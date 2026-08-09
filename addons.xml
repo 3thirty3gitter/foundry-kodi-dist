@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <addons>
 <addon id="script.program.foundry-bootstrap" version="1.0.0" name="Foundry Bootstrap Installer" provider-name="3Thirty3">
     <requires>
