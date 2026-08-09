@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<addons>
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="script.program.foundry-bootstrap" version="1.0.0" name="Foundry Bootstrap Installer" provider-name="3Thirty3">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <license>GPL-2.0</license>
+        <summary lang="en_GB">Downloads and installs the Foundry Wizard</summary>
+        <description lang="en_GB">Small bootstrap installer for the Foundry Kodi Wizard.</description>
+    </extension>
+</addon>
+
+</addons>
