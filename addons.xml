@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addons>
-<addon id="script.program.foundry-bootstrap" version="1.0.4" name="Foundry Bootstrap Installer" provider-name="3Thirty3">
+<addon id="script.program.foundry-bootstrap" version="1.0.5" name="Foundry Bootstrap Installer" provider-name="3Thirty3">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>
