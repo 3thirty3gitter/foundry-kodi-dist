@@ -14,5 +14,19 @@
         <description lang="en_GB">Small bootstrap installer for the Foundry Kodi Wizard.</description>
     </extension>
 </addon>
-
+<addon id="script.program.foundry-build" version="1.0.0" name="Foundry Build" provider-name="3Thirty3">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <license>GPL-2.0</license>
+        <summary lang="en_GB">Foundry Build — installs the Foundry skin</summary>
+        <description lang="en_GB">Foundry Build downloads and installs the Foundry skin from the official distribution site. Run it once after installing the Foundry repository.</description>
+        <disclaimer lang="en_GB">For personal use only.</disclaimer>
+    </extension>
+</addon>
 </addons>
