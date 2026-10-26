@@ -1,32 +1,104 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <addons>
-<addon id="script.program.foundry-bootstrap" version="1.0.6" name="Foundry Bootstrap Installer" provider-name="3Thirty3">
-    <requires>
-        <import addon="xbmc.python" version="3.0.0"/>
-    </requires>
-    <extension point="xbmc.python.script" library="default.py">
-        <provides>executable</provides>
+  <addon id="repository.foundry" version="1.1.0" name="Foundry Repository" provider-name="3Thirty3">
+    <extension point="xbmc.addon.repository" name="Foundry Repository">
+      <dir minversion="21.0.0">
+        <info compressed="false">https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/addons.xml</info>
+        <checksum>https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/addons.xml.md5</checksum>
+        <datadir zip="true">https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/</datadir>
+        <hashes>sha256</hashes>
+      </dir>
     </extension>
     <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <license>GPL-2.0</license>
-        <summary lang="en_GB">Downloads and installs the Foundry Wizard</summary>
-        <description lang="en_GB">Small bootstrap installer for the Foundry Kodi Wizard.</description>
+      <platform>all</platform>
+      <license>GPL-2.0-only</license>
+      <summary lang="en_GB">Foundry Kodi skin and installer</summary>
+      <description lang="en_GB">Install Foundry Build from Program add-ons, or Foundry from Look and feel &gt; Skin.</description>
+      <source>https://github.com/3thirty3gitter/foundry-kodi-dist</source>
     </extension>
-</addon>
-<addon id="script.program.foundry-build" version="1.0.0" name="Foundry Build" provider-name="3Thirty3">
+  </addon>
+  <addon id="skin.foundry" version="0.2.0" name="Foundry" provider-name="3Thirty3 / Ivar Brandt">
     <requires>
-        <import addon="xbmc.python" version="3.0.0"/>
+      <import addon="xbmc.gui" version="5.17.0" />
+      <import addon="script.foundry.helper" version="1.0.1" />
     </requires>
-    <extension point="xbmc.python.script" library="default.py">
-        <provides>executable</provides>
+    <extension point="xbmc.gui.skin" debugging="false">
+      <res width="1920" height="1440" aspect="4:3" default="false" folder="xml" />
+      <res width="1920" height="1280" aspect="3:2" default="false" folder="xml" />
+      <res width="1920" height="1200" aspect="16:10" default="false" folder="xml" />
+      <res width="2040" height="1080" aspect="17:9" default="false" folder="xml" />
+      <res width="1920" height="1080" aspect="16:9" default="true" folder="xml" />
+      <res width="2560" height="1080" aspect="21:9" default="false" folder="xml" />
+      <res width="2338" height="1080" aspect="19.5:9" default="false" folder="xml" />
+      <res width="2160" height="1080" aspect="18:9" default="false" folder="xml" />
     </extension>
     <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <license>GPL-2.0</license>
-        <summary lang="en_GB">Foundry Build — installs the Foundry skin</summary>
-        <description lang="en_GB">Foundry Build downloads and installs the Foundry skin from the official distribution site. Run it once after installing the Foundry repository.</description>
-        <disclaimer lang="en_GB">For personal use only.</disclaimer>
+      <platform>all</platform>
+      <license>CC BY-SA 4.0, GNU GENERAL PUBLIC LICENSE Version 2.0</license>
+      <assets>
+        <icon>resources/icon.png</icon>
+        <fanart>resources/fanart.png</fanart>
+      </assets>
+      <summary lang="en_GB">Foundry skin based on Nimbus by Ivar Brandt</summary>
+      <summary lang="en_NZ">Foundry skin based on Nimbus by Ivar Brandt</summary>
+      <summary lang="en_US">Foundry skin based on Nimbus by Ivar Brandt</summary>
+      <description lang="en_GB">Foundry Skin</description>
+      <description lang="en_NZ">Foundry Skin</description>
+      <description lang="en_US">Foundry Skin</description>
     </extension>
-</addon>
+  </addon>
+  <addon id="script.foundry.helper" name="Foundry Helper" version="1.0.1" provider-name="3Thirty3 / Ivar Brandt">
+    <requires>
+      <import addon="xbmc.python" version="3.0.0" />
+      <import addon="script.module.requests" version="2.19.1" />
+      <import addon="script.module.pil" version="1.1.7" />
+    </requires>
+    <extension point="xbmc.python.library" library="resources/lib/default.py" />
+    <extension point="xbmc.service" library="resources/lib/service.py" start="startup" />
+    <extension point="xbmc.addon.metadata">
+      <news />
+      <platform>all</platform>
+      <license>GPL-2.0-only, CC BY-SA 4.0 (artwork)</license>
+      <forum />
+      <source>https://github.com/3thirty3gitter/script.foundry.helper</source>
+      <assets>
+        <icon>resources/media/icon.png</icon>
+        <fanart>resources/media/fanart.png</fanart>
+      </assets>
+      <description lang="en_GB">Foundry Helper for the Foundry Skin. Forked from Nimbus Helper by Ivar Brandt.</description>
+      <description lang="en_NZ">Foundry Helper for the Foundry Skin. Forked from Nimbus Helper by Ivar Brandt.</description>
+      <description lang="en_US">Foundry Helper for the Foundry Skin. Forked from Nimbus Helper by Ivar Brandt.</description>
+    </extension>
+  </addon>
+  <addon id="script.program.foundry-build" version="1.1.0" name="Foundry Build" provider-name="3Thirty3">
+    <requires>
+      <import addon="xbmc.python" version="3.0.0" />
+      <import addon="skin.foundry" version="0.2.0" />
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+      <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+      <platform>all</platform>
+      <license>GPL-2.0-only</license>
+      <summary lang="en_GB">Install and activate the Foundry skin</summary>
+      <description lang="en_GB">Kodi installs the Foundry skin and helper together. Run Foundry Build to switch to the skin.</description>
+      <source>https://github.com/3thirty3gitter/foundry-kodi-dist</source>
+    </extension>
+  </addon>
+  <addon id="script.program.foundry-bootstrap" version="1.1.0" name="Foundry Bootstrap Installer" provider-name="3Thirty3">
+    <requires>
+      <import addon="xbmc.python" version="3.0.0" />
+      <import addon="script.program.foundry-build" version="1.1.0" />
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+      <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+      <platform>all</platform>
+      <license>GPL-2.0-only</license>
+      <summary lang="en_GB">Foundry installer shortcut</summary>
+      <description lang="en_GB">Open the Foundry Build installer. Kodi manages all required dependencies.</description>
+    </extension>
+  </addon>
 </addons>

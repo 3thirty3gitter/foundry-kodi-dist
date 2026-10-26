@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="script.program.foundry-bootstrap" version="1.1.0" name="Foundry Bootstrap Installer" provider-name="3Thirty3">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+    <import addon="script.program.foundry-build" version="1.1.0" />
+  </requires>
+  <extension point="xbmc.python.script" library="default.py"><provides>executable</provides></extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform><license>GPL-2.0-only</license>
+    <summary lang="en_GB">Foundry installer shortcut</summary>
+    <description lang="en_GB">Open the Foundry Build installer. Kodi manages all required dependencies.</description>
+  </extension>
+</addon>
