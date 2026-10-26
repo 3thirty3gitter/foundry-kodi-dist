@@ -19,7 +19,7 @@ def rpc(method, params):
 def main():
     dialog = xbmcgui.Dialog()
     if xbmc.getSkinDir() == SKIN_ID:
-        dialog.notification("Foundry", "Foundry is already active", xbmcgui.NOTIFICATION_INFO)
+        xbmc.executebuiltin("ReloadSkin()")
         return
     if not dialog.yesno("Foundry", "Use the Foundry skin now?", yeslabel="Use Foundry", nolabel="Cancel"):
         return

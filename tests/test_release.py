@@ -154,6 +154,62 @@ class Packages(unittest.TestCase):
 
 
 class Runtime(unittest.TestCase):
+    def test_foundry_branding_and_development_routes_are_packaged(self):
+        self.assertIn("foundry-logo.png", (SKIN / "xml/Home.xml").read_text())
+        self.assertIn("Welcome to Foundry", (SKIN / "xml/Custom_1116_StartHelp.xml").read_text())
+        self.assertNotIn("Welcome to Nimbus", (SKIN / "xml/Custom_1116_StartHelp.xml").read_text())
+        self.assertIn("media/foundry-home-backdrop.png", (SKIN / "xml/Variables_Artwork.xml").read_text())
+        self.assertIn("mode=ensure_repos", (SKIN / "xml/Includes_Home.xml").read_text())
+        self.assertIn("mode=choose_search_provider", (SKIN / "xml/Custom_1121_SearchResults.xml").read_text())
+        icon = (SKIN / "resources/icon.png").read_bytes()
+        self.assertEqual(hashlib.sha1(b"blob " + str(len(icon)).encode() + b"\0" + icon).hexdigest(), "2011947cb44e329c5fb48b22a619fc910e21cf32")
+
+    def test_bundled_repositories_install_offline_and_setup_is_idempotent(self):
+        from modules import repo_installer as repos
+        destination = PROFILE / "bundled-addons"
+        registry = set()
+        def register(ids):
+            registry.update(ids)
+            return []
+        with patch.object(repos, "ADDONS_DIR", str(destination)), \
+                patch.object(repos, "_has_addon", side_effect=lambda aid: aid in registry), \
+                patch.object(repos, "install_repo", side_effect=AssertionError("Network fallback was unnecessary")), \
+                patch.object(repos, "_register_repos", side_effect=register) as registrations:
+            self.assertTrue(repos.ensure_repos())
+            self.assertFalse(repos.ensure_repos())
+            self.assertEqual(len(registry), 12)
+            self.assertEqual(registrations.call_args_list[0].args[0], [p["addon_id"] for p in repos.REPOS])
+            for repo in repos.REPOS:
+                manifest = ET.parse(destination / repo["addon_id"] / "addon.xml").getroot()
+                self.assertEqual(manifest.get("id"), repo["addon_id"])
+        self.assertEqual(Window().getProperty("foundry.repos.installing"), "")
+
+    def test_new_repositories_are_enabled(self):
+        from modules import repo_installer as repos
+        calls = []
+        def rpc(request):
+            calls.append(json.loads(request))
+            return '{"result":"OK"}'
+        with patch.object(repos, "_has_addon", return_value=True), patch.object(xbmc, "executeJSONRPC", side_effect=rpc):
+            self.assertEqual(repos._register_repos(["repository.example"]), [])
+        self.assertEqual([c["params"]["addonid"] for c in calls], ["repository.example"])
+        self.assertTrue(calls[0]["params"]["enabled"])
+
+    def test_search_provider_uses_only_installed_enabled_addons(self):
+        from modules import search_provider
+        with patch.object(xbmc, "getCondVisibility", side_effect=lambda value: "plugin.video.umbrella" in value), \
+                patch.object(Dialog, "select", return_value=0), patch.object(xbmc, "executebuiltin") as execute:
+            search_provider.choose_search_provider()
+        execute.assert_called_once_with("Skin.SetString(current_search_provider,2)")
+
+    def test_installer_refreshes_existing_foundry_skin(self):
+        spec = importlib.util.spec_from_file_location("foundry_refresh", ROOT / "src/script.program.foundry-build/default.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with patch.object(xbmc, "getSkinDir", return_value="skin.foundry"), patch.object(xbmc, "executebuiltin") as execute:
+            module.main()
+        execute.assert_called_once_with("ReloadSkin()")
+
     def test_helper_modules_import_on_clean_profile(self):
         import modules.router, modules.actions, modules.custom_actions
         import modules.cpath_maker, modules.search_utils, modules.version_monitor

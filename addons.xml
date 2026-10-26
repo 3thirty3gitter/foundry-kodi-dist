@@ -17,10 +17,10 @@
       <source>https://github.com/3thirty3gitter/foundry-kodi-dist</source>
     </extension>
   </addon>
-  <addon id="skin.foundry" version="0.2.0" name="Foundry" provider-name="3Thirty3 / Ivar Brandt">
+  <addon id="skin.foundry" version="1.0.1" name="Foundry" provider-name="3Thirty3 / Ivar Brandt">
     <requires>
       <import addon="xbmc.gui" version="5.17.0" />
-      <import addon="script.foundry.helper" version="1.0.1" />
+      <import addon="script.foundry.helper" version="1.0.3" />
     </requires>
     <extension point="xbmc.gui.skin" debugging="false">
       <res width="1920" height="1440" aspect="4:3" default="false" folder="xml" />
@@ -37,17 +37,17 @@
       <license>CC BY-SA 4.0, GNU GENERAL PUBLIC LICENSE Version 2.0</license>
       <assets>
         <icon>resources/icon.png</icon>
-        <fanart>resources/fanart.png</fanart>
+        <fanart>resources/foundry-fanart.png</fanart>
       </assets>
-      <summary lang="en_GB">Foundry skin based on Nimbus by Ivar Brandt</summary>
-      <summary lang="en_NZ">Foundry skin based on Nimbus by Ivar Brandt</summary>
-      <summary lang="en_US">Foundry skin based on Nimbus by Ivar Brandt</summary>
-      <description lang="en_GB">Foundry Skin</description>
-      <description lang="en_NZ">Foundry Skin</description>
-      <description lang="en_US">Foundry Skin</description>
+      <summary lang="en_GB">Foundry skin by 3Thirty3 (based on Nimbus by Ivar Brandt)</summary>
+      <summary lang="en_NZ">Foundry skin by 3Thirty3 (based on Nimbus by Ivar Brandt)</summary>
+      <summary lang="en_US">Foundry skin by 3Thirty3 (based on Nimbus by Ivar Brandt)</summary>
+      <description lang="en_GB">Foundry - a 3Thirty3 Kodi skin built on Nimbus by Ivar Brandt. GPLv2 code / CC BY-SA 4.0 artwork; upstream attribution retained.</description>
+      <description lang="en_NZ">Foundry - a 3Thirty3 Kodi skin built on Nimbus by Ivar Brandt. GPLv2 code / CC BY-SA 4.0 artwork; upstream attribution retained.</description>
+      <description lang="en_US">Foundry - a 3Thirty3 Kodi skin built on Nimbus by Ivar Brandt. GPLv2 code / CC BY-SA 4.0 artwork; upstream attribution retained.</description>
     </extension>
   </addon>
-  <addon id="script.foundry.helper" name="Foundry Helper" version="1.0.1" provider-name="3Thirty3 / Ivar Brandt">
+  <addon id="script.foundry.helper" name="Foundry Helper" version="1.0.3" provider-name="3Thirty3 / Ivar Brandt">
     <requires>
       <import addon="xbmc.python" version="3.0.0" />
       <import addon="script.module.requests" version="2.19.1" />
@@ -70,10 +70,10 @@
       <description lang="en_US">Foundry Helper for the Foundry Skin. Forked from Nimbus Helper by Ivar Brandt.</description>
     </extension>
   </addon>
-  <addon id="script.program.foundry-build" version="1.1.0" name="Foundry Build" provider-name="3Thirty3">
+  <addon id="script.program.foundry-build" version="1.1.1" name="Foundry Build" provider-name="3Thirty3">
     <requires>
       <import addon="xbmc.python" version="3.0.0" />
-      <import addon="skin.foundry" version="0.2.0" />
+      <import addon="skin.foundry" version="1.0.1" />
     </requires>
     <extension point="xbmc.python.script" library="default.py">
       <provides>executable</provides>
@@ -86,10 +86,10 @@
       <source>https://github.com/3thirty3gitter/foundry-kodi-dist</source>
     </extension>
   </addon>
-  <addon id="script.program.foundry-bootstrap" version="1.1.0" name="Foundry Bootstrap Installer" provider-name="3Thirty3">
+  <addon id="script.program.foundry-bootstrap" version="1.1.1" name="Foundry Bootstrap Installer" provider-name="3Thirty3">
     <requires>
       <import addon="xbmc.python" version="3.0.0" />
-      <import addon="script.program.foundry-build" version="1.1.0" />
+      <import addon="script.program.foundry-build" version="1.1.1" />
     </requires>
     <extension point="xbmc.python.script" library="default.py">
       <provides>executable</provides>

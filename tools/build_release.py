@@ -14,12 +14,16 @@ def package(source, output):
     target = output / addon_id
     target.mkdir(parents=True, exist_ok=True)
     archive = target / (addon_id + "-" + version + ".zip")
+    # These unreferenced assets duplicate the active Foundry artwork.
+    unused_skin_artwork = {"resources/fanart.png", "media/foundry-backdrops/foundry-loading-splash.png"}
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
         for path in sorted(source.rglob("*")):
             relative = path.relative_to(source)
             if not path.is_file() or any(part.startswith(".") or part in {"__pycache__", "scripts", "Blank xmls"} for part in relative.parts):
                 continue
             if path.suffix in {".pyc", ".pyo"} or path.name == "Makefile" or path.name.endswith("-old.xml"):
+                continue
+            if addon_id == "skin.foundry" and relative.as_posix() in unused_skin_artwork:
                 continue
             entry = zipfile.ZipInfo(addon_id + "/" + relative.as_posix(), (2026, 10, 26, 0, 0, 0))
             entry.compress_type = zipfile.ZIP_DEFLATED
@@ -55,7 +59,10 @@ def main():
     repo = next(p for p in packages if p["id"] == "repository.foundry")
     filename = Path(repo["path"]).name
     shutil.copyfile(root / repo["path"], root / filename)
-    (root / "release.json").write_text(json.dumps({"release": "1.1.0", "skin": "0.2.0", "packages": packages}, indent=2) + "\n")
+    for addon_id in ("script.program.foundry-build", "script.program.foundry-bootstrap"):
+        installer = next(p for p in packages if p["id"] == addon_id)
+        shutil.copyfile(root / installer["path"], root / (addon_id + ".zip"))
+    (root / "release.json").write_text(json.dumps({"release": "1.1.1", "skin": "1.0.1", "packages": packages}, indent=2) + "\n")
     (root / "index.html").write_text('''<!doctype html>
 <html><head><meta charset="utf-8"><title>Foundry Kodi Source</title></head>
 <body><h1>Foundry Kodi Source</h1>
