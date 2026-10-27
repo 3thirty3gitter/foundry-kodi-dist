@@ -62,7 +62,11 @@ def main():
     for addon_id in ("script.program.foundry-build", "script.program.foundry-bootstrap"):
         installer = next(p for p in packages if p["id"] == addon_id)
         shutil.copyfile(root / installer["path"], root / (addon_id + ".zip"))
-    (root / "release.json").write_text(json.dumps({"release": "1.1.1", "skin": "1.0.1", "packages": packages}, indent=2) + "\n")
+    versions = {p["id"]: p["version"] for p in packages}
+    (root / "release.json").write_text(json.dumps({
+        "release": versions["script.program.foundry-build"],
+        "skin": versions["skin.foundry"], "packages": packages,
+    }, indent=2) + "\n")
     (root / "index.html").write_text('''<!doctype html>
 <html><head><meta charset="utf-8"><title>Foundry Kodi Source</title></head>
 <body><h1>Foundry Kodi Source</h1>

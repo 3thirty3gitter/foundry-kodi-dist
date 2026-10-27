@@ -116,21 +116,37 @@ class Packages(unittest.TestCase):
                     self.assertIn(aid + "/" + asset.text, bundle.namelist())
 
     def test_dependency_closure(self):
-        addons = {a.get("id"): a for a in ET.parse(ROOT / "addons.xml").getroot()}
-        official = {"xbmc.gui", "xbmc.python", "script.module.requests", "script.module.pil"}
+        addons = {a.get("id"): a for a in ET.parse(ROOT / "tests/fixtures/upstream-addons.xml").getroot()}
+        addons.update({a.get("id"): a for a in ET.parse(ROOT / "addons.xml").getroot()})
+        # Kodi ships Pillow itself; the other core interfaces are virtual.
+        native = {"script.module.pil"}
         visited = set()
         def visit(aid, stack=()):
             self.assertNotIn(aid, stack, "Dependency cycle")
             for dep in addons[aid].findall("./requires/import"):
                 target = dep.get("addon")
-                if target in official: continue
+                if dep.get("optional") == "true" or target in native or target.startswith(("xbmc.", "kodi.")): continue
                 self.assertIn(target, addons)
-                version = lambda s: tuple(int(n) for n in s.split("."))
-                self.assertGreaterEqual(version(addons[target].get("version")), version(dep.get("version")))
+                version = lambda s: tuple(int(n) for n in re.findall(r"\d+", s or "0"))
+                self.assertGreaterEqual(version(addons[target].get("version")), version(dep.get("version")), target)
                 visit(target, stack + (aid,))
             visited.add(aid)
         visit("script.program.foundry-build")
         self.assertTrue({"skin.foundry", "script.foundry.helper"}.issubset(visited))
+
+    def test_core_addons_are_native_install_dependencies_on_clean_profiles(self):
+        build = ET.parse(ROOT / "src/script.program.foundry-build/addon.xml").getroot()
+        required = {d.get("addon") for d in build.findall("./requires/import")}
+        self.assertTrue({"script.module.cocoscrapers", "slyguy.trailers", "plugin.video.themoviedb.helper",
+                         "metadata.themoviedb.org.python", "metadata.tvshows.themoviedb.org.python",
+                         "resource.uisounds.androidtv", "inputstream.adaptive",
+                         "script.module.inputstreamhelper"}.issubset(required))
+        # These feeds must be available before the skin has ever been loaded.
+        repo = ET.parse(ROOT / "src/repository.foundry/addon.xml").getroot()
+        feeds = [d.findtext("info") for d in repo.findall("./extension/dir")]
+        self.assertTrue(any("slyguy.uk/" in url for url in feeds))
+        self.assertTrue(any("repository.cocoscrapers/" in url for url in feeds))
+        self.assertFalse(any("redirect" in url for url in feeds))
 
     def test_all_python_xml_and_skin_references(self):
         for source in (SKIN, HELPER, ROOT / "src"):
@@ -154,6 +170,94 @@ class Packages(unittest.TestCase):
 
 
 class Runtime(unittest.TestCase):
+    def test_home_logo_actions_and_menu_have_separate_bounds(self):
+        doc = ET.parse(SKIN / "xml/Home.xml")
+        logo = next(c for c in doc.iter("control") if c.findtext("texture") == "foundry-logo.png")
+        sidebar = next(c for c in doc.iter("control") if logo in list(c))
+        action_group = next(c for c in sidebar.findall("control") if c.find("control[@id='700']") is not None)
+        menu = sidebar.find("control[@id='9000']")
+        bottom = lambda c: int(c.findtext("top", "0")) + int(c.findtext("height"))
+        label = action_group.find("control[@type='label']")
+        self.assertLessEqual(bottom(logo) + 5, int(action_group.findtext("top")) + int(label.findtext("top")))
+        self.assertLessEqual(bottom(action_group) + 15, int(menu.findtext("top")))
+        actions = action_group.find("control[@id='700']")
+        count = len(actions.findall("include[@content='IconButton']"))
+        button = ET.parse(SKIN / "xml/Includes_Buttons.xml").find("include[@name='IconButton']/definition/control")
+        full_width = count * int(button.findtext("width")) + (count - 1) * int(actions.findtext("itemgap"))
+        self.assertLessEqual(full_width, int(actions.findtext("width")))
+        self.assertLessEqual(int(action_group.findtext("left")) + full_width, 549)
+        self.assertLessEqual(bottom(menu), 877)  # Clock starts below the scrolling menu.
+
+    def test_menu_backgrounds_follow_menu_focus_and_preserve_custom_art(self):
+        variables = {e.get("name"): e for e in ET.parse(SKIN / "xml/Variables_Artwork.xml").getroot()}
+        def choose(name, menu, strings=None):
+            strings = strings or {}
+            for value in variables[name]:
+                condition = value.get("condition")
+                if condition:
+                    condition = re.sub(r"String.IsEqual\(Container\(9000\).ListItem.Property\(id\),(\w+)\)",
+                                       lambda m: str(menu == m[1]), condition)
+                    condition = re.sub(r"String.IsEmpty\(Skin.String\(([^)]+)\)\)",
+                                       lambda m: str(not strings.get(m[1])), condition)
+                    condition = condition.replace("!", " not ").replace("+", " and ").replace("|", " or ")
+                    if not eval(condition.strip(), {"__builtins__": {}}):
+                        continue
+                text = value.text
+                text = text.replace("$INFO[Container(9000).ListItem.Property(id)]", menu)
+                return re.sub(r"\$INFO\[Skin.String\(([^)]+)\)\]", lambda m: strings.get(m[1], ""), text)
+        menus = ["movies", "tvshows", "music", "musicvideos", "livetv", "radio", "games", "addons", "pictures", "video", "favorites", "weather"]
+        appearances = [(choose("FoundryMenuBackground", menu), choose("FoundryMenuBackgroundTint", menu)) for menu in menus]
+        self.assertEqual(len(set(appearances)), len(menus))
+        for path, tint in appearances:
+            self.assertTrue(Path(translate(path)).is_file())
+            self.assertRegex(tint, r"^[A-F0-9]{8}$")
+        custom = {"HomeFanart.path": "/my/backgrounds/", "HomeFanart.ext": ".jpg"}
+        self.assertEqual(choose("FoundryMenuBackground", "tvshows", custom), "/my/backgrounds/tvshows.jpg")
+        priority = variables["HomeFanartVar"][0]
+        self.assertEqual(priority.text, "$VAR[FoundryMenuBackground]")
+        self.assertIn("!ControlGroup(2000).HasFocus", priority.get("condition"))
+        background = ET.parse(SKIN / "xml/Includes.xml").find("include[@name='ColoredBackgroundImages']")
+        self.assertTrue(any(e.text == "$VAR[FoundryBackgroundImage]" for e in background.iter("texture")))
+
+    def test_slyguy_is_default_and_handles_items_without_scraped_trailers(self):
+        from modules.custom_actions import play_trailer
+        with patch.object(xbmc, "getInfoLabel", return_value=""), \
+                patch.object(xbmc, "getCondVisibility", side_effect=lambda expression: expression == "System.HasAddon(slyguy.trailers)"), \
+                patch.object(xbmc, "executebuiltin") as execute:
+            play_trailer()
+        calls = [call.args[0] for call in execute.call_args_list]
+        self.assertIn("RunScript(slyguy.trailers)", calls)
+        self.assertFalse(any(value.startswith("PlayMedia(") for value in calls))
+
+    def test_missing_trailer_provider_does_not_leave_preview_locked(self):
+        from modules.custom_actions import play_trailer
+        with patch.object(xbmc, "getInfoLabel", return_value="2"), \
+                patch.object(xbmc, "getCondVisibility", return_value=False), \
+                patch.object(xbmc, "executebuiltin") as execute:
+            play_trailer()
+        execute.assert_called_once_with("Skin.Reset(TrailerPlaying)")
+
+    def test_android_sound_default_applies_once_and_can_retry_after_failure(self):
+        from modules.experience import configure_experience
+        def visible(expression):
+            return expression == "System.HasAddon(resource.uisounds.androidtv)"
+        with patch.object(xbmc, "getCondVisibility", side_effect=visible), \
+                patch.object(xbmc, "executeJSONRPC", return_value='{"result":false}'), \
+                patch.object(xbmc, "executebuiltin") as execute:
+            self.assertFalse(configure_experience())
+            execute.assert_not_called()
+        with patch.object(xbmc, "getCondVisibility", side_effect=visible), \
+                patch.object(xbmc, "executeJSONRPC", return_value='{"result":true}') as rpc, \
+                patch.object(xbmc, "executebuiltin") as execute:
+            self.assertTrue(configure_experience())
+            self.assertEqual(json.loads(rpc.call_args.args[0])["params"],
+                             {"setting": "lookandfeel.soundskin", "value": "resource.uisounds.androidtv"})
+            execute.assert_called_once_with("Skin.SetBool(foundry.sounds.default.v1)")
+        with patch.object(xbmc, "getCondVisibility", return_value=True), \
+                patch.object(xbmc, "executeJSONRPC") as rpc:
+            self.assertFalse(configure_experience())
+            rpc.assert_not_called()
+
     def test_foundry_branding_and_development_routes_are_packaged(self):
         self.assertIn("foundry-logo.png", (SKIN / "xml/Home.xml").read_text())
         self.assertIn("Welcome to Foundry", (SKIN / "xml/Custom_1116_StartHelp.xml").read_text())

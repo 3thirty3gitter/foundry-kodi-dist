@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='utf-8'?>
+<addons>
+  <addon id="script.module.cocoscrapers" version="1.0.45">
+    <requires>
+      <import addon="xbmc.python" version="3.0.0" />
+      <import addon="script.module.requests" />
+    </requires>
+  </addon>
+  <addon id="script.module.requests" version="2.31.0">
+    <requires>
+      <import addon="xbmc.python" version="3.0.0" />
+      <import addon="script.module.certifi" version="2023.5.7" />
+      <import addon="script.module.chardet" version="5.1.0" />
+      <import addon="script.module.idna" version="3.4.0" />
+      <import addon="script.module.urllib3" version="1.26.16+matrix.1" />
+    </requires>
+  </addon>
+  <addon id="script.module.certifi" version="2023.5.7">
+    <requires>
+      <import addon="xbmc.python" version="3.0.0" />
+    </requires>
+  </addon>
+  <addon id="script.module.chardet" version="5.1.0">
+    <requires>
+      <import addon="xbmc.python" version="3.0.0" />
+    </requires>
+  </addon>
+  <addon id="script.module.idna" version="3.10.0">
+    <requires>
+      <import addon="xbmc.python" version="3.0.0" />
+    </requires>
+  </addon>
+  <addon id="script.module.urllib3" version="2.2.3">
+    <requires>
+      <import addon="xbmc.python" version="3.0.0" />
+    </requires>
+  </addon>
+  <addon id="slyguy.trailers" version="0.2.2">
+    <requires>
+      <import addon="script.module.slyguy" version="0.87.4" />
+    </requires>
+  </addon>
+  <addon id="script.module.slyguy" version="0.87.4">
+    <requires>
+      <import addon="slyguy.dependencies" version="0.0.30" />
+      <import addon="repository.slyguy" version="0.0.9" />
+    </requires>
+  </addon>
+  <addon id="slyguy.dependencies" version="0.0.30">
+    <requires>
+      <import addon="repository.slyguy" />
+    </requires>
+  </addon>
+  <addon id="repository.slyguy" version="0.0.9">
+    <requires />
+  </addon>
+  <addon id="plugin.video.themoviedb.helper" version="5.4.16">
+    <requires>
+      <import addon="xbmc.python" version="3.0.1" />
+      <import addon="script.module.requests" version="2.9.1" />
+      <import addon="script.module.pil" version="1.1.7" />
+      <import addon="script.module.addon.signals" version="0.0.6" />
+      <import addon="script.module.jurialmunkey" version="0.2.2" />
+      <import addon="script.module.infotagger" version="0.0.5" />
+      <import addon="script.module.beautifulsoup4" version="4.9.3" />
+    </requires>
+  </addon>
+  <addon id="script.module.addon.signals" version="0.0.6+matrix.1">
+    <requires>
+      <import addon="xbmc.python" version="3.0.0" />
+    </requires>
+  </addon>
+  <addon id="script.module.jurialmunkey" version="0.2.28">
+    <requires>
+      <import addon="xbmc.python" version="3.0.1" />
+      <import addon="script.module.requests" version="2.9.1" />
+      <import addon="script.module.infotagger" version="0.0.5" />
+    </requires>
+  </addon>
+  <addon id="script.module.infotagger" version="0.0.8">
+    <requires>
+      <import addon="xbmc.python" version="3.0.1" />
+    </requires>
+  </addon>
+  <addon id="script.module.beautifulsoup4" version="4.12.2">
+    <requires>
+      <import addon="xbmc.python" version="3.0.0" />
+      <import addon="script.module.soupsieve" version="2.4.1" />
+    </requires>
+  </addon>
+  <addon id="script.module.soupsieve" version="2.4.1">
+    <requires>
+      <import addon="xbmc.python" version="3.0.0" />
+    </requires>
+  </addon>
+  <addon id="metadata.themoviedb.org.python" version="3.2.2">
+    <requires>
+      <import addon="xbmc.metadata" version="2.1.0" />
+      <import addon="xbmc.python" version="3.0.0" />
+    </requires>
+  </addon>
+  <addon id="metadata.tvshows.themoviedb.org.python" version="1.7.13">
+    <requires>
+      <import addon="xbmc.python" version="3.0.0" />
+      <import addon="xbmc.metadata" version="2.1.0" />
+    </requires>
+  </addon>
+  <addon id="resource.uisounds.androidtv" version="1.0.0">
+    <requires>
+      <import addon="kodi.resource" version="1.0.0" />
+    </requires>
+  </addon>
+  <addon id="inputstream.adaptive" version="21.5.25">
+    <requires>
+      <import addon="kodi.binary.global.main" minversion="2.0.0" version="2.0.2" />
+      <import addon="kodi.binary.global.general" minversion="1.0.4" version="1.0.5" />
+      <import addon="kodi.binary.global.gui" minversion="5.15.0" version="5.15.0" />
+      <import addon="kodi.binary.global.filesystem" minversion="1.1.7" version="1.1.9" />
+      <import addon="kodi.binary.global.tools" minversion="1.0.0" version="1.0.4" />
+      <import addon="kodi.binary.instance.inputstream" minversion="3.3.0" version="3.3.0" />
+      <import addon="kodi.binary.instance.videocodec" minversion="2.1.0" version="2.1.0" />
+    </requires>
+  </addon>
+  <addon id="script.module.inputstreamhelper" version="0.8.6">
+    <requires>
+      <import addon="xbmc.python" version="3.0.0" />
+    </requires>
+  </addon>
+</addons>

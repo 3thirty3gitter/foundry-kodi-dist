@@ -1,12 +1,22 @@
 <?xml version='1.0' encoding='utf-8'?>
 <addons>
-  <addon id="repository.foundry" version="1.1.0" name="Foundry Repository" provider-name="3Thirty3">
+  <addon id="repository.foundry" version="1.2.0" name="Foundry Repository" provider-name="3Thirty3">
     <extension point="xbmc.addon.repository" name="Foundry Repository">
       <dir minversion="21.0.0">
         <info compressed="false">https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/addons.xml</info>
         <checksum>https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/addons.xml.md5</checksum>
         <datadir zip="true">https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/</datadir>
         <hashes>sha256</hashes>
+      </dir>
+      <dir minversion="21.0.0">
+        <info compressed="false">https://slyguy.uk/.repo/repository.slyguy/addons.xml</info>
+        <checksum>https://slyguy.uk/.repo/repository.slyguy/addons.xml.md5</checksum>
+        <datadir zip="true">https://slyguy.uk/.repo/repository.slyguy/</datadir>
+      </dir>
+      <dir minversion="21.0.0">
+        <info compressed="false">https://raw.githubusercontent.com/not-coco-joe/repository.cocoscrapers/master/zips/addons.xml</info>
+        <checksum>https://raw.githubusercontent.com/not-coco-joe/repository.cocoscrapers/master/zips/addons.xml.md5</checksum>
+        <datadir zip="true">https://raw.githubusercontent.com/not-coco-joe/repository.cocoscrapers/master/zips/</datadir>
       </dir>
     </extension>
     <extension point="xbmc.addon.metadata">
@@ -17,10 +27,10 @@
       <source>https://github.com/3thirty3gitter/foundry-kodi-dist</source>
     </extension>
   </addon>
-  <addon id="skin.foundry" version="1.0.1" name="Foundry" provider-name="3Thirty3 / Ivar Brandt">
+  <addon id="skin.foundry" version="1.1.0" name="Foundry" provider-name="3Thirty3 / Ivar Brandt">
     <requires>
       <import addon="xbmc.gui" version="5.17.0" />
-      <import addon="script.foundry.helper" version="1.0.3" />
+      <import addon="script.foundry.helper" version="1.1.0" />
     </requires>
     <extension point="xbmc.gui.skin" debugging="false">
       <res width="1920" height="1440" aspect="4:3" default="false" folder="xml" />
@@ -47,7 +57,7 @@
       <description lang="en_US">Foundry - a 3Thirty3 Kodi skin built on Nimbus by Ivar Brandt. GPLv2 code / CC BY-SA 4.0 artwork; upstream attribution retained.</description>
     </extension>
   </addon>
-  <addon id="script.foundry.helper" name="Foundry Helper" version="1.0.3" provider-name="3Thirty3 / Ivar Brandt">
+  <addon id="script.foundry.helper" name="Foundry Helper" version="1.1.0" provider-name="3Thirty3 / Ivar Brandt">
     <requires>
       <import addon="xbmc.python" version="3.0.0" />
       <import addon="script.module.requests" version="2.19.1" />
@@ -70,10 +80,19 @@
       <description lang="en_US">Foundry Helper for the Foundry Skin. Forked from Nimbus Helper by Ivar Brandt.</description>
     </extension>
   </addon>
-  <addon id="script.program.foundry-build" version="1.1.1" name="Foundry Build" provider-name="3Thirty3">
+  <addon id="script.program.foundry-build" version="1.2.0" name="Foundry Build" provider-name="3Thirty3">
     <requires>
       <import addon="xbmc.python" version="3.0.0" />
-      <import addon="skin.foundry" version="1.0.1" />
+      <import addon="repository.foundry" version="1.2.0" />
+      <import addon="skin.foundry" version="1.1.0" />
+      <import addon="script.module.cocoscrapers" version="1.0.45" />
+      <import addon="slyguy.trailers" version="0.2.2" />
+      <import addon="plugin.video.themoviedb.helper" version="5.4.16" />
+      <import addon="metadata.themoviedb.org.python" version="3.2.2" />
+      <import addon="metadata.tvshows.themoviedb.org.python" version="1.7.13" />
+      <import addon="resource.uisounds.androidtv" version="1.0.0" />
+      <import addon="inputstream.adaptive" version="21.0.0" />
+      <import addon="script.module.inputstreamhelper" version="0.8.6" />
     </requires>
     <extension point="xbmc.python.script" library="default.py">
       <provides>executable</provides>
@@ -82,14 +101,14 @@
       <platform>all</platform>
       <license>GPL-2.0-only</license>
       <summary lang="en_GB">Install and activate the Foundry skin</summary>
-      <description lang="en_GB">Kodi installs the Foundry skin and helper together. Run Foundry Build to switch to the skin.</description>
+      <description lang="en_GB">Installs Foundry, CocoScrapers, SlyGuy Trailers, TMDb Helper, movie and TV metadata scrapers, Android TV UI sounds, and adaptive playback support. Kodi manages their dependencies. Run Foundry Build to activate the skin.</description>
       <source>https://github.com/3thirty3gitter/foundry-kodi-dist</source>
     </extension>
   </addon>
-  <addon id="script.program.foundry-bootstrap" version="1.1.1" name="Foundry Bootstrap Installer" provider-name="3Thirty3">
+  <addon id="script.program.foundry-bootstrap" version="1.2.0" name="Foundry Bootstrap Installer" provider-name="3Thirty3">
     <requires>
       <import addon="xbmc.python" version="3.0.0" />
-      <import addon="script.program.foundry-build" version="1.1.1" />
+      <import addon="script.program.foundry-build" version="1.2.0" />
     </requires>
     <extension point="xbmc.python.script" library="default.py">
       <provides>executable</provides>

@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="script.program.foundry-build" version="1.1.1" name="Foundry Build" provider-name="3Thirty3">
+<addon id="script.program.foundry-build" version="1.2.0" name="Foundry Build" provider-name="3Thirty3">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
-    <import addon="skin.foundry" version="1.0.1" />
+    <import addon="repository.foundry" version="1.2.0" />
+    <import addon="skin.foundry" version="1.1.0" />
+    <import addon="script.module.cocoscrapers" version="1.0.45" />
+    <import addon="slyguy.trailers" version="0.2.2" />
+    <import addon="plugin.video.themoviedb.helper" version="5.4.16" />
+    <import addon="metadata.themoviedb.org.python" version="3.2.2" />
+    <import addon="metadata.tvshows.themoviedb.org.python" version="1.7.13" />
+    <import addon="resource.uisounds.androidtv" version="1.0.0" />
+    <import addon="inputstream.adaptive" version="21.0.0" />
+    <import addon="script.module.inputstreamhelper" version="0.8.6" />
   </requires>
   <extension point="xbmc.python.script" library="default.py"><provides>executable</provides></extension>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform><license>GPL-2.0-only</license>
     <summary lang="en_GB">Install and activate the Foundry skin</summary>
-    <description lang="en_GB">Kodi installs the Foundry skin and helper together. Run Foundry Build to switch to the skin.</description>
+    <description lang="en_GB">Installs Foundry, CocoScrapers, SlyGuy Trailers, TMDb Helper, movie and TV metadata scrapers, Android TV UI sounds, and adaptive playback support. Kodi manages their dependencies. Run Foundry Build to activate the skin.</description>
     <source>https://github.com/3thirty3gitter/foundry-kodi-dist</source>
   </extension>
 </addon>

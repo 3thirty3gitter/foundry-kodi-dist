@@ -2,8 +2,28 @@
 
 Permanent Kodi File Manager source: https://3thirty3gitter.github.io/foundry-kodi-dist/
 
-Install `repository.foundry-1.1.0.zip`, then open **Install from repository > Foundry Repository > Program add-ons > Foundry Build**.
-Kodi installs Foundry 1.0.1 and Foundry Helper 1.0.3 using its dependency manager.
+Install `repository.foundry-1.2.0.zip`, then open **Install from repository > Foundry Repository > Program add-ons > Foundry Build**.
+For an existing installation, update the repository first, check for updates, and update Foundry Build to 1.2.0.
+Kodi installs Foundry 1.1.0, Foundry Helper 1.1.0 and the following core add-ons using its dependency manager:
+
+| Add-on | Purpose |
+| --- | --- |
+| CocoScrapers Module | External scraper module for compatible providers |
+| SlyGuy Trailers | Default trailer provider, with its own playback dependencies |
+| TMDb Helper | Discovery, lists, metadata, artwork and supported ratings APIs |
+| The Movie Database Python | Movie-library metadata and IMDb ratings |
+| TMDb TV Shows | TV-library metadata, artwork and ratings |
+| Android TV UI Sounds | Default navigation sounds |
+| InputStream Adaptive and InputStream Helper | Adaptive playback and stream support |
+
+IMDb, OMDb, MDbList and Fanart.tv are data services used by the metadata tools; separate add-ons for each are not required.
+Personal API keys and accounts remain user-specific. Trakt scrobbling, subtitle services and Artwork Dump are optional additions.
+
+Foundry Repository includes the upstream SlyGuy and CocoScrapers feeds so clean installs can resolve their dependencies before the skin starts.
+Their original ZIPs are downloaded directly from upstream, without repackaging. No YouTube/Tubed replacement add-ons are installed.
+
+The header reserves separate space for the logo, five action buttons and the scrolling menu. Home backgrounds follow the selected menu and yield to focused widget artwork. Custom menu background folders remain supported.
+SlyGuy and Android sound defaults migrate once per profile; later user changes are preserved.
 Run Foundry Build to activate the skin. Requires Kodi 21 Omega or newer.
 
 `release.json` records ZIP versions and SHA-256 checksums. The repository feed and downloads are public and require no login.

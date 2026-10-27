@@ -1,53 +1,50 @@
 {
-  "release": "1.1.1",
-  "skin": "1.0.1",
+  "release": "1.2.0",
+  "skin": "1.1.0",
   "packages": [
     {
       "id": "repository.foundry",
-      "version": "1.1.0",
-      "path": "repository.foundry/repository.foundry-1.1.0.zip",
-      "sha256": "942107b643ae70e34bfd84100a82006864fd8ff00a57110f7fc77e2a60d13469",
-      "size": 599
+      "version": "1.2.0",
+      "path": "repository.foundry/repository.foundry-1.2.0.zip",
+      "sha256": "2a83d7d4ec2ac362fed010005ec55b6c87aee40a393a7fd82454e7137b48ffcc",
+      "size": 762
     },
     {
       "id": "skin.foundry",
-      "version": "1.0.1",
-      "path": "skin.foundry/skin.foundry-1.0.1.zip",
-      "sha256": "3f9523c16fe8adf1b603c7741bbe02d41c82979e79d492c6fef46696aca9ac32",
-      "size": 12383269
+      "version": "1.1.0",
+      "path": "skin.foundry/skin.foundry-1.1.0.zip",
+      "sha256": "e91bc84936cb7d78f43724d05931c62b039c350a0748f6ccff9e39beecc7a978",
+      "size": 12384314
     },
     {
       "id": "script.foundry.helper",
-      "version": "1.0.3",
-      "path": "script.foundry.helper/script.foundry.helper-1.0.3.zip",
-      "sha256": "786219903c862deac75ba183f46dd8a836523415c8d8a2736fa2d7da8dc31668",
-      "size": 813897
+      "version": "1.1.0",
+      "path": "script.foundry.helper/script.foundry.helper-1.1.0.zip",
+      "sha256": "d52d0769fd39c24de6253e53420f636518c70f2cc48d89d62d0c84fed3bf0af8",
+      "size": 814767
     },
     {
       "id": "script.program.foundry-build",
-      "version": "1.1.1",
-      "path": "script.program.foundry-build/script.program.foundry-build-1.1.1.zip",
-      "sha256": "dbc02a9505fe56cd267c1292ef27760207d0f6ac6bf3d4adb074ef612e5cb544",
-      "size": 1454
+      "version": "1.2.0",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.2.0.zip",
+      "sha256": "c2b33ad3533b12fa3b4cfb09fbff8a2a0a4669cb2f62f7b709ac8b3089dd9abf",
+      "size": 1678
     },
     {
       "id": "script.program.foundry-bootstrap",
-      "version": "1.1.1",
-      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.1.1.zip",
-      "sha256": "abd1d3714074d9fcbf797a4081bd6c1df162abaa846d6d3c07ec64e6a9f84a31",
+      "version": "1.2.0",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.2.0.zip",
+      "sha256": "5733bfea387229453a11165712d0a750527fd97cf8bb9e236c9529e4f1f3ad39",
       "size": 850
     }
   ],
   "source_commits": {
-    "skin.foundry-nimbus": "d78dc1a0409e85abe295ec644e9b9557180db431",
-    "script.foundry.helper": "348e8512be77b1a565af7fa6988b8f219752fe7a"
-  },
-  "recovered_development_commits": {
-    "skin.foundry-nimbus": "e2c86cf3836725be9ec8778c91ab84cd5f154cb4",
-    "script.foundry.helper": "e7bc665bcc51c442cf7f95c75e108dafbcdc79b1"
+    "skin.foundry-nimbus": "ece54bdd0173d815efeb0ea31d02b473ae587750",
+    "script.foundry.helper": "d7007532b47bae03c16f5a665cc6d22062215ce6"
   },
   "validation": {
-    "automated_tests_passed": 17,
+    "automated_tests_passed": 23,
+    "upstream_feeds_and_requested_packages_verified": true,
     "target_device_tested": false
   }
 }
