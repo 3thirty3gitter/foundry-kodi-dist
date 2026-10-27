@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="script.program.foundry-build" version="1.2.0" name="Foundry Build" provider-name="3Thirty3">
+<addon id="script.program.foundry-build" version="1.2.1" name="Foundry Build" provider-name="3Thirty3">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="repository.foundry" version="1.2.0" />
-    <import addon="skin.foundry" version="1.1.0" />
+    <import addon="skin.foundry" version="1.1.1" />
     <import addon="script.module.cocoscrapers" version="1.0.45" />
     <import addon="slyguy.trailers" version="0.2.2" />
     <import addon="plugin.video.themoviedb.helper" version="5.4.16" />

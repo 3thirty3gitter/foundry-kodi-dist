@@ -27,7 +27,7 @@
       <source>https://github.com/3thirty3gitter/foundry-kodi-dist</source>
     </extension>
   </addon>
-  <addon id="skin.foundry" version="1.1.0" name="Foundry" provider-name="3Thirty3 / Ivar Brandt">
+  <addon id="skin.foundry" version="1.1.1" name="Foundry" provider-name="3Thirty3 / Ivar Brandt">
     <requires>
       <import addon="xbmc.gui" version="5.17.0" />
       <import addon="script.foundry.helper" version="1.1.0" />
@@ -80,11 +80,11 @@
       <description lang="en_US">Foundry Helper for the Foundry Skin. Forked from Nimbus Helper by Ivar Brandt.</description>
     </extension>
   </addon>
-  <addon id="script.program.foundry-build" version="1.2.0" name="Foundry Build" provider-name="3Thirty3">
+  <addon id="script.program.foundry-build" version="1.2.1" name="Foundry Build" provider-name="3Thirty3">
     <requires>
       <import addon="xbmc.python" version="3.0.0" />
       <import addon="repository.foundry" version="1.2.0" />
-      <import addon="skin.foundry" version="1.1.0" />
+      <import addon="skin.foundry" version="1.1.1" />
       <import addon="script.module.cocoscrapers" version="1.0.45" />
       <import addon="slyguy.trailers" version="0.2.2" />
       <import addon="plugin.video.themoviedb.helper" version="5.4.16" />
@@ -105,10 +105,10 @@
       <source>https://github.com/3thirty3gitter/foundry-kodi-dist</source>
     </extension>
   </addon>
-  <addon id="script.program.foundry-bootstrap" version="1.2.0" name="Foundry Bootstrap Installer" provider-name="3Thirty3">
+  <addon id="script.program.foundry-bootstrap" version="1.2.1" name="Foundry Bootstrap Installer" provider-name="3Thirty3">
     <requires>
       <import addon="xbmc.python" version="3.0.0" />
-      <import addon="script.program.foundry-build" version="1.2.0" />
+      <import addon="script.program.foundry-build" version="1.2.1" />
     </requires>
     <extension point="xbmc.python.script" library="default.py">
       <provides>executable</provides>

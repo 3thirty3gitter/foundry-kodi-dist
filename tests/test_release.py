@@ -170,6 +170,40 @@ class Packages(unittest.TestCase):
 
 
 class Runtime(unittest.TestCase):
+    def test_first_skin_confirmation_has_an_unconditional_readable_card(self):
+        from PIL import Image
+        shared = ET.parse(SKIN / "xml/Includes.xml").find("include[@name='DialogBackgroundCommons']")
+        self.assertEqual(shared.findtext("param[@name='darken_bg']"), "true")
+        card = next(c for c in shared.findall("definition/control")
+                    if (c.findtext("texture") or "").startswith("special://skin/"))
+        self.assertIsNone(card.find("visible"))
+        self.assertEqual({name: card.findtext(name) for name in ("left", "right", "top", "bottom")},
+                         dict.fromkeys(("left", "right", "top", "bottom"), "-20"))
+        texture = card.find("texture")
+        tint = texture.get("colordiffuse")
+        self.assertRegex(tint, r"^[A-F0-9]{8}$")
+        with Image.open(translate(texture.text)) as image:
+            red, green, blue, alpha = image.convert("RGBA").getpixel((image.width // 2, image.height // 2))
+        opacity = alpha / 255 * int(tint[:2], 16) / 255
+        self.assertGreater(opacity, .8)
+        self.assertLess(opacity, 1)
+        # Worst-case bright artwork behind the translucent card and dimmer.
+        rgb = [channel * int(tint[i:i+2], 16) / 255 for channel, i in zip((red, green, blue), (2, 4, 6))]
+        behind = 255 * (1 - 0x66 / 255)
+        composite = [opacity * channel + (1 - opacity) * behind for channel in rgb]
+        def luminance(channels):
+            def linear(value):
+                value /= 255
+                return value / 12.92 if value <= .04045 else ((value + .055) / 1.055) ** 2.4
+            return sum(weight * linear(value) for value, weight in zip(channels, (.2126, .7152, .0722)))
+        self.assertGreater((luminance((240, 240, 240)) + .05) / (luminance(composite) + .05), 7)
+        self.assertEqual(ET.parse(SKIN / "xml/DialogConfirm.xml").findtext(".//control[@id='9']/textcolor"), "white")
+        variables = ET.parse(SKIN / "xml/Variables_MyVariables.xml")
+        for name in ("DialogBackgroundColorVar", "DialogBackgroundTextureVar"):
+            fallback = variables.find("variable[@name='%s']/value[last()]" % name)
+            self.assertTrue(fallback.text)
+            self.assertIsNone(fallback.get("condition"))
+
     def test_home_logo_actions_and_menu_have_separate_bounds(self):
         doc = ET.parse(SKIN / "xml/Home.xml")
         logo = next(c for c in doc.iter("control") if c.findtext("texture") == "foundry-logo.png")

@@ -67,11 +67,14 @@ def main():
         "release": versions["script.program.foundry-build"],
         "skin": versions["skin.foundry"], "packages": packages,
     }, indent=2) + "\n")
+    skin = next(p for p in packages if p["id"] == "skin.foundry")
     (root / "index.html").write_text('''<!doctype html>
 <html><head><meta charset="utf-8"><title>Foundry Kodi Source</title></head>
 <body><h1>Foundry Kodi Source</h1>
 <p>Install the repository ZIP below. Then open Install from repository &gt; Foundry Repository &gt; Program add-ons &gt; Foundry Build.</p>
-<ul><li><a href="''' + filename + '''">''' + filename + '''</a></li></ul>
+<ul><li><a href="''' + filename + '''">''' + filename + '''</a></li>
+<li><a href="''' + skin["path"] + '''">''' + Path(skin["path"]).name + '''</a></li></ul>
+<p>The skin-only ZIP updates the interface when a provider dependency is blocking the full build installation.</p>
 </body></html>
 ''')
     print(json.dumps(packages, indent=2))

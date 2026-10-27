@@ -3,8 +3,9 @@
 Permanent Kodi File Manager source: https://3thirty3gitter.github.io/foundry-kodi-dist/
 
 Install `repository.foundry-1.2.0.zip`, then open **Install from repository > Foundry Repository > Program add-ons > Foundry Build**.
-For an existing installation, update the repository first, check for updates, and update Foundry Build to 1.2.0.
-Kodi installs Foundry 1.1.0, Foundry Helper 1.1.0 and the following core add-ons using its dependency manager:
+For an existing installation, update the repository first, check for updates, and update Foundry Build to 1.2.1.
+For the popup repair while a provider dependency is failing, install the skin-only `skin.foundry-1.1.1.zip` from the same source listing. It requires only Foundry Helper and its existing Python dependencies.
+Kodi installs Foundry 1.1.1, Foundry Helper 1.1.0 and the following core add-ons using its dependency manager:
 
 | Add-on | Purpose |
 | --- | --- |
