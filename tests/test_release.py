@@ -217,7 +217,7 @@ class Runtime(unittest.TestCase):
         condition = re.sub(r"Integer.IsGreater\(Container\((\d+)\).NumItems,0\)", lambda m: str(counts.get(int(m[1]), 0) > 0), condition)
         condition = re.sub(r"Container\((\d+)\).IsUpdating", lambda m: str(int(m[1]) in updating), condition)
         condition = re.sub(r"Control.IsVisible\((\d+)\)", lambda m: str(int(m[1]) in visible), condition)
-        condition = condition.replace("Control.HasFocus(802)", str(settings))
+        condition = condition.replace("ControlGroup(700).HasFocus", str(settings))
         for token in ("Player.HasVideo", "Player.HasAudio", "Visualisation.Enabled", "ControlGroup(2000).HasFocus"):
             condition = condition.replace(token, "False")
         condition = condition.replace("String.IsEmpty(Visualisation.Name)", "True")
@@ -268,6 +268,82 @@ class Runtime(unittest.TestCase):
         for source in ("foundry-widget-base.svg", "foundry-widget-fade.svg"):
             ET.parse(SKIN / "media" / source)
 
+    def test_home_logo_is_tightly_trimmed_and_pixels_are_unchanged(self):
+        from PIL import Image, ImageChops
+        with zipfile.ZipFile(ROOT / "skin.foundry/skin.foundry-1.1.4.zip") as old:
+            import io
+            original = Image.open(io.BytesIO(old.read("skin.foundry/media/foundry-logo.png"))).convert("RGBA")
+        current = Image.open(SKIN / "media/foundry-logo.png").convert("RGBA")
+        expected = original.crop(original.getchannel("A").getbbox())
+        self.assertEqual(current.size, expected.size)
+        self.assertEqual(current.getchannel("A").getbbox(), (0, 0, *current.size))
+        self.assertIsNone(ImageChops.difference(current, expected).getbbox())
+
+    def test_home_positions_are_unchanged_except_logo_size_and_removed_tooltip(self):
+        with zipfile.ZipFile(ROOT / "skin.foundry/skin.foundry-1.1.4.zip") as old:
+            before = ET.fromstring(old.read("skin.foundry/xml/Home.xml"))
+        after = ET.parse(SKIN / "xml/Home.xml").getroot()
+        def strip_allowed_changes(doc):
+            for parent in doc.iter():
+                for child in list(parent):
+                    if child.tag == "control" and child.findtext("label") == "$VAR[HomeSubmenuButtonLabelsVar]":
+                        parent.remove(child)
+            logo = next(c for c in doc.iter("control") if c.findtext("texture") == "foundry-logo.png")
+            self.assertEqual((logo.findtext("left"), logo.findtext("top")), ("60", "40"))
+            size = (int(logo.findtext("width")), int(logo.findtext("height")))
+            for tag in ("width", "height"):
+                logo.remove(logo.find(tag))
+            return size
+        previous_size = strip_allowed_changes(before)
+        new_size = strip_allowed_changes(after)
+        self.assertGreater(new_size[0], previous_size[0])
+        self.assertGreater(new_size[1], previous_size[1])
+        def normalized(node):
+            return (node.tag, node.attrib, (node.text or "").strip(), [normalized(c) for c in node])
+        self.assertEqual(normalized(before), normalized(after))
+
+    def test_action_hover_wallpapers_override_the_selected_category(self):
+        variables = ET.parse(SKIN / "xml/Variables_Artwork.xml")
+        defaults = variables.find("variable[@name='FoundryDefaultMenuBackground']")
+        for control_id, filename in ((801, "foundry-shutdown-wallpaper.svg"), (803, "foundry-search-wallpaper.svg")):
+            route = defaults.find("value[@condition='Control.HasFocus(%s)']" % control_id)
+            self.assertEqual(route.text, "special://skin/media/" + filename)
+            ET.parse(SKIN / "media" / filename)
+        override = variables.find("variable[@name='FoundryMenuBackground']/value")
+        self.assertEqual(override.text, "$VAR[FoundryDefaultMenuBackground]")
+        for control_id in (801, 802, 803):
+            self.assertIn("Control.HasFocus(%s)" % control_id, override.get("condition"))
+        expression = ET.parse(SKIN / "xml/Expressions.xml").findtext("expression[@name='FoundryHomeHasWidgets']")
+        self.assertFalse(self.home_condition(expression, settings=True, visible={8100}, counts={8100: 6}))
+
+    def test_widget_selection_survives_menu_round_trip_for_all_layouts(self):
+        doc = ET.parse(SKIN / "xml/Includes_Home.xml")
+        # Kodi's group focus memory restores the last row; no always=true default.
+        group = doc.find("include[@name='WidgetGroupListCommon']/defaultcontrol")
+        self.assertEqual(group.get("always"), "false")
+        self.assertEqual(group.text, "0")
+        tested = 0
+        for layout in doc.findall("include"):
+            actions = [a for a in layout.findall(".//onfocus") if (a.text or "").startswith("Control.Move(")]
+            if not actions:
+                continue
+            tested += 1
+            for is_home in (True, False):
+                selected = 6
+                for action in actions:
+                    condition = action.get("condition", "true")
+                    active = not is_home if condition == "!Window.IsActive(Home)" else True
+                    if active:
+                        selected = 0  # Existing search reset behavior with no listposition.
+                self.assertEqual(selected, 6 if is_home else 0, layout.get("name"))
+        self.assertEqual(tested, 4)
+        common = doc.find("include[@name='WidgetListCommon']")
+        home_back = common.find("onback[@condition='Window.IsActive(Home)']")
+        self.assertEqual(home_back.text, "9000")
+        resets = [a for a in common.findall("onback") if (a.text or "").startswith("SetFocus(")]
+        self.assertTrue(resets)
+        self.assertTrue(all(a.get("condition").startswith("!Window.IsActive(Home)") for a in resets))
+
     def test_first_skin_confirmation_has_an_unconditional_readable_card(self):
         from PIL import Image
         shared = ET.parse(SKIN / "xml/Includes.xml").find("include[@name='DialogBackgroundCommons']")
@@ -309,8 +385,8 @@ class Runtime(unittest.TestCase):
         action_group = next(c for c in sidebar.findall("control") if c.find("control[@id='700']") is not None)
         menu = sidebar.find("control[@id='9000']")
         bottom = lambda c: int(c.findtext("top", "0")) + int(c.findtext("height"))
-        label = action_group.find("control[@type='label']")
-        self.assertLessEqual(bottom(logo) + 5, int(action_group.findtext("top")) + int(label.findtext("top")))
+        self.assertLessEqual(bottom(logo) + 10, int(action_group.findtext("top")))
+        self.assertIsNone(action_group.find("control[@type='label']"))
         self.assertLessEqual(bottom(action_group) + 15, int(menu.findtext("top")))
         actions = action_group.find("control[@id='700']")
         count = len(actions.findall("include[@content='IconButton']"))
@@ -332,7 +408,7 @@ class Runtime(unittest.TestCase):
                     condition = re.sub(r"String.IsEmpty\(Skin.String\(([^)]+)\)\)",
                                        lambda m: str(not strings.get(m[1])), condition)
                     condition = condition.replace("!", " not ").replace("+", " and ").replace("|", " or ")
-                    condition = condition.replace("Control.HasFocus(802)", "False")
+                    condition = re.sub(r"Control.HasFocus\(80[123]\)", "False", condition)
                     if not eval(condition.strip(), {"__builtins__": {}}):
                         continue
                 text = value.text

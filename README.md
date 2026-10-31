@@ -3,9 +3,9 @@
 Permanent Kodi File Manager source: https://3thirty3gitter.github.io/foundry-kodi-dist/
 
 Install `repository.foundry-1.2.0.zip`, then open **Install from repository > Foundry Repository > Program add-ons > Foundry Build**.
-For an existing installation, check for updates and update Foundry Build to **1.2.5**, then run it once to finish setup. The current Build ZIP is also listed in the File Manager source.
-The release installs **Foundry skin 1.1.4**, **Foundry Helper 1.1.1**, and the two required artwork resources.
-For the interface update while a provider dependency is failing, install the skin-only `skin.foundry-1.1.4.zip` from the same source listing, with Foundry Repository enabled so Kodi can install its helper and image resources.
+For an existing installation, check for updates and update Foundry Build to **1.2.6**, then run it once to finish setup. The current Build ZIP is also listed in the File Manager source.
+The release installs **Foundry skin 1.1.5**, **Foundry Helper 1.1.1**, and the two required artwork resources.
+For the interface update while a provider dependency is failing, install the skin-only `skin.foundry-1.1.5.zip` from the same source listing, with Foundry Repository enabled so Kodi can install its helper and image resources.
 Kodi installs the following core add-ons using its dependency manager. SlyGuy Trailers installs when Foundry Build runs, after its repository has been prepared:
 
 | Add-on | Purpose |
@@ -42,4 +42,6 @@ Build with sibling checkouts of `skin.foundry-nimbus` and `script.foundry.helper
     python3 tests/test_release.py -v
 
 Runtime tests use mocked Kodi APIs; final navigation, rendering and playback are tested in Kodi on the target device.
-Validation for 1.2.5: 40 checks pass. These cover the transparent Home menu, removal of empty-state overlays, populated/loading/hidden widget rows, selection changes, custom row 50, mutually exclusive title layouts, original artwork hashes, and the existing SlyGuy/OSD regressions. A reference layout was rendered from the native geometry and original assets. Target-device rendering and playback checks remain pending.
+Validation for 1.2.6: 44 checks pass. These cover the transparent Home menu, removal of empty-state overlays, populated/loading/hidden widget rows, selection changes, custom row 50, mutually exclusive title layouts, original artwork hashes, and the existing SlyGuy/OSD regressions. A reference layout was rendered from the native geometry and original assets. Target-device rendering and playback checks remain pending.
+
+Build 1.2.6 enlarges the Home logo from its existing (60, 40) anchor and removes only its transparent canvas border. The visible artwork is pixel-identical to the original crop. The logo ends at y=155, leaving a 10-unit gap before the unchanged button group at y=165. All other Home control coordinates are unchanged. Shutdown and Search icon focus select matching native-vector wallpaper; their hover label is removed. Home widget focus no longer executes the reset-to-first-item actions, and Back returns directly to the menu while native group memory retains the selected row. The search-results window keeps its prior navigation behavior.
