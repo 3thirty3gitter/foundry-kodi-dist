@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="resource.images.foundry.osd" name="Foundry StreamPilot OSD Artwork" version="1.0.0" provider-name="3Thirty3">
+  <requires><import addon="kodi.resource" version="1.0.0" /></requires>
+  <extension point="kodi.resource.images" compile="false" type="mediaflags" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Original StreamPilot playback format badges</summary>
+    <description lang="en_GB">Resolution and audio format artwork used by the Foundry StreamPilot playback OSD.</description>
+    <platform>all</platform><license>Proprietary artwork; respective trademarks belong to their owners</license>
+    <assets><icon>resources/icon.png</icon><fanart>resources/fanart.png</fanart></assets>
+    <source>https://github.com/3thirty3gitter/foundry-kodi-dist</source>
+  </extension>
+</addon>

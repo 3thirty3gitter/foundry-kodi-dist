@@ -27,10 +27,46 @@
       <source>https://github.com/3thirty3gitter/foundry-kodi-dist</source>
     </extension>
   </addon>
-  <addon id="skin.foundry" version="1.1.1" name="Foundry" provider-name="3Thirty3 / Ivar Brandt">
+  <addon id="resource.images.foundry.wallpapers" name="Foundry Wallpapers" version="1.0.0" provider-name="3Thirty3">
+    <requires>
+      <import addon="kodi.resource" version="1.0.0" />
+    </requires>
+    <extension point="kodi.resource.images" compile="false" type="backgrounds" />
+    <extension point="xbmc.addon.metadata">
+      <summary lang="en_GB">Original Foundry category wallpapers</summary>
+      <description lang="en_GB">The original fourteen Foundry wallpapers, preserved unchanged and installed with the Foundry skin.</description>
+      <platform>all</platform>
+      <license>CC BY-SA 4.0</license>
+      <assets>
+        <icon>resources/icon.png</icon>
+        <fanart>resources/home.png</fanart>
+      </assets>
+      <source>https://github.com/3thirty3gitter/foundry-kodi-dist</source>
+    </extension>
+  </addon>
+  <addon id="resource.images.foundry.osd" name="Foundry StreamPilot OSD Artwork" version="1.0.0" provider-name="3Thirty3">
+    <requires>
+      <import addon="kodi.resource" version="1.0.0" />
+    </requires>
+    <extension point="kodi.resource.images" compile="false" type="mediaflags" />
+    <extension point="xbmc.addon.metadata">
+      <summary lang="en_GB">Original StreamPilot playback format badges</summary>
+      <description lang="en_GB">Resolution and audio format artwork used by the Foundry StreamPilot playback OSD.</description>
+      <platform>all</platform>
+      <license>Proprietary artwork; respective trademarks belong to their owners</license>
+      <assets>
+        <icon>resources/icon.png</icon>
+        <fanart>resources/fanart.png</fanart>
+      </assets>
+      <source>https://github.com/3thirty3gitter/foundry-kodi-dist</source>
+    </extension>
+  </addon>
+  <addon id="skin.foundry" version="1.1.3" name="Foundry" provider-name="3Thirty3 / Ivar Brandt">
     <requires>
       <import addon="xbmc.gui" version="5.17.0" />
-      <import addon="script.foundry.helper" version="1.1.0" />
+      <import addon="script.foundry.helper" version="1.1.1" />
+      <import addon="resource.images.foundry.wallpapers" version="1.0.0" />
+      <import addon="resource.images.foundry.osd" version="1.0.0" />
     </requires>
     <extension point="xbmc.gui.skin" debugging="false">
       <res width="1920" height="1440" aspect="4:3" default="false" folder="xml" />
@@ -57,7 +93,7 @@
       <description lang="en_US">Foundry - a 3Thirty3 Kodi skin built on Nimbus by Ivar Brandt. GPLv2 code / CC BY-SA 4.0 artwork; upstream attribution retained.</description>
     </extension>
   </addon>
-  <addon id="script.foundry.helper" name="Foundry Helper" version="1.1.0" provider-name="3Thirty3 / Ivar Brandt">
+  <addon id="script.foundry.helper" name="Foundry Helper" version="1.1.1" provider-name="3Thirty3 / Ivar Brandt">
     <requires>
       <import addon="xbmc.python" version="3.0.0" />
       <import addon="script.module.requests" version="2.19.1" />
@@ -80,11 +116,11 @@
       <description lang="en_US">Foundry Helper for the Foundry Skin. Forked from Nimbus Helper by Ivar Brandt.</description>
     </extension>
   </addon>
-  <addon id="script.program.foundry-build" version="1.2.1" name="Foundry Build" provider-name="3Thirty3">
+  <addon id="script.program.foundry-build" version="1.2.3" name="Foundry Build" provider-name="3Thirty3">
     <requires>
       <import addon="xbmc.python" version="3.0.0" />
       <import addon="repository.foundry" version="1.2.0" />
-      <import addon="skin.foundry" version="1.1.1" />
+      <import addon="skin.foundry" version="1.1.3" />
       <import addon="script.module.cocoscrapers" version="1.0.45" />
       <import addon="slyguy.trailers" version="0.2.2" />
       <import addon="plugin.video.themoviedb.helper" version="5.4.16" />
@@ -105,10 +141,10 @@
       <source>https://github.com/3thirty3gitter/foundry-kodi-dist</source>
     </extension>
   </addon>
-  <addon id="script.program.foundry-bootstrap" version="1.2.1" name="Foundry Bootstrap Installer" provider-name="3Thirty3">
+  <addon id="script.program.foundry-bootstrap" version="1.2.3" name="Foundry Bootstrap Installer" provider-name="3Thirty3">
     <requires>
       <import addon="xbmc.python" version="3.0.0" />
-      <import addon="script.program.foundry-build" version="1.2.1" />
+      <import addon="script.program.foundry-build" version="1.2.3" />
     </requires>
     <extension point="xbmc.python.script" library="default.py">
       <provides>executable</provides>

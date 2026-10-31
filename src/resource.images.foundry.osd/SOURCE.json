@@ -1,0 +1,23 @@
+{
+  "repository": "3thirty3gitter/StreamPilot",
+  "commit": "9f746fc90af40128e5fcfba60056ada99770b796",
+  "path": "app/src/main/res/drawable-nodpi",
+  "files": {
+    "audio_2_0.jpg": "8a411ca84a173e11e34969a66825aa03547dfe6e",
+    "audio_5_1.jpg": "a5886f5b070e434cbc03280bb67ac53ba24a0265",
+    "audio_7_1.jpg": "061eb93f095cc1b78355b21b836977369ea5ea5b",
+    "audio_aac.jpg": "3bdc2ee1d19b6eaae71ac739055b6a0ae1145d41",
+    "audio_dolby_5_1.jpg": "7e8a8282041f38c14dfde58f2180070e4002d235",
+    "audio_dolby_atmos.jpg": "f3300359d53d1a5043afef81aee10ef07b845743",
+    "audio_dolby_digital.jpg": "d7dab0d9cd0c1754fc5797c2890b78f65ac60202",
+    "audio_dolby_digital_plus.jpg": "40efedf1f59982645728430066b1bb8734d8c7ea",
+    "audio_dolby_truehd.jpg": "67d57538ee733786ec3793457c0f11f21d49433e",
+    "audio_dts_hd.jpg": "9aafb0d58d886ff6d30e945b0112ecb49d04c0b5",
+    "audio_flac.jpg": "165f56bb59adb3c0cd788b058e642baa311efdce",
+    "audio_pcm.jpg": "30d2440f71c761897f1ba44e6e98ae36d2fe8cda",
+    "resolution_4k_supplied.jpg": "a9c081e03348db38e36912714950ecaffaed5e79",
+    "resolution_fhd_supplied.jpg": "626fcb63d42a7b21e13bc886be3881dc64b63116",
+    "resolution_hd_supplied.jpg": "5b7658c206579783aa1674458bc6d8f90ea37e70",
+    "resolution_sd_supplied.jpg": "78188626ca5a8d329eeabc2683228241ac68b7be"
+  }
+}

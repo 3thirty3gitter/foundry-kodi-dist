@@ -51,6 +51,9 @@ class Monitor:
 
 
 def translate(path):
+    if path.startswith("resource://"):
+        addon, relative = path[len("resource://"):].split("/", 1)
+        return str(ROOT / "src" / addon / "resources" / relative)
     if path.startswith("special://skin/"):
         return str(SKIN / path[len("special://skin/"):])
     for prefix in ("special://profile/", "special://userdata/", "special://home/"):
@@ -133,6 +136,21 @@ class Packages(unittest.TestCase):
             visited.add(aid)
         visit("script.program.foundry-build")
         self.assertTrue({"skin.foundry", "script.foundry.helper"}.issubset(visited))
+
+    def test_original_resource_assets_and_all_skin_resource_paths_are_packaged(self):
+        for addon in ("resource.images.foundry.wallpapers", "resource.images.foundry.osd"):
+            source = ROOT / "src" / addon
+            provenance = json.loads((source / "SOURCE.json").read_text())
+            with zipfile.ZipFile(ROOT / addon / (addon + "-1.0.0.zip")) as bundle:
+                for filename, expected in provenance["files"].items():
+                    data = bundle.read(addon + "/resources/" + filename)
+                    self.assertEqual(hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest(), expected)
+        paths = set()
+        for path in (SKIN / "xml").glob("*.xml"):
+            paths.update(re.findall(r"resource://resource\.images\.foundry\.[^<\s\"]+", path.read_text()))
+        self.assertGreaterEqual(len(paths), 28)
+        for uri in paths:
+            self.assertTrue(Path(translate(uri)).is_file(), uri)
 
     def test_core_addons_are_native_install_dependencies_on_clean_profiles(self):
         build = ET.parse(ROOT / "src/script.program.foundry-build/addon.xml").getroot()
@@ -234,9 +252,12 @@ class Runtime(unittest.TestCase):
                     condition = re.sub(r"String.IsEmpty\(Skin.String\(([^)]+)\)\)",
                                        lambda m: str(not strings.get(m[1])), condition)
                     condition = condition.replace("!", " not ").replace("+", " and ").replace("|", " or ")
+                    condition = condition.replace("Control.HasFocus(802)", "False")
                     if not eval(condition.strip(), {"__builtins__": {}}):
                         continue
                 text = value.text
+                if text.startswith("$VAR["):
+                    return choose(text[5:-1], menu, strings)
                 text = text.replace("$INFO[Container(9000).ListItem.Property(id)]", menu)
                 return re.sub(r"\$INFO\[Skin.String\(([^)]+)\)\]", lambda m: strings.get(m[1], ""), text)
         menus = ["movies", "tvshows", "music", "musicvideos", "livetv", "radio", "games", "addons", "pictures", "video", "favorites", "weather"]
@@ -247,11 +268,96 @@ class Runtime(unittest.TestCase):
             self.assertRegex(tint, r"^[A-F0-9]{8}$")
         custom = {"HomeFanart.path": "/my/backgrounds/", "HomeFanart.ext": ".jpg"}
         self.assertEqual(choose("FoundryMenuBackground", "tvshows", custom), "/my/backgrounds/tvshows.jpg")
+        self.assertEqual(choose("FoundryMenuBackground", "tvshows", {"NimbusCustomBackground": "/my/custom.png"}), "/my/custom.png")
         priority = variables["HomeFanartVar"][0]
         self.assertEqual(priority.text, "$VAR[FoundryMenuBackground]")
         self.assertIn("!ControlGroup(2000).HasFocus", priority.get("condition"))
         background = ET.parse(SKIN / "xml/Includes.xml").find("include[@name='ColoredBackgroundImages']")
         self.assertTrue(any(e.text == "$VAR[FoundryBackgroundImage]" for e in background.iter("texture")))
+
+    def test_category_wallpaper_renders_independently_of_blur_and_widget_art(self):
+        doc = ET.parse(SKIN / "xml/Home.xml")
+        wallpaper = next(c for c in doc.findall("./controls/control")
+                         if c.findtext("description") == "Foundry full-screen category wallpaper")
+        self.assertEqual(wallpaper.findtext("texture"), "$VAR[FoundryMenuBackground]")
+        self.assertEqual(wallpaper.findtext("width"), "100%")
+        self.assertEqual(wallpaper.findtext("height"), "100%")
+        self.assertNotIn("Blur", wallpaper.findtext("visible"))
+        siblings = doc.findall("./controls/control")
+        self.assertIn("ControlGroup(2000).HasFocus", siblings[siblings.index(wallpaper) + 1].findtext("visible"))
+
+    def test_osd_back_focus_and_button_bounds(self):
+        osd = ET.parse(SKIN / "xml/Includes_StreamPilotOSD.xml")
+        for name in ("StreamPilotVODCard", "StreamPilotLiveCard"):
+            card = osd.find("include[@name='%s']/control" % name)
+            buttons = card.findall(".//control[@type='button']")
+            ids = {b.get("id") for b in buttons}
+            self.assertTrue(ids)
+            for button in buttons:
+                self.assertEqual(button.findtext("onback"), "Dialog.Close(videoosd)")
+                self.assertIn(button.findtext("onleft"), ids)
+                self.assertIn(button.findtext("onright"), ids)
+                self.assertLessEqual(int(button.findtext("top")) + int(button.findtext("height")), int(card.findtext("height")))
+        self.assertEqual(ET.parse(SKIN / "xml/VideoOSD.xml").findtext("defaultcontrol"), "8702")
+
+    def test_osd_timer_hides_after_five_seconds_and_pauses_in_settings(self):
+        timer = ET.parse(SKIN / "xml/Timers.xml").find("timer[name='autoclosevideoosd']")
+        self.assertIn("Skin.TimerElapsedSecs(autoclosevideoosd),5", timer.findtext("stop"))
+        self.assertEqual(timer.findtext("onstop"), "Dialog.Close(videoosd)")
+        for settings in ("1101", "osdsubtitlesettings", "osdaudiosettings", "osdvideosettings"):
+            self.assertIn("!Window.IsActive(%s)" % settings, timer.findtext("start"))
+            self.assertIn("Window.IsActive(%s)" % settings, timer.findtext("reset"))
+
+    def test_osd_seek_uses_active_video_player_and_exact_relative_seconds(self):
+        from modules.osd import seek
+        for seconds in (-30, 30):
+            with patch.object(xbmc, "executeJSONRPC", side_effect=[
+                    '{"result":[{"playerid":0,"type":"audio"},{"playerid":1,"type":"video"}]}',
+                    '{"result":{"percentage":10}}']) as rpc:
+                self.assertTrue(seek(seconds))
+                request = json.loads(rpc.call_args_list[1].args[0])
+                self.assertEqual(request["method"], "Player.Seek")
+                self.assertEqual(request["params"], {"playerid": 1, "value": {"seconds": seconds}})
+
+    def test_osd_seek_rejects_bad_input_missing_player_and_kodi_errors(self):
+        from modules.osd import seek
+        with patch.object(xbmc, "executeJSONRPC") as rpc:
+            for value in (0, 10, 60, "bad", None):
+                self.assertFalse(seek(value))
+            rpc.assert_not_called()
+        for response in ('{"result":[]}', '{"error":{"code":-1}}', 'invalid'):
+            with patch.object(xbmc, "executeJSONRPC", return_value=response):
+                self.assertFalse(seek(30))
+        with patch.object(xbmc, "executeJSONRPC", side_effect=[
+                '{"result":[{"playerid":1,"type":"video"}]}', '{"error":{"code":-1}}']):
+            self.assertFalse(seek(30))
+
+    def test_osd_artwork_color_reads_cached_image_and_reuses_result(self):
+        from modules import osd
+        from PIL import Image
+        path = PROFILE / "osd-poster.png"
+        Image.new("RGB", (72, 96), (200, 20, 30)).save(path)
+        Window.values.clear()
+        with patch.object(xbmc, "getInfoLabel", return_value="https://art.invalid/poster.png"), \
+                patch.object(osd, "_cached_paths", return_value=[str(path)]) as paths:
+            osd.prepare_artwork()
+            self.assertEqual(Window().getProperty("foundry.osd.accent"), "FFC8141E")
+            self.assertEqual(Window().getProperty("foundry.osd.shade"), "FF3C0609")
+            osd.prepare_artwork()
+            paths.assert_called_once()
+
+    def test_osd_missing_artwork_retries_and_stale_artwork_cannot_replace_color(self):
+        from modules import osd
+        Window.values.clear()
+        with patch.object(xbmc, "getInfoLabel", return_value="https://art.invalid/missing.png"), \
+                patch.object(osd, "_cached_paths", return_value=[]):
+            osd.prepare_artwork()
+            self.assertEqual(Window().getProperty("foundry.osd.artwork"), "")
+            self.assertEqual(Window().getProperty("foundry.osd.accent"), "FF182A3B")
+        with patch.object(xbmc, "getInfoLabel", side_effect=["a", "a", "b", "b"]), \
+                patch.object(osd, "_cached_paths", return_value=[]):
+            osd.prepare_artwork()
+            self.assertEqual(Window().getProperty("foundry.osd.accent"), "FF182A3B")
 
     def test_slyguy_is_default_and_handles_items_without_scraped_trailers(self):
         from modules.custom_actions import play_trailer

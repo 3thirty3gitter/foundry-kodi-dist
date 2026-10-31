@@ -45,7 +45,9 @@ def main():
     parser.add_argument("--helper", type=Path, required=True)
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
-    sources = [root / "src/repository.foundry", args.skin, args.helper,
+    sources = [root / "src/repository.foundry",
+               root / "src/resource.images.foundry.wallpapers",
+               root / "src/resource.images.foundry.osd", args.skin, args.helper,
                root / "src/script.program.foundry-build", root / "src/script.program.foundry-bootstrap"]
     feed, packages = ET.Element("addons"), []
     for source in sources:
