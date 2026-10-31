@@ -53,6 +53,7 @@
   </addon>
   <addon id="repository.slyguy" version="0.0.9">
     <requires />
+    <extension point="xbmc.addon.repository" name="SlyGuy Repository" />
   </addon>
   <addon id="plugin.video.themoviedb.helper" version="5.4.16">
     <requires>

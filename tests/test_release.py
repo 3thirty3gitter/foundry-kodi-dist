@@ -155,7 +155,7 @@ class Packages(unittest.TestCase):
     def test_core_addons_are_native_install_dependencies_on_clean_profiles(self):
         build = ET.parse(ROOT / "src/script.program.foundry-build/addon.xml").getroot()
         required = {d.get("addon") for d in build.findall("./requires/import")}
-        self.assertTrue({"script.module.cocoscrapers", "slyguy.trailers", "plugin.video.themoviedb.helper",
+        self.assertTrue({"script.module.cocoscrapers", "plugin.video.themoviedb.helper",
                          "metadata.themoviedb.org.python", "metadata.tvshows.themoviedb.org.python",
                          "resource.uisounds.androidtv", "inputstream.adaptive",
                          "script.module.inputstreamhelper"}.issubset(required))
@@ -165,6 +165,26 @@ class Packages(unittest.TestCase):
         self.assertTrue(any("slyguy.uk/" in url for url in feeds))
         self.assertTrue(any("repository.cocoscrapers/" in url for url in feeds))
         self.assertFalse(any("redirect" in url for url in feeds))
+
+    def test_slyguy_native_install_requires_its_repository_to_exist_first(self):
+        addons = {a.get("id"): a for a in ET.parse(ROOT / "tests/fixtures/upstream-addons.xml").getroot()}
+        addons.update({a.get("id"): a for a in ET.parse(ROOT / "addons.xml").getroot()})
+        # Kodi Omega AddonRepos.cpp::FindDependency rejects repositories as
+        # dependencies. A complete XML dependency graph alone misses this rule.
+        def can_install(aid, installed):
+            for dep in addons[aid].findall("./requires/import"):
+                target = dep.get("addon")
+                if dep.get("optional") == "true" or target in installed or target == "script.module.pil" or target.startswith(("xbmc.", "kodi.")):
+                    continue
+                candidate = addons[target]
+                if candidate.find("extension[@point='xbmc.addon.repository']") is not None:
+                    return False
+                if not can_install(target, installed):
+                    return False
+            return True
+        self.assertFalse(can_install("slyguy.trailers", {"repository.foundry"}))
+        self.assertTrue(can_install("script.program.foundry-build", {"repository.foundry"}))
+        self.assertTrue(can_install("slyguy.trailers", {"repository.foundry", "repository.slyguy"}))
 
     def test_all_python_xml_and_skin_references(self):
         for source in (SKIN, HELPER, ROOT / "src"):
@@ -450,9 +470,93 @@ class Runtime(unittest.TestCase):
         spec = importlib.util.spec_from_file_location("foundry_refresh", ROOT / "src/script.program.foundry-build/default.py")
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        with patch.object(xbmc, "getSkinDir", return_value="skin.foundry"), patch.object(xbmc, "executebuiltin") as execute:
+        with patch.object(module, "ensure_trailers"), patch.object(xbmc, "getSkinDir", return_value="skin.foundry"), patch.object(xbmc, "executebuiltin") as execute:
             module.main()
         execute.assert_called_once_with("ReloadSkin()")
+
+    def test_clean_build_prepares_original_slyguy_repo_before_native_trailer_install(self):
+        spec = importlib.util.spec_from_file_location("foundry_slyguy", ROOT / "src/script.program.foundry-build/default.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        registry, events = {}, []
+        destination = PROFILE / "addons" / "repository.slyguy"
+        shutil.rmtree(destination, ignore_errors=True)
+        class InstalledAddon(Addon):
+            def getAddonInfo(self, key):
+                if key == "path": return str(SKIN if self.id == "skin.foundry" else HELPER)
+                return super().getAddonInfo(key)
+        def rpc(request):
+            request = json.loads(request)
+            method, params = request["method"], request["params"]
+            if method == "Addons.GetAddonDetails":
+                aid = params["addonid"]
+                if aid not in registry: return '{"error":{"code":-32602,"message":"Invalid params."}}'
+                return json.dumps({"result": {"addon": dict(registry[aid], addonid=aid)}})
+            if method == "Addons.SetAddonEnabled":
+                aid = params["addonid"]
+                if aid in registry: registry[aid]["enabled"] = True
+                events.append("enable:" + aid)
+                return '{"result":"OK"}'
+            if method == "Settings.SetSettingValue": return '{"result":true}'
+            raise AssertionError(method)
+        def execute(command, *args):
+            events.append(command)
+            if command == "UpdateLocalAddons":
+                self.assertTrue(destination.is_dir())
+                manifest = ET.parse(destination / "addon.xml").getroot()
+                self.assertEqual(manifest.get("id"), "repository.slyguy")
+                registry["repository.slyguy"] = {"version": manifest.get("version"), "enabled": False}
+            if command == "InstallAddon(slyguy.trailers)":
+                self.assertEqual(args, (True,))
+                self.assertTrue(registry["repository.slyguy"]["enabled"])
+                registry["slyguy.trailers"] = {"version": "0.2.2", "enabled": True}
+        with patch.object(xbmcaddon, "Addon", InstalledAddon), \
+                patch.object(xbmc, "executeJSONRPC", side_effect=rpc), \
+                patch.object(xbmc, "executebuiltin", side_effect=execute), \
+                patch.object(xbmc, "getSkinDir", return_value="skin.estuary"):
+            module.main()
+            self.assertLess(events.index("enable:repository.slyguy"), events.index("InstallAddon(slyguy.trailers)"))
+            self.assertLess(events.index("InstallAddon(slyguy.trailers)"), events.index("ActivateWindow(settings)"))
+            # Reopening a completed setup does not reinstall or refresh anything.
+            before = list(events)
+            module.ensure_trailers()
+            self.assertEqual(events, before)
+
+    def test_build_enables_disabled_slyguy_components_without_reinstalling(self):
+        spec = importlib.util.spec_from_file_location("foundry_enable", ROOT / "src/script.program.foundry-build/default.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with patch.object(module, "addon_details", side_effect=[
+                {"version": "0.0.9", "enabled": False}, {"version": "0.2.2", "enabled": False}]), \
+                patch.object(module, "rpc", return_value="OK") as rpc, \
+                patch.object(xbmc, "executebuiltin") as execute:
+            module.ensure_trailers()
+        self.assertEqual([c.args[1]["addonid"] for c in rpc.call_args_list], ["repository.slyguy", "slyguy.trailers"])
+        execute.assert_not_called()
+
+    def test_cancelled_trailer_install_reports_failure_and_does_not_activate(self):
+        spec = importlib.util.spec_from_file_location("foundry_cancel", ROOT / "src/script.program.foundry-build/default.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with patch.object(module, "addon_details", side_effect=[{"version": "0.0.9", "enabled": True}, None, None]), \
+                patch.object(xbmc, "executebuiltin") as execute, patch.object(Dialog, "ok") as message:
+            module.main()
+        execute.assert_called_once_with("InstallAddon(slyguy.trailers)", True)
+        self.assertIn("not installed", message.call_args.args[1])
+
+    def test_slyguy_registration_failure_stops_before_trailers_and_skin(self):
+        spec = importlib.util.spec_from_file_location("foundry_register_failure", ROOT / "src/script.program.foundry-build/default.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        tools = types.SimpleNamespace(_extract_to_addons=lambda *args: True, _register_repos=lambda ids: ids)
+        loader = types.SimpleNamespace(exec_module=lambda module: None)
+        with patch.object(module, "addon_details", return_value=None), \
+                patch.object(importlib.util, "spec_from_file_location", return_value=types.SimpleNamespace(loader=loader)), \
+                patch.object(importlib.util, "module_from_spec", return_value=tools), \
+                patch.object(xbmc, "executebuiltin") as execute, patch.object(Dialog, "ok") as message:
+            module.main()
+        execute.assert_not_called()
+        self.assertIn("could not be registered", message.call_args.args[1])
 
     def test_helper_modules_import_on_clean_profile(self):
         import modules.router, modules.actions, modules.custom_actions
@@ -547,7 +651,7 @@ class Runtime(unittest.TestCase):
             data = json.loads(request)
             requests.append(data)
             return json.dumps({"result": True if data["method"] == "Settings.SetSettingValue" else "OK"})
-        with patch.object(xbmc, "getSkinDir", return_value="skin.estuary"), patch.object(xbmc, "executeJSONRPC", side_effect=rpc):
+        with patch.object(module, "ensure_trailers"), patch.object(xbmc, "getSkinDir", return_value="skin.estuary"), patch.object(xbmc, "executeJSONRPC", side_effect=rpc):
             module.main()
         self.assertEqual(requests[-1]["params"], {"setting": "lookandfeel.skin", "value": "skin.foundry"})
 
