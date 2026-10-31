@@ -208,6 +208,66 @@ class Packages(unittest.TestCase):
 
 
 class Runtime(unittest.TestCase):
+    def home_condition(self, condition, menu="addons", visible=(), counts=None, updating=(), settings=False):
+        """Evaluate the native Home conditions against a simulated Kodi scene."""
+        expressions = {e.get("name"): e.text for e in ET.parse(SKIN / "xml/Expressions.xml").getroot()}
+        counts = counts or {}
+        condition = re.sub(r"\$EXP\[([^]]+)\]", lambda m: "(" + expressions[m[1]] + ")" if m[1] == "FoundryHomeHasWidgets" else "False", condition)
+        condition = re.sub(r"String.IsEqual\(Container\(9000\).ListItem.Property\(id\),(\w+)\)", lambda m: str(menu == m[1]), condition)
+        condition = re.sub(r"Integer.IsGreater\(Container\((\d+)\).NumItems,0\)", lambda m: str(counts.get(int(m[1]), 0) > 0), condition)
+        condition = re.sub(r"Container\((\d+)\).IsUpdating", lambda m: str(int(m[1]) in updating), condition)
+        condition = re.sub(r"Control.IsVisible\((\d+)\)", lambda m: str(int(m[1]) in visible), condition)
+        condition = condition.replace("Control.HasFocus(802)", str(settings))
+        for token in ("Player.HasVideo", "Player.HasAudio", "Visualisation.Enabled", "ControlGroup(2000).HasFocus"):
+            condition = condition.replace(token, "False")
+        condition = condition.replace("String.IsEmpty(Visualisation.Name)", "True")
+        condition = condition.replace("[", "(").replace("]", ")")
+        condition = condition.replace("!", " not ").replace("+", " and ").replace("|", " or ")
+        return bool(eval(condition.strip(), {"__builtins__": {}}))
+
+    def test_home_menu_has_no_background_or_empty_library_overlay(self):
+        doc = ET.parse(SKIN / "xml/Home.xml")
+        self.assertEqual(doc.findall(".//include[@content='MenuContentPanel']"), [])
+        prompts = doc.findall(".//include[@content='ImageWidget']")
+        self.assertEqual(len(prompts), 1)
+        self.assertEqual(prompts[0].find("param[@name='text_label']").get("value"), "$INFO[System.DVDLabel]")
+        # Shared panels and empty-state controls in other windows are preserved.
+        self.assertIsNotNone(ET.parse(SKIN / "xml/Includes.xml").find("include[@name='MenuContentPanel']"))
+        self.assertIsNotNone(ET.parse(SKIN / "xml/Includes_Home.xml").find("include[@name='ImageWidget']"))
+
+    def test_widget_wallpaper_follows_visible_rows_while_menu_has_focus(self):
+        expression = ET.parse(SKIN / "xml/Expressions.xml").findtext("expression[@name='FoundryHomeHasWidgets']")
+        self.assertTrue(self.home_condition(expression, visible={8100}, counts={8100: 4}))
+        self.assertFalse(self.home_condition(expression, menu="music", visible={8100}, counts={8100: 4}))
+        self.assertFalse(self.home_condition(expression, visible={8100}, counts={8100: 0}))
+        self.assertFalse(self.home_condition(expression, counts={8100: 4}))
+        self.assertTrue(self.home_condition(expression, visible={8100}, updating={8100}))
+        self.assertFalse(self.home_condition(expression, visible={8100}, counts={8100: 4}, settings=True))
+        for menu, last_row in (("movies", 19060), ("tvshows", 22060), ("custom1", 23060), ("custom2", 24060), ("custom3", 25060)):
+            self.assertTrue(self.home_condition(expression, menu=menu, visible={last_row}, counts={last_row: 1}))
+
+    def test_widget_wallpaper_never_keeps_the_large_category_title_below_it(self):
+        doc = ET.parse(SKIN / "xml/Home.xml")
+        controls = doc.findall("./controls/control")
+        wallpaper = next(c for c in controls if c.findtext("description") == "Foundry full-screen category wallpaper")
+        compact = next(c for c in controls if c.findtext("description") == "Foundry compact widget wallpaper")
+        for active in (False, True):
+            scene = dict(visible={8100} if active else set(), counts={8100: 2} if active else {})
+            self.assertEqual(self.home_condition(wallpaper.findtext("visible"), **scene), not active)
+            self.assertEqual(self.home_condition(compact.findtext("visible"), **scene), active)
+        title = compact.find("control[description='Original category title at the top right']")
+        # Original image remains intact; its title is scaled clear of the widget rows.
+        self.assertEqual(title.findtext("texture"), "$VAR[FoundryMenuBackground]")
+        width, height = int(title.findtext("width")), int(title.findtext("height"))
+        self.assertLess(width, 1920)
+        self.assertLess(int(title.findtext("top")) + height * .72, 510)
+        variables = ET.parse(SKIN / "xml/Variables_Artwork.xml")
+        first = variables.find("variable[@name='FoundryBackgroundImage']/value")
+        self.assertIn("FoundryHomeHasWidgets", first.get("condition"))
+        self.assertTrue(Path(translate(first.text)).is_file())
+        for source in ("foundry-widget-base.svg", "foundry-widget-fade.svg"):
+            ET.parse(SKIN / "media" / source)
+
     def test_first_skin_confirmation_has_an_unconditional_readable_card(self):
         from PIL import Image
         shared = ET.parse(SKIN / "xml/Includes.xml").find("include[@name='DialogBackgroundCommons']")
@@ -304,7 +364,8 @@ class Runtime(unittest.TestCase):
         self.assertEqual(wallpaper.findtext("height"), "100%")
         self.assertNotIn("Blur", wallpaper.findtext("visible"))
         siblings = doc.findall("./controls/control")
-        self.assertIn("ControlGroup(2000).HasFocus", siblings[siblings.index(wallpaper) + 1].findtext("visible"))
+        media = next(c for c in siblings if c.findtext("visible") and "ControlGroup(2000).HasFocus" in c.findtext("visible"))
+        self.assertIn("$EXP[isContent]", media.findtext("visible"))
 
     def test_osd_back_focus_and_button_bounds(self):
         osd = ET.parse(SKIN / "xml/Includes_StreamPilotOSD.xml")
