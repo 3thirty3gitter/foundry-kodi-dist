@@ -1,6 +1,6 @@
 {
-  "release": "1.2.11",
-  "skin": "1.2.0",
+  "release": "1.2.12",
+  "skin": "1.2.1",
   "packages": [
     {
       "id": "repository.foundry",
@@ -25,30 +25,30 @@
     },
     {
       "id": "skin.foundry",
-      "version": "1.2.0",
-      "path": "skin.foundry/skin.foundry-1.2.0.zip",
-      "sha256": "0ccd939584bab89d44ed27a9029dddf3f8a82aac0982a55fe313134a361c9b25",
-      "size": 36320215
+      "version": "1.2.1",
+      "path": "skin.foundry/skin.foundry-1.2.1.zip",
+      "sha256": "f4679bbe6f20e791bab3f5d00d31bf68dc57c78d445b6e859ebb53ecbb8cbc40",
+      "size": 36320838
     },
     {
       "id": "script.foundry.helper",
-      "version": "1.1.3",
-      "path": "script.foundry.helper/script.foundry.helper-1.1.3.zip",
-      "sha256": "abaab26b9aa49056cdea813faa0ec4e5306f2397dadcc2d94a1ba7d5ca5b3c83",
-      "size": 835222
+      "version": "1.1.4",
+      "path": "script.foundry.helper/script.foundry.helper-1.1.4.zip",
+      "sha256": "0377d6ae95a4a5a683cf4d05a78f4535e1d2741a8b83182990f253e72f70a394",
+      "size": 836551
     },
     {
       "id": "script.program.foundry-build",
-      "version": "1.2.11",
-      "path": "script.program.foundry-build/script.program.foundry-build-1.2.11.zip",
-      "sha256": "c6f7efaa578664c53a6ad9d2ed1eac0f857e17eeafdcb95f59eafea854cd587e",
-      "size": 2596
+      "version": "1.2.12",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.2.12.zip",
+      "sha256": "7e2e9983fa1f8047e60497699cc1ec7c31228c35dac4196588667f0bf58f9d3b",
+      "size": 2597
     },
     {
       "id": "script.program.foundry-bootstrap",
-      "version": "1.2.11",
-      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.2.11.zip",
-      "sha256": "2a6342d02bddc9fbbac401beab6e5bae5a927a3a1ae54baf1ced5efec9f8928f",
+      "version": "1.2.12",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.2.12.zip",
+      "sha256": "38187ca279958849adf9ba7483598a670a40935d90ec7815c92b38a8a76f49ac",
       "size": 852
     }
   ]

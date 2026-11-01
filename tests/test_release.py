@@ -317,6 +317,7 @@ class Runtime(unittest.TestCase):
                         parent.remove(child)
                     elif child.tag == "onfocus" and child.text == "ClearProperty(nimbus_saved_list_id,home)":
                         parent.remove(child)
+            next(c for c in doc.iter("control") if c.get("id")=="9000").find("movement").text = "6"
             controls = doc.find("controls")
             for child in list(controls):
                 if child.findtext("description") in {"Foundry compact widget wallpaper", "Foundry full-screen category wallpaper", "Foundry full-frame Home wallpaper"}:

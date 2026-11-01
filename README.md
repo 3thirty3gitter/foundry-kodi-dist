@@ -1,16 +1,18 @@
 # Foundry Kodi source
 
-Current release: **Build and Bootstrap 1.2.11 / skin 1.2.0 / Helper 1.1.3 / Wallpapers 1.1.0**.
+Current release: **Build and Bootstrap 1.2.12 / skin 1.2.1 / Helper 1.1.4 / Wallpapers 1.1.0**.
 
 Permanent Kodi File Manager source: https://3thirty3gitter.github.io/foundry-kodi-dist/
 
-Install `repository.foundry-1.2.0.zip`, then install/run Foundry Build. Existing installations can check for updates and run Build **1.2.11**. The skin-only `skin.foundry-1.2.0.zip` is available when a provider dependency blocks setup; its dependency requires Wallpapers **1.1.0**.
+Install `repository.foundry-1.2.0.zip`, then install/run Foundry Build. Existing installations can check for updates and run Build **1.2.12**. The skin-only `skin.foundry-1.2.1.zip` is available when a provider dependency blocks setup; its dependency requires Wallpapers **1.1.0**.
 
-This release combines all fourteen approved rich full/widget wallpaper pairs with the lighter, shorter OSD background. Every image is copied unchanged at 1672x941. All widget images are corrected revision 1, retaining the approved 55% uniform icon/text/underline group. Home artwork now reads FOUNDRY / MEDIA CENTER. Full images, the skin fallback and add-on fanart use the new complete frames. The historical Wallpapers 1.0.0 ZIP remains unchanged.
+This correction bounds Home menu movement to six so Weather stays visible, and isolates optional library metadata/color errors from source loading and navigation. It preserves every unrelated Home control, all approved rich images, transitions, OSD sizes and foreground controls. The exact device metadata trigger remains unconfirmed without its traceback; native controlled failure tests reproduce and fix the reported partial-load/error chain.
+
+The preceding release combined all fourteen approved rich full/widget wallpaper pairs with the lighter, shorter OSD background. Every image is copied unchanged at 1672x941. All widget images are corrected revision 1, retaining the approved 55% uniform icon/text/underline group. Home artwork now reads FOUNDRY / MEDIA CENTER. Full images, the skin fallback and add-on fanart use the new complete frames. The historical Wallpapers 1.0.0 ZIP remains unchanged.
 
 The 450ms full-frame crossfade, fixed widget viewport, lower-row selection retention, Umbrella visibility fix, traced header and dedicated library remain unchanged. Clean plates are visually registered, not pixel-identical. OSD backdrop opacity is reduced 25% (effective peak alpha 225 to 169); its height drops 48 units, VOD 322 to 274 and live 368 to 320. Every foreground control retains its existing size, position and action.
 
-Native Kodi 21.3 Windows fixtures check all wallpaper pairs, both transition directions, menu returns, rapid toggles and bright/dark OSD scenes. These are controlled fixtures, not Shield captures or proof of exact StreamPilot parity. Helper and library behavior remain from 1.2.10; OMDb stays optional and disabled without a user key. FenSkeleton and Forge Releases remain URL bookmarks only, with no repository installation or activation.
+Native Kodi 21.3 Windows fixtures check all wallpaper pairs, both transition directions, menu returns, rapid toggles and bright/dark OSD scenes. These are controlled fixtures, not Shield captures or proof of exact StreamPilot parity. The library layout remains from 1.2.10, with the metadata/error corrections above; OMDb stays optional and disabled without a user key. FenSkeleton and Forge Releases remain URL bookmarks only, with no repository installation or activation.
 
     python tools/build_release.py --skin ../skin.foundry-nimbus --helper ../script.foundry.helper
     python -m unittest discover -s tests -v

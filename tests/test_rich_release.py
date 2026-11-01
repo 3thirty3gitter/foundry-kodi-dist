@@ -30,7 +30,9 @@ class RichRelease(unittest.TestCase):
     def test_home_header_widgets_and_catalog_code_remain_exactly_as_1_2_10(self):
         with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.1.9.zip') as z:
             for path in ['xml/Home.xml','xml/Includes_Home.xml','xml/Includes_Animations.xml','xml/Variables_Artwork.xml','xml/script-foundry-vod.xml','xml/Font.xml','media/foundry-logo-traced.png']:
-                self.assertEqual((SKIN/path).read_bytes(),z.read('skin.foundry/'+path),path)
+                data=(SKIN/path).read_bytes()
+                if path=='xml/Home.xml':data=data.replace(b'<movement>6</movement>',b'<movement>7</movement>',1)
+                self.assertEqual(data,z.read('skin.foundry/'+path),path)
     def test_osd_only_background_changes_and_fade_remains(self):
         with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.1.9.zip') as z:
             before=E.fromstring(z.read('skin.foundry/xml/Includes_StreamPilotOSD.xml'))

@@ -1,0 +1,83 @@
+{
+  "status": "unpublished_candidate",
+  "release": {
+    "release": "1.2.12",
+    "skin": "1.2.1",
+    "packages": [
+      {
+        "id": "repository.foundry",
+        "version": "1.2.0",
+        "path": "repository.foundry/repository.foundry-1.2.0.zip",
+        "sha256": "2a83d7d4ec2ac362fed010005ec55b6c87aee40a393a7fd82454e7137b48ffcc",
+        "size": 762
+      },
+      {
+        "id": "resource.images.foundry.wallpapers",
+        "version": "1.1.0",
+        "path": "resource.images.foundry.wallpapers/resource.images.foundry.wallpapers-1.1.0.zip",
+        "sha256": "dfc8a154817e66ee9651200baf6fff251bd82f6d1e97f20126d9c5f15db6a869",
+        "size": 20150822
+      },
+      {
+        "id": "resource.images.foundry.osd",
+        "version": "1.0.0",
+        "path": "resource.images.foundry.osd/resource.images.foundry.osd-1.0.0.zip",
+        "sha256": "37ec361ab6b80bb5557ca70512263de24dc9decdbe62e531f3e5f4adb3b4987b",
+        "size": 3770026
+      },
+      {
+        "id": "skin.foundry",
+        "version": "1.2.1",
+        "path": "skin.foundry/skin.foundry-1.2.1.zip",
+        "sha256": "f4679bbe6f20e791bab3f5d00d31bf68dc57c78d445b6e859ebb53ecbb8cbc40",
+        "size": 36320838
+      },
+      {
+        "id": "script.foundry.helper",
+        "version": "1.1.4",
+        "path": "script.foundry.helper/script.foundry.helper-1.1.4.zip",
+        "sha256": "0377d6ae95a4a5a683cf4d05a78f4535e1d2741a8b83182990f253e72f70a394",
+        "size": 836551
+      },
+      {
+        "id": "script.program.foundry-build",
+        "version": "1.2.12",
+        "path": "script.program.foundry-build/script.program.foundry-build-1.2.12.zip",
+        "sha256": "7e2e9983fa1f8047e60497699cc1ec7c31228c35dac4196588667f0bf58f9d3b",
+        "size": 2597
+      },
+      {
+        "id": "script.program.foundry-bootstrap",
+        "version": "1.2.12",
+        "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.2.12.zip",
+        "sha256": "38187ca279958849adf9ba7483598a670a40935d90ec7815c92b38a8a76f49ac",
+        "size": 852
+      }
+    ]
+  },
+  "source_commits": {
+    "skin.foundry-nimbus": "a26b74c6c54c4dd629b729d0312bd7753cf556e4",
+    "script.foundry.helper": "624cdce553d033f404eff23c1d47d3529d23c95c"
+  },
+  "tests": 135,
+  "deterministic_repeat": true,
+  "zip_integrity": true,
+  "changes": [
+    "Home fixed-list movement7 to6; every other Home.xml byte unchanged",
+    "Separate metadata/color failures from actual source errors; keep safe details and poster navigation",
+    "Normalize metadata lists/dates without locale-dependent strptime",
+    "Omit invalid ratings field only from Files.GetDirectory; retain it for VideoLibrary",
+    "Focus usable Back button in empty or failed-source state; sanitized bounded diagnostics"
+  ],
+  "publication": "Approval pending. Existing public Build1.2.11 has not been changed.",
+  "limitations": [
+    "Windows native fixtures do not establish Shield compatibility.",
+    "Exact original device exception/metadata trigger remains unconfirmed without its traceback.",
+    "The local unshared-folder JSONRPC probe returns generic InvalidParams; actual provider listing fetch is not established by that probe. Native source shows RemoteAccessAllowed rejects ineligible paths; no permissions or source access were changed.",
+    "The before/after partial metadata sequence is explicit fault injection, not a captured Shield incident."
+  ],
+  "primary_source_references": [
+    "https://raw.githubusercontent.com/xbmc/xbmc/Omega/xbmc/guilib/GUIFixedListContainer.cpp",
+    "https://raw.githubusercontent.com/xbmc/xbmc/Omega/xbmc/interfaces/json-rpc/FileOperations.cpp"
+  ]
+}
