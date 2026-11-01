@@ -1,6 +1,6 @@
 {
-  "release": "1.2.7",
-  "skin": "1.1.6",
+  "release": "1.2.8",
+  "skin": "1.1.7",
   "packages": [
     {
       "id": "repository.foundry",
@@ -25,30 +25,30 @@
     },
     {
       "id": "skin.foundry",
-      "version": "1.1.6",
-      "path": "skin.foundry/skin.foundry-1.1.6.zip",
-      "sha256": "5d2a0d9eba29d986ce29c89e31960e93f75b73ea2789e320ef8e18a89657b313",
-      "size": 14221066
+      "version": "1.1.7",
+      "path": "skin.foundry/skin.foundry-1.1.7.zip",
+      "sha256": "def511f1910127322347230e53b1f4dd2c81fdaa3ed00ab968557d96e21285b0",
+      "size": 26492203
     },
     {
       "id": "script.foundry.helper",
-      "version": "1.1.1",
-      "path": "script.foundry.helper/script.foundry.helper-1.1.1.zip",
-      "sha256": "145baebd68d566e9dd8900da15da5dcb9f3dea57b0e01cc4033016d7550e89d5",
-      "size": 816808
+      "version": "1.1.2",
+      "path": "script.foundry.helper/script.foundry.helper-1.1.2.zip",
+      "sha256": "d794473e043f192e0efdb035606aa5385795f6b94e51b483c4ac2c31defb2690",
+      "size": 824358
     },
     {
       "id": "script.program.foundry-build",
-      "version": "1.2.7",
-      "path": "script.program.foundry-build/script.program.foundry-build-1.2.7.zip",
-      "sha256": "3ac7b9a3dfd44ff7576e3ce24db2f5efcf0b2c3af9788c7c35e3456508db3693",
+      "version": "1.2.8",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.2.8.zip",
+      "sha256": "edc61e51714d7f1ba59f2691607a5d68f1612514f9d5894a019901de5b930880",
       "size": 2597
     },
     {
       "id": "script.program.foundry-bootstrap",
-      "version": "1.2.7",
-      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.2.7.zip",
-      "sha256": "1ea8c412abaedaf72c3974a06df4cc00b9cd4faffa2399dd041d2f326f4baf22",
+      "version": "1.2.8",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.2.8.zip",
+      "sha256": "4338f517a3974310330bf2b2b9cc01a0728f323833e38108e5903d05b92a86be",
       "size": 852
     }
   ]

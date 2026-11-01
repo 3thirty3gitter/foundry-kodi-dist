@@ -6,6 +6,7 @@ from pathlib import Path
 import shutil
 import xml.etree.ElementTree as ET
 import zipfile
+from validate_widget_assets import validate_widget_assets
 
 
 def package(source, output):
@@ -46,6 +47,12 @@ def main():
     parser.add_argument("--skin", type=Path, required=True)
     parser.add_argument("--helper", type=Path, required=True)
     args = parser.parse_args()
+    skin_version = ET.parse(args.skin / "addon.xml").getroot().get("version", "0")
+    if tuple(int(n) for n in skin_version.split(".")) >= (1, 1, 7):
+        try:
+            validate_widget_assets(args.skin)
+        except (ValueError, OSError) as error:
+            parser.error(str(error))
     root = Path(__file__).resolve().parents[1]
     sources = [root / "src/repository.foundry",
                root / "src/resource.images.foundry.wallpapers",

@@ -1,4 +1,17 @@
-# Foundry Kodi source
+# Unpublished Foundry 1.2.8 candidate
+
+This local branch packages **skin 1.1.7 / Helper 1.1.2 / Build and Bootstrap 1.2.8**. Nothing in this batch has been pushed or published. Public source remains Build 1.2.7 / skin 1.1.6.
+
+The candidate includes fourteen approved standalone widget wallpapers, fixed-geometry 450 ms crossfades, Home row presentation on restored focus, native StreamPilot-style VOD view 57, and optional disabled-by-default OMDb-backed IMDb ratings. See the skin README for reference provenance, native-platform differences, provider setup/terms and pending Shield checks.
+
+    python tools/build_release.py --skin ../skin.foundry-nimbus --helper ../script.foundry.helper
+    python -m unittest discover -s tests -v
+
+Packaging rejects missing or unverified widget artwork. `release.json` records candidate versions, sizes and SHA-256 checksums. Original wallpaper, OSD and repository package versions remain unchanged. Runtime tests mock Kodi; actual rendering, navigation and playback checks are pending.
+
+Publication is held for this batch. After approval/review, remove this candidate banner, publish skin/helper source commits and the distribution commit through the existing flow, then verify deployed commit, feed MD5, all seven ZIP checksums/manifests and root installer aliases.
+
+## Previously published source notes
 
 Permanent Kodi File Manager source: https://3thirty3gitter.github.io/foundry-kodi-dist/
 

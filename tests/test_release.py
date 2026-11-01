@@ -251,32 +251,17 @@ class Runtime(unittest.TestCase):
         for menu, last_row in (("movies", 19060), ("tvshows", 22060), ("custom1", 23060), ("custom2", 24060), ("custom3", 25060)):
             self.assertTrue(self.home_condition(expression, menu=menu, visible={last_row}, counts={last_row: 1}))
 
-    def test_widget_wallpaper_never_keeps_the_large_category_title_below_it(self):
-        doc = ET.parse(SKIN / "xml/Home.xml")
-        controls = doc.findall("./controls/control")
-        wallpaper = next(c for c in controls if c.findtext("description") == "Foundry full-screen category wallpaper")
-        compact = next(c for c in controls if c.findtext("description") == "Foundry compact widget wallpaper")
-        for active in (False, True):
-            scene = dict(visible={8100} if active else set(), counts={8100: 2} if active else {})
-            self.assertEqual(self.home_condition(wallpaper.findtext("visible"), **scene), not active)
-            self.assertEqual(self.home_condition(compact.findtext("visible"), **scene), active)
-        backdrop = compact.find("control[description='Original widget backdrop at full screen size']")
-        self.assertEqual(backdrop.findtext("texture"), "$VAR[FoundryMenuBackground]")
-        self.assertEqual((backdrop.findtext("left"), backdrop.findtext("top"), backdrop.findtext("width"), backdrop.findtext("height")), ("0", "0", "100%", "100%"))
-        artwork = ET.parse(SKIN / "xml/Includes_Home.xml").find("include[@name='FoundryWidgetCategoryArtwork']/definition/control")
-        title = artwork.find("control[description='Original category title at the top right']")
-        self.assertEqual(title.findtext("texture"), "resource://resource.images.foundry.wallpapers/$PARAM[category].png")
-        self.assertEqual(title.find("texture").get("diffuse"), "special://skin/media/foundry-widget-layers/$PARAM[category]-title.png")
-        self.assertNotIn("$VAR[", title.find("texture").get("diffuse"))
-        width, height = int(title.findtext("width")), int(title.findtext("height"))
-        self.assertLess(width, 1920)
-        self.assertLess(int(title.findtext("top")) + height * .72, 510)
-        variables = ET.parse(SKIN / "xml/Variables_Artwork.xml")
-        first = variables.find("variable[@name='FoundryBackgroundImage']/value")
-        self.assertIn("FoundryHomeHasWidgets", first.get("condition"))
-        self.assertTrue(Path(translate(first.text)).is_file())
-        for source in ("foundry-widget-base.svg", "foundry-widget-fade.svg"):
-            ET.parse(SKIN / "media" / source)
+    def test_widget_wallpaper_uses_one_persistent_full_frame_control(self):
+        home = ET.parse(SKIN / "xml/Home.xml")
+        controls = [c for c in home.findall("./controls/control") if c.findtext("description") == "Foundry full-frame Home wallpaper"]
+        self.assertEqual(len(controls), 1)
+        image = controls[0]
+        self.assertEqual(image.findtext("texture"), "$VAR[FoundryHomeWallpaper]")
+        self.assertEqual(image.findtext("fadetime"), "450")
+        self.assertEqual(image.findtext("aspectratio"), "keep")
+        self.assertNotIn("FoundryHomeHasWidgets", image.findtext("visible"))
+        self.assertEqual(image.findall("animation"), [])
+        self.assertNotIn("FoundryWidgetCategoryArtwork", (SKIN / "xml/Home.xml").read_text())
 
     def test_home_logo_uses_vector_outlines_and_an_oversampled_texture(self):
         from PIL import Image
@@ -293,37 +278,21 @@ class Runtime(unittest.TestCase):
             self.assertLessEqual(current.width - box[2], 2)
             self.assertLessEqual(current.height - box[3], 2)
 
-    def test_all_fourteen_widget_layers_remove_only_the_original_title(self):
-        from PIL import Image, ImageChops
-        layers = SKIN / "media/foundry-widget-layers"
-        paths = sorted(layers.glob("*-repair.png"))
-        self.assertEqual(len(paths), 14)
-        home = ET.parse(SKIN / "xml/Home.xml")
-        routes = home.findall(".//include[@content='FoundryWidgetCategoryArtwork']")
-        self.assertEqual({r.find("param[@name='category']").get("value") for r in routes}, {p.stem[:-7] for p in paths})
-        compact = next(c for c in home.findall("./controls/control") if c.findtext("description") == "Foundry compact widget wallpaper")
-        custom_guard = compact.find("control[@type='group']/visible").text
-        self.assertIn("String.IsEmpty(Skin.String(HomeFanart.path))", custom_guard)
-        self.assertIn("String.IsEmpty(Skin.String(NimbusCustomBackground))", custom_guard)
-        for path in paths:
-            category = path.stem[:-7]
-            with self.subTest(category=category):
-                original = Image.open(ROOT / "src/resource.images.foundry.wallpapers/resources" / (category + ".png")).convert("RGBA").resize((1920, 1080), Image.Resampling.LANCZOS)
-                repair = Image.open(path).convert("RGBA")
-                title = Image.open(layers / (category + "-title.png")).getchannel("A").resize(original.size, Image.Resampling.LANCZOS)
-                self.assertEqual(repair.size, original.size)
-                cleaned = Image.alpha_composite(original, repair)
-                # Every untouched backdrop pixel remains exact, at full size.
-                changed = ImageChops.difference(original.convert("RGB"), cleaned.convert("RGB")).convert("L")
-                outside = repair.getchannel("A").point(lambda a: 255 if a == 0 else 0)
-                self.assertIsNone(ImageChops.multiply(changed, outside).getbbox())
-                # The old bright lettering and icon cannot bleed through.
-                title_pixels = [(a, b) for a, b, alpha in zip(original.getdata(), cleaned.getdata(), title.getdata()) if alpha > 240 and min(a[:3]) > 170]
-                self.assertGreater(len(title_pixels), 1000)
-                self.assertTrue(all(max(b[:3]) < 170 for _, b in title_pixels))
-                # The isolated artwork stays above widget rows starting at y=510.
-                box = title.getbbox()
-                self.assertLess(-55 + box[3] * 720 / 1080, 510)
+    def test_all_fourteen_standalone_wallpapers_match_approval_provenance(self):
+        from PIL import Image
+        folder = SKIN / "media/foundry-widget-wallpapers"
+        source = json.loads((folder / "SOURCE.json").read_text())["files"]
+        self.assertEqual(len(source), 14)
+        self.assertEqual({p.stem for p in folder.glob("*.png")}, set(source))
+        for category, entry in source.items():
+            data = (folder / (category + ".png")).read_bytes()
+            self.assertEqual(hashlib.sha256(data).hexdigest(), entry["sha256"])
+            self.assertTrue(entry["library_file_id"].startswith("libfile_"))
+            with Image.open(folder / (category + ".png")) as image:
+                self.assertIn(image.size, ((1672, 941), (1672, 940)))
+                self.assertEqual(image.convert("RGBA").getchannel("A").getextrema(), (255, 255))
+        for path in (SKIN / "xml").glob("*.xml"):
+            self.assertNotIn("foundry-widget-layers/", path.read_text())
 
     def test_home_positions_are_unchanged_except_logo_size_and_removed_tooltip(self):
         with zipfile.ZipFile(ROOT / "skin.foundry/skin.foundry-1.1.5.zip") as old:
@@ -336,7 +305,7 @@ class Runtime(unittest.TestCase):
                         parent.remove(child)
             controls = doc.find("controls")
             for child in list(controls):
-                if child.findtext("description") == "Foundry compact widget wallpaper":
+                if child.findtext("description") in {"Foundry compact widget wallpaper", "Foundry full-screen category wallpaper", "Foundry full-frame Home wallpaper"}:
                     controls.remove(child)
             logo = next(c for c in doc.iter("control") if c.findtext("texture") in {"foundry-logo.png", "foundry-logo-hd.png"})
             logo.find("texture").text = "foundry-logo.png"
@@ -344,6 +313,9 @@ class Runtime(unittest.TestCase):
             size = (int(logo.findtext("width")), int(logo.findtext("height")))
             for tag in ("width", "height"):
                 logo.remove(logo.find(tag))
+            for visible in doc.iter("visible"):
+                if visible.text:
+                    visible.text = visible.text.replace(" + !$EXP[FoundryHomeRowPresentation]", "")
             return size
         previous_size = strip_allowed_changes(before)
         new_size = strip_allowed_changes(after)
@@ -476,7 +448,7 @@ class Runtime(unittest.TestCase):
         self.assertEqual(choose("FoundryMenuBackground", "tvshows", custom), "/my/backgrounds/tvshows.jpg")
         self.assertEqual(choose("FoundryMenuBackground", "tvshows", {"NimbusCustomBackground": "/my/custom.png"}), "/my/custom.png")
         priority = variables["HomeFanartVar"][0]
-        self.assertEqual(priority.text, "$VAR[FoundryMenuBackground]")
+        self.assertEqual(priority.text, "$VAR[FoundryHomeWallpaper]")
         self.assertIn("!ControlGroup(2000).HasFocus", priority.get("condition"))
         background = ET.parse(SKIN / "xml/Includes.xml").find("include[@name='ColoredBackgroundImages']")
         self.assertTrue(any(e.text == "$VAR[FoundryBackgroundImage]" for e in background.iter("texture")))
@@ -484,8 +456,8 @@ class Runtime(unittest.TestCase):
     def test_category_wallpaper_renders_independently_of_blur_and_widget_art(self):
         doc = ET.parse(SKIN / "xml/Home.xml")
         wallpaper = next(c for c in doc.findall("./controls/control")
-                         if c.findtext("description") == "Foundry full-screen category wallpaper")
-        self.assertEqual(wallpaper.findtext("texture"), "$VAR[FoundryMenuBackground]")
+                         if c.findtext("description") == "Foundry full-frame Home wallpaper")
+        self.assertEqual(wallpaper.findtext("texture"), "$VAR[FoundryHomeWallpaper]")
         self.assertEqual(wallpaper.findtext("width"), "100%")
         self.assertEqual(wallpaper.findtext("height"), "100%")
         self.assertNotIn("Blur", wallpaper.findtext("visible"))
