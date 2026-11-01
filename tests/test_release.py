@@ -263,20 +263,27 @@ class Runtime(unittest.TestCase):
         self.assertEqual(image.findall("animation"), [])
         self.assertNotIn("FoundryWidgetCategoryArtwork", (SKIN / "xml/Home.xml").read_text())
 
-    def test_home_logo_uses_vector_outlines_and_an_oversampled_texture(self):
+    def test_home_logo_uses_exact_original_bytes_at_sufficient_pixel_density(self):
         from PIL import Image
-        svg = ET.parse(SKIN / "media/foundry-logo.svg")
-        self.assertEqual(svg.findall(".//{http://www.w3.org/2000/svg}text"), [])
-        self.assertGreaterEqual(len(svg.findall(".//{http://www.w3.org/2000/svg}path")), 5)
-        with Image.open(SKIN / "media/foundry-logo-hd.png") as current:
+        logo = SKIN / "media/foundry-logo.png"
+        self.assertEqual(hashlib.sha256(logo.read_bytes()).hexdigest(), "a0e3eae94bdcedba575b20cd60c07c80881169512a28369a4182425999d612a7")
+        control = next(c for c in ET.parse(SKIN / "xml/Home.xml").iter("control") if c.findtext("texture") == "foundry-logo.png")
+        self.assertEqual(tuple(int(control.findtext(n)) for n in ("left", "top", "width", "height")), (60,40,380,115))
+        self.assertEqual(control.findtext("aspectratio"),"keep")
+        self.assertEqual(control.find("aspectratio").attrib,{"align":"left","aligny":"center"})
+        self.assertNotEqual(control.findtext("imagefilter"),"nearest")
+        self.assertEqual(control.find("texture").attrib,{})
+        self.assertEqual(control.findall("animation"),[])
+        with Image.open(logo) as current:
             self.assertEqual(current.mode, "RGBA")
-            self.assertGreaterEqual(current.width, 380 * 6)
-            self.assertAlmostEqual(current.width / current.height, 380 / 115, delta=.03)
-            box = current.getchannel("A").getbbox()
-            self.assertLessEqual(box[0], 2)
-            self.assertLessEqual(box[1], 2)
-            self.assertLessEqual(current.width - box[2], 2)
-            self.assertLessEqual(current.height - box[3], 2)
+            self.assertEqual(current.size,(760,230))
+            self.assertEqual(current.getchannel("A").getbbox(),(0,0,760,230))
+            self.assertEqual(current.width/380,current.height/115)
+            for scale in (1,2):
+                self.assertGreaterEqual(current.width,380*scale)
+                self.assertGreaterEqual(current.height,115*scale)
+            hist=current.getchannel("A").histogram()
+            self.assertEqual((hist[0],hist[255],sum(hist[1:255])),(118791,43329,12680))
 
     def test_all_fourteen_standalone_wallpapers_match_approval_provenance(self):
         from PIL import Image
@@ -406,7 +413,7 @@ class Runtime(unittest.TestCase):
 
     def test_home_logo_actions_and_menu_have_separate_bounds(self):
         doc = ET.parse(SKIN / "xml/Home.xml")
-        logo = next(c for c in doc.iter("control") if c.findtext("texture") == "foundry-logo-hd.png")
+        logo = next(c for c in doc.iter("control") if c.findtext("texture") == "foundry-logo.png")
         sidebar = next(c for c in doc.iter("control") if logo in list(c))
         action_group = next(c for c in sidebar.findall("control") if c.find("control[@id='700']") is not None)
         menu = sidebar.find("control[@id='9000']")
@@ -582,7 +589,7 @@ class Runtime(unittest.TestCase):
             rpc.assert_not_called()
 
     def test_foundry_branding_and_development_routes_are_packaged(self):
-        self.assertIn("foundry-logo-hd.png", (SKIN / "xml/Home.xml").read_text())
+        self.assertIn("<texture>foundry-logo.png</texture>", (SKIN / "xml/Home.xml").read_text())
         self.assertIn("Welcome to Foundry", (SKIN / "xml/Custom_1116_StartHelp.xml").read_text())
         self.assertNotIn("Welcome to Nimbus", (SKIN / "xml/Custom_1116_StartHelp.xml").read_text())
         self.assertIn("media/foundry-home-backdrop.png", (SKIN / "xml/Variables_Artwork.xml").read_text())
