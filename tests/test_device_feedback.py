@@ -86,15 +86,24 @@ class DeviceFeedback(unittest.TestCase):
         self.assertNotIn('ClearProperty(nimbus_saved_list_id,home)',actions)
         self.assertFalse(any('SetFocus(' in a and ',0,absolute' in a for a in actions))
         fades = self.animations.find("include[@name='WidgetVisibilityAnimations']").findall('animation')
-        self.assertTrue(fades[0].get('condition','').startswith('Window.IsActive(Home) | '))
-        self.assertTrue(fades[1].get('condition','').startswith('!Window.IsActive(Home) + '))
-        # Home's show fade resolves to 100; its hide fade stays at 100.
-        self.assertEqual(fades[0].find('effect').get('end'),'100')
-        self.assertEqual(fades[1].find('effect').get('start'),'100')
+        self.assertEqual(self.animations.find("include[@name='WidgetVisibilityAnimations']/include").get('condition'),'!Window.IsActive(Home)')
+        self.assertEqual(len(self.animations.find("include[@name='LegacyWidgetVisibilityAnimations']").findall('animation')),2)
+        visual_gates=[v.text for v in self.shared.findall('.//itemlayout/control/visible') if 'foundry.home.row.' in (v.text or '')]
+        self.assertEqual(len(visual_gates),4)
+        self.assertTrue(all('Window(Home).Property(foundry.home.row.addons)' in gate for gate in visual_gates))
+        self.assertTrue(all('Integer.IsLessOrEqual(Window(Home).Property(' in gate for gate in visual_gates))
     def test_search_retains_its_legacy_scroll_and_fades(self):
         search = ET.parse(SKIN/'xml/Custom_1121_SearchResults.xml')
         self.assertTrue(search.findall(".//include[@content='Animation_Widget_Poster_Slide']"))
         self.assertEqual(self.shared.findtext("include[@name='WidgetGroupListCommon']/height"),'33000')
+    def test_traced_lettering_preserves_original_graphic_and_header_geometry(self):
+        from PIL import ImageChops
+        old=Image.open(SKIN/'media/foundry-logo.png').convert('RGBA')
+        new=Image.open(SKIN/'media/foundry-logo-traced.png').convert('RGBA')
+        self.assertEqual(new.size,(3040,920))
+        expected=old.resize(new.size,Image.Resampling.LANCZOS)
+        self.assertIsNone(ImageChops.difference(expected.crop((0,0,1140,920)),new.crop((0,0,1140,920))).getbbox())
+        self.assertIsNotNone(ImageChops.difference(expected.crop((1140,0,3040,920)),new.crop((1140,0,3040,920))).getbbox())
     def test_osd_keeps_all_foreground_controls_and_actions(self):
         with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.1.7.zip') as z:
             before = ET.fromstring(z.read('skin.foundry/xml/Includes_StreamPilotOSD.xml'))

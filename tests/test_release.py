@@ -267,7 +267,7 @@ class Runtime(unittest.TestCase):
         from PIL import Image
         logo = SKIN / "media/foundry-logo.png"
         self.assertEqual(hashlib.sha256(logo.read_bytes()).hexdigest(), "a0e3eae94bdcedba575b20cd60c07c80881169512a28369a4182425999d612a7")
-        control = next(c for c in ET.parse(SKIN / "xml/Home.xml").iter("control") if c.findtext("texture") == "foundry-logo.png")
+        control = next(c for c in ET.parse(SKIN / "xml/Home.xml").iter("control") if c.findtext("texture") == "foundry-logo-traced.png")
         self.assertEqual(tuple(int(control.findtext(n)) for n in ("left", "top", "width", "height")), (60,40,380,115))
         self.assertEqual(control.findtext("aspectratio"),"keep")
         self.assertEqual(control.find("aspectratio").attrib,{"align":"left","aligny":"center"})
@@ -308,6 +308,8 @@ class Runtime(unittest.TestCase):
         def strip_allowed_changes(doc):
             for parent in doc.iter():
                 for child in list(parent):
+                    if child.tag == "include" and child.get("content") == "HomeCategoryVisibility":
+                        child.set("content", "Visible_Right_Delayed")
                     if child.tag == "control" and child.findtext("label") == "$VAR[HomeSubmenuButtonLabelsVar]":
                         parent.remove(child)
                     elif child.tag == "include" and (child.get("content") == "Animation_Widget_Poster_Slide" or child.text in ("WidgetGroupListCommon", "HomeWidgetGroupListCommon")):
@@ -318,7 +320,7 @@ class Runtime(unittest.TestCase):
             for child in list(controls):
                 if child.findtext("description") in {"Foundry compact widget wallpaper", "Foundry full-screen category wallpaper", "Foundry full-frame Home wallpaper"}:
                     controls.remove(child)
-            logo = next(c for c in doc.iter("control") if c.findtext("texture") in {"foundry-logo.png", "foundry-logo-hd.png"})
+            logo = next(c for c in doc.iter("control") if c.findtext("texture") in {"foundry-logo.png", "foundry-logo-hd.png", "foundry-logo-traced.png"})
             logo.find("texture").text = "foundry-logo.png"
             self.assertEqual((logo.findtext("left"), logo.findtext("top")), ("60", "40"))
             size = (int(logo.findtext("width")), int(logo.findtext("height")))
@@ -413,7 +415,7 @@ class Runtime(unittest.TestCase):
 
     def test_home_logo_actions_and_menu_have_separate_bounds(self):
         doc = ET.parse(SKIN / "xml/Home.xml")
-        logo = next(c for c in doc.iter("control") if c.findtext("texture") == "foundry-logo.png")
+        logo = next(c for c in doc.iter("control") if c.findtext("texture") == "foundry-logo-traced.png")
         sidebar = next(c for c in doc.iter("control") if logo in list(c))
         action_group = next(c for c in sidebar.findall("control") if c.find("control[@id='700']") is not None)
         menu = sidebar.find("control[@id='9000']")
@@ -589,7 +591,7 @@ class Runtime(unittest.TestCase):
             rpc.assert_not_called()
 
     def test_foundry_branding_and_development_routes_are_packaged(self):
-        self.assertIn("<texture>foundry-logo.png</texture>", (SKIN / "xml/Home.xml").read_text())
+        self.assertIn("<texture>foundry-logo-traced.png</texture>", (SKIN / "xml/Home.xml").read_text())
         self.assertIn("Welcome to Foundry", (SKIN / "xml/Custom_1116_StartHelp.xml").read_text())
         self.assertNotIn("Welcome to Nimbus", (SKIN / "xml/Custom_1116_StartHelp.xml").read_text())
         self.assertIn("media/foundry-home-backdrop.png", (SKIN / "xml/Variables_Artwork.xml").read_text())

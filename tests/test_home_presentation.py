@@ -106,12 +106,21 @@ class HomePresentation(unittest.TestCase):
         for group in (old_group, new_group):
             for parent in group.iter():
                 for child in list(parent):
+                    if child.tag == "include" and child.get("content") == "HomeCategoryVisibility":
+                        child.set("content", "Visible_Right_Delayed")
                     if child.tag == "include" and (child.get("content") == "Animation_Widget_Poster_Slide" or child.text in ("WidgetGroupListCommon", "HomeWidgetGroupListCommon")):
                         parent.remove(child)
         self.assertEqual(normalize(old_group), normalize(new_group))
         current = ET.parse(SKIN / "xml/Includes_Home.xml")
         for name in ("WidgetGroupListCommon", "WidgetListCommon", "WidgetListPoster", "WidgetListLandscape", "WidgetListSquare"):
-            self.assertEqual(normalize(old_includes.find("include[@name='%s']" % name)), normalize(current.find("include[@name='%s']" % name)))
+            now = current.find("include[@name='%s']" % name)
+            for action in list(now):
+                if action.tag == "onfocus" and (action.text or "").startswith("SetProperty(foundry.home.row."):
+                    now.remove(action)
+            for parent in now.iter():
+                for child in list(parent):
+                    if child.tag=='visible' and 'foundry.home.row.' in (child.text or ''):parent.remove(child)
+            self.assertEqual(normalize(old_includes.find("include[@name='%s']" % name)), normalize(now))
 
     def test_packaging_rejects_incomplete_unapproved_artwork(self):
         self.assertEqual(set(validate_widget_assets(SKIN)), CATEGORIES)

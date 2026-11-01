@@ -1,0 +1,26 @@
+{
+  "release": "1.2.10",
+  "skin": "1.1.9",
+  "helper": "1.1.3",
+  "source_commits": {
+    "skin.foundry-nimbus": "9cd7051148d393784bd5ca9c2de1b0f2a89ec637",
+    "script.foundry.helper": "18bef7f7402000adc72c9341aaf3b5740a9c52b3"
+  },
+  "validation": {
+    "automated_checks": 118,
+    "deterministic_package_repeat": true,
+    "native_runtime": "Kodi 21.3 Windows controlled fixtures, including real local-video playback return",
+    "home_runtime": "Lower-row selection and five category switches; previous row content hidden; no real Umbrella addon installed",
+    "shield_tested": false,
+    "pixel_identical_streampilot_claim": false
+  },
+  "wallpaper_changes": false,
+  "omdb_default": "disabled without user key",
+  "external_source_action": "File Manager URL bookmarks only, no repository installation",
+  "limitations": [
+    "Provider search and sort cover the loaded directory unless provider exposes a broader API.",
+    "Unknown remote page totals are shown as ?.",
+    "Richer full-size/widget wallpaper pairs are awaiting the separate complete artwork batch.",
+    "Shield and real-provider runtime validation remains."
+  ]
+}

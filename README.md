@@ -1,19 +1,19 @@
 # Foundry Kodi source
 
-Current release: **Build and Bootstrap 1.2.9 / skin 1.1.8 / Helper 1.1.2**.
+Current release: **Build and Bootstrap 1.2.10 / skin 1.1.9 / Helper 1.1.3**.
 
 Permanent Kodi File Manager source: https://3thirty3gitter.github.io/foundry-kodi-dist/
 
-Install `repository.foundry-1.2.0.zip`, then open **Install from repository > Foundry Repository > Program add-ons > Foundry Build**. Existing installations can check for updates, update Foundry Build to **1.2.9**, and run it once. For an interface update while a provider dependency is blocking setup, install `skin.foundry-1.1.8.zip` from the same source with Foundry Repository enabled.
+Install `repository.foundry-1.2.0.zip`, then install/run Foundry Build. Existing installations can check for updates and run Build **1.2.10**. The skin-only `skin.foundry-1.1.9.zip` is available when a provider dependency blocks setup.
 
-This release restores the exact original header logo at sufficient 1080p/native-4K pixel density, keeps lower Home widget rows inside a fixed native scrolling viewport when returning to the menu, and replaces playback OSD card edges with a soft fade. All wallpaper assets remain unchanged from 1.2.8. OMDb remains optional, disabled by default, with no user key bundled.
+This release adds a dedicated native catalog with 20-title pages, four sorts, split search, rating badges and delayed-provider routing. It fixes stale preceding Home rows over the add-on description while retaining the selected lower row, and adds the approved lettering-only header trace without changing the original graphic or header geometry. FenSkeleton and Forge Releases are File Manager bookmarks only; restart Kodi after updating to reload sources. Neither unfamiliar repository is installed or enabled.
 
-The previous release's fourteen standalone widget wallpapers, 450ms crossfade and native StreamPilot-style VOD catalog remain. Kodi sorting, groups-of-six paging and existing search retain the documented platform differences. Actual Shield rendering, focus/navigation, perceived logo sharpness and playback checks remain pending. See the skin README for details and provider terms.
+The last complete fourteen wallpaper pairs and 450ms transition remain unchanged. The richer artwork batch is not part of this release. OMDb stays optional and disabled without a user key. Native Kodi 21.3 Windows fixtures verify navigation and local playback return; captures use controlled metadata, screenshot-derived poster fixtures and generated fanart. Exact StreamPilot pixel parity and Shield rendering are not claimed. Provider search/sort is limited to the loaded directory unless its API supplies broader scope; unknown page totals display `?`.
 
     python tools/build_release.py --skin ../skin.foundry-nimbus --helper ../script.foundry.helper
     python -m unittest discover -s tests -v
 
-`release.json` records all versions, ZIP sizes and SHA256 checksums. Packaging validates all approved widget image bytes. The original wallpaper, OSD resource, repository and Helper packages retain their existing versions and bytes.
+`release.json` records versions, sizes and SHA256 checksums. Original wallpaper, OSD resource and repository versions/bytes are unchanged.
 
 Kodi installs the following core add-ons using its dependency manager. SlyGuy Trailers installs when Foundry Build runs, after its repository has been prepared:
 
@@ -33,8 +33,8 @@ Personal API keys and accounts remain user-specific. Trakt scrobbling, subtitle 
 Foundry Repository includes the upstream SlyGuy and CocoScrapers feeds. Foundry Build registers and enables the original bundled SlyGuy Repository before asking Kodi to install Trailers and its dependencies.
 Their original ZIPs are downloaded directly from upstream, without repackaging. No YouTube/Tubed replacement add-ons are installed.
 
-The Home main menu is fully transparent, with separate space for the logo, action buttons and scrolling menu. Empty-library message overlays are removed from Home. Menus with visible or loading widget rows keep the full-size wallpaper and show only its isolated title artwork smaller at the top right. A feathered PNG repair layer covers the original title in place. Empty menus keep the original wallpaper. Custom menu background folders remain supported at full size, without category repair overlays.
-All fourteen original Foundry category wallpapers are included unchanged in `resource.images.foundry.wallpapers` 1.0.0. Their Home layers render independently of background blur and follow the active widget rows, including all fifty configurable rows per custom or movie/TV menu. The title masks use literal include parameters compatible with Kodi 21.
+The Home main menu is fully transparent, with separate space for the logo, action buttons and scrolling menu. Empty-library message overlays are removed from Home. Menus with visible or loading widget rows keep the full-size wallpaper and show only its isolated title artwork smaller at the top right. Widget mode uses its separately approved complete image, without repair layers. Empty menus keep the original wallpaper. Custom menu background folders remain supported at full size, without category repair overlays.
+All fourteen original Foundry category wallpapers are included unchanged in `resource.images.foundry.wallpapers` 1.0.0. Their Home layers render independently of background blur and follow the active widget rows, including all fifty configurable rows per custom or movie/TV menu. No runtime title masks are used.
 The playback OSD ports StreamPilot's VOD poster panel and live-TV card, with original format badges, artwork-based colors, five-second idle hiding, Back-to-dismiss, and fixed 30-second seek buttons. Native Kodi audio, subtitle and playback settings remain accessible. Source selection is handled by the video provider.
 `resource.images.foundry.osd` 1.0.0 contains the original StreamPilot badges. Both artwork resources are included in the repository feed and installed as skin dependencies; they no longer depend on an unpublished package.
 Build 1.2.4 fixes an installation-order defect: SlyGuy Common requires `repository.slyguy`, but Kodi refuses to install repositories as dependencies ([Kodi Omega resolver](https://github.com/xbmc/xbmc/blob/Omega/xbmc/addons/AddonRepos.cpp#L456-L463)). The repository is now prepared before the native trailer installation. Existing disabled SlyGuy components are enabled; completed setup is not repeated. Cancellation or a setup failure produces a retry message before skin activation. Skin installation is also available independently of SlyGuy.
