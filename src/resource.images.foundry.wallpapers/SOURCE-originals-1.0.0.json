@@ -1,0 +1,21 @@
+{
+  "repository": "3thirty3gitter/skin.foundry",
+  "commit": "7aeaf147cf0e37ad7c6408acf4d349dc1ae187ed",
+  "path": "media/foundry-backdrops",
+  "files": {
+    "addons.png": "b66363cfa837443a0ec9a863bea9457bc8a852b0",
+    "favorites.png": "3c51375843099264bbe2071e8d25c563383a3686",
+    "games.png": "5d2ddbceef3d1ca71ed2b70e479838c4e1b789f7",
+    "home.png": "d898b67c161fd8c5de572aa7aa15970fafcdc408",
+    "livetv.png": "4b1f527cdba92c41abe7417a03e048e429bd5da9",
+    "movies.png": "3b6449bca0cde6f0eceadf4aa0d7bbc52417f480",
+    "music.png": "af077f2210fecc42466c466c0e6dc24b9f2d3b49",
+    "musicvideos.png": "c93ca3737c4f6b441589983292bb559eb82baf3b",
+    "pictures.png": "2d427e38a31be032fd9bc4bf956c2422e7e1aeff",
+    "radio.png": "93cf2a0bcbf0072851756b7959373a3948aeea77",
+    "settings.png": "c686b1b5ce916445e5b406232740b5bac9327bb3",
+    "tvshows.png": "66dc42be9b6719a219ffd0c5218b811e5662ac52",
+    "video.png": "3644e555fad54ee97048e4f2f3df8466f718ee77",
+    "weather.png": "868079711ffca1c1397b9ea61ff2691389328868"
+  }
+}

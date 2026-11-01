@@ -1,6 +1,6 @@
 {
-  "release": "1.2.10",
-  "skin": "1.1.9",
+  "release": "1.2.11",
+  "skin": "1.2.0",
   "packages": [
     {
       "id": "repository.foundry",
@@ -11,10 +11,10 @@
     },
     {
       "id": "resource.images.foundry.wallpapers",
-      "version": "1.0.0",
-      "path": "resource.images.foundry.wallpapers/resource.images.foundry.wallpapers-1.0.0.zip",
-      "sha256": "af0f3ca0d1c2e50387d1ad5c0bc5988a2e6a17edbe038360ff3a2e601c56ef8e",
-      "size": 7441745
+      "version": "1.1.0",
+      "path": "resource.images.foundry.wallpapers/resource.images.foundry.wallpapers-1.1.0.zip",
+      "sha256": "dfc8a154817e66ee9651200baf6fff251bd82f6d1e97f20126d9c5f15db6a869",
+      "size": 20150822
     },
     {
       "id": "resource.images.foundry.osd",
@@ -25,10 +25,10 @@
     },
     {
       "id": "skin.foundry",
-      "version": "1.1.9",
-      "path": "skin.foundry/skin.foundry-1.1.9.zip",
-      "sha256": "d44a62b4aa305d1046c184811bf6ff75db099010f7c62459a61734ac2fee6521",
-      "size": 26996715
+      "version": "1.2.0",
+      "path": "skin.foundry/skin.foundry-1.2.0.zip",
+      "sha256": "0ccd939584bab89d44ed27a9029dddf3f8a82aac0982a55fe313134a361c9b25",
+      "size": 36320215
     },
     {
       "id": "script.foundry.helper",
@@ -39,16 +39,16 @@
     },
     {
       "id": "script.program.foundry-build",
-      "version": "1.2.10",
-      "path": "script.program.foundry-build/script.program.foundry-build-1.2.10.zip",
-      "sha256": "5809b51f15c88b61e8685dbb70eea6f00a122c6ba8d3f524a4b625f1eb275b41",
-      "size": 2598
+      "version": "1.2.11",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.2.11.zip",
+      "sha256": "c6f7efaa578664c53a6ad9d2ed1eac0f857e17eeafdcb95f59eafea854cd587e",
+      "size": 2596
     },
     {
       "id": "script.program.foundry-bootstrap",
-      "version": "1.2.10",
-      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.2.10.zip",
-      "sha256": "340194ada21673c8cc5c649a10fee2b236aada6d270d0ac11644d8ee401d0221",
+      "version": "1.2.11",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.2.11.zip",
+      "sha256": "2a6342d02bddc9fbbac401beab6e5bae5a927a3a1ae54baf1ced5efec9f8928f",
       "size": 852
     }
   ]

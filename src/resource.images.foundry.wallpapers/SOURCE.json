@@ -1,21 +1,189 @@
 {
-  "repository": "3thirty3gitter/skin.foundry",
-  "commit": "7aeaf147cf0e37ad7c6408acf4d349dc1ae187ed",
-  "path": "media/foundry-backdrops",
+  "schema_version": 2,
+  "artwork_set": "Foundry approved rich pairs, corrected widget version 1",
+  "approval": "Owner-approved combined rich wallpaper and lighter shorter OSD publication, 2026-11-01",
+  "resolution_note": "Exact approved 1672x941 source images; no claim of native 4K detail. All are copied unchanged.",
+  "widget_group_scale": 0.55,
+  "registration_note": "Background clean plates are visually registered, not pixel-identical. The skin keeps fixed full-frame fit geometry and a 450ms filename crossfade; it does not zoom, crop or rearrange artwork.",
+  "previews": [
+    {
+      "library_file_id": "libfile_a3c99e19f0d481919c054b0c4f237fea",
+      "version": 1
+    },
+    {
+      "library_file_id": "libfile_3bb5d4dc803c81919a1f1be66fb9f16e",
+      "version": 1
+    }
+  ],
+  "mode": "full",
   "files": {
-    "addons.png": "b66363cfa837443a0ec9a863bea9457bc8a852b0",
-    "favorites.png": "3c51375843099264bbe2071e8d25c563383a3686",
-    "games.png": "5d2ddbceef3d1ca71ed2b70e479838c4e1b789f7",
-    "home.png": "d898b67c161fd8c5de572aa7aa15970fafcdc408",
-    "livetv.png": "4b1f527cdba92c41abe7417a03e048e429bd5da9",
-    "movies.png": "3b6449bca0cde6f0eceadf4aa0d7bbc52417f480",
-    "music.png": "af077f2210fecc42466c466c0e6dc24b9f2d3b49",
-    "musicvideos.png": "c93ca3737c4f6b441589983292bb559eb82baf3b",
-    "pictures.png": "2d427e38a31be032fd9bc4bf956c2422e7e1aeff",
-    "radio.png": "93cf2a0bcbf0072851756b7959373a3948aeea77",
-    "settings.png": "c686b1b5ce916445e5b406232740b5bac9327bb3",
-    "tvshows.png": "66dc42be9b6719a219ffd0c5218b811e5662ac52",
-    "video.png": "3644e555fad54ee97048e4f2f3df8466f718ee77",
-    "weather.png": "868079711ffca1c1397b9ea61ff2691389328868"
+    "movies": {
+      "library_file_id": "libfile_1f8c1a930de08191b2de8e997edb6949",
+      "current_version_number": 0,
+      "sha256": "6bf9cac1709ea1d53fa1576c937a5d7c34666313ddb6e42a23db392dd722941f",
+      "file_id": "file_00000000871c820cbaac6aebce5b5bf3",
+      "version": 0,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "movies.png"
+    },
+    "addons": {
+      "library_file_id": "libfile_2309b64860d08191a317a7a9ad3d3895",
+      "current_version_number": 0,
+      "sha256": "5bc92e26e02f4236e61de9060afecdac874535af4abbea1b59c2f64eb4976bed",
+      "file_id": "file_000000003de8822fa7c570897fca308e",
+      "version": 0,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "addons.png"
+    },
+    "settings": {
+      "library_file_id": "libfile_cc7d4a9b4d788191b9ab04570c3ad628",
+      "current_version_number": 0,
+      "sha256": "520f903b4b2cdc46d6d89dfeab8f3c23bb31f9345fb49882e8c2ed107707d734",
+      "file_id": "file_0000000058ac822f9f1acc342cd1e2b8",
+      "version": 0,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "settings.png"
+    },
+    "home": {
+      "library_file_id": "libfile_1a761371c33c8191b122f1ef3c12e290",
+      "current_version_number": 0,
+      "sha256": "c509a40773797459698ad2659d539379d777d01c88c14caeb017deb061679602",
+      "file_id": "file_00000000107c81f59240f08fdc749a41",
+      "version": 0,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "home.png"
+    },
+    "tvshows": {
+      "library_file_id": "libfile_1838cb1cb87081919b5cb533f30e6baa",
+      "current_version_number": 0,
+      "sha256": "c92af913358b7926d98b399b1752855fe88e8d4fd0297841a107ff6cb86a04ed",
+      "file_id": "file_0000000083e481f5a11930643f84bb02",
+      "version": 0,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "tvshows.png"
+    },
+    "music": {
+      "library_file_id": "libfile_665caba535fc8191bef2038fdda0a29d",
+      "current_version_number": 0,
+      "sha256": "19c5e0c32a6ce0ddedfebb6bbc60d5e6d75c9edc6cb1c836f0051ba9e23705b8",
+      "file_id": "file_00000000526c81f5b3cfa32e3320cae6",
+      "version": 0,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "music.png"
+    },
+    "musicvideos": {
+      "library_file_id": "libfile_814791653d5481919bd0dba8949495ad",
+      "current_version_number": 0,
+      "sha256": "c768c0f67c01707dddeb90817a3a79eddf115d946e3cb6086629071fea7b5658",
+      "file_id": "file_000000006d1c822fb36d2db7fb69f598",
+      "version": 0,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "musicvideos.png"
+    },
+    "livetv": {
+      "library_file_id": "libfile_4dee99d33b1c8191ad2be25e8cf39c20",
+      "current_version_number": 0,
+      "sha256": "ca5b0de5e0348623d91d5fea75588ef2903d4f0f8813a7157dd6dd23fed8dffb",
+      "file_id": "file_00000000223c822f9f1311f7403000c9",
+      "version": 0,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "livetv.png"
+    },
+    "radio": {
+      "library_file_id": "libfile_a07eafc522188191b645d106125e56da",
+      "current_version_number": 0,
+      "sha256": "9a33d51b35b623875ec50ecf4cb272705c4da3eebcf7c43bec4214cf40428385",
+      "file_id": "file_000000006f68822f8d83e1eea5f1454f",
+      "version": 0,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "radio.png"
+    },
+    "games": {
+      "library_file_id": "libfile_0a56613882188191a1898aead3d47573",
+      "current_version_number": 0,
+      "sha256": "0d364c3bd7b4f8151b745be729a0496a08257bfe70af99af5d74e045d68735a6",
+      "file_id": "file_00000000294081f590bf1a7ccfc4cd00",
+      "version": 0,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "games.png"
+    },
+    "pictures": {
+      "library_file_id": "libfile_9037c83e93b08191bd4936df1f9fdce1",
+      "current_version_number": 0,
+      "sha256": "f3b48be494f9c72b0246c7c33cf6130ad7a6de17bc6d3ad78fe22dc4f204461c",
+      "file_id": "file_00000000a3b0822fa41152cc4aad7abe",
+      "version": 0,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "pictures.png"
+    },
+    "video": {
+      "library_file_id": "libfile_0402aa356e1c81919756de32c6a80f6c",
+      "current_version_number": 0,
+      "sha256": "1663e03b5ead7ef11d95f2c6e163c9511a907b70cfe503555897e130537e38a0",
+      "file_id": "file_00000000767c81f59aa7a145a7cf4a5a",
+      "version": 0,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "video.png"
+    },
+    "favorites": {
+      "library_file_id": "libfile_d560a43d3c608191ac80af4918a776eb",
+      "current_version_number": 0,
+      "sha256": "8802fc9c27a01209f4ddb67149e7631709ebb67920d895a246f5599473568003",
+      "file_id": "file_00000000361481f598cd40c4051b51bf",
+      "version": 0,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "favorites.png"
+    },
+    "weather": {
+      "library_file_id": "libfile_67e83dd351188191a06f20220b655504",
+      "current_version_number": 0,
+      "sha256": "187c8f33dfd5e25798b58e099fac035f076814c549fc36800e4797fd2d0ad304",
+      "file_id": "file_00000000d57481f58b51de864dfd0946",
+      "version": 0,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "weather.png"
+    }
   }
 }

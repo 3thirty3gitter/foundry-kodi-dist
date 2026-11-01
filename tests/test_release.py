@@ -142,7 +142,8 @@ class Packages(unittest.TestCase):
     def test_original_resource_assets_and_all_skin_resource_paths_are_packaged(self):
         for addon in ("resource.images.foundry.wallpapers", "resource.images.foundry.osd"):
             source = ROOT / "src" / addon
-            provenance = json.loads((source / "SOURCE.json").read_text())
+            history = "SOURCE-originals-1.0.0.json" if addon == "resource.images.foundry.wallpapers" else "SOURCE.json"
+            provenance = json.loads((source / history).read_text())
             with zipfile.ZipFile(ROOT / addon / (addon + "-1.0.0.zip")) as bundle:
                 for filename, expected in provenance["files"].items():
                     data = bundle.read(addon + "/resources/" + filename)

@@ -1,19 +1,21 @@
 # Foundry Kodi source
 
-Current release: **Build and Bootstrap 1.2.10 / skin 1.1.9 / Helper 1.1.3**.
+Current release: **Build and Bootstrap 1.2.11 / skin 1.2.0 / Helper 1.1.3 / Wallpapers 1.1.0**.
 
 Permanent Kodi File Manager source: https://3thirty3gitter.github.io/foundry-kodi-dist/
 
-Install `repository.foundry-1.2.0.zip`, then install/run Foundry Build. Existing installations can check for updates and run Build **1.2.10**. The skin-only `skin.foundry-1.1.9.zip` is available when a provider dependency blocks setup.
+Install `repository.foundry-1.2.0.zip`, then install/run Foundry Build. Existing installations can check for updates and run Build **1.2.11**. The skin-only `skin.foundry-1.2.0.zip` is available when a provider dependency blocks setup; its dependency requires Wallpapers **1.1.0**.
 
-This release adds a dedicated native catalog with 20-title pages, four sorts, split search, rating badges and delayed-provider routing. It fixes stale preceding Home rows over the add-on description while retaining the selected lower row, and adds the approved lettering-only header trace without changing the original graphic or header geometry. FenSkeleton and Forge Releases are File Manager bookmarks only; restart Kodi after updating to reload sources. Neither unfamiliar repository is installed or enabled.
+This release combines all fourteen approved rich full/widget wallpaper pairs with the lighter, shorter OSD background. Every image is copied unchanged at 1672x941. All widget images are corrected revision 1, retaining the approved 55% uniform icon/text/underline group. Home artwork now reads FOUNDRY / MEDIA CENTER. Full images, the skin fallback and add-on fanart use the new complete frames. The historical Wallpapers 1.0.0 ZIP remains unchanged.
 
-The last complete fourteen wallpaper pairs and 450ms transition remain unchanged. The richer artwork batch is not part of this release. OMDb stays optional and disabled without a user key. Native Kodi 21.3 Windows fixtures verify navigation and local playback return; captures use controlled metadata, screenshot-derived poster fixtures and generated fanart. Exact StreamPilot pixel parity and Shield rendering are not claimed. Provider search/sort is limited to the loaded directory unless its API supplies broader scope; unknown page totals display `?`.
+The 450ms full-frame crossfade, fixed widget viewport, lower-row selection retention, Umbrella visibility fix, traced header and dedicated library remain unchanged. Clean plates are visually registered, not pixel-identical. OSD backdrop opacity is reduced 25% (effective peak alpha 225 to 169); its height drops 48 units, VOD 322 to 274 and live 368 to 320. Every foreground control retains its existing size, position and action.
+
+Native Kodi 21.3 Windows fixtures check all wallpaper pairs, both transition directions, menu returns, rapid toggles and bright/dark OSD scenes. These are controlled fixtures, not Shield captures or proof of exact StreamPilot parity. Helper and library behavior remain from 1.2.10; OMDb stays optional and disabled without a user key. FenSkeleton and Forge Releases remain URL bookmarks only, with no repository installation or activation.
 
     python tools/build_release.py --skin ../skin.foundry-nimbus --helper ../script.foundry.helper
     python -m unittest discover -s tests -v
 
-`release.json` records versions, sizes and SHA256 checksums. Original wallpaper, OSD resource and repository versions/bytes are unchanged.
+Packaging rejects missing/modified approved pairs, stale widget revisions and mismatched dimensions. `release.json` records versions, sizes and SHA256 checksums. The OSD resource, Helper and repository package bytes are unchanged.
 
 Kodi installs the following core add-ons using its dependency manager. SlyGuy Trailers installs when Foundry Build runs, after its repository has been prepared:
 
