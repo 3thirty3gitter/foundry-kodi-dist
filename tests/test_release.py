@@ -109,6 +109,8 @@ class Packages(unittest.TestCase):
             self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), Path(str(path) + ".sha256").read_text().strip())
             with zipfile.ZipFile(path) as bundle:
                 self.assertIsNone(bundle.testzip())
+                self.assertEqual(bundle.namelist(), sorted(bundle.namelist()))
+                self.assertTrue(all(entry.create_system == 3 for entry in bundle.infolist()))
                 self.assertEqual({n.split("/")[0] for n in bundle.namelist()}, {aid})
                 manifest = ET.fromstring(bundle.read(aid + "/addon.xml"))
                 normalize = lambda e: (e.tag, e.attrib, (e.text or "").strip(), [normalize(child) for child in e])
@@ -150,7 +152,10 @@ class Packages(unittest.TestCase):
             paths.update(re.findall(r"resource://resource\.images\.foundry\.[^<\s\"]+", path.read_text()))
         self.assertGreaterEqual(len(paths), 28)
         for uri in paths:
-            self.assertTrue(Path(translate(uri)).is_file(), uri)
+            categories = [p.stem for p in (ROOT / "src/resource.images.foundry.wallpapers/resources").glob("*.png") if p.stem != "icon"]
+            resolved = [uri.replace("$PARAM[category]", category) for category in categories] if "$PARAM[category]" in uri else [uri]
+            for path in resolved:
+                self.assertTrue(Path(translate(path)).is_file(), path)
 
     def test_core_addons_are_native_install_dependencies_on_clean_profiles(self):
         build = ET.parse(ROOT / "src/script.program.foundry-build/addon.xml").getroot()
@@ -255,9 +260,14 @@ class Runtime(unittest.TestCase):
             scene = dict(visible={8100} if active else set(), counts={8100: 2} if active else {})
             self.assertEqual(self.home_condition(wallpaper.findtext("visible"), **scene), not active)
             self.assertEqual(self.home_condition(compact.findtext("visible"), **scene), active)
-        title = compact.find("control[description='Original category title at the top right']")
-        # Original image remains intact; its title is scaled clear of the widget rows.
-        self.assertEqual(title.findtext("texture"), "$VAR[FoundryMenuBackground]")
+        backdrop = compact.find("control[description='Original widget backdrop at full screen size']")
+        self.assertEqual(backdrop.findtext("texture"), "$VAR[FoundryMenuBackground]")
+        self.assertEqual((backdrop.findtext("left"), backdrop.findtext("top"), backdrop.findtext("width"), backdrop.findtext("height")), ("0", "0", "100%", "100%"))
+        artwork = ET.parse(SKIN / "xml/Includes_Home.xml").find("include[@name='FoundryWidgetCategoryArtwork']/definition/control")
+        title = artwork.find("control[description='Original category title at the top right']")
+        self.assertEqual(title.findtext("texture"), "resource://resource.images.foundry.wallpapers/$PARAM[category].png")
+        self.assertEqual(title.find("texture").get("diffuse"), "special://skin/media/foundry-widget-layers/$PARAM[category]-title.png")
+        self.assertNotIn("$VAR[", title.find("texture").get("diffuse"))
         width, height = int(title.findtext("width")), int(title.findtext("height"))
         self.assertLess(width, 1920)
         self.assertLess(int(title.findtext("top")) + height * .72, 510)
@@ -268,19 +278,55 @@ class Runtime(unittest.TestCase):
         for source in ("foundry-widget-base.svg", "foundry-widget-fade.svg"):
             ET.parse(SKIN / "media" / source)
 
-    def test_home_logo_is_tightly_trimmed_and_pixels_are_unchanged(self):
+    def test_home_logo_uses_vector_outlines_and_an_oversampled_texture(self):
+        from PIL import Image
+        svg = ET.parse(SKIN / "media/foundry-logo.svg")
+        self.assertEqual(svg.findall(".//{http://www.w3.org/2000/svg}text"), [])
+        self.assertGreaterEqual(len(svg.findall(".//{http://www.w3.org/2000/svg}path")), 5)
+        with Image.open(SKIN / "media/foundry-logo-hd.png") as current:
+            self.assertEqual(current.mode, "RGBA")
+            self.assertGreaterEqual(current.width, 380 * 6)
+            self.assertAlmostEqual(current.width / current.height, 380 / 115, delta=.03)
+            box = current.getchannel("A").getbbox()
+            self.assertLessEqual(box[0], 2)
+            self.assertLessEqual(box[1], 2)
+            self.assertLessEqual(current.width - box[2], 2)
+            self.assertLessEqual(current.height - box[3], 2)
+
+    def test_all_fourteen_widget_layers_remove_only_the_original_title(self):
         from PIL import Image, ImageChops
-        with zipfile.ZipFile(ROOT / "skin.foundry/skin.foundry-1.1.4.zip") as old:
-            import io
-            original = Image.open(io.BytesIO(old.read("skin.foundry/media/foundry-logo.png"))).convert("RGBA")
-        current = Image.open(SKIN / "media/foundry-logo.png").convert("RGBA")
-        expected = original.crop(original.getchannel("A").getbbox())
-        self.assertEqual(current.size, expected.size)
-        self.assertEqual(current.getchannel("A").getbbox(), (0, 0, *current.size))
-        self.assertIsNone(ImageChops.difference(current, expected).getbbox())
+        layers = SKIN / "media/foundry-widget-layers"
+        paths = sorted(layers.glob("*-repair.png"))
+        self.assertEqual(len(paths), 14)
+        home = ET.parse(SKIN / "xml/Home.xml")
+        routes = home.findall(".//include[@content='FoundryWidgetCategoryArtwork']")
+        self.assertEqual({r.find("param[@name='category']").get("value") for r in routes}, {p.stem[:-7] for p in paths})
+        compact = next(c for c in home.findall("./controls/control") if c.findtext("description") == "Foundry compact widget wallpaper")
+        custom_guard = compact.find("control[@type='group']/visible").text
+        self.assertIn("String.IsEmpty(Skin.String(HomeFanart.path))", custom_guard)
+        self.assertIn("String.IsEmpty(Skin.String(NimbusCustomBackground))", custom_guard)
+        for path in paths:
+            category = path.stem[:-7]
+            with self.subTest(category=category):
+                original = Image.open(ROOT / "src/resource.images.foundry.wallpapers/resources" / (category + ".png")).convert("RGBA").resize((1920, 1080), Image.Resampling.LANCZOS)
+                repair = Image.open(path).convert("RGBA")
+                title = Image.open(layers / (category + "-title.png")).getchannel("A").resize(original.size, Image.Resampling.LANCZOS)
+                self.assertEqual(repair.size, original.size)
+                cleaned = Image.alpha_composite(original, repair)
+                # Every untouched backdrop pixel remains exact, at full size.
+                changed = ImageChops.difference(original.convert("RGB"), cleaned.convert("RGB")).convert("L")
+                outside = repair.getchannel("A").point(lambda a: 255 if a == 0 else 0)
+                self.assertIsNone(ImageChops.multiply(changed, outside).getbbox())
+                # The old bright lettering and icon cannot bleed through.
+                title_pixels = [(a, b) for a, b, alpha in zip(original.getdata(), cleaned.getdata(), title.getdata()) if alpha > 240 and min(a[:3]) > 170]
+                self.assertGreater(len(title_pixels), 1000)
+                self.assertTrue(all(max(b[:3]) < 170 for _, b in title_pixels))
+                # The isolated artwork stays above widget rows starting at y=510.
+                box = title.getbbox()
+                self.assertLess(-55 + box[3] * 720 / 1080, 510)
 
     def test_home_positions_are_unchanged_except_logo_size_and_removed_tooltip(self):
-        with zipfile.ZipFile(ROOT / "skin.foundry/skin.foundry-1.1.4.zip") as old:
+        with zipfile.ZipFile(ROOT / "skin.foundry/skin.foundry-1.1.5.zip") as old:
             before = ET.fromstring(old.read("skin.foundry/xml/Home.xml"))
         after = ET.parse(SKIN / "xml/Home.xml").getroot()
         def strip_allowed_changes(doc):
@@ -288,7 +334,12 @@ class Runtime(unittest.TestCase):
                 for child in list(parent):
                     if child.tag == "control" and child.findtext("label") == "$VAR[HomeSubmenuButtonLabelsVar]":
                         parent.remove(child)
-            logo = next(c for c in doc.iter("control") if c.findtext("texture") == "foundry-logo.png")
+            controls = doc.find("controls")
+            for child in list(controls):
+                if child.findtext("description") == "Foundry compact widget wallpaper":
+                    controls.remove(child)
+            logo = next(c for c in doc.iter("control") if c.findtext("texture") in {"foundry-logo.png", "foundry-logo-hd.png"})
+            logo.find("texture").text = "foundry-logo.png"
             self.assertEqual((logo.findtext("left"), logo.findtext("top")), ("60", "40"))
             size = (int(logo.findtext("width")), int(logo.findtext("height")))
             for tag in ("width", "height"):
@@ -296,8 +347,7 @@ class Runtime(unittest.TestCase):
             return size
         previous_size = strip_allowed_changes(before)
         new_size = strip_allowed_changes(after)
-        self.assertGreater(new_size[0], previous_size[0])
-        self.assertGreater(new_size[1], previous_size[1])
+        self.assertEqual(new_size, previous_size)
         def normalized(node):
             return (node.tag, node.attrib, (node.text or "").strip(), [normalized(c) for c in node])
         self.assertEqual(normalized(before), normalized(after))
@@ -380,7 +430,7 @@ class Runtime(unittest.TestCase):
 
     def test_home_logo_actions_and_menu_have_separate_bounds(self):
         doc = ET.parse(SKIN / "xml/Home.xml")
-        logo = next(c for c in doc.iter("control") if c.findtext("texture") == "foundry-logo.png")
+        logo = next(c for c in doc.iter("control") if c.findtext("texture") == "foundry-logo-hd.png")
         sidebar = next(c for c in doc.iter("control") if logo in list(c))
         action_group = next(c for c in sidebar.findall("control") if c.find("control[@id='700']") is not None)
         menu = sidebar.find("control[@id='9000']")
@@ -556,7 +606,7 @@ class Runtime(unittest.TestCase):
             rpc.assert_not_called()
 
     def test_foundry_branding_and_development_routes_are_packaged(self):
-        self.assertIn("foundry-logo.png", (SKIN / "xml/Home.xml").read_text())
+        self.assertIn("foundry-logo-hd.png", (SKIN / "xml/Home.xml").read_text())
         self.assertIn("Welcome to Foundry", (SKIN / "xml/Custom_1116_StartHelp.xml").read_text())
         self.assertNotIn("Welcome to Nimbus", (SKIN / "xml/Custom_1116_StartHelp.xml").read_text())
         self.assertIn("media/foundry-home-backdrop.png", (SKIN / "xml/Variables_Artwork.xml").read_text())

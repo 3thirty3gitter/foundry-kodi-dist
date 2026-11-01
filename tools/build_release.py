@@ -17,7 +17,7 @@ def package(source, output):
     # These unreferenced assets duplicate the active Foundry artwork.
     unused_skin_artwork = {"resources/fanart.png", "media/foundry-backdrops/foundry-loading-splash.png"}
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
-        for path in sorted(source.rglob("*")):
+        for path in sorted(source.rglob("*"), key=lambda p: p.relative_to(source).as_posix()):
             relative = path.relative_to(source)
             if not path.is_file() or any(part.startswith(".") or part in {"__pycache__", "scripts", "Blank xmls"} for part in relative.parts):
                 continue
@@ -26,11 +26,13 @@ def package(source, output):
             if addon_id == "skin.foundry" and relative.as_posix() in unused_skin_artwork:
                 continue
             entry = zipfile.ZipInfo(addon_id + "/" + relative.as_posix(), (2026, 10, 26, 0, 0, 0))
+            # Keep ZIP metadata identical on Windows and Linux builders.
+            entry.create_system = 3
             entry.compress_type = zipfile.ZIP_DEFLATED
             entry.external_attr = 0o100644 << 16
             bundle.writestr(entry, path.read_bytes())
     digest = hashlib.sha256(archive.read_bytes()).hexdigest()
-    Path(str(archive) + ".sha256").write_text(digest + "\n")
+    Path(str(archive) + ".sha256").write_text(digest + "\n", newline="\n")
     for asset in manifest.findall("./extension/assets/*"):
         if asset.text and (source / asset.text).is_file():
             dest = target / asset.text
@@ -57,7 +59,7 @@ def main():
     ET.indent(feed, space="  ")
     xml = ET.tostring(feed, encoding="utf-8", xml_declaration=True) + b"\n"
     (root / "addons.xml").write_bytes(xml)
-    (root / "addons.xml.md5").write_text(hashlib.md5(xml).hexdigest() + "\n")
+    (root / "addons.xml.md5").write_text(hashlib.md5(xml).hexdigest() + "\n", newline="\n")
     repo = next(p for p in packages if p["id"] == "repository.foundry")
     filename = Path(repo["path"]).name
     shutil.copyfile(root / repo["path"], root / filename)
@@ -68,7 +70,7 @@ def main():
     (root / "release.json").write_text(json.dumps({
         "release": versions["script.program.foundry-build"],
         "skin": versions["skin.foundry"], "packages": packages,
-    }, indent=2) + "\n")
+    }, indent=2) + "\n", newline="\n")
     skin = next(p for p in packages if p["id"] == "skin.foundry")
     build = next(p for p in packages if p["id"] == "script.program.foundry-build")
     (root / "index.html").write_text('''<!doctype html>
@@ -80,7 +82,7 @@ def main():
 <li><a href="''' + skin["path"] + '''">''' + Path(skin["path"]).name + '''</a></li></ul>
 <p>The skin-only ZIP updates the interface when a provider dependency is blocking the full build installation.</p>
 </body></html>
-''')
+''', newline="\n")
     print(json.dumps(packages, indent=2))
 
 
