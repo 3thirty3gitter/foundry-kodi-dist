@@ -294,7 +294,7 @@ class Runtime(unittest.TestCase):
         for path in (SKIN / "xml").glob("*.xml"):
             self.assertNotIn("foundry-widget-layers/", path.read_text())
 
-    def test_home_positions_are_unchanged_except_logo_size_and_removed_tooltip(self):
+    def test_home_positions_allow_only_logo_tooltip_wallpaper_and_row_viewport_fix(self):
         with zipfile.ZipFile(ROOT / "skin.foundry/skin.foundry-1.1.5.zip") as old:
             before = ET.fromstring(old.read("skin.foundry/xml/Home.xml"))
         after = ET.parse(SKIN / "xml/Home.xml").getroot()
@@ -302,6 +302,10 @@ class Runtime(unittest.TestCase):
             for parent in doc.iter():
                 for child in list(parent):
                     if child.tag == "control" and child.findtext("label") == "$VAR[HomeSubmenuButtonLabelsVar]":
+                        parent.remove(child)
+                    elif child.tag == "include" and (child.get("content") == "Animation_Widget_Poster_Slide" or child.text in ("WidgetGroupListCommon", "HomeWidgetGroupListCommon")):
+                        parent.remove(child)
+                    elif child.tag == "onfocus" and child.text == "ClearProperty(nimbus_saved_list_id,home)":
                         parent.remove(child)
             controls = doc.find("controls")
             for child in list(controls):

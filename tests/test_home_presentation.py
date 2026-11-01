@@ -93,7 +93,7 @@ class HomePresentation(unittest.TestCase):
         guards = [v.text for v in self.home.iter("visible") if v.text and "!$EXP[FoundryHomeRowPresentation]" in v.text]
         self.assertEqual(len(guards), 2)  # Full fanart and Flix detail panel only.
 
-    def test_native_widget_geometry_and_focus_actions_are_unchanged(self):
+    def test_native_widget_items_and_navigation_survive_viewport_fix(self):
         with zipfile.ZipFile(ROOT / "skin.foundry/skin.foundry-1.1.6.zip") as old:
             before = ET.fromstring(old.read("skin.foundry/xml/Home.xml"))
             old_includes = ET.fromstring(old.read("skin.foundry/xml/Includes_Home.xml"))
@@ -101,6 +101,13 @@ class HomePresentation(unittest.TestCase):
         normalize = lambda n: (n.tag, n.attrib, (n.text or "").strip(), [normalize(c) for c in n])
         old_group = next(c for c in before.iter("control") if c.get("id") == "2000")
         new_group = next(c for c in after.iter("control") if c.get("id") == "2000")
+        # The enclosing Home stack now scrolls/clips natively. Item sizes, ids,
+        # content sources and focus actions must otherwise remain identical.
+        for group in (old_group, new_group):
+            for parent in group.iter():
+                for child in list(parent):
+                    if child.tag == "include" and (child.get("content") == "Animation_Widget_Poster_Slide" or child.text in ("WidgetGroupListCommon", "HomeWidgetGroupListCommon")):
+                        parent.remove(child)
         self.assertEqual(normalize(old_group), normalize(new_group))
         current = ET.parse(SKIN / "xml/Includes_Home.xml")
         for name in ("WidgetGroupListCommon", "WidgetListCommon", "WidgetListPoster", "WidgetListLandscape", "WidgetListSquare"):
