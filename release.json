@@ -1,6 +1,6 @@
 {
-  "release": "1.2.8",
-  "skin": "1.1.7",
+  "release": "1.2.9",
+  "skin": "1.1.8",
   "packages": [
     {
       "id": "repository.foundry",
@@ -25,10 +25,10 @@
     },
     {
       "id": "skin.foundry",
-      "version": "1.1.7",
-      "path": "skin.foundry/skin.foundry-1.1.7.zip",
-      "sha256": "def511f1910127322347230e53b1f4dd2c81fdaa3ed00ab968557d96e21285b0",
-      "size": 26492203
+      "version": "1.1.8",
+      "path": "skin.foundry/skin.foundry-1.1.8.zip",
+      "sha256": "06f3f0ad37527c2758f5e2d5927ca4e33bc9d81d4823e79e37d2ac0c29d272ec",
+      "size": 26496308
     },
     {
       "id": "script.foundry.helper",
@@ -39,16 +39,16 @@
     },
     {
       "id": "script.program.foundry-build",
-      "version": "1.2.8",
-      "path": "script.program.foundry-build/script.program.foundry-build-1.2.8.zip",
-      "sha256": "edc61e51714d7f1ba59f2691607a5d68f1612514f9d5894a019901de5b930880",
-      "size": 2597
+      "version": "1.2.9",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.2.9.zip",
+      "sha256": "0f127685f17a821cd5accca37cf3a137b109b366f0506d0edceafc810e5106aa",
+      "size": 2598
     },
     {
       "id": "script.program.foundry-bootstrap",
-      "version": "1.2.8",
-      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.2.8.zip",
-      "sha256": "4338f517a3974310330bf2b2b9cc01a0728f323833e38108e5903d05b92a86be",
+      "version": "1.2.9",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.2.9.zip",
+      "sha256": "81c0852ea4ac78441412ddfa0f416d75faae6cb750e642b0b0520c10136d0c41",
       "size": 852
     }
   ]

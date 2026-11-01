@@ -1,24 +1,20 @@
-# Unpublished Foundry 1.2.8 candidate
+# Foundry Kodi source
 
-This local branch packages **skin 1.1.7 / Helper 1.1.2 / Build and Bootstrap 1.2.8**. Nothing in this batch has been pushed or published. Public source remains Build 1.2.7 / skin 1.1.6.
+Current release: **Build and Bootstrap 1.2.9 / skin 1.1.8 / Helper 1.1.2**.
 
-The candidate includes fourteen approved standalone widget wallpapers, fixed-geometry 450 ms crossfades, Home row presentation on restored focus, native StreamPilot-style VOD view 57, and optional disabled-by-default OMDb-backed IMDb ratings. See the skin README for reference provenance, native-platform differences, provider setup/terms and pending Shield checks.
+Permanent Kodi File Manager source: https://3thirty3gitter.github.io/foundry-kodi-dist/
+
+Install `repository.foundry-1.2.0.zip`, then open **Install from repository > Foundry Repository > Program add-ons > Foundry Build**. Existing installations can check for updates, update Foundry Build to **1.2.9**, and run it once. For an interface update while a provider dependency is blocking setup, install `skin.foundry-1.1.8.zip` from the same source with Foundry Repository enabled.
+
+This release restores the exact original header logo at sufficient 1080p/native-4K pixel density, keeps lower Home widget rows inside a fixed native scrolling viewport when returning to the menu, and replaces playback OSD card edges with a soft fade. All wallpaper assets remain unchanged from 1.2.8. OMDb remains optional, disabled by default, with no user key bundled.
+
+The previous release's fourteen standalone widget wallpapers, 450ms crossfade and native StreamPilot-style VOD catalog remain. Kodi sorting, groups-of-six paging and existing search retain the documented platform differences. Actual Shield rendering, focus/navigation, perceived logo sharpness and playback checks remain pending. See the skin README for details and provider terms.
 
     python tools/build_release.py --skin ../skin.foundry-nimbus --helper ../script.foundry.helper
     python -m unittest discover -s tests -v
 
-Packaging rejects missing or unverified widget artwork. `release.json` records candidate versions, sizes and SHA-256 checksums. Original wallpaper, OSD and repository package versions remain unchanged. Runtime tests mock Kodi; actual rendering, navigation and playback checks are pending.
+`release.json` records all versions, ZIP sizes and SHA256 checksums. Packaging validates all approved widget image bytes. The original wallpaper, OSD resource, repository and Helper packages retain their existing versions and bytes.
 
-Publication is held for this batch. After approval/review, remove this candidate banner, publish skin/helper source commits and the distribution commit through the existing flow, then verify deployed commit, feed MD5, all seven ZIP checksums/manifests and root installer aliases.
-
-## Previously published source notes
-
-Permanent Kodi File Manager source: https://3thirty3gitter.github.io/foundry-kodi-dist/
-
-Install `repository.foundry-1.2.0.zip`, then open **Install from repository > Foundry Repository > Program add-ons > Foundry Build**.
-For an existing installation, check for updates and update Foundry Build to **1.2.7**, then run it once to finish setup. The current Build ZIP is also listed in the File Manager source.
-The release installs **Foundry skin 1.1.6**, **Foundry Helper 1.1.1**, and the two required artwork resources.
-For the interface update while a provider dependency is failing, install the skin-only `skin.foundry-1.1.6.zip` from the same source listing, with Foundry Repository enabled so Kodi can install its helper and image resources.
 Kodi installs the following core add-ons using its dependency manager. SlyGuy Trailers installs when Foundry Build runs, after its repository has been prepared:
 
 | Add-on | Purpose |
@@ -55,6 +51,8 @@ Build with sibling checkouts of `skin.foundry-nimbus` and `script.foundry.helper
     python3 tests/test_release.py -v
 
 Runtime tests use mocked Kodi APIs; final navigation, rendering and playback are tested in Kodi on the target device.
+## Historical release notes
+
 Validation for 1.2.7: 45 checks pass. These cover unchanged Home control positions, vector-outline logo and oversampled PNG, full-screen backdrop geometry, all fourteen title-removal layers, unchanged backdrop pixels outside repair regions, static diffuse paths, custom backgrounds, populated/loading/hidden widget rows, selection changes, custom row 50, original artwork hashes, dependency closure, and the existing SlyGuy/OSD regressions. Reference layouts are rendered from the native geometry and original assets. Target-device rendering, navigation and playback checks on Shield remain pending.
 
 Build 1.2.7 packages skin 1.1.6 from `skin.foundry-nimbus` commit `94e7f537003c2078d33d070f801c6028ce9b0570` and unchanged Helper 1.1.1 from commit `44ed58036a7ee2dffafcc9b90a4248aae656d871`. The Home logo now uses clean vector outlines and a 2280-pixel PNG at the unchanged (60,40), 380x115 control. Only the category title moves and shrinks when widgets are shown; the surrounding wallpaper retains its full-screen scale. ZIP metadata is fixed across Windows and Linux so unchanged package versions keep their existing checksums.
