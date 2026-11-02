@@ -82,6 +82,7 @@ xbmcgui = types.ModuleType("xbmcgui")
 xbmcgui.Window, xbmcgui.Dialog = Window, Dialog
 xbmcgui.ListItem = type("ListItem", (), {})
 xbmcgui.WindowXMLDialog = type("WindowXMLDialog", (), {})
+xbmcgui.WindowXML = type("WindowXML", (), {})
 xbmcgui.NOTIFICATION_INFO = 0
 xbmcgui.getCurrentWindowId = lambda: 10000
 xbmcvfs = types.ModuleType("xbmcvfs")

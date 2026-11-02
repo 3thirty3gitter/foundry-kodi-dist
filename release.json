@@ -34,8 +34,8 @@
       "id": "script.foundry.helper",
       "version": "1.1.5",
       "path": "script.foundry.helper/script.foundry.helper-1.1.5.zip",
-      "sha256": "f80d1b181fcd10e9ab16fb54b87af25918e623ec35da06009f72366e61fdf28a",
-      "size": 841731
+      "sha256": "40d9e0a79e77065482096a2ee4880be28383641d60422d56ae7aab06b9e53233",
+      "size": 844540
     },
     {
       "id": "script.program.foundry-build",

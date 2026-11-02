@@ -84,7 +84,7 @@ class SourceTests(unittest.TestCase):
             result=s.load();self.assertEqual(result['next_path'],'plugin://x/?page=2');self.assertEqual(call.call_count,2)
     def test_library_search_queries_complete_kodi_index(self):
         with patch('modules.catalog_source.rpc',return_value={'movies':[{'title':'Match'}]}) as call:
-            self.assertEqual(DirectorySource('videodb://movies/titles/').search('Match'),[{'title':'Match'}])
+            self.assertEqual([i['title'] for i in DirectorySource('videodb://movies/titles/').search('Match')],['Match'])
             self.assertEqual(call.call_args.args[0],'VideoLibrary.GetMovies')
             self.assertEqual(call.call_args.args[1]['filter']['value'],'Match')
     def test_provider_search_has_explicit_scope_and_no_guessed_api(self):

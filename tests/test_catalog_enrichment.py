@@ -5,6 +5,7 @@ from unittest.mock import patch
 from PIL import Image
 import test_release as kodi
 from modules.catalog_enrichment import enrich,lookup,matching,merge
+from modules.catalog_items import normalize
 from modules.catalog_color import color,resolved
 
 class Enrichment(unittest.TestCase):
@@ -37,7 +38,7 @@ class Enrichment(unittest.TestCase):
         self.assertEqual(result['art']['poster'],'base.png');self.assertEqual(result['ratings'],{})
     def test_failed_source_and_missing_addon_leave_original_item_usable(self):
         item={'title':'Film','year':2000,'file':'plugin://provider/play'}
-        with patch('modules.catalog_enrichment.rpc',side_effect=RuntimeError),patch.object(kodi.xbmc,'getCondVisibility',return_value=True):self.assertEqual(enrich(item),item)
+        with patch('modules.catalog_enrichment.rpc',side_effect=RuntimeError),patch.object(kodi.xbmc,'getCondVisibility',return_value=True):self.assertEqual(enrich(item),normalize(item))
     def test_color_uses_actual_kodi_cache_mapping_and_white_fallback(self):
         p=kodi.PROFILE/'Thumbnails/a/cached.jpg';p.parent.mkdir(parents=True,exist_ok=True)
         Image.new('RGB',(40,40),(130,130,130)).save(p)

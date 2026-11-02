@@ -101,14 +101,14 @@ class CatalogNavigation(unittest.TestCase):
             self.assertFalse(vod.page("next")); action.assert_not_called()
 
     def test_reopening_an_active_catalog_keeps_selected_item_and_scroll(self):
-        with patch("xbmc.getCondVisibility", return_value=True), patch("xbmc.executebuiltin") as action:
+        with patch("xbmc.getCondVisibility", side_effect=lambda q:q!='Container.IsUpdating'), patch("xbmc.executebuiltin") as action:
             self.assertTrue(vod.activate_catalog())
             action.assert_not_called()
 
     def test_activation_does_not_replace_other_library_or_file_windows(self):
         with patch("xbmc.getCondVisibility", return_value=False), patch("xbmc.executebuiltin") as action:
             self.assertFalse(vod.activate_catalog()); action.assert_not_called()
-        def visible(query): return query != "Control.IsVisible(57)"
+        def visible(query): return query not in {"Control.IsVisible(57)",'Container.IsUpdating'}
         with patch("xbmc.getCondVisibility", side_effect=visible), patch("xbmc.executebuiltin") as action:
             self.assertTrue(vod.activate_catalog()); action.assert_called_once_with("Container.SetViewMode(57)")
 
