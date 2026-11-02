@@ -42,7 +42,7 @@ class PartialLoad(unittest.TestCase):
             w.p('clearlogo',item['art']['clearlogo'])
             raise TypeError('DO_NOT_LOG_PROVIDER_VALUE')
         w.update_hero=broken
-        with patch.object(window_module,'listitem',side_effect=lambda i:i),patch.object(kodi.xbmc,'log') as log:
+        with patch.object(window_module,'listitem',side_effect=lambda i,*args:i),patch.object(kodi.xbmc,'log') as log:
             w.tick()
             self.assertEqual(len(w.native),3)
             self.assertEqual(w.props['catalog.message'],'')
@@ -63,7 +63,7 @@ class PartialLoad(unittest.TestCase):
         self.assertEqual(w.native,[])
     def test_empty_catalog_has_valid_back_focus(self):
         w=self.window([])
-        with patch.object(window_module,'listitem',side_effect=lambda i:i):w.tick()
+        with patch.object(window_module,'listitem',side_effect=lambda i,*args:i):w.tick()
         self.assertEqual(w.focus_pending,5701)
     def test_optional_rating_failure_cannot_escape_navigation(self):
         w=self.window([]);w.pending=None

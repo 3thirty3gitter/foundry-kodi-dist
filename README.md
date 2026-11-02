@@ -1,6 +1,14 @@
 # Foundry Kodi source
 
-Current release: **Build and Bootstrap 1.2.12 / skin 1.2.1 / Helper 1.1.4 / Wallpapers 1.1.0**.
+Unpublished review candidate: **Build and Bootstrap 1.2.13 / skin 1.2.2 / Helper 1.1.5 / Wallpapers 1.1.0**.
+## Unpublished catalog source-parity candidate
+
+StreamPilot reference is pinned to f26b7f982af2746811155ddbd0949d403014e6f8. This local candidate removes the normal focus frame, uses an explicit Home-window owner for the catalog glow color, and samples cached fanart first (poster fallback) off the GUI thread, with the source-defined white fallback and bounded cache-readiness retries. Focus scale, three existing glow layer geometries and every unrelated control remain unchanged. Android shadow rasterization and Kodi blurred textures are different renderers; equal parameters are not pixel parity.
+
+Metadata enrichment uses native VideoLibrary details for library items and the installed TMDbHelper documented details route for known IDs or an exact title/year match. It preserves playback URLs and native list position, merges nonblank metadata/artwork, and labels the singular rating as TMDb only when it comes from that documented endpoint. Unknown provider ratings are not relabelled. Work is bounded to two concurrent lookups and nearby titles, with window-local bounded caches. No new secrets or credentials are read by Foundry. OMDb remains disabled until the user configures it.
+
+Live Shield/provider success and identical artwork selection remain unverified. The isolated profile has no configured TMDbHelper/provider listing. Native public-film artwork differs from the TMDb variant in the committed reference; those captures verify bindings and focus behavior, not exact end-to-end parity. Native screenshots still show white glow despite changing computed colors; visual tint is unresolved. Header wording remains pending a faithful MEDIA CENTER lettering asset. This candidate is not release-ready. Publication is held.
+
 
 Permanent Kodi File Manager source: https://3thirty3gitter.github.io/foundry-kodi-dist/
 

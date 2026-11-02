@@ -1,6 +1,6 @@
 {
-  "release": "1.2.12",
-  "skin": "1.2.1",
+  "release": "1.2.13",
+  "skin": "1.2.2",
   "packages": [
     {
       "id": "repository.foundry",
@@ -25,31 +25,31 @@
     },
     {
       "id": "skin.foundry",
-      "version": "1.2.1",
-      "path": "skin.foundry/skin.foundry-1.2.1.zip",
-      "sha256": "f4679bbe6f20e791bab3f5d00d31bf68dc57c78d445b6e859ebb53ecbb8cbc40",
-      "size": 36320838
+      "version": "1.2.2",
+      "path": "skin.foundry/skin.foundry-1.2.2.zip",
+      "sha256": "83309a7ac8541003eff0dda2427a51b84fbe83e8f57512b898115a179294ad0a",
+      "size": 36321557
     },
     {
       "id": "script.foundry.helper",
-      "version": "1.1.4",
-      "path": "script.foundry.helper/script.foundry.helper-1.1.4.zip",
-      "sha256": "0377d6ae95a4a5a683cf4d05a78f4535e1d2741a8b83182990f253e72f70a394",
-      "size": 836551
+      "version": "1.1.5",
+      "path": "script.foundry.helper/script.foundry.helper-1.1.5.zip",
+      "sha256": "440ef4d3c390bfb49e877e7d318bfba676b5f5547eea5122be0b7a23f20bdf30",
+      "size": 840403
     },
     {
       "id": "script.program.foundry-build",
-      "version": "1.2.12",
-      "path": "script.program.foundry-build/script.program.foundry-build-1.2.12.zip",
-      "sha256": "7e2e9983fa1f8047e60497699cc1ec7c31228c35dac4196588667f0bf58f9d3b",
+      "version": "1.2.13",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.2.13.zip",
+      "sha256": "2a63c492a50193c5362b54a98fb2570b4a86db8aaf2f6579faeff9a5edac32fe",
       "size": 2597
     },
     {
       "id": "script.program.foundry-bootstrap",
-      "version": "1.2.12",
-      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.2.12.zip",
-      "sha256": "38187ca279958849adf9ba7483598a670a40935d90ec7815c92b38a8a76f49ac",
-      "size": 852
+      "version": "1.2.13",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.2.13.zip",
+      "sha256": "c3f11ef1fd51f5026127c538a4c1bde00052288873078e2bd63dbb18762fc5ba",
+      "size": 853
     }
   ]
 }
