@@ -29,7 +29,7 @@ class RichRelease(unittest.TestCase):
         self.assertEqual(hashlib.sha256(p.read_bytes()).hexdigest(),'af0f3ca0d1c2e50387d1ad5c0bc5988a2e6a17edbe038360ff3a2e601c56ef8e')
     def test_home_header_widgets_and_fonts_remain_exactly_as_1_2_10(self):
         with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.1.9.zip') as z:
-            for path in ['xml/Home.xml','xml/Includes_Home.xml','xml/Includes_Animations.xml','xml/Variables_Artwork.xml','xml/Font.xml','media/foundry-logo-traced.png']:
+            for path in ['xml/Home.xml','xml/Includes_Home.xml','xml/Includes_Animations.xml','xml/Variables_Artwork.xml','xml/Font.xml']:
                 data=(SKIN/path).read_bytes()
                 if path=='xml/Home.xml':data=data.replace(b'<movement>6</movement>',b'<movement>7</movement>',1)
                 self.assertEqual(data,z.read('skin.foundry/'+path),path)

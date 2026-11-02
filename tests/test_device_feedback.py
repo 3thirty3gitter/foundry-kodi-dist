@@ -96,13 +96,22 @@ class DeviceFeedback(unittest.TestCase):
         search = ET.parse(SKIN/'xml/Custom_1121_SearchResults.xml')
         self.assertTrue(search.findall(".//include[@content='Animation_Widget_Poster_Slide']"))
         self.assertEqual(self.shared.findtext("include[@name='WidgetGroupListCommon']/height"),'33000')
-    def test_traced_lettering_preserves_original_graphic_and_header_geometry(self):
+    def test_media_center_lettering_preserves_original_graphic_source_and_geometry(self):
         from PIL import ImageChops
+        import base64,hashlib
         old=Image.open(SKIN/'media/foundry-logo.png').convert('RGBA')
         new=Image.open(SKIN/'media/foundry-logo-traced.png').convert('RGBA')
         self.assertEqual(new.size,(3040,920))
+        # The approved SVG export uses a different raster sampler than the old
+        # Pillow upscale. Verify the actual unchanged embedded graphic bytes
+        # and original FOUNDRY path, rather than demand identical antialiasing.
+        svg=ET.parse(SKIN/'resources/foundry-header-media-center.svg').getroot()
+        icon=next(n for n in svg.iter() if n.tag.endswith('image'))
+        href=next(v for k,v in icon.attrib.items() if k.endswith('href'))
+        self.assertEqual(base64.b64decode(href.split(',')[1]),(SKIN/'media/foundry-logo.png').read_bytes())
+        main=next(n for n in svg.iter() if n.get('id')=='main')
+        self.assertEqual(hashlib.sha256(main.get('d').encode()).hexdigest(),'4ecf6ad751a3076d9c6810b040c6095efdf176ca3560599684d4358c49cbdac2')
         expected=old.resize(new.size,Image.Resampling.LANCZOS)
-        self.assertIsNone(ImageChops.difference(expected.crop((0,0,1140,920)),new.crop((0,0,1140,920))).getbbox())
         self.assertIsNotNone(ImageChops.difference(expected.crop((1140,0,3040,920)),new.crop((1140,0,3040,920))).getbbox())
     def test_osd_keeps_all_foreground_controls_and_actions(self):
         with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.1.7.zip') as z:

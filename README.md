@@ -3,11 +3,11 @@
 Unpublished review candidate: **Build and Bootstrap 1.2.13 / skin 1.2.2 / Helper 1.1.5 / Wallpapers 1.1.0**.
 ## Unpublished catalog source-parity candidate
 
-StreamPilot reference is pinned to f26b7f982af2746811155ddbd0949d403014e6f8. This local candidate removes the normal focus frame, uses an explicit Home-window owner for the catalog glow color, and samples cached fanart first (poster fallback) off the GUI thread, with the source-defined white fallback and bounded cache-readiness retries. Focus scale, three existing glow layer geometries and every unrelated control remain unchanged. Android shadow rasterization and Kodi blurred textures are different renderers; equal parameters are not pixel parity.
+StreamPilot reference is pinned to f26b7f982af2746811155ddbd0949d403014e6f8. This local candidate removes the normal focus frame, pre-tints the original glow alpha mask off the GUI thread and binds the resulting file as native item artwork, and samples cached fanart first (poster fallback) off the GUI thread, with the source-defined white fallback and bounded cache-readiness retries. Focus scale, three existing glow layer geometries and every unrelated control remain unchanged. Android shadow rasterization and Kodi blurred textures are different renderers; equal parameters are not pixel parity.
 
 Metadata enrichment uses native VideoLibrary details for library items and the installed TMDbHelper documented details route for known IDs or an exact title/year match. It preserves playback URLs and native list position, merges nonblank metadata/artwork, and labels the singular rating as TMDb only when it comes from that documented endpoint. Unknown provider ratings are not relabelled. Work is bounded to two concurrent lookups and nearby titles, with window-local bounded caches. No new secrets or credentials are read by Foundry. OMDb remains disabled until the user configures it.
 
-Live Shield/provider success and identical artwork selection remain unverified. The isolated profile has no configured TMDbHelper/provider listing. Native public-film artwork differs from the TMDb variant in the committed reference; those captures verify bindings and focus behavior, not exact end-to-end parity. Native screenshots still show white glow despite changing computed colors; visual tint is unresolved. Header wording remains pending a faithful MEDIA CENTER lettering asset. This candidate is not release-ready. Publication is held.
+Live Shield/provider success and identical artwork selection remain unverified. The isolated profile has no configured TMDbHelper/provider listing. Native public-film artwork differs from the TMDb variant in the committed reference; those captures verify bindings and focus behavior, not exact end-to-end parity. Native multi-item pixel checks now verify the corrected colored glow; deferred container invalidation prevents stale white pixels without a list reset or focus change. Final rail geometry is unchanged. The approved MEDIA CENTER header is integrated at the original footprint. SVG icon bytes/main path are unchanged; raster sampling differs slightly from the prior upscale. Live provider/Shield parity remains unverified. Publication is held.
 
 
 Permanent Kodi File Manager source: https://3thirty3gitter.github.io/foundry-kodi-dist/
@@ -25,7 +25,7 @@ Native Kodi 21.3 Windows fixtures check all wallpaper pairs, both transition dir
     python tools/build_release.py --skin ../skin.foundry-nimbus --helper ../script.foundry.helper
     python -m unittest discover -s tests -v
 
-Packaging rejects missing/modified approved pairs, stale widget revisions and mismatched dimensions. `release.json` records versions, sizes and SHA256 checksums. The OSD resource, Helper and repository package bytes are unchanged.
+Packaging rejects missing/modified approved pairs, stale widget revisions and mismatched dimensions. `release.json` records versions, sizes and SHA256 checksums. The OSD resource and repository package bytes are unchanged; the Helper is version 1.1.5.
 
 Kodi installs the following core add-ons using its dependency manager. SlyGuy Trailers installs when Foundry Build runs, after its repository has been prepared:
 

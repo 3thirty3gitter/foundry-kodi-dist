@@ -5,7 +5,7 @@ from unittest.mock import patch
 from PIL import Image
 import test_release as kodi
 from modules.catalog_enrichment import enrich,lookup,matching,merge
-from modules.catalog_color import color
+from modules.catalog_color import color,resolved
 
 class Enrichment(unittest.TestCase):
     def test_ambiguous_title_alone_never_queries_provider(self):
@@ -44,6 +44,61 @@ class Enrichment(unittest.TestCase):
         with patch('modules.catalog_color.rpc',return_value={'textures':[{'cachedurl':'a/cached.jpg'}]}):
             self.assertEqual(color('https://image.example/art.jpg'),'FFFFFFFF')
         with patch('modules.catalog_color.rpc',return_value={'textures':[]}):self.assertIsNone(color('https://image.example/not-cached.jpg'))
+    def test_resolved_effect_tints_rgb_and_preserves_source_alpha_and_bytes(self):
+        import hashlib
+        template=Path(kodi.translate('special://skin/media/streampilot/catalog-glow.png'))
+        before=template.read_bytes()
+        with patch('modules.catalog_color.color',return_value='FF0036C7'):
+            value,path=resolved('fixture://known-color')
+            second=resolved('fixture://known-color')
+        self.assertEqual(value,'FF0036C7');self.assertEqual(second,(value,path))
+        self.assertEqual(template.read_bytes(),before)
+        with Image.open(template) as source,Image.open(path) as effect:
+            self.assertEqual(source.size,effect.size)
+            self.assertEqual(source.convert('RGBA').getchannel('A').tobytes(),effect.getchannel('A').tobytes())
+            self.assertEqual(effect.getpixel((effect.width//2,effect.height//2))[:3],(0,54,199))
+    def test_missing_color_does_not_create_or_publish_an_effect(self):
+        with patch('modules.catalog_color.color',return_value=None):self.assertIsNone(resolved('fixture://not-cached'))
+    def test_native_artwork_redraw_restores_width_even_if_invalidation_fails(self):
+        import importlib
+        from unittest.mock import Mock
+        window=importlib.import_module('modules.catalog_window')
+        w=object.__new__(window.CatalogWindow);control=Mock();control.getWidth.return_value=1920
+        w.getControl=lambda cid:control
+        window.CatalogWindow.redraw_catalog_control(w,50)
+        self.assertEqual([c.args for c in control.setWidth.call_args_list],[(1921,),(1920,)])
+        control.reset_mock();control.setWidth.side_effect=[RuntimeError('controlled'),None]
+        with self.assertRaises(RuntimeError):window.CatalogWindow.redraw_catalog_control(w,50)
+        self.assertEqual(control.setWidth.call_args_list[-1].args,(1920,))
+    def test_async_artwork_redraw_is_deferred_and_coalesced(self):
+        import importlib
+        window=importlib.import_module('modules.catalog_window')
+        w=object.__new__(window.CatalogWindow);now=[10.0];w.clock=lambda:now[0];w.pending_artwork_redraw={};calls=[]
+        w.redraw_catalog_control=lambda cid:calls.append(cid)
+        w.schedule_artwork_redraw(50);now[0]=10.1;w.schedule_artwork_redraw(50);w.flush_artwork_redraw()
+        self.assertEqual(calls,[])
+        now[0]=10.3;w.flush_artwork_redraw();w.flush_artwork_redraw()
+        self.assertEqual(calls,[50]);self.assertEqual(w.pending_artwork_redraw,{})
+    def test_async_metadata_updates_native_year_ids_and_tv_type_without_playback_change(self):
+        import importlib
+        from unittest.mock import Mock
+        window=importlib.import_module('modules.catalog_window');entry=Mock()
+        window.apply_info(entry,{'title':'TV title','type':'unknown','year':2020,'imdbnumber':'tt12345','genre':['Drama',None],'file':'plugin://original/play'},'TV Shows')
+        info=entry.setInfo.call_args.args[1]
+        self.assertEqual((info['year'],info['imdbnumber'],info['mediatype']),(2020,'tt12345','tvshow'))
+        self.assertEqual(info['genre'],['Drama']);entry.setPath.assert_not_called()
+    def test_optional_rating_owner_matches_the_native_label_year_and_type(self):
+        import importlib
+        window=importlib.import_module('modules.catalog_window')
+        item={'title':'Clean title','label':'[B]Provider label[/B]','type':'unknown','year':2021}
+        self.assertEqual(window.rating_owner(item,'TV Shows'),('Clean title','2021','tvshow'))
+    def test_approved_media_center_header_bytes_and_home_geometry(self):
+        import hashlib
+        skin=Path(__file__).resolve().parents[2]/'skin.foundry-nimbus'
+        self.assertEqual(hashlib.sha256((skin/'media/foundry-logo-traced.png').read_bytes()).hexdigest(),'e60c91fa4083614177c6600be56a47257c1bf2be384f060df14d6c2cdded1f99')
+        home=E.parse(skin/'xml/Home.xml')
+        control=next(c for c in home.iter('control') if c.findtext('texture')=='foundry-logo-traced.png')
+        self.assertEqual([control.findtext(t) for t in ('left','top','width','height')],['60','40','380','115'])
     def test_catalog_layout_changes_are_only_outline_removal_and_context_correct_color(self):
         root=Path(__file__).resolve().parents[1]
         with zipfile.ZipFile(root/'skin.foundry/skin.foundry-1.2.1.zip') as z:before=E.fromstring(z.read('skin.foundry/xml/script-foundry-vod.xml'))
@@ -52,7 +107,8 @@ class Enrichment(unittest.TestCase):
                 if child.tag=='control' and child.findtext('texture')=='streampilot/catalog-frame.png':parent.remove(child)
             texture=parent.find('texture')
             if texture is not None and texture.text=='streampilot/catalog-glow.png':
-                texture.attrib.pop('colordiffuse');node=E.Element('colordiffuse');node.text='$INFO[Window(Home).Property(foundry.catalog.accent)]';parent.insert(list(parent).index(texture),node)
+                texture.attrib.pop('colordiffuse');texture.text='$INFO[ListItem.Art(foundry.catalog.glow)]'
+        before.find(".//control[@id='50']/focusedlayout").set('infoupdate','100')
         after=E.parse(root.parent/'skin.foundry-nimbus/xml/script-foundry-vod.xml').getroot()
         def normalized(n):return n.tag,n.attrib,(n.text or '').strip(),[normalized(c) for c in n]
         self.assertEqual(normalized(before),normalized(after))

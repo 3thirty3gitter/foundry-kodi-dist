@@ -27,15 +27,15 @@
       "id": "skin.foundry",
       "version": "1.2.2",
       "path": "skin.foundry/skin.foundry-1.2.2.zip",
-      "sha256": "83309a7ac8541003eff0dda2427a51b84fbe83e8f57512b898115a179294ad0a",
-      "size": 36321557
+      "sha256": "6c529f61ff03867f961d8584f24a08d95a19df028f92489cf7f71ed8a3a189a5",
+      "size": 36426701
     },
     {
       "id": "script.foundry.helper",
       "version": "1.1.5",
       "path": "script.foundry.helper/script.foundry.helper-1.1.5.zip",
-      "sha256": "440ef4d3c390bfb49e877e7d318bfba676b5f5547eea5122be0b7a23f20bdf30",
-      "size": 840403
+      "sha256": "f80d1b181fcd10e9ab16fb54b87af25918e623ec35da06009f72366e61fdf28a",
+      "size": 841731
     },
     {
       "id": "script.program.foundry-build",
