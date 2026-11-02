@@ -95,6 +95,14 @@ def main():
 <p>The skin-only ZIP updates the interface when a provider dependency is blocking the full build installation.</p>
 </body></html>
 ''', newline="\n")
+    (root / "skin.html").write_text('''<!doctype html>
+<html><head><meta charset="utf-8"><title>Foundry Skin</title></head>
+<body><h1>Foundry ''' + skin["version"] + '''</h1>
+<p>Install the Foundry Repository first so Kodi can install required dependencies.</p>
+<ul><li><a href="''' + filename + '''">Foundry Repository</a></li>
+<li><a href="''' + skin["path"] + '''">Foundry skin ''' + skin["version"] + ''' ZIP</a></li></ul>
+</body></html>
+''', newline="\n")
     print(json.dumps(packages, indent=2))
 
 

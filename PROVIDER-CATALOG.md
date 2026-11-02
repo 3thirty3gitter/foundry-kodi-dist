@@ -1,4 +1,4 @@
-# Provider-neutral Foundry catalog (unpublished candidate)
+# Provider-neutral Foundry catalog (Build 1.2.13)
 
 Foundry uses the same native catalog window, focus scale, artwork-colour glow,
 metadata bindings and navigation controller for supported video listings. Routing

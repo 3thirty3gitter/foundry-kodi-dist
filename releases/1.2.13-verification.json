@@ -1,0 +1,89 @@
+{
+  "verification_date": "2026-11-02",
+  "status": "published_downloads_verified_target_device_checks_pending",
+  "release": "1.2.13",
+  "skin": "1.2.2",
+  "helper": "1.1.5",
+  "source_url": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+  "distribution_commit_verified": "ac6dbc4a4bd7d390a9ddf5b0bde1fcc10eb02379",
+  "source_commits": {
+    "skin.foundry-nimbus": "4f279a8ca8cf45f14559455abc637bdb8152a7f8",
+    "script.foundry.helper": "4870af52093575f1a3bb66d1c11bdc759b1403b2"
+  },
+  "validation": {
+    "regression_tests_passed": 172,
+    "test_inputs": "Skin and helper extracted from the checksum-verified published ZIPs; mocked Kodi APIs",
+    "zip_integrity": "all seven current packages pass",
+    "deterministic_rebuild": "all seven package sizes and SHA-256 checksums unchanged",
+    "public_release_manifest": "matches checked-out release.json",
+    "public_addon_feed": "matches checked-out addons.xml and its MD5",
+    "public_source_index": "links to current repository, build and skin"
+  },
+  "public_packages": [
+    {
+      "id": "repository.foundry",
+      "version": "1.2.0",
+      "status": 200,
+      "size": 762,
+      "sha256": "2a83d7d4ec2ac362fed010005ec55b6c87aee40a393a7fd82454e7137b48ffcc",
+      "verified": true
+    },
+    {
+      "id": "resource.images.foundry.wallpapers",
+      "version": "1.1.0",
+      "status": 200,
+      "size": 20150822,
+      "sha256": "dfc8a154817e66ee9651200baf6fff251bd82f6d1e97f20126d9c5f15db6a869",
+      "verified": true
+    },
+    {
+      "id": "resource.images.foundry.osd",
+      "version": "1.0.0",
+      "status": 200,
+      "size": 3770026,
+      "sha256": "37ec361ab6b80bb5557ca70512263de24dc9decdbe62e531f3e5f4adb3b4987b",
+      "verified": true
+    },
+    {
+      "id": "skin.foundry",
+      "version": "1.2.2",
+      "status": 200,
+      "size": 36426701,
+      "sha256": "6c529f61ff03867f961d8584f24a08d95a19df028f92489cf7f71ed8a3a189a5",
+      "verified": true
+    },
+    {
+      "id": "script.foundry.helper",
+      "version": "1.1.5",
+      "status": 200,
+      "size": 844540,
+      "sha256": "40d9e0a79e77065482096a2ee4880be28383641d60422d56ae7aab06b9e53233",
+      "verified": true
+    },
+    {
+      "id": "script.program.foundry-build",
+      "version": "1.2.13",
+      "status": 200,
+      "size": 2597,
+      "sha256": "2a63c492a50193c5362b54a98fb2570b4a86db8aaf2f6579faeff9a5edac32fe",
+      "verified": true
+    },
+    {
+      "id": "script.program.foundry-bootstrap",
+      "version": "1.2.13",
+      "status": 200,
+      "size": 853,
+      "sha256": "c3f11ef1fd51f5026127c538a4c1bde00052288873078e2bd63dbb18762fc5ba",
+      "verified": true
+    }
+  ],
+  "followup_changes": [
+    "Correct stale unpublished/held status and old installation versions in documentation",
+    "Point skin.html to the current skin and generate it with future releases"
+  ],
+  "limitations": [
+    "No Shield is connected to this environment; target-device navigation, playback, logo sharpness and exact StreamPilot artwork parity are unverified",
+    "Provider payload fixtures do not establish live success for every installed add-on",
+    "OMDb remains disabled until the user configures a key"
+  ]
+}
