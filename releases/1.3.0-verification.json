@@ -1,0 +1,168 @@
+{
+  "verification_time_utc": "2026-11-05T04:40:43.021677+00:00",
+  "status": "published_downloads_verified_target_device_checks_pending",
+  "release": "1.3.0",
+  "skin": "1.3.0",
+  "helper": "1.2.0",
+  "source_url": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+  "distribution_commit_verified": "5eb219da517cadc424cdf38e8a0c6db7f078e98e",
+  "source_commits": {
+    "skin.foundry-nimbus": "c14f20add6d719a3b7ba675e156bfcf9e336d1de",
+    "script.foundry.helper": "e9c64ec72122d17d21854f3b4e4962a7a8e62938"
+  },
+  "validation": {
+    "regression_tests_passed": 212,
+    "test_inputs": "Pinned source snapshots and extracted package ZIPs; mocked Kodi APIs",
+    "deterministic_rebuild": "All seven package sizes and SHA-256 checksums unchanged",
+    "public_release_manifest_and_feed": "Byte-identical on Pages and raw GitHub",
+    "public_source_and_root_installers": "Byte-identical to committed release",
+    "public_package_downloads": "All seven ZIPs and SHA-256 sidecars verified on both hosts"
+  },
+  "public_packages": [
+    {
+      "id": "repository.foundry",
+      "version": "1.2.0",
+      "path": "repository.foundry/repository.foundry-1.2.0.zip",
+      "sha256": "2a83d7d4ec2ac362fed010005ec55b6c87aee40a393a7fd82454e7137b48ffcc",
+      "size": 762,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "resource.images.foundry.wallpapers",
+      "version": "1.1.0",
+      "path": "resource.images.foundry.wallpapers/resource.images.foundry.wallpapers-1.1.0.zip",
+      "sha256": "dfc8a154817e66ee9651200baf6fff251bd82f6d1e97f20126d9c5f15db6a869",
+      "size": 20150822,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "resource.images.foundry.osd",
+      "version": "1.0.0",
+      "path": "resource.images.foundry.osd/resource.images.foundry.osd-1.0.0.zip",
+      "sha256": "37ec361ab6b80bb5557ca70512263de24dc9decdbe62e531f3e5f4adb3b4987b",
+      "size": 3770026,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "skin.foundry",
+      "version": "1.3.0",
+      "path": "skin.foundry/skin.foundry-1.3.0.zip",
+      "sha256": "2f58f61a5656bb7f131b4255cbb0bc01e71094d585380da3dd97cdc459293122",
+      "size": 36429095,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.foundry.helper",
+      "version": "1.2.0",
+      "path": "script.foundry.helper/script.foundry.helper-1.2.0.zip",
+      "sha256": "fb4337aa49887e72051624dfff46ebd7052e0642c3b75c079faae37a0e04ecb1",
+      "size": 858471,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.program.foundry-build",
+      "version": "1.3.0",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.3.0.zip",
+      "sha256": "d959a31626a8b0c52cc9a2456d4809e67493501b01b2270f558a74ed0b596185",
+      "size": 2595,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.program.foundry-bootstrap",
+      "version": "1.3.0",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.3.0.zip",
+      "sha256": "de282ab1bf642bcf8fbd1be689b1a2133098b5fe2056cce9ac5aaae76267b9f3",
+      "size": 848,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "repository.foundry",
+      "version": "1.2.0",
+      "path": "repository.foundry/repository.foundry-1.2.0.zip",
+      "sha256": "2a83d7d4ec2ac362fed010005ec55b6c87aee40a393a7fd82454e7137b48ffcc",
+      "size": 762,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "resource.images.foundry.wallpapers",
+      "version": "1.1.0",
+      "path": "resource.images.foundry.wallpapers/resource.images.foundry.wallpapers-1.1.0.zip",
+      "sha256": "dfc8a154817e66ee9651200baf6fff251bd82f6d1e97f20126d9c5f15db6a869",
+      "size": 20150822,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "resource.images.foundry.osd",
+      "version": "1.0.0",
+      "path": "resource.images.foundry.osd/resource.images.foundry.osd-1.0.0.zip",
+      "sha256": "37ec361ab6b80bb5557ca70512263de24dc9decdbe62e531f3e5f4adb3b4987b",
+      "size": 3770026,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "skin.foundry",
+      "version": "1.3.0",
+      "path": "skin.foundry/skin.foundry-1.3.0.zip",
+      "sha256": "2f58f61a5656bb7f131b4255cbb0bc01e71094d585380da3dd97cdc459293122",
+      "size": 36429095,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.foundry.helper",
+      "version": "1.2.0",
+      "path": "script.foundry.helper/script.foundry.helper-1.2.0.zip",
+      "sha256": "fb4337aa49887e72051624dfff46ebd7052e0642c3b75c079faae37a0e04ecb1",
+      "size": 858471,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.program.foundry-build",
+      "version": "1.3.0",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.3.0.zip",
+      "sha256": "d959a31626a8b0c52cc9a2456d4809e67493501b01b2270f558a74ed0b596185",
+      "size": 2595,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.program.foundry-bootstrap",
+      "version": "1.3.0",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.3.0.zip",
+      "sha256": "de282ab1bf642bcf8fbd1be689b1a2133098b5fe2056cce9ac5aaae76267b9f3",
+      "size": 848,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    }
+  ],
+  "limitations": [
+    "Live TMDb/OMDb calls require personal profile keys and remain unverified",
+    "No Shield is connected; target-device rendering, navigation and playback remain unverified",
+    "Add-on custom windows and unidentified action listings keep their own behavior"
+  ]
+}
