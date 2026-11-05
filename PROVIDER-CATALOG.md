@@ -1,9 +1,10 @@
-# Provider-neutral Foundry catalog (Build 1.2.13)
+# Provider-neutral Foundry catalog (Build 1.3.0)
 
 Foundry uses the same native catalog window, focus scale, artwork-colour glow,
 metadata bindings and navigation controller for supported video listings. Routing
-does not select a skin by add-on name. TMDbHelper is an optional documented
-metadata service, not a required source of playable listings.
+does not select a skin by add-on name. TMDbHelper remains an optional metadata fallback. Direct profile-configured
+TMDb and OMDb clients provide the shared metadata service; no particular add-on
+is required as the source of playable listings.
 
 ## Adoption and safe fallback
 
@@ -37,8 +38,10 @@ methods and supported field sets. Provider IDs are never used as Kodi DB IDs.
 Native library search requests the file path so results retain playback identity.
 TV-show search results browse Kodi's native season node using the verified
 library TV-show ID while retaining the original physical path in metadata.
-Optional TMDbHelper enrichment uses valid IMDb/TMDb IDs, otherwise exact
-title/year disambiguation; conflicting returned IDs are rejected. No arbitrary
+The shared direct clients use valid IMDb/TMDb IDs, otherwise exact
+title/year disambiguation; conflicting returned IDs and season/episode ownership
+are rejected. Results are cached across surfaces and Kodi Python interpreters.
+The existing TMDbHelper enrichment route remains a fallback. No arbitrary
 provider URL parameters are parsed. The existing bounded asynchronous jobs,
 item-identity guards, metadata debounce and in-place updates preserve selection.
 
@@ -60,7 +63,8 @@ the links the add-on actually returns.
 Artwork and named ratings still require the source or configured metadata
 service to supply them. Desktop payload fixtures and native rendering do not
 prove live metadata availability across every installed add-on or on Shield.
-No add-on installation, credentials or provider-specific configuration is added.
+Personal API keys are entered once in Foundry Helper settings. No embedded
+credentials or provider-specific playback configuration is added.
 
 ## Primary-source contracts
 

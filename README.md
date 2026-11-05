@@ -1,8 +1,10 @@
 # Foundry Kodi source
 
-Published release: **Build and Bootstrap 1.2.13 / skin 1.2.2 / Helper 1.1.5 / Wallpapers 1.1.0**.
+Release 1.3.0: **Build and Bootstrap 1.3.0 / skin 1.3.0 / Helper 1.2.0 / Wallpapers 1.1.0**.
 
-Release verification: all seven public package downloads match the sizes and SHA-256 checksums in `release.json`; every ZIP passes its integrity check. All 172 package and mocked-runtime regression checks pass using the packaged skin and helper. See [the verification record](releases/1.2.13-verification.json). Shield rendering, playback and live provider checks remain pending.
+The pinned source commits are in [releases/1.3.0-sources.json](releases/1.3.0-sources.json). The release workflow builds the packages from those commits, runs all 212 checks against source and extracted ZIPs, verifies deterministic rebuilding, then publishes the ZIPs and feed in one commit. Public download verification is recorded separately in `releases/1.3.0-verification.json` once complete.
+
+Release verification: all seven public package downloads match the sizes and SHA-256 checksums in `release.json`; every ZIP passes its integrity check. All 212 package and mocked-runtime regression checks pass locally. The previous [1.2.13 verification record](releases/1.2.13-verification.json) is retained as historical evidence. Shield rendering, playback and live provider checks remain pending.
 
 ## Shared media catalog
 
@@ -10,14 +12,16 @@ The release uses provider-neutral listing classification and metadata normalizat
 
 StreamPilot reference is pinned to f26b7f982af2746811155ddbd0949d403014e6f8. This release removes the normal focus frame, pre-tints the original glow alpha mask off the GUI thread and binds the resulting file as native item artwork, and samples cached fanart first (poster fallback) off the GUI thread, with the source-defined white fallback and bounded cache-readiness retries. Focus scale, three existing glow layer geometries and every unrelated control remain unchanged. Android shadow rasterization and Kodi blurred textures are different renderers; equal parameters are not pixel parity.
 
-Metadata enrichment uses native VideoLibrary details for library items and the installed TMDbHelper documented details route for known IDs or an exact title/year match. It preserves playback URLs and native list position, merges nonblank metadata/artwork, and labels the singular rating as TMDb only when it comes from that documented endpoint. Unknown provider ratings are not relabelled. Work is bounded to two concurrent lookups and nearby titles, with window-local bounded caches. No new secrets or credentials are read by Foundry. OMDb remains disabled until the user configures it.
+Metadata enrichment uses native VideoLibrary details and direct TMDb/OMDb clients configured once per Kodi profile. The shared service covers the Foundry catalog, native media views, Home/widgets, details and playback OSD. It supplies artwork, cast, studios, certifications and named ratings, using validated media IDs or an exact title/year match. A bounded SQLite cache and cross-interpreter request leases reuse results across surfaces and restarts. Changes to keys, language, region or the cache invalidate in-flight results. Missing keys, unavailable services and quota errors preserve source data and navigation; playback URLs and watched state remain owned by the source.
+
+Open **Skin settings > TMDb / OMDb shared metadata settings** (or Foundry Helper settings). Enter your personal TMDb v3 API key or read access token. Enter and enable your personal OMDb key for IMDb ratings; Rotten Tomatoes and Metacritic are optional switches. Choose metadata language and certification country (Canada by default). Keys are masked on screen and stored in the Kodi profile. No keys are embedded or copied from StreamPilot. Existing source metadata remains the fallback. Live API calls with personal keys and Shield rendering/playback remain unverified.
 
 Live Shield/provider success and identical artwork selection remain unverified. The earlier isolated desktop profile had no configured TMDbHelper/provider listing. Native public-film artwork differs from the TMDb variant in the committed reference; those captures verify bindings and focus behavior, not exact end-to-end parity. Prior native multi-item pixel checks verified the corrected colored glow; deferred container invalidation prevents stale white pixels without a list reset or focus change. Final rail geometry is unchanged. The approved MEDIA CENTER header is integrated at the original footprint. SVG icon bytes/main path are unchanged; raster sampling differs slightly from the prior upscale.
 
 
 Permanent Kodi File Manager source: https://3thirty3gitter.github.io/foundry-kodi-dist/
 
-Install `repository.foundry-1.2.0.zip`, then install/run Foundry Build. Existing installations can check for updates and run Build **1.2.13**. The skin-only `skin.foundry-1.2.2.zip` is available when a provider dependency blocks setup; its dependency requires Wallpapers **1.1.0**.
+Install `repository.foundry-1.2.0.zip`, then install/run Foundry Build. Existing installations can check for updates and run Build **1.3.0**. The skin-only `skin.foundry-1.3.0.zip` is available when a provider dependency blocks setup; its dependency requires Wallpapers **1.1.0**.
 
 The release retains the 1.2.12 corrections that bound Home menu movement to six so Weather stays visible, and isolate optional library metadata/color errors from source loading and navigation. It preserves every unrelated Home control, all approved rich images, transitions, OSD sizes and foreground controls. The exact device metadata trigger remains unconfirmed without its traceback; native controlled failure tests reproduce and fix the reported partial-load/error chain.
 

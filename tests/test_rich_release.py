@@ -1,6 +1,6 @@
 """Approved rich pairs and the background-only OSD change are release invariants."""
 from pathlib import Path
-import copy,hashlib,json,sys,tempfile,unittest,xml.etree.ElementTree as E,zipfile
+import copy,hashlib,json,re,sys,tempfile,unittest,xml.etree.ElementTree as E,zipfile
 from PIL import Image
 import test_release
 
@@ -32,12 +32,16 @@ class RichRelease(unittest.TestCase):
             for path in ['xml/Home.xml','xml/Includes_Home.xml','xml/Includes_Animations.xml','xml/Variables_Artwork.xml','xml/Font.xml']:
                 data=(SKIN/path).read_bytes()
                 if path=='xml/Home.xml':data=data.replace(b'<movement>6</movement>',b'<movement>7</movement>',1)
+                if path=='xml/Variables_Artwork.xml':
+                    # Shared metadata values are allowed; every original artwork
+                    # fallback, menu binding and control remains byte-identical.
+                    data=re.sub(rb'\n    <value condition="\$EXP\[FoundryMetadataCurrentItem\][^\n]*</value>',b'',data)
                 self.assertEqual(data,z.read('skin.foundry/'+path),path)
     def test_osd_only_background_changes_and_fade_remains(self):
         with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.1.9.zip') as z:
             before=E.fromstring(z.read('skin.foundry/xml/Includes_StreamPilotOSD.xml'))
         after=E.parse(SKIN/'xml/Includes_StreamPilotOSD.xml')
-        def norm(n):return n.tag,n.attrib,(n.text or '').strip(),[norm(c) for c in n]
+        def norm(n):return n.tag,n.attrib,(n.text or '').strip().replace('$VAR[FoundryPlayerPlot]','$INFO[VideoPlayer.Plot]'),[norm(c) for c in n]
         for name,height in [('StreamPilotVODCard',274),('StreamPilotLiveCard',320)]:
             old=before.find("include[@name='%s']/control"%name)
             new=after.find("include[@name='%s']/control"%name)

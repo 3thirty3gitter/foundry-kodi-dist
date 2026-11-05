@@ -117,7 +117,7 @@ class DeviceFeedback(unittest.TestCase):
         with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.1.7.zip') as z:
             before = ET.fromstring(z.read('skin.foundry/xml/Includes_StreamPilotOSD.xml'))
         after = ET.parse(SKIN/'xml/Includes_StreamPilotOSD.xml')
-        def normalized(n): return n.tag,n.attrib,(n.text or '').strip(),[normalized(c) for c in n]
+        def normalized(n): return n.tag,n.attrib,(n.text or '').strip().replace('$VAR[FoundryPlayerPlot]','$INFO[VideoPlayer.Plot]'),[normalized(c) for c in n]
         for name in ('StreamPilotVODCard','StreamPilotLiveCard'):
             old=before.find("include[@name='%s']/control"%name)
             new=after.find("include[@name='%s']/control"%name)
