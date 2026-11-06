@@ -12,6 +12,7 @@ import subprocess
 import tempfile
 import time
 import xml.etree.ElementTree as E
+from urllib.request import Request, urlopen
 from PIL import Image, ImageDraw, ImageFont
 
 
@@ -89,7 +90,7 @@ def main():
                 if (font.findtext('name') or '').startswith('sp_'):
                     fontset.append(E.fromstring(E.tostring(font)))
         fonts.write(active/'xml/Font.xml',encoding='UTF-8',xml_declaration=True)
-        (userdata/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting></settings>')
+        (userdata/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">18080</setting><setting id="services.webserverauthentication">false</setting></settings>')
         keymaps=userdata/'keymaps';keymaps.mkdir()
         (keymaps/'fixture.xml').write_text('<keymap><global><keyboard><f12>RunScript('+str(base/'fixture.py')+')</f12></keyboard></global></keymap>')
         assets=base/'assets';assets.mkdir()
@@ -107,7 +108,9 @@ def main():
                           'genre':['Mystery','Thriller'],'studio':['Fixture Studio'],'original_language':'en','ratings':{'tmdb':{'rating':7.0},'imdb':{'rating':7.1}},
                           'art':{'poster':str(poster),'fanart':str(fanart)}})
         script='BASE=Path(%r)\nHELPER=Path(%r)\nOUTPUT=Path(%r)\nITEMS=%r\n'%(str(base),str(helper),str(output),items)
-        (base/'fixture.py').write_text('from pathlib import Path\n'+script+FIXTURE)
+        launcher=profile/'addons/script.foundry.libraryqa';launcher.mkdir()
+        (launcher/'addon.xml').write_text('<addon id="script.foundry.libraryqa" version="1.0.0" name="Foundry Library QA" provider-name="Foundry"><requires><import addon="xbmc.python" version="3.0.0" /></requires><extension point="xbmc.python.script" library="fixture.py" /><extension point="xbmc.addon.metadata"><platform>all</platform><license>GPL-2.0-only</license><summary lang="en_GB">Controlled fixture</summary></extension></addon>')
+        (launcher/'fixture.py').write_text('from pathlib import Path\n'+script+FIXTURE)
         environment=dict(os.environ,DISPLAY=':99',KODI_HOME=str(home),LIBGL_ALWAYS_SOFTWARE='1',AE_SINK='ALSA')
         log=open(output/'kodi-console.log','w')
         xserver=subprocess.Popen(['Xvfb',':99','-screen','0','1920x1080x24','-ac','-nolisten','tcp'],stdout=log,stderr=log)
@@ -115,14 +118,26 @@ def main():
         try:
             time.sleep(1)
             kodi=subprocess.Popen(['kodi','-p','-fs','--windowing=x11','--debug'],env=environment,stdout=log,stderr=log)
-            time.sleep(10)
-            def key(*names):subprocess.run(['xdotool','key','--clearmodifiers',*names],env=environment,check=True)
+            def rpc(method,params=None):
+                payload=json.dumps({'jsonrpc':'2.0','id':1,'method':method,'params':params or {}}).encode()
+                with urlopen(Request('http://127.0.0.1:18080/jsonrpc',data=payload,headers={'Content-Type':'application/json'}),timeout=5) as response:
+                    result=json.loads(response.read())
+                if 'error' in result:raise RuntimeError(str(result['error']))
+                return result.get('result')
+            def ready():
+                try:return rpc('JSONRPC.Ping')=='pong'
+                except Exception:return False
+            wait_for(ready,60)
+            methods={'Right':'Input.Right','Down':'Input.Down','Return':'Input.Select','Escape':'Input.Back','Up':'Input.Up'}
+            def key(*names):
+                for name in names:
+                    rpc(methods[name]);time.sleep(.15)
             def state():
                 if (base/'error.txt').exists():raise RuntimeError((base/'error.txt').read_text())
                 try:return json.loads((base/'state.json').read_text())
                 except (OSError,ValueError):return {}
-            subprocess.run(['xdotool','search','--name','Kodi','windowfocus'],env=environment,check=False)
-            key('F12')
+            rpc('Addons.SetAddonEnabled',{'addonid':'script.foundry.libraryqa','enabled':True})
+            rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.libraryqa'})
             evidence=[]
             for section,name in [('Movies','movies'),('TV Shows','tv-shows')]:
                 wait_for(lambda:state().get('section')==section and state().get('focus')==50 and bool(state().get('title')))
@@ -152,6 +167,8 @@ def main():
             xserver.terminate();log.close()
             logs=profile/'temp/kodi.log'
             if logs.exists():shutil.copyfile(logs,output/'kodi.log')
+            for name in ('state.json','error.txt'):
+                if (base/name).exists():shutil.copyfile(base/name,output/name)
 
 
 if __name__=='__main__':main()
