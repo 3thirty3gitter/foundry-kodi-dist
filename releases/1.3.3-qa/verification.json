@@ -1,0 +1,92 @@
+{
+  "renderer": "Native Kodi Kodi from Debian Media Center 21.3 Debian package version: 2:21.3+dfsg-1ubuntu1\nCopyright (C) 2005-2025 Team Kodi from Debian - http://kodi.tv",
+  "canvas": [
+    1920,
+    1080
+  ],
+  "checks": [
+    {
+      "section": "Movies",
+      "screenshot": "movies.png",
+      "focused_poster_bounds": [
+        598,
+        528,
+        865,
+        928
+      ],
+      "scrolled_poster_bounds": [
+        598,
+        528,
+        865,
+        928
+      ],
+      "source_expected_bounds": [
+        598,
+        528,
+        865,
+        928
+      ],
+      "visible_colored_glow_delta_rgb": [
+        38,
+        11,
+        72
+      ],
+      "sort_cancel_restores_poster": true,
+      "next_previous_page_roundtrip": true,
+      "row_ends_do_not_wrap": true,
+      "focused_next_arrow_bounds": [
+        1586,
+        646,
+        1805,
+        810
+      ]
+    },
+    {
+      "section": "TV Shows",
+      "screenshot": "tv-shows.png",
+      "focused_poster_bounds": [
+        598,
+        528,
+        865,
+        928
+      ],
+      "scrolled_poster_bounds": [
+        598,
+        528,
+        865,
+        928
+      ],
+      "source_expected_bounds": [
+        598,
+        528,
+        865,
+        928
+      ],
+      "visible_colored_glow_delta_rgb": [
+        38,
+        11,
+        72
+      ],
+      "sort_cancel_restores_poster": true,
+      "next_previous_page_roundtrip": true,
+      "row_ends_do_not_wrap": true,
+      "focused_next_arrow_bounds": [
+        1586,
+        646,
+        1805,
+        810
+      ]
+    },
+    {
+      "section": "Three-title row",
+      "focused_poster_bounds": [
+        91,
+        528,
+        357,
+        928
+      ],
+      "left_padding_preserved": true
+    }
+  ],
+  "scope": "Controlled fixtures; not Shield, live providers or Android pixel parity"
+}
