@@ -138,6 +138,12 @@ def main():
                 if (base/'error.txt').exists():raise RuntimeError((base/'error.txt').read_text())
                 try:return json.loads((base/'state.json').read_text())
                 except (OSError,ValueError):return {}
+            # A fresh Kodi profile can show its first-run confirmation dialog.
+            # It must close before Kodi permits a non-modal WindowXML to open.
+            for _ in range(5):
+                visible=rpc('XBMC.GetInfoBooleans',{'booleans':['System.HasModalDialog']})
+                if not visible.get('System.HasModalDialog'):break
+                rpc('Input.Back');time.sleep(.3)
             rpc('Addons.SetAddonEnabled',{'addonid':'script.foundry.libraryqa','enabled':True})
             rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.libraryqa'})
             evidence=[]
