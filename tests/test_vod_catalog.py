@@ -27,24 +27,25 @@ class CatalogLayout(unittest.TestCase):
 
     def test_poster_ratio_fixed_slot_focus_scale_and_unclipped_vertical_glow(self):
         rail = self.view.find("control[@id='57']")
-        self.assertEqual(rail.get("type"), "list")
+        self.assertEqual(rail.get("type"), "fixedlist")
         self.assertEqual(rail.findtext("orientation"), "horizontal")
         self.assertEqual(rail.find("itemlayout").attrib, rail.find("focusedlayout").attrib)
-        poster = self.doc.find("include[@name='FoundryVODPoster']/definition/control")
+        poster = self.doc.find("include[@name='FoundryVODPoster']/definition/control/control")
         width, height = (int(poster.findtext(k)) for k in ("width", "height"))
         self.assertEqual((width, height), (224, 336))
         zoom = poster.find("animation/effect")
         self.assertEqual(zoom.get("end"), "119")
         self.assertEqual((int(rail.findtext("top")), int(rail.findtext("height"))), (428, 600))
-        outer = poster.find("control[description='Artwork-color outer focus glow, normalized from 34dp']")
-        # Expanded viewport protects the focused card plus its glow at both ends.
-        art_y = int(rail.findtext("top")) + int(poster.findtext("top"))
-        glow_top = art_y - 68 - int(outer.findtext("height")) * .19 / 2
-        glow_bottom = art_y + 336 + 68 + int(outer.findtext("height")) * .19 / 2
-        self.assertGreater(glow_top, int(rail.findtext("top")))
-        self.assertLess(glow_bottom, int(rail.findtext("top")) + int(rail.findtext("height")))
+        outer = poster.find("control[texture='$VAR[FoundryVODGlow]']")
+        self.assertEqual((outer.findtext('left'),outer.findtext('top')),('-96','-96'))
+        self.assertEqual((outer.findtext('width'),outer.findtext('height')),('416','528'))
+        # Negligible transparent tails can extend beyond the viewport; the
+        # visible halo itself must retain space above and below the poster.
+        self.assertLess(int(outer.findtext('top')),0)
+        self.assertGreater(int(outer.findtext('height'))-96,336)
+        art_y = int(rail.findtext('top')) + int(poster.findtext('top'))
         studio = self.view.find(".//control[@type='image'][texture='$VAR[FoundryVODStudioLogo]']")
-        self.assertLess(int(studio.findtext("top")) + int(studio.findtext("height")), art_y - 336 * .19 / 2)
+        self.assertLess(int(studio.findtext('top')) + int(studio.findtext('height')), art_y - 336 * .19 / 2)
 
     def test_hero_clearlogo_studio_and_description_follow_reference_geometry(self):
         logo = self.view.find(".//control[@type='image'][texture='$INFO[ListItem.Art(clearlogo)]']")

@@ -36,15 +36,16 @@ class Source:
     def search(self,query):return None
 
 try:
-    for section in ('Movies','TV Shows'):
-        data=[dict(item,type='tvshow' if section=='TV Shows' else 'movie') for item in ITEMS]
+    for section,count,case in (('Movies',60,'movies'),('TV Shows',60,'tv-shows'),('Movies',3,'short-row')):
+        data=[dict(item,type='tvshow' if section=='TV Shows' else 'movie') for item in ITEMS[:count]]
         source=Source();source.load=lambda:{'items':data,'page':1,'total_pages':500}
         window=CatalogWindow('script-foundry-vod.xml',str(HELPER),'default','1080i',True,source=source,section=section,breadcrumb='Trending')
         window.show();deadline=time.monotonic()+90
         while not window.closed and time.monotonic()<deadline:
             window.tick()
-            snapshot={'initialized':window.initialized,'current_window':xbmcgui.getCurrentWindowId(),'section':section,'focus':window.getFocusId(),'position':window.getCurrentListPosition(),
+            snapshot={'case':case,'initialized':window.initialized,'current_window':xbmcgui.getCurrentWindowId(),'section':section,'focus':window.getFocusId(),'position':window.getCurrentListPosition(),
                       'page':window.state.page,'title':window.getProperty('catalog.title'),
+                      'kind':window.rail[window.getCurrentListPosition()].get('kind') if window.rail else '',
                       'sort_open':window.getProperty('catalog.sortopen'),
                       'tmdb':window.getProperty('catalog.tmdb'),'imdb':window.getProperty('catalog.imdb'),
                       'accent':window.getProperty('catalog.accent')}
@@ -69,7 +70,7 @@ def wait_for(predicate,timeout=40):
 
 
 def main():
-    output=ROOT/'releases/1.3.1-qa';output.mkdir(parents=True,exist_ok=True)
+    output=ROOT/'releases/1.3.2-qa';output.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='foundry-kodi-') as temporary:
         base=Path(temporary);home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
         profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True)
@@ -102,7 +103,7 @@ def main():
         studio=assets/'studio.png';image=Image.new('RGBA',(240,140));ImageDraw.Draw(image).text((36,45),'STUDIO',font=regular,fill='black');image.save(studio)
         colors=['#146B89','#D04A2A','#7D25E6','#1B9382','#CA3162','#50851B','#3B6FBD']
         items=[]
-        for index in range(20):
+        for index in range(60):
             color=colors[index%len(colors)]
             poster=assets/('poster-%d.png'%index);image=Image.new('RGB',(224,336),color)
             draw=ImageDraw.Draw(image);draw.text((18,34),'TITLE',font=regular,fill='white');draw.text((18,78),str(index+1),font=bold,fill='white');image.save(poster)
@@ -132,7 +133,7 @@ def main():
                 try:return rpc('JSONRPC.Ping')=='pong'
                 except Exception:return False
             wait_for(ready,60)
-            methods={'Right':'Input.Right','Down':'Input.Down','Return':'Input.Select','Escape':'Input.Back','Up':'Input.Up'}
+            methods={'Right':'Input.Right','Left':'Input.Left','Down':'Input.Down','Return':'Input.Select','Escape':'Input.Back','Up':'Input.Up'}
             def key(*names):
                 for name in names:
                     rpc(methods[name]);time.sleep(.15)
@@ -151,28 +152,62 @@ def main():
             rpc('Addons.SetAddonEnabled',{'addonid':'script.foundry.libraryqa','enabled':True})
             rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.libraryqa'})
             evidence=[]
+            def capture(name):
+                destination=output/(name+'.png')
+                destination.unlink(missing_ok=True)
+                (base/'capture.json').write_text(json.dumps({'name':name}))
+                def complete():
+                    try:
+                        with Image.open(destination) as im:im.verify()
+                        return True
+                    except (OSError,ValueError):return False
+                wait_for(complete)
+                with Image.open(destination) as im:return im.convert('RGB')
+            def poster_bounds(im,target,region):
+                pixels=im.load();l,t,r,b=region
+                matches=[(x,y) for y in range(t,b) for x in range(l,r) if max(abs(pixels[x,y][c]-target[c]) for c in range(3))<=3]
+                assert matches,'Focused poster was not rendered'
+                return [min(x for x,y in matches),min(y for x,y in matches),max(x for x,y in matches)+1,max(y for x,y in matches)+1]
             for section,name in [('Movies','movies'),('TV Shows','tv-shows')]:
-                wait_for(lambda:state().get('section')==section and state().get('focus')==50 and bool(state().get('title')))
+                wait_for(lambda:state().get('case')==name and state().get('focus')==50 and bool(state().get('title')))
                 key('Right','Right');wait_for(lambda:state().get('position')==2)
                 wait_for(lambda:bool(state().get('tmdb')) and bool(state().get('imdb')) and state().get('accent')=='FF7D25E6')
                 time.sleep(1)
-                (base/'capture.json').write_text(json.dumps({'name':name}))
-                wait_for(lambda:(output/(name+'.png')).exists())
+                focused=capture(name)
+                assert focused.size==(1920,1080),focused.size
+                bounds=poster_bounds(focused,(125,37,230),(540,480,940,980))
+                expected=[598,528,865,928]
+                assert all(abs(a-b)<=4 for a,b in zip(bounds,expected)),(bounds,expected)
                 key('Down');wait_for(lambda:state().get('focus')==5703)
+                time.sleep(.5);unfocused=capture(name+'-unfocused')
+                # Inspect rendered pixels, not just the accent property: below
+                # the zoomed poster, colored light must fade into the fanart.
+                point=(730,960)
+                delta=[focused.getpixel(point)[c]-unfocused.getpixel(point)[c] for c in range(3)]
+                assert delta[2]>=15 and delta[0]>=5,(point,delta)
                 key('Return');wait_for(lambda:state().get('focus')==5750)
                 key('Escape');wait_for(lambda:state().get('focus')==5703)
                 key('Up');wait_for(lambda:state().get('focus')==50 and state().get('position')==2)
-                with Image.open(output/(name+'.png')) as capture:
-                    assert capture.size==(1920,1080),capture.size
-                    target=(125,37,230)
-                    pixels=capture.convert('RGB').load()
-                    matches=[(x,y) for y in range(480,980) for x in range(540,940) if max(abs(pixels[x,y][c]-target[c]) for c in range(3))<=3]
-                    assert matches,'Focused poster was not rendered'
-                    bounds=[min(x for x,y in matches),min(y for x,y in matches),max(x for x,y in matches)+1,max(y for x,y in matches)+1]
-                    expected=[603,528,869,928]
-                    assert all(abs(a-b)<=6 for a,b in zip(bounds,expected)),(bounds,expected)
-                evidence.append({'section':section,'screenshot':name+'.png','focused_poster_bounds':bounds,'source_expected_bounds':expected,'sort_cancel_restores_poster':True,'tmdb_rating':state().get('tmdb'),'imdb_rating':state().get('imdb'),'artwork_accent':state().get('accent')})
+                key(*(['Right']*8));wait_for(lambda:state().get('position')==10)
+                wait_for(lambda:state().get('accent')=='FF25C7B0');time.sleep(.7)
+                middle=poster_bounds(capture(name+'-scrolled'),(27,147,130),(540,480,940,980))
+                assert all(abs(a-b)<=4 for a,b in zip(middle,expected)),(middle,expected)
+                key(*(['Right']*10));wait_for(lambda:state().get('kind')=='next');time.sleep(.7)
+                capture(name+'-next')
+                key('Right');assert state().get('position')==20,'Rail wrapped at NEXT'
+                key('Return');wait_for(lambda:state().get('page')==2 and state().get('position')==1 and state().get('kind')=='media')
+                key('Left');wait_for(lambda:state().get('kind')=='previous');time.sleep(.7)
+                capture(name+'-previous')
+                key('Left');assert state().get('position')==0,'Rail wrapped at BACK'
+                key('Return');wait_for(lambda:state().get('page')==1 and state().get('position')==0 and state().get('kind')=='media')
+                evidence.append({'section':section,'screenshot':name+'.png','focused_poster_bounds':bounds,'scrolled_poster_bounds':middle,'source_expected_bounds':expected,'visible_colored_glow_delta_rgb':delta,'sort_cancel_restores_poster':True,'next_previous_page_roundtrip':True,'row_ends_do_not_wrap':True})
                 key('Escape')
+            wait_for(lambda:state().get('case')=='short-row' and state().get('focus')==50 and state().get('position')==0)
+            wait_for(lambda:state().get('accent')=='FF1D9BC7');time.sleep(.7)
+            short=poster_bounds(capture('short-row'),(20,107,137),(60,480,400,980))
+            assert all(abs(a-b)<=4 for a,b in zip(short,[91,528,357,928])),short
+            evidence.append({'section':'Three-title row','focused_poster_bounds':short,'left_padding_preserved':True})
+            key('Escape')
             wait_for(lambda:(base/'complete').exists())
             (output/'verification.json').write_text(json.dumps({'renderer':'Native Kodi '+subprocess.check_output(['kodi','--version'],text=True).strip(),'canvas':[1920,1080],'checks':evidence,'scope':'Controlled fixtures; not Shield, live providers or Android pixel parity'},indent=2)+'\n')
         finally:

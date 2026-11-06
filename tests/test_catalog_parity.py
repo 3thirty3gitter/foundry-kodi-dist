@@ -101,7 +101,8 @@ class WindowContracts(unittest.TestCase):
         self.assertEqual(rail.findtext('orientation'),'horizontal')
         self.assertEqual(rail.findtext('width'),'1808')
         self.assertTrue(rail.findall(".//control/visible"))
-        self.assertIn('ListItem.Property(catalog.arrow)',E.tostring(rail,encoding='unicode'))
+        self.assertIn('catalog-next-focus.png',E.tostring(rail,encoding='unicode'))
+        self.assertIn('catalog-previous-focus.png',E.tostring(rail,encoding='unicode'))
         self.assertIsNone(self.doc.find(".//control[@id='5704']"))
         self.assertIsNone(self.doc.find(".//control[@id='5705']"))
     def test_search_has_32_68_panels_three_columns_and_ten_history_slots(self):

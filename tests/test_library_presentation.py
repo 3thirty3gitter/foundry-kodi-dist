@@ -65,6 +65,46 @@ class Presentation(unittest.TestCase):
         document=E.parse(skin/'xml/script-foundry-vod.xml')
         ids=[n.get('id') for n in document.iter('control') if n.get('id')]
         self.assertEqual(len(ids),len(set(ids)))
-        poster=document.find(".//control[@id='50']/focusedlayout/control")
+        poster=document.find(".//control[@id='50']/focusedlayout/control/control")
         self.assertEqual([poster.findtext(k) for k in ('width','height')],['224','336'])
         self.assertFalse(any(n.text=='streampilot/catalog-frame.png' for n in document.iter('texture')))
+
+
+class HoverRegression(unittest.TestCase):
+    def test_revisited_artwork_restores_its_cached_accent_during_focus_change(self):
+        w=object.__new__(CatalogWindow);w.section='Movies';w.enrichment_cache={};w.color_cache={'known':('FF1256AB','tinted.png')}
+        w.p=Mock();w.clock=lambda:10;w.update_hero=Mock();w.publish_color=Mock()
+        w.set_hero({'title':'Revisited','art':{'fanart':'known'}})
+        w.publish_color.assert_called_once_with('FF1256AB','tinted.png')
+
+    def test_an_arrow_never_inherits_the_last_movie_glow(self):
+        w=object.__new__(CatalogWindow);w.p=Mock();w.getFocusId=lambda:50
+        w.rail=[{'kind':'next'}];w.getCurrentListPosition=lambda:0;w.getListItem=Mock()
+        w.publish_color('FF1256AB','movie-glow.png');w.getListItem.assert_not_called()
+
+    def test_glow_has_soft_visible_pixels_outside_all_four_poster_edges(self):
+        skin=Path(__file__).resolve().parents[2]/'skin.foundry-nimbus'
+        with Image.open(skin/'media/streampilot/catalog-glow.png') as im:
+            self.assertEqual(im.size,(416,528));a=im.getchannel('A')
+            # A 224x336 poster occupies [96,96,320,432]. Glow must survive
+            # outside it, rather than hide inside three rescaled rectangles.
+            for point in ((70,264),(346,264),(208,70),(208,458)):
+                self.assertGreater(a.getpixel(point),10)
+            for point in ((0,0),(415,0),(0,527),(415,527)):
+                self.assertLessEqual(a.getpixel(point),1)
+
+    def test_page_arrows_have_separate_focus_border_and_mirrored_shapes(self):
+        from PIL import ImageChops,ImageOps
+        skin=Path(__file__).resolve().parents[2]/'skin.foundry-nimbus'
+        with Image.open(skin/'media/streampilot/catalog-next.png') as n, Image.open(skin/'media/streampilot/catalog-previous.png') as p, Image.open(skin/'media/streampilot/catalog-next-focus.png') as f:
+            self.assertEqual(n.size,(208,152))
+            self.assertIsNone(ImageChops.difference(n,ImageOps.mirror(p)).getbbox())
+            self.assertNotEqual(n.tobytes(),f.tobytes())
+
+    def test_source_tv_pivot_and_row_ends_are_explicit_in_both_views(self):
+        skin=Path(__file__).resolve().parents[2]/'skin.foundry-nimbus'
+        for name,cid in [('script-foundry-vod.xml',50),('View_57_StreamPilot.xml',57)]:
+            doc=E.parse(skin/'xml'/name);rail=doc.find(".//control[@id='%d']"%cid)
+            self.assertEqual(rail.get('type'),'fixedlist');self.assertEqual(rail.findtext('focusposition'),'2')
+            self.assertEqual(rail.findtext('movement'),'4')
+            self.assertIn('-4.32,0',E.tostring(doc.getroot(),encoding='unicode'))
