@@ -66,6 +66,13 @@ jobs:
         timeout-minutes: 4
         working-directory: foundry-kodi-dist
         run: |
+          for apt_source in /etc/apt/apt-mirrors.txt /etc/apt/sources.list /etc/apt/sources.list.d/ubuntu.sources
+          do
+            if [ -f "$apt_source" ]
+            then
+              sudo sed -i 's|http://azure.archive.ubuntu.com|https://archive.ubuntu.com|g' "$apt_source"
+            fi
+          done
           sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update -qq
           sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 -o DPkg::Lock::Timeout=60 install --no-install-recommends -y kodi xvfb xdotool python3-pil python3-requests libgl1-mesa-dri fonts-noto-core fonts-noto-mono fonts-roboto
       - name: Render and navigate Movies and TV in actual Kodi
