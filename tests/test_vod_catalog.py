@@ -21,9 +21,7 @@ class CatalogLayout(unittest.TestCase):
         self.assertEqual((backdrop.findtext("width"), backdrop.findtext("height")), ("100%", "100%"))
         self.assertEqual(backdrop.findtext("aspectratio"), "scale")
         self.assertFalse(any(g.findtext("orientation", "vertical") == "vertical" for g in self.view.findall(".//control[@type='grouplist']")))
-        sort = self.view.find("control[@id='5703']")
-        self.assertGreaterEqual(int(sort.findtext("top")), 560 + 336)
-        self.assertEqual(sort.findtext("onclick"), "SendClick(3)")
+        self.assertIsNone(self.view.find("control[@id='5703']"))
 
     def test_poster_ratio_fixed_slot_focus_scale_and_unclipped_vertical_glow(self):
         rail = self.view.find("control[@id='57']")
@@ -62,8 +60,8 @@ class CatalogLayout(unittest.TestCase):
         self.assertEqual(rail.findall("onclick"), [])  # Kodi handles playable items and folders.
         self.assertEqual(rail.findall("onback"), [])
         self.assertFalse(any("SetFocus" in (a.text or "") or "Control.Move" in (a.text or "") for a in rail.findall("onfocus")))
-        self.assertEqual(rail.findtext("ondown"), "5703")
-        self.assertEqual(self.view.findtext("control[@id='5703']/onup"), "57")
+        self.assertEqual(rail.findtext("ondown"), "57")
+        self.assertIsNone(self.view.find("control[@id='5703']"))
         self.assertEqual(self.view.findtext("control[@id='5701']/onup"), "9000")
         common = ET.parse(SKIN / "xml/Includes_MediaMenu.xml").find("include[@name='MediaMenuListCommon']/definition")
         self.assertEqual(common.findtext("onback[@condition='Control.IsVisible(57)']"), "57")
@@ -76,8 +74,8 @@ class CatalogLayout(unittest.TestCase):
         plot = self.doc.find("variable[@name='FoundryVODPlot']")
         self.assertEqual(plot.findall("value")[-1].text, "No description available.")
         imdb = self.doc.find("variable[@name='FoundryVODIMDb']")
-        self.assertIn("foundry.omdb.imdb_rating", imdb[0].text)
-        self.assertIn("ListItem.Rating(imdb)", imdb[1].text)
+        self.assertIn("foundry.omdb.imdb_rating", imdb[1].text)
+        self.assertIn("ListItem.Rating(imdb)", imdb[2].text)
         self.assertFalse((imdb[-1].text or "").strip())
 
     def test_settings_are_optional_key_masked_and_disabled_by_default(self):

@@ -111,8 +111,8 @@ class WindowContracts(unittest.TestCase):
         self.assertTrue(all(self.doc.find(".//control[@id='%d']"%(5830+i)) is not None for i in range(10)))
         self.assertIn('>=.25',self.source)
         self.assertIn('getSelectedPosition()%3==0',self.source)
-    def test_sort_menu_has_exact_four_options_and_no_native_sort_dialog(self):
-        for i,(_,name) in enumerate(SORTS):self.assertEqual(self.doc.findtext(".//control[@id='%d']/label"%(5750+i)),name)
+    def test_catalog_sort_and_search_buttons_are_removed(self):
+        for cid in (5702,5703,5750,5751,5752,5753):self.assertIsNone(self.doc.find(".//control[@id='%d']"%cid))
         self.assertNotIn('SendClick(3)',E.tostring(self.doc.getroot(),encoding='unicode'))
     def test_search_return_does_not_reset_native_rail_or_focus_to_zero(self):
         module=ast.parse(self.source);cls=next(n for n in module.body if isinstance(n,ast.ClassDef));method=next(n for n in cls.body if isinstance(n,ast.FunctionDef) and n.name=='leave_search')
@@ -133,6 +133,6 @@ class WindowContracts(unittest.TestCase):
     def test_actual_rating_badges_and_corrected_footer_anchor(self):
         for n in ('rating_rt_fresh','rating_rt_rotten','rating_metacritic'):
             self.assertTrue((SKIN/'media/streampilot'/('source-'+n+'.png')).is_file())
-        self.assertEqual(self.doc.findtext(".//control[@id='5703']/left"),'280')
+        self.assertEqual(self.doc.findtext(".//control[@id='5708']/left"),'112')
 
 if __name__=='__main__':unittest.main()

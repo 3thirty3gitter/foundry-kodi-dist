@@ -14,6 +14,7 @@ import time
 import xml.etree.ElementTree as E
 from urllib.request import Request, urlopen
 from PIL import Image, ImageDraw, ImageFont
+import copy
 
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -55,6 +56,35 @@ try:
                 xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/(name+'.png'))+')')
             xbmc.sleep(50)
         window.dispose()
+    from modules.monitors.metadata import MetadataMonitor
+    from modules.vod import CatalogArtworkMonitor
+    class SharedProvider:
+        def enrich(self,item,section):
+            item=dict(item);item['art']=dict(item.get('art') or {},studiologo=STUDIO)
+            item['ratings']={'tmdb':{'rating':7.0},'imdb':{'rating':7.1}}
+            return item,{'tmdb':'ready','omdb':'ready'}
+    metadata=MetadataMonitor(xbmcgui.Window(10000),provider=SharedProvider())
+    artwork=CatalogArtworkMonitor()
+    xbmc.executebuiltin('ActivateWindow(Videos,plugin://plugin.video.foundry.libraryqa/?page=1,return)')
+    deadline=time.monotonic()+90
+    while not (BASE/'native-complete').exists() and time.monotonic()<deadline:
+        metadata.process_current_item();artwork.process_current_item()
+        def info(label):return xbmc.getInfoLabel(label)
+        try:focus=xbmcgui.Window(10025).getFocusId()
+        except RuntimeError:focus=0
+        snapshot={'case':'native','current_window':xbmcgui.getCurrentWindowId(),'focus':focus,
+                  'position':int(info('Container(57).CurrentItem') or '0')-1,
+                  'title':info('ListItem.Title'),'label':info('ListItem.Label'),
+                  'path':info('Container.FolderPath'),
+                  'tmdb':info('Window(Home).Property(foundry.metadata.tmdb)'),
+                  'imdb':info('Window(Home).Property(foundry.metadata.imdb)'),
+                  'studio':info('Window(Home).Property(foundry.vod.studio_logo)')}
+        temporary=BASE/'state.tmp';temporary.write_text(json.dumps(snapshot));temporary.replace(BASE/'state.json')
+        if (BASE/'capture.json').exists():
+            name=json.loads((BASE/'capture.json').read_text())['name'];(BASE/'capture.json').unlink()
+            xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/(name+'.png'))+')')
+        xbmc.sleep(50)
+    metadata.stop()
     (BASE/'complete').write_text('ok')
 except Exception:
     (BASE/'error.txt').write_text(traceback.format_exc())
@@ -70,7 +100,7 @@ def wait_for(predicate,timeout=40):
 
 
 def main():
-    output=ROOT/'releases/1.3.3-qa';output.mkdir(parents=True,exist_ok=True)
+    output=ROOT/'releases/1.3.4-qa';output.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='foundry-kodi-') as temporary:
         base=Path(temporary);home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
         profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True)
@@ -93,7 +123,16 @@ def main():
                 if (font.findtext('name') or '').startswith('sp_'):
                     fontset.append(E.fromstring(E.tostring(font)))
         fonts.write(active/'xml/Font.xml',encoding='UTF-8',xml_declaration=True)
-        (userdata/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">18080</setting><setting id="services.webserverauthentication">false</setting></settings>')
+        native=E.parse(SKIN/'xml/View_57_StreamPilot.xml')
+        for filename,names in [('Expressions.xml',('FoundryOmdbCurrentItem','FoundryVODCurrentItem')),('Includes_Metadata.xml',('FoundryMetadataCurrentItem',))]:
+            expressions=E.parse(SKIN/'xml'/filename)
+            for name in names:native.getroot().append(copy.deepcopy(expressions.find("expression[@name='%s']"%name)))
+        for name,value in [('MediaFanartVar','$INFO[ListItem.Art(fanart)]'),('BreadcrumbsVideoVar','Native provider fixture')]:
+            E.SubElement(E.SubElement(native.getroot(),'variable',name=name),'value').text=value
+        native.write(active/'xml/FoundryNativeQA.xml',encoding='UTF-8',xml_declaration=True)
+        includes=E.parse(active/'xml/Includes.xml');E.SubElement(includes.getroot(),'include',file='FoundryNativeQA.xml');includes.write(active/'xml/Includes.xml',encoding='UTF-8',xml_declaration=True)
+        (active/'xml/MyVideoNav.xml').write_text('<window><defaultcontrol always="true">57</defaultcontrol><views>57</views><controls><include>View_57_StreamPilot</include></controls></window>')
+        (userdata/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting><setting id="filelists.showparentdiritems">false</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">18080</setting><setting id="services.webserverauthentication">false</setting></settings>')
         keymaps=userdata/'keymaps';keymaps.mkdir()
         (keymaps/'fixture.xml').write_text('<keymap><global><keyboard><f12>RunScript('+str(base/'fixture.py')+')</f12></keyboard></global></keymap>')
         assets=base/'assets';assets.mkdir()
@@ -117,10 +156,25 @@ def main():
                           'premiered':'2026-09-30','mpaa':'CA 14A','plot':'A controlled native Kodi fixture checks the exact source poster geometry, artwork glow, metadata and remote focus behavior.',
                           'genre':['Mystery','Thriller'],'studio':['Fixture Studio'],'original_language':'en','ratings':{'tmdb':{'rating':7.0},'imdb':{'rating':7.1}},
                           'art':{'poster':str(poster),'fanart':str(fanart),'clearlogo':str(logo),'studiologo':str(studio)}})
-        script='BASE=Path(%r)\nHELPER=Path(%r)\nOUTPUT=Path(%r)\nITEMS=%r\n'%(str(base),str(helper),str(output),items)
+        script='BASE=Path(%r)\nHELPER=Path(%r)\nOUTPUT=Path(%r)\nITEMS=%r\nSTUDIO=%r\n'%(str(base),str(helper),str(output),items,str(studio))
         launcher=profile/'addons/script.foundry.libraryqa';launcher.mkdir()
         (launcher/'addon.xml').write_text('<addon id="script.foundry.libraryqa" version="1.0.0" name="Foundry Library QA" provider-name="Foundry"><requires><import addon="xbmc.python" version="3.0.0" /></requires><extension point="xbmc.python.script" library="fixture.py" /><extension point="xbmc.addon.metadata"><platform>all</platform><license>GPL-2.0-only</license><summary lang="en_GB">Controlled fixture</summary></extension></addon>')
         (launcher/'fixture.py').write_text('from pathlib import Path\n'+script+FIXTURE)
+        plugin=profile/'addons/plugin.video.foundry.libraryqa';plugin.mkdir()
+        (plugin/'addon.xml').write_text('<addon id="plugin.video.foundry.libraryqa" version="1.0.0" name="Foundry Native Library QA" provider-name="Foundry"><requires><import addon="xbmc.python" version="3.0.0" /></requires><extension point="xbmc.python.pluginsource" library="default.py"><provides>video</provides></extension><extension point="xbmc.addon.metadata"><platform>all</platform><license>GPL-2.0-only</license><summary lang="en_GB">Controlled native fixture</summary></extension></addon>')
+        (plugin/'default.py').write_text('import sys,xbmcgui,xbmcplugin\nfrom urllib.parse import parse_qs\nITEMS=%r\n'%items+'''
+handle=int(sys.argv[1]);page=int(parse_qs(sys.argv[2].lstrip('?')).get('page',['1'])[0])
+def arrow(label,target):
+    item=xbmcgui.ListItem(label);item.setArt({'icon':'DefaultFolder.png','poster':'DefaultFolder.png'})
+    xbmcplugin.addDirectoryItem(handle,'plugin://plugin.video.foundry.libraryqa/?page='+str(target),item,True)
+arrow('Previous Page',1)
+for source in ITEMS[:8]:
+    item=xbmcgui.ListItem(source['title']);item.setInfo('video',dict(title=source['title'],year=2026,mediatype='movie',plot=source['plot'],genre=['Mystery'],studio=['Fixture Studio']))
+    item.setArt({k:v for k,v in source['art'].items() if k!='studiologo'})
+    xbmcplugin.addDirectoryItem(handle,source['file'],item,False)
+arrow('Next Page',page+1)
+xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
+''')
         environment=dict(os.environ,DISPLAY=':99',KODI_HOME=str(home),LIBGL_ALWAYS_SOFTWARE='1',AE_SINK='NULL')
         log=open(output/'kodi-console.log','w')
         xserver=subprocess.Popen(['Xvfb',':99','-screen','0','1920x1080x24','-ac','-nolisten','tcp'],stdout=log,stderr=log)
@@ -155,6 +209,7 @@ def main():
                 time.sleep(.3)
             rpc('Addons.SetAddonEnabled',{'addonid':'script.foundry.helper','enabled':True})
             rpc('Addons.SetAddonEnabled',{'addonid':'script.foundry.libraryqa','enabled':True})
+            rpc('Addons.SetAddonEnabled',{'addonid':'plugin.video.foundry.libraryqa','enabled':True})
             rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.libraryqa'})
             evidence=[]
             def capture(name):
@@ -186,16 +241,14 @@ def main():
                 bounds=poster_bounds(focused,(610,540,853,915))
                 expected=[598,528,865,928]
                 assert all(abs(a-b)<=4 for a,b in zip(bounds,expected)),(bounds,expected)
-                key('Down');wait_for(lambda:state().get('focus')==5703)
+                key('Up');wait_for(lambda:state().get('focus')==5701)
                 time.sleep(.5);unfocused=capture(name+'-unfocused')
                 # Inspect rendered pixels, not just the accent property: below
                 # the zoomed poster, colored light must fade into the fanart.
                 point=(730,960)
                 delta=[focused.getpixel(point)[c]-unfocused.getpixel(point)[c] for c in range(3)]
                 assert delta[2]>=15 and delta[0]>=5,(point,delta)
-                key('Return');wait_for(lambda:state().get('focus')==5750)
-                key('Escape');wait_for(lambda:state().get('focus')==5703)
-                key('Up');wait_for(lambda:state().get('focus')==50 and state().get('position')==2)
+                key('Down');wait_for(lambda:state().get('focus')==50 and state().get('position')==2)
                 key(*(['Right']*8));wait_for(lambda:state().get('position')==10)
                 wait_for(lambda:state().get('accent')=='FF25C7B0');time.sleep(.7)
                 middle=poster_bounds(capture(name+'-scrolled'),(610,540,853,915))
@@ -212,7 +265,7 @@ def main():
                 capture(name+'-previous')
                 key('Left');assert state().get('position')==0,'Rail wrapped at BACK'
                 key('Return');wait_for(lambda:state().get('page')==1 and state().get('position')==0 and state().get('kind')=='media')
-                evidence.append({'section':section,'screenshot':name+'.png','focused_poster_bounds':bounds,'scrolled_poster_bounds':middle,'source_expected_bounds':expected,'visible_colored_glow_delta_rgb':delta,'sort_cancel_restores_poster':True,'next_previous_page_roundtrip':True,'row_ends_do_not_wrap':True,'focused_next_arrow_bounds':arrow_bounds})
+                evidence.append({'section':section,'screenshot':name+'.png','focused_poster_bounds':bounds,'scrolled_poster_bounds':middle,'source_expected_bounds':expected,'visible_colored_glow_delta_rgb':delta,'focus_return_restores_poster':True,'next_previous_page_roundtrip':True,'row_ends_do_not_wrap':True,'focused_next_arrow_bounds':arrow_bounds})
                 key('Escape')
             wait_for(lambda:state().get('case')=='short-row' and state().get('focus')==50 and state().get('position')==0)
             wait_for(lambda:state().get('accent')=='FF1D9BC7');time.sleep(.7)
@@ -220,6 +273,38 @@ def main():
             assert all(abs(a-b)<=4 for a,b in zip(short,[91,528,357,928])),short
             evidence.append({'section':'Three-title row','focused_poster_bounds':short,'left_padding_preserved':True})
             key('Escape')
+            wait_for(lambda:state().get('case')=='native' and state().get('focus')==57 and state().get('label')=='Previous Page')
+            key('Right','Right','Right');wait_for(lambda:state().get('position')==3)
+            wait_for(lambda:state().get('tmdb')=='7' and state().get('imdb')=='7.1/10' and bool(state().get('studio')))
+            time.sleep(1.2)
+            focused=capture('native-movies')
+            key('Up');wait_for(lambda:state().get('focus')==5701);time.sleep(.5)
+            unfocused=capture('native-unfocused')
+            # Only the selected media item may produce a halo. The previous
+            # include applied Control.HasFocus(row) to every unfocused item.
+            halo_deltas=[]
+            for x in (224,480,730,992,1248,1504):
+                difference=[focused.getpixel((x,960))[c]-unfocused.getpixel((x,960))[c] for c in range(3)]
+                halo_deltas.append(difference)
+            assert max(halo_deltas[2])>=15,halo_deltas
+            assert all(max(abs(v) for v in delta)<=3 for index,delta in enumerate(halo_deltas) if index!=2),halo_deltas
+            def bright(im,region):
+                return sum(min(im.getpixel((x,y)))>170 for y in range(region[1],region[3]) for x in range(region[0],region[2]))
+            assert bright(focused,(1568,388,1808,468))>50,'Shared studio logo not visible in native view'
+            assert bright(focused,(1768,36,1864,132))==0,'Removed search icon still visible'
+            assert bright(focused,(250,960,500,1036))==0,'Removed sort button still visible'
+            yellow=sum(1 for y in range(346,370) for x in range(92,440) if focused.getpixel((x,y))[0]>160 and focused.getpixel((x,y))[1]>110 and focused.getpixel((x,y))[2]<80)
+            assert yellow>100,'Shared IMDb badge not visible in native view'
+            key('Down');wait_for(lambda:state().get('focus')==57)
+            key(*(['Right']*6));wait_for(lambda:state().get('label')=='Next Page');time.sleep(.6)
+            arrow=capture('native-next')
+            assert bright(arrow,(1400,620,1864,840))>150,'Native NEXT arrow not visible'
+            key('Return');wait_for(lambda:'page=2' in state().get('path','') and state().get('label')=='Previous Page');time.sleep(.6)
+            previous=capture('native-previous')
+            assert bright(previous,(80,620,400,840))>150,'Native BACK arrow not visible'
+            key('Return');wait_for(lambda:'page=1' in state().get('path',''))
+            evidence.append({'section':'Native provider view 57','only_selected_poster_glows':True,'glow_pixel_deltas':halo_deltas,'shared_studio_logo_visible':True,'shared_ratings_visible':True,'legacy_page_icons_replaced':True,'next_previous_page_roundtrip':True,'sort_and_search_buttons_removed':True})
+            (base/'native-complete').write_text('ok')
             wait_for(lambda:(base/'complete').exists())
             (output/'verification.json').write_text(json.dumps({'renderer':'Native Kodi '+subprocess.check_output(['kodi','--version'],text=True).strip(),'canvas':[1920,1080],'checks':evidence,'scope':'Controlled fixtures; not Shield, live providers or Android pixel parity'},indent=2)+'\n')
         finally:
