@@ -165,9 +165,18 @@ def main():
                 with Image.open(destination) as im:return im.convert('RGB')
             def poster_bounds(im,target,region):
                 pixels=im.load();l,t,r,b=region
-                matches=[(x,y) for y in range(t,b) for x in range(l,r) if max(abs(pixels[x,y][c]-target[c]) for c in range(3))<=3]
+                matches={(x,y) for y in range(t,b) for x in range(l,r) if max(abs(pixels[x,y][c]-target[c]) for c in range(3))<=3}
                 assert matches,'Focused poster was not rendered'
-                return [min(x for x,y in matches),min(y for x,y in matches),max(x for x,y in matches)+1,max(y for x,y in matches)+1]
+                # Saturation-boosted artwork light can pass through the original
+                # poster RGB again in a disconnected halo. Measure the connected
+                # poster body containing its center, excluding that outer ring.
+                seed=min(matches,key=lambda p:(p[0]-(l+r)/2)**2+(p[1]-(t+b)/2)**2)
+                body={seed};pending=[seed]
+                while pending:
+                    x,y=pending.pop()
+                    for point in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
+                        if point in matches and point not in body:body.add(point);pending.append(point)
+                return [min(x for x,y in body),min(y for x,y in body),max(x for x,y in body)+1,max(y for x,y in body)+1]
             for section,name in [('Movies','movies'),('TV Shows','tv-shows')]:
                 wait_for(lambda:state().get('case')==name and state().get('focus')==50 and bool(state().get('title')))
                 key('Right','Right');wait_for(lambda:state().get('position')==2)
