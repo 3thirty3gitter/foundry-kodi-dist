@@ -10,9 +10,9 @@
       "screenshot": "movies.png",
       "focused_poster_bounds": [
         603,
-        528,
+        529,
         869,
-        928
+        927
       ],
       "source_expected_bounds": [
         603,
@@ -20,7 +20,10 @@
         869,
         928
       ],
-      "sort_cancel_restores_poster": true
+      "sort_cancel_restores_poster": true,
+      "tmdb_rating": "7.0",
+      "imdb_rating": "7.1/10",
+      "artwork_accent": "FF7D25E6"
     },
     {
       "section": "TV Shows",
@@ -37,7 +40,10 @@
         869,
         928
       ],
-      "sort_cancel_restores_poster": true
+      "sort_cancel_restores_poster": true,
+      "tmdb_rating": "7.0",
+      "imdb_rating": "7.1/10",
+      "artwork_accent": "FF7D25E6"
     }
   ],
   "scope": "Controlled fixtures; not Shield, live providers or Android pixel parity"
