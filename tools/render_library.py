@@ -201,7 +201,11 @@ def main():
                 middle=poster_bounds(capture(name+'-scrolled'),(610,540,853,915))
                 assert all(abs(a-b)<=4 for a,b in zip(middle,expected)),(middle,expected)
                 key(*(['Right']*10));wait_for(lambda:state().get('kind')=='next');time.sleep(.7)
-                capture(name+'-next')
+                arrow=capture(name+'-next');pixels=arrow.load()
+                outline=[(x,y) for y in range(620,840) for x in range(1570,1840) if min(pixels[x,y])>=185 and max(pixels[x,y])-min(pixels[x,y])<35]
+                assert outline,'Focused NEXT arrow border was not rendered'
+                arrow_bounds=[min(x for x,y in outline),min(y for x,y in outline),max(x for x,y in outline)+1,max(y for x,y in outline)+1]
+                assert all(abs(a-b)<=3 for a,b in zip(arrow_bounds,[1586,646,1811,811])),arrow_bounds
                 key('Right');assert state().get('position')==20,'Rail wrapped at NEXT'
                 key('Return');wait_for(lambda:state().get('page')==2 and state().get('position')==1 and state().get('kind')=='media')
                 key('Left');wait_for(lambda:state().get('kind')=='previous');time.sleep(.7)
