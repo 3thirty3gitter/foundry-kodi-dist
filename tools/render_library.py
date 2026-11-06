@@ -68,7 +68,7 @@ def wait_for(predicate,timeout=40):
 def main():
     output=ROOT/'releases/1.3.1-qa';output.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='foundry-kodi-') as temporary:
-        base=Path(temporary);home=base/'kodi';shutil.copytree('/usr/share/kodi',home)
+        base=Path(temporary);home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
         profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True)
         helper=profile/'addons/script.foundry.helper';shutil.copytree(HELPER,helper)
         manifest=E.parse(helper/'addon.xml')
@@ -81,7 +81,8 @@ def main():
         shutil.copyfile(SKIN/'xml/script-foundry-vod.xml',template/'script-foundry-vod.xml')
         active=home/'addons/skin.estuary'
         shutil.copytree(SKIN/'media/streampilot',active/'media/streampilot',dirs_exist_ok=True)
-        for name in ('Roboto-Regular.ttf','Roboto-Bold.ttf'):shutil.copyfile(SKIN/'fonts'/name,active/'fonts'/name)
+        for name in ('Roboto-Regular.ttf','Roboto-Bold.ttf','NotoSans-Regular.ttf','NotoMono-Regular.ttf'):
+            shutil.copyfile(SKIN/'fonts'/name,active/'fonts'/name)
         fonts=E.parse(active/'xml/Font.xml');source=E.parse(SKIN/'xml/Font.xml')
         for fontset in fonts.findall('fontset'):
             for font in source.find('fontset').findall('font'):
