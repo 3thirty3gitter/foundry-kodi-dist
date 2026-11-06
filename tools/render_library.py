@@ -43,14 +43,14 @@ try:
         window.show();deadline=time.monotonic()+90
         while not window.closed and time.monotonic()<deadline:
             window.tick()
-            snapshot={'section':section,'focus':window.getFocusId(),'position':window.getCurrentListPosition(),
+            snapshot={'initialized':window.initialized,'current_window':xbmcgui.getCurrentWindowId(),'section':section,'focus':window.getFocusId(),'position':window.getCurrentListPosition(),
                       'page':window.state.page,'title':window.getProperty('catalog.title'),
                       'sort_open':window.getProperty('catalog.sortopen')}
             temporary=BASE/'state.tmp';temporary.write_text(json.dumps(snapshot));temporary.replace(BASE/'state.json')
             if (BASE/'capture.json').exists():
                 name=json.loads((BASE/'capture.json').read_text())['name'];(BASE/'capture.json').unlink()
                 xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/(name+'.png'))+')')
-            xbmc.Monitor().waitForAbort(.05)
+            xbmc.sleep(50)
         window.dispose()
     (BASE/'complete').write_text('ok')
 except Exception:
@@ -96,6 +96,8 @@ def main():
         assets=base/'assets';assets.mkdir()
         regular=ImageFont.truetype(str(SKIN/'fonts/Roboto-Regular.ttf'),24)
         bold=ImageFont.truetype(str(SKIN/'fonts/Roboto-Bold.ttf'),42)
+        logo=assets/'clearlogo.png';image=Image.new('RGBA',(520,132));ImageDraw.Draw(image).text((16,30),'NATIVE TITLE',font=bold,fill='white');image.save(logo)
+        studio=assets/'studio.png';image=Image.new('RGBA',(240,140));ImageDraw.Draw(image).text((36,45),'STUDIO',font=regular,fill='black');image.save(studio)
         colors=['#146B89','#D04A2A','#7D25E6','#1B9382','#CA3162','#50851B','#3B6FBD']
         items=[]
         for index in range(20):
@@ -106,12 +108,12 @@ def main():
             items.append({'title':'Fixture title %02d'%(index+1),'label':'Fixture title %02d'%(index+1),'file':'fixture://title/%d'%index,'filetype':'file','year':2026,
                           'premiered':'2026-09-30','mpaa':'CA 14A','plot':'A controlled native Kodi fixture checks the exact source poster geometry, artwork glow, metadata and remote focus behavior.',
                           'genre':['Mystery','Thriller'],'studio':['Fixture Studio'],'original_language':'en','ratings':{'tmdb':{'rating':7.0},'imdb':{'rating':7.1}},
-                          'art':{'poster':str(poster),'fanart':str(fanart)}})
+                          'art':{'poster':str(poster),'fanart':str(fanart),'clearlogo':str(logo),'studiologo':str(studio)}})
         script='BASE=Path(%r)\nHELPER=Path(%r)\nOUTPUT=Path(%r)\nITEMS=%r\n'%(str(base),str(helper),str(output),items)
         launcher=profile/'addons/script.foundry.libraryqa';launcher.mkdir()
         (launcher/'addon.xml').write_text('<addon id="script.foundry.libraryqa" version="1.0.0" name="Foundry Library QA" provider-name="Foundry"><requires><import addon="xbmc.python" version="3.0.0" /></requires><extension point="xbmc.python.script" library="fixture.py" /><extension point="xbmc.addon.metadata"><platform>all</platform><license>GPL-2.0-only</license><summary lang="en_GB">Controlled fixture</summary></extension></addon>')
         (launcher/'fixture.py').write_text('from pathlib import Path\n'+script+FIXTURE)
-        environment=dict(os.environ,DISPLAY=':99',KODI_HOME=str(home),LIBGL_ALWAYS_SOFTWARE='1',AE_SINK='ALSA')
+        environment=dict(os.environ,DISPLAY=':99',KODI_HOME=str(home),LIBGL_ALWAYS_SOFTWARE='1',AE_SINK='NULL')
         log=open(output/'kodi-console.log','w')
         xserver=subprocess.Popen(['Xvfb',':99','-screen','0','1920x1080x24','-ac','-nolisten','tcp'],stdout=log,stderr=log)
         kodi=None
