@@ -106,7 +106,12 @@ def main():
         for index in range(60):
             color=colors[index%len(colors)]
             poster=assets/('poster-%d.png'%index);image=Image.new('RGB',(224,336),color)
-            draw=ImageDraw.Draw(image);draw.text((18,34),'TITLE',font=regular,fill='white');draw.text((18,78),str(index+1),font=bold,fill='white');image.save(poster)
+            draw=ImageDraw.Draw(image);draw.text((18,34),'TITLE',font=regular,fill='white');draw.text((18,78),str(index+1),font=bold,fill='white')
+            # Four tiny fixture-only fiducials distinguish the opaque artwork
+            # edge from a same-hue glow. No released media/artwork is modified.
+            for x,y in ((24,24),(196,24),(24,308),(196,308)):
+                draw.rectangle((x,y,x+3,y+3),fill=(255,0,255))
+            image.save(poster)
             fanart=assets/('fanart-%d.png'%index);image=Image.new('RGB',(1920,1080),color);image.save(fanart)
             items.append({'title':'Fixture title %02d'%(index+1),'label':'Fixture title %02d'%(index+1),'file':'fixture://title/%d'%index,'filetype':'file','year':2026,
                           'premiered':'2026-09-30','mpaa':'CA 14A','plot':'A controlled native Kodi fixture checks the exact source poster geometry, artwork glow, metadata and remote focus behavior.',
@@ -163,20 +168,14 @@ def main():
                     except (OSError,ValueError):return False
                 wait_for(complete)
                 with Image.open(destination) as im:return im.convert('RGB')
-            def poster_bounds(im,target,region):
+            def poster_bounds(im,region):
                 pixels=im.load();l,t,r,b=region
-                matches={(x,y) for y in range(t,b) for x in range(l,r) if max(abs(pixels[x,y][c]-target[c]) for c in range(3))<=3}
-                assert matches,'Focused poster was not rendered'
-                # Saturation-boosted artwork light can pass through the original
-                # poster RGB again in a disconnected halo. Measure the connected
-                # poster body containing its center, excluding that outer ring.
-                seed=min(matches,key=lambda p:(p[0]-(l+r)/2)**2+(p[1]-(t+b)/2)**2)
-                body={seed};pending=[seed]
-                while pending:
-                    x,y=pending.pop()
-                    for point in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
-                        if point in matches and point not in body:body.add(point);pending.append(point)
-                return [min(x for x,y in body),min(y for x,y in body),max(x for x,y in body)+1,max(y for x,y in body)+1]
+                matches=[(x,y) for y in range(t,b) for x in range(l,r) if pixels[x,y][0]>=245 and pixels[x,y][1]<=10 and pixels[x,y][2]>=245]
+                assert matches,'Focused poster fiducials were not rendered'
+                # Fiducials span [24,24,200,312] of the original 224x336 art.
+                # At the source 1.19 focus scale every side has a 28.56px inset.
+                inset=24*1.19
+                return [round(min(x for x,y in matches)-inset),round(min(y for x,y in matches)-inset),round(max(x for x,y in matches)+1+inset),round(max(y for x,y in matches)+1+inset)]
             for section,name in [('Movies','movies'),('TV Shows','tv-shows')]:
                 wait_for(lambda:state().get('case')==name and state().get('focus')==50 and bool(state().get('title')))
                 key('Right','Right');wait_for(lambda:state().get('position')==2)
@@ -184,7 +183,7 @@ def main():
                 time.sleep(1)
                 focused=capture(name)
                 assert focused.size==(1920,1080),focused.size
-                bounds=poster_bounds(focused,(125,37,230),(540,480,940,980))
+                bounds=poster_bounds(focused,(610,540,853,915))
                 expected=[598,528,865,928]
                 assert all(abs(a-b)<=4 for a,b in zip(bounds,expected)),(bounds,expected)
                 key('Down');wait_for(lambda:state().get('focus')==5703)
@@ -199,7 +198,7 @@ def main():
                 key('Up');wait_for(lambda:state().get('focus')==50 and state().get('position')==2)
                 key(*(['Right']*8));wait_for(lambda:state().get('position')==10)
                 wait_for(lambda:state().get('accent')=='FF25C7B0');time.sleep(.7)
-                middle=poster_bounds(capture(name+'-scrolled'),(27,147,130),(540,480,940,980))
+                middle=poster_bounds(capture(name+'-scrolled'),(610,540,853,915))
                 assert all(abs(a-b)<=4 for a,b in zip(middle,expected)),(middle,expected)
                 key(*(['Right']*10));wait_for(lambda:state().get('kind')=='next');time.sleep(.7)
                 capture(name+'-next')
@@ -213,7 +212,7 @@ def main():
                 key('Escape')
             wait_for(lambda:state().get('case')=='short-row' and state().get('focus')==50 and state().get('position')==0)
             wait_for(lambda:state().get('accent')=='FF1D9BC7');time.sleep(.7)
-            short=poster_bounds(capture('short-row'),(20,107,137),(60,480,400,980))
+            short=poster_bounds(capture('short-row'),(100,540,345,915))
             assert all(abs(a-b)<=4 for a,b in zip(short,[91,528,357,928])),short
             evidence.append({'section':'Three-title row','focused_poster_bounds':short,'left_padding_preserved':True})
             key('Escape')
