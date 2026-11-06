@@ -1,6 +1,6 @@
 {
-  "release": "1.3.0",
-  "skin": "1.3.0",
+  "release": "1.3.1",
+  "skin": "1.3.1",
   "packages": [
     {
       "id": "repository.foundry",
@@ -25,31 +25,31 @@
     },
     {
       "id": "skin.foundry",
-      "version": "1.3.0",
-      "path": "skin.foundry/skin.foundry-1.3.0.zip",
-      "sha256": "2f58f61a5656bb7f131b4255cbb0bc01e71094d585380da3dd97cdc459293122",
-      "size": 36429095
+      "version": "1.3.1",
+      "path": "skin.foundry/skin.foundry-1.3.1.zip",
+      "sha256": "662f8cb19e09eb7d74626bdd78373fa085643dbfc827427f5d78e91f5593838d",
+      "size": 36425719
     },
     {
       "id": "script.foundry.helper",
-      "version": "1.2.0",
-      "path": "script.foundry.helper/script.foundry.helper-1.2.0.zip",
-      "sha256": "fb4337aa49887e72051624dfff46ebd7052e0642c3b75c079faae37a0e04ecb1",
-      "size": 858471
+      "version": "1.2.1",
+      "path": "script.foundry.helper/script.foundry.helper-1.2.1.zip",
+      "sha256": "aeb2b36a1dfbe535b5d37208f473960445ea9727d23dad1db808991d1239b19d",
+      "size": 860511
     },
     {
       "id": "script.program.foundry-build",
-      "version": "1.3.0",
-      "path": "script.program.foundry-build/script.program.foundry-build-1.3.0.zip",
-      "sha256": "d959a31626a8b0c52cc9a2456d4809e67493501b01b2270f558a74ed0b596185",
-      "size": 2595
+      "version": "1.3.1",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.3.1.zip",
+      "sha256": "89a4da0e9580cec264b9d1d263e06d3b23a38ae3cfbf8f4a76ebe17331e554a7",
+      "size": 2598
     },
     {
       "id": "script.program.foundry-bootstrap",
-      "version": "1.3.0",
-      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.3.0.zip",
-      "sha256": "de282ab1bf642bcf8fbd1be689b1a2133098b5fe2056cce9ac5aaae76267b9f3",
-      "size": 848
+      "version": "1.3.1",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.3.1.zip",
+      "sha256": "2d511c096007c38e8716e6bacb43fab1368c66ea92ec8d1e445960bdd6939406",
+      "size": 852
     }
   ]
 }
