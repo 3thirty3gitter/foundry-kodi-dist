@@ -29,7 +29,9 @@ scale=4
 mask=Image.new('L',(w*scale,h*scale));ImageDraw.Draw(mask).polygon([(round(x*scale),round(y*scale)) for x,y in points],fill=255)
 for focused in (False,True):
  stroke=(6 if focused else 4)*scale
- interior=mask.filter(ImageFilter.MinFilter(stroke*2+1));border=ImageChops.subtract(mask,interior)
+ padded=ImageOps.expand(mask,border=stroke,fill=0)
+ interior=padded.filter(ImageFilter.MinFilter(stroke*2+1)).crop((stroke,stroke,stroke+mask.width,stroke+mask.height))
+ border=ImageChops.subtract(mask,interior)
  start=(34,37,43) if focused else (9,10,13)
  image=Image.new('RGBA',mask.size)
  px=image.load()

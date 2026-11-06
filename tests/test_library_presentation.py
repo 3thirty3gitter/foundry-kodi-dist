@@ -100,6 +100,11 @@ class HoverRegression(unittest.TestCase):
             self.assertEqual(n.size,(208,152))
             self.assertIsNone(ImageChops.difference(n,ImageOps.mirror(p)).getbbox())
             self.assertNotEqual(n.tobytes(),f.tobytes())
+            # Source border is inside the complete arrow, including the shaft
+            # edge that touches the raster canvas. Filtering must pad with zero.
+            self.assertGreater(n.getpixel((1,76))[0],100)
+            self.assertGreater(f.getpixel((1,76))[0],180)
+            self.assertGreater(p.getpixel((206,76))[0],100)
 
     def test_source_tv_pivot_and_row_ends_are_explicit_in_both_views(self):
         skin=Path(__file__).resolve().parents[2]/'skin.foundry-nimbus'
