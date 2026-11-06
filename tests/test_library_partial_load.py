@@ -21,6 +21,7 @@ class PartialLoad(unittest.TestCase):
         w.getProperty=lambda n:w.props.get(n,'')
         class Control:
             def setWidth(self,width):pass
+            def setPosition(self,x,y):pass
             def isVisible(self):return True
         w.getControl=lambda cid:Control()
         w.getFocusId=lambda:w.focus_id

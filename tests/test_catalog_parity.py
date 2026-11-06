@@ -99,7 +99,7 @@ class WindowContracts(unittest.TestCase):
     def test_arrows_are_in_the_same_native_container_as_posters(self):
         rail=self.doc.find(".//control[@id='50']")
         self.assertEqual(rail.findtext('orientation'),'horizontal')
-        self.assertEqual(rail.findtext('width'),'1920')
+        self.assertEqual(rail.findtext('width'),'1808')
         self.assertTrue(rail.findall(".//control/visible"))
         self.assertIn('ListItem.Property(catalog.arrow)',E.tostring(rail,encoding='unicode'))
         self.assertIsNone(self.doc.find(".//control[@id='5704']"))
@@ -132,6 +132,6 @@ class WindowContracts(unittest.TestCase):
     def test_actual_rating_badges_and_corrected_footer_anchor(self):
         for n in ('rating_rt_fresh','rating_rt_rotten','rating_metacritic'):
             self.assertTrue((SKIN/'media/streampilot'/('source-'+n+'.png')).is_file())
-        self.assertEqual(self.doc.findtext(".//control[@id='5703']/left"),'298')
+        self.assertEqual(self.doc.findtext(".//control[@id='5703']/left"),'280')
 
 if __name__=='__main__':unittest.main()

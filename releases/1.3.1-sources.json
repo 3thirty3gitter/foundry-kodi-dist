@@ -1,0 +1,20 @@
+{
+  "release": "1.3.1",
+  "skin": "1.3.1",
+  "helper": "1.2.1",
+  "source_commits": {
+    "skin.foundry-nimbus": "c768434a8fc3a236f29d5228b19fce337eab5449",
+    "script.foundry.helper": "1ace84ba8a8ad1379e5a449c77a5b0dec3ef967a"
+  },
+  "reference": {
+    "repository": "3thirty3gitter/StreamPilot",
+    "commit": "994bcb2d83f0fef96afe8512ecdd66c8429d9097",
+    "path": "app/src/main/java/ca/threethirtythree/streampilot/ui/VodCatalogScreen.kt",
+    "blob": "4c73ab24d77f45b828efb2a5517357a507f76da1"
+  },
+  "validation": {
+    "regression_tests": 220,
+    "live_api_verification": "pending user-configured keys",
+    "target_device_verification": "pending Shield testing"
+  }
+}

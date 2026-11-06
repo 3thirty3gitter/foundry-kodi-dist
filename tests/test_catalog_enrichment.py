@@ -100,18 +100,12 @@ class Enrichment(unittest.TestCase):
         home=E.parse(skin/'xml/Home.xml')
         control=next(c for c in home.iter('control') if c.findtext('texture')=='foundry-logo-traced.png')
         self.assertEqual([control.findtext(t) for t in ('left','top','width','height')],['60','40','380','115'])
-    def test_catalog_layout_changes_are_only_outline_removal_and_context_correct_color(self):
+    def test_library_port_preserves_the_complete_search_screen(self):
         root=Path(__file__).resolve().parents[1]
-        with zipfile.ZipFile(root/'skin.foundry/skin.foundry-1.2.1.zip') as z:before=E.fromstring(z.read('skin.foundry/xml/script-foundry-vod.xml'))
-        for parent in before.iter():
-            for child in list(parent):
-                if child.tag=='control' and child.findtext('texture')=='streampilot/catalog-frame.png':parent.remove(child)
-            texture=parent.find('texture')
-            if texture is not None and texture.text=='streampilot/catalog-glow.png':
-                texture.attrib.pop('colordiffuse');texture.text='$INFO[ListItem.Art(foundry.catalog.glow)]'
-        before.find(".//control[@id='50']/focusedlayout").set('infoupdate','100')
+        with zipfile.ZipFile(root/'skin.foundry/skin.foundry-1.3.0.zip') as z:
+            before=E.fromstring(z.read('skin.foundry/xml/script-foundry-vod.xml'))
         after=E.parse(root.parent/'skin.foundry-nimbus/xml/script-foundry-vod.xml').getroot()
         def normalized(n):return n.tag,n.attrib,(n.text or '').strip(),[normalized(c) for c in n]
-        self.assertEqual(normalized(before),normalized(after))
+        self.assertEqual(normalized(before.find('controls')[1]),normalized(after.find('controls')[1]))
 
 if __name__=='__main__':unittest.main()

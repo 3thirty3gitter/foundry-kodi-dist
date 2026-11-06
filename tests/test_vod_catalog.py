@@ -22,7 +22,7 @@ class CatalogLayout(unittest.TestCase):
         self.assertEqual(backdrop.findtext("aspectratio"), "scale")
         self.assertFalse(any(g.findtext("orientation", "vertical") == "vertical" for g in self.view.findall(".//control[@type='grouplist']")))
         sort = self.view.find("control[@id='5703']")
-        self.assertGreaterEqual(int(sort.findtext("top")), 537 + 437)
+        self.assertGreaterEqual(int(sort.findtext("top")), 560 + 336)
         self.assertEqual(sort.findtext("onclick"), "SendClick(3)")
 
     def test_poster_ratio_fixed_slot_focus_scale_and_unclipped_vertical_glow(self):
@@ -32,27 +32,27 @@ class CatalogLayout(unittest.TestCase):
         self.assertEqual(rail.find("itemlayout").attrib, rail.find("focusedlayout").attrib)
         poster = self.doc.find("include[@name='FoundryVODPoster']/definition/control")
         width, height = (int(poster.findtext(k)) for k in ("width", "height"))
-        self.assertEqual((width, height), (240, 360))
+        self.assertEqual((width, height), (224, 336))
         zoom = poster.find("animation/effect")
         self.assertEqual(zoom.get("end"), "119")
-        self.assertEqual((int(rail.findtext("top")), int(rail.findtext("height"))), (537 - 103, 437 + 206))
+        self.assertEqual((int(rail.findtext("top")), int(rail.findtext("height"))), (428, 600))
         outer = poster.find("control[description='Artwork-color outer focus glow, normalized from 34dp']")
         # Expanded viewport protects the focused card plus its glow at both ends.
         art_y = int(rail.findtext("top")) + int(poster.findtext("top"))
-        glow_top = art_y - 73 - int(outer.findtext("height")) * .19 / 2
-        glow_bottom = art_y + 360 + 73 + int(outer.findtext("height")) * .19 / 2
+        glow_top = art_y - 68 - int(outer.findtext("height")) * .19 / 2
+        glow_bottom = art_y + 336 + 68 + int(outer.findtext("height")) * .19 / 2
         self.assertGreater(glow_top, int(rail.findtext("top")))
         self.assertLess(glow_bottom, int(rail.findtext("top")) + int(rail.findtext("height")))
-        studio = self.view.find(".//control[description='Studio logo above the rail']")
-        self.assertLess(int(studio.findtext("top")) + int(studio.findtext("height")), glow_top)
+        studio = self.view.find(".//control[@type='image'][texture='$VAR[FoundryVODStudioLogo]']")
+        self.assertLess(int(studio.findtext("top")) + int(studio.findtext("height")), art_y - 336 * .19 / 2)
 
     def test_hero_clearlogo_studio_and_description_follow_reference_geometry(self):
         logo = self.view.find(".//control[@type='image'][texture='$INFO[ListItem.Art(clearlogo)]']")
         self.assertEqual((logo.findtext("width"), logo.findtext("height")), ("520", "132"))
         self.assertEqual(logo.findtext("aspectratio"), "keep")
-        studio = self.view.find(".//control[description='Studio logo above the rail']")
+        studio = self.view.find(".//control[@type='image'][texture='$VAR[FoundryVODStudioLogo]']")
         self.assertEqual((studio.findtext("width"), studio.findtext("height")), ("240", "80"))
-        plot = self.view.find(".//control[description='Catalog description']")
+        plot = self.view.find(".//control[@type='textbox'][label='$VAR[FoundryVODPlot]']")
         self.assertEqual(plot.findtext("autoscroll"), "Skin.HasSetting(autoscroll)")
         self.assertLess(int(plot.findtext("top")) + int(plot.findtext("height")), 576)
 

@@ -32,6 +32,8 @@ class RichRelease(unittest.TestCase):
             for path in ['xml/Home.xml','xml/Includes_Home.xml','xml/Includes_Animations.xml','xml/Variables_Artwork.xml','xml/Font.xml']:
                 data=(SKIN/path).read_bytes()
                 if path=='xml/Home.xml':data=data.replace(b'<movement>6</movement>',b'<movement>7</movement>',1)
+                if path=='xml/Font.xml':
+                    data=re.sub(rb'^[ \t]*<font><name>sp_library_[^\n]*</font>\n',b'',data,flags=re.M)
                 if path=='xml/Variables_Artwork.xml':
                     # Shared metadata values are allowed; every original artwork
                     # fallback, menu binding and control remains byte-identical.

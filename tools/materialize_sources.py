@@ -5,6 +5,7 @@ and the complete expected Git blob map were verified against the pinned private
 source commits before this snapshot was committed.
 """
 import argparse
+import base64
 import gzip
 import hashlib
 import json
@@ -28,10 +29,12 @@ def main():
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', type=Path, default=root.parent)
-    output = parser.parse_args().output
+    parser.add_argument('--release', default='1.3.1')
+    args = parser.parse_args()
+    output = args.output
     output.mkdir(parents=True, exist_ok=True)
-    snapshots = json.loads(gzip.decompress((root / 'releases/1.3.0-source-snapshot.json.gz').read_bytes()))
-    sources = json.loads((root / 'releases/1.3.0-sources.json').read_text())['source_commits']
+    snapshots = json.loads(gzip.decompress((root / ('releases/' + args.release + '-source-snapshot.json.gz')).read_bytes()))
+    sources = json.loads((root / ('releases/' + args.release + '-sources.json')).read_text())['source_commits']
     for addon, snapshot in snapshots.items():
         directory = 'skin.foundry-nimbus' if addon == 'skin.foundry' else addon
         assert snapshot['source_commit'] == sources[directory], 'Source pin mismatch'
@@ -56,6 +59,10 @@ def main():
                 target = work / relative_path(path)
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_bytes(content.encode('utf-8'))
+            for path, content in snapshot.get('binary_files', {}).items():
+                target = work / relative_path(path)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(base64.b64decode(content, validate=True))
             actual = {path.relative_to(work).as_posix(): git_hash(path.read_bytes())
                       for path in work.rglob('*') if path.is_file()}
             assert actual == snapshot['packaged_git_blobs'], 'Restored source differs from verified source commit'
