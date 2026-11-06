@@ -45,7 +45,9 @@ try:
             window.tick()
             snapshot={'initialized':window.initialized,'current_window':xbmcgui.getCurrentWindowId(),'section':section,'focus':window.getFocusId(),'position':window.getCurrentListPosition(),
                       'page':window.state.page,'title':window.getProperty('catalog.title'),
-                      'sort_open':window.getProperty('catalog.sortopen')}
+                      'sort_open':window.getProperty('catalog.sortopen'),
+                      'tmdb':window.getProperty('catalog.tmdb'),'imdb':window.getProperty('catalog.imdb'),
+                      'accent':window.getProperty('catalog.accent')}
             temporary=BASE/'state.tmp';temporary.write_text(json.dumps(snapshot));temporary.replace(BASE/'state.json')
             if (BASE/'capture.json').exists():
                 name=json.loads((BASE/'capture.json').read_text())['name'];(BASE/'capture.json').unlink()
@@ -145,13 +147,15 @@ def main():
                 if not any(visible.values()):break
                 if visible.get('System.HasActiveModalDialog'):rpc('Input.Back')
                 time.sleep(.3)
+            rpc('Addons.SetAddonEnabled',{'addonid':'script.foundry.helper','enabled':True})
             rpc('Addons.SetAddonEnabled',{'addonid':'script.foundry.libraryqa','enabled':True})
             rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.libraryqa'})
             evidence=[]
             for section,name in [('Movies','movies'),('TV Shows','tv-shows')]:
                 wait_for(lambda:state().get('section')==section and state().get('focus')==50 and bool(state().get('title')))
                 key('Right','Right');wait_for(lambda:state().get('position')==2)
-                time.sleep(2)
+                wait_for(lambda:bool(state().get('tmdb')) and bool(state().get('imdb')) and state().get('accent')=='FF7D25E6')
+                time.sleep(1)
                 (base/'capture.json').write_text(json.dumps({'name':name}))
                 wait_for(lambda:(output/(name+'.png')).exists())
                 key('Down');wait_for(lambda:state().get('focus')==5703)
@@ -167,7 +171,7 @@ def main():
                     bounds=[min(x for x,y in matches),min(y for x,y in matches),max(x for x,y in matches)+1,max(y for x,y in matches)+1]
                     expected=[603,528,869,928]
                     assert all(abs(a-b)<=6 for a,b in zip(bounds,expected)),(bounds,expected)
-                evidence.append({'section':section,'screenshot':name+'.png','focused_poster_bounds':bounds,'source_expected_bounds':expected,'sort_cancel_restores_poster':True})
+                evidence.append({'section':section,'screenshot':name+'.png','focused_poster_bounds':bounds,'source_expected_bounds':expected,'sort_cancel_restores_poster':True,'tmdb_rating':state().get('tmdb'),'imdb_rating':state().get('imdb'),'artwork_accent':state().get('accent')})
                 key('Escape')
             wait_for(lambda:(base/'complete').exists())
             (output/'verification.json').write_text(json.dumps({'renderer':'Native Kodi '+subprocess.check_output(['kodi','--version'],text=True).strip(),'canvas':[1920,1080],'checks':evidence,'scope':'Controlled fixtures; not Shield, live providers or Android pixel parity'},indent=2)+'\n')
