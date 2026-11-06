@@ -66,7 +66,7 @@ def main():
         'source_url': BASES[0], 'distribution_commit_verified': COMMIT,
         'source_commits': sources['source_commits'],
         'validation': {
-            'regression_tests_passed': 232,
+            'regression_tests_passed': 233,
             'native_kodi_fixture': json.loads((ROOT / 'releases/1.3.4-qa/verification.json').read_text()),
             'test_inputs': 'Pinned source snapshots and extracted package ZIPs; mocked Kodi APIs',
             'deterministic_rebuild': 'All seven package sizes and SHA-256 checksums unchanged',

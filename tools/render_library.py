@@ -15,6 +15,7 @@ import xml.etree.ElementTree as E
 from urllib.request import Request, urlopen
 from PIL import Image, ImageDraw, ImageFont
 import copy
+import signal
 
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -181,7 +182,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
         kodi=None
         try:
             time.sleep(1)
-            kodi=subprocess.Popen(['kodi','-p','-fs','--windowing=x11','--debug'],env=environment,stdout=log,stderr=log)
+            kodi=subprocess.Popen(['kodi','-p','-fs','--windowing=x11','--debug'],env=environment,stdout=log,stderr=log,start_new_session=True)
             def rpc(method,params=None):
                 payload=json.dumps({'jsonrpc':'2.0','id':1,'method':method,'params':params or {}}).encode()
                 with urlopen(Request('http://127.0.0.1:18080/jsonrpc',data=payload,headers={'Content-Type':'application/json'}),timeout=5) as response:
@@ -308,12 +309,20 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             wait_for(lambda:(base/'complete').exists())
             (output/'verification.json').write_text(json.dumps({'renderer':'Native Kodi '+subprocess.check_output(['kodi','--version'],text=True).strip(),'canvas':[1920,1080],'checks':evidence,'scope':'Controlled fixtures; not Shield, live providers or Android pixel parity'},indent=2)+'\n')
         finally:
-            if kodi:kodi.terminate()
+            if kodi:
+                try:os.killpg(kodi.pid,signal.SIGTERM)
+                except ProcessLookupError:pass
+                try:kodi.wait(timeout=5)
+                except subprocess.TimeoutExpired:pass
+                try:os.killpg(kodi.pid,signal.SIGKILL)
+                except ProcessLookupError:pass
+                kodi.wait(timeout=5)
             xserver.terminate();log.close()
             logs=profile/'temp/kodi.log'
             if logs.exists():shutil.copyfile(logs,output/'kodi.log')
             for name in ('state.json','error.txt'):
                 if (base/name).exists():shutil.copyfile(base/name,output/name)
+        assert 'Error parsing boolean expression' not in (output/'kodi.log').read_text(), 'Invalid skin boolean conditions'
 
 
 if __name__=='__main__':main()

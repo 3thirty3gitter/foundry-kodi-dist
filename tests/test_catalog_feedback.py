@@ -10,6 +10,13 @@ from modules.monitors.metadata import MetadataMonitor,snapshot
 ROOT=Path(__file__).resolve().parents[2]
 
 class CatalogFeedback(unittest.TestCase):
+    def test_metadata_owner_conditions_use_kodi_boolean_infolabel_syntax(self):
+        for filename in ('Expressions.xml','Includes_Metadata.xml'):
+            doc=E.parse(ROOT/'skin.foundry-nimbus/xml'/filename)
+            for expression in doc.findall('expression'):
+                if expression.get('name','').startswith('Foundry'):
+                    self.assertNotIn('$INFO[',expression.text or '')
+
     def test_native_glow_requires_the_focused_layout_and_row_focus(self):
         doc=E.parse(ROOT/'skin.foundry-nimbus/xml/View_57_StreamPilot.xml')
         glow=doc.find(".//control[texture='$VAR[FoundryVODGlow]']")

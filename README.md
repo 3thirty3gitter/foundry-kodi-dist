@@ -2,9 +2,9 @@
 
 Release 1.3.4: **Build and Bootstrap 1.3.4 / skin 1.3.4 / Helper 1.2.3 / Wallpapers 1.1.0**.
 
-The pinned source commits are in [releases/1.3.4-sources.json](releases/1.3.4-sources.json). The release workflow builds the packages from those commits, runs all 232 checks against source and extracted ZIPs, verifies deterministic rebuilding, then publishes the ZIPs and feed in one commit. Public download verification is recorded separately in `releases/1.3.4-verification.json` once complete.
+The pinned source commits are in [releases/1.3.4-sources.json](releases/1.3.4-sources.json). The release workflow builds the packages from those commits, runs all 233 checks against source and extracted ZIPs, verifies deterministic rebuilding, then publishes the ZIPs and feed in one commit. Public download verification is recorded separately in `releases/1.3.4-verification.json` once complete.
 
-Release verification: all seven public package downloads match the sizes and SHA-256 checksums in `release.json`; every ZIP passes its integrity check. All 232 package and mocked-runtime regression checks pass locally. The previous [1.2.33 verification record](releases/1.2.33-verification.json) is retained as historical evidence. Shield rendering, playback and live provider checks remain pending.
+Release verification: all seven public package downloads match the sizes and SHA-256 checksums in `release.json`; every ZIP passes its integrity check. All 233 package and mocked-runtime regression checks pass locally. The previous [1.2.33 verification record](releases/1.2.33-verification.json) is retained as historical evidence. Shield rendering, playback and live provider checks remain pending.
 
 ## Shared media catalog
 
@@ -27,7 +27,7 @@ The release retains the 1.2.32 corrections that bound Home menu movement to six 
 
 The release also retains all fourteen approved rich full/widget wallpaper pairs and the lighter, shorter OSD background. Every image is copied unchanged at 1672x941. All widget images are corrected revision 1, retaining the approved 55% uniform icon/text/underline group. Home artwork reads FOUNDRY / MEDIA CENTER. Full images, the skin fallback and add-on fanart use the complete frames. The historical Wallpapers 1.0.0 ZIP remains unchanged.
 
-The 450ms full-frame crossfade, fixed widget viewport, lower-row selection retention, Umbrella visibility fix, traced header and dedicated library remain unchanged. Clean plates are visually registered, not pixel-identical. OSD backdrop opacity is reduced 25% (effective peak alpha 232 to 169); its height drops 48 units, VOD 322 to 274 and live 368 to 320. Every foreground control retains its existing size, position and action.
+The 450ms full-frame crossfade, fixed widget viewport, lower-row selection retention, Umbrella visibility fix, traced header and dedicated library remain unchanged. Clean plates are visually registered, not pixel-identical. OSD backdrop opacity is reduced 25% (effective peak alpha 233 to 169); its height drops 48 units, VOD 322 to 274 and live 368 to 320. Every foreground control retains its existing size, position and action.
 
 Native Kodi 21.3 Windows fixtures check all wallpaper pairs, both transition directions, menu returns, rapid toggles and bright/dark OSD scenes. These are controlled fixtures, not Shield captures or proof of exact StreamPilot parity. The library layout remains from 1.2.30, with the metadata/error corrections above; OMDb stays optional and disabled without a user key. FenSkeleton and Forge Releases remain URL bookmarks only, with no repository installation or activation.
 
