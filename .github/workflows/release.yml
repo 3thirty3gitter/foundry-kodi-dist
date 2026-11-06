@@ -62,11 +62,16 @@ jobs:
           cmp release.json "$RUNNER_TEMP/foundry-first-build.json"
           python tools/verify_release.py
           git diff --exit-code -- repository.foundry resource.images.foundry.wallpapers resource.images.foundry.osd
-      - name: Render and navigate Movies and TV in actual Kodi
+      - name: Install native Kodi validation environment
+        timeout-minutes: 4
         working-directory: foundry-kodi-dist
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install --no-install-recommends -y kodi xvfb xdotool python3-pil python3-requests libgl1-mesa-dri fonts-noto-core fonts-noto-mono fonts-roboto
+          sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update -qq
+          sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 -o DPkg::Lock::Timeout=60 install --no-install-recommends -y kodi xvfb xdotool python3-pil python3-requests libgl1-mesa-dri fonts-noto-core fonts-noto-mono fonts-roboto
+      - name: Render and navigate Movies and TV in actual Kodi
+        timeout-minutes: 5
+        working-directory: foundry-kodi-dist
+        run: |
           python tools/render_library.py
       - uses: actions/upload-artifact@v4
         if: failure()
