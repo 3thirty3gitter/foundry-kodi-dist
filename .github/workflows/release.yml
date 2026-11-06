@@ -15,7 +15,7 @@ permissions:
 
 concurrency:
   group: foundry-release
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   package:

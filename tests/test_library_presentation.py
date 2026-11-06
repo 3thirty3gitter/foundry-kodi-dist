@@ -113,3 +113,5 @@ class HoverRegression(unittest.TestCase):
             self.assertEqual(rail.get('type'),'fixedlist');self.assertEqual(rail.findtext('focusposition'),'2')
             self.assertEqual(rail.findtext('movement'),'4')
             self.assertIn('-4.32,0',E.tostring(doc.getroot(),encoding='unicode'))
+            for effect in doc.findall(".//effect[@type='zoom']"):
+                self.assertEqual(effect.get('center'),'auto')

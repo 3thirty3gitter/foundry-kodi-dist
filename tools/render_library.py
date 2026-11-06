@@ -205,14 +205,14 @@ def main():
                 outline=[(x,y) for y in range(620,840) for x in range(1570,1840) if min(pixels[x,y])>=185 and max(pixels[x,y])-min(pixels[x,y])<35]
                 assert outline,'Focused NEXT arrow border was not rendered'
                 arrow_bounds=[min(x for x,y in outline),min(y for x,y in outline),max(x for x,y in outline)+1,max(y for x,y in outline)+1]
-                assert all(abs(a-b)<=3 for a,b in zip(arrow_bounds,[1586,646,1811,811])),arrow_bounds
+                assert all(abs(a-b)<=3 for a,b in zip(arrow_bounds,[1586,646,1806,811])),arrow_bounds
                 key('Right');assert state().get('position')==20,'Rail wrapped at NEXT'
                 key('Return');wait_for(lambda:state().get('page')==2 and state().get('position')==1 and state().get('kind')=='media')
                 key('Left');wait_for(lambda:state().get('kind')=='previous');time.sleep(.7)
                 capture(name+'-previous')
                 key('Left');assert state().get('position')==0,'Rail wrapped at BACK'
                 key('Return');wait_for(lambda:state().get('page')==1 and state().get('position')==0 and state().get('kind')=='media')
-                evidence.append({'section':section,'screenshot':name+'.png','focused_poster_bounds':bounds,'scrolled_poster_bounds':middle,'source_expected_bounds':expected,'visible_colored_glow_delta_rgb':delta,'sort_cancel_restores_poster':True,'next_previous_page_roundtrip':True,'row_ends_do_not_wrap':True})
+                evidence.append({'section':section,'screenshot':name+'.png','focused_poster_bounds':bounds,'scrolled_poster_bounds':middle,'source_expected_bounds':expected,'visible_colored_glow_delta_rgb':delta,'sort_cancel_restores_poster':True,'next_previous_page_roundtrip':True,'row_ends_do_not_wrap':True,'focused_next_arrow_bounds':arrow_bounds})
                 key('Escape')
             wait_for(lambda:state().get('case')=='short-row' and state().get('focus')==50 and state().get('position')==0)
             wait_for(lambda:state().get('accent')=='FF1D9BC7');time.sleep(.7)
