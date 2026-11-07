@@ -29,7 +29,7 @@ def main():
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', type=Path, default=root.parent)
-    parser.add_argument('--release', default='1.3.4')
+    parser.add_argument('--release', default='1.3.5')
     args = parser.parse_args()
     output = args.output
     output.mkdir(parents=True, exist_ok=True)
@@ -72,3 +72,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

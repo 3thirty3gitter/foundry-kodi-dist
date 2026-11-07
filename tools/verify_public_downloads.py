@@ -19,10 +19,13 @@ COMMIT = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=Tr
 
 def download(base, path, expected=None):
     last_error = None
-    for attempt in range(6):
+    # Package publication precedes the separate Pages deployment. Give the
+    # small manifest time to converge before checking the larger ZIP files.
+    attempts=18 if base==BASES[0] and path=='release.json' else 6
+    for attempt in range(attempts):
         try:
             request = Request(base + path + '?verify=' + COMMIT, headers={'User-Agent': 'Foundry-release-verification'})
-            with urlopen(request, timeout=30) as response:
+            with urlopen(request, timeout=10 if attempts==18 else 30) as response:
                 assert response.status == 200, 'HTTP status ' + str(response.status)
                 data = response.read()
             if expected is not None:
@@ -30,7 +33,7 @@ def download(base, path, expected=None):
             return data
         except Exception as error:
             last_error = error
-            if attempt < 5:
+            if attempt < attempts-1:
                 time.sleep(10)
     raise RuntimeError('Public download failed: ' + base + path) from last_error
 
@@ -49,7 +52,7 @@ def package_check(task):
 
 def main():
     manifest = json.loads((ROOT / 'release.json').read_text())
-    assert manifest['release'] == '1.3.4'
+    assert manifest['release'] == '1.3.5'
     for base in BASES:
         for path in ('release.json', 'addons.xml', 'addons.xml.md5'):
             download(base, path, (ROOT / path).read_bytes())
@@ -58,7 +61,7 @@ def main():
     for path in ('index.html', 'skin.html', 'repository.foundry-1.2.0.zip',
                  'script.program.foundry-build.zip', 'script.program.foundry-bootstrap.zip'):
         download(BASES[0], path, (ROOT / path).read_bytes())
-    sources = json.loads((ROOT / 'releases/1.3.4-sources.json').read_text())
+    sources = json.loads((ROOT / 'releases/1.3.5-sources.json').read_text())
     record = {
         'verification_time_utc': datetime.now(timezone.utc).isoformat(),
         'status': 'published_downloads_verified_target_device_checks_pending',
@@ -66,8 +69,8 @@ def main():
         'source_url': BASES[0], 'distribution_commit_verified': COMMIT,
         'source_commits': sources['source_commits'],
         'validation': {
-            'regression_tests_passed': 233,
-            'native_kodi_fixture': json.loads((ROOT / 'releases/1.3.4-qa/verification.json').read_text()),
+            'regression_tests_passed': 245,
+            'native_kodi_fixture': json.loads((ROOT / 'releases/1.3.5-qa/verification.json').read_text()),
             'test_inputs': 'Pinned source snapshots and extracted package ZIPs; mocked Kodi APIs',
             'deterministic_rebuild': 'All seven package sizes and SHA-256 checksums unchanged',
             'public_release_manifest_and_feed': 'Byte-identical on Pages and raw GitHub',
@@ -81,9 +84,10 @@ def main():
             'Add-on custom windows and unidentified action listings keep their own behavior'
         ]
     }
-    (ROOT / 'releases/1.3.4-verification.json').write_text(json.dumps(record, indent=2) + '\n')
+    (ROOT / 'releases/1.3.5-verification.json').write_text(json.dumps(record, indent=2) + '\n')
     print('Verified all seven packages on both public hosts, Kodi feed, source listing and root installers.')
 
 
 if __name__ == '__main__':
     main()
+

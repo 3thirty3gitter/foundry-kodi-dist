@@ -46,7 +46,7 @@ class CatalogLayout(unittest.TestCase):
         self.assertLess(int(studio.findtext('top')) + int(studio.findtext('height')), art_y - 336 * .19 / 2)
 
     def test_hero_clearlogo_studio_and_description_follow_reference_geometry(self):
-        logo = self.view.find(".//control[@type='image'][texture='$INFO[ListItem.Art(clearlogo)]']")
+        logo = self.view.find(".//control[@type='image'][texture='$VAR[FoundryVODClearlogo]']")
         self.assertEqual((logo.findtext("width"), logo.findtext("height")), ("520", "132"))
         self.assertEqual(logo.findtext("aspectratio"), "keep")
         studio = self.view.find(".//control[@type='image'][texture='$VAR[FoundryVODStudioLogo]']")
@@ -145,3 +145,4 @@ class CatalogNavigation(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

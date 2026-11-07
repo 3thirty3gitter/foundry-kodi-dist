@@ -38,8 +38,8 @@ class Source:
     def search(self,query):return None
 
 try:
-    for section,count,case in (('Movies',60,'movies'),('TV Shows',60,'tv-shows'),('Movies',3,'short-row')):
-        data=[dict(item,type='tvshow' if section=='TV Shows' else 'movie') for item in ITEMS[:count]]
+    for section,count,case in (('Movies',60,'movies'),('TV Shows',60,'tv-shows'),('Movies',3,'short-row'),('TV Shows',2,'episodes')):
+        data=EPISODES if case=='episodes' else [dict(item,type='tvshow' if section=='TV Shows' else 'movie') for item in ITEMS[:count]]
         source=Source();source.load=lambda:{'items':data,'page':1,'total_pages':500}
         window=CatalogWindow('script-foundry-vod.xml',str(HELPER),'default','1080i',True,source=source,section=section,breadcrumb='Trending')
         window.show();deadline=time.monotonic()+90
@@ -50,7 +50,8 @@ try:
                       'kind':window.rail[window.getCurrentListPosition()].get('kind') if window.rail else '',
                       'sort_open':window.getProperty('catalog.sortopen'),
                       'tmdb':window.getProperty('catalog.tmdb'),'imdb':window.getProperty('catalog.imdb'),
-                      'accent':window.getProperty('catalog.accent')}
+                      'accent':window.getProperty('catalog.accent'),'details':window.getProperty('catalog.details'),
+                      'rendered_details':xbmc.getInfoLabel('Control.GetLabel(5713)'),'released':window.getProperty('catalog.released')}
             temporary=BASE/'state.tmp';temporary.write_text(json.dumps(snapshot));temporary.replace(BASE/'state.json')
             if (BASE/'capture.json').exists():
                 name=json.loads((BASE/'capture.json').read_text())['name'];(BASE/'capture.json').unlink()
@@ -85,6 +86,30 @@ try:
             name=json.loads((BASE/'capture.json').read_text())['name'];(BASE/'capture.json').unlink()
             xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/(name+'.png'))+')')
         xbmc.sleep(50)
+    from modules.favorites import remember
+    from modules.metadata import service
+    remember(service().cache,dict(ITEMS[0],type='movie',file='plugin://plugin.video.foundry.libraryqa/?movie=1'))
+    remember(service().cache,dict(EPISODES[0],file='plugin://plugin.video.foundry.libraryqa/?episode=2'))
+    xbmc.executebuiltin('ActivateWindow(favouritesbrowser)')
+    deadline=time.monotonic()+90
+    while not (BASE/'favorites-complete').exists() and time.monotonic()<deadline:
+        metadata.process_current_item();artwork.process_current_item()
+        try:focus=xbmcgui.Window(10060).getFocusId()
+        except RuntimeError:focus=0
+        snapshot={'case':'favorites','current_window':xbmcgui.getCurrentWindowId(),'focus':focus,
+                  'label':xbmc.getInfoLabel('ListItem.Label'),
+                  'title':xbmc.getInfoLabel('Window(Home).Property(foundry.metadata.title)'),
+                  'details':xbmc.getInfoLabel('Window(Home).Property(foundry.metadata.details)'),
+                  'rendered_details':xbmc.getInfoLabel('Control.GetLabel(5713)'),
+                  'plot':xbmc.getInfoLabel('Window(Home).Property(foundry.metadata.plot)'),
+                  'released':xbmc.getInfoLabel('Window(Home).Property(foundry.metadata.released_label)'),
+                  'tmdb':xbmc.getInfoLabel('Window(Home).Property(foundry.metadata.tmdb)'),
+                  'imdb':xbmc.getInfoLabel('Window(Home).Property(foundry.metadata.imdb)')}
+        temporary=BASE/'state.tmp';temporary.write_text(json.dumps(snapshot));temporary.replace(BASE/'state.json')
+        if (BASE/'capture.json').exists():
+            name=json.loads((BASE/'capture.json').read_text())['name'];(BASE/'capture.json').unlink()
+            xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/(name+'.png'))+')')
+        xbmc.sleep(50)
     metadata.stop()
     (BASE/'complete').write_text('ok')
 except Exception:
@@ -101,7 +126,7 @@ def wait_for(predicate,timeout=40):
 
 
 def main():
-    output=ROOT/'releases/1.3.4-qa';output.mkdir(parents=True,exist_ok=True)
+    output=ROOT/'releases/1.3.5-qa';output.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='foundry-kodi-') as temporary:
         base=Path(temporary);home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
         profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True)
@@ -129,10 +154,13 @@ def main():
             expressions=E.parse(SKIN/'xml'/filename)
             for name in names:native.getroot().append(copy.deepcopy(expressions.find("expression[@name='%s']"%name)))
         for name,value in [('MediaFanartVar','$INFO[ListItem.Art(fanart)]'),('BreadcrumbsVideoVar','Native provider fixture')]:
-            E.SubElement(E.SubElement(native.getroot(),'variable',name=name),'value').text=value
+            variable=E.SubElement(native.getroot(),'variable',name=name)
+            if name=='MediaFanartVar':E.SubElement(variable,'value',condition='$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.metadata.fanart))').text='$INFO[Window(Home).Property(foundry.metadata.fanart)]'
+            E.SubElement(variable,'value').text=value
         native.write(active/'xml/FoundryNativeQA.xml',encoding='UTF-8',xml_declaration=True)
         includes=E.parse(active/'xml/Includes.xml');E.SubElement(includes.getroot(),'include',file='FoundryNativeQA.xml');includes.write(active/'xml/Includes.xml',encoding='UTF-8',xml_declaration=True)
         (active/'xml/MyVideoNav.xml').write_text('<window><defaultcontrol always="true">57</defaultcontrol><views>57</views><controls><include>View_57_StreamPilot</include></controls></window>')
+        (active/'xml/MyFavourites.xml').write_text('<window><defaultcontrol always="true">57</defaultcontrol><views>57</views><controls><include>View_57_StreamPilot</include></controls></window>')
         (userdata/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting><setting id="filelists.showparentdiritems">false</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">18080</setting><setting id="services.webserverauthentication">false</setting></settings>')
         keymaps=userdata/'keymaps';keymaps.mkdir()
         (keymaps/'fixture.xml').write_text('<keymap><global><keyboard><f12>RunScript('+str(base/'fixture.py')+')</f12></keyboard></global></keymap>')
@@ -157,7 +185,12 @@ def main():
                           'premiered':'2026-09-30','mpaa':'CA 14A','plot':'A controlled native Kodi fixture checks the exact source poster geometry, artwork glow, metadata and remote focus behavior.',
                           'genre':['Mystery','Thriller'],'studio':['Fixture Studio'],'original_language':'en','ratings':{'tmdb':{'rating':7.0},'imdb':{'rating':7.1}},
                           'art':{'poster':str(poster),'fanart':str(fanart),'clearlogo':str(logo),'studiologo':str(studio)}})
-        script='BASE=Path(%r)\nHELPER=Path(%r)\nOUTPUT=Path(%r)\nITEMS=%r\nSTUDIO=%r\n'%(str(base),str(helper),str(output),items,str(studio))
+        episodes=[dict(items[0],type='episode',title='The Signal',showtitle='Fixture Series',season=1,episode=2,premiered='2026-11-01',runtime=2700),dict(items[1],type='episode',title='Origin Special',showtitle='Fixture Series',season=0,episode=0,premiered='2026-10-01',runtime=1800)]
+        favorites=E.Element('favourites')
+        for title,target in [('Saved movie','plugin://plugin.video.foundry.libraryqa/?movie=1'),('Saved episode','plugin://plugin.video.foundry.libraryqa/?episode=2')]:
+            E.SubElement(favorites,'favourite',name=title,thumb=items[0]['art']['poster']).text='PlayMedia("'+target+'")'
+        E.ElementTree(favorites).write(userdata/'favourites.xml',encoding='UTF-8',xml_declaration=True)
+        script='BASE=Path(%r)\nHELPER=Path(%r)\nOUTPUT=Path(%r)\nITEMS=%r\nEPISODES=%r\nSTUDIO=%r\n'%(str(base),str(helper),str(output),items,episodes,str(studio))
         launcher=profile/'addons/script.foundry.libraryqa';launcher.mkdir()
         (launcher/'addon.xml').write_text('<addon id="script.foundry.libraryqa" version="1.0.0" name="Foundry Library QA" provider-name="Foundry"><requires><import addon="xbmc.python" version="3.0.0" /></requires><extension point="xbmc.python.script" library="fixture.py" /><extension point="xbmc.addon.metadata"><platform>all</platform><license>GPL-2.0-only</license><summary lang="en_GB">Controlled fixture</summary></extension></addon>')
         (launcher/'fixture.py').write_text('from pathlib import Path\n'+script+FIXTURE)
@@ -274,6 +307,14 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             assert all(abs(a-b)<=4 for a,b in zip(short,[91,528,357,928])),short
             evidence.append({'section':'Three-title row','focused_poster_bounds':short,'left_padding_preserved':True})
             key('Escape')
+            wait_for(lambda:state().get('case')=='episodes' and 'S01E02' in state().get('rendered_details',''))
+            assert 'The Signal' in state()['rendered_details'] and 'Fixture Series' in state()['rendered_details']
+            assert state()['released']=='Aired Nov 1, 2026',state()
+            capture('episode-details')
+            key('Right');wait_for(lambda:'S00E00' in state().get('rendered_details',''))
+            assert 'Origin Special' in state()['rendered_details'];capture('episode-special')
+            evidence.append({'section':'Episode details','season_episode_and_title_visible':True,'specials_zero_preserved':True,'show_title_air_date_and_runtime_available':True})
+            key('Escape')
             wait_for(lambda:state().get('case')=='native' and state().get('focus')==57 and state().get('label')=='Previous Page')
             key('Right','Right','Right');wait_for(lambda:state().get('position')==3)
             wait_for(lambda:state().get('tmdb')=='7' and state().get('imdb')=='7.1/10' and bool(state().get('studio')))
@@ -306,6 +347,18 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             key('Return');wait_for(lambda:'page=1' in state().get('path',''))
             evidence.append({'section':'Native provider view 57','only_selected_poster_glows':True,'glow_pixel_deltas':halo_deltas,'shared_studio_logo_visible':True,'shared_ratings_visible':True,'legacy_page_icons_replaced':True,'next_previous_page_roundtrip':True,'sort_and_search_buttons_removed':True})
             (base/'native-complete').write_text('ok')
+            wait_for(lambda:state().get('case')=='favorites' and state().get('label')=='Saved movie' and bool(state().get('title')))
+            assert state()['title']=='Fixture title 01',state()
+            wait_for(lambda:state().get('tmdb')=='7' and state().get('imdb')=='7.1/10')
+            assert state().get('plot') and state().get('released');time.sleep(.8);capture('favorite-movie')
+            key('Right');wait_for(lambda:state().get('label')=='Saved episode' and 'S01E02' in state().get('rendered_details',''))
+            assert 'The Signal' in state()['rendered_details'] and 'Fixture Series' in state()['rendered_details']
+            assert state()['released']=='Aired Nov 1, 2026',state()
+            time.sleep(.8);favorite_episode=capture('favorite-episode')
+            assert bright(favorite_episode,(92,386,1249,414))>100,'Favorite episode identification line is not rendered'
+            assert not rpc('XBMC.GetInfoBooleans',{'booleans':['Player.HasVideo']})['Player.HasVideo'],'Favorites metadata started playback'
+            evidence.append({'section':'Native favorites','saved_movie_full_metadata':True,'saved_episode_show_number_title_air_date':True,'existing_aliases_preserved':True,'playback_not_started':True})
+            (base/'favorites-complete').write_text('ok')
             wait_for(lambda:(base/'complete').exists())
             (output/'verification.json').write_text(json.dumps({'renderer':'Native Kodi '+subprocess.check_output(['kodi','--version'],text=True).strip(),'canvas':[1920,1080],'checks':evidence,'scope':'Controlled fixtures; not Shield, live providers or Android pixel parity'},indent=2)+'\n')
         finally:
@@ -326,3 +379,4 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
 
 
 if __name__=='__main__':main()
+
