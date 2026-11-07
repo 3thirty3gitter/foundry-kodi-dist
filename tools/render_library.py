@@ -103,6 +103,7 @@ try:
                   'rendered_details':xbmc.getInfoLabel('Control.GetLabel(5713)'),
                   'plot':xbmc.getInfoLabel('Window(Home).Property(foundry.metadata.plot)'),
                   'released':xbmc.getInfoLabel('Window(Home).Property(foundry.metadata.released_label)'),
+                  'studio':xbmc.getInfoLabel('Window(Home).Property(foundry.vod.studio_logo)'),
                   'tmdb':xbmc.getInfoLabel('Window(Home).Property(foundry.metadata.tmdb)'),
                   'imdb':xbmc.getInfoLabel('Window(Home).Property(foundry.metadata.imdb)')}
         temporary=BASE/'state.tmp';temporary.write_text(json.dumps(snapshot));temporary.replace(BASE/'state.json')
@@ -150,12 +151,14 @@ def main():
                     fontset.append(E.fromstring(E.tostring(font)))
         fonts.write(active/'xml/Font.xml',encoding='UTF-8',xml_declaration=True)
         native=E.parse(SKIN/'xml/View_57_StreamPilot.xml')
+        for texture in native.iter('texture'):
+            if texture.text=='$VAR[MediaFanartVar]':texture.text='$VAR[FoundryQAFanart]'
         for filename,names in [('Expressions.xml',('FoundryOmdbCurrentItem','FoundryVODCurrentItem')),('Includes_Metadata.xml',('FoundryMetadataCurrentItem',))]:
             expressions=E.parse(SKIN/'xml'/filename)
             for name in names:native.getroot().append(copy.deepcopy(expressions.find("expression[@name='%s']"%name)))
-        for name,value in [('MediaFanartVar','$INFO[ListItem.Art(fanart)]'),('BreadcrumbsVideoVar','Native provider fixture')]:
+        for name,value in [('FoundryQAFanart','$INFO[ListItem.Art(fanart)]'),('BreadcrumbsVideoVar','Native provider fixture')]:
             variable=E.SubElement(native.getroot(),'variable',name=name)
-            if name=='MediaFanartVar':E.SubElement(variable,'value',condition='$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.metadata.fanart))').text='$INFO[Window(Home).Property(foundry.metadata.fanart)]'
+            if name=='FoundryQAFanart':E.SubElement(variable,'value',condition='$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.metadata.fanart))').text='$INFO[Window(Home).Property(foundry.metadata.fanart)]'
             E.SubElement(variable,'value').text=value
         native.write(active/'xml/FoundryNativeQA.xml',encoding='UTF-8',xml_declaration=True)
         includes=E.parse(active/'xml/Includes.xml');E.SubElement(includes.getroot(),'include',file='FoundryNativeQA.xml');includes.write(active/'xml/Includes.xml',encoding='UTF-8',xml_declaration=True)
@@ -350,12 +353,17 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             wait_for(lambda:state().get('case')=='favorites' and state().get('label')=='Saved movie' and bool(state().get('title')))
             assert state()['title']=='Fixture title 01',state()
             wait_for(lambda:state().get('tmdb')=='7' and state().get('imdb')=='7.1/10')
-            assert state().get('plot') and state().get('released');time.sleep(.8);capture('favorite-movie')
+            assert state().get('plot') and state().get('released')
+            wait_for(lambda:'catalog-studios' in state().get('studio',''));time.sleep(.6);capture('favorite-movie')
             key('Right');wait_for(lambda:state().get('label')=='Saved episode' and 'S01E02' in state().get('rendered_details',''))
             assert 'The Signal' in state()['rendered_details'] and 'Fixture Series' in state()['rendered_details']
             assert state()['released']=='Aired Nov 1, 2026',state()
-            time.sleep(.8);favorite_episode=capture('favorite-episode')
-            assert bright(favorite_episode,(92,386,1249,414))>100,'Favorite episode identification line is not rendered'
+            wait_for(lambda:'catalog-studios' in state().get('studio',''));time.sleep(.6);favorite_episode=capture('favorite-episode')
+            # Metadata uses the source's muted gray, whose peak RGB is below
+            # the separate white-logo/arrow threshold used above.
+            text_pixels=sum(min(favorite_episode.getpixel((x,y)))>100 for y in range(386,414) for x in range(92,1249))
+            assert text_pixels>100,'Favorite episode identification line is not rendered'
+            assert bright(favorite_episode,(1568,388,1808,468))>50,'Favorite studio logo is not visible'
             assert not rpc('XBMC.GetInfoBooleans',{'booleans':['Player.HasVideo']})['Player.HasVideo'],'Favorites metadata started playback'
             evidence.append({'section':'Native favorites','saved_movie_full_metadata':True,'saved_episode_show_number_title_air_date':True,'existing_aliases_preserved':True,'playback_not_started':True})
             (base/'favorites-complete').write_text('ok')
