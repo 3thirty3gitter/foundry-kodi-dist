@@ -93,6 +93,7 @@ class FavoritesEpisodes(unittest.TestCase):
     def test_favorites_use_catalog_view_and_service_and_owner_path_guards(self):
         skin=ROOT/'skin.foundry-nimbus/xml'
         view=E.parse(skin/'MyFavourites.xml');self.assertEqual(view.findtext('defaultcontrol'),'57')
+        self.assertIn('Container.SetViewMode(57)',[node.text for node in view.findall('onload')])
         self.assertIsNotNone(view.find("controls/include[.='View_57_StreamPilot']"))
         self.assertIn('favouritesbrowser',(ROOT/'script.foundry.helper/resources/lib/service.py').read_text())
         guards=E.parse(skin/'Includes_Metadata.xml');self.assertIn('owner_path',guards.findtext("expression[@name='FoundryMetadataCurrentItem']"))
