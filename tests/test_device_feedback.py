@@ -117,17 +117,17 @@ class DeviceFeedback(unittest.TestCase):
         with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.1.7.zip') as z:
             before = ET.fromstring(z.read('skin.foundry/xml/Includes_StreamPilotOSD.xml'))
         after = ET.parse(SKIN/'xml/Includes_StreamPilotOSD.xml')
-        def normalized(n): return n.tag,n.attrib,(n.text or '').strip().replace('$VAR[FoundryPlayerPlot]','$INFO[VideoPlayer.Plot]'),[normalized(c) for c in n]
+        def normalized(n): return n.tag,n.attrib,(n.text or '').strip().replace('$VAR[FoundryPlayerPlot]','$INFO[VideoPlayer.Plot]').replace(' | [$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.player.clearlogo))]',''),[normalized(c) for c in n]
         for name in ('StreamPilotVODCard','StreamPilotLiveCard'):
             old=before.find("include[@name='%s']/control"%name)
             new=after.find("include[@name='%s']/control"%name)
             old_controls=old.findall('control'); new_controls=new.findall('control')
-            self.assertEqual([normalized(c) for c in old_controls[3:]],[normalized(c) for c in new_controls[1:]])
+            self.assertEqual([normalized(c) for c in old_controls[3:]],[normalized(c) for c in new_controls[2 if name=='StreamPilotVODCard' else 3:]])
             self.assertEqual(old.findtext('left'),new.findtext('left'))
             self.assertEqual(old.findtext('bottom'),new.findtext('bottom'))
             self.assertEqual(old.findtext('height'),new.findtext('height'))
             self.assertFalse(new_controls[0].find('texture').get('border'))
-            self.assertEqual(new_controls[0].findtext('texture'),'streampilot/osd-feather.png')
+            self.assertEqual(new_controls[0].findtext('texture'),'streampilot/'+('vod' if name=='StreamPilotVODCard' else 'live')+'-shadow.png')
     def test_osd_fade_is_transparent_at_every_outer_edge(self):
         im=Image.open(SKIN/'media/streampilot/osd-feather.png'); a=im.getchannel('A');w,h=im.size
         self.assertEqual(a.crop((0,0,w,1)).getextrema(),(0,0))

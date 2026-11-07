@@ -23,7 +23,7 @@ class HomePresentation(unittest.TestCase):
     def choose(self, name, category, widgets, strings=None, action=None):
         strings = strings or {}
         def condition(text):
-            text = text.replace("$EXP[FoundryHomeHasWidgets]", str(widgets))
+            text = text.replace("$EXP[FoundryHomeHasWidgets]", str(widgets)).replace("$EXP[FoundryHomeWidgetsPresent]", str(widgets))
             text = re.sub(r"Control.HasFocus\((\d+)\)", lambda m: str(action == int(m[1])), text)
             text = re.sub(r"String.IsEqual\(Container\(9000\).ListItem.Property\(id\),(\w+)\)", lambda m: str(category == m[1]), text)
             text = re.sub(r"String.IsEmpty\(Skin.String\(([^)]+)\)\)", lambda m: str(not strings.get(m[1])), text)

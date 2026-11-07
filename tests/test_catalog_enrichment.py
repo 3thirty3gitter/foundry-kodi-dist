@@ -76,7 +76,7 @@ class Enrichment(unittest.TestCase):
         window=importlib.import_module('modules.catalog_window')
         w=object.__new__(window.CatalogWindow);now=[10.0];w.clock=lambda:now[0];w.pending_artwork_redraw={};calls=[]
         w.redraw_catalog_control=lambda cid:calls.append(cid)
-        w.schedule_artwork_redraw(50);now[0]=10.1;w.schedule_artwork_redraw(50);w.flush_artwork_redraw()
+        w.schedule_artwork_redraw(50);now[0]=10.025;w.schedule_artwork_redraw(50);w.flush_artwork_redraw()
         self.assertEqual(calls,[])
         now[0]=10.3;w.flush_artwork_redraw();w.flush_artwork_redraw()
         self.assertEqual(calls,[50]);self.assertEqual(w.pending_artwork_redraw,{})

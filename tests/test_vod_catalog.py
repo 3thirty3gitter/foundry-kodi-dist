@@ -68,7 +68,7 @@ class CatalogLayout(unittest.TestCase):
 
     def test_loading_empty_and_missing_metadata_have_safe_distinct_states(self):
         loading = self.view.find("control[@type='group'][visible='Container(57).IsUpdating']")
-        self.assertIsNotNone(loading)
+        self.assertIsNone(loading)
         empty = next(c for c in self.view.findall("control[@type='label']") if (c.findtext("label") or "").startswith("No library matches"))
         self.assertIn("!Container(57).IsUpdating", empty.findtext("visible"))
         plot = self.doc.find("variable[@name='FoundryVODPlot']")

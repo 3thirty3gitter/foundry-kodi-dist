@@ -62,8 +62,8 @@ class CatalogStateTests(unittest.TestCase):
         media,nxt,prev=split_directory(items)
         self.assertEqual(len(media),2);self.assertEqual(nxt,items[-1]['file']);self.assertEqual(prev,'')
         s=CatalogState(items=media,next_path=nxt,server_page=2)
-        self.assertEqual(s.page_label(),'Page 2 / ?')
-        s.server_total_pages=500;self.assertEqual(s.page_label(),'Page 2 / 500')
+        self.assertEqual(s.page_label(),'Page 2')
+        s.server_total_pages=500;self.assertEqual(s.page_label(),'Page 2')
     def test_non_page_folders_are_preserved(self):
         item={'label':'Next Episode','filetype':'directory','file':'plugin://x/episodes'}
         self.assertEqual(split_directory([item]),([item],'',''))

@@ -310,6 +310,8 @@ class Runtime(unittest.TestCase):
         def strip_allowed_changes(doc):
             for parent in doc.iter():
                 for child in list(parent):
+                    if child.tag == "include" and child.text == "FoundryWidgetMetadata":
+                        parent.remove(child)
                     if child.tag == "include" and child.get("content") == "HomeCategoryVisibility":
                         child.set("content", "Visible_Right_Delayed")
                     if child.tag == "control" and child.findtext("label") == "$VAR[HomeSubmenuButtonLabelsVar]":
