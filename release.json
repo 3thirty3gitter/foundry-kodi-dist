@@ -27,8 +27,8 @@
       "id": "skin.foundry",
       "version": "1.3.5",
       "path": "skin.foundry/skin.foundry-1.3.5.zip",
-      "sha256": "9267f746c3251721094ec1366a9febd27917d148c6c3ef130fab4e5742225c97",
-      "size": 36513378
+      "sha256": "558ee4bed65822d32554f41faad0cce5613433997ae804c07d777c4e0ee748c3",
+      "size": 36513396
     },
     {
       "id": "script.foundry.helper",
