@@ -127,7 +127,7 @@ def wait_for(predicate,timeout=40):
 
 
 def main():
-    output=ROOT/'releases/1.3.5-qa';output.mkdir(parents=True,exist_ok=True)
+    output=ROOT/'releases/1.3.6-qa';output.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='foundry-kodi-') as temporary:
         base=Path(temporary);home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
         profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True)

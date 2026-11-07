@@ -52,7 +52,7 @@ def package_check(task):
 
 def main():
     manifest = json.loads((ROOT / 'release.json').read_text())
-    assert manifest['release'] == '1.3.5'
+    assert manifest['release'] == '1.3.6'
     for base in BASES:
         for path in ('release.json', 'addons.xml', 'addons.xml.md5'):
             download(base, path, (ROOT / path).read_bytes())
@@ -61,7 +61,7 @@ def main():
     for path in ('index.html', 'skin.html', 'repository.foundry-1.2.0.zip',
                  'script.program.foundry-build.zip', 'script.program.foundry-bootstrap.zip'):
         download(BASES[0], path, (ROOT / path).read_bytes())
-    sources = json.loads((ROOT / 'releases/1.3.5-sources.json').read_text())
+    sources = json.loads((ROOT / 'releases/1.3.6-sources.json').read_text())
     record = {
         'verification_time_utc': datetime.now(timezone.utc).isoformat(),
         'status': 'published_downloads_verified_target_device_checks_pending',
@@ -70,7 +70,7 @@ def main():
         'source_commits': sources['source_commits'],
         'validation': {
             'regression_tests_passed': 245,
-            'native_kodi_fixture': json.loads((ROOT / 'releases/1.3.5-qa/verification.json').read_text()),
+            'native_kodi_fixture': json.loads((ROOT / 'releases/1.3.6-qa/verification.json').read_text()),
             'test_inputs': 'Pinned source snapshots and extracted package ZIPs; mocked Kodi APIs',
             'deterministic_rebuild': 'All seven package sizes and SHA-256 checksums unchanged',
             'public_release_manifest_and_feed': 'Byte-identical on Pages and raw GitHub',
@@ -84,7 +84,7 @@ def main():
             'Add-on custom windows and unidentified action listings keep their own behavior'
         ]
     }
-    (ROOT / 'releases/1.3.5-verification.json').write_text(json.dumps(record, indent=2) + '\n')
+    (ROOT / 'releases/1.3.6-verification.json').write_text(json.dumps(record, indent=2) + '\n')
     print('Verified all seven packages on both public hosts, Kodi feed, source listing and root installers.')
 
 
