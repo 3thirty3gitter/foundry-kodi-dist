@@ -1,6 +1,6 @@
 {
-  "release": "1.3.4",
-  "skin": "1.3.4",
+  "release": "1.3.5",
+  "skin": "1.3.5",
   "packages": [
     {
       "id": "repository.foundry",
@@ -25,31 +25,31 @@
     },
     {
       "id": "skin.foundry",
-      "version": "1.3.4",
-      "path": "skin.foundry/skin.foundry-1.3.4.zip",
-      "sha256": "88670ac62c2cda1a016cef5e6f52b40c043412bed27b451ea9d733606e76567f",
-      "size": 36513056
+      "version": "1.3.5",
+      "path": "skin.foundry/skin.foundry-1.3.5.zip",
+      "sha256": "9267f746c3251721094ec1366a9febd27917d148c6c3ef130fab4e5742225c97",
+      "size": 36513378
     },
     {
       "id": "script.foundry.helper",
-      "version": "1.2.3",
-      "path": "script.foundry.helper/script.foundry.helper-1.2.3.zip",
-      "sha256": "77c254d97cfd46ca61a48d87b437d3b726f3f07e5c933559aa1c9b0cbef73f31",
-      "size": 860811
+      "version": "1.2.4",
+      "path": "script.foundry.helper/script.foundry.helper-1.2.4.zip",
+      "sha256": "e69242913b4ad3775b932a807eee84adcd7049dba69790789dee6872a3d5bc29",
+      "size": 863697
     },
     {
       "id": "script.program.foundry-build",
-      "version": "1.3.4",
-      "path": "script.program.foundry-build/script.program.foundry-build-1.3.4.zip",
-      "sha256": "06eadbfc0d54f3c4fd1f8178fa27da2bd434b8f9c7d4b1518c0215341d2d35b9",
+      "version": "1.3.5",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.3.5.zip",
+      "sha256": "39a50b46ae411cbc8e46a7b312de638be3fd76ac0eb4dc047b518227cb6df3eb",
       "size": 2598
     },
     {
       "id": "script.program.foundry-bootstrap",
-      "version": "1.3.4",
-      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.3.4.zip",
-      "sha256": "057c5a3c3b318744a854a683383f0229c3871a0e310bfb4835b30ec3ba0e4897",
-      "size": 852
+      "version": "1.3.5",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.3.5.zip",
+      "sha256": "8667f7b2d021052a7f37fa707592d773ad43ecf6f8fbd7f2943a5eaf93e5e32e",
+      "size": 853
     }
   ]
 }
