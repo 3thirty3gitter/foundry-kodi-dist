@@ -1,0 +1,314 @@
+{
+  "verification_time_utc": "2026-11-07T04:42:40.396416+00:00",
+  "status": "published_downloads_verified_target_device_checks_pending",
+  "release": "1.3.6",
+  "skin": "1.3.6",
+  "helper": "1.2.4",
+  "source_url": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+  "distribution_commit_verified": "60dee022828707abf663985397997303d5d916df",
+  "source_commits": {
+    "skin.foundry-nimbus": "152ccc02f8e47a5b4823b752da4b8b7ba92edd2d",
+    "script.foundry.helper": "5f3448c40462d40709747d13571a76f6833c9d49"
+  },
+  "validation": {
+    "regression_tests_passed": 245,
+    "native_kodi_fixture": {
+      "renderer": "Native Kodi Kodi from Debian Media Center 21.3 Debian package version: 2:21.3+dfsg-1ubuntu1\nCopyright (C) 2005-2025 Team Kodi from Debian - http://kodi.tv",
+      "canvas": [
+        1920,
+        1080
+      ],
+      "checks": [
+        {
+          "section": "Movies",
+          "screenshot": "movies.png",
+          "focused_poster_bounds": [
+            598,
+            528,
+            865,
+            928
+          ],
+          "scrolled_poster_bounds": [
+            598,
+            528,
+            865,
+            928
+          ],
+          "source_expected_bounds": [
+            598,
+            528,
+            865,
+            928
+          ],
+          "visible_colored_glow_delta_rgb": [
+            38,
+            11,
+            72
+          ],
+          "focus_return_restores_poster": true,
+          "next_previous_page_roundtrip": true,
+          "row_ends_do_not_wrap": true,
+          "focused_next_arrow_bounds": [
+            1586,
+            646,
+            1805,
+            810
+          ]
+        },
+        {
+          "section": "TV Shows",
+          "screenshot": "tv-shows.png",
+          "focused_poster_bounds": [
+            598,
+            528,
+            865,
+            928
+          ],
+          "scrolled_poster_bounds": [
+            598,
+            528,
+            865,
+            928
+          ],
+          "source_expected_bounds": [
+            598,
+            528,
+            865,
+            928
+          ],
+          "visible_colored_glow_delta_rgb": [
+            38,
+            11,
+            72
+          ],
+          "focus_return_restores_poster": true,
+          "next_previous_page_roundtrip": true,
+          "row_ends_do_not_wrap": true,
+          "focused_next_arrow_bounds": [
+            1586,
+            646,
+            1805,
+            810
+          ]
+        },
+        {
+          "section": "Three-title row",
+          "focused_poster_bounds": [
+            91,
+            528,
+            357,
+            928
+          ],
+          "left_padding_preserved": true
+        },
+        {
+          "section": "Episode details",
+          "season_episode_and_title_visible": true,
+          "specials_zero_preserved": true,
+          "show_title_air_date_and_runtime_available": true
+        },
+        {
+          "section": "Native provider view 57",
+          "only_selected_poster_glows": true,
+          "glow_pixel_deltas": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              87,
+              93,
+              81
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "shared_studio_logo_visible": true,
+          "shared_ratings_visible": true,
+          "legacy_page_icons_replaced": true,
+          "next_previous_page_roundtrip": true,
+          "sort_and_search_buttons_removed": true
+        },
+        {
+          "section": "Native favorites",
+          "saved_movie_full_metadata": true,
+          "saved_episode_show_number_title_air_date": true,
+          "existing_aliases_preserved": true,
+          "playback_not_started": true
+        }
+      ],
+      "scope": "Controlled fixtures; not Shield, live providers or Android pixel parity"
+    },
+    "test_inputs": "Pinned source snapshots and extracted package ZIPs; mocked Kodi APIs",
+    "deterministic_rebuild": "All seven package sizes and SHA-256 checksums unchanged",
+    "public_release_manifest_and_feed": "Byte-identical on Pages and raw GitHub",
+    "public_source_and_root_installers": "Byte-identical to committed release",
+    "public_package_downloads": "All seven ZIPs and SHA-256 sidecars verified on both hosts"
+  },
+  "public_packages": [
+    {
+      "id": "repository.foundry",
+      "version": "1.2.0",
+      "path": "repository.foundry/repository.foundry-1.2.0.zip",
+      "sha256": "2a83d7d4ec2ac362fed010005ec55b6c87aee40a393a7fd82454e7137b48ffcc",
+      "size": 762,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "resource.images.foundry.wallpapers",
+      "version": "1.1.0",
+      "path": "resource.images.foundry.wallpapers/resource.images.foundry.wallpapers-1.1.0.zip",
+      "sha256": "dfc8a154817e66ee9651200baf6fff251bd82f6d1e97f20126d9c5f15db6a869",
+      "size": 20150822,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "resource.images.foundry.osd",
+      "version": "1.0.0",
+      "path": "resource.images.foundry.osd/resource.images.foundry.osd-1.0.0.zip",
+      "sha256": "37ec361ab6b80bb5557ca70512263de24dc9decdbe62e531f3e5f4adb3b4987b",
+      "size": 3770026,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "skin.foundry",
+      "version": "1.3.6",
+      "path": "skin.foundry/skin.foundry-1.3.6.zip",
+      "sha256": "99ec5b65169d08ca25ccb7ac573862fd72a9d1bb845a445b4e885b33a5c5f26f",
+      "size": 36513396,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.foundry.helper",
+      "version": "1.2.4",
+      "path": "script.foundry.helper/script.foundry.helper-1.2.4.zip",
+      "sha256": "e69242913b4ad3775b932a807eee84adcd7049dba69790789dee6872a3d5bc29",
+      "size": 863697,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.program.foundry-build",
+      "version": "1.3.6",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.3.6.zip",
+      "sha256": "3a9491cce0ae6b9c4aa73193e617b46d13bac9ed171adec76f6d50182f933c53",
+      "size": 2598,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.program.foundry-bootstrap",
+      "version": "1.3.6",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.3.6.zip",
+      "sha256": "c47091bcd4e3b5f43aa98d678e8da51e48e83d1a7528b6fac75d659c76237ee9",
+      "size": 853,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "repository.foundry",
+      "version": "1.2.0",
+      "path": "repository.foundry/repository.foundry-1.2.0.zip",
+      "sha256": "2a83d7d4ec2ac362fed010005ec55b6c87aee40a393a7fd82454e7137b48ffcc",
+      "size": 762,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "resource.images.foundry.wallpapers",
+      "version": "1.1.0",
+      "path": "resource.images.foundry.wallpapers/resource.images.foundry.wallpapers-1.1.0.zip",
+      "sha256": "dfc8a154817e66ee9651200baf6fff251bd82f6d1e97f20126d9c5f15db6a869",
+      "size": 20150822,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "resource.images.foundry.osd",
+      "version": "1.0.0",
+      "path": "resource.images.foundry.osd/resource.images.foundry.osd-1.0.0.zip",
+      "sha256": "37ec361ab6b80bb5557ca70512263de24dc9decdbe62e531f3e5f4adb3b4987b",
+      "size": 3770026,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "skin.foundry",
+      "version": "1.3.6",
+      "path": "skin.foundry/skin.foundry-1.3.6.zip",
+      "sha256": "99ec5b65169d08ca25ccb7ac573862fd72a9d1bb845a445b4e885b33a5c5f26f",
+      "size": 36513396,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.foundry.helper",
+      "version": "1.2.4",
+      "path": "script.foundry.helper/script.foundry.helper-1.2.4.zip",
+      "sha256": "e69242913b4ad3775b932a807eee84adcd7049dba69790789dee6872a3d5bc29",
+      "size": 863697,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.program.foundry-build",
+      "version": "1.3.6",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.3.6.zip",
+      "sha256": "3a9491cce0ae6b9c4aa73193e617b46d13bac9ed171adec76f6d50182f933c53",
+      "size": 2598,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.program.foundry-bootstrap",
+      "version": "1.3.6",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.3.6.zip",
+      "sha256": "c47091bcd4e3b5f43aa98d678e8da51e48e83d1a7528b6fac75d659c76237ee9",
+      "size": 853,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    }
+  ],
+  "limitations": [
+    "Live TMDb/OMDb calls require personal profile keys and remain unverified",
+    "No Shield is connected; target-device rendering, navigation and playback remain unverified",
+    "Add-on custom windows and unidentified action listings keep their own behavior"
+  ]
+}
