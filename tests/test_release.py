@@ -95,7 +95,7 @@ xbmcaddon = types.ModuleType("xbmcaddon")
 class Addon:
     def __init__(self, id="script.foundry.helper"): self.id = id
     def getAddonInfo(self, key):
-        return {"id": self.id, "version": "1.0.1", "path": str(HELPER), "name": "Foundry"}.get(key, "")
+        return {"id": self.id, "version": "1.0.1", "path": str(SKIN if self.id == "skin.foundry" else HELPER), "name": "Foundry"}.get(key, "")
 xbmcaddon.Addon = Addon
 sys.modules.update(xbmc=xbmc, xbmcgui=xbmcgui, xbmcvfs=xbmcvfs, xbmcaddon=xbmcaddon)
 
@@ -723,7 +723,8 @@ class Runtime(unittest.TestCase):
         spec = importlib.util.spec_from_file_location("foundry_register_failure", ROOT / "src/script.program.foundry-build/default.py")
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        tools = types.SimpleNamespace(_extract_to_addons=lambda *args: True, _register_repos=lambda ids: ids)
+        tools = types.SimpleNamespace(_extract_to_addons=lambda *args: True, _register_repos=lambda ids: ids,
+                                      install_startup_splash=lambda: False)
         loader = types.SimpleNamespace(exec_module=lambda module: None)
         with patch.object(module, "addon_details", return_value=None), \
                 patch.object(importlib.util, "spec_from_file_location", return_value=types.SimpleNamespace(loader=loader)), \
@@ -833,3 +834,4 @@ class Runtime(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
