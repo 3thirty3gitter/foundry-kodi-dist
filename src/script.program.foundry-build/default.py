@@ -81,6 +81,12 @@ def ensure_trailers():
 def main():
     dialog = xbmcgui.Dialog()
     try:
+        helper = xbmcaddon.Addon("script.foundry.helper").getAddonInfo("path")
+        spec = importlib.util.spec_from_file_location(
+            "_foundry_startup_splash", os.path.join(helper, "resources", "lib", "modules", "startup_splash.py"))
+        startup = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(startup)
+        startup.install_startup_splash()
         ensure_trailers()
         if xbmc.getSkinDir() == SKIN_ID:
             xbmc.executebuiltin("ReloadSkin()")
@@ -101,3 +107,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
