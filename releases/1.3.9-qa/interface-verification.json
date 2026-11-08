@@ -1,0 +1,12 @@
+{
+  "widget_metadata_top_left": true,
+  "widget_episode_number_title": true,
+  "studio_logo_above_left_row": true,
+  "settings_hover_uses_widget_wallpaper": true,
+  "empty_widget_restores_full_wallpaper": true,
+  "system_menu_icons": 52,
+  "generated_category_and_option_icons": true,
+  "vod_rounded_frame": true,
+  "live_rounded_frame_preview": true,
+  "scope": "Isolated native desktop Kodi; live providers and Shield remain unverified"
+}

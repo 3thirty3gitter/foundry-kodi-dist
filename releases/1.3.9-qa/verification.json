@@ -1,0 +1,158 @@
+{
+  "renderer": "Native Kodi Kodi from Debian Media Center 21.3 Debian package version: 2:21.3+dfsg-1ubuntu1\nCopyright (C) 2005-2025 Team Kodi from Debian - http://kodi.tv",
+  "canvas": [
+    1920,
+    1080
+  ],
+  "checks": [
+    {
+      "section": "Movies",
+      "screenshot": "movies.png",
+      "focused_poster_bounds": [
+        598,
+        528,
+        865,
+        928
+      ],
+      "scrolled_poster_bounds": [
+        598,
+        528,
+        865,
+        928
+      ],
+      "source_expected_bounds": [
+        598,
+        528,
+        865,
+        928
+      ],
+      "visible_colored_glow_delta_rgb": [
+        38,
+        11,
+        72
+      ],
+      "focus_return_restores_poster": true,
+      "next_previous_page_roundtrip": true,
+      "row_ends_do_not_wrap": true,
+      "focused_next_arrow_bounds": [
+        1586,
+        646,
+        1805,
+        810
+      ]
+    },
+    {
+      "section": "TV Shows",
+      "screenshot": "tv-shows.png",
+      "focused_poster_bounds": [
+        598,
+        528,
+        865,
+        928
+      ],
+      "scrolled_poster_bounds": [
+        598,
+        528,
+        865,
+        928
+      ],
+      "source_expected_bounds": [
+        598,
+        528,
+        865,
+        928
+      ],
+      "visible_colored_glow_delta_rgb": [
+        38,
+        11,
+        72
+      ],
+      "focus_return_restores_poster": true,
+      "next_previous_page_roundtrip": true,
+      "row_ends_do_not_wrap": true,
+      "focused_next_arrow_bounds": [
+        1586,
+        646,
+        1805,
+        810
+      ]
+    },
+    {
+      "section": "Three-title row",
+      "focused_poster_bounds": [
+        91,
+        528,
+        357,
+        928
+      ],
+      "left_padding_preserved": true
+    },
+    {
+      "section": "Episode details",
+      "season_episode_and_title_visible": true,
+      "specials_zero_preserved": true,
+      "show_title_air_date_and_runtime_available": true
+    },
+    {
+      "section": "Native provider view 57",
+      "only_selected_poster_glows": true,
+      "glow_pixel_deltas": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          38,
+          11,
+          72
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "selected_artwork_colour_matches": true,
+      "stale_owner_glow_delta": [
+        0,
+        0,
+        0
+      ],
+      "restored_owner_glow_delta": [
+        38,
+        11,
+        72
+      ],
+      "stale_owner_glow_hidden": true,
+      "shared_studio_logo_visible": true,
+      "shared_ratings_visible": true,
+      "legacy_page_icons_replaced": true,
+      "next_previous_page_roundtrip": true,
+      "sort_and_search_buttons_removed": true
+    },
+    {
+      "section": "Native favorites",
+      "saved_movie_full_metadata": true,
+      "saved_episode_show_number_title_air_date": true,
+      "existing_aliases_preserved": true,
+      "playback_not_started": true
+    }
+  ],
+  "scope": "Controlled fixtures; not Shield, live providers or Android pixel parity"
+}
