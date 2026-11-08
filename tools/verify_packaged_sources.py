@@ -88,6 +88,7 @@ def stage_workspace(root, workspace, release):
         excluded = {name for name in names if name in {'.git', '__pycache__'} or name.endswith(('.pyc', '.pyo'))}
         if Path(directory) == root:
             excluded.add('src')
+            excluded.add('deferred')
         if Path(directory) == root / 'releases':
             excluded.update(name for name in names if name.endswith('-qa'))
         return excluded

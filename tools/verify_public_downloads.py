@@ -9,6 +9,7 @@ import subprocess
 import time
 from urllib.request import Request, urlopen
 import zipfile
+from record_release_validation import evidence, require_release_scope
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,15 +53,14 @@ def package_check(task):
 
 def main():
     manifest = json.loads((ROOT / 'release.json').read_text(encoding='utf-8'))
+    require_release_scope(manifest)
     release = manifest['release']
     qa = ROOT / 'releases' / (release + '-qa')
     sources = json.loads((ROOT / 'releases' / (release + '-sources.json')).read_text(encoding='utf-8'))
     assert sources['release'] == release
-    source_tests = json.loads((qa / 'source-tests.json').read_text(encoding='utf-8'))
-    packaged_tests = json.loads((qa / 'packaged-tests.json').read_text(encoding='utf-8'))
-    rebuild = json.loads((qa / 'packaged-verification.json').read_text(encoding='utf-8'))
-    assert source_tests['successful'] and packaged_tests['successful'] and rebuild['passed']
-    assert rebuild['deterministic_rebuild']
+    validation = evidence(ROOT, release)
+    source_tests = validation['source_tests']
+    packaged_tests = validation['packaged_tests']
     package_count = len(manifest['packages'])
     for base in BASES:
         for path in ('release.json', 'addons.xml', 'addons.xml.md5'):
@@ -82,7 +82,6 @@ def main():
             'native_kodi_interface': json.loads((qa / 'native/interface-verification.json').read_text(encoding='utf-8')),
             'native_kodi_startup_splash': json.loads((qa / 'native/startup-splash-verification.json').read_text(encoding='utf-8')),
             'native_kodi_fixture': json.loads((qa / 'native/verification.json').read_text(encoding='utf-8')),
-            'native_kodi_games': json.loads((qa / 'native/games/verification.json').read_text(encoding='utf-8')),
             'native_kodi_weather': json.loads((qa / 'native/weather-verification.json').read_text(encoding='utf-8')),
             'test_inputs': 'Pinned source snapshots and extracted package ZIPs; mocked Kodi APIs',
             'deterministic_rebuild': 'All %d package sizes and SHA-256 checksums unchanged' % package_count,
@@ -95,8 +94,7 @@ def main():
             'Live TMDb/OMDb calls require personal profile keys and remain unverified',
             'No Shield is connected; target-device rendering, navigation and playback remain unverified',
             'Add-on custom windows and unidentified action listings keep their own behavior',
-            'Games fixtures use synthetic non-playable files; actual emulator gameplay is unverified',
-            'Games does not yet support PSP, direct Drive OAuth, remote metadata or save migration',
+            'Games is deferred and is not included in this release',
             'Weather uses an experimental Canadian API; device-local times, advisory headlines only',
             'Native Pulse checks preserve selection but a null audio sink cannot verify audibility',
             'The reported false error after playback stops has not been reproduced or confirmed fixed'

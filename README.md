@@ -1,14 +1,14 @@
 # Foundry Kodi source
 
-Release 1.4.0: **Build and Bootstrap 1.4.0 / skin 1.4.0 / Helper 1.3.0 / Wallpapers 1.1.0 / Pulse 1.0.0 / Games and Canada Weather 0.1.0**.
+Release 1.4.0: **Build and Bootstrap 1.4.0 / skin 1.4.0 / Helper 1.3.0 / Wallpapers 1.1.0 / Pulse 1.0.0 / Canada Weather 0.1.0**.
 
-The pinned source commits are in [releases/1.4.0-sources.json](releases/1.4.0-sources.json). Development CI tests the source and every extracted add-on, verifies deterministic rebuilding, then runs five isolated native Kodi checks. Production publication is held until those checks and owner approval pass. Actual test counts and native evidence are recorded under `releases/1.4.0-qa/`; public download verification is recorded separately in `releases/1.4.0-verification.json` once complete.
+The pinned source commits are in [releases/1.4.0-sources.json](releases/1.4.0-sources.json). Development CI tests the source and every extracted add-on, verifies deterministic rebuilding, then runs four isolated native Kodi checks. Production publication is held until those checks and owner approval pass. Actual test counts and native evidence are recorded under `releases/1.4.0-qa/`; public download verification is recorded separately in `releases/1.4.0-verification.json` once complete.
 
 The release fixes catalog first paint and Back restoration, uses the regular poster row for Home Favorites, adds bounded dialog metadata and seek/studio feedback, lowers library posters slightly, and packages the selected Pulse sounds and Ripple animation. Pulse migration preserves an explicit silent or custom sound choice. Native desktop captures are not Shield performance or audio-output proof. The reported false error after playback stops has not been reproduced or confirmed fixed.
 
 ## Games and Canadian Weather
 
-Foundry Games provides local/VFS source scanning, console categories, search, favorites, recent launches/playtime, local metadata/artwork and bounded ZIP/CUE/M3U staging. Kodi owns emulator selection, controllers and saves. No ROMs, BIOS, emulator binaries or commercial game assets are bundled. Supply files you are entitled to use and install a compatible Kodi emulator yourself. PSP, direct Drive OAuth, remote metadata, save migration and dependent Arcade sets are not supported in this first version. Native QA uses non-playable synthetic files and does not verify actual emulation. See [Games scope](src/plugin.games.foundry/README.md).
+Foundry Games is deferred from 1.4.0. This update retains Kodi's native Games navigation and does not install or publish the new Games add-on. Its implementation, tests and integration work are preserved under [deferred/games](deferred/games/README.md) for a later validated update.
 
 Canada Weather is installed but remains inactive until explicitly selected in Kodi Settings > Services > Weather and configured with one to three Canadian cities. It shows current observations, hourly and seven-day forecasts and advisory headlines, with missing/stale data labelled. Time labels follow the device's zone, not necessarily the selected city's. No GPS, account or API key is used. The upstream API is experimental; advisory headlines are not a full emergency-alert service. The provider retains its proprietary development licence and source acknowledgment. See [setup and limitations](src/weather.foundry.canada/README.md) and [data rights and usage](src/weather.foundry.canada/SOURCE.md).
 

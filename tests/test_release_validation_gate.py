@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -27,7 +28,7 @@ class ReleaseEvidenceTests(unittest.TestCase):
                          {'id': 'repository.foundry', 'version': '1.2.0',
                           'path': 'repository.foundry/repository.foundry-1.2.0.zip',
                           'size': 12, 'sha256': 'b' * 64}]
-        self.manifest = {'release': '1.4.0', 'packages': self.packages}
+        self.manifest = {'release': '1.4.0', 'skin': '1.4.0', 'packages': self.packages}
         self.write(self.root / 'release.json', self.manifest)
         self.write(self.qa / 'release.json', self.manifest)
         self.committed = {}
@@ -38,7 +39,9 @@ class ReleaseEvidenceTests(unittest.TestCase):
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_bytes(data)
                 self.committed[name] = data
-        self.write(self.root / 'releases/1.4.0-sources.json', {'release': '1.4.0', 'validation': {'status': 'pending'}})
+        self.write(self.root / 'releases/1.4.0-sources.json', {
+            'release': '1.4.0', 'helper': '1.3.0', 'source_commits': {'skin.foundry-nimbus': 'c' * 40},
+            'validation': {'status': 'pending'}})
         summary = {'successful': True, 'tests': 650, 'errors': 0, 'failures': 0, 'skipped': 0}
         for name in ('source-tests.json', 'packaged-tests.json'):
             self.write(self.qa / name, summary)
@@ -58,10 +61,6 @@ class ReleaseEvidenceTests(unittest.TestCase):
                                             'audible_output_verified': False,
                                             'widget_metadata_top_left': True,
                                             'vod_rounded_frame': True, 'live_rounded_frame_preview': True},
-            'games/verification.json': {'passed': True, 'release': '1.4.0',
-                                        'checks': [{'case': 'games-console-listing'}],
-                                        'assertions': {'screenshots_verified': True,
-                                                       'skin_boolean_parse_errors_absent': True}},
             'weather-verification.json': {'passed': True, 'checks': ['provider_entrypoint']}}
         for name, report in reports.items():
             self.write(self.qa / 'native' / name, report)
@@ -88,6 +87,68 @@ class ReleaseEvidenceTests(unittest.TestCase):
         self.assertEqual(record['status'], 'ci_passed_target_device_checks_pending')
         self.assertIn('unverified', record['target_device_verification'])
         self.assertEqual(set(record['native_reports']), set(gate.NATIVE))
+        self.assertEqual(len(record['native_reports']), 4)
+        self.assertNotIn('games/verification.json', record['native_reports'])
+        self.assertFalse((self.qa / 'native/games/verification.json').exists())
+
+    def public_verifier(self):
+        spec = importlib.util.spec_from_file_location('foundry_public_gate_test', ROOT / 'tools/verify_public_downloads.py')
+        module = importlib.util.module_from_spec(spec)
+        with patch.dict(sys.modules, {'record_release_validation': gate}), \
+                patch.object(subprocess, 'check_output', return_value='c' * 40):
+            spec.loader.exec_module(module)
+        return module
+
+    def test_unexpected_games_package_is_rejected_at_every_release_boundary(self):
+        games = {'id': 'plugin.games.foundry', 'version': '0.1.0',
+                 'path': 'plugin.games.foundry/plugin.games.foundry-0.1.0.zip'}
+        manifest = dict(self.manifest, packages=self.packages + [games])
+        self.write(self.root / 'release.json', manifest)
+        public = self.public_verifier()
+        with self.assertRaisesRegex(ValueError, 'Games is deferred'):
+            gate.require_release_scope(manifest)
+        with self.assertRaisesRegex(ValueError, 'Games is deferred'):
+            gate.evidence(self.root, '1.4.0')
+        with patch.object(gate, 'ROOT', self.root), patch.object(gate.subprocess, 'run') as git:
+            with self.assertRaisesRegex(ValueError, 'Games is deferred'):
+                gate.main()
+            git.assert_not_called()
+        with patch.object(public, 'ROOT', self.root), patch.object(public, 'download') as download:
+            with self.assertRaisesRegex(ValueError, 'Games is deferred'):
+                public.main()
+            download.assert_not_called()
+        self.assertEqual(json.loads((self.root / 'releases/1.4.0-sources.json').read_text())['validation'],
+                         {'status': 'pending'})
+
+    def test_release_number_alone_cannot_bypass_deferred_games_gate(self):
+        for version in ('1.4.0', '1.4.1', '2.0.0'):
+            manifest = {'release': version, 'packages': [{'id': 'plugin.games.foundry'}]}
+            with self.subTest(release=version), self.assertRaisesRegex(ValueError, 'restore native Games validation'):
+                gate.require_release_scope(manifest)
+
+    def test_public_verification_retains_four_gates_without_a_games_report(self):
+        public = self.public_verifier()
+        for name in ('addons.xml', 'addons.xml.md5', 'index.html', 'skin.html',
+                     'repository.foundry-1.2.0.zip', 'script.program.foundry-build.zip',
+                     'script.program.foundry-bootstrap.zip'):
+            (self.root / name).write_bytes(b'fixture')
+        with patch.object(public, 'ROOT', self.root), patch.object(public, 'download'), \
+                patch.object(public, 'package_check', side_effect=lambda task: dict(task[1], verified=True)):
+            public.main()
+        record = json.loads((self.root / 'releases/1.4.0-verification.json').read_text())
+        native = {key for key in record['validation'] if key.startswith('native_kodi_')}
+        self.assertEqual(native, {'native_kodi_interface', 'native_kodi_startup_splash',
+                                  'native_kodi_fixture', 'native_kodi_weather'})
+        self.assertEqual(len(record['public_packages']), 2 * len(self.packages))
+        self.assertIn('Games is deferred and is not included in this release', record['limitations'])
+
+    def test_public_verification_rejects_failed_shipped_feature_before_downloads(self):
+        self.update('native/weather-verification.json', passed=False)
+        public = self.public_verifier()
+        with patch.object(public, 'ROOT', self.root), patch.object(public, 'download') as download:
+            with self.assertRaises((AssertionError, ValueError)):
+                public.main()
+            download.assert_not_called()
 
     def test_failed_source_or_packaged_suite_is_rejected(self):
         for name in ('source-tests.json', 'packaged-tests.json'):
@@ -118,8 +179,8 @@ class ReleaseEvidenceTests(unittest.TestCase):
                     gate.evidence(self.root, '1.4.0')
                 path.write_bytes(original)
 
-    def test_false_weather_or_games_pass_flag_is_rejected(self):
-        for name in ('weather-verification.json', 'games/verification.json'):
+    def test_false_weather_pass_flag_is_rejected(self):
+        for name in ('weather-verification.json',):
             path = 'native/' + name
             original = (self.qa / path).read_bytes()
             with self.subTest(report=name):
@@ -251,20 +312,22 @@ class ReleaseWorkflowTests(unittest.TestCase):
     def test_failed_validation_cannot_be_downgraded_to_success(self):
         self.assertNotIn('continue-on-error:', self.workflow)
         self.assertIn('shell: bash', self.workflow)  # Actions runs explicit bash with -e -o pipefail.
-        self.assertEqual(self.workflow.count("steps.packaged.outcome == 'success'"), 5)
-        self.assertEqual(self.workflow.count("steps.kodi.outcome == 'success'"), 5)
+        self.assertEqual(self.workflow.count("steps.packaged.outcome == 'success'"), 4)
+        self.assertEqual(self.workflow.count("steps.kodi.outcome == 'success'"), 4)
+        self.assertIn('tools/record_release_validation.py --check-scope', self.workflow)
 
-    def test_failure_artifacts_and_games_evidence_are_preserved(self):
+    def test_failure_artifacts_are_preserved_and_deferred_games_is_not_run(self):
         self.assertIn('name: Collect all native QA evidence\n        if: always()', self.workflow)
         self.assertIn('uses: actions/upload-artifact@v4\n        if: always()', self.workflow)
-        self.assertIn('tools/render_games.py --output "$QA/games"', self.workflow)
+        self.assertNotIn('tools/render_games.py', self.workflow)
         self.assertLess(self.workflow.index('actions/upload-artifact@v4'),
                         self.workflow.index('name: Publish verified packages'))
 
     def test_immutable_resource_guard_precedes_publication(self):
         guard = 'git diff --exit-code -- repository.foundry resource.images.foundry.wallpapers resource.images.foundry.osd'
-        self.assertIn(guard, self.workflow)
-        self.assertLess(self.workflow.index(guard), self.workflow.index('python tools/record_release_validation.py'))
+        publish = self.workflow.split('name: Publish verified packages and repository feed together', 1)[1]
+        self.assertIn(guard, publish)
+        self.assertLess(publish.index(guard), publish.index('python tools/record_release_validation.py'))
 
 
 if __name__ == '__main__':

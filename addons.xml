@@ -72,20 +72,6 @@
       <platform>all</platform>
     </extension>
   </addon>
-  <addon id="plugin.games.foundry" version="0.1.0" name="Foundry Games" provider-name="3Thirty3">
-    <requires>
-      <import addon="xbmc.python" version="3.0.0" />
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-      <provides>game</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-      <platform>all</platform>
-      <license>GPL-2.0-only</license>
-      <summary lang="en_GB">Your game library, played with Kodi RetroPlayer</summary>
-      <description lang="en_GB">Browse user-supplied games by console, search, favorites and recent launches. Native Kodi manages emulators, controllers and saves. No ROMs, BIOS, emulator binaries or remote metadata are bundled.</description>
-    </extension>
-  </addon>
   <addon id="weather.foundry.canada" name="Foundry Canada Weather" version="0.1.0" provider-name="Foundry">
     <requires>
       <import addon="xbmc.python" version="3.0.0" />
@@ -161,7 +147,6 @@
       <import addon="xbmc.python" version="3.0.0" />
       <import addon="repository.foundry" version="1.2.0" />
       <import addon="skin.foundry" version="1.4.0" />
-      <import addon="plugin.games.foundry" version="0.1.0" />
       <import addon="weather.foundry.canada" version="0.1.0" />
       <import addon="script.module.cocoscrapers" version="1.0.45" />
       <import addon="plugin.video.themoviedb.helper" version="5.4.16" />
@@ -178,7 +163,7 @@
       <platform>all</platform>
       <license>GPL-2.0-only</license>
       <summary lang="en_GB">Install and activate the Foundry skin</summary>
-      <description lang="en_GB">Installs Foundry, CocoScrapers, SlyGuy Trailers, TMDb Helper, movie and TV metadata scrapers, Foundry Pulse UI sounds, Foundry Games, Canadian Weather, and adaptive playback support. Games require user-supplied files and compatible Kodi emulators. Weather remains inactive until selected and configured. Kodi manages their dependencies. Run Foundry Build to activate the skin.</description>
+      <description lang="en_GB">Installs Foundry, CocoScrapers, SlyGuy Trailers, TMDb Helper, movie and TV metadata scrapers, Foundry Pulse UI sounds, Canadian Weather, and adaptive playback support. Weather remains inactive until selected and configured. Kodi manages their dependencies. Run Foundry Build to activate the skin.</description>
       <source>https://github.com/3thirty3gitter/foundry-kodi-dist</source>
     </extension>
   </addon>

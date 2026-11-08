@@ -44,6 +44,7 @@ jobs:
       - name: Build and test committed sources
         run: |
           python tools/build_release.py --skin ../skin.foundry-nimbus --helper ../script.foundry.helper 2>&1 | tee "$QA/build.log"
+          python tools/record_release_validation.py --check-scope
           python tools/run_tests.py --output "$QA/source-tests.json" 2>&1 | tee "$QA/source-tests.log"
           python tools/verify_release.py 2>&1 | tee "$QA/source-package-verification.log"
           cp release.json "$QA/release.json"
@@ -87,12 +88,6 @@ jobs:
         timeout-minutes: 8
         working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
         run: python tools/render_interface.py 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-interface-run.log"
-      - name: Render Games in native Kodi
-        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && steps.kodi.outcome == 'success' }}
-        timeout-minutes: 6
-        working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
-        # Games uses the same generic verification/log filenames as library QA.
-        run: python tools/render_games.py --output "$QA/games" 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-games-run.log"
       - name: Render Canadian weather in native Kodi
         if: ${{ !cancelled() && steps.packaged.outcome == 'success' && steps.kodi.outcome == 'success' }}
         timeout-minutes: 6

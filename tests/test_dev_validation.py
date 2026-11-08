@@ -169,13 +169,14 @@ class DevelopmentWorkflowTests(unittest.TestCase):
     def test_source_and_packaged_tests_precede_all_native_runners(self):
         self.assertIn('materialize_sources.py --release 1.4.0', self.workflow)
         self.assertLess(self.workflow.index('tools/run_tests.py'), self.workflow.index('tools/verify_packaged_sources.py'))
-        for renderer in ('library', 'startup_splash', 'interface', 'games', 'weather'):
+        for renderer in ('library', 'startup_splash', 'interface', 'weather'):
             self.assertGreater(self.workflow.index('tools/render_' + renderer + '.py'),
                                self.workflow.index('tools/verify_packaged_sources.py'))
-        self.assertEqual(self.workflow.count("steps.packaged.outcome == 'success'"), 5)
+        self.assertEqual(self.workflow.count("steps.packaged.outcome == 'success'"), 4)
+        self.assertIn('tools/record_release_validation.py --check-scope', self.workflow)
 
-    def test_all_evidence_is_retained_without_games_filename_collisions(self):
-        self.assertIn('tools/render_games.py --output "$QA/games"', self.workflow)
+    def test_shipped_evidence_is_retained_and_deferred_games_is_not_run(self):
+        self.assertNotIn('tools/render_games.py', self.workflow)
         self.assertIn('name: Collect all native QA evidence\n        if: always()', self.workflow)
         self.assertIn('uses: actions/upload-artifact@v4\n        if: always()', self.workflow)
         self.assertIn('path: foundry-kodi-dist/releases/1.4.0-qa/', self.workflow)
