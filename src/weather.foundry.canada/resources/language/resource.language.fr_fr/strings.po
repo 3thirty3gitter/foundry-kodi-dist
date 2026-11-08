@@ -1,0 +1,104 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgctxt "#30000"
+msgid "Locations"
+msgstr "Lieux"
+
+msgctxt "#30001"
+msgid "Choose location 1"
+msgstr "Choisir le lieu 1"
+
+msgctxt "#30002"
+msgid "Choose location 2"
+msgstr "Choisir le lieu 2"
+
+msgctxt "#30003"
+msgid "Choose location 3"
+msgstr "Choisir le lieu 3"
+
+msgctxt "#30004"
+msgid "Selected location"
+msgstr "Lieu choisi"
+
+msgctxt "#30005"
+msgid "Location identifier"
+msgstr "Identifiant du lieu"
+
+msgctxt "#30006"
+msgid "Forecast language"
+msgstr "Langue des prévisions"
+
+msgctxt "#30007"
+msgid "Follow Kodi language"
+msgstr "Utiliser la langue de Kodi"
+
+msgctxt "#30008"
+msgid "English"
+msgstr "Anglais"
+
+msgctxt "#30009"
+msgid "French"
+msgstr "Français"
+
+msgctxt "#30010"
+msgid "CANADA WEATHER"
+msgstr "MÉTÉO CANADA"
+
+msgctxt "#30011"
+msgid "Feels like"
+msgstr "Ressenti"
+
+msgctxt "#30012"
+msgid "Next hours · device time"
+msgstr "Prochaines heures · heure de l’appareil"
+
+msgctxt "#30013"
+msgid "Forecast"
+msgstr "Prévisions"
+
+msgctxt "#30014"
+msgid "Cached / delayed data"
+msgstr "Données en cache / retardées"
+
+msgctxt "#30015"
+msgid "Observed"
+msgstr "Observation"
+
+msgctxt "#30016"
+msgid "Choose a Canadian city in weather settings"
+msgstr "Choisissez une ville canadienne dans les paramètres météo"
+
+msgctxt "#30017"
+msgid "Weather temporarily unavailable"
+msgstr "Météo temporairement indisponible"
+
+msgctxt "#30018"
+msgid "Advisories"
+msgstr "Avis météo"
+
+msgctxt "#30019"
+msgid "Full forecast"
+msgstr "Prévisions complètes"
+
+msgctxt "#30020"
+msgid "No current observation available"
+msgstr "Observation actuelle indisponible"
+
+msgctxt "#30021"
+msgid "Weather is loading"
+msgstr "Chargement de la météo"
+
+
+msgctxt "#30022"
+msgid "Next city"
+msgstr "Ville suivante"
+
+msgctxt "#30023"
+msgid "Refresh"
+msgstr "Actualiser"
+
+msgctxt "#30024"
+msgid "Settings"
+msgstr "Paramètres"

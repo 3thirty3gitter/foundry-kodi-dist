@@ -1,6 +1,7 @@
 """Visible focus must stay inside the unchanged seven-row Home menu viewport."""
 from pathlib import Path
 import unittest,xml.etree.ElementTree as E,zipfile
+from home_contracts import without_home_favorites
 
 ROOT=Path(__file__).resolve().parents[1]
 SKIN=ROOT.parent/'skin.foundry-nimbus'
@@ -15,9 +16,9 @@ class MainMenuScroll(unittest.TestCase):
         self.assertLessEqual((movement+1)*self.item_height,viewport)
     def test_only_the_main_menu_movement_byte_changes_in_home(self):
         with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.2.0.zip') as z:old=z.read('skin.foundry/xml/Home.xml')
-        new=(SKIN/'xml/Home.xml').read_bytes();start=new.index(b'<control type="fixedlist" id="9000">');end=new.index(b'</control>',start)
+        new=(SKIN/'xml/Home.xml').read_bytes().replace(b'\r\n',b'\n');start=new.index(b'<control type="fixedlist" id="9000">');end=new.index(b'</control>',start)
         normalized=new[:start]+new[start:end].replace(b'<movement>6</movement>',b'<movement>7</movement>')+new[end:]
-        self.assertEqual(normalized.replace(b'\t  <include>FoundryWidgetMetadata</include>\n',b''),old)
+        self.assertEqual(without_home_favorites(normalized.replace(b'\t  <include>FoundryWidgetMetadata</include>\n',b'')),without_home_favorites(old))
     def test_weather_visibility_and_main_menu_navigation_are_retained(self):
         # ElementTree cannot select nested attribute predicates consistently on all Python versions.
         weather=next(i for i in self.menu.findall('content/item') if i.findtext("property[@name='id']")=='weather')

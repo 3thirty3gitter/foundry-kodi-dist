@@ -1,0 +1,121 @@
+"""Portable fixture construction checks, not a claim of native Linux rendering."""
+import ast
+import importlib.util
+import json
+from pathlib import Path
+import runpy
+import sys
+import tempfile
+import types
+import unittest
+from unittest.mock import Mock, patch
+import xml.etree.ElementTree as E
+
+from test_weather_client_model import model, NOW
+from foundry_weather_test_lib import client, kodi_bridge
+from test_weather_kodi_bridge import Window
+
+ROOT = Path(__file__).resolve().parents[1]
+spec = importlib.util.spec_from_file_location('foundry_weather_renderer', ROOT / 'tools/render_weather.py')
+renderer = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(renderer)
+
+
+class WeatherRendererTests(unittest.TestCase):
+    def test_output_follows_generated_release_not_historical_constant(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            renderer.write(root / 'release.json', json.dumps({'release': '1.4.0-test'}))
+            self.assertEqual(renderer.output_directory(root=root), root / 'releases/1.4.0-test-qa')
+            self.assertEqual(renderer.output_directory(root / 'chosen'), root / 'chosen')
+            renderer.write(root / 'release.json', json.dumps({'release': '../../outside'}))
+            with self.assertRaises(ValueError):renderer.output_directory(root=root)
+
+    def test_synthetic_fresh_exercises_complete_contract(self):
+        case = renderer.scenario(now=NOW)
+        model.validate_feature(case['payload'], 'on-118')
+        normalized = model.normalize(case['payload'], 'en', NOW)
+        values = kodi_bridge.build_properties(normalized, case['fetched'])
+        self.assertEqual(values['Foundry.Weather.Temperature'], '0\u00b0C')
+        self.assertEqual(values['Foundry.Weather.DayCount'], '7')
+        self.assertEqual(values['Foundry.Weather.HourCount'], '24')
+        self.assertEqual(values['Foundry.Weather.AlertCount'], '1')
+        self.assertIn('SYNTHETIC TEST ADVISORY', values['Foundry.Weather.Alert.1.Headline'])
+
+    def test_synthetic_missing_and_stale(self):
+        case = renderer.scenario('missing', NOW)
+        values = kodi_bridge.build_properties(model.normalize(case['payload'], 'en', NOW), case['fetched'])
+        self.assertEqual(values['Foundry.Weather.Temperature'], '')
+        self.assertEqual(values['Foundry.Weather.HasCurrent'], 'false')
+        self.assertEqual(values['Foundry.Weather.HourCount'], '0')
+        case = renderer.scenario('stale', NOW)
+        values = kodi_bridge.build_properties(model.normalize(case['payload'], 'en', NOW), case['fetched'], case['stale'])
+        self.assertEqual(values['Foundry.Weather.AlertStatus'], 'unverified')
+        self.assertEqual(values['Foundry.Weather.Stale'], 'true')
+
+    def test_embedded_kodi_scripts_compile_without_execution(self):
+        for source in (renderer.FIXTURE, renderer.PROVIDER_WRAPPER):
+            ast.parse(source, feature_version=(3, 8))
+        compile((ROOT / 'tools/render_weather.py').read_text(encoding='utf-8'), 'render_weather.py', 'exec')
+
+    def test_fixture_executes_shipped_entrypoint_with_synthetic_client(self):
+        with tempfile.TemporaryDirectory() as temp:
+            base = Path(temp)
+            window = Window()
+            settings = {'language': 'en', 'location1_id': 'on-118', 'location1_label': 'Ottawa, ON'}
+            addon = Mock()
+            addon.getSetting.side_effect = lambda key: settings.get(key, '')
+            addon.getAddonInfo.return_value = str(base / 'profile')
+            modules = {'xbmc': types.SimpleNamespace(getInfoLabel=lambda _: renderer.PROVIDER,
+                    getRegion=lambda key: '\u00b0C' if key == 'tempunit' else '%H:%M', LOGWARNING=2, log=Mock()),
+                'xbmcaddon': types.SimpleNamespace(Addon=lambda: addon),
+                'xbmcgui': types.SimpleNamespace(Window=lambda _: window),
+                'xbmcvfs': types.SimpleNamespace(translatePath=lambda value: value),
+                'resources': types.ModuleType('resources'),
+                'resources.lib': sys.modules['foundry_weather_test_lib'],
+                'resources.lib.client': client, 'resources.lib.model': model,
+                'resources.lib.kodi_bridge': kodi_bridge}
+            original = (ROOT / 'src/weather.foundry.canada/default.py').read_text(encoding='utf-8')
+            renderer.write(base / 'shipped_default.py', original)
+            renderer.atomic_json(base / 'scenario.json', renderer.scenario())
+            wrapper = base / 'default.py'
+            renderer.write(wrapper, 'from pathlib import Path\nBASE=Path(%r)\n' % str(base) + renderer.PROVIDER_WRAPPER)
+            with patch.dict(sys.modules, modules), patch.object(sys, 'argv', [str(wrapper), '1']), \
+                    patch.object(client, 'Client'), patch.object(client, 'transport'):
+                runpy.run_path(str(wrapper), run_name='__main__')
+            self.assertEqual(window.getProperty('Foundry.Weather.Temperature'), '0\u00b0C')
+            self.assertEqual(window.getProperty('Foundry.Weather.HourCount'), '24')
+            self.assertFalse((base / 'provider-error.txt').exists())
+
+    def test_fixture_preparation_preserves_original_home_and_entrypoint(self):
+        with tempfile.TemporaryDirectory() as temp:
+            base = Path(temp)
+            dist, skin, helper, kodi, work = [base / name for name in ('dist', 'skin', 'helper', 'kodi-source', 'work')]
+            def addon(path, identifier, extensions=''):
+                renderer.write(path / 'addon.xml', '<addon id="%s"><requires><import addon="xbmc.python"/><import addon="script.module.requests"/></requires>%s</addon>' % (identifier, extensions))
+            addon(skin, 'skin.foundry')
+            addon(helper, 'script.foundry.helper', '<extension point="xbmc.python.library" library="resources/lib/default.py"/><extension point="xbmc.service" library="service.py"/>')
+            renderer.write(helper / 'resources/lib/default.py', "raise RuntimeError('Original helper must not run')\n")
+            for identifier in ('resource.images.foundry.wallpapers', 'resource.images.foundry.osd', 'resource.uisounds.foundry.pulse', renderer.PROVIDER):
+                addon(dist / 'src' / identifier, identifier)
+            provider = dist / 'src' / renderer.PROVIDER
+            original = "print('original shipped entrypoint')\n"
+            renderer.write(provider / 'default.py', original)
+            for name in ('Home.xml', 'Includes.xml', 'Includes_FoundryCanadaWeather.xml', 'Font.xml'):
+                renderer.write(skin / 'xml' / name, '<fixture name="%s"/>\n' % name)
+            addon(kodi / 'addons/service.fixture', 'service.fixture', '<extension point="xbmc.service" library="service.py"/>')
+            with patch.object(renderer, 'ROOT', dist):
+                home, profile, identifiers, hashes = renderer.prepare(work, kodi, skin, helper)
+            self.assertEqual((profile / 'addons/weather.foundry.canada/shipped_default.py').read_text(encoding='utf-8'), original)
+            self.assertEqual((provider / 'default.py').read_text(encoding='utf-8'), original)
+            self.assertEqual((profile / 'addons/skin.foundry/xml/Home.xml').read_bytes(), (skin / 'xml/Home.xml').read_bytes())
+            self.assertIn('weather_default.py', hashes)
+            self.assertIn('client.Client=SyntheticClient', (profile / 'addons/weather.foundry.canada/default.py').read_text(encoding='utf-8'))
+            self.assertNotIn('RuntimeError', (profile / 'addons/script.foundry.helper/resources/lib/default.py').read_text(encoding='utf-8'))
+            self.assertIsNone(E.parse(home / 'addons/service.fixture/addon.xml').find("extension[@point='xbmc.service']"))
+            self.assertIsNotNone(E.parse(kodi / 'addons/service.fixture/addon.xml').find("extension[@point='xbmc.service']"))
+            self.assertLess(identifiers.index('script.foundry.helper'), identifiers.index('skin.foundry'))
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -16,6 +16,7 @@ import unittest
 from unittest.mock import patch
 import xml.etree.ElementTree as ET
 import zipfile
+from home_contracts import restore_home_feature_additions
 
 ROOT = Path(__file__).resolve().parents[1]
 WORK = ROOT.parent
@@ -151,7 +152,7 @@ class Packages(unittest.TestCase):
                     self.assertEqual(hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest(), expected)
         paths = set()
         for path in (SKIN / "xml").glob("*.xml"):
-            paths.update(re.findall(r"resource://resource\.images\.foundry\.[^<\s\"]+", path.read_text()))
+            paths.update(re.findall(r"resource://resource\.images\.foundry\.[^<\s\"]+", path.read_text(encoding="utf-8")))
         self.assertGreaterEqual(len(paths), 28)
         for uri in paths:
             categories = [p.stem for p in (ROOT / "src/resource.images.foundry.wallpapers/resources").glob("*.png") if p.stem != "icon"]
@@ -164,7 +165,7 @@ class Packages(unittest.TestCase):
         required = {d.get("addon") for d in build.findall("./requires/import")}
         self.assertTrue({"script.module.cocoscrapers", "plugin.video.themoviedb.helper",
                          "metadata.themoviedb.org.python", "metadata.tvshows.themoviedb.org.python",
-                         "resource.uisounds.androidtv", "inputstream.adaptive",
+                         "resource.uisounds.foundry.pulse", "inputstream.adaptive",
                          "script.module.inputstreamhelper"}.issubset(required))
         # These feeds must be available before the skin has ever been loaded.
         repo = ET.parse(ROOT / "src/repository.foundry/addon.xml").getroot()
@@ -196,13 +197,13 @@ class Packages(unittest.TestCase):
     def test_all_python_xml_and_skin_references(self):
         for source in (SKIN, HELPER, ROOT / "src"):
             for path in source.rglob("*"):
-                if path.suffix == ".py": ast.parse(path.read_text())
+                if path.suffix == ".py": ast.parse(path.read_text(encoding="utf-8"))
                 elif path.suffix in {".xml", ".xsp"}: ET.parse(path)
         files = {p.name for p in (SKIN / "xml").glob("*.xml")}
         docs = [(p, ET.parse(p)) for p in (SKIN / "xml").glob("*.xml") if not p.name.endswith("-old.xml")]
         names = {e.get("name") for _, doc in docs for e in doc.findall("./include") if e.get("name")}
         for path, doc in docs:
-            text = path.read_text()
+            text = path.read_text(encoding="utf-8")
             self.assertNotIn("script.nimbus.helper", text)
             self.assertNotIn("skin.nimbus", text)
             for ref in doc.iter("include"):
@@ -301,16 +302,19 @@ class Runtime(unittest.TestCase):
                 self.assertIn(image.size, ((1672, 941), (1672, 940)))
                 self.assertEqual(image.convert("RGBA").getchannel("A").getextrema(), (255, 255))
         for path in (SKIN / "xml").glob("*.xml"):
-            self.assertNotIn("foundry-widget-layers/", path.read_text())
+            self.assertNotIn("foundry-widget-layers/", path.read_text(encoding="utf-8"))
 
     def test_home_positions_allow_only_logo_tooltip_wallpaper_and_row_viewport_fix(self):
         with zipfile.ZipFile(ROOT / "skin.foundry/skin.foundry-1.1.5.zip") as old:
             before = ET.fromstring(old.read("skin.foundry/xml/Home.xml"))
         after = ET.parse(SKIN / "xml/Home.xml").getroot()
         def strip_allowed_changes(doc):
+            restore_home_feature_additions(doc)
             for parent in doc.iter():
                 for child in list(parent):
-                    if child.tag == "include" and child.text == "FoundryWidgetMetadata":
+                    if child.tag == "control" and child.get("id") == "14000":
+                        parent.remove(child)  # Authorized Favorites row migration has separate coverage.
+                    elif child.tag == "include" and child.text == "FoundryWidgetMetadata":
                         parent.remove(child)
                     if child.tag == "include" and child.get("content") == "HomeCategoryVisibility":
                         child.set("content", "Visible_Right_Delayed")
@@ -574,22 +578,28 @@ class Runtime(unittest.TestCase):
             play_trailer()
         execute.assert_called_once_with("Skin.Reset(TrailerPlaying)")
 
-    def test_android_sound_default_applies_once_and_can_retry_after_failure(self):
+    def test_pulse_sound_default_applies_once_and_can_retry_after_failure(self):
         from modules.experience import configure_experience
         def visible(expression):
-            return expression == "System.HasAddon(resource.uisounds.androidtv)"
+            return expression == "System.HasAddon(resource.uisounds.foundry.pulse)"
+        def response(write_result):
+            def call(text):
+                request = json.loads(text)
+                return json.dumps({"result": {"value": "resource.uisounds.kodi"}
+                                   if request["method"] == "Settings.GetSettingValue" else write_result})
+            return call
         with patch.object(xbmc, "getCondVisibility", side_effect=visible), \
-                patch.object(xbmc, "executeJSONRPC", return_value='{"result":false}'), \
+                patch.object(xbmc, "executeJSONRPC", side_effect=response(False)), \
                 patch.object(xbmc, "executebuiltin") as execute:
             self.assertFalse(configure_experience())
             execute.assert_not_called()
         with patch.object(xbmc, "getCondVisibility", side_effect=visible), \
-                patch.object(xbmc, "executeJSONRPC", return_value='{"result":true}') as rpc, \
+                patch.object(xbmc, "executeJSONRPC", side_effect=response(True)) as rpc, \
                 patch.object(xbmc, "executebuiltin") as execute:
             self.assertTrue(configure_experience())
             self.assertEqual(json.loads(rpc.call_args.args[0])["params"],
-                             {"setting": "lookandfeel.soundskin", "value": "resource.uisounds.androidtv"})
-            execute.assert_called_once_with("Skin.SetBool(foundry.sounds.default.v1)")
+                             {"setting": "lookandfeel.soundskin", "value": "resource.uisounds.foundry.pulse"})
+            execute.assert_called_once_with("Skin.SetBool(foundry.sounds.pulse.v1)")
         with patch.object(xbmc, "getCondVisibility", return_value=True), \
                 patch.object(xbmc, "executeJSONRPC") as rpc:
             self.assertFalse(configure_experience())

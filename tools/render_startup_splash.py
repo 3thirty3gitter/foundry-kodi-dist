@@ -16,7 +16,8 @@ SKIN = ROOT.parent / 'skin.foundry-nimbus'
 
 
 def main():
-    output = ROOT / 'releases/1.3.9-qa'
+    release = json.loads((ROOT / 'release.json').read_text(encoding='utf-8'))['release']
+    output = ROOT / 'releases' / (release + '-qa')
     output.mkdir(parents=True, exist_ok=True)
     source = SKIN / 'media/foundry-home-backdrop.png'
     expected = Image.open(source).convert('RGB').resize((1920, 1080))

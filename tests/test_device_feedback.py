@@ -50,7 +50,8 @@ class DeviceFeedback(unittest.TestCase):
         cls.animations = ET.parse(SKIN/'xml/Includes_Animations.xml')
     def test_all_home_categories_are_clipped_and_manual_offsets_are_removed(self):
         groups = [c for c in self.home.iter('control') if c.get('type')=='grouplist' and c.get('id','').endswith('001')]
-        self.assertEqual(len(groups), 15)
+        self.assertEqual(len(groups), 16)  # Favorites now shares the standard viewport.
+        self.assertEqual(sum(c.get('id')=='14001' for c in groups),1)
         for c in groups:
             self.assertEqual(c.findtext('include'), 'HomeWidgetGroupListCommon')
             self.assertFalse(c.findall("include[@content='Animation_Widget_Poster_Slide']"))
@@ -121,6 +122,24 @@ class DeviceFeedback(unittest.TestCase):
         for name in ('StreamPilotVODCard','StreamPilotLiveCard'):
             old=before.find("include[@name='%s']/control"%name)
             new=after.find("include[@name='%s']/control"%name)
+            # Explicit directional seek additions have their own regression suite.
+            # Remove only those additions when comparing the older control contract.
+            for parent in new.iter():
+                for child in list(parent):
+                    if child.tag == 'control' and (
+                        child.findtext('info') == 'Player.Seekbar' or
+                        child.findtext('description') in {
+                            'Foundry VOD directional seek feedback',
+                            'Foundry live directional seek feedback',
+                            'Foundry live seek target time'}):
+                        parent.remove(child)
+                if parent.findtext('info') == 'Player.Progress':
+                    visibility = parent.find('visible')
+                    if visibility is not None and visibility.text == '!Player.Seeking':
+                        parent.remove(visibility)
+                label = parent.find('label')
+                if label is not None and label.text == '$VAR[FoundryOSDPlaybackTime]':
+                    label.text = '$INFO[Player.Time(h:mm:ss)]  /  $INFO[Player.Duration(h:mm:ss)]'
             old_controls=old.findall('control'); new_controls=new.findall('control')
             backgrounds=2 if name=='StreamPilotVODCard' else 3
             self.assertEqual([normalized(c) for c in old_controls[3:]],[normalized(c) for c in new_controls[backgrounds:]])

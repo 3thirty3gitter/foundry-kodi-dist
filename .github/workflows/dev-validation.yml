@@ -1,0 +1,115 @@
+name: Validate Foundry development
+
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+# Validation only. There is no publish, release, commit or push step.
+permissions:
+  contents: read
+
+concurrency:
+  group: foundry-dev-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash
+        working-directory: foundry-kodi-dist
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      QA: releases/1.4.0-qa
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: foundry-kodi-dist
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Record validation identity
+        run: |
+          mkdir -p "$QA"
+          git rev-parse HEAD > "$QA/source-commit.txt"
+          printf '%s\n' "$GITHUB_RUN_ID/$GITHUB_RUN_ATTEMPT" > "$QA/workflow-run.txt"
+      - name: Install validation dependencies
+        run: python -m pip install requests==2.34.2 Pillow==13.0.0
+      - name: Restore pinned 1.4.0 source snapshots
+        run: python tools/materialize_sources.py --release 1.4.0 2>&1 | tee "$QA/materialize.log"
+      - name: Build and test committed sources
+        run: |
+          python tools/build_release.py --skin ../skin.foundry-nimbus --helper ../script.foundry.helper 2>&1 | tee "$QA/build.log"
+          python tools/run_tests.py --output "$QA/source-tests.json" 2>&1 | tee "$QA/source-tests.log"
+          python tools/verify_release.py 2>&1 | tee "$QA/source-package-verification.log"
+          cp release.json "$QA/release.json"
+      - name: Test every extracted add-on and deterministic rebuild
+        id: packaged
+        run: |
+          python tools/verify_packaged_sources.py --workspace "$RUNNER_TEMP/foundry-packaged-validation" --output "$QA" 2>&1 | tee "$QA/packaged-tests.log"
+      - name: Install native Kodi validation environment
+        id: kodi
+        timeout-minutes: 8
+        run: |
+          for apt_source in /etc/apt/apt-mirrors.txt /etc/apt/sources.list /etc/apt/sources.list.d/ubuntu.sources
+          do
+            if [ -f "$apt_source" ]
+            then
+              sudo sed -i 's|http://azure.archive.ubuntu.com|https://archive.ubuntu.com|g' "$apt_source"
+            fi
+          done
+          sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update -qq
+          sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 -o DPkg::Lock::Timeout=60 install --no-install-recommends -y kodi xvfb xdotool python3-pil python3-requests libgl1-mesa-dri fonts-noto-core fonts-noto-mono fonts-roboto
+          kodi --version | tee "$QA/kodi-version.txt"
+          python -c 'import re, subprocess; version = subprocess.check_output(["kodi", "--version"], text=True); match = re.search(r"\b(\d+)\.\d+", version); assert match and int(match[1]) >= 21, "Native checks require Kodi 21 or newer"'
+          mkdir -p "$RUNNER_TEMP/foundry-validation-home" "$RUNNER_TEMP/foundry-validation-config" "$RUNNER_TEMP/foundry-validation-cache"
+          echo "HOME=$RUNNER_TEMP/foundry-validation-home" >> "$GITHUB_ENV"
+          echo "XDG_CONFIG_HOME=$RUNNER_TEMP/foundry-validation-config" >> "$GITHUB_ENV"
+          echo "XDG_CACHE_HOME=$RUNNER_TEMP/foundry-validation-cache" >> "$GITHUB_ENV"
+      # Each renderer is sequential and manages its own portable profile/Xvfb.
+      # Run later renderers even if an earlier native check fails, retaining all evidence.
+      - name: Render library and catalog in native Kodi
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && steps.kodi.outcome == 'success' }}
+        timeout-minutes: 6
+        working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
+        run: python tools/render_library.py 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-library-run.log"
+      - name: Render cold-start splash in native Kodi
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && steps.kodi.outcome == 'success' }}
+        timeout-minutes: 3
+        working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
+        run: python tools/render_startup_splash.py 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-splash-run.log"
+      - name: Render interface and playback controls in native Kodi
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && steps.kodi.outcome == 'success' }}
+        timeout-minutes: 8
+        working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
+        run: python tools/render_interface.py 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-interface-run.log"
+      - name: Render Games in native Kodi
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && steps.kodi.outcome == 'success' }}
+        timeout-minutes: 6
+        working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
+        # Games uses the same generic verification/log filenames as library QA.
+        run: python tools/render_games.py --output "$QA/games" 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-games-run.log"
+      - name: Render Canadian weather in native Kodi
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && steps.kodi.outcome == 'success' }}
+        timeout-minutes: 6
+        working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
+        run: python tools/render_weather.py --output "$QA" 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-weather-run.log"
+      - name: Collect all native QA evidence
+        if: always()
+        run: |
+          native="$RUNNER_TEMP/foundry-packaged-validation/foundry-kodi-dist/$QA"
+          if [ -d "$native" ]; then
+            mkdir -p "$QA/native"
+            cp -a "$native/." "$QA/native/"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: foundry-1.4.0-dev-qa-${{ github.run_id }}-${{ github.run_attempt }}
+          path: foundry-kodi-dist/releases/1.4.0-qa/
+          if-no-files-found: warn
+          retention-days: 14

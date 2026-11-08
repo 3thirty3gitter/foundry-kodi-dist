@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.games.foundry" version="0.1.0" name="Foundry Games" provider-name="3Thirty3">
+  <requires><import addon="xbmc.python" version="3.0.0" /></requires>
+  <extension point="xbmc.python.pluginsource" library="default.py"><provides>game</provides></extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform><license>GPL-2.0-only</license>
+    <summary lang="en_GB">Your game library, played with Kodi RetroPlayer</summary>
+    <description lang="en_GB">Browse user-supplied games by console, search, favorites and recent launches. Native Kodi manages emulators, controllers and saves. No ROMs, BIOS, emulator binaries or remote metadata are bundled.</description>
+  </extension>
+</addon>

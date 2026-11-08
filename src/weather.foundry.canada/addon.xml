@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="weather.foundry.canada" name="Foundry Canada Weather" version="0.1.0" provider-name="Foundry">
+  <requires><import addon="xbmc.python" version="3.0.0" /></requires>
+  <extension point="xbmc.python.weather" library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Canadian weather for Foundry</summary>
+    <summary lang="fr_FR">Météo canadienne pour Foundry</summary>
+    <description lang="en_GB">Private development prototype for Kodi 21. Manual Canadian city selection, current conditions, hourly and seven-day forecasts, and advisory headlines. No account, API key, GPS or IP geolocation. Not an emergency-warning system.</description>
+    <description lang="fr_FR">Prototype privé pour Kodi 21. Choix manuel d’une ville canadienne, conditions actuelles, prévisions horaires et sur sept jours et titres d’avis. Sans compte, clé API ni géolocalisation. Ne remplace pas les alertes d’urgence.</description>
+    <platform>all</platform>
+    <license>Proprietary development prototype; data subject to its upstream licence</license>
+  </extension>
+</addon>

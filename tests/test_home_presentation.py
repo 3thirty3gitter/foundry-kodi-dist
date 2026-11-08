@@ -7,6 +7,7 @@ import tempfile
 import unittest
 import xml.etree.ElementTree as ET
 import zipfile
+from home_contracts import restore_home_feature_additions
 
 ROOT = Path(__file__).resolve().parents[1]
 SKIN = ROOT.parent / "skin.foundry-nimbus"
@@ -97,10 +98,17 @@ class HomePresentation(unittest.TestCase):
         with zipfile.ZipFile(ROOT / "skin.foundry/skin.foundry-1.1.6.zip") as old:
             before = ET.fromstring(old.read("skin.foundry/xml/Home.xml"))
             old_includes = ET.fromstring(old.read("skin.foundry/xml/Includes_Home.xml"))
-        after = self.home.getroot()
+        after = restore_home_feature_additions(self.home.getroot())
         normalize = lambda n: (n.tag, n.attrib, (n.text or "").strip(), [normalize(c) for c in n])
         old_group = next(c for c in before.iter("control") if c.get("id") == "2000")
         new_group = next(c for c in after.iter("control") if c.get("id") == "2000")
+        # Favorites intentionally migrated from its legacy square grid to the
+        # regular poster widget. Its contract is covered separately; retain the
+        # byte-equivalent regression for every other Home category.
+        for group in (old_group, new_group):
+            favorite = group.find("control[@id='14000']")
+            self.assertIsNotNone(favorite)
+            group.remove(favorite)
         # The enclosing Home stack now scrolls/clips natively. Item sizes, ids,
         # content sources and focus actions must otherwise remain identical.
         for group in (old_group, new_group):

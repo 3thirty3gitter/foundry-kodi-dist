@@ -61,7 +61,9 @@ def main():
             parser.error(str(error))
     sources = [root / "src/repository.foundry",
                root / "src/resource.images.foundry.wallpapers",
-               root / "src/resource.images.foundry.osd", args.skin, args.helper,
+               root / "src/resource.images.foundry.osd",
+               root / "src/resource.uisounds.foundry.pulse",
+               root / "src/plugin.games.foundry", root / "src/weather.foundry.canada", args.skin, args.helper,
                root / "src/script.program.foundry-build", root / "src/script.program.foundry-bootstrap"]
     feed, packages = ET.Element("addons"), []
     for source in sources:
