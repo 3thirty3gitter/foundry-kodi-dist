@@ -39,6 +39,16 @@ class Feedback(unittest.TestCase):
                 self.assertEqual(texture.get('border'),'72,0,8,0')
                 self.assertIn(texture.get('colordiffuse'),(None,'FFFFFFFF'))
 
+    def test_native_glow_ownership_uses_the_selected_container_item(self):
+        view=E.parse(SKIN/'xml/View_57_StreamPilot.xml')
+        condition=view.findtext("expression[@name='FoundryVODGlowCurrentItem']")
+        for field in ('Label','Year','DBTYPE','FileNameAndPath','Path'):
+            self.assertIn('Container(57).ListItem.'+field,condition)
+        self.assertIn('!String.IsEmpty(Window(Home).Property(foundry.vod.owner_label))',condition)
+        glow=view.find("variable[@name='FoundryVODGlow']/value")
+        self.assertIn('$EXP[FoundryVODGlowCurrentItem]',glow.get('condition'))
+        self.assertEqual(view.findall("variable[@name='FoundryVODGlow']/value")[-1].text,'streampilot/glow-pending.svg')
+
     def test_original_home_icons_remain_in_place(self):
         home=E.parse(SKIN/'xml/Home.xml')
         icons=[p.get('value') for p in home.findall('.//param[@name="icon"]')]

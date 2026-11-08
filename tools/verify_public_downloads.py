@@ -69,7 +69,7 @@ def main():
         'source_url': BASES[0], 'distribution_commit_verified': COMMIT,
         'source_commits': sources['source_commits'],
         'validation': {
-            'regression_tests_passed': 277,
+            'regression_tests_passed': 278,
             'native_kodi_interface': json.loads((ROOT / 'releases/1.3.9-qa/interface-verification.json').read_text()),
             'native_kodi_startup_splash': json.loads((ROOT / 'releases/1.3.9-qa/startup-splash-verification.json').read_text()),
             'native_kodi_fixture': json.loads((ROOT / 'releases/1.3.9-qa/verification.json').read_text()),

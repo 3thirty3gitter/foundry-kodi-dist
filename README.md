@@ -2,7 +2,7 @@
 
 Release 1.3.9: **Build and Bootstrap 1.3.9 / skin 1.3.9 / Helper 1.2.7 / Wallpapers 1.1.0**.
 
-The pinned source commits are in [releases/1.3.9-sources.json](releases/1.3.9-sources.json). The release workflow builds the packages from those commits, runs all 277 checks against source and extracted ZIPs, verifies deterministic rebuilding, then publishes the ZIPs and feed in one commit. Public download verification is recorded separately in `releases/1.3.9-verification.json` once complete.
+The pinned source commits are in [releases/1.3.9-sources.json](releases/1.3.9-sources.json). The release workflow builds the packages from those commits, runs all 278 checks against source and extracted ZIPs, verifies deterministic rebuilding, then publishes the ZIPs and feed in one commit. Public download verification is recorded separately in `releases/1.3.9-verification.json` once complete.
 
 Release 1.3.9 adds library-style focused widget metadata and a studio logo above the left side of the row, restores the rounded StreamPilot OSD frame from the pinned Android source, removes page-loading overlays and simplifies page labels. Complete pages remain visible during replacement loads; an independent cached artwork-color path avoids a white placeholder glow. Settings hover uses the small-title wallpaper when the current menu has widgets. All 52 system-menu icons use Foundry chrome/neon artwork, with matching wallpaper categories derived from their approved image and 195 static entries/templates covered. Existing Home icons and logo geometry are preserved. Native interface captures cover widgets, episode details, Settings wallpaper variants, system menus and both OSD frames.
 

@@ -80,7 +80,12 @@ try:
                   'path':info('Container.FolderPath'),
                   'tmdb':info('Window(Home).Property(foundry.metadata.tmdb)'),
                   'imdb':info('Window(Home).Property(foundry.metadata.imdb)'),
-                  'studio':info('Window(Home).Property(foundry.vod.studio_logo)')}
+                  'studio':info('Window(Home).Property(foundry.vod.studio_logo)'),
+                  'glow':info('Window(Home).Property(foundry.vod.glow)'),
+                  'accent':info('Window(Home).Property(foundry.vod.accent)'),
+                  'glow_owner':{name:info('Window(Home).Property(foundry.vod.owner_'+name+')') for name in ('label','year','type','path')},
+                  'selected_item':{name:info('Container(57).ListItem.'+label) for name,label in [('label','Label'),('year','Year'),('type','DBTYPE'),('path','FileNameAndPath'),('folder','Path')]},
+                  'glow_guard':xbmc.getCondVisibility('$EXP[FoundryVODGlowCurrentItem]')}
         temporary=BASE/'state.tmp';temporary.write_text(json.dumps(snapshot));temporary.replace(BASE/'state.json')
         if (BASE/'capture.json').exists():
             name=json.loads((BASE/'capture.json').read_text())['name'];(BASE/'capture.json').unlink()
@@ -323,6 +328,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             wait_for(lambda:state().get('case')=='native' and state().get('focus')==57 and state().get('label')=='Previous Page')
             key('Right','Right','Right');wait_for(lambda:state().get('position')==3)
             wait_for(lambda:state().get('tmdb')=='7' and state().get('imdb')=='7.1/10' and bool(state().get('studio')))
+            wait_for(lambda:state().get('glow_guard') and state().get('glow','').endswith('.png'))
             time.sleep(1.2)
             focused=capture('native-movies')
             key('Up');wait_for(lambda:state().get('focus')==5701);time.sleep(.5)
@@ -333,7 +339,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             for x in (224,480,730,992,1248,1504):
                 difference=[focused.getpixel((x,960))[c]-unfocused.getpixel((x,960))[c] for c in range(3)]
                 halo_deltas.append(difference)
-            assert max(halo_deltas[2])>=15,halo_deltas
+            assert max(halo_deltas[2])>=15,(halo_deltas,state())
             assert all(max(abs(v) for v in delta)<=3 for index,delta in enumerate(halo_deltas) if index!=2),halo_deltas
             def bright(im,region):
                 return sum(min(im.getpixel((x,y)))>170 for y in range(region[1],region[3]) for x in range(region[0],region[2]))

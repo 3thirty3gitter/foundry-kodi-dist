@@ -151,7 +151,7 @@ class InterfaceFeedback(unittest.TestCase):
     def test_no_white_placeholder_can_appear_while_color_is_pending(self):
         root=E.parse(SKIN/'xml/View_57_StreamPilot.xml');variable=root.find("variable[@name='FoundryVODGlow']")
         self.assertEqual(variable.findall('value')[-1].text,'streampilot/glow-pending.svg')
-        self.assertIn('FoundryVODCurrentItem',variable.find('value').get('condition'))
+        self.assertIn('FoundryVODGlowCurrentItem',variable.find('value').get('condition'))
         source=(HELPER/'resources/lib/modules/catalog_window.py').read_text()
         self.assertNotIn("'metacritic':'','accent':'FFFFFFFF'",source)
 
