@@ -69,6 +69,14 @@ class WeatherRendererTests(unittest.TestCase):
         self.assertIn('SetFocus(9000,%d,absolute)', renderer.FIXTURE)
         self.assertIn("xbmc.getInfoLabel('Control.GetLabel(5)')", renderer.FIXTURE)
 
+    def test_refresh_qa_clicks_shipped_home_buttons_without_weather_window_initialization(self):
+        source = (ROOT / 'tools/render_weather.py').read_text(encoding='utf-8')
+        self.assertNotIn('Weather.Refresh', renderer.FIXTURE)
+        self.assertNotIn('ActivateWindow(weather)', source)
+        self.assertIn('click_action(15153)', source)
+        self.assertIn('click_action(15152)', source)
+        self.assertIn("{'setting': 'weather.currentlocation'}", source)
+
     def test_private_port_rejects_an_existing_listener(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as listener:
             listener.bind(('127.0.0.1', 0))
@@ -121,7 +129,8 @@ class WeatherRendererTests(unittest.TestCase):
                 self.assertEqual(current.get('__xbmcinvokerid__'), 91)
                 return addon
             modules = {'xbmc': types.SimpleNamespace(getInfoLabel=lambda _: renderer.PROVIDER,
-                    getRegion=lambda key: '\u00b0C' if key == 'tempunit' else '%H:%M', LOGWARNING=2, log=Mock()),
+                    getRegion=lambda key: '\u00b0C' if key == 'tempunit' else '%H:%M', LOGWARNING=2, log=Mock(),
+                    executeJSONRPC=lambda _: '{"result":{"value":1}}'),
                 'xbmcaddon': types.SimpleNamespace(Addon=native_default_addon),
                 'xbmcgui': types.SimpleNamespace(Window=lambda _: window),
                 'xbmcvfs': types.SimpleNamespace(translatePath=lambda value: value),
@@ -141,6 +150,9 @@ class WeatherRendererTests(unittest.TestCase):
             self.assertEqual(window.getProperty('Foundry.Weather.Temperature'), '0\u00b0C')
             self.assertEqual(window.getProperty('Foundry.Weather.HourCount'), '24')
             self.assertFalse((base / 'provider-error.txt').exists())
+            completed = json.loads((base / 'provider-complete.json').read_text(encoding='utf-8'))
+            self.assertEqual(completed['argument'], '1')
+            self.assertEqual(completed['kind'], 'fresh')
 
     def test_fixture_preparation_preserves_original_home_and_entrypoint(self):
         with tempfile.TemporaryDirectory() as temp:

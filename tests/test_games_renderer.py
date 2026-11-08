@@ -1,6 +1,7 @@
 """Contract checks for the native runner, not a substitute for executing Kodi."""
 import ast
 import importlib.util
+import tempfile
 from pathlib import Path
 import unittest
 from unittest.mock import Mock, patch, call
@@ -38,6 +39,32 @@ class GamesRendererTests(unittest.TestCase):
             runner.stop_process_group(process)
         self.assertEqual([call(54321, runner.signal.SIGTERM), call(54321, 9)], killpg.call_args_list)
         self.assertEqual([call(timeout=10), call(timeout=5)], process.wait.call_args_list)
+
+    def test_full_skin_host_preserves_ui_and_disables_only_copied_services(self):
+        spec = importlib.util.spec_from_file_location('games_native_renderer', ROOT / 'tools/render_games.py')
+        runner = importlib.util.module_from_spec(spec); spec.loader.exec_module(runner)
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary); source = base / 'source'; home = base / 'kodi'; profile = home / 'portable_data'
+            for aid in ('resource.images.foundry.wallpapers', 'resource.images.foundry.osd', 'resource.uisounds.foundry.pulse', 'script.foundry.helper', 'skin.foundry'):
+                path = source / 'src' / aid; path.mkdir(parents=True)
+                manifest = '<addon id="%s"><requires><import addon="xbmc.python"/><import addon="unused.network"/></requires>' % aid
+                if aid == 'script.foundry.helper':
+                    manifest += '<extension point="xbmc.service" library="service.py"/><extension point="xbmc.python.script" library="default.py"/>'
+                    (path / 'default.py').write_text('original helper setup')
+                (path / 'addon.xml').write_text(manifest + '</addon>')
+            skin = source / 'src/skin.foundry'; (skin / 'xml').mkdir(); (skin / 'fonts').mkdir()
+            for name in ('Home.xml','MyGames.xml','Includes.xml','View_58_FoundryGames.xml','Font.xml'):
+                (skin / 'xml' / name).write_text('<unchanged name="%s" />' % name)
+            (skin / 'fonts/example.ttf').write_bytes(b'original-font-fixture')
+            ids, hashes = runner.prepare_shipped_skin(home, profile, skin, source / 'src/script.foundry.helper', source)
+            self.assertIn('skin.foundry', ids)
+            self.assertIn('fonts/example.ttf', hashes)
+            for relative in hashes:
+                self.assertEqual((skin / relative).read_bytes(), (profile / 'addons/skin.foundry' / relative).read_bytes())
+            helper = profile / 'addons/script.foundry.helper'
+            self.assertIsNone(ET.parse(helper / 'addon.xml').find("extension[@point='xbmc.service']"))
+            self.assertIn('disabled', (helper / 'default.py').read_text())
+            self.assertEqual('original helper setup', (source / 'src/script.foundry.helper/default.py').read_text())
 
     def test_skin_view_uses_game_properties(self):
         path = ROOT.parent / 'skin.foundry-nimbus/xml/View_58_FoundryGames.xml'

@@ -78,6 +78,13 @@ class NativeRunnerContracts(unittest.TestCase):
         for unsupported in ('getControl(9000)','menu.size()','getListItem(','window=xbmcgui.Window'):
             self.assertNotIn(unsupported,phase)
 
+    def test_ripple_uses_supported_native_non_cancel_busy_dialog(self):
+        fixture=load('render_interface').FIXTURE
+        self.assertIn('ActivateWindow(busydialognocancel)',fixture)
+        self.assertIn('Window.IsVisible(busydialognocancel)',fixture)
+        self.assertIn('Dialog.Close(busydialognocancel)',fixture)
+        self.assertNotIn('ActivateWindow(busydialog)',fixture)
+
     def test_animation_gate_accepts_visible_moving_frames(self):
         frames=[Image.new('RGB',(16,16),(v,0,0)) for v in (130,180,140,210)]
         self.assertEqual(load('render_interface').animation_evidence(frames,[.02]*4,1),[256]*3)

@@ -1,5 +1,6 @@
 """Foundry Canada weather prototype for Kodi 21/Omega."""
 import os
+import json
 import sys
 import uuid
 from datetime import datetime, timezone
@@ -18,6 +19,49 @@ WINDOW = xbmcgui.Window(12600)
 def is_active_provider():
     """Never overwrite native weather state after the user changes providers."""
     return xbmc.getInfoLabel('Weather.Plugin') == 'weather.foundry.canada'
+
+
+def current_slot():
+    """Share Kodi's authoritative location with its native/periodic jobs.
+
+    Omega Weather.Refresh/LocationNext depend on an initialized native weather
+    window. Its integer setting is accessible through the supported JSON-RPC
+    Settings API even when the user has only opened the Home card.
+    """
+    try:
+        reply = json.loads(xbmc.executeJSONRPC(json.dumps({'jsonrpc': '2.0', 'id': 1,
+            'method': 'Settings.GetSettingValue', 'params': {'setting': 'weather.currentlocation'}})))
+        value = reply.get('result', {}).get('value')
+        return value if type(value) is int and value > 0 else None
+    except (ValueError, TypeError, AttributeError):
+        return None
+
+
+def refresh_current(next_location=False):
+    """Explicit Home actions never change the selected weather provider."""
+    if not is_active_provider():
+        return
+    selected = configured_locations()
+    if not selected:
+        update(1)
+        return
+    previous = current_slot()
+    if previous is None:
+        xbmc.log('Foundry Canada Weather: current location could not be read.', xbmc.LOGWARNING)
+        return
+    slot = (previous % len(selected) + 1) if next_location else min(previous, len(selected))
+    if slot != previous:
+        if not is_active_provider():
+            return
+        try:
+            reply = json.loads(xbmc.executeJSONRPC(json.dumps({'jsonrpc': '2.0', 'id': 1,
+                'method': 'Settings.SetSettingValue',
+                'params': {'setting': 'weather.currentlocation', 'value': slot}})))
+            if reply.get('result') is not True or current_slot() != slot:
+                return
+        except (ValueError, TypeError, AttributeError):
+            return
+    update(slot)
 
 
 def language():
@@ -71,7 +115,7 @@ def choose_location(slot):
         ADDON.setSetting('location'+str(slot)+'_label',item['label'])
         if is_active_provider():
             refresh_locations()
-            xbmc.executebuiltin('Weather.Refresh')
+            refresh_current()
     except WeatherError:
         xbmcgui.Dialog().ok(ADDON.getAddonInfo('name'),'Le catalogue est indisponible.' if lang=='fr' else 'The location catalogue is unavailable. Please try again later.')
 
@@ -113,24 +157,34 @@ def show_forecast():
 def update(slot):
     if not is_active_provider():
         return
-    token=uuid.uuid4().hex
-    WINDOW.setProperty(PREFIX+'RequestToken',token)
     selected=refresh_locations()
     if not selected:
+        # Clearing locations must supersede an older in-flight request too.
+        WINDOW.setProperty(PREFIX+'RequestToken',uuid.uuid4().hex)
         clear_properties(WINDOW)
         WINDOW.setProperty(PREFIX+'Status','needs_location')
         WINDOW.setProperty(PREFIX+'HasCurrent','false')
         return
     slot=min(max(slot,1),len(selected))
+    authoritative_slot = current_slot()
+    if authoritative_slot is None or min(authoritative_slot, len(selected)) != slot:
+        return
+    token=uuid.uuid4().hex
+    WINDOW.setProperty(PREFIX+'RequestToken',token)
     identifier,_=selected[slot-1]
+    def request_is_current():
+        if not is_active_provider() or current_slot()!=authoritative_slot or WINDOW.getProperty(PREFIX+'RequestToken')!=token:
+            return False
+        current = configured_locations()
+        return slot <= len(current) and current[slot-1][0] == identifier
     try:
         payload,fetched,stale,reason=client().get(COLLECTION+'/items/'+identifier+'?f=json',lambda data:validate_feature(data,identifier))
         model=normalize(payload,language(),datetime.now(timezone.utc))
         properties=build_properties(model,fetched,stale,reason,xbmc.getRegion('tempunit'),xbmc.getRegion('time'))
-        if is_active_provider() and WINDOW.getProperty(PREFIX+'RequestToken')==token:
+        if request_is_current():
             publish(WINDOW,properties)
     except (WeatherError,ValueError,TypeError,AttributeError):
-        if not is_active_provider() or WINDOW.getProperty(PREFIX+'RequestToken')!=token:
+        if not request_is_current():
             return
         clear_properties(WINDOW)
         WINDOW.setProperty(PREFIX+'Status','unavailable')
@@ -145,6 +199,10 @@ if __name__=='__main__':
         show_alerts()
     elif argument=='forecast':
         show_forecast()
+    elif argument=='refresh':
+        refresh_current()
+    elif argument=='next':
+        refresh_current(next_location=True)
     elif argument.startswith('choose:'):
         try:choose_location(int(argument.split(':',1)[1]))
         except ValueError:pass

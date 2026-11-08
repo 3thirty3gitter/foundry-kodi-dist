@@ -41,15 +41,15 @@
       "id": "weather.foundry.canada",
       "version": "0.1.0",
       "path": "weather.foundry.canada/weather.foundry.canada-0.1.0.zip",
-      "sha256": "eee49fd9922b8efc66068b88edb0e30d0a1190d3ef0a46f7ffa5937f04b95a54",
-      "size": 16473
+      "sha256": "fae387a57752af0ec63a5c75bf53bd8f207bb3fc00716af64a2be519178a64f9",
+      "size": 17146
     },
     {
       "id": "skin.foundry",
       "version": "1.4.0",
       "path": "skin.foundry/skin.foundry-1.4.0.zip",
-      "sha256": "8ab87fd6497e0caa47148659b97e3c11804fc572c6fead91e82a08f7eacb13ed",
-      "size": 40374601
+      "sha256": "88ce84d6fd4ff51f1f27ab99b5973a7d98df354dc0e37276b766df8b3eb880b6",
+      "size": 40374699
     },
     {
       "id": "script.foundry.helper",

@@ -1,5 +1,6 @@
 """Offline property and application-boundary tests; this is not a Kodi runtime test."""
 import importlib.util
+import json
 import sys
 import types
 import unittest
@@ -90,12 +91,22 @@ class DefaultBoundaryTests(unittest.TestCase):
         self.settings = {'language': 'en', 'location1_id': 'on-118', 'location1_label': 'Ottawa, ON'}
         self.dialog = Mock()
         self.provider = 'weather.foundry.canada'
+        self.current_location = 1
+        def rpc(raw):
+            request = json.loads(raw)
+            self.assertEqual(request['params']['setting'], 'weather.currentlocation')
+            if request['method'] == 'Settings.SetSettingValue':
+                self.current_location = request['params']['value']
+                return json.dumps({'result': True})
+            self.assertEqual(request['method'], 'Settings.GetSettingValue')
+            return json.dumps({'result': {'value': self.current_location}})
         addon = Mock()
         addon.getSetting.side_effect = lambda key: self.settings.get(key, '')
         addon.setSetting.side_effect = lambda key, value: self.settings.__setitem__(key, value)
         xbmc = types.SimpleNamespace(ISO_639_1=0, LOGWARNING=2, getLanguage=lambda _: 'en',
             getInfoLabel=lambda key: self.provider if key == 'Weather.Plugin' else '',
-            getRegion=lambda key: '°C' if key == 'tempunit' else '%H:%M', log=Mock(), executebuiltin=Mock())
+            getRegion=lambda key: '°C' if key == 'tempunit' else '%H:%M', log=Mock(), executebuiltin=Mock(),
+            executeJSONRPC=Mock(side_effect=rpc))
         modules = {'xbmc': xbmc, 'xbmcaddon': types.SimpleNamespace(Addon=lambda: addon),
                    'xbmcgui': types.SimpleNamespace(Window=lambda _: self.window, Dialog=lambda: self.dialog),
                    'xbmcvfs': types.SimpleNamespace(translatePath=lambda x: x),
@@ -153,6 +164,108 @@ class DefaultBoundaryTests(unittest.TestCase):
         self.app.update(1)
         self.assertEqual(self.window.getProperty(P+'Temperature'), '0°C')
         self.assertEqual(self.window.getProperty(P+'Status'), 'fresh')
+
+    def test_home_refresh_preserves_native_selected_city(self):
+        self.settings.update(location2_id='bc-74', location2_label='Vancouver, BC')
+        self.current_location = 2
+        self.app.update = Mock()
+        self.app.refresh_current()
+        self.app.update.assert_called_once_with(2)
+        self.assertEqual(self.current_location, 2)
+        self.assertTrue(all(json.loads(c.args[0])['method'] == 'Settings.GetSettingValue'
+                            for c in self.app.xbmc.executeJSONRPC.call_args_list))
+
+    def test_home_next_city_shares_native_index_and_wraps(self):
+        self.settings.update(location2_id='bc-74', location2_label='Vancouver, BC')
+        self.app.update = Mock()
+        self.app.refresh_current(next_location=True)
+        self.assertEqual(self.current_location, 2)
+        self.app.update.assert_called_with(2)
+        self.app.refresh_current(next_location=True)
+        self.assertEqual(self.current_location, 1)
+        self.app.update.assert_called_with(1)
+
+    def test_home_refresh_clamps_removed_native_city(self):
+        self.current_location = 3
+        self.app.update = Mock()
+        self.app.refresh_current()
+        self.assertEqual(self.current_location, 1)
+        self.app.update.assert_called_once_with(1)
+
+    def test_inactive_home_actions_never_read_or_mutate_native_setting(self):
+        self.provider = 'weather.other'
+        self.app.update = Mock()
+        self.app.refresh_current()
+        self.app.refresh_current(next_location=True)
+        self.app.xbmc.executeJSONRPC.assert_not_called()
+        self.app.update.assert_not_called()
+
+    def test_unavailable_location_setting_does_not_guess_city(self):
+        self.app.xbmc.executeJSONRPC.side_effect = lambda _: '{"error":{"code":-32602}}'
+        self.app.update = Mock()
+        self.app.refresh_current()
+        self.app.update.assert_not_called()
+
+    def test_failed_location_change_does_not_fetch_wrong_city(self):
+        self.settings.update(location2_id='bc-74', location2_label='Vancouver, BC')
+        self.app.xbmc.executeJSONRPC.side_effect = ['{"result":{"value":1}}', '{"result":false}']
+        self.app.update = Mock()
+        self.app.refresh_current(next_location=True)
+        self.app.update.assert_not_called()
+
+    def test_native_city_change_during_fetch_does_not_publish(self):
+        def fetch(*args):
+            self.current_location = 2
+            self.window.setProperty(P+'Temperature', 'new city pending')
+            return feature(), NOW.timestamp(), False, 'fresh'
+        self.app.client = lambda: Mock(get=fetch)
+        self.app.update(1)
+        self.assertEqual(self.window.getProperty(P+'Temperature'), 'new city pending')
+
+    def test_native_city_change_during_failed_fetch_does_not_clear(self):
+        def fetch(*args):
+            self.current_location = 2
+            self.window.setProperty(P+'Temperature', 'new city pending')
+            raise client.WeatherError('old request')
+        self.app.client = lambda: Mock(get=fetch)
+        self.app.update(1)
+        self.assertEqual(self.window.getProperty(P+'Temperature'), 'new city pending')
+
+    def test_obsolete_native_job_does_not_cancel_current_request(self):
+        self.settings.update(location2_id='bc-74', location2_label='Vancouver, BC')
+        self.current_location = 2
+        self.window.setProperty(P+'RequestToken', 'new city pending')
+        self.app.client = Mock(side_effect=AssertionError('No stale slot fetch'))
+        self.app.update(1)
+        self.app.client.assert_not_called()
+        self.assertEqual(self.window.getProperty(P+'RequestToken'), 'new city pending')
+
+    def test_location_reset_supersedes_older_success_or_failure(self):
+        for failure in (False, True):
+            with self.subTest(failure=failure):
+                self.settings.update(location1_id='on-118', location1_label='Ottawa, ON')
+                def fetch(*args):
+                    self.settings.clear()
+                    self.app.update(1)
+                    if failure:raise client.WeatherError('old request')
+                    return feature(), NOW.timestamp(), False, 'fresh'
+                self.app.client = lambda: Mock(get=fetch)
+                self.app.update(1)
+                self.assertEqual(self.window.getProperty(P+'Status'), 'needs_location')
+                self.assertEqual(self.window.getProperty(P+'Temperature'), '')
+
+    def test_changed_location_id_supersedes_older_success_or_failure(self):
+        for failure in (False, True):
+            with self.subTest(failure=failure):
+                self.settings.update(location1_id='on-118', location1_label='Ottawa, ON')
+                def fetch(*args):
+                    self.settings.update(location1_id='bc-74', location1_label='Vancouver, BC')
+                    self.window.setProperty(P+'Temperature', 'replacement pending')
+                    if failure:raise client.WeatherError('old request')
+                    return feature(), NOW.timestamp(), False, 'fresh'
+                self.app.client = lambda: Mock(get=fetch)
+                self.app.update(1)
+                self.assertEqual(self.window.getProperty(P+'Temperature'), 'replacement pending')
 
     def test_inactive_provider_does_not_fetch_or_touch_shared_state(self):
         self.provider = 'weather.other'

@@ -29,6 +29,32 @@ def blob(data):
     return hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
 
 
+def committed_files(source, commit, names):
+    """Read literal Git blob bytes in one process, including binary content."""
+    names = list(names)
+    if any('\n' in name or '\r' in name for name in names):
+        raise ValueError('Unsupported newline in source path')
+    requests = ''.join(commit + ':' + name + '\n' for name in names).encode('utf-8')
+    output = subprocess.check_output(['git', '-C', str(source), 'cat-file', '--batch'], input=requests)
+    result, offset = {}, 0
+    for name in names:
+        end = output.find(b'\n', offset)
+        if end < 0:
+            raise ValueError('Incomplete Git object header: ' + name)
+        header = output[offset:end].split()
+        if len(header) != 3 or header[1] != b'blob':
+            raise ValueError('Source is not a committed Git blob: ' + name)
+        length = int(header[2])
+        start, offset = end + 1, end + 1 + length
+        if length < 0 or output[offset:offset + 1] != b'\n':
+            raise ValueError('Incomplete Git blob bytes: ' + name)
+        result[name] = output[start:offset]
+        offset += 1
+    if offset != len(output):
+        raise ValueError('Unexpected trailing Git object data')
+    return result
+
+
 def snapshot(source, baseline):
     manifest = ET.parse(source / 'addon.xml').getroot()
     addon = manifest.get('id')
@@ -49,9 +75,9 @@ def snapshot(source, baseline):
             current = {item.filename[len(addon) + 1:]: archive.read(item)
                        for item in archive.infolist() if not item.is_dir()}
     files, binary, hashes = {}, {}, {}
+    committed = committed_files(source, commit, sorted(current))
     for name, data in sorted(current.items()):
-        committed = git(source, 'show', commit + ':' + name)
-        if committed != data:
+        if committed[name] != data:
             raise ValueError('Working bytes differ from committed source: ' + name)
         hashes[name] = blob(data)
         if old.get(name) == data:

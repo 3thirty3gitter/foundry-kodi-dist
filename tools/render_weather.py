@@ -84,15 +84,20 @@ def scenario(kind='fresh', now=None):
 
 
 PROVIDER_WRAPPER = r'''
-import json,runpy,sys,traceback
+import json,runpy,sys,traceback,uuid
 from pathlib import Path
 from resources.lib import client
 class SyntheticClient:
     def __init__(self,*args,**kwargs):pass
     def get(self,path,validator,**kwargs):
         data=json.loads((BASE/'scenario.json').read_text(encoding='utf-8'))
-        if path != client.COLLECTION+'/items/on-118?f=json':
+        locations={'on-118':'Ottawa','bc-74':'Vancouver'}
+        identifier=path.removeprefix(client.COLLECTION+'/items/').removesuffix('?f=json')
+        if identifier not in locations or path != client.COLLECTION+'/items/'+identifier+'?f=json':
             raise AssertionError('Unexpected fixture endpoint: '+path)
+        data['payload']['id']=identifier
+        data['payload']['properties']['identifier']=identifier
+        data['payload']['properties']['name']={lang:locations[identifier] for lang in ('en','fr')}
         validator(data['payload'])
         return data['payload'],data['fetched'],data['stale'],'offline' if data['stale'] else 'fresh'
 def forbid(*args,**kwargs):raise AssertionError('Live weather transport forbidden in native QA')
@@ -106,7 +111,13 @@ try:
     context={key:original_main[key] for key in keys if key in original_main}
     if context.get('__xbmcaddonid__')!='weather.foundry.canada':
         raise RuntimeError('Weather wrapper must be launched through its Kodi add-on context')
+    invocation=uuid.uuid4().hex
+    kind=json.loads((BASE/'scenario.json').read_text(encoding='utf-8'))['kind']
     runpy.run_path(str(Path(__file__).with_name('shipped_default.py')),init_globals=context,run_name='__main__')
+    receipt=BASE/('provider-complete-'+invocation+'.tmp')
+    receipt.write_text(json.dumps({'invocation':invocation,'kind':kind,
+        'argument':sys.argv[1] if len(sys.argv)>1 else '1'}),encoding='utf-8')
+    receipt.replace(BASE/'provider-complete.json')
 except Exception:
     (BASE/'provider-error.txt').write_text(traceback.format_exc(),encoding='utf-8')
     raise
@@ -155,7 +166,6 @@ try:
         if command.exists():
             value=json.loads(command.read_text(encoding='utf-8'));command.unlink()
             if value['action']=='focus-menu':focus_menu()
-            elif value['action']=='refresh':xbmc.executebuiltin('Weather.Refresh')
             elif value['action']=='capture':xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/(value['name']+'.png'))+')')
         xbmc.sleep(50)
     if not (BASE/'complete').exists():raise AssertionError('Native weather QA timed out')
@@ -205,7 +215,7 @@ def prepare(base, kodi_root=Path('/usr/share/kodi'), skin_source=SKIN, helper_so
         assert source.read_bytes() == copied.read_bytes(), name
         hashes[name] = hashlib.sha256(source.read_bytes()).hexdigest()
     write(userdata / 'addon_data/skin.foundry/settings.xml', '<settings><setting id="firsttimerun" type="bool">true</setting></settings>')
-    write(userdata / ('addon_data/' + PROVIDER + '/settings.xml'), '<settings version="2"><setting id="language">en</setting><setting id="location1_id">on-118</setting><setting id="location1_label">Ottawa, ON</setting></settings>')
+    write(userdata / ('addon_data/' + PROVIDER + '/settings.xml'), '<settings version="2"><setting id="language">en</setting><setting id="location1_id">on-118</setting><setting id="location1_label">Ottawa, ON</setting><setting id="location2_id">bc-74</setting><setting id="location2_label">Vancouver, BC</setting></settings>')
     provider = addons / PROVIDER
     shutil.copyfile(provider / 'default.py', provider / 'shipped_default.py')
     hashes['weather_default.py'] = hashlib.sha256((provider / 'shipped_default.py').read_bytes()).hexdigest()
@@ -352,11 +362,31 @@ def run(output, display, port):
                     with Image.open(destination) as picture:
                         assert picture.size == (1920, 1080), picture.size
                         return picture.convert('RGB')
+                def click_action(identifier):
+                    # Navigate to the actual shipped buttons; never initialize
+                    # the native Weather window to mask Home-only regressions.
+                    command('focus-menu')
+                    rpc('Input.Select')
+                    wait_for(lambda: state().get('focus') == 15150)
+                    rpc('Input.Down')
+                    wait_for(lambda: state().get('focus') == 15151)
+                    for control in range(15152, identifier + 1):
+                        rpc('Input.Right')
+                        wait_for(lambda: state().get('focus') == control)
+                    rpc('Input.Select')
                 def refresh(kind):
+                    receipt = base / 'provider-complete.json'
+                    before = json.loads(receipt.read_text(encoding='utf-8')) if receipt.exists() else {}
                     atomic_json(base / 'scenario.json', scenario(kind))
-                    command('refresh')
+                    click_action(15153)
+                    def completed():
+                        try:after = json.loads(receipt.read_text(encoding='utf-8'))
+                        except (OSError, ValueError):return False
+                        return (after.get('invocation') != before.get('invocation')
+                                and after.get('argument') == 'refresh' and after.get('kind') == kind)
+                    wait_for(completed)
                 wait_for(lambda: state().get('category') == 'weather')
-                command('refresh')
+                assert rpc('Settings.GetSettingValue', {'setting': 'weather.currentlocation'})['value'] == 1
                 wait_for(lambda: state().get('HasCurrent') == 'true' and state().get('HourCount') == '24')
                 assert state()['Temperature'] == '0\u00b0C', state()
                 assert state()['DayCount'] == '7' and state()['AlertCount'] == '1', state()
@@ -376,6 +406,16 @@ def run(output, display, port):
                 rpc('Input.Back'); wait_for(lambda: not state().get('dialog'))
                 rpc('Input.Back'); wait_for(lambda: state().get('focus') == 9000)
                 rpc('Input.Select'); wait_for(lambda: state().get('focus') == 15150)
+                click_action(15152)
+                wait_for(lambda: state().get('Location') == 'Vancouver, BC')
+                assert rpc('Settings.GetSettingValue', {'setting': 'weather.currentlocation'})['value'] == 2
+                refresh('fresh')
+                wait_for(lambda: state().get('Location') == 'Vancouver, BC' and state().get('HasCurrent') == 'true')
+                assert rpc('Settings.GetSettingValue', {'setting': 'weather.currentlocation'})['value'] == 2
+                capture('weather-next-city')
+                click_action(15152)
+                wait_for(lambda: state().get('Location') == 'Ottawa, ON')
+                assert rpc('Settings.GetSettingValue', {'setting': 'weather.currentlocation'})['value'] == 1
                 refresh('missing')
                 wait_for(lambda: state().get('HasCurrent') == 'false' and state().get('HourCount') == '0')
                 assert state()['Temperature'] == '', state()
@@ -392,7 +432,8 @@ def run(output, display, port):
                 atomic_json(output / 'weather-verification.json', {'passed': True, 'kodi_version': version,
                     'checks': ['provider_entrypoint', 'untouched_shipped_home_card', 'current_zero', '24_hourly', '7_daily',
                                'advisory_headline', 'forecast_click_back', 'advisory_click_back', 'menu_back_reentry',
-                               'missing_values', 'stale_unverified', 'alternate_provider_hides_card'],
+                               'native_home_initial_fetch', 'next_city_native_index', 'refresh_preserves_city',
+                               'next_city_wrap', 'missing_values', 'stale_unverified', 'alternate_provider_hides_card'],
                     'source_sha256': hashes, 'data': 'Synthetic only; no live weather or account requests',
                     'fixture_identity': identity, 'fixture_port': port,
                     'isolation': 'Disposable HOME, XDG and Kodi portable profile; copied helper/services disabled',
@@ -409,6 +450,7 @@ def run(output, display, port):
                 except subprocess.TimeoutExpired:xserver.kill(); xserver.wait(timeout=5)
                 for source, target in [(profile / 'temp/kodi.log', 'weather-kodi.log'),
                                        (base / 'state.json', 'weather-state.json'),
+                                       (base / 'provider-complete.json', 'weather-provider-complete.json'),
                                        (base / 'error.txt', 'weather-error.txt'),
                                        (base / 'provider-error.txt', 'weather-provider-error.txt')]:
                     if source.exists():shutil.copyfile(source, output / target)

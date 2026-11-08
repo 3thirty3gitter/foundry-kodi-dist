@@ -6,12 +6,13 @@ Synthetic bytes deliberately are NOT a playable ROM. This checks UI/launch error
 handling only; no optional core installer or gameplay claim is included.
 """
 import argparse
-import copy
+import hashlib
 import json
 import os
 from pathlib import Path
 import shutil
 import signal
+import socket
 import subprocess
 import tempfile
 import time
@@ -21,6 +22,7 @@ import xml.etree.ElementTree as E
 ROOT = Path(__file__).resolve().parents[1]
 SKIN = ROOT.parent / 'skin.foundry-nimbus'
 ADDON = ROOT / 'src/plugin.games.foundry'
+HELPER = ROOT.parent / 'script.foundry.helper'
 
 FIXTURE = r'''
 import json,sys,time,traceback
@@ -44,6 +46,12 @@ def wait(predicate, timeout=30):
 def info(key): return xbmc.getInfoLabel(key)
 def snapshot():
     return {'window':xbmcgui.getCurrentWindowId(),'path':info('Container.FolderPath'),
+            'plugin':info('Container.PluginName'),'content':info('Container.Content'),
+            'viewmode':info('Container.Viewmode'),
+            'games_content':xbmc.getCondVisibility('Container.Content(games)'),
+            'foundry_plugin':xbmc.getCondVisibility('String.IsEqual(Container.PluginName,plugin.games.foundry)'),
+            'view58_visible':xbmc.getCondVisibility('Control.IsVisible(58)'),
+            'current_game_id':info('ListItem.Property(Foundry.Game.Id)'),
             'label':info('ListItem.Label'),'title':info('ListItem.Title'),
             'position':info('Container(58).CurrentItem'),
             'game_id':info('Container(58).ListItem.Property(Foundry.Game.Id)'),
@@ -63,6 +71,7 @@ def open_path(query):
     xbmc.sleep(500)
 def rail():
     (OUTPUT/'phase.txt').write_text('activate native rail',encoding='utf-8')
+    (OUTPUT/'rail-before.json').write_text(json.dumps(snapshot(),indent=2),encoding='utf-8')
     xbmc.executebuiltin('Container.SetViewMode(58)')
     wait(lambda:xbmc.getCondVisibility('Control.IsVisible(58)'))
     xbmc.executebuiltin('SetFocus(58)')
@@ -77,6 +86,7 @@ def action(name):
 
 evidence=[]
 try:
+    require(xbmc.getSkinDir()=='skin.foundry','Games gate requires the actual shipped Foundry skin')
     # No game addon is allowed to execute these synthetic fixtures.
     response=json.loads(xbmc.executeJSONRPC(json.dumps({'jsonrpc':'2.0','id':1,'method':'Addons.GetAddons','params':{'type':'kodi.gameclient','enabled':True}})))
     if 'error' in response: raise AssertionError('Cannot prove absence of enabled game clients: '+str(response))
@@ -179,6 +189,49 @@ def stop_process_group(process):
         process.wait(timeout=5)
 
 
+def prepare_shipped_skin(home, profile, skin_source=SKIN, helper_source=HELPER, root=ROOT):
+    """Copy production UI unchanged; suppress only disposable helper/services."""
+    addons = profile / 'addons'
+    addons.mkdir(parents=True, exist_ok=True)
+    identifiers = []
+    sources = [root / 'src/resource.images.foundry.wallpapers',
+               root / 'src/resource.images.foundry.osd',
+               root / 'src/resource.uisounds.foundry.pulse', helper_source, skin_source]
+    for source in sources:
+        aid = E.parse(source / 'addon.xml').getroot().get('id')
+        shutil.copytree(source, addons / aid, ignore=shutil.ignore_patterns('.git', '__pycache__', '*.pyc'))
+        identifiers.append(aid)
+    # No startup services (including system update/version-check services) run.
+    for manifest_path in list((home / 'addons').glob('*/addon.xml')) + list(addons.glob('*/addon.xml')):
+        tree = E.parse(manifest_path)
+        services = tree.getroot().findall("extension[@point='xbmc.service']")
+        for service in services: tree.getroot().remove(service)
+        if services: tree.write(manifest_path, encoding='UTF-8', xml_declaration=True)
+    helper = addons / 'script.foundry.helper'
+    manifest = E.parse(helper / 'addon.xml')
+    for dependency in list(manifest.getroot().find('requires')):
+        if dependency.get('addon') != 'xbmc.python': manifest.getroot().find('requires').remove(dependency)
+    for extension in manifest.getroot().findall('extension'):
+        library = extension.get('library')
+        if library:
+            (helper / library).write_text('# Offline Games QA: helper setup/router entrypoint disabled.\n', encoding='utf-8')
+    manifest.write(helper / 'addon.xml', encoding='UTF-8', xml_declaration=True)
+    skin = addons / 'skin.foundry'
+    relative_paths = ['addon.xml', 'xml/Home.xml', 'xml/MyGames.xml', 'xml/Includes.xml',
+                      'xml/View_58_FoundryGames.xml', 'xml/Font.xml']
+    relative_paths += [str(path.relative_to(skin_source)).replace('\\', '/')
+                       for path in (skin_source / 'fonts').rglob('*') if path.is_file()]
+    hashes = {}
+    for relative in relative_paths:
+        original = (skin_source / relative).read_bytes()
+        if original != (skin / relative).read_bytes(): raise AssertionError('Shipped skin changed: ' + relative)
+        hashes[relative] = hashlib.sha256(original).hexdigest()
+    settings = profile / 'userdata/addon_data/skin.foundry'
+    settings.mkdir(parents=True, exist_ok=True)
+    (settings / 'settings.xml').write_text('<settings><setting id="firsttimerun" type="bool">true</setting></settings>', encoding='utf-8')
+    return identifiers, hashes
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path)
@@ -195,6 +248,9 @@ def main():
     if os.name != 'posix' or not Path('/usr/share/kodi').is_dir():
         raise RuntimeError('Linux Kodi/X11 runner required; no machine setup is performed')
     from PIL import Image, ImageDraw
+    # Never send fixture commands to an existing renderer or personal Kodi.
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
+        probe.bind(('127.0.0.1', args.port))
     with tempfile.TemporaryDirectory(prefix='foundry-games-qa-') as temporary:
         base = Path(temporary)
         home = base / 'kodi'
@@ -203,32 +259,10 @@ def main():
         userdata = profile / 'userdata'; userdata.mkdir(parents=True)
         addon = profile / 'addons/plugin.games.foundry'
         shutil.copytree(ADDON, addon, ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
-        active = home / 'addons/skin.estuary'
-        shutil.copyfile(SKIN / 'xml/View_58_FoundryGames.xml', active / 'xml/View_58_FoundryGames.xml')
-        includes = E.parse(active / 'xml/Includes.xml')
-        E.SubElement(includes.getroot(), 'include', file='View_58_FoundryGames.xml')
-        includes.write(active / 'xml/Includes.xml', encoding='UTF-8', xml_declaration=True)
-        games = E.parse(active / 'xml/MyGames.xml')
-        views = games.find('views')
-        if views is None: views = E.SubElement(games.getroot(), 'views')
-        views.text = (views.text or '50') + ',58'
-        E.SubElement(games.find('controls'), 'include').text = 'View_58_FoundryGames'
-        games.write(active / 'xml/MyGames.xml', encoding='UTF-8', xml_declaration=True)
-        fonts = E.parse(active / 'xml/Font.xml')
-        source_fonts = E.parse(SKIN / 'xml/Font.xml')
-        for fontset in fonts.findall('fontset'):
-            for name in ('font27', 'font36_title'):
-                for old in list(fontset.findall('font')):
-                    if old.findtext('name') == name: fontset.remove(old)
-                font = source_fonts.find("fontset/font[name='%s']" % name)
-                if font is None: raise RuntimeError('Missing source font: ' + name)
-                fontset.append(copy.deepcopy(font))
-                shutil.copyfile(SKIN / 'fonts' / font.findtext('filename'), active / 'fonts' / font.findtext('filename'))
-        fonts.write(active / 'xml/Font.xml', encoding='UTF-8', xml_declaration=True)
-        (active / 'media/streampilot').mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(SKIN / 'media/streampilot/catalog-white.png', active / 'media/streampilot/catalog-white.png')
+        identifiers, skin_hashes = prepare_shipped_skin(home, profile)
+        (output / 'shipped-skin-hashes.json').write_text(json.dumps(skin_hashes, indent=2)+'\n', encoding='utf-8')
         settings = E.Element('settings', version='2')
-        for key, value in {'lookandfeel.skin':'skin.estuary','addons.updatemode':'2','filelists.showparentdiritems':'false','services.webserver':'true','services.webserverport':str(args.port),'services.webserverauthentication':'false'}.items():
+        for key, value in {'lookandfeel.skin':'skin.estuary','addons.updatemode':'2','filelists.showparentdiritems':'false','services.webserver':'true','services.webserverport':str(args.port),'services.webserverauthentication':'false','services.devicename':base.name}.items():
             E.SubElement(settings, 'setting', id=key).text = value
         E.ElementTree(settings).write(userdata / 'guisettings.xml', encoding='UTF-8', xml_declaration=True)
         roms = base / 'synthetic-roms'; roms.mkdir()
@@ -244,7 +278,7 @@ def main():
         prefix = 'from pathlib import Path\nBASE=Path(%r)\nADDON=Path(%r)\nOUTPUT=Path(%r)\nROMS=Path(%r)\n' % tuple(map(str, (base, addon, output, roms)))
         (launcher / 'fixture.py').write_text(prefix + FIXTURE, encoding='utf-8')
         # HOME prevents any fallback user-profile or external account lookup.
-        environment = dict(os.environ, HOME=str(base / 'empty-home'), DISPLAY=args.display, KODI_HOME=str(home), LIBGL_ALWAYS_SOFTWARE='1', AE_SINK='NULL')
+        environment = dict(os.environ, HOME=str(base / 'empty-home'), XDG_CONFIG_HOME=str(base / 'empty-home/.config'), XDG_CACHE_HOME=str(base / 'empty-home/.cache'), DISPLAY=args.display, KODI_HOME=str(home), LIBGL_ALWAYS_SOFTWARE='1', AE_SINK='NULL')
         Path(environment['HOME']).mkdir()
         kodi = None
         with (output / 'kodi-console.log').open('w', encoding='utf-8') as log:
@@ -259,12 +293,26 @@ def main():
                     if 'error' in result: raise RuntimeError(str(result['error']))
                     return result.get('result')
                 def ready():
-                    try: return rpc('JSONRPC.Ping') == 'pong'
+                    try:
+                        logtext = (profile / 'temp/kodi.log').read_text(encoding='utf-8', errors='replace')
+                        if '<CWebserver[%d]>: Started' % args.port not in logtext: return False
+                        return rpc('JSONRPC.Ping') == 'pong' and rpc('Settings.GetSettingValue', {'setting':'services.devicename'}).get('value') == base.name
                     except Exception: return False
                 wait_for(ready)
                 for unused in range(5): rpc('Input.Back'); time.sleep(.2)
-                for aid in ('plugin.games.foundry', 'script.foundry.gamesqa'):
+                for aid in identifiers + ['plugin.games.foundry', 'script.foundry.gamesqa']:
                     rpc('Addons.SetAddonEnabled', {'addonid':aid, 'enabled':True})
+                if not rpc('Settings.SetSettingValue', {'setting':'lookandfeel.skin','value':'skin.foundry'}):
+                    raise AssertionError('Could not select shipped Foundry skin')
+                def modal():
+                    return rpc('XBMC.GetInfoBooleans', {'booleans':['System.HasActiveModalDialog']})['System.HasActiveModalDialog']
+                wait_for(modal)
+                labels = rpc('XBMC.GetInfoLabels', {'labels':['Control.GetLabel(1)','Control.GetLabel(9)']})
+                prompt = ' '.join(labels.values()).lower()
+                if 'keep' not in prompt and 'skin' not in prompt:
+                    raise AssertionError('Unexpected skin confirmation: ' + str(labels))
+                rpc('Input.Left'); rpc('Input.Select')
+                wait_for(lambda:not modal())
                 rpc('Addons.ExecuteAddon', {'addonid':'script.foundry.gamesqa'})
                 def finished():
                     if (base / 'error.txt').exists(): raise AssertionError((base / 'error.txt').read_text())
@@ -275,6 +323,8 @@ def main():
                 report = json.loads((output / 'fixture-result.json').read_text())
                 report['renderer'] = subprocess.check_output(['kodi','--version'], text=True).strip()
                 report['release'] = release
+                report['shipped_skin_hashes'] = skin_hashes
+                report['host'] = 'Actual pinned skin.foundry; Home/MyGames/Includes/view/fonts unchanged; only copied helper/services disabled'
                 for check in report['checks']:
                     with Image.open(output / (check['case'] + '.png')) as im:
                         assert im.size == (1920,1080), im.size
@@ -291,6 +341,10 @@ def main():
         if kodi_log.exists():
             assert 'Error parsing boolean expression' not in kodi_log.read_text(errors='replace')
         report['passed'] = True
+        for relative, expected_hash in skin_hashes.items():
+            actual_hash = hashlib.sha256((profile / 'addons/skin.foundry' / relative).read_bytes()).hexdigest()
+            if actual_hash != expected_hash: raise AssertionError('Runtime modified shipped skin: ' + relative)
+        report['assertions']['shipped_skin_bytes_unchanged'] = True
         report['assertions']['screenshots_verified'] = True
         report['assertions']['skin_boolean_parse_errors_absent'] = True
         for name in ('verification.json', 'games-verification.json'):

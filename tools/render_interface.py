@@ -86,7 +86,7 @@ try:
                   'seek_offset':label('Player.SeekOffset'),'seek_step':label('Player.SeekStepSize'),
                   'player_time':label('Player.Time'),'player_duration':label('Player.Duration'),
                   'seek_visible':xbmc.getCondVisibility('Window.IsVisible(seekbar)'),
-                  'busy_visible':xbmc.getCondVisibility('Window.IsVisible(busydialog)'),
+                  'busy_visible':xbmc.getCondVisibility('Window.IsVisible(busydialognocancel)'),
                   'python_optimize':sys.flags.optimize}
         (BASE/'state.tmp').write_text(json.dumps(snapshot));(BASE/'state.tmp').replace(BASE/'state.json')
         command=BASE/'command'
@@ -115,8 +115,10 @@ try:
                     xbmc.sleep(100)
                     if xbmc.getInfoLabel('Container(9000).ListItem.Property(id)')=='favorites':break
                 else:raise AssertionError('Shipped Home has no Favorites menu item')
-            elif value=='busy-open':xbmc.executebuiltin('ActivateWindow(busydialog)')
-            elif value=='busy-close':xbmc.executebuiltin('Dialog.Close(busydialog)')
+            # Kodi permits the non-cancel busy dialog for addons; both native
+            # dialog classes render the unchanged shipped DialogBusy.xml.
+            elif value=='busy-open':xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
+            elif value=='busy-close':xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
             elif value=='play':
                 item=xbmcgui.ListItem('Foundry Playback')
                 item.setInfo('video',{'title':'Foundry Playback','mediatype':'movie'})
@@ -347,7 +349,7 @@ def main():
             changed=animation_evidence(frames,latencies,elapsed)
             (base/'command').write_text('busy-close');wait_for(lambda:not state().get('busy_visible'))
             (base/'complete').write_text('ok')
-            (output/'interface-verification.json').write_text(json.dumps({'home_favorites_shipped_xml_sha256':hashlib.sha256((SKIN/'xml/Home.xml').read_bytes()).hexdigest(),'home_favorites_row_focus_and_horizontal_navigation':True,'home_favorites_back_returns_menu':True,'preference_migration':json.loads((base/'sounds.json').read_text()),'pulse_native_resource_selected':rpc('Settings.GetSettingValue',{'setting':'lookandfeel.soundskin'})['value'],'audible_output_verified':False,'directional_seek':seek_evidence,'playback_studio_logo_top_right':True,'ripple_changed_pixels':changed,'ripple_capture_elapsed_seconds':elapsed,'ripple_rpc_max_seconds':max(latencies),'widget_metadata_top_left':True,'widget_episode_number_title':True,'studio_logo_above_left_row':True,'settings_hover_uses_widget_wallpaper':True,'empty_widget_restores_full_wallpaper':True,'system_menu_icons':len(catalog),'generated_category_and_option_icons':True,'vod_rounded_frame':True,'live_rounded_frame_preview':True,'scope':'Isolated native desktop Kodi; synthetic metadata/video/Favorites; initial widget harness only, restored shipped Home for Favorites, helper setup/service disabled, null audio sink. Live providers, audible sound, device FPS and Shield remain unverified'},indent=2)+'\n')
+            (output/'interface-verification.json').write_text(json.dumps({'home_favorites_shipped_xml_sha256':hashlib.sha256((SKIN/'xml/Home.xml').read_bytes()).hexdigest(),'home_favorites_row_focus_and_horizontal_navigation':True,'home_favorites_back_returns_menu':True,'preference_migration':json.loads((base/'sounds.json').read_text()),'pulse_native_resource_selected':rpc('Settings.GetSettingValue',{'setting':'lookandfeel.soundskin'})['value'],'audible_output_verified':False,'directional_seek':seek_evidence,'playback_studio_logo_top_right':True,'ripple_native_dialog':'busydialognocancel (shipped DialogBusy.xml)','ripple_changed_pixels':changed,'ripple_capture_elapsed_seconds':elapsed,'ripple_rpc_max_seconds':max(latencies),'widget_metadata_top_left':True,'widget_episode_number_title':True,'studio_logo_above_left_row':True,'settings_hover_uses_widget_wallpaper':True,'empty_widget_restores_full_wallpaper':True,'system_menu_icons':len(catalog),'generated_category_and_option_icons':True,'vod_rounded_frame':True,'live_rounded_frame_preview':True,'scope':'Isolated native desktop Kodi; synthetic metadata/video/Favorites; initial widget harness only, restored shipped Home for Favorites, helper setup/service disabled, null audio sink. Live providers, audible sound, device FPS and Shield remain unverified'},indent=2)+'\n')
         except Exception:
             try:ImageGrab.grab(xdisplay=':99').save(output/'interface-failure.png')
             except Exception:pass

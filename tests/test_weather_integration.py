@@ -33,12 +33,17 @@ class WeatherIntegrationTests(unittest.TestCase):
             action = root.find(".//setting[@id='choose%d']/data" % slot).text
             self.assertEqual(action, 'RunScript(weather.foundry.canada,choose:%d)' % slot)
 
-    def test_no_provider_or_profile_setting_mutation(self):
+    def test_only_explicit_home_city_action_can_mutate_native_index(self):
         source = (ADDON / 'default.py').read_text(encoding='utf-8')
-        self.assertNotIn('Settings.SetSettingValue', source)
         self.assertNotIn('weather.addon', source)
-        self.assertNotIn('executeJSONRPC', source)
-        ast.parse(source, feature_version=(3, 8))
+        tree = ast.parse(source, feature_version=(3, 8))
+        setters = [node for node in ast.walk(tree) if isinstance(node, ast.Dict)
+                   and any(isinstance(value, ast.Constant) and value.value == 'Settings.SetSettingValue'
+                           for value in node.values)]
+        self.assertEqual(len(setters), 1)
+        self.assertIn("'setting': 'weather.currentlocation'", ast.get_source_segment(source, setters[0]))
+        action = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == 'refresh_current')
+        self.assertIn(setters[0], list(ast.walk(action)))
 
     def test_new_include_is_registered_once(self):
         includes = ET.parse(SKIN / 'xml/Includes.xml').getroot()
@@ -72,8 +77,8 @@ class WeatherIntegrationTests(unittest.TestCase):
         card = self.widget.find(".//control[@id='$PARAM[id]']")
         self.assertEqual(card.findtext('onback'), '9000')
         self.assertEqual(card.findtext('ondown'), '15151')
-        expected = ['RunScript(weather.foundry.canada,alerts)', 'Weather.LocationNext',
-                    'Weather.Refresh', 'Addon.OpenSettings(weather.foundry.canada)']
+        expected = ['RunScript(weather.foundry.canada,alerts)', 'RunScript(weather.foundry.canada,next)',
+                    'RunScript(weather.foundry.canada,refresh)', 'Addon.OpenSettings(weather.foundry.canada)']
         for index, action in enumerate(expected, 15151):
             button = self.widget.find(".//control[@id='%d']" % index)
             self.assertEqual(button.findtext('onclick'), action)
@@ -86,10 +91,17 @@ class WeatherIntegrationTests(unittest.TestCase):
         text = (SKIN / 'xml/Includes_FoundryCanadaWeather.xml').read_text(encoding='utf-8')
         self.assertNotIn('$INFO[Weather.Temperature]', text)
         values = self.widget.find("variable[@name='FoundryCanadaHomeWeatherVar']").findall('value')
-        self.assertIn('HasCurrent', values[0].get('condition'))
-        self.assertEqual(values[1].get('condition'), SELECTED)
-        self.assertFalse(values[1].text)
+        self.assertEqual(values[0].get('condition'), SELECTED + ' + !Weather.IsFetched')
+        self.assertFalse(values[0].text)
+        self.assertIn('HasCurrent', values[1].get('condition'))
+        self.assertEqual(values[2].get('condition'), SELECTED)
+        self.assertFalse(values[2].text)
         self.assertEqual(values[-1].text, '$VAR[HomeMenuWeatherVar]')
+
+    def test_initial_loading_condition_polls_native_manager_before_custom_status(self):
+        loading = self.widget.find(".//control[label='$LOCALIZE[503]']")
+        self.assertEqual(loading.findtext('visible'),
+                         '!Weather.IsFetched + String.IsEmpty(Window(weather).Property(Foundry.Weather.Status))')
 
     def test_fonts_exist_in_all_fontsets(self):
         expected = {'foundry_weather_small', 'foundry_weather_body', 'foundry_weather_title', 'foundry_weather_temperature'}
