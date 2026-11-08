@@ -27,14 +27,16 @@ class CatalogLayout(unittest.TestCase):
         rail = self.view.find("control[@id='57']")
         self.assertEqual(rail.get("type"), "fixedlist")
         self.assertEqual(rail.findtext("orientation"), "horizontal")
-        self.assertEqual(rail.find("itemlayout").attrib, rail.find("focusedlayout").attrib)
+        for dimension in ("width","height"):
+            self.assertEqual(rail.find("itemlayout").get(dimension),rail.find("focusedlayout").get(dimension))
+        self.assertEqual(rail.find("focusedlayout").get("infoupdate"),"100")
         poster = self.doc.find("include[@name='FoundryVODPoster']/definition/control/control")
         width, height = (int(poster.findtext(k)) for k in ("width", "height"))
         self.assertEqual((width, height), (224, 336))
         zoom = poster.find("animation/effect")
         self.assertEqual(zoom.get("end"), "119")
         self.assertEqual((int(rail.findtext("top")), int(rail.findtext("height"))), (428, 600))
-        outer = poster.find("control[texture='$INFO[Window(Home).Property(foundry.vod.glow)]']")
+        outer = poster.find("control[texture='$VAR[FoundryVODGlow]']")
         self.assertEqual((outer.findtext('left'),outer.findtext('top')),('-96','-96'))
         self.assertEqual((outer.findtext('width'),outer.findtext('height')),('416','528'))
         # Negligible transparent tails can extend beyond the viewport; the

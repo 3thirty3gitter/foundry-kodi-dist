@@ -350,11 +350,11 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             for x in (224,480,730,992,1248,1504):
                 difference=[focused.getpixel((x,960))[c]-unfocused.getpixel((x,960))[c] for c in range(3)]
                 halo_deltas.append(difference)
-            assert max(halo_deltas[2])>=15,(halo_deltas,state())
+            assert halo_deltas[2][2]>=15 and halo_deltas[2][2]>halo_deltas[2][0],('Selected purple artwork requires a purple halo',halo_deltas,state())
             stale_delta=[stale.getpixel((730,960))[c]-unfocused.getpixel((730,960))[c] for c in range(3)]
             restored_delta=[restored.getpixel((730,960))[c]-unfocused.getpixel((730,960))[c] for c in range(3)]
             assert max(abs(v) for v in stale_delta)<=3,('Stale owner rendered a halo',stale_delta)
-            assert max(restored_delta)>=15,('Matching owner did not restore the halo',restored_delta)
+            assert restored_delta[2]>=15 and restored_delta[2]>restored_delta[0],('Matching owner did not restore the purple halo',restored_delta)
             assert all(max(abs(v) for v in delta)<=3 for index,delta in enumerate(halo_deltas) if index!=2),halo_deltas
             def bright(im,region):
                 return sum(min(im.getpixel((x,y)))>170 for y in range(region[1],region[3]) for x in range(region[0],region[2]))

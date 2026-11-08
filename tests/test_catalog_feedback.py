@@ -19,7 +19,7 @@ class CatalogFeedback(unittest.TestCase):
 
     def test_native_glow_requires_the_focused_layout_and_row_focus(self):
         doc=E.parse(ROOT/'skin.foundry-nimbus/xml/View_57_StreamPilot.xml')
-        glow=doc.find(".//control[texture='$INFO[Window(Home).Property(foundry.vod.glow)]']")
+        glow=doc.find(".//control[texture='$VAR[FoundryVODGlow]']")
         self.assertEqual(glow.findtext('visible'),'$PARAM[focused] + Control.HasFocus(57) + $EXP[FoundryVODGlowCurrentItem]')
 
     def test_removed_controls_have_no_remaining_navigation_targets(self):

@@ -115,7 +115,7 @@ def main():
         for node in list(manifest.getroot().find('requires')):
             if node.get('addon')!='xbmc.python':manifest.getroot().find('requires').remove(node)
         manifest.write(helper/'addon.xml',encoding='UTF-8',xml_declaration=True)
-        (userdata/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.foundry</setting><setting id="addons.updatemode">2</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">18081</setting><setting id="services.webserverauthentication">false</setting></settings>')
+        (userdata/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">18081</setting><setting id="services.webserverauthentication">false</setting></settings>')
         (skin/'xml/Home.xml').write_text('''<window><defaultcontrol always="true">19011</defaultcontrol><controls>
           <control type="image"><width>1920</width><height>1080</height><texture>$VAR[FoundryHomeWallpaper]</texture></control>
           <control type="list" id="9000"><left>-500</left><width>200</width><height>200</height><itemlayout width="200" height="70"><control type="label"><label>$INFO[ListItem.Label]</label></control></itemlayout><focusedlayout width="200" height="70"><control type="label"><label>$INFO[ListItem.Label]</label></control></focusedlayout><content><item><label>Movies</label><property name="id">movies</property></item></content></control>
@@ -125,13 +125,13 @@ def main():
           <focusedlayout width="256" height="430"><control type="image"><left>36</left><top>15</top><width>224</width><height>336</height><texture>$INFO[ListItem.Art(poster)]</texture></control></focusedlayout>
           </control></control><include>FoundryWidgetMetadata</include></controls></window>''')
         catalog=json.loads((skin/'media/foundry-icons/CATALOG.json').read_text())['icons']
-        root=E.fromstring('<window type="window" id="11126"><defaultcontrol>1</defaultcontrol><controls><control type="image"><width>1920</width><height>1080</height><texture colordiffuse="FF081425">colors/white.png</texture></control><control type="button" id="1"><left>8</left><top>8</top><width>150</width><height>50</height><label>Foundry icons</label></control></controls></window>')
+        root=E.fromstring('<window type="window" id="1126"><defaultcontrol>1</defaultcontrol><controls><control type="image"><width>1920</width><height>1080</height><texture colordiffuse="FF081425">colors/white.png</texture></control><control type="button" id="1"><left>8</left><top>8</top><width>150</width><height>50</height><label>Foundry icons</label></control></controls></window>')
         for index,name in enumerate(catalog):
             x=45+(index%10)*186;y=90+(index//10)*164
             node=E.SubElement(root.find('controls'),'control',type='image')
             for key,val in [('left',x),('top',y),('width',128),('height',128),('aspectratio','keep'),('texture','foundry-icons/'+name+'.png')]:E.SubElement(node,key).text=str(val)
         E.ElementTree(root).write(skin/'xml/Custom_11126_IconQA.xml',encoding='UTF-8',xml_declaration=True)
-        (skin/'xml/Custom_11127_LiveQA.xml').write_text('<window type="window" id="11127"><defaultcontrol>8802</defaultcontrol><controls><include>StreamPilotLiveCard</include></controls></window>')
+        (skin/'xml/Custom_11127_LiveQA.xml').write_text('<window type="window" id="1127"><defaultcontrol>8802</defaultcontrol><controls><control type="image"><width>1920</width><height>1080</height><texture colordiffuse="FF556478">colors/white.png</texture></control><include>StreamPilotLiveCard</include></controls></window>')
         poster=base/'poster.png';Image.new('RGB',(224,336),'#C8D8E8').save(poster)
         fanart=base/'fanart.png';Image.new('RGB',(1920,1080),'#146B89').save(fanart)
         studio=base/'studio.png';Image.new('RGB',(240,80),'white').save(studio)
@@ -202,7 +202,11 @@ def main():
             # The rounded card occupies y=834..1036; the retired feather filled
             # y=798..1072. The source panel has a real bottom card edge.
             assert sum(osd.getpixel((900,950)))<sum(osd.getpixel((900,700))),'VOD background frame is missing'
-            (base/'command').write_text('live-frame');wait_for(lambda:state().get('window')==11127);time.sleep(.6);capture('live-osd-frame')
+            rpc('Input.Back')
+            wait_for(lambda:not rpc('XBMC.GetInfoBooleans',{'booleans':['Window.IsActive(videoosd)']}).get('Window.IsActive(videoosd)'))
+            (base/'command').write_text('live-frame');wait_for(lambda:state().get('window')==11127);time.sleep(.6);live=capture('live-osd-frame')
+            assert sum(live.getpixel((900,900)))+50<sum(live.getpixel((900,700))),'Live background frame is missing'
+            assert max(abs(a-b) for a,b in zip(live.getpixel((900,700)),(85,100,120)))<15,'Live preview background is obscured'
             rpc('Player.Stop',{'playerid':1});(base/'command').write_text('icons');wait_for(lambda:state().get('window')==11126);time.sleep(.8);icons=capture('system-icon-set')
             for index,name in enumerate(catalog):
                 x=45+(index%10)*186;y=90+(index//10)*164
