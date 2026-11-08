@@ -102,12 +102,19 @@ try:
                 require(target.resolve().is_relative_to(BASE.resolve()),'Home restoration escaped disposable profile')
                 shutil.copyfile(BASE/'shipped-Home.xml',target)
                 xbmc.executebuiltin('ReloadSkin()',True);xbmc.executebuiltin('ActivateWindow(Home)',True)
-                xbmc.sleep(800);window=xbmcgui.Window(10000);menu=window.getControl(9000)
-                for index in range(menu.size()):
-                    if menu.getListItem(index).getProperty('id')=='favorites':
-                        menu.selectItem(index);break
+                # Keep the existing Home wrapper alive. Native XML-populated lists
+                # do not populate ControlList's Python vecItems; use GUI info/actions.
+                deadline=time.monotonic()+10
+                while time.monotonic()<deadline:
+                    count=int(xbmc.getInfoLabel('Container(9000).NumItems') or '0')
+                    if count:break
+                    xbmc.sleep(50)
+                require(count>0,'Shipped Home menu did not populate')
+                for index in range(count):
+                    xbmc.executebuiltin('SetFocus(9000,%d,absolute)'%index,True)
+                    xbmc.sleep(100)
+                    if xbmc.getInfoLabel('Container(9000).ListItem.Property(id)')=='favorites':break
                 else:raise AssertionError('Shipped Home has no Favorites menu item')
-                window.setFocusId(9000)
             elif value=='busy-open':xbmc.executebuiltin('ActivateWindow(busydialog)')
             elif value=='busy-close':xbmc.executebuiltin('Dialog.Close(busydialog)')
             elif value=='play':
@@ -294,7 +301,10 @@ def main():
             assert sum(osd.getpixel((900,950)))<sum(osd.getpixel((900,700))),'VOD background frame is missing'
             assert bright(osd,(1540,40,1860,150))>100,'Playback studio logo is missing at top right'
             rpc('Input.Back')
-            wait_for(lambda:not rpc('XBMC.GetInfoBooleans',{'booleans':['Window.IsActive(videoosd)']}).get('Window.IsActive(videoosd)'))
+            # IsActive clears before the close animation releases dialog keyboard
+            # ownership. Wait for visibility too before sending fullscreen keys.
+            wait_for(lambda:not any(rpc('XBMC.GetInfoBooleans',{'booleans':['Window.IsActive(videoosd)','Window.IsVisible(videoosd)']}).values()))
+            time.sleep(.35)
             seek_evidence=[]
             for direction in ('Right','Left'):
                 # JSON-RPC Input.Right is ACTION_MOVE_RIGHT, not keyboard/remote

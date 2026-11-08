@@ -98,7 +98,8 @@ def main():
             'Games fixtures use synthetic non-playable files; actual emulator gameplay is unverified',
             'Games does not yet support PSP, direct Drive OAuth, remote metadata or save migration',
             'Weather uses an experimental Canadian API; device-local times, advisory headlines only',
-            'Native Pulse checks preserve selection but a null audio sink cannot verify audibility'
+            'Native Pulse checks preserve selection but a null audio sink cannot verify audibility',
+            'The reported false error after playback stops has not been reproduced or confirmed fixed'
         ]
     }
     (ROOT / 'releases' / (release + '-verification.json')).write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8', newline='\n')

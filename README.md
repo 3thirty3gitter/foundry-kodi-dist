@@ -1,10 +1,10 @@
 # Foundry Kodi source
 
-Release 1.4.0 candidate: **Build and Bootstrap 1.4.0 / skin 1.4.0 / Helper 1.3.0 / Wallpapers 1.1.0 / Pulse 1.0.0 / Games and Canada Weather 0.1.0**.
+Release 1.4.0: **Build and Bootstrap 1.4.0 / skin 1.4.0 / Helper 1.3.0 / Wallpapers 1.1.0 / Pulse 1.0.0 / Games and Canada Weather 0.1.0**.
 
 The pinned source commits are in [releases/1.4.0-sources.json](releases/1.4.0-sources.json). Development CI tests the source and every extracted add-on, verifies deterministic rebuilding, then runs five isolated native Kodi checks. Production publication is held until those checks and owner approval pass. Actual test counts and native evidence are recorded under `releases/1.4.0-qa/`; public download verification is recorded separately in `releases/1.4.0-verification.json` once complete.
 
-The candidate fixes catalog first paint and Back restoration, uses the regular poster row for Home Favorites, adds bounded dialog metadata and seek/studio feedback, lowers library posters slightly, and packages the selected Pulse sounds and Ripple animation. Pulse migration preserves an explicit silent or custom sound choice. Native desktop captures are not Shield performance or audio-output proof.
+The release fixes catalog first paint and Back restoration, uses the regular poster row for Home Favorites, adds bounded dialog metadata and seek/studio feedback, lowers library posters slightly, and packages the selected Pulse sounds and Ripple animation. Pulse migration preserves an explicit silent or custom sound choice. Native desktop captures are not Shield performance or audio-output proof. The reported false error after playback stops has not been reproduced or confirmed fixed.
 
 ## Games and Canadian Weather
 

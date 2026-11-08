@@ -1,7 +1,9 @@
 """Contract checks for the native runner, not a substitute for executing Kodi."""
 import ast
+import importlib.util
 from pathlib import Path
 import unittest
+from unittest.mock import Mock, patch, call
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -17,11 +19,25 @@ class GamesRendererTests(unittest.TestCase):
                          'Embedded Kodi Python may be optimized: use explicit require/raise')
         self.assertIn('scanned=db.scan(sid)', fixture)
         self.assertIn('require(scanned==45', fixture)
+        self.assertIn("info('Container(58).NumItems')", fixture)
+        self.assertNotIn('control.size()', fixture)
+        self.assertNotIn('getControl(58)', fixture)
+        self.assertIn("'SetFocus(58,'+str(index)+',absolute)'", fixture)
         self.assertIn('NOT A ROM', source)
         self.assertIn("tempfile.TemporaryDirectory(prefix='foundry-games-qa-')", source)
         self.assertIn("HOME=str(base / 'empty-home')", source)
         self.assertIn("['release']", source)
         self.assertNotIn('releases/1.3.9-qa', source)
+
+    def test_cleanup_kills_owned_group_after_launcher_exits(self):
+        spec = importlib.util.spec_from_file_location('games_native_renderer', ROOT / 'tools/render_games.py')
+        runner = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(runner)
+        process = Mock(pid=54321)
+        with patch.object(runner.os, 'killpg', create=True) as killpg, patch.object(runner.signal, 'SIGKILL', 9, create=True):
+            runner.stop_process_group(process)
+        self.assertEqual([call(54321, runner.signal.SIGTERM), call(54321, 9)], killpg.call_args_list)
+        self.assertEqual([call(timeout=10), call(timeout=5)], process.wait.call_args_list)
 
     def test_skin_view_uses_game_properties(self):
         path = ROOT.parent / 'skin.foundry-nimbus/xml/View_58_FoundryGames.xml'

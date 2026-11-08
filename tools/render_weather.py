@@ -99,7 +99,14 @@ def forbid(*args,**kwargs):raise AssertionError('Live weather transport forbidde
 client.transport=forbid
 client.Client=SyntheticClient
 try:
-    runpy.run_path(str(Path(__file__).with_name('shipped_default.py')),run_name='__main__')
+    # Kodi's Addon() reads identity from the current __main__ module, which
+    # runpy replaces. Carry genuine invoker values into the shipped script.
+    original_main=vars(sys.modules['__main__'])
+    keys=('__xbmcaddonid__','__xbmcapiversion__','__xbmcinvokerid__')
+    context={key:original_main[key] for key in keys if key in original_main}
+    if context.get('__xbmcaddonid__')!='weather.foundry.canada':
+        raise RuntimeError('Weather wrapper must be launched through its Kodi add-on context')
+    runpy.run_path(str(Path(__file__).with_name('shipped_default.py')),init_globals=context,run_name='__main__')
 except Exception:
     (BASE/'provider-error.txt').write_text(traceback.format_exc(),encoding='utf-8')
     raise
@@ -114,17 +121,18 @@ try:
     deadline=time.monotonic()+30
     while time.monotonic()<deadline:
         if xbmc.getSkinDir()=='skin.foundry':
-            try:
-                home=xbmcgui.Window(10000);menu=home.getControl(9000)
-                if menu.size():break
-            except RuntimeError:pass
+            if int(xbmc.getInfoLabel('Container(9000).NumItems') or '0')>0:break
         xbmc.sleep(100)
     else:raise AssertionError('Shipped Foundry Home did not load')
+    home=xbmcgui.Window(10000)
     def focus_menu():
-        home.setFocusId(9000)
-        for index in range(menu.size()):
-            if menu.getListItem(index).getProperty('id')=='weather':
-                menu.selectItem(index);return
+        # Native XML lists are not Python ControlList.vecItems. Use Kodi's
+        # native focus action and info labels, never borrowed control wrappers.
+        count=int(xbmc.getInfoLabel('Container(9000).NumItems') or '0')
+        for index in range(count):
+            xbmc.executebuiltin('SetFocus(9000,%d,absolute)'%index,True)
+            xbmc.sleep(75)
+            if xbmc.getInfoLabel('Container(9000).ListItem.Property(id)')=='weather':return
         raise AssertionError('Weather menu item is missing')
     focus_menu()
     deadline=time.monotonic()+240
@@ -135,8 +143,7 @@ try:
         dialog=xbmc.getCondVisibility('Window.IsVisible(textviewer)')
         body=''
         if dialog:
-            try:body=xbmcgui.Window(xbmcgui.getCurrentWindowDialogId()).getControl(5).getText()
-            except (RuntimeError,AttributeError):body=xbmc.getInfoLabel('Control.GetLabel(5)')
+            body=xbmc.getInfoLabel('Control.GetLabel(5)')
         values={key:weather.getProperty('Foundry.Weather.'+key) for key in
             ['Status','HasCurrent','Temperature','Location','AlertCount','AlertStatus','DayCount','HourCount','Stale']}
         values.update(window=xbmcgui.getCurrentWindowId(),focus=focus,dialog=dialog,body=body,

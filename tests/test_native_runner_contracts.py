@@ -63,6 +63,21 @@ class NativeRunnerContracts(unittest.TestCase):
         self.assertIn("['xdotool','key','--clearmodifiers',direction]",source)
         self.assertNotIn("rpc('Input.'+direction)",source)
 
+    def test_async_readiness_waits_for_resolved_metadata_and_closed_osd(self):
+        library=(ROOT/'tools/render_library.py').read_text()
+        self.assertIn("state().get('label')=='Saved movie' and state().get('title')=='Fixture title 01'",library)
+        interface=(ROOT/'tools/render_interface.py').read_text()
+        self.assertIn("['Window.IsActive(videoosd)','Window.IsVisible(videoosd)']",interface)
+
+    def test_favorites_reads_native_container_not_python_owned_items(self):
+        fixture=load('render_interface').FIXTURE
+        phase=fixture[fixture.index("elif value=='favorites':"):fixture.index("elif value=='busy-open':")]
+        self.assertIn('Container(9000).NumItems',phase)
+        self.assertIn('SetFocus(9000,%d,absolute)',phase)
+        self.assertIn('Container(9000).ListItem.Property(id)',phase)
+        for unsupported in ('getControl(9000)','menu.size()','getListItem(','window=xbmcgui.Window'):
+            self.assertNotIn(unsupported,phase)
+
     def test_animation_gate_accepts_visible_moving_frames(self):
         frames=[Image.new('RGB',(16,16),(v,0,0)) for v in (130,180,140,210)]
         self.assertEqual(load('render_interface').animation_evidence(frames,[.02]*4,1),[256]*3)

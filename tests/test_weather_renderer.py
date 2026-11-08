@@ -61,6 +61,14 @@ class WeatherRendererTests(unittest.TestCase):
                              'Kodi optimizes embedded Python; mandatory checks must use explicit raises')
         compile((ROOT / 'tools/render_weather.py').read_text(encoding='utf-8'), 'render_weather.py', 'exec')
 
+    def test_controller_uses_native_navigation_not_borrowed_controls(self):
+        self.assertNotIn('.getControl(', renderer.FIXTURE)
+        self.assertNotIn('menu.size()', renderer.FIXTURE)
+        self.assertNotIn('getListItem(', renderer.FIXTURE)
+        self.assertIn('Container(9000).NumItems', renderer.FIXTURE)
+        self.assertIn('SetFocus(9000,%d,absolute)', renderer.FIXTURE)
+        self.assertIn("xbmc.getInfoLabel('Control.GetLabel(5)')", renderer.FIXTURE)
+
     def test_private_port_rejects_an_existing_listener(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as listener:
             listener.bind(('127.0.0.1', 0))
@@ -104,9 +112,17 @@ class WeatherRendererTests(unittest.TestCase):
             addon = Mock()
             addon.getSetting.side_effect = lambda key: settings.get(key, '')
             addon.getAddonInfo.return_value = str(base / 'profile')
+            def native_default_addon():
+                # Match Omega LanguageHook::GetAddonId rather than a constant
+                # lambda, so runpy losing Kodi's __main__ identity is caught.
+                current = vars(sys.modules['__main__'])
+                self.assertEqual(current.get('__xbmcaddonid__'), renderer.PROVIDER)
+                self.assertEqual(current.get('__xbmcapiversion__'), '3.0.0')
+                self.assertEqual(current.get('__xbmcinvokerid__'), 91)
+                return addon
             modules = {'xbmc': types.SimpleNamespace(getInfoLabel=lambda _: renderer.PROVIDER,
                     getRegion=lambda key: '\u00b0C' if key == 'tempunit' else '%H:%M', LOGWARNING=2, log=Mock()),
-                'xbmcaddon': types.SimpleNamespace(Addon=lambda: addon),
+                'xbmcaddon': types.SimpleNamespace(Addon=native_default_addon),
                 'xbmcgui': types.SimpleNamespace(Window=lambda _: window),
                 'xbmcvfs': types.SimpleNamespace(translatePath=lambda value: value),
                 'resources': types.ModuleType('resources'),
@@ -120,7 +136,8 @@ class WeatherRendererTests(unittest.TestCase):
             renderer.write(wrapper, 'from pathlib import Path\nBASE=Path(%r)\n' % str(base) + renderer.PROVIDER_WRAPPER)
             with patch.dict(sys.modules, modules), patch.object(sys, 'argv', [str(wrapper), '1']), \
                     patch.object(client, 'Client'), patch.object(client, 'transport'):
-                runpy.run_path(str(wrapper), run_name='__main__')
+                runpy.run_path(str(wrapper), init_globals={'__xbmcaddonid__': renderer.PROVIDER,
+                    '__xbmcapiversion__': '3.0.0', '__xbmcinvokerid__': 91}, run_name='__main__')
             self.assertEqual(window.getProperty('Foundry.Weather.Temperature'), '0\u00b0C')
             self.assertEqual(window.getProperty('Foundry.Weather.HourCount'), '24')
             self.assertFalse((base / 'provider-error.txt').exists())

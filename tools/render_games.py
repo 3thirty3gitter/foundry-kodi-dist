@@ -57,15 +57,21 @@ def shot(name):
     wait(lambda:(OUTPUT/(name+'.png')).exists())
     evidence.append(dict(case=name,**snapshot()))
 def open_path(query):
+    (OUTPUT/'phase.txt').write_text('open '+query,encoding='utf-8')
     xbmc.executebuiltin('ActivateWindow(games,plugin://plugin.games.foundry/?'+query+',return)')
     wait(lambda:query in info('Container.FolderPath'))
     xbmc.sleep(500)
 def rail():
+    (OUTPUT/'phase.txt').write_text('activate native rail',encoding='utf-8')
     xbmc.executebuiltin('Container.SetViewMode(58)')
     wait(lambda:xbmc.getCondVisibility('Control.IsVisible(58)'))
-    window=xbmcgui.Window(xbmcgui.getCurrentWindowId())
-    window.setFocusId(58)
-    return window.getControl(58)
+    xbmc.executebuiltin('SetFocus(58)')
+    wait(lambda:xbmc.getCondVisibility('Control.HasFocus(58)'))
+    (OUTPUT/'phase.txt').write_text('native rail ready',encoding='utf-8')
+def select_item(index):
+    # Native built-in posts GUI_MSG_SETFOCUS/absolute selection. Do not return
+    # borrowed Python Control wrappers whose owning Window is already disposed.
+    xbmc.executebuiltin('SetFocus(58,'+str(index)+',absolute)')
 def action(name):
     xbmc.executebuiltin('Action('+name+')');xbmc.sleep(300)
 
@@ -86,15 +92,16 @@ try:
     first=db.games()[0];gid=first['id'];db.played(gid,60,now=123456)
     db.close()
     open_path('action=home');shot('games-consoles')
-    open_path('action=games&system=nes');control=rail()
+    open_path('action=games&system=nes');rail()
     wait(lambda:bool(info('Container(58).ListItem.Property(Foundry.Game.Id)')))
-    require(control.size()==21,'Expected 20 games plus next page')
-    control.selectItem(2);wait(lambda:'Fixture 02' in info('ListItem.Label'))
+    # ControlList.size() reads its Python-owned vecItems, not native GUI items.
+    require(int(info('Container(58).NumItems') or '0')==21,'Expected 20 games plus next page')
+    select_item(2);wait(lambda:'Fixture 02' in info('ListItem.Label'))
     require('Nintendo' in snapshot()['platform'] and 'Original local' in snapshot()['overview'],'Focused hero metadata is missing')
     shot('games-focused-hero')
     action('right');wait(lambda:'Fixture 03' in info('ListItem.Label'))
     action('left');wait(lambda:'Fixture 02' in info('ListItem.Label'))
-    control.selectItem(20);wait(lambda:info('ListItem.Label')=='Next page')
+    select_item(20);wait(lambda:info('ListItem.Label')=='Next page')
     action('select');wait(lambda:'page=1' in info('Container.FolderPath'))
     rail();shot('games-page-two')
     action('back');wait(lambda:'page=1' not in info('Container.FolderPath') and 'system=nes' in info('Container.FolderPath'))
@@ -117,7 +124,7 @@ try:
     wait(lambda:xbmc.getCondVisibility('Window.IsActive(virtualkeyboard)'))
     action('back');wait(lambda:not xbmc.getCondVisibility('Window.IsActive(virtualkeyboard)'))
     shot('games-search-cancel')
-    open_path('action=games&system=nes');control=rail();control.selectItem(2)
+    open_path('action=games&system=nes');rail();select_item(2)
     wait(lambda:'Fixture 02' in info('ListItem.Label'))
     action('select')
     # No installer selection or affirmative dialog action is sent. A native
@@ -148,6 +155,28 @@ def wait_for(predicate, timeout=60):
         if predicate(): return
         time.sleep(.1)
     raise RuntimeError('Native games fixture timed out')
+
+
+def stop_process_group(process):
+    """Stop only the process group created by this runner's start_new_session.
+
+    Kodi's launcher can exit before kodi.bin. Always finish its original group,
+    even when waiting for the launcher itself succeeds.
+    """
+    try:
+        os.killpg(process.pid, signal.SIGTERM)
+    except ProcessLookupError:
+        pass
+    try:
+        process.wait(timeout=10)
+    except subprocess.TimeoutExpired:
+        pass
+    finally:
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        process.wait(timeout=5)
 
 
 def main():
@@ -239,6 +268,8 @@ def main():
                 rpc('Addons.ExecuteAddon', {'addonid':'script.foundry.gamesqa'})
                 def finished():
                     if (base / 'error.txt').exists(): raise AssertionError((base / 'error.txt').read_text())
+                    if kodi.poll() is not None:
+                        raise RuntimeError('Kodi exited before Games fixture completion; return code %s. See console/crash logs.' % kodi.returncode)
                     return (base / 'complete').exists()
                 wait_for(finished, 240)
                 report = json.loads((output / 'fixture-result.json').read_text())
@@ -250,13 +281,12 @@ def main():
                         im.verify()
             finally:
                 if kodi:
-                    try: os.killpg(kodi.pid, signal.SIGTERM); kodi.wait(timeout=10)
-                    except ProcessLookupError: pass
-                    except subprocess.TimeoutExpired:
-                        os.killpg(kodi.pid, signal.SIGKILL); kodi.wait(timeout=5)
+                    stop_process_group(kodi)
                 xserver.terminate(); xserver.wait(timeout=10)
                 for source, name in ((profile / 'temp/kodi.log','kodi.log'), (base / 'error.txt','error.txt')):
                     if source.exists(): shutil.copyfile(source, output / name)
+                for crash in base.rglob('kodi_crashlog*.log'):
+                    shutil.copyfile(crash, output / crash.name)
         kodi_log = output / 'kodi.log'
         if kodi_log.exists():
             assert 'Error parsing boolean expression' not in kodi_log.read_text(errors='replace')
