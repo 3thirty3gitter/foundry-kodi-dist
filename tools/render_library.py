@@ -85,7 +85,7 @@ try:
                   'accent':info('Window(Home).Property(foundry.vod.accent)'),
                   'glow_owner':{name:info('Window(Home).Property(foundry.vod.owner_'+name+')') for name in ('label','year','type','path')},
                   'selected_item':{name:info('Container(57).ListItem.'+label) for name,label in [('label','Label'),('year','Year'),('type','DBTYPE'),('path','FileNameAndPath'),('folder','Path')]},
-                  'glow_guard':xbmc.getCondVisibility('$EXP[FoundryVODGlowCurrentItem]')}
+                  'glow_guard':xbmc.getCondVisibility(GLOW_OWNER_EXPRESSION)}
         temporary=BASE/'state.tmp';temporary.write_text(json.dumps(snapshot));temporary.replace(BASE/'state.json')
         if (BASE/'capture.json').exists():
             name=json.loads((BASE/'capture.json').read_text())['name'];(BASE/'capture.json').unlink()
@@ -200,7 +200,9 @@ def main():
         for title,target in [('Saved movie','plugin://plugin.video.foundry.libraryqa/?movie=1'),('Saved episode','plugin://plugin.video.foundry.libraryqa/?episode=2')]:
             E.SubElement(favorites,'favourite',name=title,thumb=items[0]['art']['poster']).text='PlayMedia("'+target+'")'
         E.ElementTree(favorites).write(userdata/'favourites.xml',encoding='UTF-8',xml_declaration=True)
-        script='BASE=Path(%r)\nHELPER=Path(%r)\nOUTPUT=Path(%r)\nITEMS=%r\nEPISODES=%r\nSTUDIO=%r\n'%(str(base),str(helper),str(output),items,episodes,str(studio))
+        glow_owner_expression=native.findtext("expression[@name='FoundryVODGlowCurrentItem']")
+        assert glow_owner_expression,'Native glow ownership expression is missing'
+        script='BASE=Path(%r)\nHELPER=Path(%r)\nOUTPUT=Path(%r)\nITEMS=%r\nEPISODES=%r\nSTUDIO=%r\nGLOW_OWNER_EXPRESSION=%r\n'%(str(base),str(helper),str(output),items,episodes,str(studio),glow_owner_expression)
         launcher=profile/'addons/script.foundry.libraryqa';launcher.mkdir()
         (launcher/'addon.xml').write_text('<addon id="script.foundry.libraryqa" version="1.0.0" name="Foundry Library QA" provider-name="Foundry"><requires><import addon="xbmc.python" version="3.0.0" /></requires><extension point="xbmc.python.script" library="fixture.py" /><extension point="xbmc.addon.metadata"><platform>all</platform><license>GPL-2.0-only</license><summary lang="en_GB">Controlled fixture</summary></extension></addon>')
         (launcher/'fixture.py').write_text('from pathlib import Path\n'+script+FIXTURE)

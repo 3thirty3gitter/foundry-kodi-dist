@@ -48,6 +48,9 @@ class Feedback(unittest.TestCase):
         glow=view.find("variable[@name='FoundryVODGlow']/value")
         self.assertIn('$EXP[FoundryVODGlowCurrentItem]',glow.get('condition'))
         self.assertEqual(view.findall("variable[@name='FoundryVODGlow']/value")[-1].text,'streampilot/glow-pending.svg')
+        native_qa=(ROOT/'tools/render_library.py').read_text()
+        self.assertIn('xbmc.getCondVisibility(GLOW_OWNER_EXPRESSION)',native_qa)
+        self.assertNotIn("xbmc.getCondVisibility('$EXP[",native_qa)
 
     def test_original_home_icons_remain_in_place(self):
         home=E.parse(SKIN/'xml/Home.xml')
