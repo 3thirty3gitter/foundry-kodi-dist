@@ -11,7 +11,7 @@ import time
 from io import BytesIO
 from urllib.request import Request,urlopen
 import xml.etree.ElementTree as E
-from PIL import Image
+from PIL import Image,ImageGrab
 
 ROOT=Path(__file__).resolve().parents[1]
 SKIN=ROOT.parent/'skin.foundry-nimbus'
@@ -30,6 +30,11 @@ class Provider:
         item['ratings']={'tmdb':{'rating':7.2},'imdb':{'rating':7.8}}
         return item,{'tmdb':'ready','omdb':'ready'}
 try:
+    # JSON-RPC can change the setting before the active skin is reloaded.
+    # ReloadSkin without parameters uses that setting and asks no confirmation.
+    xbmc.executebuiltin('Dialog.Close(all,true)',True)
+    xbmc.executebuiltin('ReloadSkin()',True)
+    xbmc.executebuiltin('ActivateWindow(Home)',True)
     deadline=time.monotonic()+20
     while time.monotonic()<deadline:
         if xbmc.getSkinDir()=='skin.foundry':
@@ -162,9 +167,7 @@ def main():
             for aid in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','script.foundry.helper','skin.foundry','script.foundry.interfaceqa'):
                 rpc('Addons.SetAddonEnabled',{'addonid':aid,'enabled':True})
             assert rpc('Settings.SetSettingValue',{'setting':'lookandfeel.skin','value':'skin.foundry'})
-            time.sleep(1)
-            if rpc('XBMC.GetInfoBooleans',{'booleans':['System.HasActiveModalDialog']}).get('System.HasActiveModalDialog'):
-                rpc('Input.Left');rpc('Input.Select')
+            time.sleep(.3)
             wait_for(lambda:rpc('Settings.GetSettingValue',{'setting':'lookandfeel.skin'}).get('value')=='skin.foundry')
             rpc('GUI.ActivateWindow',{'window':'home'})
             rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.interfaceqa'})
@@ -213,6 +216,10 @@ def main():
                 assert bright(icons,(x,y,x+128,y+128))>30,'Missing native icon: '+name
             (base/'complete').write_text('ok')
             (output/'interface-verification.json').write_text(json.dumps({'widget_metadata_top_left':True,'widget_episode_number_title':True,'studio_logo_above_left_row':True,'settings_hover_uses_widget_wallpaper':True,'empty_widget_restores_full_wallpaper':True,'system_menu_icons':len(catalog),'generated_category_and_option_icons':True,'vod_rounded_frame':True,'live_rounded_frame_preview':True,'scope':'Isolated native desktop Kodi; live providers and Shield remain unverified'},indent=2)+'\n')
+        except Exception:
+            try:ImageGrab.grab(xdisplay=':99').save(output/'interface-failure.png')
+            except Exception:pass
+            raise
         finally:
             if kodi:
                 try:os.killpg(kodi.pid,signal.SIGTERM)

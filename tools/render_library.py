@@ -371,7 +371,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             previous=capture('native-previous')
             assert bright(previous,(80,620,400,840))>150,'Native BACK arrow not visible'
             key('Return');wait_for(lambda:'page=1' in state().get('path',''))
-            evidence.append({'section':'Native provider view 57','only_selected_poster_glows':True,'glow_pixel_deltas':halo_deltas,'stale_owner_glow_delta':stale_delta,'restored_owner_glow_delta':restored_delta,'stale_owner_glow_hidden':True,'shared_studio_logo_visible':True,'shared_ratings_visible':True,'legacy_page_icons_replaced':True,'next_previous_page_roundtrip':True,'sort_and_search_buttons_removed':True})
+            evidence.append({'section':'Native provider view 57','only_selected_poster_glows':True,'glow_pixel_deltas':halo_deltas,'selected_artwork_colour_matches':True,'stale_owner_glow_delta':stale_delta,'restored_owner_glow_delta':restored_delta,'stale_owner_glow_hidden':True,'shared_studio_logo_visible':True,'shared_ratings_visible':True,'legacy_page_icons_replaced':True,'next_previous_page_roundtrip':True,'sort_and_search_buttons_removed':True})
             (base/'native-complete').write_text('ok')
             wait_for(lambda:state().get('case')=='favorites' and state().get('label')=='Saved movie' and bool(state().get('title')))
             assert state()['title']=='Fixture title 01',state()
