@@ -70,7 +70,10 @@ try:
     xbmc.executebuiltin('ActivateWindow(Videos,plugin://plugin.video.foundry.libraryqa/?page=1,return)')
     deadline=time.monotonic()+90
     while not (BASE/'native-complete').exists() and time.monotonic()<deadline:
-        metadata.process_current_item();artwork.process_current_item()
+        if (BASE/'native-stale-owner').exists():
+            xbmcgui.Window(10000).setProperty('foundry.vod.owner_label','Mismatched fixture owner')
+        else:
+            metadata.process_current_item();artwork.process_current_item()
         def info(label):return xbmc.getInfoLabel(label)
         try:focus=xbmcgui.Window(10025).getFocusId()
         except RuntimeError:focus=0
@@ -333,6 +336,12 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             wait_for(lambda:state().get('glow_guard') and state().get('glow','').endswith('.png'))
             time.sleep(1.2)
             focused=capture('native-movies')
+            (base/'native-stale-owner').write_text('pause artwork monitoring')
+            wait_for(lambda:state().get('glow_guard') is False);time.sleep(.4)
+            stale=capture('native-stale-owner')
+            (base/'native-stale-owner').unlink()
+            wait_for(lambda:state().get('glow_guard') is True);time.sleep(.4)
+            restored=capture('native-glow-restored')
             key('Up');wait_for(lambda:state().get('focus')==5701);time.sleep(.5)
             unfocused=capture('native-unfocused')
             # Only the selected media item may produce a halo. The previous
@@ -342,6 +351,10 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
                 difference=[focused.getpixel((x,960))[c]-unfocused.getpixel((x,960))[c] for c in range(3)]
                 halo_deltas.append(difference)
             assert max(halo_deltas[2])>=15,(halo_deltas,state())
+            stale_delta=[stale.getpixel((730,960))[c]-unfocused.getpixel((730,960))[c] for c in range(3)]
+            restored_delta=[restored.getpixel((730,960))[c]-unfocused.getpixel((730,960))[c] for c in range(3)]
+            assert max(abs(v) for v in stale_delta)<=3,('Stale owner rendered a halo',stale_delta)
+            assert max(restored_delta)>=15,('Matching owner did not restore the halo',restored_delta)
             assert all(max(abs(v) for v in delta)<=3 for index,delta in enumerate(halo_deltas) if index!=2),halo_deltas
             def bright(im,region):
                 return sum(min(im.getpixel((x,y)))>170 for y in range(region[1],region[3]) for x in range(region[0],region[2]))
@@ -358,7 +371,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             previous=capture('native-previous')
             assert bright(previous,(80,620,400,840))>150,'Native BACK arrow not visible'
             key('Return');wait_for(lambda:'page=1' in state().get('path',''))
-            evidence.append({'section':'Native provider view 57','only_selected_poster_glows':True,'glow_pixel_deltas':halo_deltas,'shared_studio_logo_visible':True,'shared_ratings_visible':True,'legacy_page_icons_replaced':True,'next_previous_page_roundtrip':True,'sort_and_search_buttons_removed':True})
+            evidence.append({'section':'Native provider view 57','only_selected_poster_glows':True,'glow_pixel_deltas':halo_deltas,'stale_owner_glow_delta':stale_delta,'restored_owner_glow_delta':restored_delta,'stale_owner_glow_hidden':True,'shared_studio_logo_visible':True,'shared_ratings_visible':True,'legacy_page_icons_replaced':True,'next_previous_page_roundtrip':True,'sort_and_search_buttons_removed':True})
             (base/'native-complete').write_text('ok')
             wait_for(lambda:state().get('case')=='favorites' and state().get('label')=='Saved movie' and bool(state().get('title')))
             assert state()['title']=='Fixture title 01',state()

@@ -34,7 +34,7 @@ class CatalogLayout(unittest.TestCase):
         zoom = poster.find("animation/effect")
         self.assertEqual(zoom.get("end"), "119")
         self.assertEqual((int(rail.findtext("top")), int(rail.findtext("height"))), (428, 600))
-        outer = poster.find("control[texture='$VAR[FoundryVODGlow]']")
+        outer = poster.find("control[texture='$INFO[Window(Home).Property(foundry.vod.glow)]']")
         self.assertEqual((outer.findtext('left'),outer.findtext('top')),('-96','-96'))
         self.assertEqual((outer.findtext('width'),outer.findtext('height')),('416','528'))
         # Negligible transparent tails can extend beyond the viewport; the

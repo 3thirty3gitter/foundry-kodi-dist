@@ -149,9 +149,10 @@ class InterfaceFeedback(unittest.TestCase):
         window.color_executor.submit.assert_called_once();window.enrichment_executor.submit.assert_not_called()
 
     def test_no_white_placeholder_can_appear_while_color_is_pending(self):
-        root=E.parse(SKIN/'xml/View_57_StreamPilot.xml');variable=root.find("variable[@name='FoundryVODGlow']")
-        self.assertEqual(variable.findall('value')[-1].text,'streampilot/glow-pending.svg')
-        self.assertIn('FoundryVODGlowCurrentItem',variable.find('value').get('condition'))
+        root=E.parse(SKIN/'xml/View_57_StreamPilot.xml')
+        glow=next(node for node in root.iter('control') if node.findtext('texture')=='$INFO[Window(Home).Property(foundry.vod.glow)]')
+        self.assertEqual(glow.find('texture').get('fallback'),'streampilot/glow-pending.svg')
+        self.assertIn('FoundryVODGlowCurrentItem',glow.findtext('visible'))
         source=(HELPER/'resources/lib/modules/catalog_window.py').read_text()
         self.assertNotIn("'metacritic':'','accent':'FFFFFFFF'",source)
 
