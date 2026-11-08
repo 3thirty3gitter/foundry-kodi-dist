@@ -118,10 +118,10 @@ class CatalogNavigation(unittest.TestCase):
         clock = Clock(); monitor = vod.CatalogArtworkMonitor(clock)
         labels = {"ListItem.Art(fanart)": "one", "ListItem.Label": "Title"}
         with patch("xbmc.getCondVisibility", return_value=True), patch("xbmc.getInfoLabel", side_effect=lambda k: labels.get(k, "")), patch("modules.vod.prepare_artwork") as prepare:
-            monitor.process_current_item(); prepare.assert_not_called()
-            clock.value += .21; monitor.process_current_item(); prepare.assert_called_once()
-            labels["ListItem.Art(fanart)"] = "two"; monitor.process_current_item(); self.assertEqual(prepare.call_count, 1)
-            clock.value += .21; monitor.process_current_item(); self.assertEqual(prepare.call_count, 2)
+            monitor.process_current_item(); prepare.assert_called_once()
+            clock.value += .01; monitor.process_current_item(); prepare.assert_called_once()
+            labels["ListItem.Art(fanart)"] = "two"; monitor.process_current_item(); self.assertEqual(prepare.call_count, 2)
+            clock.value += .01; monitor.process_current_item(); self.assertEqual(prepare.call_count, 2)
 
     def test_details_format_date_limit_genres_and_omit_missing_fields(self):
         labels = {"ListItem.Label": "Example", "ListItem.DBTYPE": "movie", "ListItem.Year": "2025", "ListItem.Premiered": "2025-09-28", "ListItem.Genre": "Drama / Comedy / Mystery / Crime", "ListItem.Studio": "N/A"}

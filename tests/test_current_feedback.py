@@ -37,7 +37,7 @@ class Feedback(unittest.TestCase):
             for state in ('texturefocus','texturenofocus'):
                 texture=definition.find(state)
                 self.assertEqual(texture.get('border'),'72,0,8,0')
-                self.assertEqual(texture.get('colordiffuse'),'FFFFFFFF')
+                self.assertIn(texture.get('colordiffuse'),(None,'FFFFFFFF'))
 
     def test_original_home_icons_remain_in_place(self):
         home=E.parse(SKIN/'xml/Home.xml')
@@ -86,3 +86,4 @@ class Feedback(unittest.TestCase):
 
 
 if __name__=='__main__':unittest.main()
+

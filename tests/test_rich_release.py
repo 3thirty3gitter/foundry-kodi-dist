@@ -31,28 +31,30 @@ class RichRelease(unittest.TestCase):
         with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.1.9.zip') as z:
             for path in ['xml/Home.xml','xml/Includes_Home.xml','xml/Includes_Animations.xml','xml/Variables_Artwork.xml','xml/Font.xml']:
                 data=(SKIN/path).read_bytes()
-                if path=='xml/Home.xml':data=data.replace(b'\t  <include>FoundryWidgetMetadata</include>\n',b'').replace(b'<movement>6</movement>',b'<movement>7</movement>',1)
+                if path=='xml/Home.xml':data=data.replace(b'\t  <include>FoundryWidgetMetadata</include>\n',b'')
+                if path=='xml/Includes_Home.xml':data=data.replace(b'$PARAM[visible] + !Window.IsActive(Home)',b'$PARAM[visible]')
+                if path=='xml/Home.xml':data=data.replace(b'<movement>6</movement>',b'<movement>7</movement>',1)
                 if path=='xml/Font.xml':
                     data=re.sub(rb'^[ \t]*<font><name>sp_library_[^\n]*</font>\n',b'',data,flags=re.M)
-                if path=='xml/Includes_Home.xml':data=data.replace(b'$PARAM[visible] + !Window.IsActive(Home)',b'$PARAM[visible]')
                 if path=='xml/Variables_Artwork.xml':
                     data=re.sub(rb'    <value condition="Control.HasFocus\(802\) \+ \$EXP\[FoundryHomeWidgetsPresent\]">[^\n]*</value>\n',b'',data)
                     # Shared metadata values are allowed; every original artwork
                     # fallback, menu binding and control remains byte-identical.
                     data=re.sub(rb'\n    <value condition="\$EXP\[FoundryMetadataCurrentItem\][^\n]*</value>',b'',data)
                 self.assertEqual(data,z.read('skin.foundry/'+path),path)
-    def test_osd_only_background_changes_and_fade_remains(self):
-        with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.1.9.zip') as z:
-            before=E.fromstring(z.read('skin.foundry/xml/Includes_StreamPilotOSD.xml'))
+    def test_osd_uses_the_stream_pilot_rounded_frame(self):
         after=E.parse(SKIN/'xml/Includes_StreamPilotOSD.xml')
-        def norm(n):return n.tag,n.attrib,(n.text or '').strip().replace('$VAR[FoundryPlayerPlot]','$INFO[VideoPlayer.Plot]').replace(' | [$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.player.clearlogo))]',''),[norm(c) for c in n]
-        for name,height in [('StreamPilotVODCard',274),('StreamPilotLiveCard',320)]:
-            old=before.find("include[@name='%s']/control"%name)
-            new=after.find("include[@name='%s']/control"%name)
-            self.assertEqual([norm(n) for n in old.findall('control')[1:]],[norm(n) for n in new.findall('control')[2 if name=='StreamPilotVODCard' else 3:]])
-            bg=new.find('control');self.assertEqual(bg.findtext('top'),'-24');self.assertEqual(int(bg.findtext('height')),250 if name=='StreamPilotVODCard' else 296)
-            self.assertEqual(bg.findtext('texture'),'streampilot/'+('vod' if name=='StreamPilotVODCard' else 'live')+'-shadow.png')
-            for k in ('left','right','bottom','height'):self.assertEqual(old.findtext(k),new.findtext(k))
+        for name,kind,height,layers in [('StreamPilotVODCard','vod',202,2),('StreamPilotLiveCard','live',248,3)]:
+            card=after.find("include[@name='%s']/control"%name)
+            controls=card.findall('control')
+            self.assertEqual(card.findtext('height'),str(height))
+            self.assertEqual(controls[0].findtext('texture'),'streampilot/'+kind+'-shadow.png')
+            self.assertEqual(controls[1].findtext('texture'),'streampilot/'+kind+'-panel.png')
+            self.assertEqual(controls[1].findtext('height'),str(height))
+            self.assertEqual(controls[1].findtext('left'),'0')
+            self.assertEqual(controls[1].findtext('top'),'0')
+            if layers==3:self.assertEqual(controls[2].findtext('texture'),'streampilot/live-edge.png')
+            self.assertIsNotNone(card.find("animation[@effect='fade']"))
     def test_installer_dependency_requires_new_full_frame_resource(self):
         skin=E.parse(SKIN/'addon.xml');self.assertEqual(skin.find("requires/import[@addon='resource.images.foundry.wallpapers']").get('version'),'1.1.0')
         self.assertEqual(E.parse(RESOURCE/'addon.xml').getroot().get('version'),'1.1.0')
@@ -68,3 +70,4 @@ class RichRelease(unittest.TestCase):
                 doc['files']={'movies':doc['files']['movies'],**{k:v for k,v in doc['files'].items() if k!='movies'}}
                 (folder/'SOURCE.json').write_text(json.dumps(doc))
                 validate_rich_pairs(fake/'skin',RESOURCE)
+

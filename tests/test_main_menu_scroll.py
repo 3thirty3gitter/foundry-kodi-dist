@@ -31,3 +31,4 @@ class MainMenuScroll(unittest.TestCase):
         for count in (1,2,3,7,8,16,33,64):
             max_cursor=min(focus+movement,per_page,count-1)
             self.assertLessEqual((max_cursor+1)*self.item_height,int(self.menu.findtext('height')))
+

@@ -122,7 +122,8 @@ class DeviceFeedback(unittest.TestCase):
             old=before.find("include[@name='%s']/control"%name)
             new=after.find("include[@name='%s']/control"%name)
             old_controls=old.findall('control'); new_controls=new.findall('control')
-            self.assertEqual([normalized(c) for c in old_controls[3:]],[normalized(c) for c in new_controls[2 if name=='StreamPilotVODCard' else 3:]])
+            backgrounds=2 if name=='StreamPilotVODCard' else 3
+            self.assertEqual([normalized(c) for c in old_controls[3:]],[normalized(c) for c in new_controls[backgrounds:]])
             self.assertEqual(old.findtext('left'),new.findtext('left'))
             self.assertEqual(old.findtext('bottom'),new.findtext('bottom'))
             self.assertEqual(old.findtext('height'),new.findtext('height'))
@@ -140,3 +141,4 @@ class DeviceFeedback(unittest.TestCase):
         self.assertLess(max(b-a for a,b in zip(ramp,ramp[1:])),8)
 
 if __name__=='__main__':unittest.main()
+

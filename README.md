@@ -1,12 +1,12 @@
 # Foundry Kodi source
 
-Release 1.3.8: **Build and Bootstrap 1.3.8 / skin 1.3.8 / Helper 1.2.6 / Wallpapers 1.1.0**.
+Release 1.3.9: **Build and Bootstrap 1.3.9 / skin 1.3.9 / Helper 1.2.7 / Wallpapers 1.1.0**.
 
-The pinned source commits are in [releases/1.3.8-sources.json](releases/1.3.8-sources.json). The release workflow builds the packages from those commits, runs all 259 checks against source and extracted ZIPs, verifies deterministic rebuilding, then publishes the ZIPs and feed in one commit. Public download verification is recorded separately in `releases/1.3.8-verification.json` once complete.
+The pinned source commits are in [releases/1.3.9-sources.json](releases/1.3.9-sources.json). The release workflow builds the packages from those commits, runs all 277 checks against source and extracted ZIPs, verifies deterministic rebuilding, then publishes the ZIPs and feed in one commit. Public download verification is recorded separately in `releases/1.3.9-verification.json` once complete.
 
-Release 1.3.8 installs the approved Foundry full-frame image unchanged at Kodi's writable startup splash location. The active-skin helper handles existing users automatically, and Foundry Build installs it before optional trailer setup. Kodi displays it on the next full restart. Previous custom PNG/JPEG splashes are preserved as numbered .before-foundry backups; no APK, global Kodi settings, or menu artwork is modified. The new cold-start check captures the real Kodi splash on desktop. Shield restart testing remains pending.
+Release 1.3.9 adds library-style focused widget metadata and a studio logo above the left side of the row, restores the rounded StreamPilot OSD frame from the pinned Android source, removes page-loading overlays and simplifies page labels. Complete pages remain visible during replacement loads; an independent cached artwork-color path avoids a white placeholder glow. Settings hover uses the small-title wallpaper when the current menu has widgets. All 52 system-menu icons use Foundry chrome/neon artwork, with matching wallpaper categories derived from their approved image and 195 static entries/templates covered. Existing Home icons and logo geometry are preserved. Native interface captures cover widgets, episode details, Settings wallpaper variants, system menus and both OSD frames.
 
-Release 1.3.8 completes the wallpaper-themed system menu icons and the requested widget/library corrections. It adds focused-widget metadata at the upper left with the studio logo above the row; Settings uses its compact wallpaper while widgets are present. The native library stays covered until the shared catalog is ready, loading overlays are hidden during browsing, page labels show only the page number, and persistent artwork-colour caching removes the initial white glow. VOD and live OSD cards restore the rounded StreamPilot frame and shadow. Home menu icons and the Foundry header remain unchanged. Native desktop catalog navigation is validated by the release workflow; Shield rendering and playback remain pending.
+The release also installs the approved Foundry full-frame image unchanged at Kodi's writable startup splash location. The active-skin helper handles existing users automatically, and Foundry Build installs it before optional trailer setup. Kodi displays it on the next full restart. Previous custom PNG/JPEG splashes are preserved as numbered .before-foundry backups; no APK, global Kodi settings, or menu artwork is modified. The new cold-start check captures the real Kodi splash on desktop. Shield restart testing remains pending.
 
 ## Shared media catalog
 
@@ -23,20 +23,20 @@ Live Shield/provider success and identical artwork selection remain unverified. 
 
 Permanent Kodi File Manager source: https://3thirty3gitter.github.io/foundry-kodi-dist/
 
-Install `repository.foundry-1.2.0.zip`, then install/run Foundry Build. Existing installations can check for updates and run Build **1.3.8**. The skin-only `skin.foundry-1.3.8.zip` is available when a provider dependency blocks setup; its dependency requires Wallpapers **1.1.0**.
+Install `repository.foundry-1.2.0.zip`, then install/run Foundry Build. Existing installations can check for updates and run Build **1.3.9**. The skin-only `skin.foundry-1.3.9.zip` is available when a provider dependency blocks setup; its dependency requires Wallpapers **1.1.0**.
 
 The release retains the 1.2.42 corrections that bound Home menu movement to six so Weather stays visible, and isolate optional library metadata/color errors from source loading and navigation. It preserves every unrelated Home control, all approved rich images, transitions, OSD sizes and foreground controls. The exact device metadata trigger remains unconfirmed without its traceback; native controlled failure tests reproduce and fix the reported partial-load/error chain.
 
-The release also retains all fourteen approved rich full/widget wallpaper pairs and the lighter, shorter OSD background. Every image is copied unchanged at 1672x941. All widget images are corrected revision 1, retaining the approved 55% uniform icon/text/underline group. Home artwork reads FOUNDRY / MEDIA CENTER. Full images, the skin fallback and add-on fanart use the complete frames. The historical Wallpapers 1.0.0 ZIP remains unchanged.
+The release retains all fourteen approved rich full/widget wallpaper pairs. The OSD now restores the rounded StreamPilot background frame using the dimensions and gradient geometry recorded in skin resources/streampilot-osd-source.json. Every image is copied unchanged at 1672x941. All widget images are corrected revision 1, retaining the approved 55% uniform icon/text/underline group. Home artwork reads FOUNDRY / MEDIA CENTER. Full images, the skin fallback and add-on fanart use the complete frames. The historical Wallpapers 1.0.0 ZIP remains unchanged.
 
-The 450ms full-frame crossfade, fixed widget viewport, lower-row selection retention, Umbrella visibility fix, traced header and dedicated library remain unchanged. Clean plates are visually registered, not pixel-identical. OSD backdrop opacity is reduced 25% (effective peak alpha 245 to 169); its height drops 48 units, VOD 322 to 274 and live 368 to 320. Every foreground control retains its existing size, position and action.
+The 450ms full-frame crossfade, fixed widget viewport, lower-row selection retention, Umbrella visibility fix, traced header and dedicated library remain unchanged. Clean plates are visually registered, not pixel-identical. The restored OSD uses the source rounded card instead of the interim feather backdrop; foreground controls retain their size, position and action.
 
 Native Kodi 21.3 Windows fixtures check all wallpaper pairs, both transition directions, menu returns, rapid toggles and bright/dark OSD scenes. These are controlled fixtures, not Shield captures or proof of exact StreamPilot parity. The library layout remains from 1.2.40, with the metadata/error corrections above; OMDb stays optional and disabled without a user key. FenSkeleton and Forge Releases remain URL bookmarks only, with no repository installation or activation.
 
     python tools/build_release.py --skin ../skin.foundry-nimbus --helper ../script.foundry.helper
     python -m unittest discover -s tests -v
 
-Packaging rejects missing/modified approved pairs, stale widget revisions and mismatched dimensions. `release.json` records versions, sizes and SHA256 checksums. The OSD resource and repository package bytes are unchanged; the Helper is version 1.2.6.
+Packaging rejects missing/modified approved pairs, stale widget revisions and mismatched dimensions. `release.json` records versions, sizes and SHA256 checksums. The OSD resource and repository package bytes are unchanged; the Helper is version 1.2.7.
 
 Kodi installs the following core add-ons using its dependency manager. SlyGuy Trailers installs when Foundry Build runs, after its repository has been prepared:
 

@@ -18,8 +18,8 @@ def settext(node, name, value, **attributes):
 
 def row(control, icon):
     settext(control,'textoffsetx','84')
-    settext(control,'texturefocus','foundry-icons/rows/'+icon+'-focus.png',border='72,0,8,0',colordiffuse='FFFFFFFF')
-    settext(control,'texturenofocus','foundry-icons/rows/'+icon+'-normal.png',border='72,0,8,0',colordiffuse='FFFFFFFF')
+    settext(control,'texturefocus','foundry-icons/rows/'+icon+'-focus.png',border='72,0,8,0')
+    settext(control,'texturenofocus','foundry-icons/rows/'+icon+'-normal.png',border='72,0,8,0')
 
 
 def write(path, root):
@@ -71,26 +71,14 @@ def main():
             if param.get('name')=='textoffsetx':param.text='84'
         definition=include.find('definition')
         row(definition if definition is not None else include,'$PARAM[system_icon]')
-        if definition is not None:settext(definition,'textoffsetx','$PARAM[textoffsetx]')
     menu=root.find("include[@name='ButtonMenuList']")
     for layout in [menu.find('itemlayout'),menu.find('focusedlayout')]:
         if not any(n.findtext('texture')=='$INFO[ListItem.Icon]' for n in layout.findall('control')):
             icon=E.SubElement(layout,'control',type='image')
             for k,v in [('left','20'),('top','21'),('width','28'),('height','28'),('aspectratio','keep')]:settext(icon,k,v)
-            settext(icon,'texture','$INFO[ListItem.Icon]',fallback='foundry-icons/settings.png',colordiffuse='FFFFFFFF')
+            settext(icon,'texture','$INFO[ListItem.Icon]',fallback='foundry-icons/settings.png')
         for label in layout.findall("control[@type='label']"):
             settext(label,'left','64');settext(label,'width','370');settext(label,'textoffsetx','0');settext(label,'align','left')
-    write(path,root)
-    path=XML/'Includes.xml';root=E.parse(path).getroot()
-    panel=root.find("include[@name='SettingsPanel']")
-    for image in panel.findall('.//control'):
-        texture=image.find('texture')
-        if texture is not None and texture.text=='$INFO[ListItem.Icon]':
-            texture.set('colordiffuse','FFFFFFFF');settext(image,'aspectratio','keep')
-    write(path,root)
-    path=XML/'Includes_Buttons.xml';root=E.parse(path).getroot()
-    for texture in root.findall("include[@name='ButtonMenuList']//texture"):
-        if texture.text=='$INFO[ListItem.Icon]':texture.set('colordiffuse','FFFFFFFF')
     write(path,root)
     (SKIN/'media/foundry-icons/COVERAGE.json').write_text(json.dumps({'static_entries_and_templates':coverage,'generated_settings_rows':'Native category, button, toggle, selector, edit, color and slider templates reserve an inline icon for every generated row.','dynamic_context_rows':'Native context template supplies its action icon; power-menu entries use their own icons.'},indent=2)+'\n')
     print('Integrated icons for %d menu entries and control templates' % len(coverage))
