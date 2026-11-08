@@ -164,9 +164,12 @@ try:
         (BASE/'state.tmp').write_text(json.dumps(values),encoding='utf-8');(BASE/'state.tmp').replace(BASE/'state.json')
         command=BASE/'command.json'
         if command.exists():
-            value=json.loads(command.read_text(encoding='utf-8'));command.unlink()
+            value=json.loads(command.read_text(encoding='utf-8'))
             if value['action']=='focus-menu':focus_menu()
             elif value['action']=='capture':xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/(value['name']+'.png'))+')')
+            # Consumption is the host's completion acknowledgment, not merely
+            # receipt. Never let host input race the menu-selection loop.
+            command.unlink()
         xbmc.sleep(50)
     if not (BASE/'complete').exists():raise AssertionError('Native weather QA timed out')
 except Exception:(BASE/'error.txt').write_text(traceback.format_exc(),encoding='utf-8')
@@ -235,6 +238,11 @@ def wait_for(predicate, timeout=45):
             return
         time.sleep(.1)
     raise AssertionError('Native weather fixture did not reach the expected state')
+
+
+def weather_menu_ready(values):
+    return (values.get('window') == 10000 and values.get('focus') == 9000
+            and values.get('category') == 'weather' and not values.get('dialog'))
 
 
 def available_port(requested=0):
@@ -348,6 +356,10 @@ def run(output, display, port):
                     wait_for(lambda: not (base / 'command.json').exists())
                     atomic_json(base / 'command.json', dict(action=action, **kwargs))
                     wait_for(lambda: not (base / 'command.json').exists())
+                    if action == 'focus-menu':
+                        # The fixture publishes state on its next loop, after
+                        # acknowledgment. Do not reuse the previous card focus.
+                        wait_for(lambda: weather_menu_ready(state()))
                 def capture(name):
                     destination = output / (name + '.png')
                     if destination.exists():destination.unlink()

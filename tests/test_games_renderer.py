@@ -11,6 +11,46 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class GamesRendererTests(unittest.TestCase):
+    def runner(self):
+        spec = importlib.util.spec_from_file_location('games_native_renderer', ROOT / 'tools/render_games.py')
+        runner = importlib.util.module_from_spec(spec); spec.loader.exec_module(runner)
+        return runner
+
+    def test_enable_prompt_matches_only_exact_fixture_addon(self):
+        runner = self.runner()
+        labels = {'Control.GetLabel(1)':'Disabled add-ons','Control.GetLabel(9)':'Would you like to enable this add-on?\nFoundry Wallpapers'}
+        self.assertTrue(runner.fixture_enable_prompt(labels, 'Foundry Wallpapers'))
+        self.assertFalse(runner.fixture_enable_prompt(labels, 'Other addon'))
+        labels['Control.GetLabel(9)'] += ' and another addon'
+        self.assertFalse(runner.fixture_enable_prompt(labels, 'Foundry Wallpapers'))
+
+    def test_dependency_readiness_rejects_unrelated_dialog_without_accepting(self):
+        runner = self.runner(); calls = []
+        def rpc(method, params=None):
+            calls.append(method)
+            if method == 'Addons.GetAddonDetails': return {'addon':{'name':'Foundry Wallpapers','enabled':False}}
+            if method == 'XBMC.GetInfoBooleans': return {'System.HasActiveModalDialog':True}
+            if method == 'XBMC.GetInfoLabels': return {'Control.GetLabel(1)':'Terms','Control.GetLabel(9)':'Accept unrelated terms?'}
+            return 'OK'
+        with self.assertRaisesRegex(AssertionError, 'Unrelated dialog'):
+            runner.enable_fixture_addons(rpc, ['resource.images.foundry.wallpapers'])
+        self.assertNotIn('Input.Select', calls)
+
+    def test_dependency_readiness_waits_for_confirmed_enable(self):
+        runner = self.runner(); calls = []; state = {'enabled':False,'prompt':False}
+        def rpc(method, params=None):
+            calls.append((method, params))
+            if method == 'Addons.GetAddonDetails': return {'addon':{'name':'Foundry Wallpapers','enabled':state['enabled']}}
+            if method == 'Addons.SetAddonEnabled': state['prompt'] = True
+            if method == 'XBMC.GetInfoBooleans': return {'System.HasActiveModalDialog':state['prompt']}
+            if method == 'XBMC.GetInfoLabels': return {'Control.GetLabel(1)':'Disabled add-ons','Control.GetLabel(9)':'Would you like to enable this add-on?\nFoundry Wallpapers'}
+            if method == 'Input.Select': state.update(enabled=True,prompt=False)
+            return 'OK'
+        runner.enable_fixture_addons(rpc, ['resource.images.foundry.wallpapers'])
+        self.assertTrue(state['enabled'])
+        self.assertEqual(1, sum(method == 'Input.Select' for method, params in calls))
+        self.assertEqual('Addons.GetAddonDetails', calls[-1][0])
+
     def test_embedded_fixture_python38_syntax(self):
         source = (ROOT / 'tools/render_games.py').read_text(encoding='utf-8')
         tree = ast.parse(source, feature_version=(3, 8))

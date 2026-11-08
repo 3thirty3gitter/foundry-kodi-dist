@@ -67,6 +67,34 @@ class FavoritesWidget(unittest.TestCase):
         params={p.get('name'):p.get('value') for p in row.findall('param')}
         self.assertEqual(params['list_id'],'14100');self.assertEqual(params['content_path'],'favourites://')
         self.assertIsNone(group.find(".//control[@type='panel']"))
+    def test_focused_favorites_header_has_one_category_with_or_without_clock(self):
+        crumbs=xml('Variables_MyVariables.xml').find("variable[@name='HomescreenFlixCrumbs']")
+        focused=crumbs.find("value[@condition='Window.IsActive(Home) + Control.HasFocus(14100)']")
+        self.assertEqual(focused.text,'$VAR[ClockCrumbs]')
+        group=xml('Home.xml').find(".//control[@id='14000']")
+        header=group.find(".//include[@content='WidgetListPoster']/param[@name='widget_header']")
+        self.assertEqual(header.get('value'),'$LOCALIZE[10134]')
+        labels=xml('Includes_Home.xml').find("include[@name='CategoryLabel']").findall('.//control[@type="label"]/label')
+        focused_labels=[node.text for node in labels if '$VAR[HomescreenFlixCrumbs]' in (node.text or '')]
+        self.assertEqual(len(focused_labels),2)  # With and without navigation arrows.
+        for clock in ['', '11:27 PM - ']:
+            for template in focused_labels:
+                text=template.replace('$VAR[HomescreenFlixCrumbs]',focused.text.replace('$VAR[ClockCrumbs]',clock))
+                text=text.replace('$VAR[SearchFlixCrumbs]','').replace('$PARAM[label]','Favourites')
+                text=text.replace('$PARAM[label_focus]',' - QA Favorite 1')
+                text=re.sub(r'\[(?:/?LIGHT|/?COLOR(?: [^]]+)?)\]','',text)
+                self.assertEqual(text,clock+'Favourites - QA Favorite 1')
+    def test_unfocused_favorites_uses_only_the_shared_row_header(self):
+        labels=xml('Includes_Home.xml').find("include[@name='CategoryLabel']").findall('.//control[@type="label"]')
+        unfocused=[node for node in labels if '!Control.HasFocus($PARAM[list_id])' in [v.text for v in node.findall('visible')]]
+        self.assertEqual(len(unfocused),1)
+        self.assertEqual(unfocused[0].findtext('label'),'$PARAM[label]')
+    def test_nonfavorite_crumbs_and_optional_clock_are_unchanged(self):
+        before=original('Variables_MyVariables.xml');after=xml('Variables_MyVariables.xml')
+        name="variable[@name='HomescreenFlixCrumbs']/value[@condition='Window.IsActive(Home) + !Control.HasFocus(14100)']"
+        self.assertEqual(normalized(before.find(name)),normalized(after.find(name)))
+        name="variable[@name='ClockCrumbs']"
+        self.assertEqual(normalized(before.find(name)),normalized(after.find(name)))
     def test_native_favorite_order_actions_and_context_menu_remain_kodi_owned(self):
         group=xml('Home.xml').find(".//control[@id='14000']")
         params={p.get('name'):p.get('value') for p in group.findall(".//include[@content='WidgetListPoster']/param")}

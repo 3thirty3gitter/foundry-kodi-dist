@@ -33,7 +33,7 @@ Live Shield/provider success and identical artwork selection remain unverified. 
 
 Permanent Kodi File Manager source: https://3thirty3gitter.github.io/foundry-kodi-dist/
 
-Install `repository.foundry-1.2.0.zip`, then install/run Foundry Build. Existing installations can check for updates and run Build **1.3.9**. The skin-only `skin.foundry-1.3.9.zip` is available when a provider dependency blocks setup; its dependency requires Wallpapers **1.1.0**.
+Install `repository.foundry-1.2.0.zip`, then install/run Foundry Build. Existing installations can check for updates and run Build **1.4.0**. The skin-only `skin.foundry-1.4.0.zip` is available when a provider dependency blocks setup; its dependency requires Wallpapers **1.1.0**.
 
 The release retains the 1.2.42 corrections that bound Home menu movement to six so Weather stays visible, and isolate optional library metadata/color errors from source loading and navigation. It preserves every unrelated Home control, all approved rich images, transitions, OSD sizes and foreground controls. The exact device metadata trigger remains unconfirmed without its traceback; native controlled failure tests reproduce and fix the reported partial-load/error chain.
 

@@ -77,6 +77,37 @@ class WeatherRendererTests(unittest.TestCase):
         self.assertIn('click_action(15152)', source)
         self.assertIn("{'setting': 'weather.currentlocation'}", source)
 
+    def test_command_acknowledgment_follows_completed_action(self):
+        tree = ast.parse(renderer.FIXTURE)
+        dispatch = next(node for node in ast.walk(tree) if isinstance(node, ast.If)
+                        and ast.unparse(node.test) == 'command.exists()')
+        code = compile(ast.Module(body=[dispatch], type_ignores=[]), '<fixture-command>', 'exec')
+        with tempfile.TemporaryDirectory() as temp:
+            command = Path(temp) / 'command.json'
+            renderer.atomic_json(command, {'action': 'focus-menu'})
+            def focusing():
+                self.assertTrue(command.exists(), 'Host must still wait while native focus changes')
+            exec(code, {'command': command, 'json': json, 'focus_menu': focusing})
+            self.assertFalse(command.exists())
+            renderer.atomic_json(command, {'action': 'focus-menu'})
+            def failed():
+                raise RuntimeError('native menu still missing')
+            with self.assertRaises(RuntimeError):
+                exec(code, {'command': command, 'json': json, 'focus_menu': failed})
+            self.assertTrue(command.exists(), 'Failed action must not acknowledge completion')
+
+    def test_menu_readiness_rejects_stale_card_or_wrong_window_state(self):
+        ready = {'window': 10000, 'focus': 9000, 'category': 'weather', 'dialog': False}
+        self.assertTrue(renderer.weather_menu_ready(ready))
+        for patch_value in ({'focus': 15150}, {'category': 'musicvideos'}, {'window': 10025}, {'dialog': True}):
+            self.assertFalse(renderer.weather_menu_ready(dict(ready, **patch_value)))
+        tree = ast.parse((ROOT / 'tools/render_weather.py').read_text(encoding='utf-8'))
+        command = next(node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef) and node.name == 'command')
+        statements = [ast.unparse(node) for node in command.body]
+        self.assertTrue(statements[1].startswith('atomic_json('))
+        self.assertTrue(statements[2].startswith('wait_for('))
+        self.assertIn('weather_menu_ready(state())', statements[3])
+
     def test_private_port_rejects_an_existing_listener(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as listener:
             listener.bind(('127.0.0.1', 0))

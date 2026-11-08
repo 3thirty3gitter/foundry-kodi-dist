@@ -3,7 +3,7 @@
   "skin": "1.4.0",
   "helper": "1.3.0",
   "source_commits": {
-    "skin.foundry-nimbus": "95d4289928bc88882234585d1fa3b8a65771120d",
+    "skin.foundry-nimbus": "41c172c21f99670fedc15598aaa0f547086b31d7",
     "script.foundry.helper": "e5525bcfcc45f1477ed45ef6cd98a1a56d2f2038"
   },
   "validation": {

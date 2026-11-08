@@ -189,6 +189,43 @@ def stop_process_group(process):
         process.wait(timeout=5)
 
 
+def fixture_enable_prompt(labels, name):
+    """Match only Kodi's exact request for the currently copied fixture addon."""
+    normalize = lambda value: ' '.join(value.split()).casefold()
+    return (normalize(labels.get('Control.GetLabel(1)', '')) == 'disabled add-ons' and
+            normalize(labels.get('Control.GetLabel(9)', '')) ==
+            normalize('Would you like to enable this add-on? ' + name))
+
+
+def enable_fixture_addons(rpc, identifiers, timeout=30):
+    """Enable only the caller's copied fixture list and verify each final state."""
+    def details(aid):
+        return rpc('Addons.GetAddonDetails', {'addonid':aid,'properties':['enabled','name']})['addon']
+    def modal():
+        return rpc('XBMC.GetInfoBooleans', {'booleans':['System.HasActiveModalDialog']})['System.HasActiveModalDialog']
+    for aid in identifiers:
+        before = details(aid)
+        if not before['enabled']:
+            rpc('Addons.SetAddonEnabled', {'addonid':aid, 'enabled':True})
+        deadline = time.monotonic() + timeout
+        quiet_since = None
+        while time.monotonic() < deadline:
+            if modal():
+                labels = rpc('XBMC.GetInfoLabels', {'labels':['Control.GetLabel(1)','Control.GetLabel(9)']})
+                if not fixture_enable_prompt(labels, before['name']):
+                    raise AssertionError('Unrelated dialog while enabling %s: %s' % (aid, labels))
+                rpc('Input.Left'); rpc('Input.Select')
+                quiet_since = None
+            elif details(aid)['enabled']:
+                if quiet_since is None: quiet_since = time.monotonic()
+                elif time.monotonic() - quiet_since >= .5: break
+            else: quiet_since = None
+            time.sleep(.1)
+        else: raise AssertionError('Copied fixture dependency did not enable: ' + aid)
+    for aid in identifiers:
+        if not details(aid)['enabled']: raise AssertionError('Fixture dependency became disabled: ' + aid)
+
+
 def prepare_shipped_skin(home, profile, skin_source=SKIN, helper_source=HELPER, root=ROOT):
     """Copy production UI unchanged; suppress only disposable helper/services."""
     addons = profile / 'addons'
@@ -300,8 +337,7 @@ def main():
                     except Exception: return False
                 wait_for(ready)
                 for unused in range(5): rpc('Input.Back'); time.sleep(.2)
-                for aid in identifiers + ['plugin.games.foundry', 'script.foundry.gamesqa']:
-                    rpc('Addons.SetAddonEnabled', {'addonid':aid, 'enabled':True})
+                enable_fixture_addons(rpc, identifiers + ['plugin.games.foundry', 'script.foundry.gamesqa'])
                 if not rpc('Settings.SetSettingValue', {'setting':'lookandfeel.skin','value':'skin.foundry'}):
                     raise AssertionError('Could not select shipped Foundry skin')
                 def modal():
@@ -309,7 +345,7 @@ def main():
                 wait_for(modal)
                 labels = rpc('XBMC.GetInfoLabels', {'labels':['Control.GetLabel(1)','Control.GetLabel(9)']})
                 prompt = ' '.join(labels.values()).lower()
-                if 'keep' not in prompt and 'skin' not in prompt:
+                if 'keep' not in prompt or 'skin' not in prompt:
                     raise AssertionError('Unexpected skin confirmation: ' + str(labels))
                 rpc('Input.Left'); rpc('Input.Select')
                 wait_for(lambda:not modal())
