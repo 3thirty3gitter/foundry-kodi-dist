@@ -32,7 +32,6 @@ class Provider:
 try:
     # JSON-RPC can change the setting before the active skin is reloaded.
     # ReloadSkin without parameters uses that setting and asks no confirmation.
-    xbmc.executebuiltin('Dialog.Close(all,true)',True)
     xbmc.executebuiltin('ReloadSkin()',True)
     xbmc.executebuiltin('ActivateWindow(Home)',True)
     deadline=time.monotonic()+20
@@ -174,7 +173,12 @@ def main():
             for aid in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','script.foundry.helper','skin.foundry','script.foundry.interfaceqa'):
                 rpc('Addons.SetAddonEnabled',{'addonid':aid,'enabled':True})
             assert rpc('Settings.SetSettingValue',{'setting':'lookandfeel.skin','value':'skin.foundry'})
-            time.sleep(.3)
+            wait_for(lambda:rpc('XBMC.GetInfoBooleans',{'booleans':['System.HasActiveModalDialog']}).get('System.HasActiveModalDialog'))
+            labels=rpc('XBMC.GetInfoLabels',{'labels':['Control.GetLabel(1)','Control.GetLabel(9)']})
+            prompt=' '.join(labels.values()).lower()
+            assert 'keep' in prompt or 'skin' in prompt,('Unexpected skin-change dialog',labels)
+            rpc('Input.Left');rpc('Input.Select')
+            wait_for(lambda:not rpc('XBMC.GetInfoBooleans',{'booleans':['System.HasActiveModalDialog']}).get('System.HasActiveModalDialog'))
             wait_for(lambda:rpc('Settings.GetSettingValue',{'setting':'lookandfeel.skin'}).get('value')=='skin.foundry')
             rpc('GUI.ActivateWindow',{'window':'home'})
             rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.interfaceqa'})
