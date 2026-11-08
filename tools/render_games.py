@@ -29,6 +29,11 @@ import xbmc,xbmcgui,xbmcvfs
 sys.path.insert(0,str(ADDON/'resources/lib'))
 from library import Library
 
+def require(condition, message):
+    # Kodi may initialize Python with optimization enabled. Never use assert
+    # for native checks or put a required operation inside an assert expression.
+    if not condition: raise AssertionError(message)
+
 def wait(predicate, timeout=30):
     until=time.monotonic()+timeout
     while time.monotonic()<until:
@@ -75,15 +80,17 @@ try:
     profile=Path(xbmcvfs.translatePath('special://profile/addon_data/plugin.games.foundry/'))
     profile.mkdir(parents=True,exist_ok=True)
     db=Library(str(profile/'library-v1.db'))
-    sid=db.add_source(str(ROMS),'nes');assert db.scan(sid)==45
+    sid=db.add_source(str(ROMS),'nes')
+    scanned=db.scan(sid)
+    require(scanned==45,'Expected 45 synthetic source games; got '+str(scanned))
     first=db.games()[0];gid=first['id'];db.played(gid,60,now=123456)
     db.close()
     open_path('action=home');shot('games-consoles')
     open_path('action=games&system=nes');control=rail()
     wait(lambda:bool(info('Container(58).ListItem.Property(Foundry.Game.Id)')))
-    assert control.size()==21,'Expected 20 games plus next page'
+    require(control.size()==21,'Expected 20 games plus next page')
     control.selectItem(2);wait(lambda:'Fixture 02' in info('ListItem.Label'))
-    assert 'Nintendo' in snapshot()['platform'] and 'Original local' in snapshot()['overview']
+    require('Nintendo' in snapshot()['platform'] and 'Original local' in snapshot()['overview'],'Focused hero metadata is missing')
     shot('games-focused-hero')
     action('right');wait(lambda:'Fixture 03' in info('ListItem.Label'))
     action('left');wait(lambda:'Fixture 02' in info('ListItem.Label'))
@@ -121,14 +128,14 @@ try:
         if not xbmc.getCondVisibility('System.HasActiveModalDialog'):break
         action('back')
     wait(lambda:not xbmc.getCondVisibility('System.HasActiveModalDialog'))
-    assert not xbmc.Player().isPlaying(),'Synthetic fixture unexpectedly played'
+    require(not xbmc.Player().isPlaying(),'Synthetic fixture unexpectedly played')
     wait(lambda:'Fixture 02' in info('ListItem.Label'))
     shot('games-launch-cancel-focus')
     # The cancelled core picker must not record a recent successful launch.
     check=Library(str(profile/'library-v1.db'))
-    assert len(check.games(mode='recent'))==1
+    require(len(check.games(mode='recent'))==1,'Cancelled launch incorrectly changed recent games')
     check.close()
-    (OUTPUT/'verification.json').write_text(json.dumps({'checks':evidence,'scope':'Native Kodi UI only. Synthetic non-playable files. No cores/ROMs downloaded. Not Shield or gameplay certification.'},indent=2)+'\n',encoding='utf-8')
+    (OUTPUT/'fixture-result.json').write_text(json.dumps({'checks':evidence,'assertions':{'console_listing':True,'focused_hero_metadata':True,'remote_navigation':True,'page_back_focus':True,'favorite_persistence':True,'search_results':True,'search_cancel':True,'missing_core_dialog':True,'launch_cancel_focus':True,'cancel_does_not_record_play':True},'scope':'Native Kodi UI only. Synthetic non-playable files. No cores/ROMs downloaded. Not Shield or gameplay certification.','limitations':['No actual gameplay or controller/disconnect/multiplayer validation','No Shield or Android emulator compatibility validation','No real VFS provider or Google Drive authorization tested','PSP remains unsupported']},indent=2)+'\n',encoding='utf-8')
     (BASE/'complete').write_text('ok')
 except Exception:
     (BASE/'error.txt').write_text(traceback.format_exc(),encoding='utf-8')
@@ -152,6 +159,10 @@ def main():
     release = json.loads((ROOT / 'release.json').read_text(encoding='utf-8'))['release']
     output = (args.output or ROOT / 'releases' / (str(release) + '-qa') / 'games').resolve()
     output.mkdir(parents=True, exist_ok=True)
+    # A failed rerun must not leave a previous pass summary in its evidence set.
+    for name in ('verification.json', 'games-verification.json', 'fixture-result.json'):
+        target = output / name
+        if target.exists(): target.unlink()
     if os.name != 'posix' or not Path('/usr/share/kodi').is_dir():
         raise RuntimeError('Linux Kodi/X11 runner required; no machine setup is performed')
     from PIL import Image, ImageDraw
@@ -230,14 +241,13 @@ def main():
                     if (base / 'error.txt').exists(): raise AssertionError((base / 'error.txt').read_text())
                     return (base / 'complete').exists()
                 wait_for(finished, 240)
-                report = json.loads((output / 'verification.json').read_text())
+                report = json.loads((output / 'fixture-result.json').read_text())
                 report['renderer'] = subprocess.check_output(['kodi','--version'], text=True).strip()
                 report['release'] = release
                 for check in report['checks']:
                     with Image.open(output / (check['case'] + '.png')) as im:
                         assert im.size == (1920,1080), im.size
                         im.verify()
-                (output / 'verification.json').write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
             finally:
                 if kodi:
                     try: os.killpg(kodi.pid, signal.SIGTERM); kodi.wait(timeout=10)
@@ -250,6 +260,11 @@ def main():
         kodi_log = output / 'kodi.log'
         if kodi_log.exists():
             assert 'Error parsing boolean expression' not in kodi_log.read_text(errors='replace')
+        report['passed'] = True
+        report['assertions']['screenshots_verified'] = True
+        report['assertions']['skin_boolean_parse_errors_absent'] = True
+        for name in ('verification.json', 'games-verification.json'):
+            (output / name).write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
     print('Native Games UI evidence:', output)
 
 

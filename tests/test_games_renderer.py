@@ -12,7 +12,11 @@ class GamesRendererTests(unittest.TestCase):
         source = (ROOT / 'tools/render_games.py').read_text(encoding='utf-8')
         tree = ast.parse(source, feature_version=(3, 8))
         fixture = next(node.value.value for node in tree.body if isinstance(node, ast.Assign) and any(isinstance(target, ast.Name) and target.id == 'FIXTURE' for target in node.targets))
-        ast.parse(fixture, feature_version=(3, 8))
+        fixture_tree = ast.parse(fixture, feature_version=(3, 8))
+        self.assertFalse(any(isinstance(node, ast.Assert) for node in ast.walk(fixture_tree)),
+                         'Embedded Kodi Python may be optimized: use explicit require/raise')
+        self.assertIn('scanned=db.scan(sid)', fixture)
+        self.assertIn('require(scanned==45', fixture)
         self.assertIn('NOT A ROM', source)
         self.assertIn("tempfile.TemporaryDirectory(prefix='foundry-games-qa-')", source)
         self.assertIn("HOME=str(base / 'empty-home')", source)

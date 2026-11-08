@@ -14,6 +14,7 @@ from pathlib import Path
 import re
 import shutil
 import signal
+import socket
 import subprocess
 import tempfile
 import time
@@ -219,14 +220,58 @@ def wait_for(predicate, timeout=45):
     raise AssertionError('Native weather fixture did not reach the expected state')
 
 
+def available_port(requested=0):
+    """Fail on a busy explicit port, or allocate a separate ephemeral endpoint."""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as listener:
+        listener.bind(('127.0.0.1', requested))
+        return listener.getsockname()[1]
+
+
+def fixture_ready(rpc, logfile, port, identity):
+    """Ping alone can accidentally reach a previous renderer's orphan process."""
+    try:
+        if '<CWebserver[%d]>: Started' % port not in logfile.read_text(encoding='utf-8', errors='replace'):
+            return False
+        if rpc('JSONRPC.Ping') != 'pong':
+            return False
+        return rpc('Settings.GetSettingValue', {'setting': 'services.devicename'}).get('value') == identity
+    except (OSError, ValueError):
+        return False
+
+
+def stop_process_group(process):
+    """The launcher exiting does not prove its Kodi child has exited."""
+    try:
+        os.killpg(process.pid, signal.SIGTERM)
+    except ProcessLookupError:
+        pass
+    try:
+        process.wait(timeout=5)
+    except subprocess.TimeoutExpired:
+        pass
+    # A TERM handler can leave kodi.bin alive after its shell launcher exits.
+    # Limit cleanup strictly to the private session created by this runner.
+    try:
+        os.killpg(process.pid, 0)
+    except ProcessLookupError:
+        return
+    try:
+        os.killpg(process.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        pass
+    process.wait(timeout=5)
+
+
 def run(output, display, port):
     from PIL import Image, ImageGrab
+    port = available_port(port)
     output.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='foundry-weather-', ignore_cleanup_errors=True) as temporary:
         base = Path(temporary)
         home, profile, identifiers, hashes = prepare(base)
         userdata = profile / 'userdata'
-        write(userdata / 'guisettings.xml', '<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">%d</setting><setting id="services.webserverauthentication">false</setting><setting id="locale.temperatureunit">c</setting></settings>' % port)
+        identity = 'Foundry Weather QA ' + base.name
+        write(userdata / 'guisettings.xml', '<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">%d</setting><setting id="services.webserverauthentication">false</setting><setting id="services.devicename">%s</setting><setting id="locale.temperatureunit">c</setting></settings>' % (port, identity))
         launcher = profile / 'addons/script.foundry.weatherqa'
         write(launcher / 'addon.xml', '<addon id="script.foundry.weatherqa" name="Foundry Weather QA" version="1.0.0" provider-name="Foundry"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/><extension point="xbmc.addon.metadata"><platform>all</platform><license>Private test fixture</license></extension></addon>')
         write(launcher / 'default.py', 'from pathlib import Path\nBASE=Path(%r)\nOUTPUT=Path(%r)\n' % (str(base), str(output)) + FIXTURE)
@@ -251,8 +296,7 @@ def run(output, display, port):
                         raise RuntimeError(str(result['error']))
                     return result.get('result')
                 def ready():
-                    try:return rpc('JSONRPC.Ping') == 'pong'
-                    except Exception:return False
+                    return fixture_ready(rpc, profile / 'temp/kodi.log', port, identity)
                 wait_for(ready, 75)
                 version = rpc('Application.GetProperties', {'properties': ['version']})['version']
                 assert version['major'] >= 21, 'Kodi 21+ required'
@@ -343,6 +387,7 @@ def run(output, display, port):
                                'advisory_headline', 'forecast_click_back', 'advisory_click_back', 'menu_back_reentry',
                                'missing_values', 'stale_unverified', 'alternate_provider_hides_card'],
                     'source_sha256': hashes, 'data': 'Synthetic only; no live weather or account requests',
+                    'fixture_identity': identity, 'fixture_port': port,
                     'isolation': 'Disposable HOME, XDG and Kodi portable profile; copied helper/services disabled',
                     'scope': 'Native Linux desktop only. Shield and live service behavior remain separate QA.'})
             except Exception:
@@ -351,11 +396,7 @@ def run(output, display, port):
                 raise
             finally:
                 if kodi:
-                    try:os.killpg(kodi.pid, signal.SIGTERM)
-                    except ProcessLookupError:pass
-                    try:kodi.wait(timeout=5)
-                    except subprocess.TimeoutExpired:
-                        os.killpg(kodi.pid, signal.SIGKILL); kodi.wait(timeout=5)
+                    stop_process_group(kodi)
                 xserver.terminate()
                 try:xserver.wait(timeout=5)
                 except subprocess.TimeoutExpired:xserver.kill(); xserver.wait(timeout=5)
@@ -370,7 +411,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, help='Override release.json-derived QA output directory')
     parser.add_argument('--display', default=':99')
-    parser.add_argument('--port', type=int, default=18081)
+    parser.add_argument('--port', type=int, default=0, help='Private HTTP port; 0 chooses a free ephemeral port')
     args = parser.parse_args()
     if os.name != 'posix':
         parser.error('Native execution requires Linux Kodi/X11; no software will be installed')

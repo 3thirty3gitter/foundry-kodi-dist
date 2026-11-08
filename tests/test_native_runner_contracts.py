@@ -28,11 +28,12 @@ class NativeRunnerContracts(unittest.TestCase):
 
     def test_first_paint_is_observed_without_tick_and_back_checks_native_parent(self):
         fixture=load('render_library').FIXTURE
-        opening=fixture[fixture.index('source=Source();source.initial='):fixture.index("(BASE/'back-once.json')")]
+        opening=fixture[fixture.index('source=Source();source.initial='):fixture.index("(BASE/'first-paint.json')")]
         self.assertNotIn('window.tick()',opening)
         self.assertIn("window.getListSize()",opening)
-        self.assertIn("window.dispose();xbmc.sleep(600)",opening)
-        self.assertIn("first['after_back_and_dispose']==parent",opening)
+        self.assertIn("window.dispose();xbmc.sleep(600)",fixture)
+        self.assertIn("first['after_back_and_dispose']==parent",fixture)
+        self.assertIn("first['focus_after_normal_ticks']==50",fixture)
 
     def test_shipped_home_restoration_is_explicitly_inside_disposable_profile(self):
         fixture=load('render_interface').FIXTURE
@@ -46,6 +47,21 @@ class NativeRunnerContracts(unittest.TestCase):
         self.assertIn("('','')",fixture)
         self.assertIn('resource.uisounds.foundry.qacustom',fixture)
         self.assertIn('Settings.GetSettingValue',fixture)
+
+    def test_embedded_checks_survive_kodi_python_optimization(self):
+        for name in ('render_library','render_interface'):
+            tree=ast.parse(load(name).FIXTURE)
+            self.assertFalse(any(isinstance(node,ast.Assert) for node in ast.walk(tree)))
+            function=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='require')
+            isolated=ast.Module(body=[function],type_ignores=[])
+            namespace={};exec(compile(isolated,name,'exec',optimize=2),namespace)
+            with self.assertRaisesRegex(AssertionError,'optimized check'):
+                namespace['require'](False,'optimized check')
+
+    def test_seek_uses_real_keyboard_mapping_not_navigation_rpc(self):
+        source=(ROOT/'tools/render_interface.py').read_text()
+        self.assertIn("['xdotool','key','--clearmodifiers',direction]",source)
+        self.assertNotIn("rpc('Input.'+direction)",source)
 
     def test_animation_gate_accepts_visible_moving_frames(self):
         frames=[Image.new('RGB',(16,16),(v,0,0)) for v in (130,180,140,210)]

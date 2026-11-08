@@ -22,6 +22,8 @@ FIXTURE=r'''
 import json,sys,time,traceback
 from pathlib import Path
 import xbmc,xbmcgui
+def require(condition,message):
+    if not condition:raise AssertionError(message)
 sys.path.insert(0,str(HELPER/'resources/lib'))
 from modules.monitors.metadata import MetadataMonitor
 from modules.vod import CatalogArtworkMonitor
@@ -47,18 +49,20 @@ try:
     from modules.experience import configure_experience
     def setting(method,**params):
         result=json.loads(xbmc.executeJSONRPC(json.dumps({'jsonrpc':'2.0','id':1,'method':method,'params':params})))
-        assert 'error' not in result,result
+        require('error' not in result,result)
         return result['result']
     sounds=[]
     for selected,expected in [('resource.uisounds.kodi','resource.uisounds.foundry.pulse'),('',''),('resource.uisounds.foundry.qacustom','resource.uisounds.foundry.qacustom')]:
         xbmc.executebuiltin('Skin.Reset(foundry.sounds.pulse.v1)',True)
         xbmc.executebuiltin('Skin.Reset(foundry.sounds.default.v1)',True)
-        assert setting('Settings.SetSettingValue',setting='lookandfeel.soundskin',value=selected)
+        changed=setting('Settings.SetSettingValue',setting='lookandfeel.soundskin',value=selected)
+        require(changed,('Could not select sound fixture',selected))
         configure_experience()
         actual=setting('Settings.GetSettingValue',setting='lookandfeel.soundskin')['value']
-        assert actual==expected,(selected,expected,actual)
+        require(actual==expected,(selected,expected,actual))
         sounds.append({'before':selected,'after':actual})
-    assert setting('Settings.SetSettingValue',setting='lookandfeel.soundskin',value='resource.uisounds.foundry.pulse')
+    changed=setting('Settings.SetSettingValue',setting='lookandfeel.soundskin',value='resource.uisounds.foundry.pulse')
+    require(changed,'Could not restore Pulse fixture selection')
     (BASE/'sounds.json').write_text(json.dumps(sounds))
     metadata=MetadataMonitor(window,provider=Provider());artwork=CatalogArtworkMonitor()
     for title,kind,season,episode in [('Widget Film','movie',None,None),('The Signal','episode',1,2)]:
@@ -82,7 +86,8 @@ try:
                   'seek_offset':label('Player.SeekOffset'),'seek_step':label('Player.SeekStepSize'),
                   'player_time':label('Player.Time'),'player_duration':label('Player.Duration'),
                   'seek_visible':xbmc.getCondVisibility('Window.IsVisible(seekbar)'),
-                  'busy_visible':xbmc.getCondVisibility('Window.IsVisible(busydialog)')}
+                  'busy_visible':xbmc.getCondVisibility('Window.IsVisible(busydialog)'),
+                  'python_optimize':sys.flags.optimize}
         (BASE/'state.tmp').write_text(json.dumps(snapshot));(BASE/'state.tmp').replace(BASE/'state.json')
         command=BASE/'command'
         if command.exists():
@@ -94,7 +99,7 @@ try:
                 import shutil
                 # BASE is created by TemporaryDirectory, never the source checkout.
                 target=BASE/'kodi/portable_data/addons/skin.foundry/xml/Home.xml'
-                assert target.resolve().is_relative_to(BASE.resolve())
+                require(target.resolve().is_relative_to(BASE.resolve()),'Home restoration escaped disposable profile')
                 shutil.copyfile(BASE/'shipped-Home.xml',target)
                 xbmc.executebuiltin('ReloadSkin()',True);xbmc.executebuiltin('ActivateWindow(Home)',True)
                 xbmc.sleep(800);window=xbmcgui.Window(10000);menu=window.getControl(9000)
@@ -292,7 +297,9 @@ def main():
             wait_for(lambda:not rpc('XBMC.GetInfoBooleans',{'booleans':['Window.IsActive(videoosd)']}).get('Window.IsActive(videoosd)'))
             seek_evidence=[]
             for direction in ('Right','Left'):
-                rpc('Input.'+direction)
+                # JSON-RPC Input.Right is ACTION_MOVE_RIGHT, not keyboard/remote
+                # key mapping. A real key selects Kodi's fullscreen StepForward/Back.
+                subprocess.run(['xdotool','key','--clearmodifiers',direction],env=environment,check=True)
                 wait_for(lambda:state().get('seek_visible') and bool(state().get('seek_offset') or state().get('seek_step')),5)
                 sample=state();seek=capture('vod-seek-'+direction.lower())
                 assert sample.get('player_time') and sample.get('player_duration'),sample
@@ -340,7 +347,12 @@ def main():
                 try:os.killpg(kodi.pid,signal.SIGTERM)
                 except ProcessLookupError:pass
                 try:kodi.wait(timeout=5)
-                except subprocess.TimeoutExpired:os.killpg(kodi.pid,signal.SIGKILL);kodi.wait(timeout=5)
+                except subprocess.TimeoutExpired:pass
+                # The kodi shell launcher can exit before kodi.bin. Reap only
+                # our own start_new_session process group, even after wait succeeds.
+                try:os.killpg(kodi.pid,signal.SIGKILL)
+                except ProcessLookupError:pass
+                kodi.wait(timeout=5)
             xserver.terminate();xserver.wait(timeout=5);log.close()
             if (profile/'temp/kodi.log').exists():shutil.copyfile(profile/'temp/kodi.log',output/'interface-kodi.log')
             for name in ['state.json','error.txt','sounds.json']:

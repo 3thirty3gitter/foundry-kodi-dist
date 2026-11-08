@@ -4,6 +4,7 @@ import importlib.util
 import json
 from pathlib import Path
 import runpy
+import socket
 import sys
 import tempfile
 import types
@@ -55,8 +56,45 @@ class WeatherRendererTests(unittest.TestCase):
 
     def test_embedded_kodi_scripts_compile_without_execution(self):
         for source in (renderer.FIXTURE, renderer.PROVIDER_WRAPPER):
-            ast.parse(source, feature_version=(3, 8))
+            tree = ast.parse(source, feature_version=(3, 8))
+            self.assertFalse(any(isinstance(node, ast.Assert) for node in ast.walk(tree)),
+                             'Kodi optimizes embedded Python; mandatory checks must use explicit raises')
         compile((ROOT / 'tools/render_weather.py').read_text(encoding='utf-8'), 'render_weather.py', 'exec')
+
+    def test_private_port_rejects_an_existing_listener(self):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as listener:
+            listener.bind(('127.0.0.1', 0))
+            listener.listen(1)
+            with self.assertRaises(OSError):renderer.available_port(listener.getsockname()[1])
+            self.assertNotEqual(renderer.available_port(), listener.getsockname()[1])
+
+    def test_readiness_requires_own_log_and_unique_identity(self):
+        with tempfile.TemporaryDirectory() as temp:
+            logfile = Path(temp) / 'kodi.log'
+            rpc = Mock(side_effect=['pong', {'value': 'weather-private-fixture'}])
+            self.assertFalse(renderer.fixture_ready(rpc, logfile, 54321, 'weather-private-fixture'))
+            rpc.assert_not_called()
+            renderer.write(logfile, 'info <CWebserver[54321]>: Started\n')
+            self.assertTrue(renderer.fixture_ready(rpc, logfile, 54321, 'weather-private-fixture'))
+            rpc.side_effect = ['pong', {'value': 'older-renderer'}]
+            self.assertFalse(renderer.fixture_ready(rpc, logfile, 54321, 'weather-private-fixture'))
+            rpc.side_effect = TimeoutError('starting')
+            self.assertFalse(renderer.fixture_ready(rpc, logfile, 54321, 'weather-private-fixture'))
+
+    def test_cleanup_kills_remaining_children_after_launcher_exits(self):
+        process = Mock(pid=43210)
+        with patch.object(renderer.os, 'killpg', create=True) as killpg, \
+                patch.object(renderer.signal, 'SIGKILL', 9, create=True):
+            renderer.stop_process_group(process)
+        self.assertEqual([call.args[1] for call in killpg.call_args_list],
+                         [renderer.signal.SIGTERM, 0, 9])
+        self.assertTrue(all(call.args[0] == process.pid for call in killpg.call_args_list))
+
+    def test_cleanup_does_not_signal_a_nonexistent_group(self):
+        process = Mock(pid=43210)
+        with patch.object(renderer.os, 'killpg', side_effect=ProcessLookupError, create=True) as killpg:
+            renderer.stop_process_group(process)
+        self.assertEqual(killpg.call_count, 2)
 
     def test_fixture_executes_shipped_entrypoint_with_synthetic_client(self):
         with tempfile.TemporaryDirectory() as temp:

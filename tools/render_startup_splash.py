@@ -64,9 +64,12 @@ def main():
                     try: os.killpg(kodi.pid, signal.SIGTERM)
                     except ProcessLookupError: pass
                     try: kodi.wait(timeout=5)
-                    except subprocess.TimeoutExpired:
-                        os.killpg(kodi.pid, signal.SIGKILL)
-                        kodi.wait(timeout=5)
+                    except subprocess.TimeoutExpired: pass
+                    # Kodi's launcher can exit while its native child survives.
+                    # Always stop this fixture's remaining process-group members.
+                    try: os.killpg(kodi.pid, signal.SIGKILL)
+                    except ProcessLookupError: pass
+                    kodi.wait(timeout=5)
                 xserver.terminate()
                 xserver.wait(timeout=5)
                 logs = profile / 'temp/kodi.log'

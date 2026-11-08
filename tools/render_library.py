@@ -27,6 +27,8 @@ FIXTURE=r'''
 import json,sys,time,traceback
 from pathlib import Path
 import xbmc,xbmcgui
+def require(condition,message):
+    if not condition:raise AssertionError(message)
 sys.path.insert(0,str(HELPER/'resources/lib'))
 from modules.catalog_window import CatalogWindow
 
@@ -42,7 +44,7 @@ try:
     xbmc.executebuiltin('ActivateWindow(settings)',True)
     xbmc.sleep(500)
     parent=xbmcgui.getCurrentWindowId()
-    assert parent==10004,('Expected native settings parent',parent)
+    require(parent==10004,('Expected native settings parent',parent))
     source=Source();source.initial={'items':ITEMS,'page':1,'total_pages':500}
     window=CatalogWindow('script-foundry-vod.xml',str(HELPER),'default','1080i',True,source=source,section='Movies',breadcrumb='Preloaded fixture')
     window.show()
@@ -50,16 +52,23 @@ try:
     while not window.initialized and time.monotonic()<deadline:xbmc.sleep(10)
     first={'initialized':window.initialized,'list_size':window.getListSize(),'focus':window.getFocusId(),
            'title':window.getProperty('catalog.title'),'loading':window.getProperty('catalog.loading'),
-           'parent':parent,'preloaded_consumed':source.initial is None,'ticks_before_observation':0}
-    assert first['list_size']>0 and first['focus']==50 and first['title'] and not first['loading'],first
+           'parent':parent,'preloaded_consumed':source.initial is None,'ticks_before_observation':0,'python_optimize':sys.flags.optimize}
+    require(first['list_size']==len(window.rail) and first['list_size']==21 and first['title'] and not first['loading'],first)
     (BASE/'first-paint.json').write_text(json.dumps(first))
     xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/'catalog-first-paint.png')+')')
+    # Focus is intentionally queued by the shipped controller for its next tick.
+    deadline=time.monotonic()+5
+    while window.getFocusId()!=50 and time.monotonic()<deadline:
+        window.tick();xbmc.sleep(20)
+    first['focus_after_normal_ticks']=window.getFocusId()
+    require(first['focus_after_normal_ticks']==50,first)
+    (BASE/'focus-ready').write_text('ok')
     deadline=time.monotonic()+40
     while not window.closed and time.monotonic()<deadline:xbmc.sleep(20)
-    assert window.closed,'Fixture expected one remote Back'
+    require(window.closed,'Fixture expected one remote Back')
     window.dispose();xbmc.sleep(600)
     first['after_back_and_dispose']=xbmcgui.getCurrentWindowId()
-    assert first['after_back_and_dispose']==parent,first
+    require(first['after_back_and_dispose']==parent,first)
     (BASE/'back-once.json').write_text(json.dumps(first))
     for section,count,case in (('Movies',60,'movies'),('TV Shows',60,'tv-shows'),('Movies',3,'short-row'),('TV Shows',2,'episodes')):
         data=EPISODES if case=='episodes' else [dict(item,type='tvshow' if section=='TV Shows' else 'movie') for item in ITEMS[:count]]
@@ -289,7 +298,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             rpc('Addons.SetAddonEnabled',{'addonid':'plugin.video.foundry.libraryqa','enabled':True})
             rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.libraryqa'})
             wait_for(lambda:(base/'first-paint.json').exists())
-            wait_for(lambda:(output/'catalog-first-paint.png').exists())
+            wait_for(lambda:(output/'catalog-first-paint.png').exists() and (base/'focus-ready').exists())
             key('Escape')
             wait_for(lambda:(base/'back-once.json').exists())
             evidence=[dict(section='Preloaded first paint and single Back',**json.loads((base/'back-once.json').read_text()))]

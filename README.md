@@ -1,8 +1,18 @@
 # Foundry Kodi source
 
-Release 1.3.9: **Build and Bootstrap 1.3.9 / skin 1.3.9 / Helper 1.2.7 / Wallpapers 1.1.0**.
+Release 1.4.0 candidate: **Build and Bootstrap 1.4.0 / skin 1.4.0 / Helper 1.3.0 / Wallpapers 1.1.0 / Pulse 1.0.0 / Games and Canada Weather 0.1.0**.
 
-The pinned source commits are in [releases/1.3.9-sources.json](releases/1.3.9-sources.json). The release workflow builds the packages from those commits, runs all 278 checks against source and extracted ZIPs, verifies deterministic rebuilding, then publishes the ZIPs and feed in one commit. Public download verification is recorded separately in `releases/1.3.9-verification.json` once complete.
+The pinned source commits are in [releases/1.4.0-sources.json](releases/1.4.0-sources.json). Development CI tests the source and every extracted add-on, verifies deterministic rebuilding, then runs five isolated native Kodi checks. Production publication is held until those checks and owner approval pass. Actual test counts and native evidence are recorded under `releases/1.4.0-qa/`; public download verification is recorded separately in `releases/1.4.0-verification.json` once complete.
+
+The candidate fixes catalog first paint and Back restoration, uses the regular poster row for Home Favorites, adds bounded dialog metadata and seek/studio feedback, lowers library posters slightly, and packages the selected Pulse sounds and Ripple animation. Pulse migration preserves an explicit silent or custom sound choice. Native desktop captures are not Shield performance or audio-output proof.
+
+## Games and Canadian Weather
+
+Foundry Games provides local/VFS source scanning, console categories, search, favorites, recent launches/playtime, local metadata/artwork and bounded ZIP/CUE/M3U staging. Kodi owns emulator selection, controllers and saves. No ROMs, BIOS, emulator binaries or commercial game assets are bundled. Supply files you are entitled to use and install a compatible Kodi emulator yourself. PSP, direct Drive OAuth, remote metadata, save migration and dependent Arcade sets are not supported in this first version. Native QA uses non-playable synthetic files and does not verify actual emulation. See [Games scope](src/plugin.games.foundry/README.md).
+
+Canada Weather is installed but remains inactive until explicitly selected in Kodi Settings > Services > Weather and configured with one to three Canadian cities. It shows current observations, hourly and seven-day forecasts and advisory headlines, with missing/stale data labelled. Time labels follow the device's zone, not necessarily the selected city's. No GPS, account or API key is used. The upstream API is experimental; advisory headlines are not a full emergency-alert service. The provider retains its proprietary development licence and source acknowledgment. See [setup and limitations](src/weather.foundry.canada/README.md) and [data rights and usage](src/weather.foundry.canada/SOURCE.md).
+
+## Earlier release history
 
 Release 1.3.9 adds library-style focused widget metadata and a studio logo above the left side of the row, restores the rounded StreamPilot OSD frame from the pinned Android source, removes page-loading overlays and simplifies page labels. Complete pages remain visible during replacement loads; an independent cached artwork-color path avoids a white placeholder glow. Settings hover uses the small-title wallpaper when the current menu has widgets. All 52 system-menu icons use Foundry chrome/neon artwork, with matching wallpaper categories derived from their approved image and 195 static entries/templates covered. Existing Home icons and logo geometry are preserved. Native interface captures cover widgets, episode details, Settings wallpaper variants, system menus and both OSD frames.
 
@@ -36,7 +46,7 @@ Native Kodi 21.3 Windows fixtures check all wallpaper pairs, both transition dir
     python tools/build_release.py --skin ../skin.foundry-nimbus --helper ../script.foundry.helper
     python -m unittest discover -s tests -v
 
-Packaging rejects missing/modified approved pairs, stale widget revisions and mismatched dimensions. `release.json` records versions, sizes and SHA256 checksums. The OSD resource and repository package bytes are unchanged; the Helper is version 1.2.7.
+Packaging rejects missing/modified approved pairs, stale widget revisions and mismatched dimensions. `release.json` records versions, sizes and SHA256 checksums. The OSD resource and repository package bytes are unchanged; the Helper is version 1.3.0.
 
 Kodi installs the following core add-ons using its dependency manager. SlyGuy Trailers installs when Foundry Build runs, after its repository has been prepared:
 
@@ -47,7 +57,9 @@ Kodi installs the following core add-ons using its dependency manager. SlyGuy Tr
 | TMDb Helper | Discovery, lists, metadata, artwork and supported ratings APIs |
 | The Movie Database Python | Movie-library metadata and IMDb ratings |
 | TMDb TV Shows | TV-library metadata, artwork and ratings |
-| Android TV UI Sounds | Default navigation sounds |
+| Foundry Pulse UI Sounds | Selected navigation sounds; silent/custom choices preserved |
+| Foundry Games | User-supplied game library and native RetroPlayer launch |
+| Foundry Canada Weather | Optional manually selected Canadian weather provider |
 | InputStream Adaptive and InputStream Helper | Adaptive playback and stream support |
 
 IMDb, OMDb, MDbList and Fanart.tv are data services used by the metadata tools; separate add-ons for each are not required.
@@ -61,7 +73,7 @@ All fourteen original Foundry category wallpapers are included unchanged in `res
 The playback OSD ports StreamPilot's VOD poster panel and live-TV card, with original format badges, artwork-based colors, five-second idle hiding, Back-to-dismiss, and fixed 30-second seek buttons. Native Kodi audio, subtitle and playback settings remain accessible. Source selection is handled by the video provider.
 `resource.images.foundry.osd` 1.0.0 contains the original StreamPilot badges. Both artwork resources are included in the repository feed and installed as skin dependencies; they no longer depend on an unpublished package.
 Build 1.2.4 fixes an installation-order defect: SlyGuy Common requires `repository.slyguy`, but Kodi refuses to install repositories as dependencies ([Kodi Omega resolver](https://github.com/xbmc/xbmc/blob/Omega/xbmc/addons/AddonRepos.cpp#L456-L463)). The repository is now prepared before the native trailer installation. Existing disabled SlyGuy components are enabled; completed setup is not repeated. Cancellation or a setup failure produces a retry message before skin activation. Skin installation is also available independently of SlyGuy.
-SlyGuy and Android sound defaults migrate once per profile; later user changes are preserved.
+SlyGuy and Pulse sound defaults migrate once per profile; later user changes are preserved.
 Run Foundry Build to activate the skin. Requires Kodi 21 Omega or newer.
 
 `release.json` records ZIP versions and SHA-256 checksums. The repository feed and downloads are public and require no login.
