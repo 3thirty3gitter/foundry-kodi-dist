@@ -158,10 +158,17 @@ def main():
                 try:return rpc('JSONRPC.Ping')=='pong'
                 except Exception:return False
             wait_for(ready,60)
-            for _ in range(5):
+            # First-start add-on prompts arrive one at a time. A momentary
+            # gap is not initialization completion, so require a quiet interval.
+            deadline=time.monotonic()+30;quiet_since=None
+            while time.monotonic()<deadline:
                 visible=rpc('XBMC.GetInfoBooleans',{'booleans':['System.HasActiveModalDialog']})
-                if not visible.get('System.HasActiveModalDialog'):break
-                rpc('Input.Back');time.sleep(.2)
+                if visible.get('System.HasActiveModalDialog'):
+                    rpc('Input.Back');quiet_since=None
+                elif quiet_since is None:quiet_since=time.monotonic()
+                elif time.monotonic()-quiet_since>=2:break
+                time.sleep(.2)
+            else:raise AssertionError('Initial add-on dialogs did not settle')
             # Fresh profiles discover manually placed add-ons as disabled.
             # Enable the isolated fixture dependencies before selecting its skin.
             for aid in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','script.foundry.helper','skin.foundry','script.foundry.interfaceqa'):
