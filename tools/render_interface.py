@@ -106,7 +106,7 @@ def wait_for(predicate,timeout=45):
 
 def main():
     output=ROOT/'releases/1.3.9-qa';output.mkdir(parents=True,exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix='foundry-interface-') as temporary:
+    with tempfile.TemporaryDirectory(prefix='foundry-interface-',ignore_cleanup_errors=True) as temporary:
         base=Path(temporary);home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
         profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True)
         addons=profile/'addons';addons.mkdir()
@@ -209,7 +209,8 @@ def main():
             rpc('GUI.ActivateWindow',{'window':'settings'});time.sleep(1);capture('system-settings')
             rpc('GUI.ActivateWindow',{'window':'systemsettings'});time.sleep(1);category=capture('system-setting-rows')
             assert bright(category,(40,145,90,200))>10,'Generated category row has no icon'
-            assert bright(category,(510,145,560,195))>10,'Generated option row has no icon'
+            # Options start below Kodi's 50px section heading.
+            assert bright(category,(510,200,560,240))>10,'Generated option row has no icon'
             (base/'command').write_text('play');wait_for(lambda:rpc('Player.GetActivePlayers'))
             time.sleep(.7);rpc('Input.ShowOSD');time.sleep(.8);osd=capture('vod-osd')
             assert bright(osd,(96,742,276,1012))>100,'OSD poster is missing'
