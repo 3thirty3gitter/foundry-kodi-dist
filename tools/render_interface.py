@@ -30,9 +30,16 @@ class Provider:
         item['ratings']={'tmdb':{'rating':7.2},'imdb':{'rating':7.8}}
         return item,{'tmdb':'ready','omdb':'ready'}
 try:
-    window=xbmcgui.Window(10000)
+    deadline=time.monotonic()+20
+    while time.monotonic()<deadline:
+        if xbmc.getSkinDir()=='skin.foundry':
+            try:
+                window=xbmcgui.Window(10000);row=window.getControl(19011)
+                break
+            except RuntimeError:pass
+        xbmc.sleep(100)
+    else:raise AssertionError('Foundry fixture Home did not load; active skin: '+xbmc.getSkinDir())
     metadata=MetadataMonitor(window,provider=Provider());artwork=CatalogArtworkMonitor()
-    row=window.getControl(19011)
     for title,kind,season,episode in [('Widget Film','movie',None,None),('The Signal','episode',1,2)]:
         item=xbmcgui.ListItem(title,path='fixture://'+kind)
         info={'title':title,'year':2026,'mediatype':kind,'plot':'A complete focused widget item shows the same metadata stack as the library.','genre':['Mystery'],'studio':['Fixture Studio'],'premiered':'2026-11-01'}
@@ -150,7 +157,17 @@ def main():
                 visible=rpc('XBMC.GetInfoBooleans',{'booleans':['System.HasActiveModalDialog']})
                 if not visible.get('System.HasActiveModalDialog'):break
                 rpc('Input.Back');time.sleep(.2)
-            rpc('Addons.SetAddonEnabled',{'addonid':'script.foundry.interfaceqa','enabled':True});rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.interfaceqa'})
+            # Fresh profiles discover manually placed add-ons as disabled.
+            # Enable the isolated fixture dependencies before selecting its skin.
+            for aid in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','script.foundry.helper','skin.foundry','script.foundry.interfaceqa'):
+                rpc('Addons.SetAddonEnabled',{'addonid':aid,'enabled':True})
+            assert rpc('Settings.SetSettingValue',{'setting':'lookandfeel.skin','value':'skin.foundry'})
+            time.sleep(1)
+            if rpc('XBMC.GetInfoBooleans',{'booleans':['System.HasActiveModalDialog']}).get('System.HasActiveModalDialog'):
+                rpc('Input.Left');rpc('Input.Select')
+            wait_for(lambda:rpc('Settings.GetSettingValue',{'setting':'lookandfeel.skin'}).get('value')=='skin.foundry')
+            rpc('GUI.ActivateWindow',{'window':'home'})
+            rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.interfaceqa'})
             def state():
                 if (base/'error.txt').exists():raise AssertionError((base/'error.txt').read_text())
                 try:return json.loads((base/'state.json').read_text())
