@@ -108,6 +108,28 @@ class WeatherRendererTests(unittest.TestCase):
         self.assertTrue(statements[2].startswith('wait_for('))
         self.assertIn('weather_menu_ready(state())', statements[3])
 
+    def test_visibility_observes_shipped_parent_without_modifying_xml(self):
+        condition = renderer.card_parent_visibility(ROOT.parent / 'skin.foundry-nimbus')
+        self.assertEqual(condition, 'String.IsEqual(Weather.Plugin,weather.foundry.canada)')
+        self.assertIn('parent_visible=xbmc.getCondVisibility(CARD_PARENT_VISIBLE)', renderer.FIXTURE)
+        self.assertIn('card_visible=child_visible and parent_visible', renderer.FIXTURE)
+        self.assertIn("ControlGroup(15001).HasFocus", renderer.FIXTURE)
+        source = (ROOT / 'tools/render_weather.py').read_text(encoding='utf-8')
+        self.assertIn("rpc('Input.Right')", source)
+        self.assertNotIn('SetFocus(15150)', source)
+        with tempfile.TemporaryDirectory() as temp:
+            skin = Path(temp)
+            renderer.write(skin / 'xml/Includes_FoundryCanadaWeather.xml', '<includes/>')
+            with self.assertRaises(ValueError):renderer.card_parent_visibility(skin)
+
+    def test_title_render_check_has_positive_and_absent_controls(self):
+        from PIL import Image, ImageDraw
+        absent = Image.new('RGB', (1920, 1080), (10, 20, 35))
+        present = absent.copy()
+        ImageDraw.Draw(present).rectangle((338, 318, 637, 351), fill=(73, 220, 242))
+        self.assertEqual(renderer.card_title_pixels(absent), 0)
+        self.assertEqual(renderer.card_title_pixels(present), 300 * 34)
+
     def test_private_port_rejects_an_existing_listener(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as listener:
             listener.bind(('127.0.0.1', 0))

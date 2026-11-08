@@ -197,12 +197,17 @@ def fixture_enable_prompt(labels, name):
             normalize('Would you like to enable this add-on? ' + name))
 
 
-def enable_fixture_addons(rpc, identifiers, timeout=30):
+def enable_fixture_addons(rpc, identifiers, manifest_names, timeout=30):
     """Enable only the caller's copied fixture list and verify each final state."""
     def details(aid):
         return rpc('Addons.GetAddonDetails', {'addonid':aid,'properties':['enabled','name']})['addon']
     def modal():
         return rpc('XBMC.GetInfoBooleans', {'booleans':['System.HasActiveModalDialog']})['System.HasActiveModalDialog']
+    if set(manifest_names) != set(identifiers) or not all(manifest_names.values()):
+        raise AssertionError('Fixture enable allowlist does not match copied manifests')
+    for aid in identifiers:
+        if details(aid)['name'] != manifest_names[aid]:
+            raise AssertionError('Kodi addon name differs from copied manifest: ' + aid)
     for aid in identifiers:
         before = details(aid)
         if not before['enabled']:
@@ -212,7 +217,9 @@ def enable_fixture_addons(rpc, identifiers, timeout=30):
         while time.monotonic() < deadline:
             if modal():
                 labels = rpc('XBMC.GetInfoLabels', {'labels':['Control.GetLabel(1)','Control.GetLabel(9)']})
-                if not fixture_enable_prompt(labels, before['name']):
+                # First-run enable prompts can be queued in a different order.
+                # Only names verified against every copied fixture manifest count.
+                if not any(fixture_enable_prompt(labels, name) for name in manifest_names.values()):
                     raise AssertionError('Unrelated dialog while enabling %s: %s' % (aid, labels))
                 rpc('Input.Left'); rpc('Input.Select')
                 quiet_since = None
@@ -337,7 +344,13 @@ def main():
                     except Exception: return False
                 wait_for(ready)
                 for unused in range(5): rpc('Input.Back'); time.sleep(.2)
-                enable_fixture_addons(rpc, identifiers + ['plugin.games.foundry', 'script.foundry.gamesqa'])
+                fixture_ids = identifiers + ['plugin.games.foundry', 'script.foundry.gamesqa']
+                fixture_names = {}
+                for aid in fixture_ids:
+                    manifest = E.parse(profile / 'addons' / aid / 'addon.xml').getroot()
+                    if manifest.get('id') != aid: raise AssertionError('Unexpected copied fixture ID: ' + aid)
+                    fixture_names[aid] = manifest.get('name', '')
+                enable_fixture_addons(rpc, fixture_ids, fixture_names)
                 if not rpc('Settings.SetSettingValue', {'setting':'lookandfeel.skin','value':'skin.foundry'}):
                     raise AssertionError('Could not select shipped Foundry skin')
                 def modal():

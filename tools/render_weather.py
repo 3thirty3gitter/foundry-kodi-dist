@@ -157,10 +157,14 @@ try:
             body=xbmc.getInfoLabel('Control.GetLabel(5)')
         values={key:weather.getProperty('Foundry.Weather.'+key) for key in
             ['Status','HasCurrent','Temperature','Location','AlertCount','AlertStatus','DayCount','HourCount','Stale']}
+        child_visible=xbmc.getCondVisibility('Control.IsVisible(15150)')
+        parent_visible=xbmc.getCondVisibility(CARD_PARENT_VISIBLE)
         values.update(window=xbmcgui.getCurrentWindowId(),focus=focus,dialog=dialog,body=body,
             provider=xbmc.getInfoLabel('Weather.Plugin'),category=xbmc.getInfoLabel('Container(9000).ListItem.Property(id)'),
-            card_visible=xbmc.getCondVisibility('Control.IsVisible(15150)'),
-            legacy_visible=xbmc.getCondVisibility('Control.IsVisible(15001)'))
+            card_control_visible=child_visible,card_parent_visible=parent_visible,
+            card_visible=child_visible and parent_visible,
+            legacy_visible=xbmc.getCondVisibility('Control.IsVisible(15001)'),
+            legacy_focused=xbmc.getCondVisibility('ControlGroup(15001).HasFocus'))
         (BASE/'state.tmp').write_text(json.dumps(values),encoding='utf-8');(BASE/'state.tmp').replace(BASE/'state.json')
         command=BASE/'command.json'
         if command.exists():
@@ -245,6 +249,24 @@ def weather_menu_ready(values):
             and values.get('category') == 'weather' and not values.get('dialog'))
 
 
+def card_parent_visibility(skin):
+    # Omega Control.IsVisible reports only the child, not hidden ancestors.
+    # Read the actual shipped group expression without changing its XML/IDs.
+    root = E.parse(skin / 'xml/Includes_FoundryCanadaWeather.xml').getroot()
+    value = root.findtext("include[@name='FoundryCanadaWeatherWidget']/definition/control/visible")
+    if not value or not value.strip():
+        raise ValueError('Shipped weather card parent visibility is missing')
+    return value.strip()
+
+
+def card_title_pixels(picture):
+    # Independent rendered evidence: the cyan CANADA WEATHER title sits here
+    # on the shipped card. Fresh capture supplies a positive control.
+    return sum(g > 150 and b > 170 and r < 130
+               for y in range(318, 352) for x in range(338, 638)
+               for r, g, b in [picture.getpixel((x, y))[:3]])
+
+
 def available_port(requested=0):
     """Fail on a busy explicit port, or allocate a separate ephemeral endpoint."""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as listener:
@@ -299,7 +321,8 @@ def run(output, display, port):
         write(userdata / 'guisettings.xml', '<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">%d</setting><setting id="services.webserverauthentication">false</setting><setting id="services.devicename">%s</setting><setting id="locale.temperatureunit">c</setting></settings>' % (port, identity))
         launcher = profile / 'addons/script.foundry.weatherqa'
         write(launcher / 'addon.xml', '<addon id="script.foundry.weatherqa" name="Foundry Weather QA" version="1.0.0" provider-name="Foundry"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/><extension point="xbmc.addon.metadata"><platform>all</platform><license>Private test fixture</license></extension></addon>')
-        write(launcher / 'default.py', 'from pathlib import Path\nBASE=Path(%r)\nOUTPUT=Path(%r)\n' % (str(base), str(output)) + FIXTURE)
+        parent_visibility = card_parent_visibility(profile / 'addons/skin.foundry')
+        write(launcher / 'default.py', 'from pathlib import Path\nBASE=Path(%r)\nOUTPUT=Path(%r)\nCARD_PARENT_VISIBLE=%r\n' % (str(base), str(output), parent_visibility) + FIXTURE)
         # Isolate HOME/XDG paths as well as Kodi portable_data. Never inherit a personal profile.
         isolated_home = base / 'user-home'
         isolated_home.mkdir()
@@ -406,6 +429,8 @@ def run(output, display, port):
                 rpc('Input.Select')
                 wait_for(lambda: state().get('focus') == 15150 and state().get('card_visible'))
                 fresh = capture('weather-fresh')
+                fresh_title = card_title_pixels(fresh)
+                assert fresh_title > 100, 'Fresh weather card title is missing from native render'
                 bright = sum(min(fresh.getpixel((x, y))) > 100 for y in range(370, 460) for x in range(335, 520))
                 assert bright > 50, 'Current temperature appears absent from native card'
                 rpc('Input.Select')
@@ -437,15 +462,29 @@ def run(output, display, port):
                 capture('weather-stale')
                 command('focus-menu')
                 assert rpc('Settings.SetSettingValue', {'setting': 'weather.addon', 'value': ALTERNATE})
-                wait_for(lambda: state().get('provider') == ALTERNATE and not state().get('card_visible'))
-                capture('weather-other-provider')
+                wait_for(lambda: state().get('provider') == ALTERNATE and not state().get('card_visible')
+                         and state().get('legacy_visible'))
+                other = capture('weather-other-provider')
+                alternate_state = state()
+                alternate_title = card_title_pixels(other)
+                assert alternate_title < fresh_title * .1, 'Canada card title remains rendered with another provider'
+                # Normal remote navigation must enter the visible legacy group,
+                # never a forced SetFocus call targeting the hidden card itself.
+                rpc('Input.Right')
+                wait_for(lambda: state().get('legacy_focused'))
+                assert state().get('focus') not in range(15150, 15155), state()
+                capture('weather-other-provider-navigation')
                 assert rpc('Settings.GetSettingValue', {'setting': 'weather.addon'})['value'] == ALTERNATE
                 write(base / 'complete', 'ok')
                 atomic_json(output / 'weather-verification.json', {'passed': True, 'kodi_version': version,
                     'checks': ['provider_entrypoint', 'untouched_shipped_home_card', 'current_zero', '24_hourly', '7_daily',
                                'advisory_headline', 'forecast_click_back', 'advisory_click_back', 'menu_back_reentry',
                                'native_home_initial_fetch', 'next_city_native_index', 'refresh_preserves_city',
-                               'next_city_wrap', 'missing_values', 'stale_unverified', 'alternate_provider_hides_card'],
+                               'next_city_wrap', 'missing_values', 'stale_unverified', 'alternate_provider_hides_card',
+                               'alternate_card_render_absent', 'alternate_normal_navigation_uses_legacy'],
+                    'alternate_visibility': {'shipped_parent_condition': parent_visibility,
+                        'state': alternate_state, 'fresh_title_pixels': fresh_title,
+                        'alternate_title_pixels': alternate_title, 'normal_navigation_focus': state().get('focus')},
                     'source_sha256': hashes, 'data': 'Synthetic only; no live weather or account requests',
                     'fixture_identity': identity, 'fixture_port': port,
                     'isolation': 'Disposable HOME, XDG and Kodi portable profile; copied helper/services disabled',

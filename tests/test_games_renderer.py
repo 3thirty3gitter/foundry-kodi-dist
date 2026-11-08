@@ -33,7 +33,7 @@ class GamesRendererTests(unittest.TestCase):
             if method == 'XBMC.GetInfoLabels': return {'Control.GetLabel(1)':'Terms','Control.GetLabel(9)':'Accept unrelated terms?'}
             return 'OK'
         with self.assertRaisesRegex(AssertionError, 'Unrelated dialog'):
-            runner.enable_fixture_addons(rpc, ['resource.images.foundry.wallpapers'])
+            runner.enable_fixture_addons(rpc, ['resource.images.foundry.wallpapers'], {'resource.images.foundry.wallpapers':'Foundry Wallpapers'})
         self.assertNotIn('Input.Select', calls)
 
     def test_dependency_readiness_waits_for_confirmed_enable(self):
@@ -46,10 +46,33 @@ class GamesRendererTests(unittest.TestCase):
             if method == 'XBMC.GetInfoLabels': return {'Control.GetLabel(1)':'Disabled add-ons','Control.GetLabel(9)':'Would you like to enable this add-on?\nFoundry Wallpapers'}
             if method == 'Input.Select': state.update(enabled=True,prompt=False)
             return 'OK'
-        runner.enable_fixture_addons(rpc, ['resource.images.foundry.wallpapers'])
+        runner.enable_fixture_addons(rpc, ['resource.images.foundry.wallpapers'], {'resource.images.foundry.wallpapers':'Foundry Wallpapers'})
         self.assertTrue(state['enabled'])
         self.assertEqual(1, sum(method == 'Input.Select' for method, params in calls))
         self.assertEqual('Addons.GetAddonDetails', calls[-1][0])
+
+    def test_queued_pulse_before_wallpapers_uses_verified_fixture_allowlist(self):
+        runner = self.runner()
+        names = {'resource.images.foundry.wallpapers':'Foundry Wallpapers', 'resource.uisounds.foundry.pulse':'Foundry Pulse UI Sounds'}
+        enabled = dict.fromkeys(names, False); pending = ['resource.uisounds.foundry.pulse', 'resource.images.foundry.wallpapers']; accepted = []
+        def rpc(method, params=None):
+            if method == 'Addons.GetAddonDetails':
+                aid = params['addonid']; return {'addon':{'name':names[aid],'enabled':enabled[aid]}}
+            if method == 'XBMC.GetInfoBooleans': return {'System.HasActiveModalDialog':bool(pending)}
+            if method == 'XBMC.GetInfoLabels': return {'Control.GetLabel(1)':'Disabled add-ons','Control.GetLabel(9)':'Would you like to enable this add-on?\n'+names[pending[0]]}
+            if method == 'Input.Select':
+                aid = pending.pop(0); enabled[aid] = True; accepted.append(aid)
+            return 'OK'
+        runner.enable_fixture_addons(rpc, list(names), names)
+        self.assertEqual(['resource.uisounds.foundry.pulse','resource.images.foundry.wallpapers'], accepted)
+        self.assertTrue(all(enabled.values()))
+
+    def test_dependency_allowlist_requires_matching_copied_manifest_name(self):
+        runner = self.runner()
+        rpc = Mock(return_value={'addon':{'name':'Unexpected name','enabled':False}})
+        with self.assertRaisesRegex(AssertionError, 'differs from copied manifest'):
+            runner.enable_fixture_addons(rpc, ['copied.id'], {'copied.id':'Expected name'})
+        self.assertEqual(['Addons.GetAddonDetails'], [args.args[0] for args in rpc.call_args_list])
 
     def test_embedded_fixture_python38_syntax(self):
         source = (ROOT / 'tools/render_games.py').read_text(encoding='utf-8')
