@@ -1,6 +1,6 @@
 # Foundry 1.5.0 development handoff
 
-Updated 2026-11-09 UTC on SPACESHIP. Branch: dev. Candidate development is validated and ready for review. Published Kodi main/Pages remains 1.4.0; release authorization is pending. Uncommitted product work: none. This documentation receipt follows the validated runtime candidate.
+Updated 2026-11-09 UTC on SPACESHIP. Branch: dev. Runtime development is validated in the recorded run; read the latest dev workflow below for current-head status. Published Kodi main/Pages remains 1.4.0; release authorization is pending. Uncommitted product work: none. This documentation receipt follows the validated runtime candidate.
 
 ## Exact candidate
 
@@ -47,6 +47,16 @@ Captures require native state stable beyond shipped animation bounds, actual 192
 Only exact proven published Timer and PosterFlow warnings are classified as baseline; every new boolean expression failure remains fatal. No legacy runtime XML was changed to suppress warnings. Exact native emulator-error/chooser state may cover ScriptRunner Busy10138 only under the source-proven Kodi 21.3 topmost-modal/render-suppression rule. Other modal/busy/progress states fail. The report retains source links and separate busy-window bits.
 
 Historical failed runs and diagnoses are preserved in [development diagnostics](2026-11-09-native-development-diagnostics.md). The first exit139 root cause remains unconfirmed; subsequent full runs did not repeat it. No failing historical run is presented as a complete pass.
+
+## Weather observer startup follow-up
+
+The documentation-head run 42565633890 repeated the complete Games pass with the same production entrypoint and shipped-skin hashes, but Weather failed before its first observer state. Its QA invoker started before confirmation deinitialized, then overlapped Startup/Home and another reload; no first state/error file was produced and the failure frame was black. This does not prove a provider or product regression.
+
+The QA-only correction removes the observer's redundant synchronous ReloadSkin/ActivateHome. Host readiness now requires the actual final Foundry load-to-Home event, own profile/webserver/provider, a real Home/menu signature, no active/visible modal or Startup/update, and two stable seconds within the existing deadline. The observer verifies actual special://skin, publishes genuine first state before input, then uses the existing completed focus-menu command. Actual weather buttons, card assertions, synthetic provider behavior and copied source hashes are preserved. Startup observations, phase, pending command and exact observer source are retained on failure.
+
+A fresh local clone materialized the immutable 898/54 skin/helper blobs before rebuilding. All 659 source and 659 extracted-package tests passed (Windows skips 1/2), all 22 direct Weather tests passed, and deterministic rebuilding/source-tree preservation passed. Manifest, feed, aliases and all 112 original candidate/historical artifact hashes remained byte-identical, including the 92 published 1.4.0 artifacts. Runtime packages and source pins did not change.
+
+The completed runtime proof above remains historical evidence. Current-head validation is authoritative in the [latest dev workflow](https://github.com/3thirty3gitter/foundry-kodi-dist/actions/workflows/dev-validation.yml?query=branch%3Adev); all five native gates are required before publication. Follow-up local records: C:/Users/TrentTimmerman/Documents/Codex/foundry-next-games-20261109/weather-cold-home-pinned-source-01/ .
 
 ## Remaining scope and next steps
 

@@ -1,5 +1,6 @@
 """Portable fixture construction checks, not a claim of native Linux rendering."""
 import ast
+import copy
 import importlib.util
 import json
 from pathlib import Path
@@ -87,13 +88,13 @@ class WeatherRendererTests(unittest.TestCase):
             renderer.atomic_json(command, {'action': 'focus-menu'})
             def focusing():
                 self.assertTrue(command.exists(), 'Host must still wait while native focus changes')
-            exec(code, {'command': command, 'json': json, 'focus_menu': focusing})
+            exec(code, {'command': command, 'json': json, 'focus_menu': focusing, 'phase': Mock()})
             self.assertFalse(command.exists())
             renderer.atomic_json(command, {'action': 'focus-menu'})
             def failed():
                 raise RuntimeError('native menu still missing')
             with self.assertRaises(RuntimeError):
-                exec(code, {'command': command, 'json': json, 'focus_menu': failed})
+                exec(code, {'command': command, 'json': json, 'focus_menu': failed, 'phase': Mock()})
             self.assertTrue(command.exists(), 'Failed action must not acknowledge completion')
 
     def test_menu_readiness_rejects_stale_card_or_wrong_window_state(self):
@@ -236,6 +237,118 @@ class WeatherRendererTests(unittest.TestCase):
             self.assertIsNotNone(E.parse(kodi / 'addons/service.fixture/addon.xml').find("extension[@point='xbmc.service']"))
             self.assertLess(identifiers.index('script.foundry.helper'), identifiers.index('skin.foundry'))
 
+
+
+class WeatherStartupReadiness(unittest.TestCase):
+    identity='owned-weather'
+    skin='/owned/portable_data/addons/skin.foundry'
+    port=54321
+
+    def log(self,skin=None,transition='Home.xml'):
+        return ('info <CWebserver[54321]>: Started\n'
+                'info load skin from: '+(skin or self.skin)+' / (version: 1.5.0)\n'
+                'info skin loaded...\nWindow Init ('+transition+')').replace(' / (version:','/ (version:')
+
+    def observation(self):
+        return {'window':{'id':10000},'flags':{'Window.IsVisible(startup)':False,
+            'System.HasActiveModalDialog':False,'System.HasVisibleModalDialog':False,'Container.IsUpdating':False},
+            'labels':{'Container(9000).NumItems':'19','Container(9000).ListItem.Property(menu_id)':'7000',
+                      'Container(9000).ListItem.Property(id)':'music','Weather.Plugin':renderer.PROVIDER},
+            'owner':self.identity,'provider':renderer.PROVIDER,'own_webserver':True,
+            'skin_log':renderer.actual_skin_log_state(self.log(),self.skin)}
+
+    def rpc(self,observation):
+        def call(method,params):
+            values=observation()
+            if method=='GUI.GetProperties':return {'currentwindow':values['window']}
+            if method=='XBMC.GetInfoBooleans':return values['flags']
+            if method=='XBMC.GetInfoLabels':return values['labels']
+            if method=='Settings.GetSettingValue':
+                return {'value':values['owner'] if params['setting']=='services.devicename' else values['provider']}
+            raise AssertionError(method)
+        return call
+
+    def test_log_requires_latest_real_foundry_load_and_completed_home(self):
+        self.assertFalse(renderer.actual_skin_log_state(self.log('/owned/skin.estuary'),self.skin)['ready'])
+        self.assertFalse(renderer.actual_skin_log_state(self.log(transition='Startup.xml'),self.skin)['ready'])
+        self.assertTrue(renderer.actual_skin_log_state(self.log(),self.skin)['ready'])
+        later_estuary=self.log()+'\nload skin from: /owned/skin.estuary/ (version: 4.0.0)\nskin loaded...\nWindow Init (Home.xml)'
+        self.assertFalse(renderer.actual_skin_log_state(later_estuary,self.skin)['ready'])
+        late_startup=self.log()+'\nlate Window Init (Startup.xml)'
+        self.assertFalse(renderer.actual_skin_log_state(late_startup,self.skin)['ready'])
+
+    def test_configured_skin_or_home_number_cannot_replace_runtime_and_menu_proof(self):
+        valid=self.observation()
+        self.assertTrue(renderer.cold_home_ready(valid,self.identity,renderer.PROVIDER))
+        cases=[{'skin_log':{'ready':False}}, {'window':{'id':12999}}, {'owner':'another-profile'},
+               {'provider':'another-provider'}, {'own_webserver':False}]
+        for changed in cases:
+            self.assertFalse(renderer.cold_home_ready(dict(valid,**changed),self.identity,renderer.PROVIDER))
+        for flag in valid['flags']:
+            changed=copy.deepcopy(valid);changed['flags'][flag]=True
+            self.assertFalse(renderer.cold_home_ready(changed,self.identity,renderer.PROVIDER),flag)
+        for label in ('Container(9000).NumItems','Container(9000).ListItem.Property(menu_id)','Container(9000).ListItem.Property(id)','Weather.Plugin'):
+            changed=copy.deepcopy(valid);changed['labels'][label]=''
+            self.assertFalse(renderer.cold_home_ready(changed,self.identity,renderer.PROVIDER),label)
+
+    def test_observer_requires_genuine_runtime_path_and_unblocked_home(self):
+        valid={'window':10000,'provider':renderer.PROVIDER,'runtime_skin_path':self.skin,'home_count':'19',
+               'modal_active':False,'modal_visible':False,'startup_visible':False,'updating':False}
+        self.assertTrue(renderer.observer_home_ready(valid,self.skin,renderer.PROVIDER))
+        for changed in ({'runtime_skin_path':'/owned/skin.estuary'}, {'runtime_skin_path':''}, {'home_count':''},
+                        {'modal_visible':True}, {'startup_visible':True}, {'window':12999}):
+            self.assertFalse(renderer.observer_home_ready(dict(valid,**changed),self.skin,renderer.PROVIDER))
+
+    def test_late_startup_and_confirmation_restart_the_quiet_interval(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output=Path(temporary);log=output/'kodi.log';log.write_text(self.log(),encoding='utf-8')
+            clock={'step':0}
+            def observation():
+                result=self.observation()
+                if clock['step']<2:result['flags']['System.HasVisibleModalDialog']=True
+                if clock['step']==4:
+                    result['window']={'id':12999};result['flags']['Window.IsVisible(startup)']=True
+                return result
+            def advance(_):
+                clock['step']+=1
+                if clock['step']==4:log.write_text(self.log(transition='Startup.xml'),encoding='utf-8')
+                if clock['step']==5:log.write_text(self.log()+'\nfinal Window Init (Home.xml)',encoding='utf-8')
+            with patch.object(renderer.time,'monotonic',side_effect=lambda:clock['step']/10),patch.object(renderer.time,'sleep',side_effect=advance):
+                report=renderer.settle_cold_home(self.rpc(observation),log,self.skin,self.port,self.identity,renderer.PROVIDER,lambda:True,output,timeout=2,quiet=.2)
+            self.assertTrue(report['passed'])
+            self.assertGreaterEqual(clock['step'],7)
+            self.assertTrue(any(row['window']['id']==12999 for row in report['observations']))
+            self.assertEqual(report,json.loads((output/'weather-startup-readiness.json').read_text(encoding='utf-8')))
+
+    def test_old_estuary_never_becomes_ready_even_with_valid_configured_home(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output=Path(temporary);log=output/'kodi.log';log.write_text(self.log('/owned/skin.estuary'),encoding='utf-8')
+            clock={'now':0.0}
+            def advance(_):clock['now']+=.1
+            with patch.object(renderer.time,'monotonic',side_effect=lambda:clock['now']),patch.object(renderer.time,'sleep',side_effect=advance):
+                with self.assertRaisesRegex(AssertionError,'Cold Foundry Home did not settle'):
+                    renderer.settle_cold_home(self.rpc(self.observation),log,self.skin,self.port,self.identity,renderer.PROVIDER,lambda:True,output,timeout=.4,quiet=.2)
+            report=json.loads((output/'weather-startup-readiness.json').read_text(encoding='utf-8'))
+            self.assertFalse(report['passed']);self.assertFalse(report['observations'][-1]['skin_log']['ready'])
+
+    def test_first_observer_state_precedes_any_focus_or_reload_action(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base=Path(temporary)
+            native=types.SimpleNamespace(executebuiltin=Mock(),getCondVisibility=lambda _:False,
+                getInfoLabel=lambda name:{'Container(9000).NumItems':'19','Weather.Plugin':renderer.PROVIDER,
+                    'Container(9000).ListItem.Property(id)':'music'}.get(name,''),
+                sleep=lambda _:(base/'complete').write_text('ok',encoding='utf-8'))
+            window=types.SimpleNamespace(getProperty=lambda _:'',getFocusId=lambda:9000)
+            gui=types.SimpleNamespace(Window=lambda _:window,getCurrentWindowId=lambda:10000)
+            vfs=types.SimpleNamespace(translatePath=lambda _:self.skin)
+            with patch.dict(sys.modules,{'xbmc':native,'xbmcgui':gui,'xbmcvfs':vfs}):
+                exec(renderer.FIXTURE,{'BASE':base,'OUTPUT':base,'EXPECTED_SKIN_PATH':self.skin,'CARD_PARENT_VISIBLE':'synthetic-parent'})
+            native.executebuiltin.assert_not_called()
+            state=json.loads((base/'state.json').read_text(encoding='utf-8'))
+            self.assertEqual(state['category'],'music')
+            self.assertEqual(state['runtime_skin_path'],self.skin)
+            self.assertEqual(json.loads((base/'fixture-phase.json').read_text(encoding='utf-8'))['stage'],'first-state-published')
+            self.assertFalse((base/'error.txt').exists())
 
 if __name__ == '__main__':
     unittest.main()

@@ -125,16 +125,18 @@ except Exception:
 
 FIXTURE = r'''
 import json,time,traceback
-import xbmc,xbmcgui
+import xbmc,xbmcgui,xbmcvfs
+def phase(stage,**values):
+    temporary=BASE/'fixture-phase.tmp'
+    temporary.write_text(json.dumps(dict(values,stage=stage,observed=time.monotonic())),encoding='utf-8')
+    temporary.replace(BASE/'fixture-phase.json')
 try:
-    xbmc.executebuiltin('ReloadSkin()',True)
-    xbmc.executebuiltin('ActivateWindow(Home)',True)
-    deadline=time.monotonic()+30
-    while time.monotonic()<deadline:
-        if xbmc.getSkinDir()=='skin.foundry':
-            if int(xbmc.getInfoLabel('Container(9000).NumItems') or '0')>0:break
-        xbmc.sleep(100)
-    else:raise AssertionError('Shipped Foundry Home did not load')
+    phase('observer-started')
+    runtime_skin_path=xbmcvfs.translatePath('special://skin/')
+    phase('runtime-skin-observed',runtime_skin_path=runtime_skin_path)
+    normalize=lambda value:str(value).replace('\\','/').rstrip('/')
+    if normalize(runtime_skin_path)!=normalize(EXPECTED_SKIN_PATH):
+        raise AssertionError('Observer is not running in the copied Foundry skin: '+runtime_skin_path)
     home=xbmcgui.Window(10000)
     def focus_menu():
         # Native XML lists are not Python ControlList.vecItems. Use Kodi's
@@ -145,7 +147,7 @@ try:
             xbmc.sleep(75)
             if xbmc.getInfoLabel('Container(9000).ListItem.Property(id)')=='weather':return
         raise AssertionError('Weather menu item is missing')
-    focus_menu()
+    first_state=True
     deadline=time.monotonic()+240
     while not (BASE/'complete').exists() and time.monotonic()<deadline:
         weather=xbmcgui.Window(12600)
@@ -160,23 +162,35 @@ try:
         child_visible=xbmc.getCondVisibility('Control.IsVisible(15150)')
         parent_visible=xbmc.getCondVisibility(CARD_PARENT_VISIBLE)
         values.update(window=xbmcgui.getCurrentWindowId(),focus=focus,dialog=dialog,body=body,
+            runtime_skin_path=xbmcvfs.translatePath('special://skin/'),home_count=xbmc.getInfoLabel('Container(9000).NumItems'),
+            modal_active=xbmc.getCondVisibility('System.HasActiveModalDialog'),
+            modal_visible=xbmc.getCondVisibility('System.HasVisibleModalDialog'),
+            startup_visible=xbmc.getCondVisibility('Window.IsVisible(startup)'),
+            updating=xbmc.getCondVisibility('Container.IsUpdating'),
             provider=xbmc.getInfoLabel('Weather.Plugin'),category=xbmc.getInfoLabel('Container(9000).ListItem.Property(id)'),
             card_control_visible=child_visible,card_parent_visible=parent_visible,
             card_visible=child_visible and parent_visible,
             legacy_visible=xbmc.getCondVisibility('Control.IsVisible(15001)'),
             legacy_focused=xbmc.getCondVisibility('ControlGroup(15001).HasFocus'))
         (BASE/'state.tmp').write_text(json.dumps(values),encoding='utf-8');(BASE/'state.tmp').replace(BASE/'state.json')
+        if first_state:
+            phase('first-state-published',state=values);first_state=False
         command=BASE/'command.json'
         if command.exists():
             value=json.loads(command.read_text(encoding='utf-8'))
+            phase('command-started',command=value)
             if value['action']=='focus-menu':focus_menu()
             elif value['action']=='capture':xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/(value['name']+'.png'))+')')
             # Consumption is the host's completion acknowledgment, not merely
             # receipt. Never let host input race the menu-selection loop.
+            phase('command-completed',command=value)
             command.unlink()
         xbmc.sleep(50)
     if not (BASE/'complete').exists():raise AssertionError('Native weather QA timed out')
-except Exception:(BASE/'error.txt').write_text(traceback.format_exc(),encoding='utf-8')
+except Exception:
+    error=traceback.format_exc()
+    phase('observer-failed',error=error)
+    (BASE/'error.txt').write_text(error,encoding='utf-8')
 '''
 
 
@@ -286,6 +300,73 @@ def fixture_ready(rpc, logfile, port, identity):
         return False
 
 
+def actual_skin_log_state(text, skin_path):
+    lines=text.splitlines()
+    loads=[(index,re.search(r'load skin from:\s*(.*?)\s+\(version:',line))
+           for index,line in enumerate(lines) if 'load skin from:' in line]
+    if not loads:return {'ready':False}
+    index,match=loads[-1]
+    if match is None:return {'ready':False}
+    normalize=lambda value:str(value).replace('\\','/').rstrip('/')
+    tail=lines[index+1:]
+    loaded=next((offset for offset,line in enumerate(tail) if 'skin loaded...' in line),None)
+    transitions=[line for line in tail[loaded+1:] if 'Window Init (Home.xml)' in line or 'Window Init (Startup.xml)' in line] if loaded is not None else []
+    return {'ready':normalize(match.group(1))==normalize(skin_path) and bool(transitions) and 'Window Init (Home.xml)' in transitions[-1],
+            'loaded_path':match.group(1),'load_event':lines[index],
+            'last_transition':transitions[-1] if transitions else ''}
+
+
+def cold_home_ready(observation, identity, provider):
+    labels=observation['labels']
+    count=labels.get('Container(9000).NumItems','')
+    menu=labels.get('Container(9000).ListItem.Property(menu_id)','')
+    category=labels.get('Container(9000).ListItem.Property(id)','')
+    categories={'movies','tvshows','music','disc','musicvideos','livetv','radio','games','addons',
+                'pictures','video','videos','favorites','weather','settings','custom1','custom2','custom3'}
+    return (observation['window']['id']==10000 and observation['skin_log']['ready'] and
+            observation['own_webserver'] and observation['owner']==identity and
+            observation['provider']==provider and labels.get('Weather.Plugin')==provider and
+            not any(observation['flags'].values()) and count.isdigit() and int(count)>0 and
+            menu.isdigit() and int(menu)>0 and category in categories)
+
+
+def observer_home_ready(values, skin_path, provider):
+    normalize=lambda value:str(value).replace('\\','/').rstrip('/')
+    count=values.get('home_count','')
+    return (values.get('window')==10000 and values.get('provider')==provider and
+            normalize(values.get('runtime_skin_path',''))==normalize(skin_path) and
+            count.isdigit() and int(count)>0 and
+            not any(values.get(name,True) for name in ('modal_active','modal_visible','startup_visible','updating')))
+
+
+def settle_cold_home(rpc, log_path, skin_path, port, identity, provider, alive, output, timeout=45, quiet=2):
+    deadline=time.monotonic()+timeout;quiet_since=None;last=None;history=[]
+    destination=output/'weather-startup-readiness.json'
+    while time.monotonic()<deadline:
+        if not alive():raise AssertionError('Kodi exited during cold Foundry Home startup')
+        text=log_path.read_text(encoding='utf-8',errors='replace')
+        if any(marker in text for marker in ('PythonToCppException','Error Contents:','Traceback (most recent call last):')):
+            raise AssertionError('Python failure during cold Foundry Home startup')
+        observation={'window':rpc('GUI.GetProperties',{'properties':['currentwindow']})['currentwindow'],
+            'flags':rpc('XBMC.GetInfoBooleans',{'booleans':['Window.IsVisible(startup)','System.HasActiveModalDialog','System.HasVisibleModalDialog','Container.IsUpdating']}),
+            'labels':rpc('XBMC.GetInfoLabels',{'labels':['Container(9000).NumItems','Container(9000).ListItem.Property(menu_id)','Container(9000).ListItem.Property(id)','Weather.Plugin']}),
+            'owner':rpc('Settings.GetSettingValue',{'setting':'services.devicename'})['value'],
+            'provider':rpc('Settings.GetSettingValue',{'setting':'weather.addon'})['value'],
+            'skin_log':actual_skin_log_state(text,skin_path),
+            'own_webserver':'<CWebserver[%d]>: Started'%port in text}
+        if observation!=last:history.append(observation);last=observation;quiet_since=None
+        ready=cold_home_ready(observation,identity,provider)
+        if ready:
+            if quiet_since is None:quiet_since=time.monotonic()
+            elif time.monotonic()-quiet_since>=quiet:
+                report={'passed':True,'quiet_seconds':quiet,'observations':history}
+                atomic_json(destination,report);return report
+        else:quiet_since=None
+        atomic_json(destination,{'passed':False,'observations':history})
+        time.sleep(.1)
+    raise AssertionError('Cold Foundry Home did not settle within the existing startup deadline')
+
+
 def stop_process_group(process):
     """The launcher exiting does not prove its Kodi child has exited."""
     try:
@@ -322,7 +403,7 @@ def run(output, display, port):
         launcher = profile / 'addons/script.foundry.weatherqa'
         write(launcher / 'addon.xml', '<addon id="script.foundry.weatherqa" name="Foundry Weather QA" version="1.0.0" provider-name="Foundry"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/><extension point="xbmc.addon.metadata"><platform>all</platform><license>Private test fixture</license></extension></addon>')
         parent_visibility = card_parent_visibility(profile / 'addons/skin.foundry')
-        write(launcher / 'default.py', 'from pathlib import Path\nBASE=Path(%r)\nOUTPUT=Path(%r)\nCARD_PARENT_VISIBLE=%r\n' % (str(base), str(output), parent_visibility) + FIXTURE)
+        write(launcher / 'default.py', 'from pathlib import Path\nBASE=Path(%r)\nOUTPUT=Path(%r)\nCARD_PARENT_VISIBLE=%r\nEXPECTED_SKIN_PATH=%r\n' % (str(base), str(output), parent_visibility, str(profile/'addons/skin.foundry')) + FIXTURE)
         # Isolate HOME/XDG paths as well as Kodi portable_data. Never inherit a personal profile.
         isolated_home = base / 'user-home'
         isolated_home.mkdir()
@@ -369,6 +450,7 @@ def run(output, display, port):
                 assert 'keep' in prompt or 'skin' in prompt, ('Unexpected skin prompt', labels)
                 rpc('Input.Left'); rpc('Input.Select')
                 wait_for(lambda: not modal())
+                startup=settle_cold_home(rpc,profile/'temp/kodi.log',profile/'addons/skin.foundry',port,identity,PROVIDER,lambda:kodi.poll() is None,output)
                 rpc('Addons.ExecuteAddon', {'addonid': 'script.foundry.weatherqa'})
                 def state():
                     for name in ('error.txt', 'provider-error.txt'):
@@ -420,6 +502,8 @@ def run(output, display, port):
                         return (after.get('invocation') != before.get('invocation')
                                 and after.get('argument') == 'refresh' and after.get('kind') == kind)
                     wait_for(completed)
+                wait_for(lambda: observer_home_ready(state(),profile/'addons/skin.foundry',PROVIDER))
+                command('focus-menu')
                 wait_for(lambda: state().get('category') == 'weather')
                 assert rpc('Settings.GetSettingValue', {'setting': 'weather.currentlocation'})['value'] == 1
                 wait_for(lambda: state().get('HasCurrent') == 'true' and state().get('HourCount') == '24')
@@ -486,7 +570,7 @@ def run(output, display, port):
                         'state': alternate_state, 'fresh_title_pixels': fresh_title,
                         'alternate_title_pixels': alternate_title, 'normal_navigation_focus': state().get('focus')},
                     'source_sha256': hashes, 'data': 'Synthetic only; no live weather or account requests',
-                    'fixture_identity': identity, 'fixture_port': port,
+                    'fixture_identity': identity, 'fixture_port': port,'cold_home_startup':startup,
                     'isolation': 'Disposable HOME, XDG and Kodi portable profile; copied helper/services disabled',
                     'scope': 'Native Linux desktop only. Shield and live service behavior remain separate QA.'})
             except Exception:
@@ -503,7 +587,11 @@ def run(output, display, port):
                                        (base / 'state.json', 'weather-state.json'),
                                        (base / 'provider-complete.json', 'weather-provider-complete.json'),
                                        (base / 'error.txt', 'weather-error.txt'),
-                                       (base / 'provider-error.txt', 'weather-provider-error.txt')]:
+                                       (base / 'provider-error.txt', 'weather-provider-error.txt'),
+                                       (base / 'fixture-phase.json','weather-fixture-phase.json'),
+                                       (base / 'command.json','weather-command.json'),
+                                       (base / 'scenario.json','weather-scenario.json'),
+                                       (launcher / 'default.py','weather-native-fixture.py')]:
                     if source.exists():shutil.copyfile(source, output / target)
 
 
