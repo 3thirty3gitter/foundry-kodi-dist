@@ -20,7 +20,7 @@ MOVIE_LABELS = ('Trending', 'Trending Recent', 'Popular', 'Popular Today', 'Prem
                 'Blockbusters', 'In Theaters', 'Up Coming', 'Oscar Winners')
 MOVIE_FLAGS = ('passed', 'custom_background_preserved', 'selected_title_fanart_preserved',
                'tv_mixed_unknown_rejected', 'paging_and_rehydration_context_preserved')
-GAMES_ASSERTIONS = ('console_listing', 'automatic_games_view_selected', 'focused_hero_metadata', 'remote_navigation',
+GAMES_ASSERTIONS = ('console_listing', 'capture_state_settled', 'screenshot_encoding_acknowledged', 'automatic_games_view_selected', 'focused_hero_metadata', 'remote_navigation',
                     'page_back_focus', 'favorite_persistence', 'favorite_refresh_complete',
                     'favorites_native_route', 'fresh_directory_acknowledgments',
                     'search_results', 'search_cancel', 'search_cancel_retains_listing',
@@ -77,6 +77,12 @@ def evidence(root, release):
         assert version and int(version[1]) >= 21, 'Games requires native Kodi 21+'
         assert all(games['assertions'].get(name) is True for name in GAMES_ASSERTIONS)
         assert set(GAMES_CASES) <= {check['case'] for check in games['checks']}
+        assert all(check['capture_state_stable_seconds'] >= .5 and check['png_completion_ack'] is True for check in games['checks'])
+        captures=games['capture_acknowledgments']
+        assert len(captures)==len(games['checks'])
+        for index,(capture,check) in enumerate(zip(captures,games['checks'])):
+            assert capture['sequence']==index+1 and capture['case']==check['case']
+            assert capture['passed'] is True and capture['dimensions']==[1920,1080] and capture['stable_seconds']>=.5
         assert games['shipped_skin_hashes'], 'Games requires unchanged shipped-skin proof'
         game_log = games['native_gameclient_log']
         assert game_log['complete'] is True and game_log['native_gameclient_path'] is True
@@ -84,6 +90,11 @@ def evidence(root, release):
         assert re.fullmatch(r'[a-f0-9]{64}', games['production_entrypoint_sha256'])
         assert games['skin_boolean_errors']['new_errors'] == []
         assert games['skin_boolean_errors']['unchanged_timer_sha256'] == 'c2c90596e9362a97dc5ad2e79004273fe014954bf0f976cc39f78e7cf2e02614'
+        poster=games['skin_boolean_errors']['posterflow_proof']
+        assert poster['current_sha256']==poster['published_140_sha256']=='ebcdc5840651253eb0bae2d1241578624d3ee132c5a63ad53a7d58aa2e8c2993'
+        assert poster['bytes_equal'] is True
+        baseline_inputs={name:'String.IsEqual(ListItem.DBType,'+kind+')' for name,kind in (('isMovie','movie'),('isTVShow','tvshow'),('isSeason','season'),('isEpisode','episode'))}
+        assert poster['current_inputs']==poster['published_140_inputs']==baseline_inputs
         startup = games['startup_readiness']
         assert startup['passed'] is True and startup['quiet_seconds'] >= 2
         assert startup['actual_skin_log']['ready'] is True and startup['home_signature']

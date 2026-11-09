@@ -69,11 +69,15 @@ class ReleaseEvidenceTests(unittest.TestCase):
                 'packages': self.packages, 'renderer': 'Native Kodi 21.3',
                 'native_gameclient_log': {'complete': True, 'native_gameclient_path': True, 'failures': []},
                 'production_entrypoint_sha256': 'a' * 64,
-                'skin_boolean_errors': {'new_errors': [], 'unchanged_timer_sha256': 'c2c90596e9362a97dc5ad2e79004273fe014954bf0f976cc39f78e7cf2e02614'},
+                'skin_boolean_errors': {'new_errors': [], 'unchanged_timer_sha256': 'c2c90596e9362a97dc5ad2e79004273fe014954bf0f976cc39f78e7cf2e02614',
+                    'posterflow_proof': {'current_sha256':'ebcdc5840651253eb0bae2d1241578624d3ee132c5a63ad53a7d58aa2e8c2993','published_140_sha256':'ebcdc5840651253eb0bae2d1241578624d3ee132c5a63ad53a7d58aa2e8c2993','bytes_equal':True,
+                        'current_inputs':{name:'String.IsEqual(ListItem.DBType,'+kind+')' for name,kind in (('isMovie','movie'),('isTVShow','tvshow'),('isSeason','season'),('isEpisode','episode'))},
+                        'published_140_inputs':{name:'String.IsEqual(ListItem.DBType,'+kind+')' for name,kind in (('isMovie','movie'),('isTVShow','tvshow'),('isSeason','season'),('isEpisode','episode'))}}},
                 'startup_readiness': {'passed': True, 'quiet_seconds': 2, 'actual_skin_log': {'ready':True}, 'home_signature': {'category':'music'}, 'completed_game_widgets': [dict(mode=mode, phase='completed', error='') for mode in ('recent', 'favorites')]},
                 'shipped_skin_hashes': {'xml/MyGames.xml': 'f' * 64},
                 'assertions': {name: True for name in gate.GAMES_ASSERTIONS},
-                'checks': [{'case': name} for name in gate.GAMES_CASES]}}
+                'checks': [{'case': name,'capture_state_stable_seconds':.5,'png_completion_ack':True} for name in gate.GAMES_CASES],
+                'capture_acknowledgments':[dict(sequence=index+1,case=name,passed=True,dimensions=[1920,1080],stable_seconds=.5) for index,name in enumerate(gate.GAMES_CASES)]}}
         movies = dict(approved_count=13, rendered_approved_count=13,
                       copied_skin_inputs_sha256={'xml/Variables_Artwork.xml': 'f' * 64},
                       cases=[])
@@ -177,6 +181,22 @@ class ReleaseEvidenceTests(unittest.TestCase):
             report = json.loads(original); report.update(changes); self.write(path, report)
             with self.subTest(changes=changes), self.assertRaises(AssertionError):
                 gate.evidence(self.root, '1.5.0')
+        path.write_bytes(original)
+
+    def test_capture_and_published_posterflow_proofs_cannot_be_bypassed(self):
+        path=self.qa/'native/games/games-verification.json';original=path.read_bytes()
+        for failure in ('capture-stability','capture-ack','ack-size','ack-sequence','poster-current','poster-published','poster-bytes','poster-inputs'):
+            report=json.loads(original);poster=report['skin_boolean_errors']['posterflow_proof']
+            if failure=='capture-stability':report['checks'][0]['capture_state_stable_seconds']=.1
+            elif failure=='capture-ack':report['checks'][0]['png_completion_ack']=False
+            elif failure=='ack-size':report['capture_acknowledgments'][0]['dimensions']=[100,100]
+            elif failure=='ack-sequence':report['capture_acknowledgments'][0]['sequence']=99
+            elif failure=='poster-current':poster['current_sha256']='0'*64
+            elif failure=='poster-published':poster['published_140_sha256']='0'*64
+            elif failure=='poster-bytes':poster['bytes_equal']=False
+            elif failure=='poster-inputs':poster['current_inputs']['isMovie']='changed'
+            self.write(path,report)
+            with self.subTest(failure=failure),self.assertRaises(AssertionError):gate.evidence(self.root,'1.5.0')
         path.write_bytes(original)
 
     def test_all_thirteen_movies_native_routes_and_negatives_are_required(self):

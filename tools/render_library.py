@@ -17,6 +17,7 @@ from urllib.request import Request, urlopen
 from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageStat
 import copy
 import signal
+import socket
 
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -295,12 +296,27 @@ def wait_for(predicate,timeout=40):
     raise RuntimeError('Native Kodi fixture did not reach its expected state')
 
 
+def available_port(requested=0):
+    with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as listener:
+        listener.bind(('127.0.0.1',requested))
+        return listener.getsockname()[1]
+
+
+def fixture_ready(rpc,logfile,port,identity):
+    try:
+        if '<CWebserver[%d]>: Started'%port not in logfile.read_text(encoding='utf-8',errors='replace'):
+            return False
+        return rpc('JSONRPC.Ping')=='pong' and rpc('Settings.GetSettingValue',{'setting':'services.devicename'}).get('value')==identity
+    except (OSError,ValueError,RuntimeError):return False
+
+
 def main():
+    port=available_port()
     release=json.loads((ROOT/'release.json').read_text())['release']
     assert isinstance(release,str) and release and all(c.isalnum() or c in '._-' for c in release)
     output=ROOT/'releases'/(release+'-qa');output.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='foundry-kodi-') as temporary:
-        base=Path(temporary);home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
+        base=Path(temporary);identity='Foundry Library QA '+base.name;home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
         profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True)
         helper=profile/'addons/script.foundry.helper';shutil.copytree(HELPER,helper)
         manifest=E.parse(helper/'addon.xml')
@@ -343,7 +359,7 @@ def main():
         favorites_view=E.fromstring('<window><defaultcontrol always="true">57</defaultcontrol><views>57</views><controls><include>View_57_StreamPilot</include></controls></window>')
         for action in E.parse(SKIN/'xml/MyFavourites.xml').findall('onload'):favorites_view.insert(1,copy.deepcopy(action))
         E.ElementTree(favorites_view).write(active/'xml/MyFavourites.xml',encoding='UTF-8',xml_declaration=True)
-        (userdata/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting><setting id="filelists.showparentdiritems">false</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">18080</setting><setting id="services.webserverauthentication">false</setting></settings>')
+        (userdata/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting><setting id="filelists.showparentdiritems">false</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">%d</setting><setting id="services.webserverauthentication">false</setting><setting id="services.devicename">%s</setting></settings>'%(port,identity),encoding='utf-8')
         keymaps=userdata/'keymaps';keymaps.mkdir()
         (keymaps/'fixture.xml').write_text('<keymap><global><keyboard><f12>RunScript('+str(base/'fixture.py')+')</f12></keyboard></global></keymap>')
         assets=base/'assets';assets.mkdir()
@@ -405,12 +421,12 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             kodi=subprocess.Popen(['kodi','-p','-fs','--windowing=x11','--debug'],env=environment,stdout=log,stderr=log,start_new_session=True)
             def rpc(method,params=None):
                 payload=json.dumps({'jsonrpc':'2.0','id':1,'method':method,'params':params or {}}).encode()
-                with urlopen(Request('http://127.0.0.1:18080/jsonrpc',data=payload,headers={'Content-Type':'application/json'}),timeout=5) as response:
+                with urlopen(Request('http://127.0.0.1:%d/jsonrpc'%port,data=payload,headers={'Content-Type':'application/json'}),timeout=5) as response:
                     result=json.loads(response.read())
                 if 'error' in result:raise RuntimeError(str(result['error']))
                 return result.get('result')
             def ready():
-                try:return rpc('JSONRPC.Ping')=='pong'
+                try:return fixture_ready(rpc,profile/'temp/kodi.log',port,identity)
                 except Exception:return False
             wait_for(ready,60)
             assert rpc('Application.GetProperties',{'properties':['version']})['version']['major']>=21,'Kodi 21+ required'
@@ -633,7 +649,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             assert movie_wallpapers['approved_count']==movie_wallpapers['rendered_approved_count']==13
             evidence.append({'section':'Movies submenu wallpapers','passed':True,'rendered_approved_count':13})
             wait_for(lambda:(base/'complete').exists())
-            (output/'verification.json').write_text(json.dumps({'renderer':'Native Kodi '+subprocess.check_output(['kodi','--version'],text=True).strip(),'canvas':[1920,1080],'checks':evidence,'movie_submenu_wallpapers':movie_wallpapers,'scope':'Controlled fixtures; not Shield, live providers or Android pixel parity'},indent=2)+'\n')
+            (output/'verification.json').write_text(json.dumps({'fixture_identity':identity,'fixture_port':port,'renderer':'Native Kodi '+subprocess.check_output(['kodi','--version'],text=True).strip(),'canvas':[1920,1080],'checks':evidence,'movie_submenu_wallpapers':movie_wallpapers,'scope':'Controlled fixtures; not Shield, live providers or Android pixel parity'},indent=2)+'\n',encoding='utf-8')
         finally:
             if kodi:
                 try:os.killpg(kodi.pid,signal.SIGTERM)

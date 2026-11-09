@@ -64,6 +64,8 @@ def snapshot():
             'overview':info('Container(58).ListItem.Property(Foundry.Game.Overview)'),
             'modal':xbmc.getCondVisibility('System.HasActiveModalDialog'),
             'updating':xbmc.getCondVisibility('Container.IsUpdating'),
+            'progress_visible':xbmc.getCondVisibility('Window.IsVisible(progressdialog)'),
+            'busy_visible':xbmc.getCondVisibility('Window.IsVisible(busydialog)') or xbmc.getCondVisibility('Window.IsVisible(busydialognocancel)'),
             'dialog_id':xbmcgui.getCurrentWindowDialogId(),
             'dialog_heading':info('Control.GetLabel(1)'),
             'dialog_message':info('Control.GetLabel(9)')}
@@ -91,12 +93,39 @@ def wait_invocation(action,before):
     return new_invocation(action,before)
 def wait_invocation_complete(identifier,action,timeout=30):
     wait(lambda:invocation_complete(invocation_records(),identifier,action),timeout)
-def shot(name):
+CAPTURE_SETTLE_SECONDS=.5
+capture_sequence=0
+def settle_capture(predicate=None,timeout=30):
+    deadline=time.monotonic()+timeout;previous=None;since=None
+    while time.monotonic()<deadline:
+        state=snapshot()
+        ready=(not state['updating'] and not state['progress_visible'] and not state['busy_visible'] and
+               (predicate is None or predicate(state)))
+        if not ready or state!=previous:
+            previous=state;since=time.monotonic() if ready else None
+        elif since is not None and time.monotonic()-since>=CAPTURE_SETTLE_SECONDS:
+            return state
+        xbmc.sleep(50)
+    raise AssertionError('Native capture state did not settle: '+json.dumps(snapshot()))
+def shot(name,predicate=None):
+    global capture_sequence
+    state=settle_capture(predicate)
     target=OUTPUT/(name+'.png')
     if target.exists():target.unlink()
-    xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/(name+'.png'))+')')
-    wait(lambda:(OUTPUT/(name+'.png')).exists())
-    evidence.append(dict(case=name,**snapshot()))
+    xbmc.executebuiltin('TakeScreenshot('+str(target)+')')
+    wait(lambda:target.exists())
+    require(snapshot()==state,'Native state changed while the screenshot was captured')
+    capture_sequence+=1
+    request={'sequence':capture_sequence,'case':name,'state':state,'stable_seconds':CAPTURE_SETTLE_SECONDS}
+    pending=BASE/'capture-request.tmp';pending.write_text(json.dumps(request),encoding='utf-8');pending.replace(BASE/'capture-request.json')
+    def encoded():
+        ack=BASE/'capture-complete.json'
+        if not ack.exists():return False
+        result=json.loads(ack.read_text(encoding='utf-8'))
+        return result.get('sequence')==capture_sequence and result.get('case')==name and result.get('passed') is True
+    wait(encoded)
+    require(snapshot()==state,'Native state changed during PNG encoding')
+    evidence.append(dict(case=name,capture_state_stable_seconds=CAPTURE_SETTLE_SECONDS,png_completion_ack=True,**state))
 def directory_id(): return info('Container.Property(Foundry.Games.DirectoryId)')
 def directory_ready(query, previous):
     path=info('Container.FolderPath')
@@ -237,7 +266,7 @@ try:
         require(native_core_dialog(state,expected_core),'Unexpected game launch dialog: '+json.dumps(state))
         return True
     wait(core_ready)
-    shot('games-missing-core')
+    shot('games-missing-core',lambda state:native_core_dialog(state,expected_core))
     for unused in range(4):
         if not xbmc.getCondVisibility('System.HasActiveModalDialog'):break
         action('back')
@@ -251,7 +280,7 @@ try:
     check=Library(str(profile/'library-v1.db'))
     require(len(check.games(mode='recent'))==1,'Cancelled launch incorrectly changed recent games')
     check.close()
-    (OUTPUT/'fixture-result.json').write_text(json.dumps({'checks':evidence,'assertions':{'console_listing':True,'automatic_games_view_selected':True,'focused_hero_metadata':True,'remote_navigation':True,'page_back_focus':True,'favorite_persistence':True,'favorite_refresh_complete':True,'favorites_native_route':True,'fresh_directory_acknowledgments':True,'search_results':True,'search_cancel':True,'search_cancel_retains_listing':True,'search_cancel_invoker_completed':True,'launch_cancel_invoker_completed':True,'missing_core_dialog':True,'launch_cancel_focus':True,'cancel_does_not_record_play':True},'invocations':list(invocation_records().values()),'native_core_expected':expected_core,'scope':'Native Kodi UI only. Synthetic non-playable files. No cores/ROMs downloaded. Not Shield or gameplay certification.','limitations':['No actual gameplay or controller/disconnect/multiplayer validation','No Shield or Android emulator compatibility validation','No real VFS provider or Google Drive authorization tested','PSP remains unsupported']},indent=2)+'\n',encoding='utf-8')
+    (OUTPUT/'fixture-result.json').write_text(json.dumps({'checks':evidence,'assertions':{'console_listing':True,'capture_state_settled':True,'screenshot_encoding_acknowledged':True,'automatic_games_view_selected':True,'focused_hero_metadata':True,'remote_navigation':True,'page_back_focus':True,'favorite_persistence':True,'favorite_refresh_complete':True,'favorites_native_route':True,'fresh_directory_acknowledgments':True,'search_results':True,'search_cancel':True,'search_cancel_retains_listing':True,'search_cancel_invoker_completed':True,'launch_cancel_invoker_completed':True,'missing_core_dialog':True,'launch_cancel_focus':True,'cancel_does_not_record_play':True},'invocations':list(invocation_records().values()),'native_core_expected':expected_core,'scope':'Native Kodi UI only. Synthetic non-playable files. No cores/ROMs downloaded. Not Shield or gameplay certification.','limitations':['No actual gameplay or controller/disconnect/multiplayer validation','No Shield or Android emulator compatibility validation','No real VFS provider or Google Drive authorization tested','PSP remains unsupported']},indent=2)+'\n',encoding='utf-8')
     (BASE/'complete').write_text('ok')
 except Exception:
     (BASE/'error.txt').write_text(traceback.format_exc(),encoding='utf-8')
@@ -369,7 +398,8 @@ def settle_startup(rpc, records, log_path, alive, output, identity, skin_path, t
 
 
 def preserve_fixture_evidence(base, profile, output):
-    for source, name in ((profile / 'temp/kodi.log', 'kodi.log'), (base / 'error.txt', 'error.txt')):
+    for source, name in ((profile / 'temp/kodi.log', 'kodi.log'), (base / 'error.txt', 'error.txt'),
+                         (base/'capture-request.json','capture-request.json'), (base/'capture-complete.json','capture-complete.json')):
         if source.exists(): shutil.copyfile(source, output / name)
     for source, name in ((base / 'invocations', 'invocations'),):
         if source.exists(): shutil.copytree(source, output / name, dirs_exist_ok=True)
@@ -381,21 +411,31 @@ def preserve_fixture_evidence(base, profile, output):
         if crash.resolve()!=target.resolve(): shutil.copyfile(crash,target)
 
 
+KNOWN_POSTERFLOW_SHA256 = 'ebcdc5840651253eb0bae2d1241578624d3ee132c5a63ad53a7d58aa2e8c2993'
+POSTERFLOW_EXPRESSION = '[string.isempty(listitem.art(clearlogo)) | !skin.hassetting(enable.clearlogo)] + [[string.isequal(listitem.dbtype,movie)] | [string.isequal(listitem.dbtype,tvshow)] | [string.isequal(listitem.dbtype,season)] | [string.isequal(listitem.dbtype,episode)]'
+BASELINE_EXPRESSION_INPUTS = {name:'String.IsEqual(ListItem.DBType,'+kind+')' for name,kind in (('isMovie','movie'),('isTVShow','tvshow'),('isSeason','season'),('isEpisode','episode'))}
 KNOWN_TIMER_SHA256 = 'c2c90596e9362a97dc5ad2e79004273fe014954bf0f976cc39f78e7cf2e02614'
 
 
-def skin_boolean_report(text, timer_sha256):
+def skin_boolean_report(text, timer_sha256, posterflow_proof=None):
     if timer_sha256 != KNOWN_TIMER_SHA256:
         raise AssertionError('Known baseline Timer warning requires exact unchanged published bytes')
-    known, unexpected = [], []
-    marker = 'Error parsing boolean expression'
+    posterflow_valid=(posterflow_proof is not None and
+        posterflow_proof.get('current_sha256')==posterflow_proof.get('published_140_sha256')==KNOWN_POSTERFLOW_SHA256 and
+        posterflow_proof.get('bytes_equal') is True and
+        posterflow_proof.get('current_inputs')==posterflow_proof.get('published_140_inputs')==BASELINE_EXPRESSION_INPUTS)
+    known={'timers':[],'posterflow':[]};unexpected=[]
+    normalize=lambda value:''.join(value.casefold().split())
+    marker='Error parsing boolean expression'
     for line in text.splitlines():
         if marker in line:
-            expression = line.split(marker, 1)[1].strip()
-            (known if expression == 'control.hasfocus($param[list_id])' else unexpected).append(line)
-    if unexpected: raise AssertionError('New skin boolean parsing failures: ' + str(unexpected))
-    return {'passed': True, 'known_baseline_warnings': known, 'new_errors': unexpected,
-            'unchanged_timer_sha256': timer_sha256}
+            expression=normalize(line.split(marker,1)[1])
+            if expression==normalize('control.hasfocus($param[list_id])'):known['timers'].append(line)
+            elif expression==normalize(POSTERFLOW_EXPRESSION) and posterflow_valid:known['posterflow'].append(line)
+            else:unexpected.append(line)
+    if unexpected:raise AssertionError('New skin boolean parsing failures: '+str(unexpected))
+    return {'passed':True,'known_baseline_warnings':known,'new_errors':unexpected,
+            'unchanged_timer_sha256':timer_sha256,'posterflow_proof':posterflow_proof}
 
 
 def wait_for(predicate, timeout=60):
@@ -404,6 +444,46 @@ def wait_for(predicate, timeout=60):
         if predicate(): return
         time.sleep(.1)
     raise RuntimeError('Native games fixture timed out')
+
+
+def verify_capture(path, timeout=10):
+    """Keep Kodi alive until its asynchronous encoder finishes the actual PNG."""
+    from PIL import Image
+    import struct
+    pending = []
+    def complete():
+        try:
+            with Image.open(path) as captured:
+                if captured.size != (1920, 1080):
+                    raise AssertionError('Native Games screenshot has wrong dimensions: ' + str(captured.size))
+                captured.verify()
+            return True
+        except (OSError, SyntaxError, EOFError, struct.error) as error:
+            pending[:] = [error]
+            return False
+    try:
+        wait_for(complete, timeout)
+    except RuntimeError as error:
+        raise AssertionError('Native Games screenshot did not finish encoding: ' + str(path)) from (pending[0] if pending else error)
+
+
+def acknowledge_capture(base, output):
+    request_path=base/'capture-request.json'
+    if not request_path.exists():return
+    request=json.loads(request_path.read_text(encoding='utf-8'))
+    name=request['case'];sequence=request['sequence']
+    if not re.fullmatch(r'games-[a-z0-9-]+',name) or not isinstance(sequence,int) or sequence<1:
+        raise AssertionError('Invalid isolated native capture request')
+    ack_path=base/'capture-complete.json'
+    if ack_path.exists():
+        previous=json.loads(ack_path.read_text(encoding='utf-8'))
+        if previous.get('sequence')==sequence and previous.get('case')==name:return
+    verify_capture(output/(name+'.png'))
+    result={'sequence':sequence,'case':name,'passed':True,'dimensions':[1920,1080],'stable_seconds':request['stable_seconds']}
+    temporary=base/'capture-complete.tmp'
+    temporary.write_text(json.dumps(result),encoding='utf-8');temporary.replace(ack_path)
+    with (output/'capture-acknowledgments.jsonl').open('a',encoding='utf-8') as stream:
+        stream.write(json.dumps(result)+'\n')
 
 
 def stop_process_group(process):
@@ -501,7 +581,8 @@ def prepare_shipped_skin(home, profile, skin_source=SKIN, helper_source=HELPER, 
     manifest.write(helper / 'addon.xml', encoding='UTF-8', xml_declaration=True)
     skin = addons / 'skin.foundry'
     relative_paths = ['addon.xml', 'xml/Home.xml', 'xml/MyGames.xml', 'xml/Includes.xml',
-                      'xml/View_58_FoundryGames.xml', 'xml/Font.xml', 'xml/Timers.xml']
+                      'xml/View_58_FoundryGames.xml', 'xml/Font.xml', 'xml/Timers.xml',
+                      'xml/View_51_PosterFlow.xml','xml/Expressions.xml','xml/Includes_Animations.xml']
     relative_paths += [str(path.relative_to(skin_source)).replace('\\', '/')
                        for path in (skin_source / 'fonts').rglob('*') if path.is_file()]
     hashes = {}
@@ -614,18 +695,20 @@ def main():
                     if (base / 'error.txt').exists(): raise AssertionError((base / 'error.txt').read_text())
                     if kodi.poll() is not None:
                         raise RuntimeError('Kodi exited before Games fixture completion; return code %s. See console/crash logs.' % kodi.returncode)
+                    acknowledge_capture(base,output)
                     return (base / 'complete').exists()
                 wait_for(finished, 240)
                 report = json.loads((output / 'fixture-result.json').read_text())
                 report['renderer'] = version
+                report['capture_acknowledgments']=[json.loads(line) for line in (output/'capture-acknowledgments.jsonl').read_text(encoding='utf-8').splitlines()]
                 report['packages'] = json.loads((ROOT / 'release.json').read_text(encoding='utf-8'))['packages']
                 report['release'] = release
                 report['shipped_skin_hashes'] = skin_hashes
                 report['host'] = 'Actual pinned skin.foundry; Home/MyGames/Includes/view/fonts unchanged; only copied helper/services disabled'
+                # TakeScreenshot is asynchronous: file existence can precede
+                # PNG completion. Validate actual full images before teardown.
                 for check in report['checks']:
-                    with Image.open(output / (check['case'] + '.png')) as im:
-                        assert im.size == (1920,1080), im.size
-                        im.verify()
+                    verify_capture(output / (check['case'] + '.png'))
             finally:
                 if kodi:
                     stop_process_group(kodi)
@@ -633,10 +716,19 @@ def main():
                 preserve_fixture_evidence(base,profile,output)
         kodi_log = output / 'kodi.log'
         timer_bytes=(SKIN/'xml/Timers.xml').read_bytes()
+        posterflow=(SKIN/'xml/View_51_PosterFlow.xml').read_bytes()
+        current_expressions=E.parse(SKIN/'xml/Expressions.xml').getroot()
         with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.4.0.zip') as baseline:
             if timer_bytes != baseline.read('skin.foundry/xml/Timers.xml'):
                 raise AssertionError('Published baseline Timer bytes differ')
-        boolean_errors=skin_boolean_report(kodi_log.read_text(encoding='utf-8',errors='replace'),hashlib.sha256(timer_bytes).hexdigest())
+            published_posterflow=baseline.read('skin.foundry/xml/View_51_PosterFlow.xml')
+            published_expressions=E.fromstring(baseline.read('skin.foundry/xml/Expressions.xml'))
+        posterflow_proof={'current_sha256':hashlib.sha256(posterflow).hexdigest(),
+            'published_140_sha256':hashlib.sha256(published_posterflow).hexdigest(),
+            'bytes_equal':posterflow==published_posterflow,
+            'current_inputs':{name:current_expressions.findtext("expression[@name='%s']"%name) for name in BASELINE_EXPRESSION_INPUTS},
+            'published_140_inputs':{name:published_expressions.findtext("expression[@name='%s']"%name) for name in BASELINE_EXPRESSION_INPUTS}}
+        boolean_errors=skin_boolean_report(kodi_log.read_text(encoding='utf-8',errors='replace'),hashlib.sha256(timer_bytes).hexdigest(),posterflow_proof)
         launch_log=native_game_log_report(kodi_log.read_text(encoding='utf-8',errors='replace'))
         (output/'games-native-errors.json').write_text(json.dumps(launch_log,indent=2)+'\n',encoding='utf-8')
         if not launch_log['complete'] or not launch_log['native_gameclient_path'] or launch_log['failures']:

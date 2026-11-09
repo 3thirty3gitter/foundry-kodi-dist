@@ -5,6 +5,7 @@ import tempfile
 import json
 import sys
 import time
+import types
 from urllib.parse import parse_qs, urlsplit
 from pathlib import Path
 import unittest
@@ -244,7 +245,7 @@ class GamesRendererTests(unittest.TestCase):
         runner = self.runner()
         known = 'Error parsing boolean expression control.hasfocus($param[list_id])'
         result = runner.skin_boolean_report(known, runner.KNOWN_TIMER_SHA256)
-        self.assertEqual(result['known_baseline_warnings'], [known])
+        self.assertEqual(result['known_baseline_warnings']['timers'], [known])
         for log, digest in ((known, '0' * 64), ('Error parsing boolean expression bad.games.expression', runner.KNOWN_TIMER_SHA256)):
             with self.assertRaises(AssertionError): runner.skin_boolean_report(log, digest)
         for name in ('dev-validation.yml', 'release.yml'):
@@ -279,6 +280,109 @@ class GamesRendererTests(unittest.TestCase):
                 acknowledgment = json.loads((Path(temporary) / 'directory-acks.jsonl').read_text())
                 self.assertEqual(acknowledgment['directory_id'], 'fresh-directory')
 
+    def test_native_png_waits_for_partial_file_to_become_the_genuine_capture(self):
+        runner = self.runner()
+        from PIL import Image
+        for initial in (b'', b'\x89PNG\r\n\x1a\n'):
+            with self.subTest(initial=initial), tempfile.TemporaryDirectory() as temporary:
+                path = Path(temporary) / 'actual-capture.png'; path.write_bytes(initial)
+                def encode(unused): Image.new('RGB', (1920, 1080), '#123456').save(path)
+                with patch.object(runner.time, 'sleep', side_effect=encode) as yielded:
+                    runner.verify_capture(path)
+                yielded.assert_called_once_with(.1)
+                with Image.open(path) as capture:
+                    self.assertEqual(capture.size, (1920, 1080))
+                    self.assertEqual(capture.getpixel((0, 0)), (18, 52, 86))
+
+    def test_native_png_never_accepts_a_permanently_truncated_capture(self):
+        runner = self.runner()
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / 'incomplete.png'; path.write_bytes(b'\x89PNG\r\n\x1a\n')
+            ticks = iter(index / 10 for index in range(20))
+            with patch.object(runner.time, 'monotonic', side_effect=lambda: next(ticks)), patch.object(runner.time, 'sleep'), self.assertRaisesRegex(AssertionError, 'did not finish encoding'):
+                runner.verify_capture(path, timeout=.4)
+            self.assertEqual(path.read_bytes(), b'\x89PNG\r\n\x1a\n')
+
+    def test_native_png_rejects_wrong_dimensions_and_wait_precedes_teardown(self):
+        runner = self.runner()
+        from PIL import Image
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / 'wrong-size.png'; Image.new('RGB', (100, 100)).save(path)
+            with patch.object(runner.time, 'sleep') as sleep, self.assertRaisesRegex(AssertionError, 'wrong dimensions'):
+                runner.verify_capture(path)
+            sleep.assert_not_called()
+        source = (ROOT / 'tools/render_games.py').read_text(encoding='utf-8')
+        self.assertLess(source.index("verify_capture(output /"), source.index('stop_process_group(kodi)'))
+
+    def test_capture_settles_after_real_fades_and_matches_dialog_state(self):
+        runner=self.runner();tree=ast.parse(runner.FIXTURE)
+        function=next(node for node in tree.body if isinstance(node,ast.FunctionDef) and node.name=='settle_capture')
+        clock={'now':0.0}
+        def snapshot():
+            return dict(directory_id='new',viewmode='Foundry Games',game_id='game',dialog_id=12002,
+                        updating=False,busy_visible=False,progress_visible=clock['now']<.25)
+        class Kodi:
+            def sleep(self,duration):clock['now']+=duration/1000
+        namespace=dict(snapshot=snapshot,time=types.SimpleNamespace(monotonic=lambda:clock['now']),
+                       xbmc=Kodi(),json=json,CAPTURE_SETTLE_SECONDS=.5)
+        exec(compile(ast.Module(body=[function],type_ignores=[]),'<capture-settle>','exec'),namespace)
+        result=namespace['settle_capture'](lambda state:state['dialog_id']==12002)
+        self.assertEqual(result['directory_id'],'new');self.assertGreaterEqual(clock['now'],.75)
+        animations=ET.parse(ROOT.parent/'skin.foundry-nimbus/xml/Includes_Animations.xml').getroot()
+        fade=animations.find("include[@name='Visible_Fade']")
+        dialog=animations.find("include[@name='Animation_DialogPopupOpenClose']")
+        bounds=[int(node.get('time','0'))+int(node.get('delay','0')) for node in list(fade.iter('animation'))+list(dialog.iter('effect'))]
+        self.assertGreater(500,max(bounds))
+
+    def test_capture_acknowledges_only_the_actual_fully_encoded_png_once(self):
+        runner=self.runner();from PIL import Image
+        with tempfile.TemporaryDirectory() as temporary:
+            base=Path(temporary);output=base/'output';output.mkdir()
+            path=output/'games-favorites.png';path.write_bytes(b'')
+            (base/'capture-request.json').write_text(json.dumps(dict(sequence=1,case='games-favorites',stable_seconds=.5)))
+            def encode(unused):
+                self.assertFalse((base/'capture-complete.json').exists())
+                Image.new('RGB',(1920,1080),'#345678').save(path)
+            with patch.object(runner.time,'sleep',side_effect=encode):runner.acknowledge_capture(base,output)
+            result=json.loads((base/'capture-complete.json').read_text())
+            self.assertEqual((result['sequence'],result['case'],result['passed']),(1,'games-favorites',True))
+            runner.acknowledge_capture(base,output)
+            self.assertEqual(len((output/'capture-acknowledgments.jsonl').read_text().splitlines()),1)
+
+    def test_shot_cannot_return_from_an_old_png_completion_ack(self):
+        runner=self.runner();tree=ast.parse(runner.FIXTURE)
+        functions=[node for node in tree.body if isinstance(node,ast.FunctionDef) and node.name in {'shot','wait','require'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            base=Path(temporary);state=dict(directory_id='fresh',viewmode='Foundry Games',game_id='game')
+            (base/'capture-complete.json').write_text(json.dumps(dict(sequence=99,case='old',passed=True)))
+            evidence=[];events=[]
+            class Kodi:
+                def executebuiltin(self,command):(base/'games-favorites.png').write_bytes(b'capture')
+                def sleep(self,duration):
+                    self.assert_no_evidence()
+                    events.append('yielded-for-host')
+                    (base/'capture-complete.json').write_text(json.dumps(dict(sequence=1,case='games-favorites',passed=True)))
+                def assert_no_evidence(self):
+                    if evidence:raise AssertionError('Capture advanced before matching PNG acknowledgment')
+            namespace=dict(BASE=base,OUTPUT=base,xbmc=Kodi(),json=json,time=time,snapshot=lambda:dict(state),
+                           settle_capture=lambda predicate:dict(state),capture_sequence=0,CAPTURE_SETTLE_SECONDS=.5,evidence=evidence)
+            exec(compile(ast.Module(body=functions,type_ignores=[]),'<capture-ack>','exec'),namespace)
+            namespace['shot']('games-favorites')
+            self.assertEqual(events,['yielded-for-host']);self.assertTrue(evidence[0]['png_completion_ack'])
+            source=runner.FIXTURE
+            self.assertIn("require(snapshot()==state,'Native state changed during PNG encoding')",source)
+
+    def test_posterflow_warning_needs_exact_published_bytes_and_inputs(self):
+        runner=self.runner();warning='Error parsing boolean expression '+runner.POSTERFLOW_EXPRESSION
+        proof=dict(current_sha256=runner.KNOWN_POSTERFLOW_SHA256,published_140_sha256=runner.KNOWN_POSTERFLOW_SHA256,
+                   bytes_equal=True,current_inputs=dict(runner.BASELINE_EXPRESSION_INPUTS),published_140_inputs=dict(runner.BASELINE_EXPRESSION_INPUTS))
+        result=runner.skin_boolean_report(warning,runner.KNOWN_TIMER_SHA256,proof)
+        self.assertEqual(result['known_baseline_warnings']['posterflow'],[warning])
+        for changes in ({'current_sha256':'0'*64},{'published_140_sha256':'0'*64},{'bytes_equal':False},{'current_inputs':{}}):
+            with self.subTest(changes=changes),self.assertRaises(AssertionError):runner.skin_boolean_report(warning,runner.KNOWN_TIMER_SHA256,dict(proof,**changes))
+        with self.assertRaises(AssertionError):runner.skin_boolean_report(warning,runner.KNOWN_TIMER_SHA256)
+        with self.assertRaises(AssertionError):runner.skin_boolean_report('Error parsing boolean expression new.games.condition',runner.KNOWN_TIMER_SHA256,proof)
+
     def test_cleanup_kills_owned_group_after_launcher_exits(self):
         spec = importlib.util.spec_from_file_location('games_native_renderer', ROOT / 'tools/render_games.py')
         runner = importlib.util.module_from_spec(spec)
@@ -302,7 +406,7 @@ class GamesRendererTests(unittest.TestCase):
                     (path / 'default.py').write_text('original helper setup')
                 (path / 'addon.xml').write_text(manifest + '</addon>')
             skin = source / 'src/skin.foundry'; (skin / 'xml').mkdir(); (skin / 'fonts').mkdir()
-            for name in ('Home.xml','MyGames.xml','Includes.xml','View_58_FoundryGames.xml','Font.xml','Timers.xml'):
+            for name in ('Home.xml','MyGames.xml','Includes.xml','View_58_FoundryGames.xml','Font.xml','Timers.xml','View_51_PosterFlow.xml','Expressions.xml','Includes_Animations.xml'):
                 (skin / 'xml' / name).write_text('<unchanged name="%s" />' % name)
             (skin / 'fonts/example.ttf').write_bytes(b'original-font-fixture')
             ids, hashes = runner.prepare_shipped_skin(home, profile, skin, source / 'src/script.foundry.helper', source)
