@@ -1,0 +1,564 @@
+{
+  "verification_time_utc": "2026-11-09T00:11:01.220238+00:00",
+  "status": "published_downloads_verified_target_device_checks_pending",
+  "release": "1.4.0",
+  "skin": "1.4.0",
+  "helper": "1.3.0",
+  "source_url": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+  "distribution_commit_verified": "fa2ea18d4ea83626bcc4b26c6dc39d4f0ce78eef",
+  "source_commits": {
+    "skin.foundry-nimbus": "d7a7979ebe0c911190f9441c32eac3103217f291",
+    "script.foundry.helper": "e5525bcfcc45f1477ed45ef6cd98a1a56d2f2038"
+  },
+  "validation": {
+    "source_regression_tests": {
+      "tests": 510,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "successful": true,
+      "python": "3.12.16"
+    },
+    "packaged_regression_tests": {
+      "tests": 510,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "successful": true,
+      "python": "3.12.16"
+    },
+    "native_kodi_interface": {
+      "home_favorites_shipped_xml_sha256": "0bbd7c537930d4e48218170657872a7649d09700cbf8f719a412d1d0c9ebb9b3",
+      "home_favorites_row_focus_and_horizontal_navigation": true,
+      "home_favorites_back_returns_menu": true,
+      "preference_migration": [
+        {
+          "before": "resource.uisounds.kodi",
+          "after": "resource.uisounds.foundry.pulse"
+        },
+        {
+          "before": "",
+          "after": ""
+        },
+        {
+          "before": "resource.uisounds.foundry.qacustom",
+          "after": "resource.uisounds.foundry.qacustom"
+        }
+      ],
+      "pulse_native_resource_selected": "resource.uisounds.foundry.pulse",
+      "audible_output_verified": false,
+      "directional_seek": [
+        {
+          "window": 12005,
+          "label": "",
+          "details": "",
+          "studio": "/tmp/foundry-interface-mk5wa0ev/kodi/portable_data/userdata/addon_data/script.foundry.helper/catalog-studios/5dcfab41ee88b6da44ff89f137f5d0b336f80fe40ab7e9de99b4bfb4143be0be.png",
+          "title": "",
+          "wallpaper": "",
+          "focus": 802,
+          "favorites_count": "",
+          "favorite_label": "",
+          "seek_offset": "",
+          "seek_step": "+00:10",
+          "player_time": "00:02",
+          "player_duration": "01:00",
+          "seek_visible": true,
+          "busy_visible": false,
+          "python_optimize": 1
+        },
+        {
+          "window": 12005,
+          "label": "",
+          "details": "",
+          "studio": "/tmp/foundry-interface-mk5wa0ev/kodi/portable_data/userdata/addon_data/script.foundry.helper/catalog-studios/5dcfab41ee88b6da44ff89f137f5d0b336f80fe40ab7e9de99b4bfb4143be0be.png",
+          "title": "",
+          "wallpaper": "",
+          "focus": 802,
+          "favorites_count": "",
+          "favorite_label": "",
+          "seek_offset": "",
+          "seek_step": "-00:10",
+          "player_time": "00:14",
+          "player_duration": "01:00",
+          "seek_visible": true,
+          "busy_visible": false,
+          "python_optimize": 1
+        }
+      ],
+      "playback_studio_logo_top_right": true,
+      "ripple_native_dialog": "busydialognocancel (shipped DialogBusy.xml)",
+      "ripple_changed_pixels": [
+        6584,
+        8052,
+        8118,
+        7113,
+        6998,
+        5861,
+        7045,
+        6554,
+        7999,
+        8043,
+        7756
+      ],
+      "ripple_capture_elapsed_seconds": 3.2962042590000067,
+      "ripple_rpc_max_seconds": 0.004392803999991202,
+      "widget_metadata_top_left": true,
+      "widget_episode_number_title": true,
+      "studio_logo_above_left_row": true,
+      "settings_hover_uses_widget_wallpaper": true,
+      "empty_widget_restores_full_wallpaper": true,
+      "system_menu_icons": 52,
+      "generated_category_and_option_icons": true,
+      "vod_rounded_frame": true,
+      "live_rounded_frame_preview": true,
+      "scope": "Isolated native desktop Kodi; synthetic metadata/video/Favorites; initial widget harness only, restored shipped Home for Favorites, helper setup/service disabled, null audio sink. Live providers, audible sound, device FPS and Shield remain unverified"
+    },
+    "native_kodi_startup_splash": {
+      "real_kodi_cold_start": true,
+      "writable_home_override_selected": true,
+      "approved_artwork_unchanged": true,
+      "canvas": [
+        1920,
+        1080
+      ],
+      "scope": "Native desktop Kodi; Shield restart remains unverified"
+    },
+    "native_kodi_fixture": {
+      "renderer": "Native Kodi Kodi from Debian Media Center 21.3 Debian package version: 2:21.3+dfsg-1ubuntu1\nCopyright (C) 2005-2025 Team Kodi from Debian - http://kodi.tv",
+      "canvas": [
+        1920,
+        1080
+      ],
+      "checks": [
+        {
+          "section": "Preloaded first paint and single Back",
+          "initialized": true,
+          "list_size": 21,
+          "focus": 0,
+          "title": "Fixture title 01",
+          "loading": "",
+          "parent": 10004,
+          "preloaded_consumed": true,
+          "ticks_before_observation": 0,
+          "python_optimize": 1,
+          "focus_after_normal_ticks": 50,
+          "after_back_and_dispose": 10004
+        },
+        {
+          "section": "Movies",
+          "screenshot": "movies.png",
+          "focused_poster_bounds": [
+            598,
+            544,
+            865,
+            944
+          ],
+          "scrolled_poster_bounds": [
+            598,
+            544,
+            865,
+            944
+          ],
+          "source_expected_bounds": [
+            598,
+            544,
+            865,
+            944
+          ],
+          "visible_colored_glow_delta_rgb": [
+            39,
+            12,
+            73
+          ],
+          "focus_return_restores_poster": true,
+          "next_previous_page_roundtrip": true,
+          "row_ends_do_not_wrap": true,
+          "focused_next_arrow_bounds": [
+            1586,
+            662,
+            1805,
+            826
+          ]
+        },
+        {
+          "section": "TV Shows",
+          "screenshot": "tv-shows.png",
+          "focused_poster_bounds": [
+            598,
+            544,
+            865,
+            944
+          ],
+          "scrolled_poster_bounds": [
+            598,
+            544,
+            865,
+            944
+          ],
+          "source_expected_bounds": [
+            598,
+            544,
+            865,
+            944
+          ],
+          "visible_colored_glow_delta_rgb": [
+            39,
+            12,
+            73
+          ],
+          "focus_return_restores_poster": true,
+          "next_previous_page_roundtrip": true,
+          "row_ends_do_not_wrap": true,
+          "focused_next_arrow_bounds": [
+            1586,
+            662,
+            1805,
+            826
+          ]
+        },
+        {
+          "section": "Three-title row",
+          "focused_poster_bounds": [
+            91,
+            544,
+            357,
+            944
+          ],
+          "left_padding_preserved": true
+        },
+        {
+          "section": "Episode details",
+          "season_episode_and_title_visible": true,
+          "specials_zero_preserved": true,
+          "show_title_air_date_and_runtime_available": true
+        },
+        {
+          "section": "Native provider view 57",
+          "only_selected_poster_glows": true,
+          "glow_pixel_deltas": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              39,
+              12,
+              73
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "selected_artwork_colour_matches": true,
+          "stale_owner_glow_delta": [
+            0,
+            0,
+            0
+          ],
+          "restored_owner_glow_delta": [
+            39,
+            12,
+            73
+          ],
+          "stale_owner_glow_hidden": true,
+          "shared_studio_logo_visible": true,
+          "shared_ratings_visible": true,
+          "legacy_page_icons_replaced": true,
+          "next_previous_page_roundtrip": true,
+          "sort_and_search_buttons_removed": true
+        },
+        {
+          "section": "Native favorites",
+          "saved_movie_full_metadata": true,
+          "saved_episode_show_number_title_air_date": true,
+          "existing_aliases_preserved": true,
+          "playback_not_started": true
+        }
+      ],
+      "scope": "Controlled fixtures; not Shield, live providers or Android pixel parity"
+    },
+    "native_kodi_weather": {
+      "passed": true,
+      "kodi_version": {
+        "major": 21,
+        "minor": 3,
+        "revision": "20260315-nogitfound",
+        "tag": "stable"
+      },
+      "checks": [
+        "provider_entrypoint",
+        "untouched_shipped_home_card",
+        "current_zero",
+        "24_hourly",
+        "7_daily",
+        "advisory_headline",
+        "forecast_click_back",
+        "advisory_click_back",
+        "menu_back_reentry",
+        "native_home_initial_fetch",
+        "next_city_native_index",
+        "refresh_preserves_city",
+        "next_city_wrap",
+        "missing_values",
+        "stale_unverified",
+        "alternate_provider_hides_card",
+        "alternate_card_render_absent",
+        "alternate_normal_navigation_uses_legacy"
+      ],
+      "alternate_visibility": {
+        "shipped_parent_condition": "String.IsEqual(Weather.Plugin,weather.foundry.canada)",
+        "state": {
+          "Status": "stale",
+          "HasCurrent": "true",
+          "Temperature": "0\u00b0C",
+          "Location": "Ottawa, ON",
+          "AlertCount": "1",
+          "AlertStatus": "unverified",
+          "DayCount": "7",
+          "HourCount": "24",
+          "Stale": "true",
+          "window": 10000,
+          "focus": 9000,
+          "dialog": false,
+          "body": "",
+          "provider": "weather.foundry.fixtureother",
+          "category": "weather",
+          "card_control_visible": true,
+          "card_parent_visible": false,
+          "card_visible": false,
+          "legacy_visible": true,
+          "legacy_focused": false
+        },
+        "fresh_title_pixels": 544,
+        "alternate_title_pixels": 0,
+        "normal_navigation_focus": 15200
+      },
+      "source_sha256": {
+        "Home.xml": "0bbd7c537930d4e48218170657872a7649d09700cbf8f719a412d1d0c9ebb9b3",
+        "Includes.xml": "1ca21575a6bf23ed4aa39f279c2fb87f46a9689161e18b7e26249d1a3e0f948c",
+        "Includes_FoundryCanadaWeather.xml": "6cc87b4a80aa289dc6a8aae28ded2413ea265548fc498436989111a646de57c0",
+        "Font.xml": "df9832baa14066ce0933a0a78ebc84bc3b09417c68687ac0f9b4528ada09325a",
+        "weather_default.py": "4b637abe755f05a3a05d60bfff04b521cdd400c291dca59de1ba20ea8e9ccb3d"
+      },
+      "data": "Synthetic only; no live weather or account requests",
+      "fixture_identity": "Foundry Weather QA foundry-weather-upoj5tk4",
+      "fixture_port": 56785,
+      "isolation": "Disposable HOME, XDG and Kodi portable profile; copied helper/services disabled",
+      "scope": "Native Linux desktop only. Shield and live service behavior remain separate QA."
+    },
+    "test_inputs": "Pinned source snapshots and extracted package ZIPs; mocked Kodi APIs",
+    "deterministic_rebuild": "All 9 package sizes and SHA-256 checksums unchanged",
+    "public_release_manifest_and_feed": "Byte-identical on Pages and raw GitHub",
+    "public_source_and_root_installers": "Byte-identical to committed release",
+    "public_package_downloads": "All 9 ZIPs and SHA-256 sidecars verified on both hosts"
+  },
+  "public_packages": [
+    {
+      "id": "repository.foundry",
+      "version": "1.2.0",
+      "path": "repository.foundry/repository.foundry-1.2.0.zip",
+      "sha256": "2a83d7d4ec2ac362fed010005ec55b6c87aee40a393a7fd82454e7137b48ffcc",
+      "size": 762,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "resource.images.foundry.wallpapers",
+      "version": "1.1.0",
+      "path": "resource.images.foundry.wallpapers/resource.images.foundry.wallpapers-1.1.0.zip",
+      "sha256": "dfc8a154817e66ee9651200baf6fff251bd82f6d1e97f20126d9c5f15db6a869",
+      "size": 20150822,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "resource.images.foundry.osd",
+      "version": "1.0.0",
+      "path": "resource.images.foundry.osd/resource.images.foundry.osd-1.0.0.zip",
+      "sha256": "37ec361ab6b80bb5557ca70512263de24dc9decdbe62e531f3e5f4adb3b4987b",
+      "size": 3770026,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "resource.uisounds.foundry.pulse",
+      "version": "1.0.0",
+      "path": "resource.uisounds.foundry.pulse/resource.uisounds.foundry.pulse-1.0.0.zip",
+      "sha256": "d666f2baabaa000c052903ac9ef2385c21acae571be6efec4142f175a6f4caa3",
+      "size": 46443,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "weather.foundry.canada",
+      "version": "0.1.0",
+      "path": "weather.foundry.canada/weather.foundry.canada-0.1.0.zip",
+      "sha256": "fae387a57752af0ec63a5c75bf53bd8f207bb3fc00716af64a2be519178a64f9",
+      "size": 17146,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "skin.foundry",
+      "version": "1.4.0",
+      "path": "skin.foundry/skin.foundry-1.4.0.zip",
+      "sha256": "bf1b5b07d1790f3e9b820a28044dc6847fd78d6e987f8b4148d8539a0ca26d45",
+      "size": 40373486,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.foundry.helper",
+      "version": "1.3.0",
+      "path": "script.foundry.helper/script.foundry.helper-1.3.0.zip",
+      "sha256": "39bba9b713e90eebb0069f0cc5a55db4ed6feee9e879c11121347cc460fd8763",
+      "size": 868206,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.program.foundry-build",
+      "version": "1.4.0",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.4.0.zip",
+      "sha256": "7b42fe01cf69ad748222942080c591f856c1de5435797d7cc7ed2755d8833489",
+      "size": 2697,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.program.foundry-bootstrap",
+      "version": "1.4.0",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.4.0.zip",
+      "sha256": "56ecdff12a928f5838022e6c20ee1fcf25e54c81885df81b3f58b286e3c375c5",
+      "size": 852,
+      "host": "https://3thirty3gitter.github.io/foundry-kodi-dist/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "repository.foundry",
+      "version": "1.2.0",
+      "path": "repository.foundry/repository.foundry-1.2.0.zip",
+      "sha256": "2a83d7d4ec2ac362fed010005ec55b6c87aee40a393a7fd82454e7137b48ffcc",
+      "size": 762,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "resource.images.foundry.wallpapers",
+      "version": "1.1.0",
+      "path": "resource.images.foundry.wallpapers/resource.images.foundry.wallpapers-1.1.0.zip",
+      "sha256": "dfc8a154817e66ee9651200baf6fff251bd82f6d1e97f20126d9c5f15db6a869",
+      "size": 20150822,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "resource.images.foundry.osd",
+      "version": "1.0.0",
+      "path": "resource.images.foundry.osd/resource.images.foundry.osd-1.0.0.zip",
+      "sha256": "37ec361ab6b80bb5557ca70512263de24dc9decdbe62e531f3e5f4adb3b4987b",
+      "size": 3770026,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "resource.uisounds.foundry.pulse",
+      "version": "1.0.0",
+      "path": "resource.uisounds.foundry.pulse/resource.uisounds.foundry.pulse-1.0.0.zip",
+      "sha256": "d666f2baabaa000c052903ac9ef2385c21acae571be6efec4142f175a6f4caa3",
+      "size": 46443,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "weather.foundry.canada",
+      "version": "0.1.0",
+      "path": "weather.foundry.canada/weather.foundry.canada-0.1.0.zip",
+      "sha256": "fae387a57752af0ec63a5c75bf53bd8f207bb3fc00716af64a2be519178a64f9",
+      "size": 17146,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "skin.foundry",
+      "version": "1.4.0",
+      "path": "skin.foundry/skin.foundry-1.4.0.zip",
+      "sha256": "bf1b5b07d1790f3e9b820a28044dc6847fd78d6e987f8b4148d8539a0ca26d45",
+      "size": 40373486,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.foundry.helper",
+      "version": "1.3.0",
+      "path": "script.foundry.helper/script.foundry.helper-1.3.0.zip",
+      "sha256": "39bba9b713e90eebb0069f0cc5a55db4ed6feee9e879c11121347cc460fd8763",
+      "size": 868206,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.program.foundry-build",
+      "version": "1.4.0",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.4.0.zip",
+      "sha256": "7b42fe01cf69ad748222942080c591f856c1de5435797d7cc7ed2755d8833489",
+      "size": 2697,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    },
+    {
+      "id": "script.program.foundry-bootstrap",
+      "version": "1.4.0",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.4.0.zip",
+      "sha256": "56ecdff12a928f5838022e6c20ee1fcf25e54c81885df81b3f58b286e3c375c5",
+      "size": 852,
+      "host": "https://raw.githubusercontent.com/3thirty3gitter/foundry-kodi-dist/main/",
+      "status": 200,
+      "verified": true
+    }
+  ],
+  "limitations": [
+    "Live TMDb/OMDb calls require personal profile keys and remain unverified",
+    "No Shield is connected; target-device rendering, navigation and playback remain unverified",
+    "Add-on custom windows and unidentified action listings keep their own behavior",
+    "Games is deferred and is not included in this release",
+    "Weather uses an experimental Canadian API; device-local times, advisory headlines only",
+    "Native Pulse checks preserve selection but a null audio sink cannot verify audibility",
+    "The reported false error after playback stops has not been reproduced or confirmed fixed"
+  ]
+}
