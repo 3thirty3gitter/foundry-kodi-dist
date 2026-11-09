@@ -109,15 +109,18 @@ def wait_directory(query, previous):
     # The property is copied with endOfDirectory's completed list, so require
     # an identity never observed before the requested navigation/refresh.
     wait(lambda:directory_ready(query, previous))
-    (OUTPUT/'directory-acks.jsonl').open('a',encoding='utf-8').write(json.dumps(snapshot())+'\n')
+    with (OUTPUT/'directory-acks.jsonl').open('a',encoding='utf-8') as acknowledgment:
+        acknowledgment.write(json.dumps(snapshot())+'\n')
 def open_path(query):
     (OUTPUT/'phase.txt').write_text('open '+query,encoding='utf-8')
     previous=directory_id()
     path='plugin://plugin.games.foundry/?'+query
     if xbmc.getCondVisibility('Window.IsActive(games)'):
-        xbmc.executebuiltin('Container.Update('+path+')',wait=True)
+        xbmc.executebuiltin('Container.Update('+path+')')
     else:
-        xbmc.executebuiltin('ActivateWindow(games,'+path+',return)',wait=True)
+        xbmc.executebuiltin('ActivateWindow(games,'+path+',return)')
+    # A synchronous GUI call can wait for the next plugin invoker while holding
+    # this Python interpreter. Post navigation and observe the fresh native list.
     wait_directory(query,previous)
 def home_item(index,label):
     xbmc.executebuiltin('Container.SetViewMode(50)')

@@ -69,7 +69,7 @@ class GamesKodiTests(unittest.TestCase):
         self.assertEqual((1, 'Foundry.Games.DirectoryId'), first[:2])
         self.assertNotEqual(first[2], second[2])
 
-    def test_favorite_waits_for_its_origin_refresh_after_commit(self):
+    def test_favorite_posts_its_origin_refresh_after_commit(self):
         events = []
         self.modules['xbmc'].getInfoLabel.return_value = self.ui.url(action='games', system='nes')
         self.modules['xbmc'].executebuiltin.side_effect = lambda *args, **kwargs: events.append(('refresh', args, kwargs))
@@ -77,7 +77,7 @@ class GamesKodiTests(unittest.TestCase):
             self.ui.run([self.ui.BASE, '-1', '?action=favorite&id=abc'])
         self.assertEqual(['commit', 'refresh'], [event[0] for event in events])
         self.assertEqual(('Container.Refresh',), events[1][1])
-        self.assertEqual({'wait': True}, events[1][2])
+        self.assertEqual({}, events[1][2])
         self.modules['xbmcplugin'].endOfDirectory.assert_not_called()
 
     def test_favorite_does_not_refresh_after_navigation(self):

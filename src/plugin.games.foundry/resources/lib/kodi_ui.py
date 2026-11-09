@@ -199,9 +199,10 @@ def run(argv):
             origin = xbmc.getInfoLabel('Container.FolderPath')
             db.favorite(params['id'])
             # A context action can outlive navigation. Refresh only the directory
-            # which invoked it, and finish the builtin before this invoker exits.
+            # which invoked it. Post the refresh: synchronous GUI dispatch can
+            # block a replacement Python directory invoker.
             if origin.startswith(BASE) and xbmc.getInfoLabel('Container.FolderPath') == origin:
-                xbmc.executebuiltin('Container.Refresh', wait=True)
+                xbmc.executebuiltin('Container.Refresh')
         elif action in ('play', 'details'):
             game = db.get(params.get('id', ''))
             if not game: raise ValueError('Game is no longer in the available library. Rescan its source.')

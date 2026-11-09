@@ -4,6 +4,8 @@ import importlib.util
 import tempfile
 import json
 import sys
+import time
+from urllib.parse import parse_qs, urlsplit
 from pathlib import Path
 import unittest
 from unittest.mock import Mock, patch, call
@@ -247,6 +249,35 @@ class GamesRendererTests(unittest.TestCase):
             with self.assertRaises(AssertionError): runner.skin_boolean_report(log, digest)
         for name in ('dev-validation.yml', 'release.yml'):
             self.assertIn('kodi gdb xvfb', (ROOT / '.github/workflows' / name).read_text())
+
+    def test_plugin_directory_navigation_posts_then_yields_for_fresh_native_list(self):
+        runner = self.runner(); tree = ast.parse(runner.FIXTURE)
+        names = {'open_path', 'directory_ready', 'directory_id', 'wait_directory', 'wait', 'info'}
+        functions = [node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name in names]
+        for active in (False, True):
+            with self.subTest(active=active), tempfile.TemporaryDirectory() as temporary:
+                events = []; state = {'path': '', 'directory_id': 'old-directory'}
+                class Kodi:
+                    def getCondVisibility(self, name): return active if name == 'Window.IsActive(games)' else False
+                    def getInfoLabel(self, name):
+                        return state['path'] if name == 'Container.FolderPath' else state['directory_id']
+                    # Enqueue changes the visible route before native contents.
+                    # A wait=True regression is rejected by this signature.
+                    def executebuiltin(self, command):
+                        events.append(('post', command))
+                        state['path'] = 'plugin://plugin.games.foundry/?action=games&system=nes'
+                    def sleep(self, duration):
+                        # The dependent plugin can finish only when the controller
+                        # yields; route/DB state alone must never count as ready.
+                        events.append(('yield', duration)); state['directory_id'] = 'fresh-directory'
+                namespace = dict(OUTPUT=Path(temporary), xbmc=Kodi(), snapshot=lambda: dict(state),
+                                 json=json, time=time, parse_qs=parse_qs, urlsplit=urlsplit)
+                exec(compile(ast.Module(body=functions, type_ignores=[]), '<native-navigation>', 'exec'), namespace)
+                namespace['open_path']('action=games&system=nes')
+                command = 'Container.Update(plugin://plugin.games.foundry/?action=games&system=nes)' if active else 'ActivateWindow(games,plugin://plugin.games.foundry/?action=games&system=nes,return)'
+                self.assertEqual(events, [('post', command), ('yield', 100)])
+                acknowledgment = json.loads((Path(temporary) / 'directory-acks.jsonl').read_text())
+                self.assertEqual(acknowledgment['directory_id'], 'fresh-directory')
 
     def test_cleanup_kills_owned_group_after_launcher_exits(self):
         spec = importlib.util.spec_from_file_location('games_native_renderer', ROOT / 'tools/render_games.py')
