@@ -1,0 +1,86 @@
+{
+  "home_favorites_shipped_xml_sha256": "0bbd7c537930d4e48218170657872a7649d09700cbf8f719a412d1d0c9ebb9b3",
+  "home_favorites_row_focus_and_horizontal_navigation": true,
+  "home_favorites_back_returns_menu": true,
+  "preference_migration": [
+    {
+      "before": "resource.uisounds.kodi",
+      "after": "resource.uisounds.foundry.pulse"
+    },
+    {
+      "before": "",
+      "after": ""
+    },
+    {
+      "before": "resource.uisounds.foundry.qacustom",
+      "after": "resource.uisounds.foundry.qacustom"
+    }
+  ],
+  "pulse_native_resource_selected": "resource.uisounds.foundry.pulse",
+  "audible_output_verified": false,
+  "directional_seek": [
+    {
+      "window": 12005,
+      "label": "",
+      "details": "",
+      "studio": "/tmp/foundry-interface-mk5wa0ev/kodi/portable_data/userdata/addon_data/script.foundry.helper/catalog-studios/5dcfab41ee88b6da44ff89f137f5d0b336f80fe40ab7e9de99b4bfb4143be0be.png",
+      "title": "",
+      "wallpaper": "",
+      "focus": 802,
+      "favorites_count": "",
+      "favorite_label": "",
+      "seek_offset": "",
+      "seek_step": "+00:10",
+      "player_time": "00:02",
+      "player_duration": "01:00",
+      "seek_visible": true,
+      "busy_visible": false,
+      "python_optimize": 1
+    },
+    {
+      "window": 12005,
+      "label": "",
+      "details": "",
+      "studio": "/tmp/foundry-interface-mk5wa0ev/kodi/portable_data/userdata/addon_data/script.foundry.helper/catalog-studios/5dcfab41ee88b6da44ff89f137f5d0b336f80fe40ab7e9de99b4bfb4143be0be.png",
+      "title": "",
+      "wallpaper": "",
+      "focus": 802,
+      "favorites_count": "",
+      "favorite_label": "",
+      "seek_offset": "",
+      "seek_step": "-00:10",
+      "player_time": "00:14",
+      "player_duration": "01:00",
+      "seek_visible": true,
+      "busy_visible": false,
+      "python_optimize": 1
+    }
+  ],
+  "playback_studio_logo_top_right": true,
+  "ripple_native_dialog": "busydialognocancel (shipped DialogBusy.xml)",
+  "ripple_changed_pixels": [
+    6584,
+    8052,
+    8118,
+    7113,
+    6998,
+    5861,
+    7045,
+    6554,
+    7999,
+    8043,
+    7756
+  ],
+  "ripple_capture_elapsed_seconds": 3.2962042590000067,
+  "ripple_rpc_max_seconds": 0.004392803999991202,
+  "widget_metadata_top_left": true,
+  "widget_episode_number_title": true,
+  "studio_logo_above_left_row": true,
+  "settings_hover_uses_widget_wallpaper": true,
+  "empty_widget_restores_full_wallpaper": true,
+  "system_menu_icons": 52,
+  "generated_category_and_option_icons": true,
+  "vod_rounded_frame": true,
+  "live_rounded_frame_preview": true,
+  "scope": "Isolated native desktop Kodi; synthetic metadata/video/Favorites; initial widget harness only, restored shipped Home for Favorites, helper setup/service disabled, null audio sink. Live providers, audible sound, device FPS and Shield remain unverified"
+}

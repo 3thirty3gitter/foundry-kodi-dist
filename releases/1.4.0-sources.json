@@ -7,7 +7,31 @@
     "script.foundry.helper": "e5525bcfcc45f1477ed45ef6cd98a1a56d2f2038"
   },
   "validation": {
-    "status": "awaiting_final_ci",
-    "target_device_verification": "Shield gameplay and rendering unverified"
+    "status": "ci_passed_target_device_checks_pending",
+    "source_tests": {
+      "tests": 510,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "successful": true,
+      "python": "3.12.16"
+    },
+    "packaged_tests": {
+      "tests": 510,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "successful": true,
+      "python": "3.12.16"
+    },
+    "deterministic_rebuild": true,
+    "native_reports": [
+      "verification.json",
+      "startup-splash-verification.json",
+      "interface-verification.json",
+      "weather-verification.json"
+    ],
+    "workflow_run": "42538322980",
+    "target_device_verification": "Shield rendering, navigation and playback unverified; Games deferred from this release"
   }
 }

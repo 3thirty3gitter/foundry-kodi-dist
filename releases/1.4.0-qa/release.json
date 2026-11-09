@@ -1,0 +1,69 @@
+{
+  "release": "1.4.0",
+  "skin": "1.4.0",
+  "packages": [
+    {
+      "id": "repository.foundry",
+      "version": "1.2.0",
+      "path": "repository.foundry/repository.foundry-1.2.0.zip",
+      "sha256": "2a83d7d4ec2ac362fed010005ec55b6c87aee40a393a7fd82454e7137b48ffcc",
+      "size": 762
+    },
+    {
+      "id": "resource.images.foundry.wallpapers",
+      "version": "1.1.0",
+      "path": "resource.images.foundry.wallpapers/resource.images.foundry.wallpapers-1.1.0.zip",
+      "sha256": "dfc8a154817e66ee9651200baf6fff251bd82f6d1e97f20126d9c5f15db6a869",
+      "size": 20150822
+    },
+    {
+      "id": "resource.images.foundry.osd",
+      "version": "1.0.0",
+      "path": "resource.images.foundry.osd/resource.images.foundry.osd-1.0.0.zip",
+      "sha256": "37ec361ab6b80bb5557ca70512263de24dc9decdbe62e531f3e5f4adb3b4987b",
+      "size": 3770026
+    },
+    {
+      "id": "resource.uisounds.foundry.pulse",
+      "version": "1.0.0",
+      "path": "resource.uisounds.foundry.pulse/resource.uisounds.foundry.pulse-1.0.0.zip",
+      "sha256": "d666f2baabaa000c052903ac9ef2385c21acae571be6efec4142f175a6f4caa3",
+      "size": 46443
+    },
+    {
+      "id": "weather.foundry.canada",
+      "version": "0.1.0",
+      "path": "weather.foundry.canada/weather.foundry.canada-0.1.0.zip",
+      "sha256": "fae387a57752af0ec63a5c75bf53bd8f207bb3fc00716af64a2be519178a64f9",
+      "size": 17146
+    },
+    {
+      "id": "skin.foundry",
+      "version": "1.4.0",
+      "path": "skin.foundry/skin.foundry-1.4.0.zip",
+      "sha256": "bf1b5b07d1790f3e9b820a28044dc6847fd78d6e987f8b4148d8539a0ca26d45",
+      "size": 40373486
+    },
+    {
+      "id": "script.foundry.helper",
+      "version": "1.3.0",
+      "path": "script.foundry.helper/script.foundry.helper-1.3.0.zip",
+      "sha256": "39bba9b713e90eebb0069f0cc5a55db4ed6feee9e879c11121347cc460fd8763",
+      "size": 868206
+    },
+    {
+      "id": "script.program.foundry-build",
+      "version": "1.4.0",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.4.0.zip",
+      "sha256": "7b42fe01cf69ad748222942080c591f856c1de5435797d7cc7ed2755d8833489",
+      "size": 2697
+    },
+    {
+      "id": "script.program.foundry-bootstrap",
+      "version": "1.4.0",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.4.0.zip",
+      "sha256": "56ecdff12a928f5838022e6c20ee1fcf25e54c81885df81b3f58b286e3c375c5",
+      "size": 852
+    }
+  ]
+}
