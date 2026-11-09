@@ -3,7 +3,7 @@ import json
 import os
 import time
 from uuid import uuid4
-from urllib.parse import parse_qs, urlencode
+from urllib.parse import parse_qs, urlencode, urlsplit
 
 import xbmc
 import xbmcaddon
@@ -160,7 +160,14 @@ def run(argv):
                 folder('Next page', action='games', system=params.get('system', ''), query=query, mode=params.get('mode', ''), page=page+1)
             if not games: folder('No games here. Add or rescan a source.', action='sources')
             done()
-            if xbmc.getSkinDir() == 'skin.foundry':
+            visible_path = xbmc.getInfoLabel('Container.FolderPath')
+            visible_params = {key: values[-1] for key, values in parse_qs(urlsplit(visible_path).query).items()}
+            if (xbmc.getSkinDir() == 'skin.foundry' and
+                    xbmc.getCondVisibility('Window.IsActive(games)') and
+                    visible_path.startswith(BASE) and visible_params == params):
+                # Home/widgets may resolve this same route in the background.
+                # Only the owning, currently displayed Games directory may
+                # change its native view; never mutate Home or another listing.
                 xbmc.executebuiltin('Container.SetViewMode(58)')
         elif action == 'sources':
             folder('Add local / configured VFS folder', action='add')

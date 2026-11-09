@@ -172,6 +172,82 @@ class GamesRendererTests(unittest.TestCase):
         self.assertFalse(runner.native_game_log_report(native.replace('RetroPlayer[PLAYER]', 'Unrelated player'))['native_gameclient_path'])
         self.assertTrue(runner.native_game_log_report(native + '\nPythonToCppException: staging failed')['failures'])
 
+    def test_startup_waits_for_both_real_widgets_and_stable_owned_home(self):
+        runner = self.runner()
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary); records = base / 'records'; records.mkdir()
+            log = base / 'kodi.log'
+            healthy_log='load skin from: '+str(base/'skin.foundry')+' (version:1.5.0)\nskin loaded...\nWindow Init (Home.xml)'
+            log.write_text(healthy_log)
+            for mode, phase in (('recent', 'completed'), ('favorites', 'started')):
+                (records / (mode + '.json')).write_text(json.dumps(dict(id=mode, action='games', mode=mode, phase=phase, error='', runtime_skin_path=str(base/'skin.foundry'))))
+            def rpc(method, params):
+                if method == 'GUI.GetProperties': return dict(currentwindow=dict(id=10000), skin=dict(id='skin.foundry'))
+                if method == 'Settings.GetSettingValue': return {'value': 'owned-fixture'}
+                if method == 'XBMC.GetInfoLabels': return {'Container(9000).NumItems':'19','Container(9000).ListItem.Property(menu_id)':'7000','Container(9000).ListItem.Property(id)':'music'}
+                return {'Window.IsVisible(startup)': False, 'System.HasActiveModalDialog': False, 'Container.IsUpdating': False}
+            ticks = iter(index / 10 for index in range(100))
+            def finish_widget(unused):
+                (records / 'favorites.json').write_text(json.dumps(dict(id='favorites', action='games', mode='favorites', phase='completed', error='', runtime_skin_path=str(base/'skin.foundry'))))
+            with patch.object(runner.time, 'monotonic', side_effect=lambda: next(ticks)), patch.object(runner.time, 'sleep', side_effect=finish_widget):
+                result = runner.settle_startup(rpc, records, log, lambda: True, base, 'owned-fixture', base/'skin.foundry', timeout=3, quiet=.2)
+            self.assertTrue(result['passed'])
+            self.assertEqual({record['mode'] for record in result['completed_game_widgets']}, {'recent', 'favorites'})
+            self.assertGreaterEqual(len(result['observations']), 2)
+            self.assertTrue((base / 'startup-readiness.json').exists())
+            for failure in ('missing-widget', 'wrong-owner', 'native-crash', 'python-error', 'active-modal', 'configured-only', 'wrong-home-signature'):
+                with self.subTest(failure=failure):
+                    ticks = iter(index / 10 for index in range(100))
+                    def failing_rpc(method, params):
+                        value = rpc(method, params)
+                        if failure == 'wrong-owner' and method == 'Settings.GetSettingValue': return {'value': 'somebody-else'}
+                        if failure == 'wrong-home-signature' and method == 'XBMC.GetInfoLabels': return {'Container(9000).NumItems':'19','Container(9000).ListItem.Property(menu_id)':'','Container(9000).ListItem.Property(id)':'music'}
+                        if failure == 'active-modal' and method == 'XBMC.GetInfoBooleans': value['System.HasActiveModalDialog'] = True
+                        return value
+                    if failure == 'missing-widget': (records / 'favorites.json').unlink()
+                    if failure == 'python-error': log.write_text('PythonToCppException: failure')
+                    if failure == 'configured-only': log.write_text(healthy_log.replace('skin.foundry','skin.estuary'))
+                    with patch.object(runner.time, 'monotonic', side_effect=lambda: next(ticks)), patch.object(runner.time, 'sleep'), self.assertRaises((AssertionError, RuntimeError)):
+                        runner.settle_startup(failing_rpc, records, log, lambda: failure != 'native-crash', base, 'owned-fixture', base/'skin.foundry', timeout=.5, quiet=.2)
+                    finish_widget(0); log.write_text(healthy_log)
+
+    def test_crash_evidence_keeps_atomic_invocation_records_and_genuine_sources(self):
+        runner = self.runner()
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary); profile = base / 'profile'; output = base / 'output'; output.mkdir()
+            for relative, contents in {'profile/temp/kodi.log': 'native log', 'error.txt': 'fixture error',
+                    'invocations/search.json': '{"phase":"completed"}',
+                    'profile/addons/plugin.games.foundry/default.py': 'genuine wrapper',
+                    'profile/addons/script.foundry.gamesqa/fixture.py': 'fixture source',
+                    'empty-home/kodi_crashlog-test.log': 'native backtrace'}.items():
+                path = base / relative; path.parent.mkdir(parents=True, exist_ok=True); path.write_text(contents)
+            (output / 'phase.txt').write_text('startup in progress')
+            runner.preserve_fixture_evidence(base, profile, output)
+            for relative in ('kodi.log', 'error.txt', 'invocations/search.json', 'instrumented-games-entrypoint.py', 'native-fixture.py', 'kodi_crashlog-test.log'):
+                self.assertTrue((output / relative).exists(), relative)
+            self.assertEqual((output / 'phase.txt').read_text(), 'startup in progress')
+
+    def test_actual_skin_log_rejects_later_estuary_and_detects_restart_cycle(self):
+        runner = self.runner()
+        log='load skin from: /owned/skin.foundry/ (version:1.5.0)\nskin loaded...\nfirst Window Init (Home.xml)'
+        first=runner.actual_skin_log_state(log,'/owned/skin.foundry')
+        self.assertTrue(first['ready'])
+        startup=runner.actual_skin_log_state(log+'\nWindow Init (Startup.xml)','/owned/skin.foundry')
+        self.assertFalse(startup['ready'])
+        restarted=runner.actual_skin_log_state(log+'\nWindow Init (Startup.xml)\nsecond Window Init (Home.xml)','/owned/skin.foundry')
+        self.assertTrue(restarted['ready']);self.assertNotEqual(first['last_transition'],restarted['last_transition'])
+        self.assertFalse(runner.actual_skin_log_state(log+'\nload skin from: /other/skin.estuary/ (version:4)\nskin loaded...\nWindow Init (Home.xml)','/owned/skin.foundry')['ready'])
+
+    def test_only_exact_unchanged_timer_warning_is_classified_as_baseline(self):
+        runner = self.runner()
+        known = 'Error parsing boolean expression control.hasfocus($param[list_id])'
+        result = runner.skin_boolean_report(known, runner.KNOWN_TIMER_SHA256)
+        self.assertEqual(result['known_baseline_warnings'], [known])
+        for log, digest in ((known, '0' * 64), ('Error parsing boolean expression bad.games.expression', runner.KNOWN_TIMER_SHA256)):
+            with self.assertRaises(AssertionError): runner.skin_boolean_report(log, digest)
+        for name in ('dev-validation.yml', 'release.yml'):
+            self.assertIn('kodi gdb xvfb', (ROOT / '.github/workflows' / name).read_text())
+
     def test_cleanup_kills_owned_group_after_launcher_exits(self):
         spec = importlib.util.spec_from_file_location('games_native_renderer', ROOT / 'tools/render_games.py')
         runner = importlib.util.module_from_spec(spec)
@@ -195,7 +271,7 @@ class GamesRendererTests(unittest.TestCase):
                     (path / 'default.py').write_text('original helper setup')
                 (path / 'addon.xml').write_text(manifest + '</addon>')
             skin = source / 'src/skin.foundry'; (skin / 'xml').mkdir(); (skin / 'fonts').mkdir()
-            for name in ('Home.xml','MyGames.xml','Includes.xml','View_58_FoundryGames.xml','Font.xml'):
+            for name in ('Home.xml','MyGames.xml','Includes.xml','View_58_FoundryGames.xml','Font.xml','Timers.xml'):
                 (skin / 'xml' / name).write_text('<unchanged name="%s" />' % name)
             (skin / 'fonts/example.ttf').write_bytes(b'original-font-fixture')
             ids, hashes = runner.prepare_shipped_skin(home, profile, skin, source / 'src/script.foundry.helper', source)

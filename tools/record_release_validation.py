@@ -20,16 +20,17 @@ MOVIE_LABELS = ('Trending', 'Trending Recent', 'Popular', 'Popular Today', 'Prem
                 'Blockbusters', 'In Theaters', 'Up Coming', 'Oscar Winners')
 MOVIE_FLAGS = ('passed', 'custom_background_preserved', 'selected_title_fanart_preserved',
                'tv_mixed_unknown_rejected', 'paging_and_rehydration_context_preserved')
-GAMES_ASSERTIONS = ('console_listing', 'focused_hero_metadata', 'remote_navigation',
+GAMES_ASSERTIONS = ('console_listing', 'automatic_games_view_selected', 'focused_hero_metadata', 'remote_navigation',
                     'page_back_focus', 'favorite_persistence', 'favorite_refresh_complete',
                     'favorites_native_route', 'fresh_directory_acknowledgments',
                     'search_results', 'search_cancel', 'search_cancel_retains_listing',
                     'search_cancel_invoker_completed', 'launch_cancel_invoker_completed',
                     'native_gameclient_path_verified', 'native_tracebacks_absent',
+                    'full_home_startup_widgets_completed',
                     'missing_core_dialog', 'launch_cancel_focus',
                     'cancel_does_not_record_play', 'shipped_skin_bytes_unchanged',
-                    'screenshots_verified', 'skin_boolean_parse_errors_absent')
-GAMES_CASES = ('games-consoles', 'games-focused-hero', 'games-page-two',
+                    'screenshots_verified', 'new_skin_boolean_parse_errors_absent')
+GAMES_CASES = ('games-consoles', 'games-automatic-view', 'games-focused-hero', 'games-page-two',
                'games-page-back-focus', 'games-favorite-refresh-complete',
                'games-favorites', 'games-search-results', 'games-search-cancel',
                'games-missing-core', 'games-launch-cancel-focus')
@@ -81,6 +82,13 @@ def evidence(root, release):
         assert game_log['complete'] is True and game_log['native_gameclient_path'] is True
         assert game_log['failures'] == []
         assert re.fullmatch(r'[a-f0-9]{64}', games['production_entrypoint_sha256'])
+        assert games['skin_boolean_errors']['new_errors'] == []
+        assert games['skin_boolean_errors']['unchanged_timer_sha256'] == 'c2c90596e9362a97dc5ad2e79004273fe014954bf0f976cc39f78e7cf2e02614'
+        startup = games['startup_readiness']
+        assert startup['passed'] is True and startup['quiet_seconds'] >= 2
+        assert startup['actual_skin_log']['ready'] is True and startup['home_signature']
+        assert {record['mode'] for record in startup['completed_game_widgets']} == {'recent', 'favorites'}
+        assert all(record['phase'] == 'completed' and not record['error'] for record in startup['completed_game_widgets'])
         movies = native['verification.json']['movie_submenu_wallpapers']
         assert all(movies.get(name) is True for name in MOVIE_FLAGS)
         assert movies['approved_count'] == movies['rendered_approved_count'] == 13

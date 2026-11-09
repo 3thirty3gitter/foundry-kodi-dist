@@ -9,6 +9,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import signal
@@ -16,6 +17,7 @@ import socket
 import subprocess
 import tempfile
 import time
+import zipfile
 from urllib.request import Request, urlopen
 import xml.etree.ElementTree as E
 
@@ -30,6 +32,7 @@ from urllib.parse import parse_qs, urlsplit
 from pathlib import Path
 import xbmc,xbmcgui,xbmcvfs
 sys.path.insert(0,str(ADDON/'resources/lib'))
+(OUTPUT/'phase.txt').write_text('fixture importing production library',encoding='utf-8')
 from library import Library
 
 def require(condition, message):
@@ -141,7 +144,9 @@ def action(name):
 
 evidence=[]
 try:
-    require(xbmc.getSkinDir()=='skin.foundry','Games gate requires the actual shipped Foundry skin')
+    (OUTPUT/'phase.txt').write_text('fixture validating skin and seeding catalog',encoding='utf-8')
+    require(xbmc.getSkinDir()=='skin.foundry','Games gate requires the Foundry setting')
+    require(Path(xbmcvfs.translatePath('special://skin/')).resolve()==(ADDON.parent/'skin.foundry').resolve(),'Actual graphics skin path is not the copied Foundry skin')
     # No game addon is allowed to execute these synthetic fixtures.
     response=json.loads(xbmc.executeJSONRPC(json.dumps({'jsonrpc':'2.0','id':1,'method':'Addons.GetAddons','params':{'type':'kodi.gameclient','enabled':True}})))
     if 'error' in response: raise AssertionError('Cannot prove absence of enabled game clients: '+str(response))
@@ -157,7 +162,10 @@ try:
     first=db.games()[0];gid=first['id'];db.played(gid,60,now=123456)
     db.close()
     open_path('action=home');shot('games-consoles')
-    open_path('action=games&system=nes');rail()
+    open_path('action=games&system=nes')
+    wait(lambda:info('Container.Viewmode')=='Foundry Games' and xbmc.getCondVisibility('Control.IsVisible(58)'))
+    shot('games-automatic-view')
+    rail()
     wait(lambda:bool(info('Container(58).ListItem.Property(Foundry.Game.Id)')))
     # ControlList.size() reads its Python-owned vecItems, not native GUI items.
     require(int(info('Container(58).NumItems') or '0')==21,'Expected 20 games plus next page')
@@ -240,7 +248,7 @@ try:
     check=Library(str(profile/'library-v1.db'))
     require(len(check.games(mode='recent'))==1,'Cancelled launch incorrectly changed recent games')
     check.close()
-    (OUTPUT/'fixture-result.json').write_text(json.dumps({'checks':evidence,'assertions':{'console_listing':True,'focused_hero_metadata':True,'remote_navigation':True,'page_back_focus':True,'favorite_persistence':True,'favorite_refresh_complete':True,'favorites_native_route':True,'fresh_directory_acknowledgments':True,'search_results':True,'search_cancel':True,'search_cancel_retains_listing':True,'search_cancel_invoker_completed':True,'launch_cancel_invoker_completed':True,'missing_core_dialog':True,'launch_cancel_focus':True,'cancel_does_not_record_play':True},'invocations':list(invocation_records().values()),'native_core_expected':expected_core,'scope':'Native Kodi UI only. Synthetic non-playable files. No cores/ROMs downloaded. Not Shield or gameplay certification.','limitations':['No actual gameplay or controller/disconnect/multiplayer validation','No Shield or Android emulator compatibility validation','No real VFS provider or Google Drive authorization tested','PSP remains unsupported']},indent=2)+'\n',encoding='utf-8')
+    (OUTPUT/'fixture-result.json').write_text(json.dumps({'checks':evidence,'assertions':{'console_listing':True,'automatic_games_view_selected':True,'focused_hero_metadata':True,'remote_navigation':True,'page_back_focus':True,'favorite_persistence':True,'favorite_refresh_complete':True,'favorites_native_route':True,'fresh_directory_acknowledgments':True,'search_results':True,'search_cancel':True,'search_cancel_retains_listing':True,'search_cancel_invoker_completed':True,'launch_cancel_invoker_completed':True,'missing_core_dialog':True,'launch_cancel_focus':True,'cancel_does_not_record_play':True},'invocations':list(invocation_records().values()),'native_core_expected':expected_core,'scope':'Native Kodi UI only. Synthetic non-playable files. No cores/ROMs downloaded. Not Shield or gameplay certification.','limitations':['No actual gameplay or controller/disconnect/multiplayer validation','No Shield or Android emulator compatibility validation','No real VFS provider or Google Drive authorization tested','PSP remains unsupported']},indent=2)+'\n',encoding='utf-8')
     (BASE/'complete').write_text('ok')
 except Exception:
     (BASE/'error.txt').write_text(traceback.format_exc(),encoding='utf-8')
@@ -257,7 +265,7 @@ from uuid import uuid4 as _qa_uuid
 from urllib.parse import parse_qs as _qa_parse
 _qa_id=_qa_uuid().hex
 _qa_action=_qa_parse(_qa_sys.argv[2].lstrip('?')).get('action',['home'])[-1]
-_qa_record={'id':_qa_id,'action':_qa_action,'phase':'started','error':'','started':_qa_time.monotonic()}
+_qa_record={'id':_qa_id,'action':_qa_action,'mode':_qa_parse(_qa_sys.argv[2].lstrip('?')).get('mode',[''])[-1],'phase':'started','error':'','started':_qa_time.monotonic()}
 _qa_target=_qa_Path(%r)/(_qa_id+'.json')
 def _qa_write():
     _qa_temp=_qa_target.with_suffix('.tmp')
@@ -270,7 +278,10 @@ except BaseException:
     _qa_record['error']=_qa_traceback.format_exc()
     raise
 finally:
-    _qa_record.update(phase='completed',completed=_qa_time.monotonic())
+    _qa_vfs=_qa_sys.modules.get('xbmcvfs');_qa_gui=_qa_sys.modules.get('xbmcgui')
+    _qa_record.update(phase='completed',completed=_qa_time.monotonic(),
+        runtime_skin_path=_qa_vfs.translatePath('special://skin/') if _qa_vfs is not None else '',
+        window_id=_qa_gui.getCurrentWindowId() if _qa_gui is not None else None)
     _qa_write()
 ''' % (str(records),original)
     path.write_text(wrapper,encoding='utf-8')
@@ -286,6 +297,102 @@ def native_game_log_report(text):
     return {'complete':bool(segment),'native_gameclient_path':
             'RetroPlayer[PLAYER]: No compatible game client selected, aborting playback' in segment,
             'failures':failures,'log':segment}
+
+
+def read_invocations(directory):
+    return {path.stem: json.loads(path.read_text(encoding='utf-8')) for path in directory.glob('*.json')}
+
+
+def actual_skin_log_state(text, skin_path):
+    lines = text.splitlines()
+    loads = [(index, re.search(r'load skin from:\s*(.*?)\s+\(version:', line))
+             for index, line in enumerate(lines) if 'load skin from:' in line]
+    if not loads: return {'ready': False}
+    index, match = loads[-1]
+    if match is None: return {'ready': False}
+    normalize = lambda path: str(path).replace('\\', '/').rstrip('/')
+    path = match.group(1)
+    tail = lines[index + 1:]
+    loaded = next((offset for offset, line in enumerate(tail) if 'skin loaded...' in line), None)
+    transitions = [line for line in tail[loaded + 1:] if 'Window Init (Home.xml)' in line or 'Window Init (Startup.xml)' in line] if loaded is not None else []
+    return {'ready': normalize(path) == normalize(skin_path) and bool(transitions) and 'Window Init (Home.xml)' in transitions[-1],
+            'loaded_path': path, 'load_event': lines[index],
+            'last_transition': transitions[-1] if transitions else ''}
+
+
+def settle_startup(rpc, records, log_path, alive, output, identity, skin_path, timeout=45, quiet=2):
+    """Observe the actual full Home and both real widget invocations to completion."""
+    deadline = time.monotonic() + timeout
+    quiet_since = None
+    last = None
+    history = []
+    while time.monotonic() < deadline:
+        if not alive(): raise RuntimeError('Kodi exited during full Home startup settlement')
+        text = log_path.read_text(encoding='utf-8', errors='replace')
+        if any(marker in text for marker in ('PythonToCppException', 'Error Contents:', 'Traceback (most recent call last):')):
+            raise AssertionError('Python failure during full shipped Home startup')
+        gui = rpc('GUI.GetProperties', {'properties': ['currentwindow', 'skin']})
+        flags = rpc('XBMC.GetInfoBooleans', {'booleans': ['Window.IsVisible(startup)', 'System.HasActiveModalDialog', 'Container.IsUpdating']})
+        labels=rpc('XBMC.GetInfoLabels',{'labels':['Container(9000).NumItems','Container(9000).ListItem.Property(menu_id)','Container(9000).ListItem.Property(id)']})
+        log_skin=actual_skin_log_state(text,skin_path)
+        owner = rpc('Settings.GetSettingValue', {'setting': 'services.devicename'})['value']
+        invocations = read_invocations(records)
+        widgets = [record for record in invocations.values() if record['action'] == 'games' and record.get('mode') in ('recent', 'favorites')]
+        if any(record.get('error') for record in widgets): raise AssertionError('Production Games startup widget failed')
+        normalize=lambda path:str(path).replace('\\','/').rstrip('/')
+        complete = ({record['mode'] for record in widgets} == {'recent', 'favorites'} and
+                    all(record['phase'] == 'completed' and normalize(record.get('runtime_skin_path',''))==normalize(skin_path) for record in widgets))
+        count=labels.get('Container(9000).NumItems','');menu_id=labels.get('Container(9000).ListItem.Property(menu_id)','')
+        category=labels.get('Container(9000).ListItem.Property(id)','')
+        home_signature=(count.isdigit() and int(count)>0 and menu_id.isdigit() and int(menu_id)>0 and
+            category in {'movies','tvshows','music','disc','musicvideos','livetv','radio','games','addons','pictures','video','favorites','weather','settings','custom1','custom2','custom3'})
+        state = {'window': gui['currentwindow'], 'skin': gui['skin'], 'flags': flags,
+                 'owner': owner, 'actual_skin_log':log_skin,'home_signature':labels, 'widgets': sorted((record['id'], record['mode'], record['phase']) for record in widgets)}
+        ready = (gui['currentwindow']['id'] == 10000 and gui['skin']['id'] == 'skin.foundry' and
+                 owner == identity and not any(flags.values()) and complete and log_skin['ready'] and home_signature)
+        if state != last:
+            history.append(state); last = state; quiet_since = None
+        if ready:
+            if quiet_since is None: quiet_since = time.monotonic()
+            elif time.monotonic() - quiet_since >= quiet:
+                report = {'passed': True, 'quiet_seconds': quiet, 'observations': history,
+                          'completed_game_widgets': widgets, 'owner': identity, 'actual_skin_log':log_skin, 'home_signature':labels}
+                (output / 'startup-readiness.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+                return report
+        else: quiet_since = None
+        (output / 'startup-readiness.json').write_text(json.dumps({'passed': False, 'observations': history}, indent=2) + '\n', encoding='utf-8')
+        time.sleep(.1)
+    raise AssertionError('Full shipped Home/startup widgets did not settle before the bounded deadline')
+
+
+def preserve_fixture_evidence(base, profile, output):
+    for source, name in ((profile / 'temp/kodi.log', 'kodi.log'), (base / 'error.txt', 'error.txt')):
+        if source.exists(): shutil.copyfile(source, output / name)
+    for source, name in ((base / 'invocations', 'invocations'),):
+        if source.exists(): shutil.copytree(source, output / name, dirs_exist_ok=True)
+    for source, name in ((profile / 'addons/plugin.games.foundry/default.py', 'instrumented-games-entrypoint.py'),
+                         (profile / 'addons/script.foundry.gamesqa/fixture.py', 'native-fixture.py')):
+        if source.exists(): shutil.copyfile(source, output / name)
+    for crash in list(base.rglob('kodi_crashlog*.log')):
+        target=output/crash.name
+        if crash.resolve()!=target.resolve(): shutil.copyfile(crash,target)
+
+
+KNOWN_TIMER_SHA256 = 'c2c90596e9362a97dc5ad2e79004273fe014954bf0f976cc39f78e7cf2e02614'
+
+
+def skin_boolean_report(text, timer_sha256):
+    if timer_sha256 != KNOWN_TIMER_SHA256:
+        raise AssertionError('Known baseline Timer warning requires exact unchanged published bytes')
+    known, unexpected = [], []
+    marker = 'Error parsing boolean expression'
+    for line in text.splitlines():
+        if marker in line:
+            expression = line.split(marker, 1)[1].strip()
+            (known if expression == 'control.hasfocus($param[list_id])' else unexpected).append(line)
+    if unexpected: raise AssertionError('New skin boolean parsing failures: ' + str(unexpected))
+    return {'passed': True, 'known_baseline_warnings': known, 'new_errors': unexpected,
+            'unchanged_timer_sha256': timer_sha256}
 
 
 def wait_for(predicate, timeout=60):
@@ -391,7 +498,7 @@ def prepare_shipped_skin(home, profile, skin_source=SKIN, helper_source=HELPER, 
     manifest.write(helper / 'addon.xml', encoding='UTF-8', xml_declaration=True)
     skin = addons / 'skin.foundry'
     relative_paths = ['addon.xml', 'xml/Home.xml', 'xml/MyGames.xml', 'xml/Includes.xml',
-                      'xml/View_58_FoundryGames.xml', 'xml/Font.xml']
+                      'xml/View_58_FoundryGames.xml', 'xml/Font.xml', 'xml/Timers.xml']
     relative_paths += [str(path.relative_to(skin_source)).replace('\\', '/')
                        for path in (skin_source / 'fonts').rglob('*') if path.is_file()]
     hashes = {}
@@ -414,6 +521,7 @@ def main():
     release = json.loads((ROOT / 'release.json').read_text(encoding='utf-8'))['release']
     output = (args.output or ROOT / 'releases' / (str(release) + '-qa') / 'games').resolve()
     output.mkdir(parents=True, exist_ok=True)
+    (output/'phase.txt').write_text('preparing isolated native Games host',encoding='utf-8')
     # A failed rerun must not leave a previous pass summary in its evidence set.
     for name in ('verification.json', 'games-verification.json', 'fixture-result.json'):
         target = output / name
@@ -496,7 +604,8 @@ def main():
                 if 'keep' not in prompt or 'skin' not in prompt:
                     raise AssertionError('Unexpected skin confirmation: ' + str(labels))
                 rpc('Input.Left'); rpc('Input.Select')
-                wait_for(lambda:not modal())
+                (output/'phase.txt').write_text('settling full shipped Home and Games widgets',encoding='utf-8')
+                startup = settle_startup(rpc,base/'invocations',profile/'temp/kodi.log',lambda:kodi.poll() is None,output,base.name,profile/'addons/skin.foundry')
                 rpc('Addons.ExecuteAddon', {'addonid':'script.foundry.gamesqa'})
                 def finished():
                     if (base / 'error.txt').exists(): raise AssertionError((base / 'error.txt').read_text())
@@ -518,17 +627,20 @@ def main():
                 if kodi:
                     stop_process_group(kodi)
                 xserver.terminate(); xserver.wait(timeout=10)
-                for source, name in ((profile / 'temp/kodi.log','kodi.log'), (base / 'error.txt','error.txt')):
-                    if source.exists(): shutil.copyfile(source, output / name)
-                for crash in base.rglob('kodi_crashlog*.log'):
-                    shutil.copyfile(crash, output / crash.name)
+                preserve_fixture_evidence(base,profile,output)
         kodi_log = output / 'kodi.log'
-        if kodi_log.exists():
-            assert 'Error parsing boolean expression' not in kodi_log.read_text(errors='replace')
+        timer_bytes=(SKIN/'xml/Timers.xml').read_bytes()
+        with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.4.0.zip') as baseline:
+            if timer_bytes != baseline.read('skin.foundry/xml/Timers.xml'):
+                raise AssertionError('Published baseline Timer bytes differ')
+        boolean_errors=skin_boolean_report(kodi_log.read_text(encoding='utf-8',errors='replace'),hashlib.sha256(timer_bytes).hexdigest())
         launch_log=native_game_log_report(kodi_log.read_text(encoding='utf-8',errors='replace'))
         (output/'games-native-errors.json').write_text(json.dumps(launch_log,indent=2)+'\n',encoding='utf-8')
         if not launch_log['complete'] or not launch_log['native_gameclient_path'] or launch_log['failures']:
             raise AssertionError('Native game-client path/traceback evidence failed: '+str(launch_log))
+        report['skin_boolean_errors']=boolean_errors
+        report['startup_readiness']=startup
+        report['assertions']['full_home_startup_widgets_completed']=True
         report['native_gameclient_log']=launch_log
         report['production_entrypoint_sha256']=entrypoint_sha256
         report['assertions']['native_gameclient_path_verified']=True
@@ -539,7 +651,7 @@ def main():
             if actual_hash != expected_hash: raise AssertionError('Runtime modified shipped skin: ' + relative)
         report['assertions']['shipped_skin_bytes_unchanged'] = True
         report['assertions']['screenshots_verified'] = True
-        report['assertions']['skin_boolean_parse_errors_absent'] = True
+        report['assertions']['new_skin_boolean_parse_errors_absent'] = True
         for name in ('verification.json', 'games-verification.json'):
             (output / name).write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
     print('Native Games UI evidence:', output)

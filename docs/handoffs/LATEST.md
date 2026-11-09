@@ -1,6 +1,6 @@
 # Foundry distribution 1.5.0 candidate handoff
 
-Prepared on SPACESHIP for the coordinated dev validation commit. This candidate is unpublished. Supported native Kodi 21 validation and owner approval remain pending; no distribution push or production merge was performed by this task.
+Prepared on SPACESHIP for the coordinated development candidate. This candidate is unpublished. Development commits have been pushed to dev for validation; supported native Kodi 21 validation and owner approval remain pending. Production main remains unchanged.
 
 ## Exact source identity
 
@@ -15,15 +15,23 @@ Do not move these runtime source pins merely to add later validation receipts. R
 
 Windows Python 3.13.5 against the exact source pins above:
 
-- Complete source suite: 623 tests run, zero failures/errors, one skipped Windows symbolic-link fixture; successful.
-- Complete extracted-package suite: 623 tests run, zero failures/errors, two skips (the same symbolic-link fixture, plus preserved-deferred-source checks intentionally excluded from extracted-package workspaces); successful.
+- Complete source suite: 629 tests run, zero failures/errors, one skipped Windows symbolic-link fixture; successful.
+- Complete extracted-package suite: 629 tests run, zero failures/errors, two skips (the same symbolic-link fixture, plus preserved-deferred-source checks intentionally excluded from extracted-package workspaces); successful.
 - All ten package ZIPs, sizes, SHA-256 sidecars, manifests, dependencies, feed/checksum and root installer aliases verified.
 - Isolated extracted-package deterministic rebuild passed without modifying source trees.
 - All 92 published 1.4.0 artifacts were compared byte-for-byte with the pre-candidate committed baseline: nine package ZIPs and sidecars plus 74 source/QA/verification records. All remain unchanged. Generated current feed/installer aliases are working candidate files; the remote existing update flow remains published 1.4.0 until approved publication.
 
 Local evidence directory on SPACESHIP: `C:\Users\TrentTimmerman\Documents\Codex\foundry-next-games-20261109`.
 
-Relevant records: `source-tests-final.json` / `.log`, `packaged-qa-final/packaged-tests.json`, `packaged-qa-final/packaged-verification.json`, `packaged-tests-final.log`, `published-1.4.0-immutability.json`, and `distribution-reviewed-paths.txt`. Local results do not substitute for CI/native results. Existing 1.4.0 native receipts describe that published release only.
+Relevant records: `source-tests-post-crash-final.json` / `.log`, `packaged-qa-post-crash-final/packaged-tests.json`, `packaged-qa-post-crash-final/packaged-verification.json`, `packaged-tests-post-crash-final.log`, `published-1.4.0-immutability.json`, and `distribution-reviewed-paths.txt`. Local results do not substitute for CI/native results. Existing 1.4.0 native receipts describe that published release only.
+
+## First native run and bounded corrections
+
+[Development run42555313989](https://github.com/3thirty3gitter/foundry-kodi-dist/actions/runs/42555313989), distribution721e5daebef6b88b4f117322f623cbc6c1a18599, passed source/extracted checks and the library, splash, interface and Weather native gates. Games exited139 during full Home startup before the first fixture phase. Its crash report lacked a backtrace because gdb was absent. The native crash root cause remains unconfirmed; those four passing reports are provisional for that prior candidate, and every gate must rerun for the correction.
+
+A separate confirmed issue is corrected: background Games widget listings no longer request a global view change in Home/Videos or a different Games route. The native fixture must observe automatic Games view58 before forcing any rail focus/view control. Startup readiness now retains all real Home Games widgets and requires their genuine invokers to finish, actual `special://skin/` graphics paths to match the copied skin, the last real skin-load/Home transitions and Foundry menu signature, fixture identity, no modal/startup/update, and two stable seconds. A later Startup/Home cycle resets settlement. Failure paths preserve phase, invocation records and genuine source wrappers; CI installs gdb for a recurring native crash backtrace.
+
+Only the exact existing Timer warning `control.hasfocus($param[list_id])` is classified as baseline, with byte-equality against the published1.4 Timer and SHA-256c2c90596e9362a97dc5ad2e79004273fe014954bf0f976cc39f78e7cf2e02614. Every new skin boolean parse expression still fails. No native success is claimed for these corrections. Diagnosis: `games-crash-42555313989-diagnosis.json` in the local evidence directory.
 
 ## Mandatory next validation
 

@@ -69,6 +69,8 @@ class ReleaseEvidenceTests(unittest.TestCase):
                 'packages': self.packages, 'renderer': 'Native Kodi 21.3',
                 'native_gameclient_log': {'complete': True, 'native_gameclient_path': True, 'failures': []},
                 'production_entrypoint_sha256': 'a' * 64,
+                'skin_boolean_errors': {'new_errors': [], 'unchanged_timer_sha256': 'c2c90596e9362a97dc5ad2e79004273fe014954bf0f976cc39f78e7cf2e02614'},
+                'startup_readiness': {'passed': True, 'quiet_seconds': 2, 'actual_skin_log': {'ready':True}, 'home_signature': {'category':'music'}, 'completed_game_widgets': [dict(mode=mode, phase='completed', error='') for mode in ('recent', 'favorites')]},
                 'shipped_skin_hashes': {'xml/MyGames.xml': 'f' * 64},
                 'assertions': {name: True for name in gate.GAMES_ASSERTIONS},
                 'checks': [{'case': name} for name in gate.GAMES_CASES]}}
@@ -167,7 +169,11 @@ class ReleaseEvidenceTests(unittest.TestCase):
                         {'native_gameclient_log': {'complete': False, 'native_gameclient_path': True, 'failures': []}},
                         {'native_gameclient_log': {'complete': True, 'native_gameclient_path': False, 'failures': []}},
                         {'native_gameclient_log': {'complete': True, 'native_gameclient_path': True, 'failures': ['traceback']}},
-                        {'production_entrypoint_sha256': ''}):
+                        {'production_entrypoint_sha256': ''},
+                        {'startup_readiness': {'passed': False, 'quiet_seconds': 2, 'completed_game_widgets': []}},
+                        {'startup_readiness': {'passed': True, 'quiet_seconds': 0, 'completed_game_widgets': []}},
+                        {'startup_readiness': {'passed': True, 'quiet_seconds': 2, 'actual_skin_log': {'ready':True}, 'home_signature': {'category':'music'}, 'completed_game_widgets': [{'mode': 'recent', 'phase': 'started', 'error': ''}]}},
+                        {'skin_boolean_errors': {'new_errors': ['bad.games'], 'unchanged_timer_sha256': '0' * 64}}):
             report = json.loads(original); report.update(changes); self.write(path, report)
             with self.subTest(changes=changes), self.assertRaises(AssertionError):
                 gate.evidence(self.root, '1.5.0')

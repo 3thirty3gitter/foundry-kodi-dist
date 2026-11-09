@@ -87,6 +87,24 @@ class GamesKodiTests(unittest.TestCase):
         favorite.assert_called_once_with('abc')
         self.modules['xbmc'].executebuiltin.assert_not_called()
 
+    def test_background_game_widgets_never_change_an_unrelated_view(self):
+        xbmc = self.modules['xbmc']; xbmc.getSkinDir.return_value = 'skin.foundry'
+        for window_active, visible in ((False, ''), (False, 'videodb://movies/'),
+                                        (True, self.ui.url(action='games', system='nes'))):
+            with self.subTest(active=window_active, path=visible):
+                xbmc.executebuiltin.reset_mock()
+                xbmc.getCondVisibility.return_value = window_active
+                xbmc.getInfoLabel.return_value = visible
+                self.ui.run([self.ui.BASE, '1', '?action=games&mode=recent'])
+                xbmc.executebuiltin.assert_not_called()
+
+    def test_owned_visible_games_route_selects_its_native_view(self):
+        xbmc = self.modules['xbmc']; xbmc.getSkinDir.return_value = 'skin.foundry'
+        xbmc.getCondVisibility.return_value = True
+        xbmc.getInfoLabel.return_value = self.ui.url(system='nes', action='games')
+        self.ui.run([self.ui.BASE, '1', '?action=games&system=nes'])
+        xbmc.executebuiltin.assert_called_once_with('Container.SetViewMode(58)')
+
     def test_source_choice_cancel_does_not_browse(self):
         self.modules['xbmcgui'].Dialog().select.return_value = -1
         self.ui.run(['plugin://plugin.games.foundry/', '1', '?action=add'])
