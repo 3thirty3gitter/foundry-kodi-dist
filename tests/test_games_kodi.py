@@ -101,9 +101,52 @@ class GamesKodiTests(unittest.TestCase):
     def test_owned_visible_games_route_selects_its_native_view(self):
         xbmc = self.modules['xbmc']; xbmc.getSkinDir.return_value = 'skin.foundry'
         xbmc.getCondVisibility.return_value = True
-        xbmc.getInfoLabel.return_value = self.ui.url(system='nes', action='games')
+        published = {}
+        self.modules['xbmcplugin'].setProperty.side_effect = lambda handle, name, value: published.update({name:value})
+        xbmc.getInfoLabel.side_effect = lambda name: self.ui.url(system='nes', action='games') if name == 'Container.FolderPath' else published.get('Foundry.Games.DirectoryId', '')
         self.ui.run([self.ui.BASE, '1', '?action=games&system=nes'])
         xbmc.executebuiltin.assert_called_once_with('Container.SetViewMode(58)')
+
+    def test_view_selection_yields_until_its_own_new_listing_is_published(self):
+        xbmc = self.modules['xbmc']; xbmc.getSkinDir.return_value = 'skin.foundry'
+        state = dict(path=self.ui.url(action='home'), directory='old', active=True)
+        xbmc.getCondVisibility.side_effect = lambda condition: state['active']
+        xbmc.getInfoLabel.side_effect = lambda name: state['path'] if name == 'Container.FolderPath' else state['directory']
+        def publish(delay):
+            self.assertEqual(delay, .05)
+            xbmc.executebuiltin.assert_not_called()
+            state.update(path=self.ui.url(action='games', system='nes'), directory='own-new')
+            return False
+        xbmc.Monitor().waitForAbort.side_effect = publish
+        self.ui.select_native_view({'action':'games', 'system':'nes'}, 'own-new')
+        xbmc.Monitor().waitForAbort.assert_called_once_with(.05)
+        xbmc.executebuiltin.assert_called_once_with('Container.SetViewMode(58)')
+
+    def test_different_widget_uuid_cannot_change_the_displayed_games_view(self):
+        xbmc = self.modules['xbmc']; xbmc.getSkinDir.return_value = 'skin.foundry'
+        xbmc.getCondVisibility.return_value = True
+        xbmc.getInfoLabel.side_effect = lambda name: self.ui.url(action='games', mode='favorites') if name == 'Container.FolderPath' else 'visible-directory'
+        xbmc.Monitor().waitForAbort.return_value = False
+        ticks = iter(index / 10 for index in range(100))
+        with patch.object(self.ui.time, 'monotonic', side_effect=lambda: next(ticks)):
+            self.ui.select_native_view({'action':'games', 'mode':'favorites'}, 'background-widget-directory')
+        xbmc.executebuiltin.assert_not_called()
+        self.assertGreater(xbmc.Monitor().waitForAbort.call_count, 0)
+        self.assertLessEqual(xbmc.Monitor().waitForAbort.call_count, 20)
+
+    def test_navigation_away_cancels_pending_default_view_selection(self):
+        for leave_window in (False, True):
+            with self.subTest(leave_window=leave_window):
+                xbmc = self.modules['xbmc']; xbmc.getSkinDir.return_value = 'skin.foundry'
+                state = dict(path=self.ui.url(action='home'), active=True)
+                xbmc.getCondVisibility.side_effect = lambda condition: state['active']
+                xbmc.getInfoLabel.side_effect = lambda name: state['path'] if name == 'Container.FolderPath' else 'old-directory'
+                def navigate(delay):
+                    state.update(path=self.ui.url(action='games', system='gb'), active=not leave_window)
+                    return False
+                xbmc.Monitor().waitForAbort.side_effect = navigate
+                self.ui.select_native_view({'action':'games', 'system':'nes'}, 'pending-directory')
+                xbmc.executebuiltin.assert_not_called()
 
     def test_source_choice_cancel_does_not_browse(self):
         self.modules['xbmcgui'].Dialog().select.return_value = -1

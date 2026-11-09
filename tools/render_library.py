@@ -24,6 +24,32 @@ SKIN=ROOT.parent/'skin.foundry-nimbus'
 HELPER=ROOT.parent/'script.foundry.helper'
 
 
+def atomic_document(path, document):
+    temporary=path.with_name(path.name+'.tmp')
+    temporary.write_text(json.dumps(document),encoding='utf-8')
+    temporary.replace(path)
+
+
+def native_input_completed(snapshot, before, action_id):
+    """A fresh same-instance sample after the real WindowXML action callback."""
+    return (snapshot.get('case')==before.get('case') and
+            snapshot.get('generation')==before.get('generation') and
+            snapshot.get('sample',-1)>before.get('sample',-1) and
+            snapshot.get('native_action_sequence',0)>before.get('native_action_sequence',0) and
+            snapshot.get('native_action_id')==action_id)
+
+
+def catalog_close_completed(snapshot, before, action_id):
+    """Closing the Python object alone is not a native-window restoration ack."""
+    return (snapshot.get('case')==before.get('case') and
+            snapshot.get('generation')==before.get('generation') and
+            snapshot.get('closed') is True and
+            snapshot.get('actual_parent')==before.get('parent') and
+            snapshot.get('parent')==before.get('parent') and
+            snapshot.get('native_action_sequence',0)>before.get('native_action_sequence',0) and
+            snapshot.get('native_action_id')==action_id)
+
+
 FIXTURE=r'''
 import json,sys,time,traceback
 from pathlib import Path
@@ -39,6 +65,61 @@ class Source:
     def load(self):
         return {'items':ITEMS,'page':1,'total_pages':500}
     def search(self,query):return None
+
+
+def document(path, value):
+    temporary=path.with_name(path.name+'.tmp')
+    temporary.write_text(json.dumps(value));temporary.replace(path)
+
+
+def journal(event, **values):
+    values.update(event=event,at=time.monotonic(),current_window=xbmcgui.getCurrentWindowId())
+    with (BASE/'library-actions.jsonl').open('a') as handle:handle.write(json.dumps(values)+'\n')
+
+
+class ObservedCatalogWindow(CatalogWindow):
+    # Native WindowXML first processes its GUI action, then invokes onAction.
+    # Observe after the unchanged shipped callback; never move/reset selection.
+    def __init__(self,*args,fixture_case,fixture_generation,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.fixture_case=fixture_case;self.fixture_generation=fixture_generation
+        self.native_action_sequence=0;self.native_action_id=None
+    def onAction(self,action):
+        super().onAction(action)
+        self.native_action_sequence+=1;self.native_action_id=action.getId()
+        journal('native-action-completed',case=self.fixture_case,generation=self.fixture_generation,
+                native_action_sequence=self.native_action_sequence,native_action_id=self.native_action_id,
+                closed=self.closed)
+
+
+def await_release(case,generation,parent):
+    deadline=time.monotonic()+40
+    while time.monotonic()<deadline:
+        request={}
+        try:request=json.loads((BASE/'catalog-release.json').read_text())
+        except (OSError,ValueError):pass
+        if (request.get('case')==case and request.get('generation')==generation and
+                request.get('after_generation')==generation-1 and request.get('parent')==parent and
+                xbmcgui.getCurrentWindowId()==parent):
+            (BASE/'catalog-release.json').unlink()
+            journal('case-released',case=case,generation=generation,parent=parent)
+            return
+        xbmc.sleep(20)
+    raise AssertionError(('No matching fresh catalog release',case,generation,parent,request))
+
+
+def finish_case(window,case,generation,parent):
+    require(window.closed,('Case ended without native Back',case,generation))
+    window.dispose()
+    deadline=time.monotonic()+10
+    while (xbmcgui.getCurrentWindowId()!=parent or window.native_action_id!=92) and time.monotonic()<deadline:xbmc.sleep(20)
+    actual_parent=xbmcgui.getCurrentWindowId()
+    require(actual_parent==parent,('Native parent did not restore',case,generation,parent,actual_parent))
+    require(window.native_action_id==92 and window.native_action_sequence>0,('Native Back callback did not complete',case,generation))
+    closed={'case':case,'generation':generation,'closed':True,'parent':parent,'actual_parent':actual_parent,
+            'native_action_sequence':window.native_action_sequence,'native_action_id':window.native_action_id}
+    document(BASE/'catalog-close.json',closed)
+    journal('case-closed',**closed)
 
 try:
     # The real controller must bind adopted data before any tick/executor turn.
@@ -71,26 +152,35 @@ try:
     first['after_back_and_dispose']=xbmcgui.getCurrentWindowId()
     require(first['after_back_and_dispose']==parent,first)
     (BASE/'back-once.json').write_text(json.dumps(first))
+    generation=0
     for section,count,case in (('Movies',60,'movies'),('TV Shows',60,'tv-shows'),('Movies',3,'short-row'),('TV Shows',2,'episodes')):
+        generation+=1;case_parent=xbmcgui.getCurrentWindowId()
+        await_release(case,generation,case_parent)
         data=EPISODES if case=='episodes' else [dict(item,type='tvshow' if section=='TV Shows' else 'movie') for item in ITEMS[:count]]
         source=Source();source.load=lambda:{'items':data,'page':1,'total_pages':500}
-        window=CatalogWindow('script-foundry-vod.xml',str(HELPER),'default','1080i',True,source=source,section=section,breadcrumb='Trending')
-        window.show();deadline=time.monotonic()+90
+        window=ObservedCatalogWindow('script-foundry-vod.xml',str(HELPER),'default','1080i',True,source=source,section=section,breadcrumb='Trending',fixture_case=case,fixture_generation=generation)
+        window.show();deadline=time.monotonic()+90;sample=0;last_native_state=None
         while not window.closed and time.monotonic()<deadline:
             window.tick()
-            snapshot={'case':case,'initialized':window.initialized,'current_window':xbmcgui.getCurrentWindowId(),'section':section,'focus':window.getFocusId(),'position':window.getCurrentListPosition(),
+            sample+=1
+            snapshot={'case':case,'generation':generation,'sample':sample,'parent':case_parent,
+                      'native_action_sequence':window.native_action_sequence,'native_action_id':window.native_action_id,'initialized':window.initialized,'current_window':xbmcgui.getCurrentWindowId(),'section':section,'focus':window.getFocusId(),'position':window.getCurrentListPosition(),
                       'page':window.state.page,'title':window.getProperty('catalog.title'),
                       'kind':window.rail[window.getCurrentListPosition()].get('kind') if window.rail else '',
                       'sort_open':window.getProperty('catalog.sortopen'),
                       'tmdb':window.getProperty('catalog.tmdb'),'imdb':window.getProperty('catalog.imdb'),
                       'accent':window.getProperty('catalog.accent'),'details':window.getProperty('catalog.details'),
                       'rendered_details':xbmc.getInfoLabel('Control.GetLabel(5713)'),'released':window.getProperty('catalog.released')}
+            native_state=(snapshot['focus'],snapshot['position'],snapshot['page'])
+            if native_state!=last_native_state:
+                journal('native-state',**snapshot);last_native_state=native_state
             temporary=BASE/'state.tmp';temporary.write_text(json.dumps(snapshot));temporary.replace(BASE/'state.json')
             if (BASE/'capture.json').exists():
                 name=json.loads((BASE/'capture.json').read_text())['name'];(BASE/'capture.json').unlink()
                 xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/(name+'.png'))+')')
             xbmc.sleep(50)
-        window.dispose()
+        finish_case(window,case,generation,case_parent)
+        del window
     from modules.monitors.metadata import MetadataMonitor
     from modules.vod import CatalogArtworkMonitor
     class SharedProvider:
@@ -154,6 +244,8 @@ try:
         xbmc.sleep(50)
     metadata.stop()
     for case in MOVIE_CASES:
+        generation+=1;case_parent=xbmcgui.getCurrentWindowId()
+        await_release(case['name'],generation,case_parent)
         data=[]
         for index,item in enumerate(ITEMS):
             art={key:value for key,value in item['art'].items() if key!='fanart' or case.get('fanart')}
@@ -162,8 +254,8 @@ try:
         source=Source();source.path='fixture://movie-wallpaper/'+case['name'];source.content='movies' if case['section']=='Movies' else 'tvshows'
         source.load=lambda:{'items':data,'page':1,'total_pages':3};source.initial=source.load()
         if case.get('custom'):xbmc.executebuiltin('Skin.SetString(NimbusCustomBackground,'+CUSTOM_BACKGROUND+')',True)
-        window=CatalogWindow('script-foundry-vod.xml',str(HELPER),'default','1080i',True,source=source,section=case['section'],breadcrumb=case['label'])
-        window.show();deadline=time.monotonic()+90;completed_command=''
+        window=ObservedCatalogWindow('script-foundry-vod.xml',str(HELPER),'default','1080i',True,source=source,section=case['section'],breadcrumb=case['label'],fixture_case=case['name'],fixture_generation=generation)
+        window.show();deadline=time.monotonic()+90;completed_command='';sample=0;last_native_state=None
         while not window.closed and time.monotonic()<deadline:
             window.tick()
             command=BASE/'movie-command'
@@ -171,17 +263,23 @@ try:
                 operation=command.read_text();command.unlink()
                 require(operation=='rehydrate',operation)
                 window.clearList();window.onInit();completed_command=operation
-            snapshot={'case':case['name'],'focus':window.getFocusId(),'position':window.getCurrentListPosition(),'page':window.state.page,
+            sample+=1
+            snapshot={'case':case['name'],'generation':generation,'sample':sample,'parent':case_parent,
+                      'native_action_sequence':window.native_action_sequence,'native_action_id':window.native_action_id,'focus':window.getFocusId(),'position':window.getCurrentListPosition(),'page':window.state.page,
                       'title':window.getProperty('catalog.title'),'fanart':window.getProperty('catalog.fanart'),
                       'movie_submenu_label':window.getProperty('foundry.movie_submenu_label'),'command_complete':completed_command,
                       'kind':window.rail[window.getCurrentListPosition()].get('kind') if window.rail else ''}
+            native_state=(snapshot['focus'],snapshot['position'],snapshot['page'])
+            if native_state!=last_native_state:
+                journal('native-state',**snapshot);last_native_state=native_state
             temporary=BASE/'state.tmp';temporary.write_text(json.dumps(snapshot));temporary.replace(BASE/'state.json')
             if (BASE/'capture.json').exists():
                 name=json.loads((BASE/'capture.json').read_text())['name'];(BASE/'capture.json').unlink()
                 xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/(name+'.png'))+')')
             xbmc.sleep(50)
         require(window.closed,'Movie wallpaper case did not finish: '+case['name'])
-        window.dispose()
+        finish_case(window,case['name'],generation,case_parent)
+        del window
         if case.get('custom'):xbmc.executebuiltin('Skin.Reset(NimbusCustomBackground)',True)
     (BASE/'complete').write_text('ok')
 except Exception:
@@ -317,13 +415,36 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             wait_for(ready,60)
             assert rpc('Application.GetProperties',{'properties':['version']})['version']['major']>=21,'Kodi 21+ required'
             methods={'Right':'Input.Right','Left':'Input.Left','Down':'Input.Down','Return':'Input.Select','Escape':'Input.Back','Up':'Input.Up'}
+            action_ids={'Left':1,'Right':2,'Up':3,'Down':4,'Return':7,'Escape':92}
+            catalog_case=None;catalog_generation=0
             def key(*names):
                 for name in names:
-                    rpc(methods[name]);time.sleep(.15)
+                    before=state() if catalog_case else None
+                    if before is not None:
+                        assert before.get('case')==catalog_case and before.get('generation')==catalog_generation,before
+                    rpc(methods[name])
+                    if before is None:time.sleep(.15)
+                    elif name=='Escape':wait_for(lambda:catalog_close_completed(close_state(),before,action_ids[name]))
+                    else:wait_for(lambda:native_input_completed(state(),before,action_ids[name]))
             def state():
                 if (base/'error.txt').exists():raise RuntimeError((base/'error.txt').read_text())
                 try:return json.loads((base/'state.json').read_text())
                 except (OSError,ValueError):return {}
+            def close_state():
+                if (base/'error.txt').exists():raise RuntimeError((base/'error.txt').read_text())
+                try:return json.loads((base/'catalog-close.json').read_text())
+                except (OSError,ValueError):return {}
+            def open_case(name):
+                nonlocal catalog_case,catalog_generation
+                if catalog_generation:
+                    closed=close_state()
+                    assert closed.get('generation')==catalog_generation and closed.get('closed') is True,closed
+                    assert closed.get('actual_parent')==closed.get('parent'),closed
+                parent_id=rpc('GUI.GetProperties',{'properties':['currentwindow']})['currentwindow']['id']
+                catalog_generation+=1;catalog_case=name
+                atomic_document(base/'catalog-release.json',{'case':name,'generation':catalog_generation,
+                    'after_generation':catalog_generation-1,'parent':parent_id})
+                wait_for(lambda:state().get('case')==name and state().get('generation')==catalog_generation)
             # A fresh Kodi profile can show its first-run confirmation dialog.
             # It must close before Kodi permits a non-modal WindowXML to open.
             for _ in range(5):
@@ -343,7 +464,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             def capture(name):
                 destination=output/(name+'.png')
                 destination.unlink(missing_ok=True)
-                (base/'capture.json').write_text(json.dumps({'name':name}))
+                atomic_document(base/'capture.json',{'name':name})
                 def complete():
                     try:
                         with Image.open(destination) as im:im.verify()
@@ -360,6 +481,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
                 inset=24*1.19
                 return [round(min(x for x,y in matches)-inset),round(min(y for x,y in matches)-inset),round(max(x for x,y in matches)+1+inset),round(max(y for x,y in matches)+1+inset)]
             for section,name in [('Movies','movies'),('TV Shows','tv-shows')]:
+                open_case(name)
                 wait_for(lambda:state().get('case')==name and state().get('focus')==50 and bool(state().get('title')))
                 key('Right','Right');wait_for(lambda:state().get('position')==2)
                 wait_for(lambda:bool(state().get('tmdb')) and bool(state().get('imdb')) and state().get('accent')=='FF7D25E6')
@@ -395,12 +517,14 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
                 key('Return');wait_for(lambda:state().get('page')==1 and state().get('position')==0 and state().get('kind')=='media')
                 evidence.append({'section':section,'screenshot':name+'.png','focused_poster_bounds':bounds,'scrolled_poster_bounds':middle,'source_expected_bounds':expected,'visible_colored_glow_delta_rgb':delta,'focus_return_restores_poster':True,'next_previous_page_roundtrip':True,'row_ends_do_not_wrap':True,'focused_next_arrow_bounds':arrow_bounds})
                 key('Escape')
+            open_case('short-row')
             wait_for(lambda:state().get('case')=='short-row' and state().get('focus')==50 and state().get('position')==0)
             wait_for(lambda:state().get('accent')=='FF1D9BC7');time.sleep(.7)
             short=poster_bounds(capture('short-row'),(100,556,345,931))
             assert all(abs(a-b)<=4 for a,b in zip(short,[91,544,357,944])),short
             evidence.append({'section':'Three-title row','focused_poster_bounds':short,'left_padding_preserved':True})
             key('Escape')
+            open_case('episodes')
             wait_for(lambda:state().get('case')=='episodes' and 'S01E02' in state().get('rendered_details',''))
             assert 'The Signal' in state()['rendered_details'] and 'Fixture Series' in state()['rendered_details']
             assert state()['released']=='Aired Nov 1, 2026',state()
@@ -409,6 +533,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             assert 'Origin Special' in state()['rendered_details'];capture('episode-special')
             evidence.append({'section':'Episode details','season_episode_and_title_visible':True,'specials_zero_preserved':True,'show_title_air_date_and_runtime_available':True})
             key('Escape')
+            catalog_case=None
             wait_for(lambda:state().get('case')=='native' and state().get('focus')==57 and state().get('label')=='Previous Page')
             key('Right','Right','Right');wait_for(lambda:state().get('position')==3)
             wait_for(lambda:state().get('tmdb')=='7' and state().get('imdb')=='7.1/10' and bool(state().get('studio')))
@@ -482,6 +607,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
                 assert max(differences)<12,('Rendered movie wallpaper pixels differ',str(source),differences,state())
                 return differences
             for case in movie_cases:
+                open_case(case['name'])
                 wait_for(lambda:state().get('case')==case['name'] and state().get('focus')==50 and bool(state().get('title')))
                 wanted=case['label'] if case['section']=='Movies' and case['kind']=='movie' and case['label']!='Movies' else ''
                 assert state().get('movie_submenu_label')==wanted,(case,state())
@@ -496,7 +622,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
                     key('Left');wait_for(lambda:state().get('kind')=='previous');key('Return')
                     wait_for(lambda:state().get('page')==1 and state().get('position')==0)
                     assert state()['movie_submenu_label']==wanted,state()
-                    (base/'movie-command').write_text('rehydrate');wait_for(lambda:state().get('command_complete')=='rehydrate' and state().get('focus')==50)
+                    (base/'movie-command.tmp').write_text('rehydrate');(base/'movie-command.tmp').replace(base/'movie-command');wait_for(lambda:state().get('command_complete')=='rehydrate' and state().get('focus')==50)
                     assert state()['movie_submenu_label']==wanted,state();time.sleep(.3);artwork_pixels(capture(case['name']+'-rehydrated'),source)
                     record.update(paging_roundtrip_retains_context=True,native_list_loss_rehydration_retains_context=True)
                 wallpaper_evidence.append(record);key('Escape')
@@ -520,7 +646,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             xserver.terminate();log.close()
             logs=profile/'temp/kodi.log'
             if logs.exists():shutil.copyfile(logs,output/'kodi.log')
-            for name in ('state.json','error.txt','first-paint.json','back-once.json'):
+            for name in ('state.json','error.txt','first-paint.json','back-once.json','library-actions.jsonl','catalog-close.json'):
                 if (base/name).exists():shutil.copyfile(base/name,output/name)
         assert 'Error parsing boolean expression' not in (output/'kodi.log').read_text(), 'Invalid skin boolean conditions'
 

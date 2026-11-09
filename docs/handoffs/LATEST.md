@@ -15,15 +15,15 @@ Do not move these runtime source pins merely to add later validation receipts. R
 
 Windows Python 3.13.5 against the exact source pins above:
 
-- Complete source suite: 630 tests run, zero failures/errors, one skipped Windows symbolic-link fixture; successful.
-- Complete extracted-package suite: 630 tests run, zero failures/errors, two skips (the same symbolic-link fixture, plus preserved-deferred-source checks intentionally excluded from extracted-package workspaces); successful.
+- Complete source suite: 640 tests run, zero failures/errors, one skipped Windows symbolic-link fixture; successful.
+- Complete extracted-package suite: 640 tests run, zero failures/errors, two skips (the same symbolic-link fixture, plus preserved-deferred-source checks intentionally excluded from extracted-package workspaces); successful.
 - All ten package ZIPs, sizes, SHA-256 sidecars, manifests, dependencies, feed/checksum and root installer aliases verified.
 - Isolated extracted-package deterministic rebuild passed without modifying source trees.
 - All 92 published 1.4.0 artifacts were compared byte-for-byte with the pre-candidate committed baseline: nine package ZIPs and sidecars plus 74 source/QA/verification records. All remain unchanged. Generated current feed/installer aliases are working candidate files; the remote existing update flow remains published 1.4.0 until approved publication.
 
 Local evidence directory on SPACESHIP: `C:\Users\TrentTimmerman\Documents\Codex\foundry-next-games-20261109`.
 
-Relevant records: `source-tests-async.json` / `.log`, `packaged-qa-async/packaged-tests.json`, `packaged-qa-async/packaged-verification.json`, `packaged-tests-async.log`, `published-1.4.0-immutability.json`, and `distribution-reviewed-paths.txt`. Local results do not substitute for CI/native results. Existing 1.4.0 native receipts describe that published release only.
+Relevant records: `source-tests-final-combined.json` / `.log`, `packaged-qa-final-combined/packaged-tests.json`, `packaged-qa-final-combined/packaged-verification.json`, `packaged-tests-final-combined.log`, `published-1.4.0-immutability.json`, and `distribution-reviewed-paths.txt`. Local results do not substitute for CI/native results. Existing 1.4.0 native receipts describe that published release only.
 
 ## First native run and bounded corrections
 
@@ -36,6 +36,10 @@ Only the exact existing Timer warning `control.hasfocus($param[list_id])` is cla
 The [second development run42557830873](https://github.com/3thirty3gitter/foundry-kodi-dist/actions/runs/42557830873), candidatee9cd14567c743dc94b1dd9bd480acc0a75428330, again passed the other four native gates. Games startup settlement proved the actual Foundry graphics path, full Home signature and completed real recent/favorites widgets; its first Home directory also completed. The subsequent NES `Container.Update` synchronous call stalled: the native directory operation started a new Python invoker which never initialized, while the controller never reached its fresh-directory wait. The host timed out240seconds with Kodi alive.
 
 The minimal correction posts plugin `ActivateWindow`, `Container.Update` and favorite `Container.Refresh` asynchronously, then retains the exact route/fresh DirectoryId/invoker-completion acknowledgments. No timeout or runtime check was relaxed. A semantic fake-GUI regression exposes the requested route immediately but completes its native listing only when the Python controller yields, requiring a genuinely fresh UUID. Its dispatch signature rejects synchronous waiting. Current supported Games native success remains pending a complete rerun. The original exit139 root cause remains unconfirmed. Detailed timeout evidence: `games-timeout-42557830873-diagnosis.json` in the local evidence directory.
+
+The [third development run42559245662](https://github.com/3thirty3gitter/foundry-kodi-dist/actions/runs/42559245662), candidate5e070c61d80645929b0bfbd1bf8b804e3828e844, cleared the synchronous directory stall. Games reached the fresh NES catalog in native window10821 but stayed in List view. The immediate post-endOfDirectory owner check could run before Kodi published the new native list. The correction returns the invocation UUID from done(), then yields through Monitor.waitForAbort(.05), bounded to two seconds, until the exact Games route and that UUID are actually displayed before posting view58. Home/Videos, a different background widget UUID, navigation away or abort cannot change another view. The native automatic58 assertion remains before any fixture-forced rail control. Evidence: `games-view-42559245662-diagnosis.json`.
+
+That third run also exposed a separate short-row library fixture transition race (native position1 versus required0). Its owner added explicit parent-close acknowledgment, host-controlled case release, sequence acknowledgments and input journaling; capture and rehydrate command publication is also atomic. All original position and pixel assertions remain. The combined corrected candidate is locally verified above; both fixes require the next complete native run, with no supported Games pass claimed yet. Skin/helper runtime source pins remain unchanged.
 
 ## Mandatory next validation
 

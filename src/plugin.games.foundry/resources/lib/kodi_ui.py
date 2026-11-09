@@ -112,6 +112,27 @@ def launch(db, game, profile):
     db.played(game['id'], time.monotonic() - start)
 
 
+def select_native_view(params, directory_id, timeout=2):
+    """Select only this invocation's newly published native Games directory."""
+    if xbmc.getSkinDir() != 'skin.foundry': return
+    monitor = xbmc.Monitor()
+    deadline = time.monotonic() + timeout
+    origin = xbmc.getInfoLabel('Container.FolderPath')
+    while time.monotonic() < deadline:
+        if not xbmc.getCondVisibility('Window.IsActive(games)'): return
+        visible_path = xbmc.getInfoLabel('Container.FolderPath')
+        visible_params = {key: values[-1] for key, values in parse_qs(urlsplit(visible_path).query).items()}
+        if visible_path.startswith(BASE) and visible_params == params:
+            if xbmc.getInfoLabel('Container.Property(Foundry.Games.DirectoryId)') == directory_id:
+                xbmc.executebuiltin('Container.SetViewMode(58)')
+                return
+        elif visible_path != origin:
+            return  # Navigation changed while this directory was being published.
+        # endOfDirectory releases Kodi's directory fetch before the GUI list is
+        # replaced. Yield without a synchronous GUI call, bounded to two seconds.
+        if monitor.waitForAbort(.05): return
+
+
 def run(argv):
     handle = int(argv[1])
     params = {k: v[-1] for k, v in parse_qs(argv[2].lstrip('?')).items()}
@@ -126,8 +147,10 @@ def run(argv):
     def done():
         # This property belongs to Kodi's completed list, rather than the DB
         # transaction or invoker. Consumers can wait for fresh native contents.
-        xbmcplugin.setProperty(handle, 'Foundry.Games.DirectoryId', uuid4().hex)
+        directory_id = uuid4().hex
+        xbmcplugin.setProperty(handle, 'Foundry.Games.DirectoryId', directory_id)
         xbmcplugin.endOfDirectory(handle, cacheToDisc=False)
+        return directory_id
     try:
         if action == 'home':
             folder('Search games', action='search')
@@ -159,16 +182,10 @@ def run(argv):
             if len(games) > 20:
                 folder('Next page', action='games', system=params.get('system', ''), query=query, mode=params.get('mode', ''), page=page+1)
             if not games: folder('No games here. Add or rescan a source.', action='sources')
-            done()
-            visible_path = xbmc.getInfoLabel('Container.FolderPath')
-            visible_params = {key: values[-1] for key, values in parse_qs(urlsplit(visible_path).query).items()}
-            if (xbmc.getSkinDir() == 'skin.foundry' and
-                    xbmc.getCondVisibility('Window.IsActive(games)') and
-                    visible_path.startswith(BASE) and visible_params == params):
-                # Home/widgets may resolve this same route in the background.
-                # Only the owning, currently displayed Games directory may
-                # change its native view; never mutate Home or another listing.
-                xbmc.executebuiltin('Container.SetViewMode(58)')
+            directory_id = done()
+            # Background Home/widgets cannot match their invocation's UUID in
+            # the displayed directory and must never change another view.
+            select_native_view(params, directory_id)
         elif action == 'sources':
             folder('Add local / configured VFS folder', action='add')
             folder('Add selected game file', action='add', file='1')
