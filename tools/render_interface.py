@@ -1,10 +1,12 @@
 """Verify widget metadata, OSD frames and system icons in native Foundry/Kodi."""
+import argparse
 import json
 import hashlib
 import os
 from pathlib import Path
 import shutil
 import signal
+import socket
 import struct
 import subprocess
 import tempfile
@@ -27,6 +29,7 @@ def require(condition,message):
 sys.path.insert(0,str(HELPER/'resources/lib'))
 from modules.monitors.metadata import MetadataMonitor
 from modules.vod import CatalogArtworkMonitor
+from modules.catalog_window import CatalogWindow
 class Provider:
     def enrich(self,item,section):
         item=dict(item);item['art']=dict(item.get('art') or {},studiologo=STUDIO)
@@ -72,8 +75,16 @@ try:
         item.setInfo('video',info);item.setArt({'poster':POSTER,'fanart':FANART,'studiologo':STUDIO})
         row.addItem(item)
     window.setFocusId(19011)
-    deadline=time.monotonic()+180
+    playback_catalog=None;playback_command=0;playback_parent=None;playback_closed_parent=None;command_sequence=0
+    deadline=time.monotonic()+360
     while not (BASE/'complete').exists() and time.monotonic()<deadline:
+        if playback_catalog is not None:
+            if playback_catalog.closed:
+                playback_catalog.dispose();playback_catalog=None
+                playback_closed_parent=None
+            else:playback_catalog.tick()
+        if playback_catalog is None and playback_parent is not None and xbmcgui.getCurrentWindowId()==playback_parent:
+            playback_closed_parent=playback_parent
         metadata.process_current_item();artwork.process_current_item()
         def label(name):return xbmc.getInfoLabel(name)
         snapshot={'window':xbmcgui.getCurrentWindowId(),'label':label('ListItem.Label'),
@@ -87,11 +98,53 @@ try:
                   'player_time':label('Player.Time'),'player_duration':label('Player.Duration'),
                   'seek_visible':xbmc.getCondVisibility('Window.IsVisible(seekbar)'),
                   'busy_visible':xbmc.getCondVisibility('Window.IsVisible(busydialognocancel)'),
-                  'python_optimize':sys.flags.optimize}
+                  'python_optimize':sys.flags.optimize,'playback_command':playback_command,'command_sequence':command_sequence,
+                  'playback_parent':playback_parent,'playback_closed_parent':playback_closed_parent,
+                  'catalog':None}
+        if playback_catalog is not None:
+            snapshot['catalog']={'selected':playback_catalog.state.selected,'source':playback_catalog.source.path,
+                'submenu':playback_catalog.getProperty('foundry.movie_submenu_label'),
+                'fanart':playback_catalog.getProperty('catalog.fanart'),'native_ready':False,
+                'message':playback_catalog.getProperty('catalog.message'),
+                'file':playback_catalog.state.items[3]['file']}
+            if not xbmc.getCondVisibility('Player.HasVideo'):
+                try:
+                    snapshot['catalog'].update(native_ready=True,focus=playback_catalog.getFocusId(),
+                        position=playback_catalog.getCurrentListPosition(),size=playback_catalog.getListSize())
+                except RuntimeError:snapshot['catalog']['native_ready']=False
         (BASE/'state.tmp').write_text(json.dumps(snapshot));(BASE/'state.tmp').replace(BASE/'state.json')
+        playback_request=BASE/'playback-command.json'
+        if playback_request.exists():
+            request=json.loads(playback_request.read_text())
+            if request['action']=='open-catalog':
+                require(playback_catalog is None,'Previous catalog did not close')
+                xbmc.executebuiltin('ActivateWindow(settings)',True);xbmc.sleep(300)
+                playback_parent=xbmcgui.getCurrentWindowId();playback_closed_parent=None
+                require(playback_parent==10004,('Unexpected catalog parent',playback_parent))
+                class Source:
+                    scope='fixture';path='fixture://playback-catalog';content='movies'
+                    movie_submenu_label='Trending';movie_submenu_verified=False
+                    def load(self):raise AssertionError('Playback return reloaded the source')
+                source=Source()
+                art={'poster':POSTER}
+                if request.get('fanart'):art['fanart']=FANART
+                source.initial={'items':[{'title':'Playback Movie '+str(index),'type':'movie',
+                    'filetype':'file','file':str(BASE/'fixture.avi'),'plot':'Offline playback return fixture.',
+                    'art':dict(art)} for index in range(6)]}
+                playback_catalog=CatalogWindow('script-foundry-vod.xml',str(HELPER),'default','1080i',True,
+                    source=source,section='Movies',breadcrumb='VOD / Movies / Trending')
+                playback_catalog.show()
+                limit=time.monotonic()+10
+                while not playback_catalog.initialized and time.monotonic()<limit:xbmc.sleep(20)
+                require(playback_catalog.initialized,'Playback catalog failed to initialize')
+            elif request['action']=='begin':xbmc.log('[Foundry playback QA] begin',xbmc.LOGINFO)
+            elif request['action']=='end':xbmc.log('[Foundry playback QA] end',xbmc.LOGINFO)
+            else:raise AssertionError('Unknown playback command')
+            # Acknowledge only a completed action; the next state carries this ID.
+            playback_command=request['id'];playback_request.unlink()
         command=BASE/'command'
         if command.exists():
-            value=command.read_text();command.unlink()
+            value=command.read_text()
             if value=='clear-widget':row.reset()
             elif value=='icons':xbmc.executebuiltin('ActivateWindow(11126)')
             elif value=='live-frame':xbmc.executebuiltin('ActivateWindow(11127)')
@@ -104,8 +157,8 @@ try:
                 xbmc.executebuiltin('ReloadSkin()',True);xbmc.executebuiltin('ActivateWindow(Home)',True)
                 # Keep the existing Home wrapper alive. Native XML-populated lists
                 # do not populate ControlList's Python vecItems; use GUI info/actions.
-                deadline=time.monotonic()+10
-                while time.monotonic()<deadline:
+                favorites_deadline=time.monotonic()+10
+                while time.monotonic()<favorites_deadline:
                     count=int(xbmc.getInfoLabel('Container(9000).NumItems') or '0')
                     if count:break
                     xbmc.sleep(50)
@@ -124,10 +177,14 @@ try:
                 item.setInfo('video',{'title':'Foundry Playback','mediatype':'movie'})
                 item.setArt({'poster':POSTER,'studiologo':STUDIO})
                 xbmc.Player().play(str(BASE/'fixture.avi'),item)
+            else:raise AssertionError('Unknown interface command')
+            # Publish completion only after the requested action returns.
+            command_sequence+=1;command.unlink()
         capture=BASE/'capture'
         if capture.exists():
-            name=capture.read_text();capture.unlink()
+            name=capture.read_text()
             xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/(name+'.png'))+')')
+            capture.unlink()
         xbmc.sleep(30)
     metadata.stop()
 except Exception:(BASE/'error.txt').write_text(traceback.format_exc())
@@ -166,10 +223,47 @@ def animation_evidence(frames,latencies,elapsed):
     return changed
 
 
+def atomic_text(path,value):
+    temporary=path.with_name(path.name+'.tmp')
+    temporary.write_text(value,encoding='utf-8')
+    temporary.replace(path)
+
+
+def available_port(requested=0):
+    with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as listener:
+        listener.bind(('127.0.0.1',requested))
+        return listener.getsockname()[1]
+
+
+def fixture_ready(rpc,logfile,port,identity):
+    try:
+        if '<CWebserver[%d]>: Started'%port not in logfile.read_text(encoding='utf-8',errors='replace'):
+            return False
+        return rpc('JSONRPC.Ping')=='pong' and rpc('Settings.GetSettingValue',{'setting':'services.devicename'}).get('value')==identity
+    except (OSError,ValueError,RuntimeError):return False
+
+
+def playback_log_report(text):
+    """Retain complete native traceback context, including swallowed callbacks."""
+    begin='[Foundry playback QA] begin';end='[Foundry playback QA] end'
+    start=text.find(begin);finish=text.find(end,start+len(begin)) if start>=0 else -1
+    segment=text[start:finish+len(end) if finish>=0 else None] if start>=0 else ''
+    markers=('PythonToCppException','Error Contents:','Traceback (most recent call last):','[Foundry catalog]')
+    failures=[line for line in segment.splitlines() if any(marker in line for marker in markers)]
+    return {'complete':start>=0 and finish>=0,'failures':failures,'log':segment}
+
+
 def main():
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--output',type=Path)
+    parser.add_argument('--display',default=':98',help='A free private X11 display')
+    parser.add_argument('--port',type=int,default=0)
+    parser.add_argument('--allow-unsupported-kodi',action='store_true',help='Diagnostic run only; final release still requires Kodi21+')
+    args=parser.parse_args()
+    port=available_port(args.port);display=args.display
     release=json.loads((ROOT/'release.json').read_text())['release']
     assert isinstance(release,str) and release and all(c.isalnum() or c in '._-' for c in release)
-    output=ROOT/'releases'/(release+'-qa');output.mkdir(parents=True,exist_ok=True)
+    output=args.output or ROOT/'releases'/(release+'-qa');output.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='foundry-interface-',ignore_cleanup_errors=True) as temporary:
         base=Path(temporary);home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
         profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True)
@@ -195,7 +289,8 @@ def main():
         settings=userdata/'addon_data/skin.foundry';settings.mkdir(parents=True)
         (settings/'settings.xml').write_text('<settings><setting id="firsttimerun" type="bool">true</setting></settings>')
         shutil.copyfile(skin/'xml/Home.xml',base/'shipped-Home.xml')
-        (userdata/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">18081</setting><setting id="services.webserverauthentication">false</setting></settings>')
+        identity='Foundry Interface QA '+base.name
+        (userdata/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">%d</setting><setting id="services.webserverauthentication">false</setting><setting id="services.devicename">%s</setting></settings>'%(port,identity))
         (skin/'xml/Home.xml').write_text('''<window><defaultcontrol always="true">19011</defaultcontrol><controls>
           <control type="image"><width>1920</width><height>1080</height><texture>$VAR[FoundryHomeWallpaper]</texture></control>
           <control type="list" id="9000"><left>-500</left><width>200</width><height>200</height><itemlayout width="200" height="70"><control type="label"><label>$INFO[ListItem.Label]</label></control></itemlayout><focusedlayout width="200" height="70"><control type="label"><label>$INFO[ListItem.Label]</label></control></focusedlayout><content><item><label>Movies</label><property name="id">movies</property></item></content></control>
@@ -224,23 +319,24 @@ def main():
         (launcher/'addon.xml').write_text('<addon id="script.foundry.interfaceqa" version="1.0.0" name="Foundry Interface QA" provider-name="Foundry"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/><extension point="xbmc.addon.metadata"><platform>all</platform><license>GPL-2.0-only</license></extension></addon>')
         (launcher/'default.py').write_text('from pathlib import Path\nBASE=Path(%r)\nOUTPUT=Path(%r)\nHELPER=Path(%r)\nPOSTER=%r\nFANART=%r\nSTUDIO=%r\n'%(str(base),str(output),str(helper),str(poster),str(fanart),str(studio))+FIXTURE)
         isolated_home=base/'user-home';isolated_home.mkdir()
-        environment=dict(os.environ,HOME=str(isolated_home),XDG_CONFIG_HOME=str(isolated_home/'.config'),XDG_CACHE_HOME=str(isolated_home/'.cache'),DISPLAY=':99',KODI_HOME=str(home),LIBGL_ALWAYS_SOFTWARE='1',AE_SINK='NULL')
+        environment=dict(os.environ,HOME=str(isolated_home),XDG_CONFIG_HOME=str(isolated_home/'.config'),XDG_CACHE_HOME=str(isolated_home/'.cache'),DISPLAY=display,KODI_HOME=str(home),LIBGL_ALWAYS_SOFTWARE='1',AE_SINK='NULL')
         kodi=None;log=(output/'interface-console.log').open('w')
-        xserver=subprocess.Popen(['Xvfb',':99','-screen','0','1920x1080x24','-ac','-nolisten','tcp'],stdout=log,stderr=log)
+        xserver=subprocess.Popen(['Xvfb',display,'-screen','0','1920x1080x24','-ac','-nolisten','tcp'],stdout=log,stderr=log)
         try:
             time.sleep(1)
             assert xserver.poll() is None,'Private Xvfb failed to start'
             kodi=subprocess.Popen(['kodi','-p','-fs','--windowing=x11','--debug'],env=environment,stdout=log,stderr=log,start_new_session=True)
             def rpc(method,params=None):
                 data=json.dumps({'jsonrpc':'2.0','id':1,'method':method,'params':params or {}}).encode()
-                with urlopen(Request('http://127.0.0.1:18081/jsonrpc',data=data,headers={'Content-Type':'application/json'}),timeout=5) as response:result=json.loads(response.read())
+                with urlopen(Request('http://127.0.0.1:%d/jsonrpc'%port,data=data,headers={'Content-Type':'application/json'}),timeout=5) as response:result=json.loads(response.read())
                 if 'error' in result:raise RuntimeError(str(result['error']))
                 return result.get('result')
             def ready():
-                try:return rpc('JSONRPC.Ping')=='pong'
+                try:return fixture_ready(rpc,profile/'temp/kodi.log',port,identity)
                 except Exception:return False
             wait_for(ready,60)
-            assert rpc('Application.GetProperties',{'properties':['version']})['version']['major']>=21,'Kodi 21+ required'
+            kodi_version=rpc('Application.GetProperties',{'properties':['version']})['version']
+            assert kodi_version['major']>=21 or args.allow_unsupported_kodi,'Kodi 21+ required; older runtimes are diagnostic only'
             # First-start add-on prompts arrive one at a time. A momentary
             # gap is not initialization completion, so require a quiet interval.
             deadline=time.monotonic()+30;quiet_since=None
@@ -270,8 +366,20 @@ def main():
                 if (base/'error.txt').exists():raise AssertionError((base/'error.txt').read_text())
                 try:return json.loads((base/'state.json').read_text())
                 except (OSError,ValueError):return {}
+            playback_serial=0
+            def playback_command(action,**values):
+                nonlocal playback_serial
+                playback_serial+=1
+                atomic_text(base/'playback-command.json',json.dumps(dict(values,id=playback_serial,action=action)))
+                wait_for(lambda:state().get('playback_command')==playback_serial)
+            command_serial=0
+            def command(value):
+                nonlocal command_serial
+                command_serial+=1
+                atomic_text(base/'command',value)
+                wait_for(lambda:state().get('command_sequence')==command_serial)
             def capture(name):
-                destination=output/(name+'.png');destination.unlink(missing_ok=True);(base/'capture').write_text(name)
+                destination=output/(name+'.png');destination.unlink(missing_ok=True);atomic_text(base/'capture',name)
                 def complete():
                     try:
                         with Image.open(destination) as candidate:candidate.verify()
@@ -288,14 +396,14 @@ def main():
             rpc('Input.Up');time.sleep(.8);small=capture('settings-widget-wallpaper')
             expected=Image.open(skin/'media/foundry-widget-wallpapers/settings.png').convert('RGB').resize((1920,1080))
             for point in [(1400,230),(1550,400),(600,720)]:assert max(abs(a-b) for a,b in zip(small.getpixel(point),expected.getpixel(point)))<25,'Settings hover did not select the widget wallpaper'
-            (base/'command').write_text('clear-widget');time.sleep(.4);full=capture('settings-full-wallpaper')
+            command('clear-widget');time.sleep(.4);full=capture('settings-full-wallpaper')
             assert sum(abs(a-b) for a,b in zip(full.getpixel((1400,230)),small.getpixel((1400,230))))>20,'Empty widgets did not restore the full Settings wallpaper'
             rpc('GUI.ActivateWindow',{'window':'settings'});time.sleep(1);capture('system-settings')
             rpc('GUI.ActivateWindow',{'window':'systemsettings'});time.sleep(1);category=capture('system-setting-rows')
             assert bright(category,(40,145,90,200))>10,'Generated category row has no icon'
             # Options start below Kodi's 50px section heading.
             assert bright(category,(510,200,560,240))>10,'Generated option row has no icon'
-            (base/'command').write_text('play');wait_for(lambda:rpc('Player.GetActivePlayers'))
+            command('play');wait_for(lambda:rpc('Player.GetActivePlayers'))
             time.sleep(.7);rpc('Input.ShowOSD');time.sleep(.8);osd=capture('vod-osd')
             assert bright(osd,(96,742,276,1012))>100,'OSD poster is missing'
             # The rounded card occupies y=834..1036; the retired feather filled
@@ -319,15 +427,53 @@ def main():
                 assert bright(seek,(1540,40,1860,150))>100,'Seek studio logo is missing'
                 seek_evidence.append(sample)
                 time.sleep(2.2)
-            (base/'command').write_text('live-frame');wait_for(lambda:state().get('window')==11127);time.sleep(.6);live=capture('live-osd-frame')
+            command('live-frame');wait_for(lambda:state().get('window')==11127);time.sleep(.6);live=capture('live-osd-frame')
             assert sum(live.getpixel((900,900)))+50<sum(live.getpixel((900,700))),'Live background frame is missing'
             assert max(abs(a-b) for a,b in zip(live.getpixel((900,700)),(85,100,120)))<15,'Live preview background is obscured'
-            rpc('Player.Stop',{'playerid':1});(base/'command').write_text('icons');wait_for(lambda:state().get('window')==11126);time.sleep(.8);icons=capture('system-icon-set')
+            rpc('Player.Stop',{'playerid':1});command('icons');wait_for(lambda:state().get('window')==11126);time.sleep(.8);icons=capture('system-icon-set')
             for index,name in enumerate(catalog):
                 x=45+(index%10)*186;y=90+(index//10)*164
                 assert bright(icons,(x,y,x+128,y+128))>30,'Missing native icon: '+name
+            # Real shipped catalog, native context Play and native Stop/Back.
+            # Reopen between cycles so both playback return and navigation cleanup run.
+            playback_command('begin');playback_cycles=[]
+            for cycle in range(3):
+                with_fanart=cycle>0
+                playback_command('open-catalog',fanart=with_fanart)
+                def catalog_ready():
+                    current=state();entry=current.get('catalog') or {}
+                    return current.get('window')!=12005 and entry.get('native_ready') and entry.get('focus')==50 and entry.get('size')==6
+                wait_for(catalog_ready)
+                for position in range(1,4):
+                    rpc('Input.Right');wait_for(lambda:(state().get('catalog') or {}).get('position')==position)
+                before=state();catalog_window_id=before['window']
+                require_label=(before['catalog']['submenu']=='Trending')
+                assert require_label,('Movies submenu context missing before playback',before)
+                capture('playback-%d-before'%cycle)
+                rpc('Input.ContextMenu')
+                wait_for(lambda:rpc('XBMC.GetInfoBooleans',{'booleans':['System.HasActiveModalDialog']}).get('System.HasActiveModalDialog'))
+                rpc('Input.Select');wait_for(lambda:bool(rpc('Player.GetActivePlayers')))
+                wait_for(lambda:state().get('window')==12005)
+                time.sleep(.4)
+                players=rpc('Player.GetActivePlayers');player=next(item for item in players if item['type']=='video')
+                rpc('Player.Stop',{'playerid':player['playerid']})
+                wait_for(lambda:not rpc('Player.GetActivePlayers'))
+                wait_for(lambda:catalog_ready() and state().get('window')==catalog_window_id)
+                after=state();entry=after['catalog']
+                assert entry['position']==3 and entry['selected']==3,('Playback lost selection',before,after)
+                assert entry['source']==before['catalog']['source'] and entry['file']==before['catalog']['file'],('Playback changed source identity',before,after)
+                assert entry['submenu']=='Trending' and entry['fanart']==before['catalog']['fanart'],('Playback changed submenu or item fanart',before,after)
+                assert not entry['message'],('Playback return displayed a false source error',after)
+                capture('playback-%d-stopped'%cycle)
+                rpc('Input.Back')
+                wait_for(lambda:state().get('catalog') is None and state().get('playback_closed_parent')==before['playback_parent'])
+                assert state()['window']==before['playback_parent'],('Back popped the restored parent',state())
+                playback_cycles.append({'cycle':cycle+1,'with_item_fanart':with_fanart,'before':before,'after_stop':after,'after_back':state()})
+            playback_command('end')
+            report=playback_log_report((profile/'temp/kodi.log').read_text(encoding='utf-8',errors='replace'))
+            assert report['complete'] and not report['failures'],('Native playback traceback or diagnostic',report['failures'])
             # Exercise the unchanged shipped Home, not the earlier metadata harness.
-            (base/'command').write_text('favorites')
+            command('favorites')
             wait_for(lambda:state().get('window')==10000 and state().get('favorites_count')=='3')
             assert (skin/'xml/Home.xml').read_bytes()==(SKIN/'xml/Home.xml').read_bytes()
             rpc('Input.Right');wait_for(lambda:state().get('focus')==14100)
@@ -338,20 +484,20 @@ def main():
             assert not rpc('Player.GetActivePlayers'),'Favorites focus started playback'
             # Actual DialogBusy and selected GIF, with native animation and bounded responsiveness.
             rpc('GUI.ActivateWindow',{'window':'settings'});time.sleep(.5)
-            (base/'command').write_text('busy-open');wait_for(lambda:state().get('busy_visible'))
+            command('busy-open');wait_for(lambda:state().get('busy_visible'))
             time.sleep(.8);frames=[];latencies=[];started=time.monotonic()
             for index in range(12):
-                frame=ImageGrab.grab(xdisplay=':99').convert('RGB');frame.save(output/('ripple-%02d.png'%index))
+                frame=ImageGrab.grab(xdisplay=display).convert('RGB');frame.save(output/('ripple-%02d.png'%index))
                 frames.append(frame.crop((793,373,1127,707)))
                 ping=time.monotonic();assert rpc('JSONRPC.Ping')=='pong';latencies.append(time.monotonic()-ping)
                 time.sleep(.13)
             elapsed=time.monotonic()-started
             changed=animation_evidence(frames,latencies,elapsed)
-            (base/'command').write_text('busy-close');wait_for(lambda:not state().get('busy_visible'))
+            command('busy-close');wait_for(lambda:not state().get('busy_visible'))
             (base/'complete').write_text('ok')
-            (output/'interface-verification.json').write_text(json.dumps({'home_favorites_shipped_xml_sha256':hashlib.sha256((SKIN/'xml/Home.xml').read_bytes()).hexdigest(),'home_favorites_row_focus_and_horizontal_navigation':True,'home_favorites_back_returns_menu':True,'preference_migration':json.loads((base/'sounds.json').read_text()),'pulse_native_resource_selected':rpc('Settings.GetSettingValue',{'setting':'lookandfeel.soundskin'})['value'],'audible_output_verified':False,'directional_seek':seek_evidence,'playback_studio_logo_top_right':True,'ripple_native_dialog':'busydialognocancel (shipped DialogBusy.xml)','ripple_changed_pixels':changed,'ripple_capture_elapsed_seconds':elapsed,'ripple_rpc_max_seconds':max(latencies),'widget_metadata_top_left':True,'widget_episode_number_title':True,'studio_logo_above_left_row':True,'settings_hover_uses_widget_wallpaper':True,'empty_widget_restores_full_wallpaper':True,'system_menu_icons':len(catalog),'generated_category_and_option_icons':True,'vod_rounded_frame':True,'live_rounded_frame_preview':True,'scope':'Isolated native desktop Kodi; synthetic metadata/video/Favorites; initial widget harness only, restored shipped Home for Favorites, helper setup/service disabled, null audio sink. Live providers, audible sound, device FPS and Shield remain unverified'},indent=2)+'\n')
+            (output/'interface-verification.json').write_text(json.dumps({'kodi_version':kodi_version,'diagnostic_only':kodi_version['major']<21,'playback_stop_back_cycles':playback_cycles,'playback_traceback_gate':True,'reported_device_error_reproduced':False,'fixture_identity':identity,'fixture_port':port,'home_favorites_shipped_xml_sha256':hashlib.sha256((SKIN/'xml/Home.xml').read_bytes()).hexdigest(),'home_favorites_row_focus_and_horizontal_navigation':True,'home_favorites_back_returns_menu':True,'preference_migration':json.loads((base/'sounds.json').read_text()),'pulse_native_resource_selected':rpc('Settings.GetSettingValue',{'setting':'lookandfeel.soundskin'})['value'],'audible_output_verified':False,'directional_seek':seek_evidence,'playback_studio_logo_top_right':True,'ripple_native_dialog':'busydialognocancel (shipped DialogBusy.xml)','ripple_changed_pixels':changed,'ripple_capture_elapsed_seconds':elapsed,'ripple_rpc_max_seconds':max(latencies),'widget_metadata_top_left':True,'widget_episode_number_title':True,'studio_logo_above_left_row':True,'settings_hover_uses_widget_wallpaper':True,'empty_widget_restores_full_wallpaper':True,'system_menu_icons':len(catalog),'generated_category_and_option_icons':True,'vod_rounded_frame':True,'live_rounded_frame_preview':True,'scope':'Isolated native desktop Kodi; synthetic metadata/video/Favorites; initial widget harness only, restored shipped Home for Favorites, helper setup/service disabled, null audio sink. Live providers, audible sound, device FPS and Shield remain unverified'},indent=2)+'\n')
         except Exception:
-            try:ImageGrab.grab(xdisplay=':99').save(output/'interface-failure.png')
+            try:ImageGrab.grab(xdisplay=display).save(output/'interface-failure.png')
             except Exception:pass
             raise
         finally:
@@ -367,6 +513,10 @@ def main():
                 kodi.wait(timeout=5)
             xserver.terminate();xserver.wait(timeout=5);log.close()
             if (profile/'temp/kodi.log').exists():shutil.copyfile(profile/'temp/kodi.log',output/'interface-kodi.log')
+            if (output/'interface-kodi.log').exists():
+                playback=playback_log_report((output/'interface-kodi.log').read_text(encoding='utf-8',errors='replace'))
+                (output/'interface-playback-kodi.log').write_text(playback.pop('log'),encoding='utf-8')
+                (output/'interface-playback-errors.json').write_text(json.dumps(playback,indent=2)+'\n',encoding='utf-8')
             for name in ['state.json','error.txt','sounds.json']:
                 if (base/name).exists():shutil.copyfile(base/name,output/('interface-'+name))
 

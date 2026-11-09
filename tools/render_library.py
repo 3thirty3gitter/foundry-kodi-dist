@@ -5,6 +5,7 @@ accounts, API keys or network providers are loaded. The active Estuary fixture
 provides fonts/textures; the window and controller are the shipped Foundry code.
 """
 import json
+import hashlib
 import os
 from pathlib import Path
 import shutil
@@ -13,7 +14,7 @@ import tempfile
 import time
 import xml.etree.ElementTree as E
 from urllib.request import Request, urlopen
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageStat
 import copy
 import signal
 
@@ -152,6 +153,36 @@ try:
             xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/(name+'.png'))+')')
         xbmc.sleep(50)
     metadata.stop()
+    for case in MOVIE_CASES:
+        data=[]
+        for index,item in enumerate(ITEMS):
+            art={key:value for key,value in item['art'].items() if key!='fanart' or case.get('fanart')}
+            kind='tvshow' if case['kind']=='tvshow' or (case['kind']=='mixed' and index%2) else 'movie'
+            data.append(dict(item,type=kind,art=art))
+        source=Source();source.path='fixture://movie-wallpaper/'+case['name'];source.content='movies' if case['section']=='Movies' else 'tvshows'
+        source.load=lambda:{'items':data,'page':1,'total_pages':3};source.initial=source.load()
+        if case.get('custom'):xbmc.executebuiltin('Skin.SetString(NimbusCustomBackground,'+CUSTOM_BACKGROUND+')',True)
+        window=CatalogWindow('script-foundry-vod.xml',str(HELPER),'default','1080i',True,source=source,section=case['section'],breadcrumb=case['label'])
+        window.show();deadline=time.monotonic()+90;completed_command=''
+        while not window.closed and time.monotonic()<deadline:
+            window.tick()
+            command=BASE/'movie-command'
+            if command.exists():
+                operation=command.read_text();command.unlink()
+                require(operation=='rehydrate',operation)
+                window.clearList();window.onInit();completed_command=operation
+            snapshot={'case':case['name'],'focus':window.getFocusId(),'position':window.getCurrentListPosition(),'page':window.state.page,
+                      'title':window.getProperty('catalog.title'),'fanart':window.getProperty('catalog.fanart'),
+                      'movie_submenu_label':window.getProperty('foundry.movie_submenu_label'),'command_complete':completed_command,
+                      'kind':window.rail[window.getCurrentListPosition()].get('kind') if window.rail else ''}
+            temporary=BASE/'state.tmp';temporary.write_text(json.dumps(snapshot));temporary.replace(BASE/'state.json')
+            if (BASE/'capture.json').exists():
+                name=json.loads((BASE/'capture.json').read_text())['name'];(BASE/'capture.json').unlink()
+                xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/(name+'.png'))+')')
+            xbmc.sleep(50)
+        require(window.closed,'Movie wallpaper case did not finish: '+case['name'])
+        window.dispose()
+        if case.get('custom'):xbmc.executebuiltin('Skin.Reset(NimbusCustomBackground)',True)
     (BASE/'complete').write_text('ok')
 except Exception:
     (BASE/'error.txt').write_text(traceback.format_exc())
@@ -184,6 +215,12 @@ def main():
         shutil.copyfile(SKIN/'xml/script-foundry-vod.xml',template/'script-foundry-vod.xml')
         active=home/'addons/skin.estuary'
         shutil.copytree(SKIN/'media/streampilot',active/'media/streampilot',dirs_exist_ok=True)
+        shutil.copytree(SKIN/'media/foundry-movie-submenus',active/'media/foundry-movie-submenus',dirs_exist_ok=True)
+        shutil.copyfile(SKIN/'xml/Includes_FoundryMovieSubmenus.xml',active/'xml/Includes_FoundryMovieSubmenus.xml')
+        copied_skin_inputs={str(path.relative_to(SKIN)).replace('\\','/'):hashlib.sha256(path.read_bytes()).hexdigest() for path in [SKIN/'xml/script-foundry-vod.xml',SKIN/'xml/Includes_FoundryMovieSubmenus.xml',SKIN/'xml/View_57_StreamPilot.xml',*sorted((SKIN/'media/foundry-movie-submenus').glob('*'))]}
+        approved_movies=json.loads((SKIN/'media/foundry-movie-submenus/SOURCE.json').read_text())['files']
+        movie_cases=[dict(name='movie-wallpaper-'+item['slug'],label=item['label'],section='Movies',kind='movie',expected=item['proposed_skin_path']) for item in approved_movies]
+        movie_cases += [dict(name='movie-wallpaper-unknown',label='Movies',section='Movies',kind='movie',expected='media/streampilot/catalog-base.png'),dict(name='movie-wallpaper-tv',label='Trending',section='TV Shows',kind='tvshow',expected='media/streampilot/catalog-base.png'),dict(name='movie-wallpaper-mixed',label='Trending',section='Movies',kind='mixed',expected='media/streampilot/catalog-base.png'),dict(name='movie-wallpaper-custom',label='Trending',section='Movies',kind='movie',custom=True,expected='custom'),dict(name='movie-wallpaper-title-fanart',label='Trending',section='Movies',kind='movie',fanart=True,expected='fanart')]
         for name in ('Roboto-Regular.ttf','Roboto-Bold.ttf','NotoSans-Regular.ttf','NotoMono-Regular.ttf'):
             shutil.copyfile(SKIN/'fonts'/name,active/'fonts'/name)
         fonts=E.parse(active/'xml/Font.xml');source=E.parse(SKIN/'xml/Font.xml')
@@ -203,7 +240,7 @@ def main():
             if name=='FoundryQAFanart':E.SubElement(variable,'value',condition='$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.metadata.fanart))').text='$INFO[Window(Home).Property(foundry.metadata.fanart)]'
             E.SubElement(variable,'value').text=value
         native.write(active/'xml/FoundryNativeQA.xml',encoding='UTF-8',xml_declaration=True)
-        includes=E.parse(active/'xml/Includes.xml');E.SubElement(includes.getroot(),'include',file='FoundryNativeQA.xml');includes.write(active/'xml/Includes.xml',encoding='UTF-8',xml_declaration=True)
+        includes=E.parse(active/'xml/Includes.xml');E.SubElement(includes.getroot(),'include',file='FoundryNativeQA.xml');E.SubElement(includes.getroot(),'include',file='Includes_FoundryMovieSubmenus.xml');includes.write(active/'xml/Includes.xml',encoding='UTF-8',xml_declaration=True)
         (active/'xml/MyVideoNav.xml').write_text('<window><defaultcontrol always="true">57</defaultcontrol><views>57</views><controls><include>View_57_StreamPilot</include></controls></window>')
         favorites_view=E.fromstring('<window><defaultcontrol always="true">57</defaultcontrol><views>57</views><controls><include>View_57_StreamPilot</include></controls></window>')
         for action in E.parse(SKIN/'xml/MyFavourites.xml').findall('onload'):favorites_view.insert(1,copy.deepcopy(action))
@@ -242,6 +279,7 @@ def main():
         script='BASE=Path(%r)\nHELPER=Path(%r)\nOUTPUT=Path(%r)\nITEMS=%r\nEPISODES=%r\nSTUDIO=%r\nGLOW_OWNER_EXPRESSION=%r\n'%(str(base),str(helper),str(output),items,episodes,str(studio),glow_owner_expression)
         launcher=profile/'addons/script.foundry.libraryqa';launcher.mkdir()
         (launcher/'addon.xml').write_text('<addon id="script.foundry.libraryqa" version="1.0.0" name="Foundry Library QA" provider-name="Foundry"><requires><import addon="xbmc.python" version="3.0.0" /></requires><extension point="xbmc.python.script" library="fixture.py" /><extension point="xbmc.addon.metadata"><platform>all</platform><license>GPL-2.0-only</license><summary lang="en_GB">Controlled fixture</summary></extension></addon>')
+        script += 'MOVIE_CASES=%r\nCUSTOM_BACKGROUND=%r\n'%(movie_cases,str(assets/'fanart-1.png'))
         (launcher/'fixture.py').write_text('from pathlib import Path\n'+script+FIXTURE)
         plugin=profile/'addons/plugin.video.foundry.libraryqa';plugin.mkdir()
         (plugin/'addon.xml').write_text('<addon id="plugin.video.foundry.libraryqa" version="1.0.0" name="Foundry Native Library QA" provider-name="Foundry"><requires><import addon="xbmc.python" version="3.0.0" /></requires><extension point="xbmc.python.pluginsource" library="default.py"><provides>video</provides></extension><extension point="xbmc.addon.metadata"><platform>all</platform><license>GPL-2.0-only</license><summary lang="en_GB">Controlled native fixture</summary></extension></addon>')
@@ -431,8 +469,45 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             assert not rpc('XBMC.GetInfoBooleans',{'booleans':['Player.HasVideo']})['Player.HasVideo'],'Favorites metadata started playback'
             evidence.append({'section':'Native favorites','saved_movie_full_metadata':True,'saved_episode_show_number_title_air_date':True,'existing_aliases_preserved':True,'playback_not_started':True})
             (base/'favorites-complete').write_text('ok')
+            wallpaper_evidence=[]
+            shade=Image.open(SKIN/'media/streampilot/catalog-shade.png').convert('RGBA').resize((1920,1080))
+            def artwork_pixels(image,source):
+                plane=ImageOps.fit(Image.open(source).convert('RGBA'),(1920,1080),method=Image.Resampling.BILINEAR)
+                expected=Image.alpha_composite(plane,shade).convert('RGB')
+                regions=[(1392,164,1408,180),(1692,244,1708,260),(1842,392,1858,408)]
+                differences=[]
+                for region in regions:
+                    actual_mean=ImageStat.Stat(image.crop(region)).mean;expected_mean=ImageStat.Stat(expected.crop(region)).mean
+                    differences.append(max(abs(a-b) for a,b in zip(actual_mean,expected_mean)))
+                assert max(differences)<12,('Rendered movie wallpaper pixels differ',str(source),differences,state())
+                return differences
+            for case in movie_cases:
+                wait_for(lambda:state().get('case')==case['name'] and state().get('focus')==50 and bool(state().get('title')))
+                wanted=case['label'] if case['section']=='Movies' and case['kind']=='movie' and case['label']!='Movies' else ''
+                assert state().get('movie_submenu_label')==wanted,(case,state())
+                time.sleep(.65)
+                source=assets/'fanart-1.png' if case.get('custom') else assets/'fanart-0.png' if case.get('fanart') else SKIN/case['expected']
+                differences=artwork_pixels(capture(case['name']),source)
+                record={'case':case['name'],'canonical_label':wanted,'pixel_mean_max_errors':differences,'screenshot':case['name']+'.png'}
+                if case is movie_cases[0]:
+                    key(*(['Right']*20));wait_for(lambda:state().get('kind')=='next');key('Return')
+                    wait_for(lambda:state().get('page')==2 and state().get('position')==1)
+                    assert state()['movie_submenu_label']==wanted,state();time.sleep(.3);artwork_pixels(capture(case['name']+'-page2'),source)
+                    key('Left');wait_for(lambda:state().get('kind')=='previous');key('Return')
+                    wait_for(lambda:state().get('page')==1 and state().get('position')==0)
+                    assert state()['movie_submenu_label']==wanted,state()
+                    (base/'movie-command').write_text('rehydrate');wait_for(lambda:state().get('command_complete')=='rehydrate' and state().get('focus')==50)
+                    assert state()['movie_submenu_label']==wanted,state();time.sleep(.3);artwork_pixels(capture(case['name']+'-rehydrated'),source)
+                    record.update(paging_roundtrip_retains_context=True,native_list_loss_rehydration_retains_context=True)
+                wallpaper_evidence.append(record);key('Escape')
+            movie_wallpapers={'approved_count':len(approved_movies),'rendered_approved_count':sum(case['name'] in {entry['case'] for entry in wallpaper_evidence} for case in movie_cases[:13]),
+                              'passed':True,'cases':wallpaper_evidence,'custom_background_preserved':True,'selected_title_fanart_preserved':True,'tv_mixed_unknown_rejected':True,
+                              'paging_and_rehydration_context_preserved':True,'copied_skin_inputs_sha256':copied_skin_inputs,
+                              'scope':'Shipped catalog XML and exact approved assets copied into isolated Estuary scaffolding. Native desktop Kodi; no Shield, provider or real playback claim for wallpaper context.'}
+            assert movie_wallpapers['approved_count']==movie_wallpapers['rendered_approved_count']==13
+            evidence.append({'section':'Movies submenu wallpapers','passed':True,'rendered_approved_count':13})
             wait_for(lambda:(base/'complete').exists())
-            (output/'verification.json').write_text(json.dumps({'renderer':'Native Kodi '+subprocess.check_output(['kodi','--version'],text=True).strip(),'canvas':[1920,1080],'checks':evidence,'scope':'Controlled fixtures; not Shield, live providers or Android pixel parity'},indent=2)+'\n')
+            (output/'verification.json').write_text(json.dumps({'renderer':'Native Kodi '+subprocess.check_output(['kodi','--version'],text=True).strip(),'canvas':[1920,1080],'checks':evidence,'movie_submenu_wallpapers':movie_wallpapers,'scope':'Controlled fixtures; not Shield, live providers or Android pixel parity'},indent=2)+'\n')
         finally:
             if kodi:
                 try:os.killpg(kodi.pid,signal.SIGTERM)

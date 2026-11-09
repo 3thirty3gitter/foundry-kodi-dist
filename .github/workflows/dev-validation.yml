@@ -23,7 +23,7 @@ jobs:
         working-directory: foundry-kodi-dist
     env:
       PYTHONDONTWRITEBYTECODE: '1'
-      QA: releases/1.4.0-qa
+      QA: releases/1.5.0-qa
     steps:
       - uses: actions/checkout@v4
         with:
@@ -39,8 +39,8 @@ jobs:
           printf '%s\n' "$GITHUB_RUN_ID/$GITHUB_RUN_ATTEMPT" > "$QA/workflow-run.txt"
       - name: Install validation dependencies
         run: python -m pip install requests==2.34.2 Pillow==13.0.0
-      - name: Restore pinned 1.4.0 source snapshots
-        run: python tools/materialize_sources.py --release 1.4.0 2>&1 | tee "$QA/materialize.log"
+      - name: Restore pinned 1.5.0 source snapshots
+        run: python tools/materialize_sources.py --release 1.5.0 2>&1 | tee "$QA/materialize.log"
       - name: Build and test committed sources
         run: |
           python tools/build_release.py --skin ../skin.foundry-nimbus --helper ../script.foundry.helper 2>&1 | tee "$QA/build.log"
@@ -93,6 +93,11 @@ jobs:
         timeout-minutes: 6
         working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
         run: python tools/render_weather.py --output "$QA" 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-weather-run.log"
+      - name: Render Games in native Kodi
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && steps.kodi.outcome == 'success' }}
+        timeout-minutes: 6
+        working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
+        run: python tools/render_games.py --output "$QA/games" 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-games-run.log"
       - name: Collect all native QA evidence
         if: always()
         run: |
@@ -104,7 +109,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: foundry-1.4.0-dev-qa-${{ github.run_id }}-${{ github.run_attempt }}
-          path: foundry-kodi-dist/releases/1.4.0-qa/
+          name: foundry-1.5.0-dev-qa-${{ github.run_id }}-${{ github.run_attempt }}
+          path: foundry-kodi-dist/releases/1.5.0-qa/
           if-no-files-found: warn
           retention-days: 14

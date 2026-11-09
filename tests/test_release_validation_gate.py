@@ -21,14 +21,17 @@ class ReleaseEvidenceTests(unittest.TestCase):
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)
         self.root = Path(temporary.name)
-        self.qa = self.root / 'releases/1.4.0-qa'
-        self.packages = [{'id': 'skin.foundry', 'version': '1.4.0',
-                          'path': 'skin.foundry/skin.foundry-1.4.0.zip',
+        self.qa = self.root / 'releases/1.5.0-qa'
+        self.packages = [{'id': 'skin.foundry', 'version': '1.5.0',
+                          'path': 'skin.foundry/skin.foundry-1.5.0.zip',
                           'size': 10, 'sha256': 'a' * 64},
                          {'id': 'repository.foundry', 'version': '1.2.0',
                           'path': 'repository.foundry/repository.foundry-1.2.0.zip',
-                          'size': 12, 'sha256': 'b' * 64}]
-        self.manifest = {'release': '1.4.0', 'skin': '1.4.0', 'packages': self.packages}
+                          'size': 12, 'sha256': 'b' * 64},
+                         {'id': 'plugin.games.foundry', 'version': '0.1.0',
+                          'path': 'plugin.games.foundry/plugin.games.foundry-0.1.0.zip',
+                          'size': 10, 'sha256': 'e' * 64}]
+        self.manifest = {'release': '1.5.0', 'skin': '1.5.0', 'packages': self.packages}
         self.write(self.root / 'release.json', self.manifest)
         self.write(self.qa / 'release.json', self.manifest)
         self.committed = {}
@@ -39,14 +42,14 @@ class ReleaseEvidenceTests(unittest.TestCase):
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_bytes(data)
                 self.committed[name] = data
-        self.write(self.root / 'releases/1.4.0-sources.json', {
-            'release': '1.4.0', 'helper': '1.3.0', 'source_commits': {'skin.foundry-nimbus': 'c' * 40},
+        self.write(self.root / 'releases/1.5.0-sources.json', {
+            'release': '1.5.0', 'helper': '1.3.0', 'source_commits': {'skin.foundry-nimbus': 'c' * 40},
             'validation': {'status': 'pending'}})
         summary = {'successful': True, 'tests': 650, 'errors': 0, 'failures': 0, 'skipped': 0}
         for name in ('source-tests.json', 'packaged-tests.json'):
             self.write(self.qa / name, summary)
         self.write(self.qa / 'packaged-verification.json', {
-            'passed': True, 'release': '1.4.0', 'stage': 'complete',
+            'passed': True, 'release': '1.5.0', 'stage': 'complete',
             'deterministic_rebuild': True, 'source_trees_preserved': True,
             'packages': self.packages})
         reports = {
@@ -61,7 +64,42 @@ class ReleaseEvidenceTests(unittest.TestCase):
                                             'audible_output_verified': False,
                                             'widget_metadata_top_left': True,
                                             'vod_rounded_frame': True, 'live_rounded_frame_preview': True},
-            'weather-verification.json': {'passed': True, 'checks': ['provider_entrypoint']}}
+            'weather-verification.json': {'passed': True, 'checks': ['provider_entrypoint']},
+            'games/games-verification.json': {'passed': True, 'release': '1.5.0',
+                'packages': self.packages, 'renderer': 'Native Kodi 21.3',
+                'native_gameclient_log': {'complete': True, 'native_gameclient_path': True, 'failures': []},
+                'production_entrypoint_sha256': 'a' * 64,
+                'shipped_skin_hashes': {'xml/MyGames.xml': 'f' * 64},
+                'assertions': {name: True for name in gate.GAMES_ASSERTIONS},
+                'checks': [{'case': name} for name in gate.GAMES_CASES]}}
+        movies = dict(approved_count=13, rendered_approved_count=13,
+                      copied_skin_inputs_sha256={'xml/Variables_Artwork.xml': 'f' * 64},
+                      cases=[])
+        movies.update({name: True for name in gate.MOVIE_FLAGS})
+        entries = [('movie-wallpaper-' + label.lower().replace(' ', '-'), label) for label in gate.MOVIE_LABELS]
+        entries += [('movie-wallpaper-unknown', ''), ('movie-wallpaper-tv', ''),
+                    ('movie-wallpaper-mixed', ''), ('movie-wallpaper-custom', 'Trending'),
+                    ('movie-wallpaper-title-fanart', 'Trending')]
+        for name, label in entries:
+            movies['cases'].append(dict(case=name, canonical_label=label,
+                screenshot=name + '.png', pixel_mean_max_errors=[0, 1, 2]))
+        movies['cases'][0].update(paging_roundtrip_retains_context=True,
+                                 native_list_loss_rehydration_retains_context=True)
+        reports['verification.json']['movie_submenu_wallpapers'] = movies
+        interface = reports['interface-verification.json']
+        interface.update(kodi_version={'major': 21}, diagnostic_only=False,
+            playback_traceback_gate=True, reported_device_error_reproduced=False,
+            playback_stop_back_cycles=[])
+        for index in range(3):
+            entry = dict(native_ready=True, size=6, focus=50, position=3, selected=3,
+                         submenu='Trending', message='', source='fixture://catalog',
+                         file='fixture.avi', fanart='art.png' if index else '')
+            before = dict(window=13000, playback_parent=10004, catalog=dict(entry))
+            interface['playback_stop_back_cycles'].append(dict(cycle=index + 1,
+                with_item_fanart=index > 0, before=before,
+                after_stop=dict(window=13000, catalog=dict(entry)),
+                after_back=dict(window=10004, catalog=None)))
+        reports['interface-playback-errors.json'] = {'complete': True, 'failures': []}
         for name, report in reports.items():
             self.write(self.qa / 'native' / name, report)
         environment = patch.dict(os.environ, {'GITHUB_REF': 'refs/heads/main',
@@ -83,13 +121,13 @@ class ReleaseEvidenceTests(unittest.TestCase):
         self.write(path, value)
 
     def test_complete_evidence_keeps_target_device_limits_explicit(self):
-        record = gate.evidence(self.root, '1.4.0')
+        record = gate.evidence(self.root, '1.5.0')
         self.assertEqual(record['status'], 'ci_passed_target_device_checks_pending')
         self.assertIn('unverified', record['target_device_verification'])
         self.assertEqual(set(record['native_reports']), set(gate.NATIVE))
-        self.assertEqual(len(record['native_reports']), 4)
-        self.assertNotIn('games/verification.json', record['native_reports'])
-        self.assertFalse((self.qa / 'native/games/verification.json').exists())
+        self.assertEqual(len(record['native_reports']), 5)
+        self.assertIn('games/games-verification.json', record['native_reports'])
+        self.assertTrue((self.qa / 'native/games/games-verification.json').exists())
 
     def public_verifier(self):
         spec = importlib.util.spec_from_file_location('foundry_public_gate_test', ROOT / 'tools/verify_public_downloads.py')
@@ -99,34 +137,93 @@ class ReleaseEvidenceTests(unittest.TestCase):
             spec.loader.exec_module(module)
         return module
 
-    def test_unexpected_games_package_is_rejected_at_every_release_boundary(self):
-        games = {'id': 'plugin.games.foundry', 'version': '0.1.0',
-                 'path': 'plugin.games.foundry/plugin.games.foundry-0.1.0.zip'}
-        manifest = dict(self.manifest, packages=self.packages + [games])
-        self.write(self.root / 'release.json', manifest)
-        public = self.public_verifier()
-        with self.assertRaisesRegex(ValueError, 'Games is deferred'):
-            gate.require_release_scope(manifest)
-        with self.assertRaisesRegex(ValueError, 'Games is deferred'):
-            gate.evidence(self.root, '1.4.0')
-        with patch.object(gate, 'ROOT', self.root), patch.object(gate.subprocess, 'run') as git:
-            with self.assertRaisesRegex(ValueError, 'Games is deferred'):
-                gate.main()
-            git.assert_not_called()
-        with patch.object(public, 'ROOT', self.root), patch.object(public, 'download') as download:
-            with self.assertRaisesRegex(ValueError, 'Games is deferred'):
-                public.main()
-            download.assert_not_called()
-        self.assertEqual(json.loads((self.root / 'releases/1.4.0-sources.json').read_text())['validation'],
-                         {'status': 'pending'})
+    def test_old_release_rejects_games_and_new_release_requires_exact_package(self):
+        for release, packages in (('1.4.0', self.packages), ('1.4.1', self.packages),
+                                  ('1.5.0', self.packages[:-1]),
+                                  ('1.5.0', self.packages + [self.packages[-1]]),
+                                  ('1.5.0', self.packages[:-1] + [dict(self.packages[-1], version='0.0.1')])):
+            with self.subTest(release=release, packages=packages), self.assertRaises(ValueError):
+                gate.require_release_scope({'release': release, 'packages': packages})
+        gate.require_release_scope(self.manifest)
 
-    def test_release_number_alone_cannot_bypass_deferred_games_gate(self):
-        for version in ('1.4.0', '1.4.1', '2.0.0'):
-            manifest = {'release': version, 'packages': [{'id': 'plugin.games.foundry'}]}
-            with self.subTest(release=version), self.assertRaisesRegex(ValueError, 'restore native Games validation'):
-                gate.require_release_scope(manifest)
+    def test_every_games_completion_contract_and_capture_is_required(self):
+        path = self.qa / 'native/games/games-verification.json'
+        original = path.read_bytes()
+        for name in gate.GAMES_ASSERTIONS:
+            report = json.loads(original)
+            report['assertions'][name] = False
+            self.write(path, report)
+            with self.subTest(assertion=name), self.assertRaises(AssertionError):
+                gate.evidence(self.root, '1.5.0')
+        for name in gate.GAMES_CASES:
+            report = json.loads(original)
+            report['checks'] = [check for check in report['checks'] if check['case'] != name]
+            self.write(path, report)
+            with self.subTest(case=name), self.assertRaises(AssertionError):
+                gate.evidence(self.root, '1.5.0')
+        path.write_bytes(original)
+        for changes in ({'passed': False}, {'release': '1.4.0'}, {'packages': []},
+                        {'renderer': 'Kodi 20.5'}, {'shipped_skin_hashes': {}},
+                        {'native_gameclient_log': {'complete': False, 'native_gameclient_path': True, 'failures': []}},
+                        {'native_gameclient_log': {'complete': True, 'native_gameclient_path': False, 'failures': []}},
+                        {'native_gameclient_log': {'complete': True, 'native_gameclient_path': True, 'failures': ['traceback']}},
+                        {'production_entrypoint_sha256': ''}):
+            report = json.loads(original); report.update(changes); self.write(path, report)
+            with self.subTest(changes=changes), self.assertRaises(AssertionError):
+                gate.evidence(self.root, '1.5.0')
+        path.write_bytes(original)
 
-    def test_public_verification_retains_four_gates_without_a_games_report(self):
+    def test_all_thirteen_movies_native_routes_and_negatives_are_required(self):
+        path = self.qa / 'native/verification.json'
+        original = path.read_bytes()
+        mutations = [{name: False} for name in gate.MOVIE_FLAGS]
+        mutations += [{'approved_count': 12}, {'rendered_approved_count': 12},
+                      {'cases': []}, {'copied_skin_inputs_sha256': {}},
+                      {'copied_skin_inputs_sha256': {'xml/file.xml': 'not-a-hash'}}]
+        for changes in mutations:
+            report = json.loads(original); report['movie_submenu_wallpapers'].update(changes)
+            self.write(path, report)
+            with self.subTest(changes=changes), self.assertRaises(AssertionError):
+                gate.evidence(self.root, '1.5.0')
+        for key, value in (('canonical_label', 'Wrong'), ('screenshot', 'wrong.png'),
+                           ('pixel_mean_max_errors', [0, 1, 12]),
+                           ('paging_roundtrip_retains_context', False),
+                           ('native_list_loss_rehydration_retains_context', False)):
+            report = json.loads(original)
+            report['movie_submenu_wallpapers']['cases'][0][key] = value
+            self.write(path, report)
+            with self.subTest(field=key), self.assertRaises(AssertionError):
+                gate.evidence(self.root, '1.5.0')
+        path.write_bytes(original)
+
+    def test_playback_stop_back_and_traceback_proofs_cannot_be_omitted(self):
+        path = self.qa / 'native/interface-verification.json'
+        original = path.read_bytes()
+        for changes in ({'kodi_version': {'major': 20}}, {'diagnostic_only': True},
+                        {'playback_traceback_gate': False}, {'playback_stop_back_cycles': []}):
+            report = json.loads(original); report.update(changes); self.write(path, report)
+            with self.subTest(changes=changes), self.assertRaises(AssertionError):
+                gate.evidence(self.root, '1.5.0')
+        for key, value in (('size', 0), ('focus', 51), ('position', 0),
+                           ('selected', 0), ('submenu', ''), ('message', 'error'),
+                           ('source', 'changed'), ('file', 'changed'), ('fanart', 'changed')):
+            report = json.loads(original)
+            report['playback_stop_back_cycles'][0]['after_stop']['catalog'][key] = value
+            self.write(path, report)
+            with self.subTest(invariant=key), self.assertRaises(AssertionError):
+                gate.evidence(self.root, '1.5.0')
+        report = json.loads(original)
+        report['playback_stop_back_cycles'][0]['after_back']['window'] = 10000
+        self.write(path, report)
+        with self.assertRaises(AssertionError): gate.evidence(self.root, '1.5.0')
+        path.write_bytes(original)
+        errors = self.qa / 'native/interface-playback-errors.json'
+        for value in ({'complete': False, 'failures': []}, {'complete': True, 'failures': ['traceback']}):
+            self.write(errors, value)
+            with self.subTest(errors=value), self.assertRaises(AssertionError):
+                gate.evidence(self.root, '1.5.0')
+
+    def test_public_verification_retains_all_five_native_reports(self):
         public = self.public_verifier()
         for name in ('addons.xml', 'addons.xml.md5', 'index.html', 'skin.html',
                      'repository.foundry-1.2.0.zip', 'script.program.foundry-build.zip',
@@ -135,12 +232,12 @@ class ReleaseEvidenceTests(unittest.TestCase):
         with patch.object(public, 'ROOT', self.root), patch.object(public, 'download'), \
                 patch.object(public, 'package_check', side_effect=lambda task: dict(task[1], verified=True)):
             public.main()
-        record = json.loads((self.root / 'releases/1.4.0-verification.json').read_text())
+        record = json.loads((self.root / 'releases/1.5.0-verification.json').read_text())
         native = {key for key in record['validation'] if key.startswith('native_kodi_')}
         self.assertEqual(native, {'native_kodi_interface', 'native_kodi_startup_splash',
-                                  'native_kodi_fixture', 'native_kodi_weather'})
+                                  'native_kodi_fixture', 'native_kodi_weather', 'native_kodi_games'})
         self.assertEqual(len(record['public_packages']), 2 * len(self.packages))
-        self.assertIn('Games is deferred and is not included in this release', record['limitations'])
+        self.assertTrue(any('no Shield gameplay' in item for item in record['limitations']))
 
     def test_public_verification_rejects_failed_shipped_feature_before_downloads(self):
         self.update('native/weather-verification.json', passed=False)
@@ -157,7 +254,7 @@ class ReleaseEvidenceTests(unittest.TestCase):
                 with self.subTest(report=name, changes=changes):
                     self.update(name, **changes)
                     with self.assertRaises((AssertionError, ValueError)):
-                        gate.evidence(self.root, '1.4.0')
+                        gate.evidence(self.root, '1.5.0')
                     (self.qa / name).write_bytes(original)
 
     def test_failed_deterministic_rebuild_is_rejected(self):
@@ -166,7 +263,7 @@ class ReleaseEvidenceTests(unittest.TestCase):
                 original = (self.qa / 'packaged-verification.json').read_bytes()
                 self.update('packaged-verification.json', **changes)
                 with self.assertRaises((AssertionError, ValueError)):
-                    gate.evidence(self.root, '1.4.0')
+                    gate.evidence(self.root, '1.5.0')
                 (self.qa / 'packaged-verification.json').write_bytes(original)
 
     def test_each_missing_native_report_is_rejected(self):
@@ -176,7 +273,7 @@ class ReleaseEvidenceTests(unittest.TestCase):
             with self.subTest(report=name):
                 path.unlink()
                 with self.assertRaises((FileNotFoundError, AssertionError, ValueError)):
-                    gate.evidence(self.root, '1.4.0')
+                    gate.evidence(self.root, '1.5.0')
                 path.write_bytes(original)
 
     def test_false_weather_pass_flag_is_rejected(self):
@@ -186,26 +283,26 @@ class ReleaseEvidenceTests(unittest.TestCase):
             with self.subTest(report=name):
                 self.update(path, passed=False)
                 with self.assertRaises((AssertionError, ValueError)):
-                    gate.evidence(self.root, '1.4.0')
+                    gate.evidence(self.root, '1.5.0')
                 (self.qa / path).write_bytes(original)
 
     def test_packaged_evidence_for_another_release_is_rejected(self):
         self.update('packaged-verification.json', release='1.3.9')
         with self.assertRaises((AssertionError, ValueError)):
-            gate.evidence(self.root, '1.4.0')
+            gate.evidence(self.root, '1.5.0')
 
     def test_packaged_evidence_for_other_bytes_is_rejected(self):
         packages = [dict(package) for package in self.packages]
         packages[0]['sha256'] = 'd' * 64
         self.update('packaged-verification.json', packages=packages)
         with self.assertRaises((AssertionError, ValueError)):
-            gate.evidence(self.root, '1.4.0')
+            gate.evidence(self.root, '1.5.0')
 
     def test_qa_manifest_for_other_bytes_is_rejected(self):
         value = dict(self.manifest, packages=[])
         self.write(self.qa / 'release.json', value)
         with self.assertRaises((AssertionError, ValueError)):
-            gate.evidence(self.root, '1.4.0')
+            gate.evidence(self.root, '1.5.0')
 
     def test_empty_library_or_failed_native_contract_is_rejected(self):
         cases = [('native/verification.json', {'checks': []}),
@@ -216,7 +313,7 @@ class ReleaseEvidenceTests(unittest.TestCase):
             with self.subTest(report=name):
                 self.update(name, **changes)
                 with self.assertRaises((AssertionError, ValueError)):
-                    gate.evidence(self.root, '1.4.0')
+                    gate.evidence(self.root, '1.5.0')
                 (self.qa / name).write_bytes(original)
 
     def committed_bytes(self, command, **kwargs):
@@ -240,7 +337,7 @@ class ReleaseEvidenceTests(unittest.TestCase):
                     with self.assertRaisesRegex(AssertionError, 'Refusing changed versioned package'):
                         gate.main()
                 self.assertFalse(any(call.args[0][:2] == ['git', 'add'] for call in git.call_args_list))
-                self.assertEqual(json.loads((self.root / 'releases/1.4.0-sources.json').read_text())['validation'],
+                self.assertEqual(json.loads((self.root / 'releases/1.5.0-sources.json').read_text())['validation'],
                                  {'status': 'pending'})
                 (self.root / name).write_bytes(self.committed[name])
 
@@ -258,9 +355,9 @@ class ReleaseEvidenceTests(unittest.TestCase):
         git.assert_not_called()
 
     def test_non_main_or_unset_ref_cannot_stage_or_rewrite_evidence(self):
-        source = self.root / 'releases/1.4.0-sources.json'
+        source = self.root / 'releases/1.5.0-sources.json'
         original = source.read_bytes()
-        for ref in ('refs/heads/dev', 'refs/tags/1.4.0', ''):
+        for ref in ('refs/heads/dev', 'refs/tags/1.5.0', ''):
             with self.subTest(ref=ref), patch.dict(os.environ, {'GITHUB_REF': ref}), \
                     patch.object(gate, 'ROOT', self.root), patch.object(gate.subprocess, 'run') as git:
                 with self.assertRaises((AssertionError, ValueError)):
@@ -288,15 +385,15 @@ class ReleaseEvidenceTests(unittest.TestCase):
         self.assertEqual(len(adds), 1)
         self.assertEqual(adds[0][:3], ['git', 'add', '--'])
         paths = set(adds[0][3:])
-        self.assertIn('releases/1.4.0-sources.json', paths)
-        self.assertIn('releases/1.4.0-qa/native/new-screen.png', paths)
+        self.assertIn('releases/1.5.0-sources.json', paths)
+        self.assertIn('releases/1.5.0-qa/native/new-screen.png', paths)
         self.assertIn('repository.foundry-1.2.0.zip', paths)
         for package in self.packages:
             self.assertIn(package['path'], paths)
             self.assertIn(package['path'] + '.sha256', paths)
         self.assertNotIn('src/example/default.py', paths)
         self.assertNotIn('skin.foundry/skin.foundry-1.3.9.zip', paths)
-        self.assertNotIn('releases/1.4.0-qa/native/kodi.log', paths)
+        self.assertNotIn('releases/1.5.0-qa/native/kodi.log', paths)
         self.assertFalse(any('*' in path or path in ('.', 'src', 'releases') for path in paths))
 
 
@@ -312,14 +409,14 @@ class ReleaseWorkflowTests(unittest.TestCase):
     def test_failed_validation_cannot_be_downgraded_to_success(self):
         self.assertNotIn('continue-on-error:', self.workflow)
         self.assertIn('shell: bash', self.workflow)  # Actions runs explicit bash with -e -o pipefail.
-        self.assertEqual(self.workflow.count("steps.packaged.outcome == 'success'"), 4)
-        self.assertEqual(self.workflow.count("steps.kodi.outcome == 'success'"), 4)
+        self.assertEqual(self.workflow.count("steps.packaged.outcome == 'success'"), 5)
+        self.assertEqual(self.workflow.count("steps.kodi.outcome == 'success'"), 5)
         self.assertIn('tools/record_release_validation.py --check-scope', self.workflow)
 
-    def test_failure_artifacts_are_preserved_and_deferred_games_is_not_run(self):
+    def test_failure_artifacts_are_preserved_and_games_is_required(self):
         self.assertIn('name: Collect all native QA evidence\n        if: always()', self.workflow)
         self.assertIn('uses: actions/upload-artifact@v4\n        if: always()', self.workflow)
-        self.assertNotIn('tools/render_games.py', self.workflow)
+        self.assertIn('tools/render_games.py --output', self.workflow)
         self.assertLess(self.workflow.index('actions/upload-artifact@v4'),
                         self.workflow.index('name: Publish verified packages'))
 

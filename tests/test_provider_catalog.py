@@ -101,10 +101,11 @@ class ProviderPayloads(unittest.TestCase):
         self.assertEqual(w.source.path,'plugin://provider/season?opaque=a%26b')
     def test_nested_nonmedia_result_returns_to_native_kodi_without_url_rewrite(self):
         from modules.catalog_window import CatalogWindow
-        w=object.__new__(CatalogWindow);w.close=Mock();url='plugin://provider/source?auth=opaque%26value'
+        w=object.__new__(CatalogWindow);w.close=Mock();w.setProperty=Mock();url='plugin://provider/source?auth=opaque%26value'
         with patch('modules.catalog_window.rpc') as rpc:
             w.open_native(url)
         self.assertTrue(w.closed);w.close.assert_called_once()
+        w.setProperty.assert_called_once_with('foundry.movie_submenu_label','')
         self.assertEqual(rpc.call_args.args,('GUI.ActivateWindow',{'window':'videos','parameters':[url,'return']}))
         self.assertEqual(kodi.Window().getProperty('foundry.catalog.handled_path'),url)
     def test_shared_metadata_binding_accepts_malformed_art_ratings_and_episode_fields(self):

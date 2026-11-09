@@ -83,6 +83,8 @@ def main():
             'native_kodi_startup_splash': json.loads((qa / 'native/startup-splash-verification.json').read_text(encoding='utf-8')),
             'native_kodi_fixture': json.loads((qa / 'native/verification.json').read_text(encoding='utf-8')),
             'native_kodi_weather': json.loads((qa / 'native/weather-verification.json').read_text(encoding='utf-8')),
+            **({'native_kodi_games': json.loads((qa / 'native/games/games-verification.json').read_text(encoding='utf-8'))}
+               if any(p['id'] == 'plugin.games.foundry' for p in manifest['packages']) else {}),
             'test_inputs': 'Pinned source snapshots and extracted package ZIPs; mocked Kodi APIs',
             'deterministic_rebuild': 'All %d package sizes and SHA-256 checksums unchanged' % package_count,
             'public_release_manifest_and_feed': 'Byte-identical on Pages and raw GitHub',
@@ -94,7 +96,7 @@ def main():
             'Live TMDb/OMDb calls require personal profile keys and remain unverified',
             'No Shield is connected; target-device rendering, navigation and playback remain unverified',
             'Add-on custom windows and unidentified action listings keep their own behavior',
-            'Games is deferred and is not included in this release',
+            'Games UI uses synthetic non-playable fixtures; no Shield gameplay, core licensing or controller validation is certified',
             'Weather uses an experimental Canadian API; device-local times, advisory headlines only',
             'Native Pulse checks preserve selection but a null audio sink cannot verify audibility',
             'The reported false error after playback stops has not been reproduced or confirmed fixed'

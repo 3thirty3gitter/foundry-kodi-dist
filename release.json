@@ -1,6 +1,6 @@
 {
-  "release": "1.4.0",
-  "skin": "1.4.0",
+  "release": "1.5.0",
+  "skin": "1.5.0",
   "packages": [
     {
       "id": "repository.foundry",
@@ -38,31 +38,38 @@
       "size": 17146
     },
     {
+      "id": "plugin.games.foundry",
+      "version": "0.1.0",
+      "path": "plugin.games.foundry/plugin.games.foundry-0.1.0.zip",
+      "sha256": "df53e813cd56f03c67787fd8d98b1493ea3e999a9be3ab715d3d513758073974",
+      "size": 17022
+    },
+    {
       "id": "skin.foundry",
-      "version": "1.4.0",
-      "path": "skin.foundry/skin.foundry-1.4.0.zip",
-      "sha256": "bf1b5b07d1790f3e9b820a28044dc6847fd78d6e987f8b4148d8539a0ca26d45",
-      "size": 40373486
+      "version": "1.5.0",
+      "path": "skin.foundry/skin.foundry-1.5.0.zip",
+      "sha256": "acc0484f9398a3c0451f53761d37305a6341a3c4bdb714b44982ac60dd06601b",
+      "size": 56856420
     },
     {
       "id": "script.foundry.helper",
-      "version": "1.3.0",
-      "path": "script.foundry.helper/script.foundry.helper-1.3.0.zip",
-      "sha256": "39bba9b713e90eebb0069f0cc5a55db4ed6feee9e879c11121347cc460fd8763",
-      "size": 868206
+      "version": "1.3.1",
+      "path": "script.foundry.helper/script.foundry.helper-1.3.1.zip",
+      "sha256": "2f798770d43d386c50fa1cc27300686f296faf1f116fd197750529b491a498a4",
+      "size": 872327
     },
     {
       "id": "script.program.foundry-build",
-      "version": "1.4.0",
-      "path": "script.program.foundry-build/script.program.foundry-build-1.4.0.zip",
-      "sha256": "7b42fe01cf69ad748222942080c591f856c1de5435797d7cc7ed2755d8833489",
-      "size": 2697
+      "version": "1.5.0",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.5.0.zip",
+      "sha256": "7cdaf8f385b3362b0299d8f091723b8bef46151a3d57c82978da715cc0a1c9e9",
+      "size": 2710
     },
     {
       "id": "script.program.foundry-bootstrap",
-      "version": "1.4.0",
-      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.4.0.zip",
-      "sha256": "56ecdff12a928f5838022e6c20ee1fcf25e54c81885df81b3f58b286e3c375c5",
+      "version": "1.5.0",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.5.0.zip",
+      "sha256": "e249d5af82cb7b23b492b83a44ab4c3dfcaf2a32d743436e3f425ae164670b7e",
       "size": 852
     }
   ]

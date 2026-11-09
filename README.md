@@ -1,14 +1,16 @@
 # Foundry Kodi source
 
-Release 1.4.0: **Build and Bootstrap 1.4.0 / skin 1.4.0 / Helper 1.3.0 / Wallpapers 1.1.0 / Pulse 1.0.0 / Canada Weather 0.1.0**.
+Next-release candidate 1.5.0: **Build and Bootstrap 1.5.0 / skin 1.5.0 / Helper 1.3.1 / Wallpapers 1.1.0 / Pulse 1.0.0 / Canada Weather 0.1.0 / Games 0.1.0**.
 
-The pinned source commits are in [releases/1.4.0-sources.json](releases/1.4.0-sources.json). Development CI tests the source and every extracted add-on, verifies deterministic rebuilding, then runs four isolated native Kodi checks. Production publication is held until those checks and owner approval pass. Actual test counts and native evidence are recorded under `releases/1.4.0-qa/`; public download verification is recorded separately in `releases/1.4.0-verification.json` once complete.
+The next release restores Foundry Games and adds the thirteen approved Movies submenu wallpapers. The exact reviewed dev source pins are recorded in [releases/1.5.0-sources.json](releases/1.5.0-sources.json); native CI validation is pending. Published 1.4.0 packages and evidence remain immutable. This working candidate is not a published update.
 
-The release fixes catalog first paint and Back restoration, uses the regular poster row for Home Favorites, adds bounded dialog metadata and seek/studio feedback, lowers library posters slightly, and packages the selected Pulse sounds and Ripple animation. Pulse migration preserves an explicit silent or custom sound choice. Native desktop captures are not Shield performance or audio-output proof. The reported false error after playback stops has not been reproduced or confirmed fixed.
+Development CI tests the source and every extracted add-on, verifies deterministic rebuilding, then runs five isolated native Kodi 21+ checks: catalog/library, cold-start splash, interface/playback, Canadian Weather and Games. The same extracted candidate supplies every native gate. Publication requires those results and owner approval. Games evidence must prove fresh directory completion, the real Favorites menu route, real search/cancel, missing-core handling and retained focus; unit tests alone cannot satisfy that gate.
+
+Published 1.4.0 remains the existing Kodi update flow until the next candidate is approved and published. It includes regular Home Favorites, catalog Back/focus and overlay fixes, Pulse/Ripple and Canada Weather. It excludes Games and the thirteen new Movies submenu wallpapers.
 
 ## Games and Canadian Weather
 
-Foundry Games is deferred from 1.4.0. This update retains Kodi's native Games navigation and does not install or publish the new Games add-on. Its implementation, tests and integration work are preserved under [deferred/games](deferred/games/README.md) for a later validated update.
+Foundry Games indexes user-supplied local or configured Kodi VFS sources, provides console categories, Favorites, recent games, search and paging, and hands launch/controller/save ownership to native RetroPlayer. No ROMs, BIOS, cores or credentials are bundled or installed. Kodi 21+ is required. Synthetic native UI tests do not establish Shield gameplay, controller, VFS-provider or emulator-license clearance. See [Games scope and limitations](src/plugin.games.foundry/README.md). The pre-integration originals remain under [deferred/games](deferred/games/README.md).
 
 Canada Weather is installed but remains inactive until explicitly selected in Kodi Settings > Services > Weather and configured with one to three Canadian cities. It shows current observations, hourly and seven-day forecasts and advisory headlines, with missing/stale data labelled. Time labels follow the device's zone, not necessarily the selected city's. No GPS, account or API key is used. The upstream API is experimental; advisory headlines are not a full emergency-alert service. The provider retains its proprietary development licence and source acknowledgment. See [setup and limitations](src/weather.foundry.canada/README.md) and [data rights and usage](src/weather.foundry.canada/SOURCE.md).
 
@@ -33,7 +35,7 @@ Live Shield/provider success and identical artwork selection remain unverified. 
 
 Permanent Kodi File Manager source: https://3thirty3gitter.github.io/foundry-kodi-dist/
 
-Install `repository.foundry-1.2.0.zip`, then install/run Foundry Build. Existing installations can check for updates and run Build **1.4.0**. The skin-only `skin.foundry-1.4.0.zip` is available when a provider dependency blocks setup; its dependency requires Wallpapers **1.1.0**.
+Install `repository.foundry-1.2.0.zip`, then install/run Foundry Build. Existing installations can check for updates and run Build **1.5.0** when the candidate is validated and published. The skin-only `skin.foundry-1.5.0.zip` is available when a provider dependency blocks setup; its dependency requires Wallpapers **1.1.0**.
 
 The release retains the 1.2.42 corrections that bound Home menu movement to six so Weather stays visible, and isolate optional library metadata/color errors from source loading and navigation. It preserves every unrelated Home control, all approved rich images, transitions, OSD sizes and foreground controls. The exact device metadata trigger remains unconfirmed without its traceback; native controlled failure tests reproduce and fix the reported partial-load/error chain.
 
@@ -46,9 +48,9 @@ Native Kodi 21.3 Windows fixtures check all wallpaper pairs, both transition dir
     python tools/build_release.py --skin ../skin.foundry-nimbus --helper ../script.foundry.helper
     python -m unittest discover -s tests -v
 
-Packaging rejects missing/modified approved pairs, stale widget revisions and mismatched dimensions. `release.json` records versions, sizes and SHA256 checksums. The OSD resource and repository package bytes are unchanged; the Helper is version 1.3.0.
+Packaging rejects missing/modified approved pairs, stale widget revisions and mismatched dimensions. `release.json` records versions, sizes and SHA256 checksums. The OSD resource and repository package bytes are unchanged; the candidate Helper is version 1.3.1.
 
-Kodi installs the following core add-ons using its dependency manager. SlyGuy Trailers installs when Foundry Build runs, after its repository has been prepared:
+The following table describes the **1.5.0 candidate** core add-ons; Games is absent from published 1.4.0. Kodi installs them using its dependency manager. SlyGuy Trailers installs when Foundry Build runs, after its repository has been prepared:
 
 | Add-on | Purpose |
 | --- | --- |

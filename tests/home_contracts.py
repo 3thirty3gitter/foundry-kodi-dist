@@ -6,9 +6,24 @@ GAMES = 'System.HasAddon(plugin.games.foundry)'
 
 
 def restore_home_feature_additions(root):
-    """Undo only the declared Weather/Games additions for old snapshot tests."""
+    """Undo only exact, separately tested Weather/Games/Movies additions."""
     for parent in list(root.iter()):
         for child in list(parent):
+            if (child.tag == 'onunload' and parent is root and child.text ==
+                    'SetProperty(foundry.navigation.category,$INFO[Container(9000).ListItem.Property(id)],home)'):
+                parent.remove(child)
+                continue
+            if (parent.get('id') == '17001' and child.tag == 'include' and
+                    child.get('content') == 'WidgetListPoster' and child.get('condition') == GAMES):
+                values = {param.get('name'): param.get('value') for param in child.findall('param')}
+                declared = {'17300': ('recent', 'Recently played games'),
+                            '17400': ('favorites', 'Favorite games')}
+                row = declared.get(values.get('list_id'))
+                if row and values == {'list_id': values['list_id'],
+                        'content_path': 'plugin://plugin.games.foundry/?action=games&mode=' + row[0],
+                        'widget_header': row[1], 'widget_target': 'games', 'fallback_icon': 'DefaultGames.png'}:
+                    parent.remove(child)
+                    continue
             if child.tag == 'include' and child.get('content') == 'FoundryCanadaWeatherWidget':
                 parent.remove(child)
                 continue

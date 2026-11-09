@@ -25,7 +25,7 @@ spec.loader.exec_module(renderer)
 class WeatherRendererTests(unittest.TestCase):
     def test_output_follows_generated_release_not_historical_constant(self):
         with tempfile.TemporaryDirectory() as temp:
-            root = Path(temp)
+            root = Path(temp).resolve()
             renderer.write(root / 'release.json', json.dumps({'release': '1.4.0-test'}))
             self.assertEqual(renderer.output_directory(root=root), root / 'releases/1.4.0-test-qa')
             self.assertEqual(renderer.output_directory(root / 'chosen'), root / 'chosen')
