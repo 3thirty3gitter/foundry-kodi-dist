@@ -78,6 +78,22 @@ def evidence(root, release):
         assert all(games['assertions'].get(name) is True for name in GAMES_ASSERTIONS)
         assert set(GAMES_CASES) <= {check['case'] for check in games['checks']}
         assert all(check['capture_state_stable_seconds'] >= .5 and check['png_completion_ack'] is True for check in games['checks'])
+        expected_core=games['native_core_expected']
+        normalize=lambda text:' '.join(text.casefold().split())
+        for check in games['checks']:
+            assert check['progress_visible'] is False
+            assert check['busy_visible']==(check['busy_dialog_visible'] or check['busy_nocancel_visible'])
+            if check['case']=='games-missing-core':
+                assert check['modal'] is True and check['dialog_id'] in (12000,12002)
+                if check['dialog_id']==12000: assert normalize(check['dialog_heading'])==normalize(expected_core['chooser'])
+                else:
+                    assert normalize(check['dialog_heading'])==normalize(expected_core['heading'])
+                    assert normalize(check['dialog_message']) in {normalize(value) for value in expected_core['messages']}
+                if check['busy_visible']:
+                    assert check['busy_dialog_visible'] is True and check['busy_nocancel_visible'] is False
+                    assert check['buried_busy_render_suppressed'] is True
+                    assert check['busy_suppression_source']=='Kodi21.3 GUIDialogBusy.cpp118-132: Render only when topmost'
+            else: assert check['modal'] is False and check['busy_visible'] is False
         captures=games['capture_acknowledgments']
         assert len(captures)==len(games['checks'])
         for index,(capture,check) in enumerate(zip(captures,games['checks'])):

@@ -15,15 +15,15 @@ Do not move these runtime source pins merely to add later validation receipts. R
 
 Windows Python 3.13.5 against the exact source pins above:
 
-- Complete source suite: 651 tests run, zero failures/errors, one skipped Windows symbolic-link fixture; successful.
-- Complete extracted-package suite: 651 tests run, zero failures/errors, two skips (the same symbolic-link fixture, plus preserved-deferred-source checks intentionally excluded from extracted-package workspaces); successful.
+- Complete source suite: 653 tests run, zero failures/errors, one skipped Windows symbolic-link fixture; successful.
+- Complete extracted-package suite: 653 tests run, zero failures/errors, two skips (the same symbolic-link fixture, plus preserved-deferred-source checks intentionally excluded from extracted-package workspaces); successful.
 - All ten package ZIPs, sizes, SHA-256 sidecars, manifests, dependencies, feed/checksum and root installer aliases verified.
 - Isolated extracted-package deterministic rebuild passed without modifying source trees.
 - All 92 published 1.4.0 artifacts were compared byte-for-byte with the pre-candidate committed baseline: nine package ZIPs and sidecars plus 74 source/QA/verification records. All remain unchanged. Generated current feed/installer aliases are working candidate files; the remote existing update flow remains published 1.4.0 until approved publication.
 
 Local evidence directory on SPACESHIP: `C:\Users\TrentTimmerman\Documents\Codex\foundry-next-games-20261109`.
 
-Relevant records: `source-tests-capture-final.json` / `.log`, `packaged-qa-capture-final/packaged-tests.json`, `packaged-qa-capture-final/packaged-verification.json`, `packaged-tests-capture-final.log`, `published-1.4.0-immutability.json`, and `distribution-reviewed-paths.txt`. Local results do not substitute for CI/native results. Existing 1.4.0 native receipts describe that published release only.
+Relevant records: `source-tests-modal-final.json` / `.log`, `packaged-qa-modal-final/packaged-tests.json`, `packaged-qa-modal-final/packaged-verification.json`, `packaged-tests-modal-final.log`, `published-1.4.0-immutability.json`, and `distribution-reviewed-paths.txt`. Local results do not substitute for CI/native results. Existing 1.4.0 native receipts describe that published release only.
 
 ## First native run and bounded corrections
 
@@ -46,6 +46,10 @@ The [fourth development run42561448372](https://github.com/3thirty3gitter/foundr
 The final harness holds the same native UUID/view/game/dialog state for0.5seconds with no progress/busy window, checks exact native core-dialog identity, and requires a sequence-matched host acknowledgment after full actual1920x1080 PNG verification before any next input. It verifies the state again after encoding. Empty, partial, wrong-size images and stale acknowledgments fail; no screenshot is substituted. All original functional conditions remain. The library RPC helper now rejects explicit JSON-RPC errors instead of silently turning them into missing state.
 
 The additional PosterFlow parse warning is proved to originate from published1.4.0 `xml/View_51_PosterFlow.xml` line463, unchanged byte-for-byte at SHA-256ebcdc5840651253eb0bae2d1241578624d3ee132c5a63ad53a7d58aa2e8c2993; its four expanded type-expression inputs are also unchanged. Only that exact normalized warning and the exact Timer warning may be reported as separate known baselines, with current/published hashes and inputs required by the release gate. Every other expression remains a failure. Runtime XML and source pins were not changed. Evidence: `games-boolean-42561448372-source-comparison.json` and `games-png-42561448372-diagnosis.json`. Final capture/provenance checks still require a complete supported native rerun.
+
+The [fifth development run42563639963](https://github.com/3thirty3gitter/foundry-kodi-dist/actions/runs/42563639963) passed source/package validation and the other four native gates. Settled Favorites captures are now visually clean. Missing-core capture correctly observed native topmost12002, the exact Failed to play game heading and incompatible-emulator body, but its global no-busy rule rejected Kodi's underlying script-wait Busy dialog. Native log order is play53.225, Busy53.446, staging53.652, native error53.695, staging close53.921 (04:51 UTC).
+
+Kodi21.3's getCurrentWindowDialogId returns the topmost modal; ScriptRunner opens Busy10138 while awaiting the plugin; CGUIDialogBusy only renders when it is itself topmost. The narrow QA correction accepts visible10138 beneath an explicitly expected exact12000/12002 native core modal, requires10160 false and records that render-suppression reason. All normal captures reject any modal or busy state. An unrelated12002, a topmost Busy, progress or NoCancelBusy cannot use the exception. The500ms stable-state interval, exact identity, before/after-encoding equality and full PNG acknowledgment remain required. Runtime packages and source pins are unchanged. Evidence: `games-modal-42563639963-diagnosis.json`; complete supported Games native success remains pending.
 
 ## Mandatory next validation
 

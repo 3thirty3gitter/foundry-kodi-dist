@@ -49,6 +49,8 @@ def wait(predicate, timeout=30):
 
 def info(key): return xbmc.getInfoLabel(key)
 def snapshot():
+    busy_dialog=xbmc.getCondVisibility('Window.IsVisible(busydialog)')
+    busy_nocancel=xbmc.getCondVisibility('Window.IsVisible(busydialognocancel)')
     return {'window':xbmcgui.getCurrentWindowId(),'path':info('Container.FolderPath'),
             'plugin':info('Container.PluginName'),'content':info('Container.Content'),
             'viewmode':info('Container.Viewmode'),
@@ -65,7 +67,8 @@ def snapshot():
             'modal':xbmc.getCondVisibility('System.HasActiveModalDialog'),
             'updating':xbmc.getCondVisibility('Container.IsUpdating'),
             'progress_visible':xbmc.getCondVisibility('Window.IsVisible(progressdialog)'),
-            'busy_visible':xbmc.getCondVisibility('Window.IsVisible(busydialog)') or xbmc.getCondVisibility('Window.IsVisible(busydialognocancel)'),
+            'busy_visible':busy_dialog or busy_nocancel,
+            'busy_dialog_visible':busy_dialog,'busy_nocancel_visible':busy_nocancel,
             'dialog_id':xbmcgui.getCurrentWindowDialogId(),
             'dialog_heading':info('Control.GetLabel(1)'),
             'dialog_message':info('Control.GetLabel(9)')}
@@ -95,21 +98,28 @@ def wait_invocation_complete(identifier,action,timeout=30):
     wait(lambda:invocation_complete(invocation_records(),identifier,action),timeout)
 CAPTURE_SETTLE_SECONDS=.5
 capture_sequence=0
-def settle_capture(predicate=None,timeout=30):
+def core_covers_busy(state,expected_core):
+    # getCurrentWindowDialogId is the TOPMOST modal. In Kodi21.3
+    # CGUIDialogBusy.Render suppresses10138 whenever it is not topmost.
+    return (expected_core is not None and state['modal'] and native_core_dialog(state,expected_core) and
+            state.get('busy_dialog_visible') is True and state.get('busy_nocancel_visible') is False)
+def settle_capture(expected_core=None,timeout=30):
     deadline=time.monotonic()+timeout;previous=None;since=None
     while time.monotonic()<deadline:
         state=snapshot()
-        ready=(not state['updating'] and not state['progress_visible'] and not state['busy_visible'] and
-               (predicate is None or predicate(state)))
+        core=(expected_core is not None and state['modal'] and native_core_dialog(state,expected_core))
+        modal_ready=core if expected_core is not None else not state['modal']
+        busy_ready=not state['busy_visible'] or core_covers_busy(state,expected_core)
+        ready=not state['updating'] and not state['progress_visible'] and modal_ready and busy_ready
         if not ready or state!=previous:
             previous=state;since=time.monotonic() if ready else None
         elif since is not None and time.monotonic()-since>=CAPTURE_SETTLE_SECONDS:
             return state
         xbmc.sleep(50)
     raise AssertionError('Native capture state did not settle: '+json.dumps(snapshot()))
-def shot(name,predicate=None):
+def shot(name,expected_core=None):
     global capture_sequence
-    state=settle_capture(predicate)
+    state=settle_capture(expected_core)
     target=OUTPUT/(name+'.png')
     if target.exists():target.unlink()
     xbmc.executebuiltin('TakeScreenshot('+str(target)+')')
@@ -125,7 +135,10 @@ def shot(name,predicate=None):
         return result.get('sequence')==capture_sequence and result.get('case')==name and result.get('passed') is True
     wait(encoded)
     require(snapshot()==state,'Native state changed during PNG encoding')
-    evidence.append(dict(case=name,capture_state_stable_seconds=CAPTURE_SETTLE_SECONDS,png_completion_ack=True,**state))
+    covered=core_covers_busy(state,expected_core)
+    evidence.append(dict(case=name,capture_state_stable_seconds=CAPTURE_SETTLE_SECONDS,png_completion_ack=True,
+        buried_busy_render_suppressed=covered,
+        busy_suppression_source='Kodi21.3 GUIDialogBusy.cpp118-132: Render only when topmost' if covered else '',**state))
 def directory_id(): return info('Container.Property(Foundry.Games.DirectoryId)')
 def directory_ready(query, previous):
     path=info('Container.FolderPath')
@@ -266,7 +279,7 @@ try:
         require(native_core_dialog(state,expected_core),'Unexpected game launch dialog: '+json.dumps(state))
         return True
     wait(core_ready)
-    shot('games-missing-core',lambda state:native_core_dialog(state,expected_core))
+    shot('games-missing-core',expected_core)
     for unused in range(4):
         if not xbmc.getCondVisibility('System.HasActiveModalDialog'):break
         action('back')
@@ -700,6 +713,7 @@ def main():
                 wait_for(finished, 240)
                 report = json.loads((output / 'fixture-result.json').read_text())
                 report['renderer'] = version
+                report['native_busy_modal_contract']={'topmost_modal_api':'https://github.com/xbmc/xbmc/blob/21.3-Omega/xbmc/interfaces/legacy/ModuleXbmcgui.cpp#L31-L35','busy_render_rule':'https://github.com/xbmc/xbmc/blob/21.3-Omega/xbmc/dialogs/GUIDialogBusy.cpp#L118-L132','plugin_busy_wait':'https://github.com/xbmc/xbmc/blob/21.3-Omega/xbmc/interfaces/generic/ScriptRunner.cpp#L112-L134'}
                 report['capture_acknowledgments']=[json.loads(line) for line in (output/'capture-acknowledgments.jsonl').read_text(encoding='utf-8').splitlines()]
                 report['packages'] = json.loads((ROOT / 'release.json').read_text(encoding='utf-8'))['packages']
                 report['release'] = release

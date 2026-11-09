@@ -76,7 +76,8 @@ class ReleaseEvidenceTests(unittest.TestCase):
                 'startup_readiness': {'passed': True, 'quiet_seconds': 2, 'actual_skin_log': {'ready':True}, 'home_signature': {'category':'music'}, 'completed_game_widgets': [dict(mode=mode, phase='completed', error='') for mode in ('recent', 'favorites')]},
                 'shipped_skin_hashes': {'xml/MyGames.xml': 'f' * 64},
                 'assertions': {name: True for name in gate.GAMES_ASSERTIONS},
-                'checks': [{'case': name,'capture_state_stable_seconds':.5,'png_completion_ack':True} for name in gate.GAMES_CASES],
+                'native_core_expected': {'chooser':'Select emulator for .nes','heading':'Failed to play game','messages':['No compatible emulator.']},
+                'checks': [dict(case=name,capture_state_stable_seconds=.5,png_completion_ack=True,progress_visible=False,modal=name=='games-missing-core',busy_visible=False,busy_dialog_visible=False,busy_nocancel_visible=False,dialog_id=12002 if name=='games-missing-core' else 9999,dialog_heading='Failed to play game' if name=='games-missing-core' else '',dialog_message='No compatible emulator.' if name=='games-missing-core' else '') for name in gate.GAMES_CASES],
                 'capture_acknowledgments':[dict(sequence=index+1,case=name,passed=True,dimensions=[1920,1080],stable_seconds=.5) for index,name in enumerate(gate.GAMES_CASES)]}}
         movies = dict(approved_count=13, rendered_approved_count=13,
                       copied_skin_inputs_sha256={'xml/Variables_Artwork.xml': 'f' * 64},
@@ -197,6 +198,24 @@ class ReleaseEvidenceTests(unittest.TestCase):
             elif failure=='poster-inputs':poster['current_inputs']['isMovie']='changed'
             self.write(path,report)
             with self.subTest(failure=failure),self.assertRaises(AssertionError):gate.evidence(self.root,'1.5.0')
+        path.write_bytes(original)
+
+    def test_core_busy_capture_exception_never_accepts_unrelated_or_topmost_busy(self):
+        path=self.qa/'native/games/games-verification.json';original=path.read_bytes()
+        for failure in (None,'chooser','generic','topmost-busy','nocancel','no-render-proof','normal-modal'):
+            report=json.loads(original)
+            check=next(check for check in report['checks'] if check['case']=='games-missing-core')
+            check.update(busy_visible=True,busy_dialog_visible=True,busy_nocancel_visible=False,buried_busy_render_suppressed=True,busy_suppression_source='Kodi21.3 GUIDialogBusy.cpp118-132: Render only when topmost')
+            if failure=='chooser':check.update(dialog_id=12000,dialog_heading=report['native_core_expected']['chooser'],dialog_message='')
+            if failure=='generic':check.update(dialog_heading='Foundry Games',dialog_message='Unable to complete this operation')
+            if failure=='topmost-busy':check['dialog_id']=10138
+            if failure=='nocancel':check['busy_nocancel_visible']=True
+            if failure=='no-render-proof':check['buried_busy_render_suppressed']=False
+            if failure=='normal-modal':report['checks'][0]['modal']=True
+            self.write(path,report)
+            if failure in (None,'chooser'):gate.evidence(self.root,'1.5.0')
+            else:
+                with self.subTest(failure=failure),self.assertRaises(AssertionError):gate.evidence(self.root,'1.5.0')
         path.write_bytes(original)
 
     def test_all_thirteen_movies_native_routes_and_negatives_are_required(self):

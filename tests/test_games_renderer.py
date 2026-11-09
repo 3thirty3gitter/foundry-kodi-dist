@@ -319,14 +319,14 @@ class GamesRendererTests(unittest.TestCase):
         function=next(node for node in tree.body if isinstance(node,ast.FunctionDef) and node.name=='settle_capture')
         clock={'now':0.0}
         def snapshot():
-            return dict(directory_id='new',viewmode='Foundry Games',game_id='game',dialog_id=12002,
+            return dict(directory_id='new',viewmode='Foundry Games',game_id='game',dialog_id=9999,modal=False,
                         updating=False,busy_visible=False,progress_visible=clock['now']<.25)
         class Kodi:
             def sleep(self,duration):clock['now']+=duration/1000
         namespace=dict(snapshot=snapshot,time=types.SimpleNamespace(monotonic=lambda:clock['now']),
                        xbmc=Kodi(),json=json,CAPTURE_SETTLE_SECONDS=.5)
         exec(compile(ast.Module(body=[function],type_ignores=[]),'<capture-settle>','exec'),namespace)
-        result=namespace['settle_capture'](lambda state:state['dialog_id']==12002)
+        result=namespace['settle_capture']()
         self.assertEqual(result['directory_id'],'new');self.assertGreaterEqual(clock['now'],.75)
         animations=ET.parse(ROOT.parent/'skin.foundry-nimbus/xml/Includes_Animations.xml').getroot()
         fade=animations.find("include[@name='Visible_Fade']")
@@ -364,8 +364,8 @@ class GamesRendererTests(unittest.TestCase):
                     (base/'capture-complete.json').write_text(json.dumps(dict(sequence=1,case='games-favorites',passed=True)))
                 def assert_no_evidence(self):
                     if evidence:raise AssertionError('Capture advanced before matching PNG acknowledgment')
-            namespace=dict(BASE=base,OUTPUT=base,xbmc=Kodi(),json=json,time=time,snapshot=lambda:dict(state),
-                           settle_capture=lambda predicate:dict(state),capture_sequence=0,CAPTURE_SETTLE_SECONDS=.5,evidence=evidence)
+            namespace=dict(BASE=base,OUTPUT=base,xbmc=Kodi(),json=json,time=time,snapshot=lambda:dict(state),core_covers_busy=lambda state,expected:False,
+                           settle_capture=lambda expected:dict(state),capture_sequence=0,CAPTURE_SETTLE_SECONDS=.5,evidence=evidence)
             exec(compile(ast.Module(body=functions,type_ignores=[]),'<capture-ack>','exec'),namespace)
             namespace['shot']('games-favorites')
             self.assertEqual(events,['yielded-for-host']);self.assertTrue(evidence[0]['png_completion_ack'])
@@ -382,6 +382,33 @@ class GamesRendererTests(unittest.TestCase):
             with self.subTest(changes=changes),self.assertRaises(AssertionError):runner.skin_boolean_report(warning,runner.KNOWN_TIMER_SHA256,dict(proof,**changes))
         with self.assertRaises(AssertionError):runner.skin_boolean_report(warning,runner.KNOWN_TIMER_SHA256)
         with self.assertRaises(AssertionError):runner.skin_boolean_report('Error parsing boolean expression new.games.condition',runner.KNOWN_TIMER_SHA256,proof)
+
+    def test_only_exact_topmost_native_core_can_cover_render_suppressed_busy(self):
+        runner=self.runner();tree=ast.parse(runner.FIXTURE)
+        names={'native_core_dialog','core_covers_busy','settle_capture'}
+        functions=[node for node in tree.body if isinstance(node,ast.FunctionDef) and node.name in names]
+        expected=dict(chooser='Select emulator for .nes',heading='Failed to play game',messages=['No compatible emulator.'])
+        base=dict(modal=True,dialog_id=12002,dialog_heading=expected['heading'],dialog_message=expected['messages'][0],
+                  updating=False,progress_visible=False,busy_visible=True,busy_dialog_visible=True,busy_nocancel_visible=False)
+        for failure in (None,'chooser','no-explicit-core','generic-error','busy-topmost','nocancel-busy','progress','unrelated-modal'):
+            with self.subTest(failure=failure):
+                clock={'now':0.0};state=dict(base)
+                if failure=='chooser':state.update(dialog_id=12000,dialog_heading=expected['chooser'],dialog_message='')
+                if failure=='generic-error':state.update(dialog_heading='Foundry Games',dialog_message='Unable to complete this operation')
+                if failure=='busy-topmost':state['dialog_id']=10138
+                if failure=='nocancel-busy':state['busy_nocancel_visible']=True
+                if failure=='progress':state['progress_visible']=True
+                if failure=='unrelated-modal':state.update(busy_visible=False,busy_dialog_visible=False,dialog_heading='Unrelated message')
+                class Kodi:
+                    def sleep(self,duration):clock['now']+=duration/1000
+                namespace=dict(snapshot=lambda:dict(state),xbmc=Kodi(),time=types.SimpleNamespace(monotonic=lambda:clock['now']),json=json,CAPTURE_SETTLE_SECONDS=.5)
+                exec(compile(ast.Module(body=functions,type_ignores=[]),'<native-modal-stack>','exec'),namespace)
+                if failure in (None,'chooser'):
+                    result=namespace['settle_capture'](expected,timeout=1)
+                    self.assertTrue(namespace['core_covers_busy'](result,expected));self.assertGreaterEqual(clock['now'],.5)
+                else:
+                    with self.assertRaisesRegex(AssertionError,'did not settle'):
+                        namespace['settle_capture'](None if failure=='no-explicit-core' else expected,timeout=.7)
 
     def test_cleanup_kills_owned_group_after_launcher_exits(self):
         spec = importlib.util.spec_from_file_location('games_native_renderer', ROOT / 'tools/render_games.py')
