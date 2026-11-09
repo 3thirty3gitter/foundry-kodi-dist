@@ -16,7 +16,8 @@ SKIN = ROOT.parent / 'skin.foundry-nimbus'
 
 
 def main():
-    output = ROOT / 'releases/1.3.9-qa'
+    release = json.loads((ROOT / 'release.json').read_text(encoding='utf-8'))['release']
+    output = ROOT / 'releases' / (release + '-qa')
     output.mkdir(parents=True, exist_ok=True)
     source = SKIN / 'media/foundry-home-backdrop.png'
     expected = Image.open(source).convert('RGB').resize((1920, 1080))
@@ -63,9 +64,12 @@ def main():
                     try: os.killpg(kodi.pid, signal.SIGTERM)
                     except ProcessLookupError: pass
                     try: kodi.wait(timeout=5)
-                    except subprocess.TimeoutExpired:
-                        os.killpg(kodi.pid, signal.SIGKILL)
-                        kodi.wait(timeout=5)
+                    except subprocess.TimeoutExpired: pass
+                    # Kodi's launcher can exit while its native child survives.
+                    # Always stop this fixture's remaining process-group members.
+                    try: os.killpg(kodi.pid, signal.SIGKILL)
+                    except ProcessLookupError: pass
+                    kodi.wait(timeout=5)
                 xserver.terminate()
                 xserver.wait(timeout=5)
                 logs = profile / 'temp/kodi.log'

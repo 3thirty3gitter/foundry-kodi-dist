@@ -9,6 +9,7 @@ import subprocess
 import time
 from urllib.request import Request, urlopen
 import zipfile
+from record_release_validation import evidence, require_release_scope
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -51,8 +52,16 @@ def package_check(task):
 
 
 def main():
-    manifest = json.loads((ROOT / 'release.json').read_text())
-    assert manifest['release'] == '1.3.9'
+    manifest = json.loads((ROOT / 'release.json').read_text(encoding='utf-8'))
+    require_release_scope(manifest)
+    release = manifest['release']
+    qa = ROOT / 'releases' / (release + '-qa')
+    sources = json.loads((ROOT / 'releases' / (release + '-sources.json')).read_text(encoding='utf-8'))
+    assert sources['release'] == release
+    validation = evidence(ROOT, release)
+    source_tests = validation['source_tests']
+    packaged_tests = validation['packaged_tests']
+    package_count = len(manifest['packages'])
     for base in BASES:
         for path in ('release.json', 'addons.xml', 'addons.xml.md5'):
             download(base, path, (ROOT / path).read_bytes())
@@ -61,7 +70,6 @@ def main():
     for path in ('index.html', 'skin.html', 'repository.foundry-1.2.0.zip',
                  'script.program.foundry-build.zip', 'script.program.foundry-bootstrap.zip'):
         download(BASES[0], path, (ROOT / path).read_bytes())
-    sources = json.loads((ROOT / 'releases/1.3.9-sources.json').read_text())
     record = {
         'verification_time_utc': datetime.now(timezone.utc).isoformat(),
         'status': 'published_downloads_verified_target_device_checks_pending',
@@ -69,25 +77,31 @@ def main():
         'source_url': BASES[0], 'distribution_commit_verified': COMMIT,
         'source_commits': sources['source_commits'],
         'validation': {
-            'regression_tests_passed': 278,
-            'native_kodi_interface': json.loads((ROOT / 'releases/1.3.9-qa/interface-verification.json').read_text()),
-            'native_kodi_startup_splash': json.loads((ROOT / 'releases/1.3.9-qa/startup-splash-verification.json').read_text()),
-            'native_kodi_fixture': json.loads((ROOT / 'releases/1.3.9-qa/verification.json').read_text()),
+            'source_regression_tests': source_tests,
+            'packaged_regression_tests': packaged_tests,
+            'native_kodi_interface': json.loads((qa / 'native/interface-verification.json').read_text(encoding='utf-8')),
+            'native_kodi_startup_splash': json.loads((qa / 'native/startup-splash-verification.json').read_text(encoding='utf-8')),
+            'native_kodi_fixture': json.loads((qa / 'native/verification.json').read_text(encoding='utf-8')),
+            'native_kodi_weather': json.loads((qa / 'native/weather-verification.json').read_text(encoding='utf-8')),
             'test_inputs': 'Pinned source snapshots and extracted package ZIPs; mocked Kodi APIs',
-            'deterministic_rebuild': 'All seven package sizes and SHA-256 checksums unchanged',
+            'deterministic_rebuild': 'All %d package sizes and SHA-256 checksums unchanged' % package_count,
             'public_release_manifest_and_feed': 'Byte-identical on Pages and raw GitHub',
             'public_source_and_root_installers': 'Byte-identical to committed release',
-            'public_package_downloads': 'All seven ZIPs and SHA-256 sidecars verified on both hosts'
+            'public_package_downloads': 'All %d ZIPs and SHA-256 sidecars verified on both hosts' % package_count
         },
         'public_packages': checks,
         'limitations': [
             'Live TMDb/OMDb calls require personal profile keys and remain unverified',
             'No Shield is connected; target-device rendering, navigation and playback remain unverified',
-            'Add-on custom windows and unidentified action listings keep their own behavior'
+            'Add-on custom windows and unidentified action listings keep their own behavior',
+            'Games is deferred and is not included in this release',
+            'Weather uses an experimental Canadian API; device-local times, advisory headlines only',
+            'Native Pulse checks preserve selection but a null audio sink cannot verify audibility',
+            'The reported false error after playback stops has not been reproduced or confirmed fixed'
         ]
     }
-    (ROOT / 'releases/1.3.9-verification.json').write_text(json.dumps(record, indent=2) + '\n')
-    print('Verified all seven packages on both public hosts, Kodi feed, source listing and root installers.')
+    (ROOT / 'releases' / (release + '-verification.json')).write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8', newline='\n')
+    print('Verified all %d packages on both public hosts, Kodi feed, source listing and root installers.' % package_count)
 
 
 if __name__ == '__main__':

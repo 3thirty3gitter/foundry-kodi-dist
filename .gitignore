@@ -1,0 +1,4 @@
+__pycache__/
+*.py[cod]
+releases/*-qa/*.log
+releases/*-qa/**/*.log

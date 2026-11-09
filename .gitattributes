@@ -1,0 +1,11 @@
+* text=auto eol=lf
+*.zip binary
+*.gz binary
+*.png binary
+*.jpg binary
+*.gif binary
+*.wav binary
+*.ttf binary
+*.xbt binary
+releases/1.2.11-artwork-approval.json -text
+releases/1.2.11.json -text

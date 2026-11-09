@@ -27,6 +27,8 @@ FIXTURE=r'''
 import json,sys,time,traceback
 from pathlib import Path
 import xbmc,xbmcgui
+def require(condition,message):
+    if not condition:raise AssertionError(message)
 sys.path.insert(0,str(HELPER/'resources/lib'))
 from modules.catalog_window import CatalogWindow
 
@@ -38,6 +40,36 @@ class Source:
     def search(self,query):return None
 
 try:
+    # The real controller must bind adopted data before any tick/executor turn.
+    xbmc.executebuiltin('ActivateWindow(settings)',True)
+    xbmc.sleep(500)
+    parent=xbmcgui.getCurrentWindowId()
+    require(parent==10004,('Expected native settings parent',parent))
+    source=Source();source.initial={'items':ITEMS,'page':1,'total_pages':500}
+    window=CatalogWindow('script-foundry-vod.xml',str(HELPER),'default','1080i',True,source=source,section='Movies',breadcrumb='Preloaded fixture')
+    window.show()
+    deadline=time.monotonic()+10
+    while not window.initialized and time.monotonic()<deadline:xbmc.sleep(10)
+    first={'initialized':window.initialized,'list_size':window.getListSize(),'focus':window.getFocusId(),
+           'title':window.getProperty('catalog.title'),'loading':window.getProperty('catalog.loading'),
+           'parent':parent,'preloaded_consumed':source.initial is None,'ticks_before_observation':0,'python_optimize':sys.flags.optimize}
+    require(first['list_size']==len(window.rail) and first['list_size']==21 and first['title'] and not first['loading'],first)
+    (BASE/'first-paint.json').write_text(json.dumps(first))
+    xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/'catalog-first-paint.png')+')')
+    # Focus is intentionally queued by the shipped controller for its next tick.
+    deadline=time.monotonic()+5
+    while window.getFocusId()!=50 and time.monotonic()<deadline:
+        window.tick();xbmc.sleep(20)
+    first['focus_after_normal_ticks']=window.getFocusId()
+    require(first['focus_after_normal_ticks']==50,first)
+    (BASE/'focus-ready').write_text('ok')
+    deadline=time.monotonic()+40
+    while not window.closed and time.monotonic()<deadline:xbmc.sleep(20)
+    require(window.closed,'Fixture expected one remote Back')
+    window.dispose();xbmc.sleep(600)
+    first['after_back_and_dispose']=xbmcgui.getCurrentWindowId()
+    require(first['after_back_and_dispose']==parent,first)
+    (BASE/'back-once.json').write_text(json.dumps(first))
     for section,count,case in (('Movies',60,'movies'),('TV Shows',60,'tv-shows'),('Movies',3,'short-row'),('TV Shows',2,'episodes')):
         data=EPISODES if case=='episodes' else [dict(item,type='tvshow' if section=='TV Shows' else 'movie') for item in ITEMS[:count]]
         source=Source();source.load=lambda:{'items':data,'page':1,'total_pages':500}
@@ -135,7 +167,9 @@ def wait_for(predicate,timeout=40):
 
 
 def main():
-    output=ROOT/'releases/1.3.9-qa';output.mkdir(parents=True,exist_ok=True)
+    release=json.loads((ROOT/'release.json').read_text())['release']
+    assert isinstance(release,str) and release and all(c.isalnum() or c in '._-' for c in release)
+    output=ROOT/'releases'/(release+'-qa');output.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='foundry-kodi-') as temporary:
         base=Path(temporary);home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
         profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True)
@@ -224,12 +258,14 @@ for source in ITEMS[:8]:
 arrow('Next Page',page+1)
 xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
 ''')
-        environment=dict(os.environ,DISPLAY=':99',KODI_HOME=str(home),LIBGL_ALWAYS_SOFTWARE='1',AE_SINK='NULL')
+        isolated_home=base/'user-home';isolated_home.mkdir()
+        environment=dict(os.environ,HOME=str(isolated_home),XDG_CONFIG_HOME=str(isolated_home/'.config'),XDG_CACHE_HOME=str(isolated_home/'.cache'),DISPLAY=':99',KODI_HOME=str(home),LIBGL_ALWAYS_SOFTWARE='1',AE_SINK='NULL')
         log=open(output/'kodi-console.log','w')
         xserver=subprocess.Popen(['Xvfb',':99','-screen','0','1920x1080x24','-ac','-nolisten','tcp'],stdout=log,stderr=log)
         kodi=None
         try:
             time.sleep(1)
+            assert xserver.poll() is None,'Private Xvfb failed to start'
             kodi=subprocess.Popen(['kodi','-p','-fs','--windowing=x11','--debug'],env=environment,stdout=log,stderr=log,start_new_session=True)
             def rpc(method,params=None):
                 payload=json.dumps({'jsonrpc':'2.0','id':1,'method':method,'params':params or {}}).encode()
@@ -241,6 +277,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
                 try:return rpc('JSONRPC.Ping')=='pong'
                 except Exception:return False
             wait_for(ready,60)
+            assert rpc('Application.GetProperties',{'properties':['version']})['version']['major']>=21,'Kodi 21+ required'
             methods={'Right':'Input.Right','Left':'Input.Left','Down':'Input.Down','Return':'Input.Select','Escape':'Input.Back','Up':'Input.Up'}
             def key(*names):
                 for name in names:
@@ -260,7 +297,11 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             rpc('Addons.SetAddonEnabled',{'addonid':'script.foundry.libraryqa','enabled':True})
             rpc('Addons.SetAddonEnabled',{'addonid':'plugin.video.foundry.libraryqa','enabled':True})
             rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.libraryqa'})
-            evidence=[]
+            wait_for(lambda:(base/'first-paint.json').exists())
+            wait_for(lambda:(output/'catalog-first-paint.png').exists() and (base/'focus-ready').exists())
+            key('Escape')
+            wait_for(lambda:(base/'back-once.json').exists())
+            evidence=[dict(section='Preloaded first paint and single Back',**json.loads((base/'back-once.json').read_text()))]
             def capture(name):
                 destination=output/(name+'.png')
                 destination.unlink(missing_ok=True)
@@ -287,27 +328,27 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
                 time.sleep(1)
                 focused=capture(name)
                 assert focused.size==(1920,1080),focused.size
-                bounds=poster_bounds(focused,(610,540,853,915))
-                expected=[598,528,865,928]
+                bounds=poster_bounds(focused,(610,556,853,931))
+                expected=[598,544,865,944]
                 assert all(abs(a-b)<=4 for a,b in zip(bounds,expected)),(bounds,expected)
                 key('Up');wait_for(lambda:state().get('focus')==5701)
                 time.sleep(.5);unfocused=capture(name+'-unfocused')
                 # Inspect rendered pixels, not just the accent property: below
                 # the zoomed poster, colored light must fade into the fanart.
-                point=(730,960)
+                point=(730,976)
                 delta=[focused.getpixel(point)[c]-unfocused.getpixel(point)[c] for c in range(3)]
                 assert delta[2]>=15 and delta[0]>=5,(point,delta)
                 key('Down');wait_for(lambda:state().get('focus')==50 and state().get('position')==2)
                 key(*(['Right']*8));wait_for(lambda:state().get('position')==10)
                 wait_for(lambda:state().get('accent')=='FF25C7B0');time.sleep(.7)
-                middle=poster_bounds(capture(name+'-scrolled'),(610,540,853,915))
+                middle=poster_bounds(capture(name+'-scrolled'),(610,556,853,931))
                 assert all(abs(a-b)<=4 for a,b in zip(middle,expected)),(middle,expected)
                 key(*(['Right']*10));wait_for(lambda:state().get('kind')=='next');time.sleep(.7)
                 arrow=capture(name+'-next');pixels=arrow.load()
                 outline=[(x,y) for y in range(620,840) for x in range(1570,1840) if min(pixels[x,y])>=185 and max(pixels[x,y])-min(pixels[x,y])<35]
                 assert outline,'Focused NEXT arrow border was not rendered'
                 arrow_bounds=[min(x for x,y in outline),min(y for x,y in outline),max(x for x,y in outline)+1,max(y for x,y in outline)+1]
-                assert all(abs(a-b)<=3 for a,b in zip(arrow_bounds,[1586,646,1806,811])),arrow_bounds
+                assert all(abs(a-b)<=3 for a,b in zip(arrow_bounds,[1586,662,1806,827])),arrow_bounds
                 key('Right');assert state().get('position')==20,'Rail wrapped at NEXT'
                 key('Return');wait_for(lambda:state().get('page')==2 and state().get('position')==1 and state().get('kind')=='media')
                 key('Left');wait_for(lambda:state().get('kind')=='previous');time.sleep(.7)
@@ -318,8 +359,8 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
                 key('Escape')
             wait_for(lambda:state().get('case')=='short-row' and state().get('focus')==50 and state().get('position')==0)
             wait_for(lambda:state().get('accent')=='FF1D9BC7');time.sleep(.7)
-            short=poster_bounds(capture('short-row'),(100,540,345,915))
-            assert all(abs(a-b)<=4 for a,b in zip(short,[91,528,357,928])),short
+            short=poster_bounds(capture('short-row'),(100,556,345,931))
+            assert all(abs(a-b)<=4 for a,b in zip(short,[91,544,357,944])),short
             evidence.append({'section':'Three-title row','focused_poster_bounds':short,'left_padding_preserved':True})
             key('Escape')
             wait_for(lambda:state().get('case')=='episodes' and 'S01E02' in state().get('rendered_details',''))
@@ -348,11 +389,11 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             # include applied Control.HasFocus(row) to every unfocused item.
             halo_deltas=[]
             for x in (224,480,730,992,1248,1504):
-                difference=[focused.getpixel((x,960))[c]-unfocused.getpixel((x,960))[c] for c in range(3)]
+                difference=[focused.getpixel((x,976))[c]-unfocused.getpixel((x,976))[c] for c in range(3)]
                 halo_deltas.append(difference)
             assert halo_deltas[2][2]>=15 and halo_deltas[2][2]>halo_deltas[2][0],('Selected purple artwork requires a purple halo',halo_deltas,state())
-            stale_delta=[stale.getpixel((730,960))[c]-unfocused.getpixel((730,960))[c] for c in range(3)]
-            restored_delta=[restored.getpixel((730,960))[c]-unfocused.getpixel((730,960))[c] for c in range(3)]
+            stale_delta=[stale.getpixel((730,976))[c]-unfocused.getpixel((730,976))[c] for c in range(3)]
+            restored_delta=[restored.getpixel((730,976))[c]-unfocused.getpixel((730,976))[c] for c in range(3)]
             assert max(abs(v) for v in stale_delta)<=3,('Stale owner rendered a halo',stale_delta)
             assert restored_delta[2]>=15 and restored_delta[2]>restored_delta[0],('Matching owner did not restore the purple halo',restored_delta)
             assert all(max(abs(v) for v in delta)<=3 for index,delta in enumerate(halo_deltas) if index!=2),halo_deltas
@@ -373,7 +414,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             key('Return');wait_for(lambda:'page=1' in state().get('path',''))
             evidence.append({'section':'Native provider view 57','only_selected_poster_glows':True,'glow_pixel_deltas':halo_deltas,'selected_artwork_colour_matches':True,'stale_owner_glow_delta':stale_delta,'restored_owner_glow_delta':restored_delta,'stale_owner_glow_hidden':True,'shared_studio_logo_visible':True,'shared_ratings_visible':True,'legacy_page_icons_replaced':True,'next_previous_page_roundtrip':True,'sort_and_search_buttons_removed':True})
             (base/'native-complete').write_text('ok')
-            wait_for(lambda:state().get('case')=='favorites' and state().get('label')=='Saved movie' and bool(state().get('title')))
+            wait_for(lambda:state().get('case')=='favorites' and state().get('label')=='Saved movie' and state().get('title')=='Fixture title 01')
             assert state()['title']=='Fixture title 01',state()
             wait_for(lambda:state().get('tmdb')=='7' and state().get('imdb')=='7.1/10')
             assert state().get('plot') and state().get('released')
@@ -404,7 +445,7 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
             xserver.terminate();log.close()
             logs=profile/'temp/kodi.log'
             if logs.exists():shutil.copyfile(logs,output/'kodi.log')
-            for name in ('state.json','error.txt'):
+            for name in ('state.json','error.txt','first-paint.json','back-once.json'):
                 if (base/name).exists():shutil.copyfile(base/name,output/name)
         assert 'Error parsing boolean expression' not in (output/'kodi.log').read_text(), 'Invalid skin boolean conditions'
 

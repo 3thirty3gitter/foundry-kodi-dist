@@ -3,6 +3,7 @@ from pathlib import Path
 import copy,hashlib,json,re,sys,tempfile,unittest,xml.etree.ElementTree as E,zipfile
 from PIL import Image
 import test_release
+from home_contracts import without_home_favorites
 
 ROOT=Path(__file__).resolve().parents[1]
 SKIN=ROOT.parent/'skin.foundry-nimbus'
@@ -30,18 +31,22 @@ class RichRelease(unittest.TestCase):
     def test_home_header_widgets_and_fonts_remain_exactly_as_1_2_10(self):
         with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.1.9.zip') as z:
             for path in ['xml/Home.xml','xml/Includes_Home.xml','xml/Includes_Animations.xml','xml/Variables_Artwork.xml','xml/Font.xml']:
-                data=(SKIN/path).read_bytes()
+                data=(SKIN/path).read_bytes().replace(b'\r\n',b'\n')
                 if path=='xml/Home.xml':data=data.replace(b'\t  <include>FoundryWidgetMetadata</include>\n',b'')
-                if path=='xml/Includes_Home.xml':data=data.replace(b'$PARAM[visible] + !Window.IsActive(Home)',b'$PARAM[visible]')
+                if path=='xml/Includes_Home.xml':
+                    data=data.replace(b'$PARAM[visible] + !Window.IsActive(Home)',b'$PARAM[visible]')
+                    data=data.replace(b' | Integer.IsEqual($PARAM[list_id],14100)',b'')
                 if path=='xml/Home.xml':data=data.replace(b'<movement>6</movement>',b'<movement>7</movement>',1)
                 if path=='xml/Font.xml':
-                    data=re.sub(rb'^[ \t]*<font><name>sp_library_[^\n]*</font>\n',b'',data,flags=re.M)
+                    data=re.sub(rb'^[ \t]*<font><name>(?:sp_library_[^<]+|foundry_weather_(?:small|body|temperature|title))</name>[^\n]*</font>\n',b'',data,flags=re.M)
                 if path=='xml/Variables_Artwork.xml':
                     data=re.sub(rb'    <value condition="Control.HasFocus\(802\) \+ \$EXP\[FoundryHomeWidgetsPresent\]">[^\n]*</value>\n',b'',data)
                     # Shared metadata values are allowed; every original artwork
                     # fallback, menu binding and control remains byte-identical.
                     data=re.sub(rb'\n    <value condition="\$EXP\[FoundryMetadataCurrentItem\][^\n]*</value>',b'',data)
-                self.assertEqual(data,z.read('skin.foundry/'+path),path)
+                old=z.read('skin.foundry/'+path)
+                if path=='xml/Home.xml':data,old=without_home_favorites(data),without_home_favorites(old)
+                self.assertEqual(data,old,path)
     def test_osd_uses_the_stream_pilot_rounded_frame(self):
         after=E.parse(SKIN/'xml/Includes_StreamPilotOSD.xml')
         for name,kind,height,layers in [('StreamPilotVODCard','vod',202,2),('StreamPilotLiveCard','live',248,3)]:

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+  <!-- Dedicated game data, never the video catalog resolver. Native directory
+       navigation retains console/page selection and returns after RetroPlayer. -->
+  <include name="View_58_FoundryGames">
+    <control type="group">
+      <visible>Control.IsVisible(58)</visible>
+      <control type="image">
+        <left>900</left><top>110</top><width>920</width><height>430</height>
+        <texture background="true">$INFO[Container(58).ListItem.Art(fanart)]</texture>
+        <aspectratio>keep</aspectratio>
+      </control>
+      <control type="image">
+        <left>90</left><top>110</top><width>520</width><height>100</height>
+        <texture background="true">$INFO[Container(58).ListItem.Art(clearlogo)]</texture>
+        <aspectratio align="left">keep</aspectratio>
+      </control>
+      <control type="textbox">
+        <left>90</left><top>225</top><width>780</width><height>105</height>
+        <font>font36_title</font><textcolor>FFFFFFFF</textcolor>
+        <label>$INFO[Container(58).ListItem.Label]</label>
+      </control>
+      <control type="label">
+        <left>90</left><top>345</top><width>780</width><height>40</height>
+        <font>font27</font><textcolor>CCFFFFFF</textcolor>
+        <label>$INFO[Container(58).ListItem.Property(Foundry.Game.Platform)]</label>
+      </control>
+      <control type="textbox">
+        <left>90</left><top>400</top><width>780</width><height>150</height>
+        <font>font27</font><textcolor>CCFFFFFF</textcolor>
+        <label>$INFO[Container(58).ListItem.Property(Foundry.Game.Overview)]</label>
+      </control>
+      <control type="label">
+        <left>90</left><top>1000</top><width>1700</width><height>40</height>
+        <font>font27</font><textcolor>CCFFFFFF</textcolor>
+        <label>Select to play · Context menu for favorites and details · Back for consoles</label>
+      </control>
+    </control>
+    <control type="panel" id="58">
+      <visible>String.IsEqual(Container.PluginName,plugin.games.foundry) + Container.Content(games)</visible>
+      <left>90</left><top>600</top><width>1740</width><height>370</height>
+      <viewtype label="Foundry Games">icon</viewtype>
+      <orientation>horizontal</orientation>
+      <onup>58</onup><ondown>58</ondown><onleft>58</onleft><onright>58</onright>
+      <scrolltime>180</scrolltime>
+      <itemlayout width="245" height="360">
+        <control type="image"><left>8</left><top>8</top><width>220</width><height>275</height><texture background="true" fallback="DefaultGames.png">$INFO[ListItem.Art(poster)]</texture><aspectratio>keep</aspectratio></control>
+        <control type="textbox"><left>8</left><top>292</top><width>220</width><height>62</height><font>font27</font><align>center</align><label>$INFO[ListItem.Label]</label><textcolor>CCFFFFFF</textcolor></control>
+      </itemlayout>
+      <focusedlayout width="245" height="360">
+        <control type="image"><left>0</left><top>0</top><width>236</width><height>288</height><texture colordiffuse="FFFFFFFF">streampilot/catalog-white.png</texture></control>
+        <control type="image"><left>5</left><top>5</top><width>226</width><height>278</height><texture colordiffuse="FF15151C">streampilot/catalog-white.png</texture></control>
+        <control type="image"><left>8</left><top>8</top><width>220</width><height>275</height><texture background="true" fallback="DefaultGames.png">$INFO[ListItem.Art(poster)]</texture><aspectratio>keep</aspectratio></control>
+        <control type="textbox"><left>8</left><top>292</top><width>220</width><height>62</height><font>font27</font><align>center</align><label>$INFO[ListItem.Label]</label><textcolor>FFFFFFFF</textcolor></control>
+      </focusedlayout>
+    </control>
+  </include>
+</includes>
