@@ -1,0 +1,35 @@
+{
+  "status": "ci_passed_target_device_checks_pending",
+  "source_tests": {
+    "tests": 653,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "successful": true,
+    "python": "3.12.16"
+  },
+  "packaged_tests": {
+    "tests": 653,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "successful": true,
+    "python": "3.12.16"
+  },
+  "deterministic_rebuild": true,
+  "native_reports": [
+    "verification.json",
+    "startup-splash-verification.json",
+    "interface-verification.json",
+    "weather-verification.json",
+    "games/games-verification.json"
+  ],
+  "workflow_run": "42564799165",
+  "target_device_verification": "Shield rendering, navigation, controllers and gameplay unverified; native synthetic Games checks do not certify gameplay",
+  "source_commit": "bcd5875b4215bf6e268f05444c096b1a7f0a30ff",
+  "artifact_sha256": "bfa0eee24cc883e253a8a4f0656770847f61f41f36ace47e0e5b6ed2236b34f8",
+  "games_cases": 11,
+  "games_assertions": 25,
+  "all_game_assertions": true,
+  "read_only_publication_evidence_gate_passed": true
+}
