@@ -1,3 +1,14 @@
+# Approved 1.5.1 publication, 2026-11-11
+
+Trent explicitly approved publishing 1.5.1 using the successful local Kodi 21.3 native validation as an exception to hosted DNS failure, with immediate availability, rollback/manual-downgrade risk and untested Shield disclosed. Exact response: "Yes publish". The guarded production push fast-forwarded main from 02c4a4b to bfd9c7c07ee86349946f439bd66cc1524b4b4163. Hosted gates, signing keys, security settings and locked protocols remain unchanged. This is not a green hosted native validation claim.
+
+Hosted dev run 43058235384 passed source/extracted testing and packaging but failed all four official Ubuntu archive suites resolving archive.ubuntu.com, exit 100. All five unchanged native harnesses previously passed in isolated Ubuntu 26.04 / Kodi 21.3 on Spaceship; 93 screenshots verified. Full Windows source suite: 682 passed, zero failures/errors, two environment skips.
+
+Publication verification is in progress. Pages run 43069822304 and release run 43069821764 belong to bfd9c7c. Public package/feed/alias checks and their final report are maintained at C:/Users/TrentTimmerman/Documents/Codex/foundry-navigation-20261111/combined-evidence/PUBLICATION-VERIFIED.json (exists only on complete success). Earlier sections below are historical, not current blockers.
+
+A fresh normal lease d4961d21-262f-4a01-ab56-371195ce2409 was acquired for repair-foundry-navigation-20261111 after expiry; no token override was needed for publication. Shared active-repos registration publication and canonical session close remain pending because the brain checkout contains preserved unrelated work.
+
+---
 # Native validation and hosted setup repair, 2026-11-11
 
 All five unchanged native harnesses passed in a disposable Ubuntu 26.04 Docker container on Spaceship running Kodi 21.3, against the exact extracted f06ed5512dde2451561c7098348c42b3223fd51e packages. Independent evidence() assertions pass; 93 full 1920x1080 PNGs verified and representative catalog/Home/splash/Games captures visually reviewed. Combined evidence and explicit split provenance: C:/Users/TrentTimmerman/Documents/Codex/foundry-navigation-20261111/combined-evidence/PROVENANCE.json. Docker image digest: sha256:82a932795ad13cebee5562e30c0c113ef0ca4b3aa06187afd75b4d71b1f8952e.
