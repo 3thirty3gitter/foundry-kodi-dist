@@ -1,3 +1,13 @@
+# Foundry 1.5.3 local native validation complete, 2026-11-11
+
+All five local native gates now pass against the unchanged extracted candidate. Library, cold-start splash, interface and Games used Kodi 21.3/Python 3.14; unchanged Weather used official Debian 13 Kodi 21.2/Python 3.13 after its compatibility stress test passed 210 concurrent empty-script invocations. Weather completed full cold Home startup and all 18 checks. The original Ubuntu/Python 3.14 invoker SIGSEGV and minimal Estuary-only reproduction remain retained, not erased or mislabeled as passed.
+
+Official record_release_validation.evidence() assertions independently pass read-only against the consolidated reports. Evidence: project-root/candidate-independent-validation/LOCAL-VALIDATION.json; Weather: candidate-weather-debian/weather/weather-verification.json. Compatible local image ID: sha256:7de853ad1a02a8b0a23979346d15196bc5b711ce33895d8a3b8bf0494d2da213. Final runtime manifest remains ff27594f3de1c66c73c348cd71636d3f57f5254324e00b8fc311d18b96860ef5; all 1,037 source/package byte checks and 290 historical-file checks still pass.
+
+This supersedes the pending local Weather result below. Final Linux source/extracted suites remain 763/763 with zero failures/errors and 0/1 expected skips. Hosted dev CI has not run for the final dev commit; no hosted success or production publication is claimed. Physical phone/Wi-Fi and Shield remain unverified. Parent coordinates dev-only pushes; any CI runtime change is a separate QA-only follow-up without weakening gates.
+
+---
+
 # Foundry 1.5.3 combined local candidate, 2026-11-11
 
 Unpublished dev candidate. Release/skin/build/bootstrap 1.5.3, Helper 1.3.4 and Wallpapers 1.1.1 integrate the approved 45 wallpaper frames, separate Foundry Media Center app/startup artwork, Movies root Back artwork and QR phone connection/full-size keyboard repair. General Home/widget/catalog fallbacks remain clean. Startup installation retains atomic writes and numbered backups of earlier custom PNG/JPEG splash files.
