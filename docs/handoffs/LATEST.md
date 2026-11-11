@@ -1,3 +1,33 @@
+# Foundry 1.5.1 repair candidate, 2026-11-11
+
+Local development candidate; not published. Public release remains 1.5.0. Canonical distribution checkout is C:/Users/TrentTimmerman/Documents/Codex/foundry-publish-recovery-20261111/apps/foundry-kodi-dist, owned by Codex-repair-foundry-navigation-20261111. New skin/helper clones are under C:/Users/TrentTimmerman/Documents/Codex/foundry-navigation-20261111/apps; their labels are repair-foundry-skin-20261111 and repair-foundry-helper-20261111. Original stale dirty checkout is untouched.
+
+## Changes
+
+- Add-ons launcher's left category menu background removed without changing control geometry/actions or shared search panels.
+- Helper restores widget/menu XML after cold update, same-version reinstall or profile changes using persistent version/file fingerprints, one complete batch and one reload. SQLite serializes concurrent startup. Failed writes remain retryable. Normal edits update only their fingerprint to avoid an extra rebuild. Existing custom-path database/provider URLs are preserved.
+- Videos content remains visible with loading feedback during metadata loading. Late provider results are rejected after Home/new folder/update/abort; nonmedia native menus avoid a redundant monitor probe. Eligible media still needs an additional metadata request; this does not establish real provider/Shield latency improvement.
+
+## Exact source pins and evidence
+
+- Skin 1.5.1: 908df9a394913b468d46899ea9bb351131035331.
+- Helper 1.3.2: ab6517232b1ebfb23ebcbb6ff971509df7707554.
+- Build/Bootstrap 1.5.1; other package versions unchanged. Ten packages.
+- Source and extracted-package suites each pass 678 tests on Windows, 0 failures/errors, 2 skips (host symlink privilege and preserved-original check excluded in disposable layout).
+- Deterministic extracted rebuild and all ten package ZIPs/manifests/dependencies/feed/aliases pass.
+- All 115 pre-existing versioned ZIPs retain their SHA-256 hashes. Existing 1.5.0 source snapshot and pins are unchanged.
+- Evidence root: C:/Users/TrentTimmerman/Documents/Codex/foundry-navigation-20261111/, final-source-tests.json/log, package-evidence/packaged-tests.json and packaged-verification.json, published-artifact-hashes.json.
+- 140 XML and 46 helper Python files parsed. Focused tests include transparent Add-ons menu, widget recovery/failure/profile/edit and delayed navigation ownership.
+
+## Blockers and next steps
+
+1. Explicit permission to push all three dev branches is pending. Automatic review denied the attempted source dev push before execution; no push occurred. Source commits are local; this distribution handoff accompanies the local candidate commit. Do not retry without new relevant authorization.
+2. Once approved, push source commits, commit/push this distribution candidate, and verify all five native Kodi development gates for that exact head. No native visual/Shield/provider claim is made from Windows tests.
+3. Obtain affected-device logs/timings and test saved widgets, Back/Home/repeated navigation, provider slow/error cases and visual Add-ons menu.
+4. Only after validation and the current production Approval Gate may main/Pages be changed. 1.5.0 approval does not authorize this release.
+5. Registration of skin/helper was approved and added to the shared local active-repos.json under brain-only claim Codex-register-foundry-sources-20261111. Registry publication and canonical session close remain pending; preserve existing unrelated brain work.
+
+---
 # Foundry 1.5.0 published, 2026-11-11
 
 Trent confirmed YES to the current production Approval Gate for Foundry 1.5.0, including Quick Relay, Games and Movies wallpaper work. Validated code 41afbf69151df874b96c80e9c3838059b0cc95d9 was fast-forwarded to main. Package release run 42960198717 passed all five native Kodi gates again and published QA evidence. Public-download run 42960835218 passed on both Pages and raw GitHub: ten packages, feed/checksum, hashes, ZIP integrity and aliases. Both exact public release.json URLs independently returned 1.5.0 with Quick Relay 1.1.0.

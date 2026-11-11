@@ -1,3 +1,14 @@
+# Foundry 1.5.1 development candidate
+
+Unpublished navigation/widget repair candidate. Existing public 1.5.0 remains unchanged.
+
+- Transparent left category menu on the Home Add-ons launcher, retaining its controls and navigation.
+- Saved widget/menu recovery after cold updates, same-version reinstall and profile changes. Regeneration completes before one reload and preserves the saved configuration.
+- Native Videos content stays visible while provider metadata loads. Late results cannot take over newer navigation; nonmedia menus avoid a redundant probe.
+
+Provider latency on Shield remains unverified. Eligible media still performs a metadata lookup after Kodi's original provider load. Production publication requires the current approval gate after full candidate validation. See docs/handoffs/LATEST.md for exact source pins and test status.
+
+---
 # Foundry Kodi source
 
 Next-release candidate 1.5.0: **Build and Bootstrap 1.5.0 / skin 1.5.0 / Helper 1.3.1 / Wallpapers 1.1.0 / Quick Relay 1.1.0 / Canada Weather 0.1.0 / Games 0.1.0**.

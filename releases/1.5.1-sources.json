@@ -1,0 +1,13 @@
+{
+  "release": "1.5.1",
+  "skin": "1.5.1",
+  "helper": "1.3.2",
+  "source_commits": {
+    "skin.foundry-nimbus": "908df9a394913b468d46899ea9bb351131035331",
+    "script.foundry.helper": "ab6517232b1ebfb23ebcbb6ff971509df7707554"
+  },
+  "validation": {
+    "status": "awaiting_final_ci",
+    "target_device_verification": "Shield gameplay and rendering unverified"
+  }
+}

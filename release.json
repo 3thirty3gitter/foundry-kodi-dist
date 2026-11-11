@@ -1,6 +1,6 @@
 {
-  "release": "1.5.0",
-  "skin": "1.5.0",
+  "release": "1.5.1",
+  "skin": "1.5.1",
   "packages": [
     {
       "id": "repository.foundry",
@@ -46,31 +46,31 @@
     },
     {
       "id": "skin.foundry",
-      "version": "1.5.0",
-      "path": "skin.foundry/skin.foundry-1.5.0.zip",
-      "sha256": "acc0484f9398a3c0451f53761d37305a6341a3c4bdb714b44982ac60dd06601b",
-      "size": 56856420
+      "version": "1.5.1",
+      "path": "skin.foundry/skin.foundry-1.5.1.zip",
+      "sha256": "1e3b3f170ade3fc80e478a53b59f998ad3c59225aefae7426abc784a317e88a5",
+      "size": 56857193
     },
     {
       "id": "script.foundry.helper",
-      "version": "1.3.1",
-      "path": "script.foundry.helper/script.foundry.helper-1.3.1.zip",
-      "sha256": "2f798770d43d386c50fa1cc27300686f296faf1f116fd197750529b491a498a4",
-      "size": 872327
+      "version": "1.3.2",
+      "path": "script.foundry.helper/script.foundry.helper-1.3.2.zip",
+      "sha256": "f37d46c0b19c741d1b8cb72f305137aeaf1ec2ab93056854966726f41e35b514",
+      "size": 874750
     },
     {
       "id": "script.program.foundry-build",
-      "version": "1.5.0",
-      "path": "script.program.foundry-build/script.program.foundry-build-1.5.0.zip",
-      "sha256": "7cdaf8f385b3362b0299d8f091723b8bef46151a3d57c82978da715cc0a1c9e9",
-      "size": 2710
+      "version": "1.5.1",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.5.1.zip",
+      "sha256": "2f1e3cb98ed058e863df8031d84a986d2d793e2246f247b571384ff3df603e56",
+      "size": 2713
     },
     {
       "id": "script.program.foundry-bootstrap",
-      "version": "1.5.0",
-      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.5.0.zip",
-      "sha256": "e249d5af82cb7b23b492b83a44ab4c3dfcaf2a32d743436e3f425ae164670b7e",
-      "size": 852
+      "version": "1.5.1",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.5.1.zip",
+      "sha256": "2eb506658f2c5447ae1d1a7cd0beb24dddcfab95c7895feaeafeb54e30c99a18",
+      "size": 853
     }
   ]
 }
