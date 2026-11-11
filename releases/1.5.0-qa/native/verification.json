@@ -1,0 +1,392 @@
+{
+  "fixture_identity": "Foundry Library QA foundry-kodi-gokuxpd_",
+  "fixture_port": 54207,
+  "renderer": "Native Kodi Kodi from Debian Media Center 21.3 Debian package version: 2:21.3+dfsg-1ubuntu1\nCopyright (C) 2005-2025 Team Kodi from Debian - http://kodi.tv",
+  "canvas": [
+    1920,
+    1080
+  ],
+  "checks": [
+    {
+      "section": "Preloaded first paint and single Back",
+      "initialized": true,
+      "list_size": 21,
+      "focus": 0,
+      "title": "Fixture title 01",
+      "loading": "",
+      "parent": 10004,
+      "preloaded_consumed": true,
+      "ticks_before_observation": 0,
+      "python_optimize": 1,
+      "focus_after_normal_ticks": 50,
+      "after_back_and_dispose": 10004
+    },
+    {
+      "section": "Movies",
+      "screenshot": "movies.png",
+      "focused_poster_bounds": [
+        598,
+        544,
+        865,
+        944
+      ],
+      "scrolled_poster_bounds": [
+        598,
+        544,
+        865,
+        944
+      ],
+      "source_expected_bounds": [
+        598,
+        544,
+        865,
+        944
+      ],
+      "visible_colored_glow_delta_rgb": [
+        39,
+        12,
+        73
+      ],
+      "focus_return_restores_poster": true,
+      "next_previous_page_roundtrip": true,
+      "row_ends_do_not_wrap": true,
+      "focused_next_arrow_bounds": [
+        1586,
+        662,
+        1805,
+        826
+      ]
+    },
+    {
+      "section": "TV Shows",
+      "screenshot": "tv-shows.png",
+      "focused_poster_bounds": [
+        598,
+        544,
+        865,
+        944
+      ],
+      "scrolled_poster_bounds": [
+        598,
+        544,
+        865,
+        944
+      ],
+      "source_expected_bounds": [
+        598,
+        544,
+        865,
+        944
+      ],
+      "visible_colored_glow_delta_rgb": [
+        39,
+        12,
+        73
+      ],
+      "focus_return_restores_poster": true,
+      "next_previous_page_roundtrip": true,
+      "row_ends_do_not_wrap": true,
+      "focused_next_arrow_bounds": [
+        1586,
+        662,
+        1805,
+        826
+      ]
+    },
+    {
+      "section": "Three-title row",
+      "focused_poster_bounds": [
+        91,
+        544,
+        357,
+        944
+      ],
+      "left_padding_preserved": true
+    },
+    {
+      "section": "Episode details",
+      "season_episode_and_title_visible": true,
+      "specials_zero_preserved": true,
+      "show_title_air_date_and_runtime_available": true
+    },
+    {
+      "section": "Native provider view 57",
+      "only_selected_poster_glows": true,
+      "glow_pixel_deltas": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          39,
+          12,
+          73
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "selected_artwork_colour_matches": true,
+      "stale_owner_glow_delta": [
+        0,
+        0,
+        0
+      ],
+      "restored_owner_glow_delta": [
+        39,
+        12,
+        73
+      ],
+      "stale_owner_glow_hidden": true,
+      "shared_studio_logo_visible": true,
+      "shared_ratings_visible": true,
+      "legacy_page_icons_replaced": true,
+      "next_previous_page_roundtrip": true,
+      "sort_and_search_buttons_removed": true
+    },
+    {
+      "section": "Native favorites",
+      "saved_movie_full_metadata": true,
+      "saved_episode_show_number_title_air_date": true,
+      "existing_aliases_preserved": true,
+      "playback_not_started": true
+    },
+    {
+      "section": "Movies submenu wallpapers",
+      "passed": true,
+      "rendered_approved_count": 13
+    }
+  ],
+  "movie_submenu_wallpapers": {
+    "approved_count": 13,
+    "rendered_approved_count": 13,
+    "passed": true,
+    "cases": [
+      {
+        "case": "movie-wallpaper-trending",
+        "canonical_label": "Trending",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-trending.png",
+        "paging_roundtrip_retains_context": true,
+        "native_list_loss_rehydration_retains_context": true
+      },
+      {
+        "case": "movie-wallpaper-trending-recent",
+        "canonical_label": "Trending Recent",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-trending-recent.png"
+      },
+      {
+        "case": "movie-wallpaper-popular",
+        "canonical_label": "Popular",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-popular.png"
+      },
+      {
+        "case": "movie-wallpaper-popular-today",
+        "canonical_label": "Popular Today",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-popular-today.png"
+      },
+      {
+        "case": "movie-wallpaper-premieres",
+        "canonical_label": "Premieres",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-premieres.png"
+      },
+      {
+        "case": "movie-wallpaper-latest-releases",
+        "canonical_label": "Latest Releases",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-latest-releases.png"
+      },
+      {
+        "case": "movie-wallpaper-most-watched",
+        "canonical_label": "Most Watched",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-most-watched.png"
+      },
+      {
+        "case": "movie-wallpaper-most-favorited",
+        "canonical_label": "Most Favorited",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-most-favorited.png"
+      },
+      {
+        "case": "movie-wallpaper-top-10-box-office",
+        "canonical_label": "Top 10 Box Office",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-top-10-box-office.png"
+      },
+      {
+        "case": "movie-wallpaper-blockbusters",
+        "canonical_label": "Blockbusters",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-blockbusters.png"
+      },
+      {
+        "case": "movie-wallpaper-in-theaters",
+        "canonical_label": "In Theaters",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-in-theaters.png"
+      },
+      {
+        "case": "movie-wallpaper-up-coming",
+        "canonical_label": "Up Coming",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-up-coming.png"
+      },
+      {
+        "case": "movie-wallpaper-oscar-winners",
+        "canonical_label": "Oscar Winners",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-oscar-winners.png"
+      },
+      {
+        "case": "movie-wallpaper-unknown",
+        "canonical_label": "",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-unknown.png"
+      },
+      {
+        "case": "movie-wallpaper-tv",
+        "canonical_label": "",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-tv.png"
+      },
+      {
+        "case": "movie-wallpaper-mixed",
+        "canonical_label": "",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-mixed.png"
+      },
+      {
+        "case": "movie-wallpaper-custom",
+        "canonical_label": "Trending",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-custom.png"
+      },
+      {
+        "case": "movie-wallpaper-title-fanart",
+        "canonical_label": "Trending",
+        "pixel_mean_max_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "screenshot": "movie-wallpaper-title-fanart.png"
+      }
+    ],
+    "custom_background_preserved": true,
+    "selected_title_fanart_preserved": true,
+    "tv_mixed_unknown_rejected": true,
+    "paging_and_rehydration_context_preserved": true,
+    "copied_skin_inputs_sha256": {
+      "xml/script-foundry-vod.xml": "9e23fdffc2e9cd0963ddee5112adce2b29ab996b7ff6bee1108f4e5adfabfa7a",
+      "xml/Includes_FoundryMovieSubmenus.xml": "75c321c05a3f044f454561996a2e6b013698412f4198ff7375d18d66a8ddcc88",
+      "xml/View_57_StreamPilot.xml": "336577c86a7b3f180751812584ecac1b617d6cbac2fec1e43209da4ce9684db9",
+      "media/foundry-movie-submenus/SOURCE.json": "c184b8132ab188557f31f87c169b05ad0eac6dffaf2e595ddb61d7a7be40b81b",
+      "media/foundry-movie-submenus/blockbusters.png": "bca0e25af74ba4760dae905513a08696a69f9e3632384a455ff79c8cfee83606",
+      "media/foundry-movie-submenus/in-theaters.png": "fbedbfb72d6b2b3d05559204d1daa4421d4dd3573ba2829e8bd5ab16e2a61b3c",
+      "media/foundry-movie-submenus/latest-releases.png": "5b2f00878909400094b2dc275bc037d04fd2d3c58a7c4b18aa12c99094b94260",
+      "media/foundry-movie-submenus/most-favorited.png": "6f2501b34ca42055ba36e0d34c317c7d7e9181037d3ebd17d35a96a532a31253",
+      "media/foundry-movie-submenus/most-watched.png": "60cfa20ec05ec7d8e0a98bf25830a8649ea1613a0577fd4920dfeffa068df5bb",
+      "media/foundry-movie-submenus/oscar-winners.png": "f82d322381b6d5952648e80b4ece8343235be293899cc693a74cf5e1af0f399d",
+      "media/foundry-movie-submenus/popular-today.png": "b583c971a4cee760773ff63247675a5f8d22dc2e6fcf870fb2fe2c89cc69c924",
+      "media/foundry-movie-submenus/popular.png": "a9f54cd64f1bd5bb0573294e6416163b45f8729dde7817f4a3a91e3beb2430c7",
+      "media/foundry-movie-submenus/premieres.png": "099d321d4d5ef84a6d3bcd5e59641dbb50f46eb1488861ac1c816c38b93fe221",
+      "media/foundry-movie-submenus/top-10-box-office.png": "0b585ff023a885b447a89ab711bfe1ddba5779e003fbd47ede1852f3adebe89a",
+      "media/foundry-movie-submenus/trending-recent.png": "988405977d861693d8e5ad0c65a44024a09bd227e7ba662cdfde8acc90f5cc71",
+      "media/foundry-movie-submenus/trending.png": "6928e49789f98ebd39ea1c3ff58a6f10345742161a23e2bc4d1619636deaea4a",
+      "media/foundry-movie-submenus/up-coming.png": "b93dc18a0cbc5ae7ca5373dcd3ea93a7339a095f728b503278548faa6aebe8f0"
+    },
+    "scope": "Shipped catalog XML and exact approved assets copied into isolated Estuary scaffolding. Native desktop Kodi; no Shield, provider or real playback claim for wallpaper context."
+  },
+  "scope": "Controlled fixtures; not Shield, live providers or Android pixel parity"
+}
