@@ -1,3 +1,21 @@
+# Foundry 1.5.2 publication verified, 2026-11-11
+
+Trent explicitly approved production publication after disclosure of immediate updater availability, rollback/manual downgrade risk, trusted-LAN unencrypted QR text entry, and untested physical phone/Shield. Ordinary PR #2 merged the exact validated dev candidate 0029accf61ff1373441ee475f51b2afc6252374b into main as 8dc85df6cd83ce386d9d4928c5b7b47e480c7864. Historical 1.5.1 receipts were preserved; no protection bypass or force push. https://github.com/3thirty3gitter/foundry-kodi-dist/pull/2
+
+Release/skin/build/bootstrap 1.5.2; helper 1.3.3. Source pins: skin 920755f6d90d9d37b6051542b2f6a9215682a13d; helper 597c16da1e67208e7788e563005b5c5a20c07b67. Release manifest SHA256 f96d65e8761106275184e1bfcf5ad77dd0df5df2fee88f7345681c12b1e54073.
+
+Hosted dev run 43101931097 and production release run 43104436614 succeeded: 724 source tests, zero failures/errors/skips; 724 extracted tests, zero failures/errors/one expected skip; deterministic rebuild and all five native Kodi gates passed. Production artifact 13893417185 independently verified against SHA256 38ecbb2e13b404bb9d5593e0d199fd24b459fd2daf7796f7f02831298d2d1123, all 171 extracted files, exact merge/run identity and official read-only evidence() assertions.
+
+Release automation published validation receipt 08ffe19626c28dcbe3983c7e457b17ee44a3c6c2. Public verification run 43105288012 succeeded, creating receipt ba8d38eefca5537ee8c3edbaf6f8b7f3c575f885 (only releases/1.5.2-verification.json changed). Initial Pages43104436190 succeeded; follow-up43105272165 superseded/cancelled by final receipt Pages43105381215, whose final status is recorded separately.
+
+Independent live verification completed 21:43:29UTC: all 10 ZIPs on both Pages and raw GitHub (20 downloads), exact committed bytes/SHA256/ZIP integrity/checksum sidecars, both release manifests/Kodi feeds and five Pages installer/listing aliases passed. Evidence under C:/Users/TrentTimmerman/Documents/Codex/foundry-152-production/production-public-verification/: independent-production-evidence.json and releases/1.5.2-verification.json. No repository edits made by verification worker.
+
+Remaining limitations: physical phone/browser/network and Shield rendering/navigation/playback/controller/gameplay unverified. QR entry is plaintext trusted-LAN HTTP for ordinary text only, excludes hidden/password/PIN dialogs and requires explicit TV OK. Live personal TMDb/OMDb keys unverified; native Games fixtures do not certify gameplay. Production lease closure and dev handoff synchronization remain parent's responsibility. Preserve original dirty shared trees and historical evidence.
+
+Final receipt Pages run 43105381215 completed successfully. All assigned production release, public verification and latest Pages workflows are green.
+
+---
+
 # Foundry 1.5.2 local candidate, 2026-11-11
 
 Unpublished local dev candidate at C:/Users/TrentTimmerman/Documents/Codex/foundry-wallpaper-20261111/apps. Original dirty shared repositories were preserved. All three own leases remain active; no push/main/Pages publication performed or authorized for this candidate.
