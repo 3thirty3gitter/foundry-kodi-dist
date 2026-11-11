@@ -1,3 +1,15 @@
+# Foundry 1.5.0 published, 2026-11-11
+
+Trent confirmed YES to the current production Approval Gate for Foundry 1.5.0, including Quick Relay, Games and Movies wallpaper work. Validated code 41afbf69151df874b96c80e9c3838059b0cc95d9 was fast-forwarded to main. Package release run 42960198717 passed all five native Kodi gates again and published QA evidence. Public-download run 42960835218 passed on both Pages and raw GitHub: ten packages, feed/checksum, hashes, ZIP integrity and aliases. Both exact public release.json URLs independently returned 1.5.0 with Quick Relay 1.1.0.
+
+Development run 42959433883 passed 662 source and 662 extracted tests (Linux skips 0/1), deterministic rebuild and all five native gates. Independent evidence() validation passed, including all eleven complete Games PNGs. The earlier Weather crash remains an unconfirmed intermittent failure; it did not recur in the next two full Weather runs. The Games progress-transition race was corrected in QA only without weakening settled-dialog or capture assertions. Device audio, Shield, gameplay/controllers and other previously documented target-device checks remain unverified.
+
+Public update site: https://3thirty3gitter.github.io/foundry-kodi-dist/ . Workflow receipts: https://github.com/3thirty3gitter/foundry-kodi-dist/actions/runs/42960198717 and https://github.com/3thirty3gitter/foundry-kodi-dist/actions/runs/42960835218 .
+
+The recovery checkout is C:/Users/TrentTimmerman/Documents/Codex/foundry-publish-recovery-20261111/apps/foundry-kodi-dist. The original apps/foundry-kodi-dist dirty checkout was deliberately preserved and is now stale; do not republish or blindly apply it. All thirteen original pending files were backed up and SHA-256 verified before replay. No source package pin or published historical ZIP was overwritten.
+
+---
+
 # Native validation follow-up, 2026-11-11
 
 Dev d38a3a8 passed source/extracted suites and deterministic packaging in both attempts of run 42957974887. Attempt 1 passed Library, Splash, Interface and Games but Kodi 21.3 segfaulted during Weather startup; root cause remains unconfirmed. Attempt 2 passed Weather but Games classified dialog 12002 while progress was still visible and its text was blank. Neither attempt is a full pass.
