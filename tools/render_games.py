@@ -139,6 +139,17 @@ def shot(name,expected_core=None):
     evidence.append(dict(case=name,capture_state_stable_seconds=CAPTURE_SETTLE_SECONDS,png_completion_ack=True,
         buried_busy_render_suppressed=covered,
         busy_suppression_source='Kodi21.3 GUIDialogBusy.cpp118-132: Render only when topmost' if covered else '',**state))
+def home_menu():
+    count=int(info('Container(50).NumItems') or '0')
+    return {'items':[(info('Container(50).ListItemAbsolute('+str(i)+').Label'),
+                      info('Container(50).ListItemAbsolute('+str(i)+').FileNameAndPath')) for i in range(count)],
+            'selected':info('Container(50).CurrentItem'),'label':info('ListItem.Label'),'path':info('Container.FolderPath')}
+def cancel_home_ack(previous,current,before_ids,records):
+    if not current:return None
+    fresh=[r for key,r in records.items() if key not in before_ids and r.get('action')=='home']
+    if current==previous and not fresh:return {'retained':True}
+    matches=[r for r in fresh if invocation_complete(records,r['id'],'home') and r.get('directory_id')==current]
+    return matches[0] if len(matches)==1 else None
 def directory_id(): return info('Container.Property(Foundry.Games.DirectoryId)')
 def directory_ready(query, previous):
     path=info('Container.FolderPath')
@@ -251,16 +262,26 @@ try:
     require(int(info('Container(58).NumItems') or '0')==1,'Search did not filter native items')
     wait(lambda:info('ListItem.Label')=='Fixture 04');shot('games-search-results')
     # Cancellation resolves the pending directory as failed. Kodi retains the
-    # original Home items/focus; require that native state, not just a closed UI.
+    # original Home items/focus, optionally reloading Home via GUIMediaWindow.Update.
+    # Require full identities/focus and a completed matching invoker for any new UUID.
     open_path('action=home')
-    before_cancel=snapshot();before_cancel_invocations=set(invocation_records())
+    xbmc.executebuiltin('Container.SetViewMode(50)');wait(lambda:xbmc.getCondVisibility('Control.IsVisible(50)'))
+    xbmc.executebuiltin('SetFocus(50,0,absolute)');wait(lambda:info('ListItem.Label')=='Search games')
+    before_cancel=home_menu()
+    require(bool(before_cancel['items']) and all(label and path for label,path in before_cancel['items']),'Home menu identities unavailable')
+    before_cancel_invocations=set(invocation_records())
     previous=home_item(0,'Search games')
     wait(lambda:xbmc.getCondVisibility('Window.IsActive(virtualkeyboard)'))
     cancel_invocation=wait_invocation('search',before_cancel_invocations)
     action('back');wait(lambda:not xbmc.getCondVisibility('Window.IsActive(virtualkeyboard)'))
     wait_invocation_complete(cancel_invocation,'search')
     wait(lambda:not xbmc.getCondVisibility('Container.IsUpdating'))
-    wait(lambda:directory_id()==previous and info('ListItem.Label')=='Search games' and info('Container.FolderPath')==before_cancel['path'])
+    wait(lambda:home_menu()==before_cancel and cancel_home_ack(previous,directory_id(),before_cancel_invocations,invocation_records()) is not None)
+    settle_capture()
+    require(home_menu()==before_cancel,'Cancelled search changed Home menu identities or focus')
+    cancel_ack=cancel_home_ack(previous,directory_id(),before_cancel_invocations,invocation_records())
+    require(cancel_ack is not None,'Cancelled search reload lacks completed matching Home invocation')
+    (OUTPUT/'search-cancel-ack.json').write_text(json.dumps({'old_directory_id':previous,'new_directory_id':directory_id(),'refresh_ack':cancel_ack,'before':before_cancel,'after':home_menu(),'cancel_invocation':invocation_records()[cancel_invocation]},indent=2),encoding='utf-8')
     shot('games-search-cancel')
     open_path('action=games&system=nes');rail();select_item(2)
     wait(lambda:'Fixture 02' in info('ListItem.Label'))
@@ -321,6 +342,14 @@ def _qa_write():
     _qa_temp.write_text(_qa_json.dumps(_qa_record),encoding='utf-8')
     _qa_temp.replace(_qa_target)
 _qa_write()
+import xbmcplugin as _qa_plugin
+_qa_set_property=_qa_plugin.setProperty
+def _qa_property(handle,key,value):
+    if key=='Foundry.Games.DirectoryId':
+        _qa_record['directory_id']=value
+        _qa_write()
+    return _qa_set_property(handle,key,value)
+_qa_plugin.setProperty=_qa_property
 try:
     exec(compile(%r,__file__,'exec'),globals())
 except BaseException:
