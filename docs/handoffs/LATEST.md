@@ -4,7 +4,7 @@ Trent explicitly approved publishing 1.5.1 using the successful local Kodi 21.3 
 
 Hosted dev run 43058235384 passed source/extracted testing and packaging but failed all four official Ubuntu archive suites resolving archive.ubuntu.com, exit 100. All five unchanged native harnesses previously passed in isolated Ubuntu 26.04 / Kodi 21.3 on Spaceship; 93 screenshots verified. Full Windows source suite: 682 passed, zero failures/errors, two environment skips.
 
-Publication verification is in progress. Pages run 43069822304 and release run 43069821764 belong to bfd9c7c. Public package/feed/alias checks and their final report are maintained at C:/Users/TrentTimmerman/Documents/Codex/foundry-navigation-20261111/combined-evidence/PUBLICATION-VERIFIED.json (exists only on complete success). Earlier sections below are historical, not current blockers.
+Publication verified successfully: both public manifests and feeds match; all ten package ZIPs on both Pages and raw GitHub (20 downloads) pass exact bytes, SHA-256, ZIP integrity and checksum sidecars; all five Pages root installer/listing aliases match. Report: C:/Users/TrentTimmerman/Documents/Codex/foundry-navigation-20261111/combined-evidence/PUBLICATION-VERIFIED.json. Pages run 43069822304 and release run 43069821764 belong to bfd9c7c. Hosted release native validation remains separate and may retain the disclosed DNS failure. Earlier sections below are historical, not current blockers.
 
 A fresh normal lease d4961d21-262f-4a01-ab56-371195ce2409 was acquired for repair-foundry-navigation-20261111 after expiry; no token override was needed for publication. Shared active-repos registration publication and canonical session close remain pending because the brain checkout contains preserved unrelated work.
 
