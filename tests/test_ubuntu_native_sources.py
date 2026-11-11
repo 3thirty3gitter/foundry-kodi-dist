@@ -28,8 +28,8 @@ class UbuntuNativeSources(unittest.TestCase):
     def test_both_workflows_keep_native_gates_and_strict_update(self):
         for name in ('dev-validation.yml','release.yml'):
             text=(ROOT/'.github/workflows'/name).read_text()
-            self.assertIn('sudo python3 tools/use_direct_ubuntu_sources.py',text)
-            self.assertIn('APT::Update::Error-Mode=any',text)
+            self.assertIn('docker build --platform linux/amd64',text)
+            self.assertNotIn('sudo apt-get',text)
             for gate in ('library','startup_splash','interface','weather','games'):
                 self.assertIn('tools/render_'+gate+'.py',text)
             self.assertNotIn('allow-unsupported-kodi',text)

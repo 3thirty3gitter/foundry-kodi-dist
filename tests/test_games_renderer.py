@@ -293,8 +293,12 @@ class GamesRendererTests(unittest.TestCase):
         self.assertEqual(result['known_baseline_warnings']['timers'], [known])
         for log, digest in ((known, '0' * 64), ('Error parsing boolean expression bad.games.expression', runner.KNOWN_TIMER_SHA256)):
             with self.assertRaises(AssertionError): runner.skin_boolean_report(log, digest)
+        packages = dict(line.split() for line in (ROOT / 'tools/native-qa/packages.lock').read_text().splitlines())
+        for name, version in {'kodi': '2:21.2+dfsg-4', 'gdb': '16.3-1', 'xvfb': '2:21.1.16-1.3+deb13u4'}.items():
+            self.assertEqual(packages[name], version)
         for name in ('dev-validation.yml', 'release.yml'):
-            self.assertIn('kodi gdb xvfb', (ROOT / '.github/workflows' / name).read_text())
+            workflow = (ROOT / '.github/workflows' / name).read_text()
+            self.assertIn('docker build --platform linux/amd64 --tag "$NATIVE_QA_IMAGE" tools/native-qa', workflow)
 
     def test_plugin_directory_navigation_posts_then_yields_for_fresh_native_list(self):
         runner = self.runner(); tree = ast.parse(runner.FIXTURE)

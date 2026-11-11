@@ -1,3 +1,15 @@
+# Foundry 1.5.3 pinned native QA complete, 2026-11-11
+
+All five unchanged native gates now pass together on the reproducibly locked official Debian 13 Kodi 21.2/Python 3.13 runtime as unprivileged UID 1000 with read-only extracted sources and a writable QA-only mount. Final full source/extracted suites pass 768/768 tests, zero failures/errors, 0/1 expected skips. Deterministic rebuilding, official evidence() assertions and integrity of all 93 screenshots pass. All 1,037 package/source comparisons, 979 native before/after hashes and 290 immutable historical files pass; release manifest remains ff27594f3de1c66c73c348cd71636d3f57f5254324e00b8fc311d18b96860ef5.
+
+The dev and release workflows now build tools/native-qa/Dockerfile from pinned official Debian base digest and all 414 exact installed versions, verifying the resulting full dpkg inventory. They invoke the same five renderers through tools/run_native_qa.sh; readonly source mounts, output mount creation, nonroot execution, failure propagation, sequential timeouts, artifact retention and publication guards are preserved. This QA-only follow-up changes no product package, runtime pin or security setting. Dependency retirement fails the image build instead of silently upgrading. Linux wrapper argument/exit-code regressions and native nonroot/mount smoke pass.
+
+Evidence: project-root/candidate-independent-validation-locked/LOCAL-VALIDATION.json and candidate-native-locked/{native-summary.json,native-qa/}. Locked image ID: sha256:7747f32c71781f6d452821fd02aa11a6267100e848720e94c45b453ee900dbab. Source/extracted final logs: candidate-ci-source-tests-final.log and candidate-ci-extracted-tests-final.log. Final suite extraction is candidate-packaged-ci/apps; native locked run used candidate-packaged-final/apps with identical runtime/package bytes and renderer sources. Earlier split-runtime reports and Ubuntu/Python 3.14 crashes remain retained as historical evidence.
+
+Hosted dev validation remains pending parent-reviewed dev pushes; this is not a hosted CI or production publication claim. Parent pushes helper, skin, then distribution dev after exact HEAD/lease/remote checks. Production remains 1.5.2; no production merge/release is authorized. Physical phone/Wi-Fi and Shield remain unverified.
+
+---
+
 # Foundry 1.5.3 local native validation complete, 2026-11-11
 
 All five local native gates now pass against the unchanged extracted candidate. Library, cold-start splash, interface and Games used Kodi 21.3/Python 3.14; unchanged Weather used official Debian 13 Kodi 21.2/Python 3.13 after its compatibility stress test passed 210 concurrent empty-script invocations. Weather completed full cold Home startup and all 18 checks. The original Ubuntu/Python 3.14 invoker SIGSEGV and minimal Estuary-only reproduction remain retained, not erased or mislabeled as passed.
