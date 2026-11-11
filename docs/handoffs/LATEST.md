@@ -1,3 +1,16 @@
+# Native validation and hosted setup repair, 2026-11-11
+
+All five unchanged native harnesses passed in a disposable Ubuntu 26.04 Docker container on Spaceship running Kodi 21.3, against the exact extracted f06ed5512dde2451561c7098348c42b3223fd51e packages. Independent evidence() assertions pass; 93 full 1920x1080 PNGs verified and representative catalog/Home/splash/Games captures visually reviewed. Combined evidence and explicit split provenance: C:/Users/TrentTimmerman/Documents/Codex/foundry-navigation-20261111/combined-evidence/PROVENANCE.json. Docker image digest: sha256:82a932795ad13cebee5562e30c0c113ef0ca4b3aa06187afd75b4d71b1f8952e.
+
+Hosted run 43049658155 attempts 1 and 2 passed all 678 source tests (zero skips), all 678 extracted tests (one expected skip) and deterministic packaging. Both failed installing Kodi because Ubuntu package-server DNS resolution failed; hosted native gates never ran. This is not green hosted CI.
+
+Trent approved all three dev pushes, then explicitly authorized the documented session-token override after this task's ephemeral cache token disappeared. Own authoritative identity was verified, existing wrappers used, and override removed. Source and distribution dev SHAs were verified remotely. Production remains 1.5.0.
+
+The narrow CI follow-up replaces only failing mirror-list/official HTTP Ubuntu URIs with direct HTTPS official archive routing. Suites, components, signing keys and all five native gates remain unchanged. Update now fails on repository errors rather than proceeding on stale indexes. Four routing tests and all fourteen existing development/package-validation tests pass. New exact-head hosted validation is pending. Runtime package bytes/source pins are unchanged.
+
+Next: verify new hosted run, then present current production Approval Gate. Pages serves main/root immediately, so do not push main while the gate is unresolved. Shared registry publication and canonical session close remain pending.
+
+---
 # Foundry 1.5.1 repair candidate, 2026-11-11
 
 Local development candidate; not published. Public release remains 1.5.0. Canonical distribution checkout is C:/Users/TrentTimmerman/Documents/Codex/foundry-publish-recovery-20261111/apps/foundry-kodi-dist, owned by Codex-repair-foundry-navigation-20261111. New skin/helper clones are under C:/Users/TrentTimmerman/Documents/Codex/foundry-navigation-20261111/apps; their labels are repair-foundry-skin-20261111 and repair-foundry-helper-20261111. Original stale dirty checkout is untouched.
