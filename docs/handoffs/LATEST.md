@@ -1,3 +1,16 @@
+# Foundry 1.5.2 local candidate, 2026-11-11
+
+Unpublished local dev candidate at C:/Users/TrentTimmerman/Documents/Codex/foundry-wallpaper-20261111/apps. Original dirty shared repositories were preserved. All three own leases remain active; no push/main/Pages publication performed or authorized for this candidate.
+
+Skin/build/bootstrap 1.5.2 and Helper 1.3.3 integrate Movies wallpaper layering, wallpaper-backed native catalog adoption/first paint, installed studio-logo resolution and temporary QR phone text entry. Other package versions remain unchanged. Phone entry is trusted-LAN plaintext HTTP for ordinary text only, excludes hidden/password/PIN fields and requires TV OK. Actual phone browser/network and Shield remain unverified; see helper docs/PHONE-ENTRY.md.
+
+Exact source pins: skin 920755f6d90d9d37b6051542b2f6a9215682a13d; helper 597c16da1e67208e7788e563005b5c5a20c07b67. Working packaged bytes were checked against committed Git blobs before recording releases/1.5.2-source-snapshot.json.gz. All 153 previous ZIP/snapshot files retain their original SHA-256 hashes, with hashes and comparison in the project-root candidate-preserved-hashes.json and candidate-preservation-verification.json.
+
+Versioned source suite: 722 tests, zero failures/errors/skips on Linux. Extracted suite: 722 tests, zero failures/errors, one expected preserved-source skip. Deterministic extracted rebuild, all ten package ZIP hashes, manifests/dependencies, feed/checksum and installer/listing aliases pass. Reports: releases/1.5.2-qa/{source-tests,packaged-tests,packaged-verification,release}.json. Exact extracted source workspace: project-root/candidate-packaged/apps.
+
+Full five-gate native candidate validation is in progress against the extracted packages. No final native release-gate pass or hosted CI success is claimed here. Earlier focused native category, studio and phone fixtures passed, but are not a substitute for complete release gates. Once completed, consult the later validation receipt. Production publication requires the current approval gate; previous 1.5.1 approval does not cover this candidate.
+
+---
 # Approved 1.5.1 publication, 2026-11-11
 
 Trent explicitly approved publishing 1.5.1 using the successful local Kodi 21.3 native validation as an exception to hosted DNS failure, with immediate availability, rollback/manual-downgrade risk and untested Shield disclosed. Exact response: "Yes publish". The guarded production push fast-forwarded main from 02c4a4b to bfd9c7c07ee86349946f439bd66cc1524b4b4163. Hosted gates, signing keys, security settings and locked protocols remain unchanged. This is not a green hosted native validation claim.

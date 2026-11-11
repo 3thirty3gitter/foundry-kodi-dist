@@ -167,7 +167,7 @@ class DevelopmentWorkflowTests(unittest.TestCase):
             self.assertNotIn(forbidden, self.workflow)
 
     def test_source_and_packaged_tests_precede_all_native_runners(self):
-        self.assertIn('materialize_sources.py --release 1.5.1', self.workflow)
+        self.assertIn('materialize_sources.py --release 1.5.2', self.workflow)
         self.assertLess(self.workflow.index('tools/run_tests.py'), self.workflow.index('tools/verify_packaged_sources.py'))
         for renderer in ('library', 'startup_splash', 'interface', 'weather', 'games'):
             self.assertGreater(self.workflow.index('tools/render_' + renderer + '.py'),
@@ -179,7 +179,7 @@ class DevelopmentWorkflowTests(unittest.TestCase):
         self.assertIn('tools/render_games.py --output', self.workflow)
         self.assertIn('name: Collect all native QA evidence\n        if: always()', self.workflow)
         self.assertIn('uses: actions/upload-artifact@v4\n        if: always()', self.workflow)
-        self.assertIn('path: foundry-kodi-dist/releases/1.5.1-qa/', self.workflow)
+        self.assertIn('path: foundry-kodi-dist/releases/1.5.2-qa/', self.workflow)
 
 
 if __name__ == '__main__':
