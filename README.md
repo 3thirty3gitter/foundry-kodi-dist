@@ -1,6 +1,6 @@
 # Foundry Kodi source
 
-Next-release candidate 1.5.0: **Build and Bootstrap 1.5.0 / skin 1.5.0 / Helper 1.3.1 / Wallpapers 1.1.0 / Pulse 1.0.0 / Canada Weather 0.1.0 / Games 0.1.0**.
+Next-release candidate 1.5.0: **Build and Bootstrap 1.5.0 / skin 1.5.0 / Helper 1.3.1 / Wallpapers 1.1.0 / Quick Relay 1.1.0 / Canada Weather 0.1.0 / Games 0.1.0**.
 
 The next release restores Foundry Games and adds the thirteen approved Movies submenu wallpapers. The exact reviewed dev source pins are recorded in [releases/1.5.0-sources.json](releases/1.5.0-sources.json); native CI validation is pending. Published 1.4.0 packages and evidence remain immutable. This working candidate is not a published update.
 
@@ -59,7 +59,7 @@ The following table describes the **1.5.0 candidate** core add-ons; Games is abs
 | TMDb Helper | Discovery, lists, metadata, artwork and supported ratings APIs |
 | The Movie Database Python | Movie-library metadata and IMDb ratings |
 | TMDb TV Shows | TV-library metadata, artwork and ratings |
-| Foundry Pulse UI Sounds | Selected navigation sounds; silent/custom choices preserved |
+| Foundry Quick Relay UI Sounds | Selected single Quick Relay cue; silent/custom choices preserved |
 | Foundry Games | User-supplied game library and native RetroPlayer launch |
 | Foundry Canada Weather | Optional manually selected Canadian weather provider |
 | InputStream Adaptive and InputStream Helper | Adaptive playback and stream support |

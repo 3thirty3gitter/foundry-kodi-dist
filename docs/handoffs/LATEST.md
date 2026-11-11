@@ -1,3 +1,27 @@
+# Quick Relay recovery and publication preparation, 2026-11-11
+
+Trent requested that artwork failures be resolved and the candidate published, and approved safe recovery preserving existing work. After the prior lease expired, canonical startup granted SESSION_READY to Codex-Nova Fix Publish Foundry Artwork in an isolated clean checkout. The original checkout and all thirteen pending files remain untouched; their backup and replay were SHA-256 verified against base c02e6837a41d68295091459a611e3112e322379e.
+
+The earlier Windows artwork failures do not reproduce when TEMP and TMP use a short writable path. All 661 source tests passed (one Windows skip), and all 661 extracted-package tests passed (two expected Windows skips). This points to Windows temporary-path constraints, not a demonstrated artwork runtime regression. No artwork product code was changed. The isolated deterministic rebuild passed and all 125 ZIPs matched the preserved candidate byte-for-byte. All ten selected packages, feed, dependencies and hashes validated.
+
+Final recovered-checkout verification and exact-head development CI are in progress. All five native Kodi gates remain required. Production/main/Pages publication has not occurred; the project production Approval Gate remains pending. Earlier authorization and failure statements below are historical. Shield/Android and audible output checks remain unverified.
+
+Windows validation uses process-local TEMP and TMP set to C:/Users/TrentTimmerman/Documents/Codex, with PYTHONDONTWRITEBYTECODE=1. No system or user environment settings are changed.
+
+---
+
+# Quick Relay sound update, 2026-11-11
+
+Trent selected the third Muted Relay variation and requested a single UI sound integrated directly. Added Quick Relay 1.1.0 under the stable sound add-on ID. Navigation, Select and Back use the identical selected cue; existing error, action mapping, mute/playback/custom sound preferences remain unchanged. Exact regenerated WAV SHA256: bbfab20103bf39a11a66c153807614911ffe8f2f5d7eb24e5ac0d4e681d4b93f.
+
+Verified: 22 focused sound/migration tests pass. All ten packages/manifests/feed/aliases validate. All 124 pre-existing ZIPs are byte-identical after rebuilding from pinned sources. The new sound package is versioned separately at 1.1.0.
+
+Full Windows suites (659 tests before two new sound tests) remain blocked by 2 failures and 2 errors in existing artwork cache/presentation paths, with 1 source / 2 extracted skips. These are not a full pass. Native audible output/Shield testing and current-head CI were not performed. No production/main/Pages publication is authorized or performed. Existing 1.5.0 candidate release gate still applies.
+
+Local evidence: C:/Users/TrentTimmerman/Documents/Codex/quick-relay-20261111/ .
+
+---
+
 # Foundry 1.5.0 development handoff
 
 Updated 2026-11-09 UTC on SPACESHIP. Branch: dev. Runtime development is validated in the recorded run; read the latest dev workflow below for current-head status. Published Kodi main/Pages remains 1.4.0; release authorization is pending. Uncommitted product work: none. This documentation receipt follows the validated runtime candidate.

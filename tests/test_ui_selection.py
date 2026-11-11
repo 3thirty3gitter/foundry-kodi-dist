@@ -77,11 +77,11 @@ class NativeBindings(unittest.TestCase):
   self.assertEqual([control.findtext(k) for k in ['width','height','aspectratio']],['333','333','keep'])
   self.assertEqual(control.find('texture').get('colordiffuse'),'$VAR[FocusColorTheme]')
 class OriginalAssetIntegrity(unittest.TestCase):
- def test_original_quiet_pulse_waves_are_unchanged(self):
+ def test_selected_quick_relay_waves_and_existing_error_are_exact(self):
   import hashlib,wave
-  expected={'navigate.wav':(6748,'d91fc5e76db9988f97b6317ed01d573100507d4d5ba452ad1f94fe84fecf38cc'),
-            'select.wav':(19888,'97c81d78c73ee2ca1c981cd56036a371842b187dda853e2a45b16fbce794d331'),
-            'back.wav':(12568,'068a883c876f22260199033bf8b290e7a224233a0ff626a3afec7569085c2765'),
+  expected={'navigate.wav':(5600, 'bbfab20103bf39a11a66c153807614911ffe8f2f5d7eb24e5ac0d4e681d4b93f'),
+            'select.wav':(5600, 'bbfab20103bf39a11a66c153807614911ffe8f2f5d7eb24e5ac0d4e681d4b93f'),
+            'back.wav':(5600, 'bbfab20103bf39a11a66c153807614911ffe8f2f5d7eb24e5ac0d4e681d4b93f'),
             'error.wav':(19448,'7b1f66ef34928b114aefe6b4a376ecfed5fc6199faf65d4a1457ffcd62c73dc7')}
   for name,(size,digest) in expected.items():
    path=OUT.parent/'src/resource.uisounds.foundry.pulse/resources'/name
@@ -90,6 +90,17 @@ class OriginalAssetIntegrity(unittest.TestCase):
     self.assertEqual((audio.getnchannels(),audio.getsampwidth(),audio.getframerate()),(1,2,44100))
     samples=audio.readframes(audio.getnframes())
     self.assertEqual(samples[:2],b'\x00\x00');self.assertEqual(samples[-2:],b'\x00\x00')
+ def test_published_original_pulse_package_is_preserved(self):
+  import hashlib,zipfile
+  archive=OUT.parent/'resource.uisounds.foundry.pulse/resource.uisounds.foundry.pulse-1.0.0.zip'
+  with zipfile.ZipFile(archive) as bundle:
+   expected={'navigate.wav':'d91fc5e76db9988f97b6317ed01d573100507d4d5ba452ad1f94fe84fecf38cc','select.wav':'97c81d78c73ee2ca1c981cd56036a371842b187dda853e2a45b16fbce794d331','back.wav':'068a883c876f22260199033bf8b290e7a224233a0ff626a3afec7569085c2765'}
+   for name,digest in expected.items():
+    self.assertEqual(hashlib.sha256(bundle.read('resource.uisounds.foundry.pulse/resources/'+name)).hexdigest(),digest)
+ def test_quick_relay_update_keeps_stable_identity_and_bumps_version(self):
+  addon=E.parse(OUT.parent/'src/resource.uisounds.foundry.pulse/addon.xml').getroot()
+  self.assertEqual(addon.get('id'),'resource.uisounds.foundry.pulse')
+  self.assertEqual(addon.get('version'),'1.1.0')
  def test_selected_white_ripple_original_is_unchanged(self):
   import hashlib
   from PIL import Image

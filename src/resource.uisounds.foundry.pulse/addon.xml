@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="resource.uisounds.foundry.pulse" version="1.0.0" name="Foundry Pulse UI Sounds" provider-name="3Thirty3">
+<addon id="resource.uisounds.foundry.pulse" version="1.1.0" name="Foundry Quick Relay UI Sounds" provider-name="3Thirty3">
   <requires><import addon="kodi.resource" version="1.0.0"/></requires>
   <extension point="kodi.resource.uisounds"/>
   <extension point="kodi.addon.metadata">
-    <summary lang="en">The selected Pulse navigation sounds for Foundry</summary>
-    <description lang="en">Short, quiet navigation, selection, back and error cues. Kodi controls mute, GUI volume and playback sound behavior.</description>
+    <summary lang="en">The selected Quick Relay UI sound for Foundry</summary>
+    <description lang="en">One quiet Quick Relay cue for navigation, selection and back. The existing error cue is preserved. Kodi controls mute, GUI volume and playback sound behavior.</description>
     <platform>all</platform>
   </extension>
 </addon>

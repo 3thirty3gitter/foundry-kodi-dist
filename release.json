@@ -25,10 +25,10 @@
     },
     {
       "id": "resource.uisounds.foundry.pulse",
-      "version": "1.0.0",
-      "path": "resource.uisounds.foundry.pulse/resource.uisounds.foundry.pulse-1.0.0.zip",
-      "sha256": "d666f2baabaa000c052903ac9ef2385c21acae571be6efec4142f175a6f4caa3",
-      "size": 46443
+      "version": "1.1.0",
+      "path": "resource.uisounds.foundry.pulse/resource.uisounds.foundry.pulse-1.1.0.zip",
+      "sha256": "d314f7c06e0b565c09c5f1d0593e013656adc43e6116cc1902062a54aa793ed3",
+      "size": 24581
     },
     {
       "id": "weather.foundry.canada",
