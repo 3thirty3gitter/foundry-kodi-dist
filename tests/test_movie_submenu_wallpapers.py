@@ -124,6 +124,13 @@ class MoviesSubmenuWallpapers(unittest.TestCase):
         del context.labels['Skin.String(HomeFanart.path)'];self.assertEqual(context.variable('FoundryMovieSubmenuBase'),'other.jpg')
         visible=E.parse(SKIN/'xml/Includes_FoundryMovieSubmenus.xml').findtext("include[@name='FoundryMovieSubmenuBackdrop']/control/visible")
         self.assertFalse(context.condition(visible))
+    def test_loading_backdrop_retains_movies_wallpaper_when_provider_clears_labels(self):
+        context=native('',folder='',content='')
+        self.assertEqual(context.variable('FoundryNativeLoadingBackdrop'),'resource://resource.images.foundry.wallpapers/movies.png')
+        context.labels['Skin.String(NimbusCustomBackground)']='custom.jpg'
+        self.assertEqual(context.variable('FoundryNativeLoadingBackdrop'),'custom.jpg')
+        context.labels.update({'Skin.String(HomeFanart.path)':'/custom/','Skin.String(HomeFanart.ext)':'.png'})
+        self.assertEqual(context.variable('FoundryNativeLoadingBackdrop'),'/custom/movies.png')
     def test_native_movie_fanart_priority_and_folder_art_surface(self):
         visible=E.parse(SKIN/'xml/Includes_FoundryMovieSubmenus.xml').findtext("include[@name='FoundryMovieSubmenuBackdrop']/control/visible")
         context=native('Film','Trending','movies',is_folder=False,extra={'ListItem.Art(fanart)':'film.jpg'})
@@ -133,10 +140,34 @@ class MoviesSubmenuWallpapers(unittest.TestCase):
         with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.4.0.zip') as bundle:
             for filename in ['script-foundry-vod.xml','View_57_StreamPilot.xml']:
                 before=E.fromstring(bundle.read('skin.foundry/xml/'+filename));after=E.parse(SKIN/'xml'/filename).getroot()
-                old=[n for n in before.iter('control') if n.findtext('texture')=='streampilot/catalog-base.png'];new=[n for n in after.iter('control') if n.findtext('texture')=='$VAR[FoundryMovieSubmenuBase]']
+                expected='$VAR[FoundryCatalogFirstPaintBackdrop]' if filename=='script-foundry-vod.xml' else '$VAR[FoundryMovieSubmenuBase]'
+                old=[n for n in before.iter('control') if n.findtext('texture')=='streampilot/catalog-base.png'];new=[n for n in after.iter('control') if n.findtext('texture')==expected]
                 self.assertEqual(len(old),1);self.assertEqual(len(new),1)
                 new[0].find('texture').text='streampilot/catalog-base.png';new[0].find('texture').attrib.clear()
+                if filename=='View_57_StreamPilot.xml':
+                    # Studio-logo resolution is independently covered by test_studio_art.
+                    # Preserve the strict comparison for all artwork/layout controls.
+                    for tree in (before,after):
+                        tree.remove(tree.find("variable[@name='FoundryVODStudioLogo']"))
                 self.assertEqual(normalized(before),normalized(after))
+    def test_first_catalog_frame_uses_loading_backdrop_only_before_section_ready(self):
+        context=SkinConditions({'Window(Home).Property(foundry.navigation.category)':'movies'})
+        self.assertEqual(context.variable('FoundryCatalogFirstPaintBackdrop'),'resource://resource.images.foundry.wallpapers/movies.png')
+        context.labels['Window.Property(catalog.section)']='TV Shows'
+        self.assertEqual(context.variable('FoundryCatalogFirstPaintBackdrop'),'streampilot/catalog-base.png')
+        context.labels.update({'Window.Property(catalog.section)':'Movies','Window.Property(foundry.movie_submenu_label)':'Popular Today'})
+        self.assertTrue(context.variable('FoundryCatalogFirstPaintBackdrop').endswith('/popular-today.png'))
+    def test_legacy_fullscreen_provider_art_cannot_cover_approved_category(self):
+        root=E.parse(SKIN/'xml/View_50_List.xml')
+        overlays=[n for n in root.iter('control') if n.find('texture') is not None and n.find('texture').get('diffuse')=='overlays/fanart-diffuse.png']
+        self.assertEqual(len(overlays),1)
+        self.assertTrue(overlays[0].findtext('visible').strip().startswith('!$EXP[FoundryMovieSubmenuBackdropVisible] +'))
+        for label in APPROVED:
+            self.assertTrue(native(label,extra={'ListItem.Art(fanart)':'provider-gears.jpg'}).condition('$EXP[FoundryMovieSubmenuBackdropVisible]'))
+        for context in [native('Unknown'),native('Popular Today',category='tvshows'),native('Film','Popular Today','movies',is_folder=False,extra={'ListItem.Art(fanart)':'film.jpg'}),native('Popular Today',extra={'Skin.String(NimbusCustomBackground)':'custom.jpg'})]:
+            self.assertFalse(context.condition('$EXP[FoundryMovieSubmenuBackdropVisible]'))
+        context=native('Popular Today');context.flags['Player.HasVideo']=True
+        self.assertFalse(context.condition('$EXP[FoundryMovieSubmenuBackdropVisible]'))
     def test_home_geometry_focus_and_all_unrelated_artwork_remain(self):
         with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.4.0.zip') as bundle:
             before=E.fromstring(bundle.read('skin.foundry/xml/Home.xml'));after=E.parse(SKIN/'xml/Home.xml').getroot()
@@ -156,7 +187,7 @@ class MoviesSubmenuWallpapers(unittest.TestCase):
                 self.assertNotIn('$VAR[',condition or '');self.assertNotIn('$INFO[',condition or '')
         includes=E.parse(SKIN/'xml/Includes.xml')
         self.assertEqual(len(includes.findall("include[@file='Includes_FoundryMovieSubmenus.xml']")),1)
-        self.assertEqual(E.parse(SKIN/'addon.xml').getroot().get('version'),'1.5.1')
-        self.assertEqual(E.parse(SKIN/'addon.xml').find("requires/import[@addon='script.foundry.helper']").get('version'),'1.3.2')
+        self.assertEqual(E.parse(SKIN/'addon.xml').getroot().get('version'),'1.5.2')
+        self.assertEqual(E.parse(SKIN/'addon.xml').find("requires/import[@addon='script.foundry.helper']").get('version'),'1.3.3')
 
 if __name__=='__main__':unittest.main()

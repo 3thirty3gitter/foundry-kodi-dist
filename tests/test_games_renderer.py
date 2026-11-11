@@ -21,6 +21,30 @@ class GamesRendererTests(unittest.TestCase):
         runner = importlib.util.module_from_spec(spec); spec.loader.exec_module(runner)
         return runner
 
+    def test_cancel_home_requires_completed_matching_refresh_or_retained_list(self):
+        tree=ast.parse(self.runner().FIXTURE)
+        functions=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in {'cancel_home_ack','invocation_complete'}]
+        ns={};exec(compile(ast.Module(body=functions,type_ignores=[]),'fixture','exec'),ns)
+        ack=ns['cancel_home_ack'];old={'existing'}
+        self.assertEqual({'retained':True},ack('old','old',old,{}))
+        self.assertIsNone(ack('old','new',old,{}))
+        valid={'id':'fresh','action':'home','phase':'completed','error':'','directory_id':'new'}
+        self.assertEqual(valid,ack('old','new',old,{'fresh':valid}))
+        for field,value in [('phase','started'),('error','failure'),('directory_id','other'),('action','search')]:
+            with self.subTest(field=field):
+                self.assertIsNone(ack('old','new',old,{'fresh':dict(valid,**{field:value})}))
+        self.assertIsNone(ack('old','new',{'fresh'},{'fresh':valid}))
+        self.assertIsNone(ack('old','old',old,{'fresh':valid}))
+        self.assertIsNone(ack('old','',old,{}))
+
+    def test_cancel_preserves_full_menu_identity_and_focus(self):
+        fixture=self.runner().FIXTURE
+        for expression in ('ListItemAbsolute(', 'FileNameAndPath',
+                           'Container(50).CurrentItem', 'home_menu()==before_cancel',
+                           "wait_invocation_complete(cancel_invocation,'search')", 'settle_capture()',
+                           "OUTPUT/'search-cancel-ack.json'"):
+            self.assertIn(expression,fixture)
+
     def test_enable_prompt_matches_only_exact_fixture_addon(self):
         runner = self.runner()
         labels = {'Control.GetLabel(1)':'Disabled add-ons','Control.GetLabel(9)':'Would you like to enable this add-on?\nFoundry Wallpapers'}
@@ -105,7 +129,7 @@ class GamesRendererTests(unittest.TestCase):
         self.assertIn("directory_id()!=previous", fixture)
         self.assertIn("Container.Update(", fixture)
         self.assertIn("Input.SendText", fixture)
-        self.assertIn("info('Container.FolderPath')==before_cancel['path']", fixture)
+        self.assertIn("home_menu()==before_cancel", fixture)
         self.assertNotIn('xbmc.sleep(500)', fixture)
 
     def helper(self, name):
@@ -160,7 +184,7 @@ class GamesRendererTests(unittest.TestCase):
         records['new']['error'] = 'traceback'
         self.assertFalse(complete(records, 'new', 'search'))
         fixture = self.runner().FIXTURE
-        self.assertLess(fixture.index("wait_invocation_complete(cancel_invocation,'search')"), fixture.index("directory_id()==previous"))
+        self.assertLess(fixture.index("wait_invocation_complete(cancel_invocation,'search')"), fixture.index("wait(lambda:home_menu()==before_cancel"))
         self.assertLess(fixture.index("wait_invocation_complete(play_invocation,'play',75)"), fixture.index("require(not xbmc.Player().isPlaying()"))
 
     def test_instrumented_copy_keeps_real_invoker_globals_and_always_completes(self):
@@ -168,13 +192,13 @@ class GamesRendererTests(unittest.TestCase):
         for error in (False, True):
             with self.subTest(error=error), tempfile.TemporaryDirectory() as temporary:
                 base = Path(temporary); addon = base / 'addon'; addon.mkdir()
-                original = "import sys\nresult=(__name__,__file__,list(sys.argv),existing_global)\n"
+                original = "import sys,xbmcplugin\nxbmcplugin.setProperty(7,'Foundry.Games.DirectoryId','published-directory')\nresult=(__name__,__file__,list(sys.argv),existing_global)\n"
                 if error: original += "raise RuntimeError('fixture error')\n"
                 (addon / 'default.py').write_text(original, encoding='utf-8')
                 runner.instrument_entrypoint(addon, base / 'records')
                 scope = dict(__name__='__main__', __file__=str(addon / 'default.py'), existing_global='retained')
                 args = ['plugin://plugin.games.foundry/', '7', '?action=search']
-                with patch.object(sys, 'argv', args):
+                with patch.object(sys, 'argv', args), patch.dict(sys.modules, {'xbmcplugin':types.SimpleNamespace(setProperty=Mock())}):
                     if error:
                         with self.assertRaisesRegex(RuntimeError, 'fixture error'):
                             exec((addon / 'default.py').read_text(), scope)
@@ -184,6 +208,7 @@ class GamesRendererTests(unittest.TestCase):
                 self.assertEqual(len(records), 1)
                 record = json.loads(records[0].read_text())
                 self.assertEqual((record['action'], record['phase']), ('search', 'completed'))
+                self.assertEqual(record['directory_id'], 'published-directory')
                 self.assertEqual(bool(record['error']), error)
                 self.assertGreaterEqual(record['completed'], record['started'])
 

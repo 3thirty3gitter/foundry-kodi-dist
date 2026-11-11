@@ -1,3 +1,29 @@
+# Foundry 1.5.2 local candidate, 2026-11-11
+
+Unpublished local dev candidate at C:/Users/TrentTimmerman/Documents/Codex/foundry-wallpaper-20261111/apps. Original dirty shared repositories were preserved. All three own leases remain active; no push/main/Pages publication performed or authorized for this candidate.
+
+Skin/build/bootstrap 1.5.2 and Helper 1.3.3 integrate Movies wallpaper layering, wallpaper-backed native catalog adoption/first paint, installed studio-logo resolution and temporary QR phone text entry. Other package versions remain unchanged. Phone entry is trusted-LAN plaintext HTTP for ordinary text only, excludes hidden/password/PIN fields and requires TV OK. Actual phone browser/network and Shield remain unverified; see helper docs/PHONE-ENTRY.md.
+
+Exact source pins: skin 920755f6d90d9d37b6051542b2f6a9215682a13d; helper 597c16da1e67208e7788e563005b5c5a20c07b67. Working packaged bytes were checked against committed Git blobs before recording releases/1.5.2-source-snapshot.json.gz. All 153 previous ZIP/snapshot files retain their original SHA-256 hashes, with hashes and comparison in the project-root candidate-preserved-hashes.json and candidate-preservation-verification.json.
+
+Versioned source suite: 724 tests, zero failures/errors/skips on Linux. Extracted suite: 724 tests, zero failures/errors, one expected preserved-source skip. Deterministic extracted rebuild, all ten package ZIP hashes, manifests/dependencies, feed/checksum and installer/listing aliases pass. Reports: releases/1.5.2-qa/{source-tests,packaged-tests,packaged-verification,release}.json. Exact extracted source workspace: project-root/candidate-packaged-qa-final/apps (prior native-gate extraction retained at candidate-packaged/apps).
+
+Full five-gate native candidate validation is in progress against the extracted packages. No final native release-gate pass or hosted CI success is claimed here. Earlier focused native category, studio and phone fixtures passed, but are not a substitute for complete release gates. Once completed, consult the later validation receipt. Production publication requires the current approval gate; previous 1.5.1 approval does not cover this candidate.
+
+QA-only follow-up: Games cancellation now verifies the complete menu and focus, accepting a new directory UUID only when it belongs to an exact completed fresh Home invocation. Runtime packages/source pins unchanged. Correction commit 4cf6147ae8783fb87f0adf66bdffab7fcd2db205; 30 focused Games checks passed. Full source/extracted suites and deterministic rebuild passed again; log project-root/candidate-source-extracted-qa-final.log. The original failed native Games log is retained by the native validation worker.
+
+---
+# Approved 1.5.1 publication, 2026-11-11
+
+Trent explicitly approved publishing 1.5.1 using the successful local Kodi 21.3 native validation as an exception to hosted DNS failure, with immediate availability, rollback/manual-downgrade risk and untested Shield disclosed. Exact response: "Yes publish". The guarded production push fast-forwarded main from 02c4a4b to bfd9c7c07ee86349946f439bd66cc1524b4b4163. Hosted gates, signing keys, security settings and locked protocols remain unchanged. This is not a green hosted native validation claim.
+
+Hosted dev run 43058235384 passed source/extracted testing and packaging but failed all four official Ubuntu archive suites resolving archive.ubuntu.com, exit 100. All five unchanged native harnesses previously passed in isolated Ubuntu 26.04 / Kodi 21.3 on Spaceship; 93 screenshots verified. Full Windows source suite: 682 passed, zero failures/errors, two environment skips.
+
+Publication verified successfully: both public manifests and feeds match; all ten package ZIPs on both Pages and raw GitHub (20 downloads) pass exact bytes, SHA-256, ZIP integrity and checksum sidecars; all five Pages root installer/listing aliases match. Report: C:/Users/TrentTimmerman/Documents/Codex/foundry-navigation-20261111/combined-evidence/PUBLICATION-VERIFIED.json. Pages run 43069822304 and release run 43069821764 belong to bfd9c7c. Hosted release native validation remains separate and may retain the disclosed DNS failure. Earlier sections below are historical, not current blockers.
+
+A fresh normal lease d4961d21-262f-4a01-ab56-371195ce2409 was acquired for repair-foundry-navigation-20261111 after expiry; no token override was needed for publication. Shared active-repos registration publication and canonical session close remain pending because the brain checkout contains preserved unrelated work.
+
+---
 # Native validation and hosted setup repair, 2026-11-11
 
 All five unchanged native harnesses passed in a disposable Ubuntu 26.04 Docker container on Spaceship running Kodi 21.3, against the exact extracted f06ed5512dde2451561c7098348c42b3223fd51e packages. Independent evidence() assertions pass; 93 full 1920x1080 PNGs verified and representative catalog/Home/splash/Games captures visually reviewed. Combined evidence and explicit split provenance: C:/Users/TrentTimmerman/Documents/Codex/foundry-navigation-20261111/combined-evidence/PROVENANCE.json. Docker image digest: sha256:82a932795ad13cebee5562e30c0c113ef0ca4b3aa06187afd75b4d71b1f8952e.

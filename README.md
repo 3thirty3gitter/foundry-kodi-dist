@@ -1,4 +1,8 @@
-# Foundry 1.5.1 development candidate
+# Foundry 1.5.2 development candidate
+
+Local candidate: Movies category wallpaper layering and loading/first-paint transitions, shared studio-logo resolution, and temporary QR phone text entry. Skin/build/bootstrap are 1.5.2; helper is 1.3.3. All other package versions and historical artifacts are preserved. Published production remains 1.5.1 until a fresh approval gate and publication.
+
+Phone text entry uses temporary trusted-LAN HTTP, not encryption or a public backend. It excludes hidden/password/PIN fields and requires TV OK. See the helper's `docs/PHONE-ENTRY.md` for limitations. Real phone/browser/Wi-Fi and Shield behavior remain unverified; local mocked/native fixture results do not establish those device results.
 
 Unpublished navigation/widget repair candidate. Existing public 1.5.0 remains unchanged.
 
