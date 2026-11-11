@@ -291,15 +291,16 @@ class Runtime(unittest.TestCase):
     def test_all_fourteen_standalone_wallpapers_match_approval_provenance(self):
         from PIL import Image
         folder = SKIN / "media/foundry-widget-wallpapers"
-        source = json.loads((folder / "SOURCE.json").read_text())["files"]
+        manifest = json.loads((folder / "SOURCE-trending-fixed-20261111.json").read_text())
+        source = {entry["slug"]:entry for entry in manifest["files"]}
         self.assertEqual(len(source), 14)
         self.assertEqual({p.stem for p in folder.glob("*.png")}, set(source))
         for category, entry in source.items():
             data = (folder / (category + ".png")).read_bytes()
             self.assertEqual(hashlib.sha256(data).hexdigest(), entry["sha256"])
-            self.assertTrue(entry["library_file_id"].startswith("libfile_"))
+            self.assertTrue(manifest["review_library_file_id"].startswith("libfile_"))
             with Image.open(folder / (category + ".png")) as image:
-                self.assertIn(image.size, ((1672, 941), (1672, 940)))
+                self.assertEqual(image.size, (1672, 941))
                 self.assertEqual(image.convert("RGBA").getchannel("A").getextrema(), (255, 255))
         for path in (SKIN / "xml").glob("*.xml"):
             self.assertNotIn("foundry-widget-layers/", path.read_text(encoding="utf-8"))
@@ -349,10 +350,12 @@ class Runtime(unittest.TestCase):
     def test_action_hover_wallpapers_override_the_selected_category(self):
         variables = ET.parse(SKIN / "xml/Variables_Artwork.xml")
         defaults = variables.find("variable[@name='FoundryDefaultMenuBackground']")
-        for control_id, filename in ((801, "foundry-shutdown-wallpaper.svg"), (803, "foundry-search-wallpaper.svg")):
+        for control_id, filename in ((801, "foundry-navigation/shutdown.png"), (803, "foundry-navigation/search.png")):
             route = defaults.find("value[@condition='Control.HasFocus(%s)']" % control_id)
             self.assertEqual(route.text, "special://skin/media/" + filename)
-            ET.parse(SKIN / "media" / filename)
+            from PIL import Image
+            with Image.open(SKIN / "media" / filename) as image:
+                self.assertEqual(image.size,(1672,941))
         override = variables.find("variable[@name='FoundryMenuBackground']/value")
         self.assertEqual(override.text, "$VAR[FoundryDefaultMenuBackground]")
         for control_id in (801, 802, 803):

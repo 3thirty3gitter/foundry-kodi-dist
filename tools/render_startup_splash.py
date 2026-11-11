@@ -19,7 +19,7 @@ def main():
     release = json.loads((ROOT / 'release.json').read_text(encoding='utf-8'))['release']
     output = ROOT / 'releases' / (release + '-qa')
     output.mkdir(parents=True, exist_ok=True)
-    source = SKIN / 'media/foundry-home-backdrop.png'
+    source = SKIN / 'media/foundry-backdrops/foundry-loading-splash.png'
     expected = Image.open(source).convert('RGB').resize((1920, 1080))
     samples = [(x, y) for x in (190, 570, 960, 1340, 1730) for y in (190, 410, 650, 890)]
     with tempfile.TemporaryDirectory(prefix='foundry-splash-') as temporary:

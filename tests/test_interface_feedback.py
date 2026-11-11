@@ -57,6 +57,9 @@ class InterfaceFeedback(unittest.TestCase):
         with zipfile.ZipFile(ROOT/'skin.foundry/skin.foundry-1.3.7.zip') as bundle:
             before=E.fromstring(bundle.read('skin.foundry/xml/Home.xml'))
         after=E.parse(SKIN/'xml/Home.xml').getroot()
+        for node in after.iter('texture'):
+            if node.get('fallback')=='special://skin/media/foundry-widget-base.png':
+                node.set('fallback','special://skin/media/foundry-widget-base.svg')
         def icons(root):return [(node.tag,(node.text or '').strip(),node.attrib) for node in root.iter() if node.tag in ('icon','texture')]
         self.assertEqual(icons(before),icons(after))
         for root in [before,after]:

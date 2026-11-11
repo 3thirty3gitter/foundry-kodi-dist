@@ -1,3 +1,19 @@
+# Foundry 1.5.3 combined local candidate, 2026-11-11
+
+Unpublished dev candidate. Release/skin/build/bootstrap 1.5.3, Helper 1.3.4 and Wallpapers 1.1.1 integrate the approved 45 wallpaper frames, separate Foundry Media Center app/startup artwork, Movies root Back artwork and QR phone connection/full-size keyboard repair. General Home/widget/catalog fallbacks remain clean. Startup installation retains atomic writes and numbered backups of earlier custom PNG/JPEG splash files.
+
+Runtime source pins: skin 31ea77978276a236b2b6607d154f456a1857cadd; helper 80422a4c0284d7cd7466ba7b1a6e866180f25ff0. Deterministic snapshot verifies exact Git blobs. Release manifest SHA256 ff27594f3de1c66c73c348cd71636d3f57f5254324e00b8fc311d18b96860ef5. All 290 historical release records, ZIPs, sidecars and snapshots remain byte-identical. 1,037 packaged source files match their exact ZIPs; distribution package source also matches staged Git blobs.
+
+Final Linux source suite: 763 tests, zero failures/errors/skips. Final extracted suite: 763 tests, zero failures/errors, one expected preserved-source skip. Deterministic rebuild and all ten package/dependency/feed/alias checks pass. Source/extracted QA reports are releases/1.5.3-qa/. Final extraction: project-root/candidate-packaged-final/apps.
+
+Native Kodi 21.3 library, real cold-start app splash and Games gates pass against exact extracted runtime packages. Additional exact-extracted proof covers 48 Home wallpaper states, all thirteen category foregrounds, child Back restoring category, root Back returning exactly once, and repaired QR delivery/TV OK/Cancel/Back/hidden input exclusion. Final normalized LF phone evidence is project-root/phone-evidence-extracted-153; pre-normalization phone-evidence-08 is historical, not the final raw-byte proof. The interface gate's legacy one-pixel Settings discriminator was replaced with broad foreground comparison against exact approved full/widget images plus four regressions; final extracted rerun passed all interface/playback/Back/Favorites/ripple assertions with exact-source foreground errors 0.231/0.254 versus wrong-variant errors above 10. Evidence: project-root/wallpaper-native/interface-final-packaged.
+
+Local Weather gate is NOT green: two initial runs and debugger investigation encountered native Kodi/Python 3.14 PyEval_RestoreThread SIGSEGV during concurrent script startup. A minimal Estuary-only reproduction with seven empty scripts crashed before enabling Foundry or Weather. Original failures are retained under project-root/candidate-native and candidate-weather-retry; debugger/minimal reproduction under candidate-weather-debug and candidate-weather-runtime-repro. No cold Home checks, runtime widgets or gates were disabled. A compatible local QA runtime and independent hosted dev CI remain pending. Do not treat this candidate as all-five-native-gates verified or production-ready.
+
+Project root: C:/Users/TrentTimmerman/Documents/Codex/foundry-phone-fix-20261111. Parent owns guarded helper, skin, then distribution dev pushes after exact commit review. No production merge, PR action, release, existing published artifact mutation or security setting change is authorized. Production remains 1.5.2. Phone entry is temporary plaintext trusted-LAN HTTP for ordinary text only; physical phone/Wi-Fi and Shield rendering/navigation/playback remain unverified.
+
+---
+
 # Foundry 1.5.2 publication verified, 2026-11-11
 
 Trent explicitly approved production publication after disclosure of immediate updater availability, rollback/manual downgrade risk, trusted-LAN unencrypted QR text entry, and untested physical phone/Shield. Ordinary PR #2 merged the exact validated dev candidate 0029accf61ff1373441ee475f51b2afc6252374b into main as 8dc85df6cd83ce386d9d4928c5b7b47e480c7864. Historical 1.5.1 receipts were preserved; no protection bypass or force push. https://github.com/3thirty3gitter/foundry-kodi-dist/pull/2

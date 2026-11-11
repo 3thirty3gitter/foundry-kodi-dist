@@ -23,7 +23,7 @@ jobs:
         working-directory: foundry-kodi-dist
     env:
       PYTHONDONTWRITEBYTECODE: '1'
-      QA: releases/1.5.2-qa
+      QA: releases/1.5.3-qa
     steps:
       - uses: actions/checkout@v4
         with:
@@ -39,8 +39,8 @@ jobs:
           printf '%s\n' "$GITHUB_RUN_ID/$GITHUB_RUN_ATTEMPT" > "$QA/workflow-run.txt"
       - name: Install validation dependencies
         run: python -m pip install requests==2.34.2 Pillow==13.0.0
-      - name: Restore pinned 1.5.2 source snapshots
-        run: python tools/materialize_sources.py --release 1.5.2 2>&1 | tee "$QA/materialize.log"
+      - name: Restore pinned 1.5.3 source snapshots
+        run: python tools/materialize_sources.py --release 1.5.3 2>&1 | tee "$QA/materialize.log"
       - name: Build and test committed sources
         run: |
           python tools/build_release.py --skin ../skin.foundry-nimbus --helper ../script.foundry.helper 2>&1 | tee "$QA/build.log"
@@ -104,7 +104,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: foundry-1.5.2-dev-qa-${{ github.run_id }}-${{ github.run_attempt }}
-          path: foundry-kodi-dist/releases/1.5.2-qa/
+          name: foundry-1.5.3-dev-qa-${{ github.run_id }}-${{ github.run_attempt }}
+          path: foundry-kodi-dist/releases/1.5.3-qa/
           if-no-files-found: warn
           retention-days: 14
