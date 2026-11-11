@@ -593,6 +593,9 @@ def run(output, display, port):
                                        (base / 'scenario.json','weather-scenario.json'),
                                        (launcher / 'default.py','weather-native-fixture.py')]:
                     if source.exists():shutil.copyfile(source, output / target)
+                # Preserve native crash diagnostics before the disposable HOME is removed.
+                for crash in isolated_home.glob('kodi_crashlog-*.log'):
+                    shutil.copyfile(crash, output / ('weather-' + crash.name))
 
 
 def main():

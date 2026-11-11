@@ -128,6 +128,26 @@ class GamesRendererTests(unittest.TestCase):
                       dict(dialog_id=10147, dialog_heading=expected['chooser'], dialog_message='')):
             self.assertFalse(check(state, expected))
 
+    def test_core_readiness_waits_for_progress_but_rejects_settled_wrong_dialog(self):
+        tree = ast.parse(self.runner().FIXTURE)
+        function = next(node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef) and node.name == 'core_ready')
+        state = dict(modal=True, dialog_id=12002, dialog_heading='', dialog_message='', progress_visible=True, updating=False)
+        expected = dict(chooser='Select emulator', heading='Failed to play game', messages=['No emulator'])
+        def require(condition, message):
+            if not condition: raise AssertionError(message)
+        namespace = dict(snapshot=lambda:state, expected_core=expected, require=require,
+                         native_core_dialog=self.helper('native_core_dialog'), json=json)
+        exec(compile(ast.Module(body=[function], type_ignores=[]), '<core-readiness>', 'exec'), namespace)
+        ready = namespace['core_ready']
+        self.assertFalse(ready())
+        state.update(progress_visible=False)
+        with self.assertRaisesRegex(AssertionError, 'Unexpected game launch dialog'):
+            ready()
+        state.update(dialog_heading=expected['heading'], dialog_message=expected['messages'][0])
+        self.assertTrue(ready())
+        state.update(updating=True)
+        self.assertFalse(ready())
+
     def test_cancel_cannot_complete_from_old_or_running_invocation(self):
         complete = self.helper('invocation_complete')
         records = {'old': dict(id='old', action='search', phase='completed', error='')}

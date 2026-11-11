@@ -275,6 +275,10 @@ try:
                    'messages':[xbmc.getLocalizedString(value) for value in (35212,35214)]}
     def core_ready():
         state=snapshot()
+        # Kodi publishes dialog identity before its text and progress teardown finish.
+        # Do not classify that intermediate frame; capture still requires the exact
+        # native emulator dialog, no progress, and a stable completed render.
+        if state['progress_visible'] or state['updating']:return False
         if not state['modal'] or state['dialog_id'] in (0,10101,10138,10160):return False
         require(native_core_dialog(state,expected_core),'Unexpected game launch dialog: '+json.dumps(state))
         return True

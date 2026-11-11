@@ -1,3 +1,11 @@
+# Native validation follow-up, 2026-11-11
+
+Dev d38a3a8 passed source/extracted suites and deterministic packaging in both attempts of run 42957974887. Attempt 1 passed Library, Splash, Interface and Games but Kodi 21.3 segfaulted during Weather startup; root cause remains unconfirmed. Attempt 2 passed Weather but Games classified dialog 12002 while progress was still visible and its text was blank. Neither attempt is a full pass.
+
+The QA-only Games correction waits for progress/updating to finish before classifying the modal. Exact emulator heading/body checks, unrelated-dialog rejection, bounded timeout, settled screenshot requirements and cancellation checks remain intact. A regression test covers the observed transition and rejects a settled wrong dialog. Weather now retains native crash reports before removing its disposable profile. No runtime package/source pin is changed. Focused Games/Weather harness tests pass 28/22. A fresh full native run is required before publication.
+
+---
+
 # Quick Relay recovery and publication preparation, 2026-11-11
 
 Trent requested that artwork failures be resolved and the candidate published, and approved safe recovery preserving existing work. After the prior lease expired, canonical startup granted SESSION_READY to Codex-Nova Fix Publish Foundry Artwork in an isolated clean checkout. The original checkout and all thirteen pending files remain untouched; their backup and replay were SHA-256 verified against base c02e6837a41d68295091459a611e3112e322379e.
