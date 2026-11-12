@@ -14,7 +14,7 @@ import time
 from io import BytesIO
 from urllib.request import Request,urlopen
 import xml.etree.ElementTree as E
-from PIL import Image,ImageGrab,ImageChops
+from PIL import Image,ImageGrab,ImageChops,ImageStat
 
 ROOT=Path(__file__).resolve().parents[1]
 SKIN=ROOT.parent/'skin.foundry-nimbus'
@@ -253,6 +253,21 @@ def playback_log_report(text):
     return {'complete':start>=0 and finish>=0,'failures':failures,'log':segment}
 
 
+def wallpaper_evidence(frame,expected_source,other_source):
+    """Match foreground art, not isolated pixels shared by both wallpapers."""
+    regions=[(1100,140,1780,560),(700,300,1500,580)]
+    frame=frame.convert('RGB')
+    def errors(source):
+        with Image.open(source) as image:expected=image.convert('RGB').resize((1920,1080))
+        return [max(ImageStat.Stat(ImageChops.difference(frame.crop(region),expected.crop(region))).mean)
+                for region in regions]
+    expected_errors=errors(expected_source);other_errors=errors(other_source)
+    assert max(expected_errors)<5,('Native wallpaper differs from approved foreground',str(expected_source),expected_errors)
+    assert max(other_errors)>max(expected_errors)+3,('Native wallpaper does not distinguish full/widget artwork',expected_errors,other_errors)
+    return {'source':str(expected_source),'sha256':hashlib.sha256(Path(expected_source).read_bytes()).hexdigest(),
+            'regions':regions,'mean_absolute_errors':expected_errors,'other_variant_errors':other_errors}
+
+
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--output',type=Path)
@@ -394,10 +409,12 @@ def main():
             assert bright(image,(92,516,332,580))>100,'Widget studio logo is not above the left side of the row'
             rpc('Input.Right');wait_for(lambda:'S01E02' in state().get('details',''));capture('widget-episode')
             rpc('Input.Up');time.sleep(.8);small=capture('settings-widget-wallpaper')
-            expected=Image.open(skin/'media/foundry-widget-wallpapers/settings.png').convert('RGB').resize((1920,1080))
-            for point in [(1400,230),(1550,400),(600,720)]:assert max(abs(a-b) for a,b in zip(small.getpixel(point),expected.getpixel(point)))<25,'Settings hover did not select the widget wallpaper'
+            widget_source=skin/'media/foundry-widget-wallpapers/settings.png'
+            full_source=addons/'resource.images.foundry.wallpapers/resources/settings.png'
+            settings_wallpapers={'widget':wallpaper_evidence(small,widget_source,full_source)}
             command('clear-widget');time.sleep(.4);full=capture('settings-full-wallpaper')
-            assert sum(abs(a-b) for a,b in zip(full.getpixel((1400,230)),small.getpixel((1400,230))))>20,'Empty widgets did not restore the full Settings wallpaper'
+            settings_wallpapers['full']=wallpaper_evidence(full,full_source,widget_source)
+            (output/'settings-wallpaper-verification.json').write_text(json.dumps(settings_wallpapers,indent=2)+'\n')
             rpc('GUI.ActivateWindow',{'window':'settings'});time.sleep(1);capture('system-settings')
             rpc('GUI.ActivateWindow',{'window':'systemsettings'});time.sleep(1);category=capture('system-setting-rows')
             assert bright(category,(40,145,90,200))>10,'Generated category row has no icon'

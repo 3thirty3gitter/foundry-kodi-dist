@@ -1,0 +1,76 @@
+{
+  "release": "1.5.3",
+  "skin": "1.5.3",
+  "packages": [
+    {
+      "id": "repository.foundry",
+      "version": "1.2.0",
+      "path": "repository.foundry/repository.foundry-1.2.0.zip",
+      "sha256": "2a83d7d4ec2ac362fed010005ec55b6c87aee40a393a7fd82454e7137b48ffcc",
+      "size": 762
+    },
+    {
+      "id": "resource.images.foundry.wallpapers",
+      "version": "1.1.1",
+      "path": "resource.images.foundry.wallpapers/resource.images.foundry.wallpapers-1.1.1.zip",
+      "sha256": "ca31310f602b3c8054a0d79de613f58e42f30901e640e17e1db10453f455c3a3",
+      "size": 17421183
+    },
+    {
+      "id": "resource.images.foundry.osd",
+      "version": "1.0.0",
+      "path": "resource.images.foundry.osd/resource.images.foundry.osd-1.0.0.zip",
+      "sha256": "37ec361ab6b80bb5557ca70512263de24dc9decdbe62e531f3e5f4adb3b4987b",
+      "size": 3770026
+    },
+    {
+      "id": "resource.uisounds.foundry.pulse",
+      "version": "1.1.0",
+      "path": "resource.uisounds.foundry.pulse/resource.uisounds.foundry.pulse-1.1.0.zip",
+      "sha256": "d314f7c06e0b565c09c5f1d0593e013656adc43e6116cc1902062a54aa793ed3",
+      "size": 24581
+    },
+    {
+      "id": "weather.foundry.canada",
+      "version": "0.1.0",
+      "path": "weather.foundry.canada/weather.foundry.canada-0.1.0.zip",
+      "sha256": "fae387a57752af0ec63a5c75bf53bd8f207bb3fc00716af64a2be519178a64f9",
+      "size": 17146
+    },
+    {
+      "id": "plugin.games.foundry",
+      "version": "0.1.0",
+      "path": "plugin.games.foundry/plugin.games.foundry-0.1.0.zip",
+      "sha256": "e55ac14ce17676806e75413157fd59e72b91817a4bc518b303318319d3730f6b",
+      "size": 17449
+    },
+    {
+      "id": "skin.foundry",
+      "version": "1.5.3",
+      "path": "skin.foundry/skin.foundry-1.5.3.zip",
+      "sha256": "edc01ab1fa38f1db13b5f90f75c86f6b840c552776e2db1da612d7c1914ca794",
+      "size": 59213967
+    },
+    {
+      "id": "script.foundry.helper",
+      "version": "1.3.4",
+      "path": "script.foundry.helper/script.foundry.helper-1.3.4.zip",
+      "sha256": "77b6b750459991fdde6d780632989a6d6878635565421716f0f88fdc8dcb095c",
+      "size": 899526
+    },
+    {
+      "id": "script.program.foundry-build",
+      "version": "1.5.3",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.5.3.zip",
+      "sha256": "8e4232fe29789e2013fbf523f55c1cd5e52f4bc788170b62a2ab198c9dec4e79",
+      "size": 2713
+    },
+    {
+      "id": "script.program.foundry-bootstrap",
+      "version": "1.5.3",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.5.3.zip",
+      "sha256": "3e6b3897150319f8981ef9f1581d7edefc0609932ab236f1f81ea8f03f5c80fe",
+      "size": 853
+    }
+  ]
+}

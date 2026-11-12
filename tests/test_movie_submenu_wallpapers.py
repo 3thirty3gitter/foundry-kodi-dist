@@ -73,12 +73,13 @@ def native(label='',folder='Movies',content='videos',category='movies',is_folder
 
 class MoviesSubmenuWallpapers(unittest.TestCase):
     def test_all_thirteen_bytes_and_manifest_match_independent_approved_hashes(self):
-        manifest=json.loads((SKIN/'media/foundry-movie-submenus/SOURCE.json').read_text())
+        manifest=json.loads((SKIN/'media/foundry-movie-submenus/SOURCE-trending-fixed-20261111.json').read_text())
+        approved=json.loads((ROOT/'tests/fixtures/approved-wallpapers-trending-fixed-20261111.json').read_text())
         self.assertEqual(manifest['dimensions'],[1672,941]);self.assertEqual(len(manifest['files']),13)
         self.assertEqual({i['label'] for i in manifest['files']},set(APPROVED))
         for item in manifest['files']:
-            slug,digest=APPROVED[item['label']];relative='media/foundry-movie-submenus/'+slug+'.png'
-            self.assertEqual(item['proposed_skin_path'],relative);self.assertEqual(item['sha256'],digest)
+            slug,_=APPROVED[item['label']];digest=approved['categories/'+slug+'.png']['sha256'];relative='media/foundry-movie-submenus/'+slug+'.png'
+            self.assertEqual(item['filename'],slug+'.png');self.assertEqual(item['sha256'],digest)
             data=(SKIN/relative).read_bytes();self.assertEqual(hashlib.sha256(data).hexdigest(),digest);self.assertEqual(len(data),item['bytes'])
             self.assertEqual(data[:8],b'\x89PNG\r\n\x1a\n');self.assertEqual((int.from_bytes(data[16:20],'big'),int.from_bytes(data[20:24],'big')),(1672,941))
     def test_native_folder_focus_and_opened_results_use_each_exact_label(self):
@@ -106,9 +107,9 @@ class MoviesSubmenuWallpapers(unittest.TestCase):
                 with self.subTest(label=label,content=content):
                     self.assertEqual(native('Trending',label,content).variable('FoundryMovieSubmenuWallpaper'),'')
                     self.assertEqual(native('Trending','Movies',content,extra={'Container.PluginCategory':label}).variable('FoundryMovieSubmenuWallpaper'),'')
-    def test_parent_folder_does_not_show_approved_art(self):
+    def test_parent_folder_uses_back_plate_or_current_directory_art(self):
         context=native('Trending');context.flags['ListItem.IsParentFolder']=True
-        self.assertEqual(context.variable('FoundryMovieSubmenuWallpaper'),'')
+        self.assertTrue(context.variable('FoundryMovieSubmenuWallpaper').endswith('/movies-back.png'))
         context.labels['Container.FolderName']='Trending'
         self.assertTrue(context.variable('FoundryMovieSubmenuWallpaper').endswith('/trending.png'))
     def test_catalog_requires_verified_movies_property_not_selected_title(self):
@@ -175,11 +176,14 @@ class MoviesSubmenuWallpapers(unittest.TestCase):
                 for child in list(parent):
                     if child.tag=='include' and child.get('content')=='WidgetListPoster' and any((p.get('value') or '').startswith('plugin://plugin.games.foundry/') for p in child.findall('param')):parent.remove(child)
             after=restore_home_feature_additions(after);before=restore_home_feature_additions(before)
+            for node in after.iter('texture'):
+                if node.get('fallback')=='special://skin/media/foundry-widget-base.png':node.set('fallback','special://skin/media/foundry-widget-base.svg')
             self.assertEqual(normalized(before.find('controls')),normalized(after.find('controls')))
             for name in bundle.namelist():
                 relative=name.removeprefix('skin.foundry/')
                 if name.startswith('skin.foundry/media/') or name.startswith('skin.foundry/resources/'):
-                    self.assertEqual((SKIN/relative).read_bytes(),bundle.read(name),relative)
+                    if relative not in {'media/foundry-home-backdrop.png','resources/foundry-fanart.png','media/streampilot/catalog-base.png'} and not relative.startswith('media/foundry-widget-wallpapers/'):
+                        self.assertEqual((SKIN/relative).read_bytes(),bundle.read(name),relative)
     def test_conditions_use_raw_info_labels_and_registered_expression(self):
         root=E.parse(SKIN/'xml/Includes_FoundryMovieSubmenus.xml')
         for node in root.iter():
@@ -187,7 +191,7 @@ class MoviesSubmenuWallpapers(unittest.TestCase):
                 self.assertNotIn('$VAR[',condition or '');self.assertNotIn('$INFO[',condition or '')
         includes=E.parse(SKIN/'xml/Includes.xml')
         self.assertEqual(len(includes.findall("include[@file='Includes_FoundryMovieSubmenus.xml']")),1)
-        self.assertEqual(E.parse(SKIN/'addon.xml').getroot().get('version'),'1.5.2')
-        self.assertEqual(E.parse(SKIN/'addon.xml').find("requires/import[@addon='script.foundry.helper']").get('version'),'1.3.3')
+        self.assertEqual(E.parse(SKIN/'addon.xml').getroot().get('version'),'1.5.3')
+        self.assertEqual(E.parse(SKIN/'addon.xml').find("requires/import[@addon='script.foundry.helper']").get('version'),'1.3.4')
 
 if __name__=='__main__':unittest.main()

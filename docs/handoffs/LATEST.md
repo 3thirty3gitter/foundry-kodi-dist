@@ -1,3 +1,59 @@
+# Foundry 1.5.3 pinned native QA complete, 2026-11-11
+
+All five unchanged native gates now pass together on the reproducibly locked official Debian 13 Kodi 21.2/Python 3.13 runtime as unprivileged UID 1000 with read-only extracted sources and a writable QA-only mount. Final full source/extracted suites pass 768/768 tests, zero failures/errors, 0/1 expected skips. Deterministic rebuilding, official evidence() assertions and integrity of all 93 screenshots pass. All 1,037 package/source comparisons, 979 native before/after hashes and 290 immutable historical files pass; release manifest remains ff27594f3de1c66c73c348cd71636d3f57f5254324e00b8fc311d18b96860ef5.
+
+The dev and release workflows now build tools/native-qa/Dockerfile from pinned official Debian base digest and all 414 exact installed versions, verifying the resulting full dpkg inventory. They invoke the same five renderers through tools/run_native_qa.sh; readonly source mounts, output mount creation, nonroot execution, failure propagation, sequential timeouts, artifact retention and publication guards are preserved. This QA-only follow-up changes no product package, runtime pin or security setting. Dependency retirement fails the image build instead of silently upgrading. Linux wrapper argument/exit-code regressions and native nonroot/mount smoke pass.
+
+Evidence: project-root/candidate-independent-validation-locked/LOCAL-VALIDATION.json and candidate-native-locked/{native-summary.json,native-qa/}. Locked image ID: sha256:7747f32c71781f6d452821fd02aa11a6267100e848720e94c45b453ee900dbab. Source/extracted final logs: candidate-ci-source-tests-final.log and candidate-ci-extracted-tests-final.log. Final suite extraction is candidate-packaged-ci/apps; native locked run used candidate-packaged-final/apps with identical runtime/package bytes and renderer sources. Earlier split-runtime reports and Ubuntu/Python 3.14 crashes remain retained as historical evidence.
+
+Hosted dev validation remains pending parent-reviewed dev pushes; this is not a hosted CI or production publication claim. Parent pushes helper, skin, then distribution dev after exact HEAD/lease/remote checks. Production remains 1.5.2; no production merge/release is authorized. Physical phone/Wi-Fi and Shield remain unverified.
+
+---
+
+# Foundry 1.5.3 local native validation complete, 2026-11-11
+
+All five local native gates now pass against the unchanged extracted candidate. Library, cold-start splash, interface and Games used Kodi 21.3/Python 3.14; unchanged Weather used official Debian 13 Kodi 21.2/Python 3.13 after its compatibility stress test passed 210 concurrent empty-script invocations. Weather completed full cold Home startup and all 18 checks. The original Ubuntu/Python 3.14 invoker SIGSEGV and minimal Estuary-only reproduction remain retained, not erased or mislabeled as passed.
+
+Official record_release_validation.evidence() assertions independently pass read-only against the consolidated reports. Evidence: project-root/candidate-independent-validation/LOCAL-VALIDATION.json; Weather: candidate-weather-debian/weather/weather-verification.json. Compatible local image ID: sha256:7de853ad1a02a8b0a23979346d15196bc5b711ce33895d8a3b8bf0494d2da213. Final runtime manifest remains ff27594f3de1c66c73c348cd71636d3f57f5254324e00b8fc311d18b96860ef5; all 1,037 source/package byte checks and 290 historical-file checks still pass.
+
+This supersedes the pending local Weather result below. Final Linux source/extracted suites remain 763/763 with zero failures/errors and 0/1 expected skips. Hosted dev CI has not run for the final dev commit; no hosted success or production publication is claimed. Physical phone/Wi-Fi and Shield remain unverified. Parent coordinates dev-only pushes; any CI runtime change is a separate QA-only follow-up without weakening gates.
+
+---
+
+# Foundry 1.5.3 combined local candidate, 2026-11-11
+
+Unpublished dev candidate. Release/skin/build/bootstrap 1.5.3, Helper 1.3.4 and Wallpapers 1.1.1 integrate the approved 45 wallpaper frames, separate Foundry Media Center app/startup artwork, Movies root Back artwork and QR phone connection/full-size keyboard repair. General Home/widget/catalog fallbacks remain clean. Startup installation retains atomic writes and numbered backups of earlier custom PNG/JPEG splash files.
+
+Runtime source pins: skin 31ea77978276a236b2b6607d154f456a1857cadd; helper 80422a4c0284d7cd7466ba7b1a6e866180f25ff0. Deterministic snapshot verifies exact Git blobs. Release manifest SHA256 ff27594f3de1c66c73c348cd71636d3f57f5254324e00b8fc311d18b96860ef5. All 290 historical release records, ZIPs, sidecars and snapshots remain byte-identical. 1,037 packaged source files match their exact ZIPs; distribution package source also matches staged Git blobs.
+
+Final Linux source suite: 763 tests, zero failures/errors/skips. Final extracted suite: 763 tests, zero failures/errors, one expected preserved-source skip. Deterministic rebuild and all ten package/dependency/feed/alias checks pass. Source/extracted QA reports are releases/1.5.3-qa/. Final extraction: project-root/candidate-packaged-final/apps.
+
+Native Kodi 21.3 library, real cold-start app splash and Games gates pass against exact extracted runtime packages. Additional exact-extracted proof covers 48 Home wallpaper states, all thirteen category foregrounds, child Back restoring category, root Back returning exactly once, and repaired QR delivery/TV OK/Cancel/Back/hidden input exclusion. Final normalized LF phone evidence is project-root/phone-evidence-extracted-153; pre-normalization phone-evidence-08 is historical, not the final raw-byte proof. The interface gate's legacy one-pixel Settings discriminator was replaced with broad foreground comparison against exact approved full/widget images plus four regressions; final extracted rerun passed all interface/playback/Back/Favorites/ripple assertions with exact-source foreground errors 0.231/0.254 versus wrong-variant errors above 10. Evidence: project-root/wallpaper-native/interface-final-packaged.
+
+Local Weather gate is NOT green: two initial runs and debugger investigation encountered native Kodi/Python 3.14 PyEval_RestoreThread SIGSEGV during concurrent script startup. A minimal Estuary-only reproduction with seven empty scripts crashed before enabling Foundry or Weather. Original failures are retained under project-root/candidate-native and candidate-weather-retry; debugger/minimal reproduction under candidate-weather-debug and candidate-weather-runtime-repro. No cold Home checks, runtime widgets or gates were disabled. A compatible local QA runtime and independent hosted dev CI remain pending. Do not treat this candidate as all-five-native-gates verified or production-ready.
+
+Project root: C:/Users/TrentTimmerman/Documents/Codex/foundry-phone-fix-20261111. Parent owns guarded helper, skin, then distribution dev pushes after exact commit review. No production merge, PR action, release, existing published artifact mutation or security setting change is authorized. Production remains 1.5.2. Phone entry is temporary plaintext trusted-LAN HTTP for ordinary text only; physical phone/Wi-Fi and Shield rendering/navigation/playback remain unverified.
+
+---
+
+# Foundry 1.5.2 publication verified, 2026-11-11
+
+Trent explicitly approved production publication after disclosure of immediate updater availability, rollback/manual downgrade risk, trusted-LAN unencrypted QR text entry, and untested physical phone/Shield. Ordinary PR #2 merged the exact validated dev candidate 0029accf61ff1373441ee475f51b2afc6252374b into main as 8dc85df6cd83ce386d9d4928c5b7b47e480c7864. Historical 1.5.1 receipts were preserved; no protection bypass or force push. https://github.com/3thirty3gitter/foundry-kodi-dist/pull/2
+
+Release/skin/build/bootstrap 1.5.2; helper 1.3.3. Source pins: skin 920755f6d90d9d37b6051542b2f6a9215682a13d; helper 597c16da1e67208e7788e563005b5c5a20c07b67. Release manifest SHA256 f96d65e8761106275184e1bfcf5ad77dd0df5df2fee88f7345681c12b1e54073.
+
+Hosted dev run 43101931097 and production release run 43104436614 succeeded: 724 source tests, zero failures/errors/skips; 724 extracted tests, zero failures/errors/one expected skip; deterministic rebuild and all five native Kodi gates passed. Production artifact 13893417185 independently verified against SHA256 38ecbb2e13b404bb9d5593e0d199fd24b459fd2daf7796f7f02831298d2d1123, all 171 extracted files, exact merge/run identity and official read-only evidence() assertions.
+
+Release automation published validation receipt 08ffe19626c28dcbe3983c7e457b17ee44a3c6c2. Public verification run 43105288012 succeeded, creating receipt ba8d38eefca5537ee8c3edbaf6f8b7f3c575f885 (only releases/1.5.2-verification.json changed). Initial Pages43104436190 succeeded; follow-up43105272165 superseded/cancelled by final receipt Pages43105381215, whose final status is recorded separately.
+
+Independent live verification completed 21:43:29UTC: all 10 ZIPs on both Pages and raw GitHub (20 downloads), exact committed bytes/SHA256/ZIP integrity/checksum sidecars, both release manifests/Kodi feeds and five Pages installer/listing aliases passed. Evidence under C:/Users/TrentTimmerman/Documents/Codex/foundry-152-production/production-public-verification/: independent-production-evidence.json and releases/1.5.2-verification.json. No repository edits made by verification worker.
+
+Remaining limitations: physical phone/browser/network and Shield rendering/navigation/playback/controller/gameplay unverified. QR entry is plaintext trusted-LAN HTTP for ordinary text only, excludes hidden/password/PIN dialogs and requires explicit TV OK. Live personal TMDb/OMDb keys unverified; native Games fixtures do not certify gameplay. Production lease closure and dev handoff synchronization remain parent's responsibility. Preserve original dirty shared trees and historical evidence.
+
+Final receipt Pages run 43105381215 completed successfully. All assigned production release, public verification and latest Pages workflows are green.
+
+---
+
 # Foundry 1.5.2 local candidate, 2026-11-11
 
 Unpublished local dev candidate at C:/Users/TrentTimmerman/Documents/Codex/foundry-wallpaper-20261111/apps. Original dirty shared repositories were preserved. All three own leases remain active; no push/main/Pages publication performed or authorized for this candidate.

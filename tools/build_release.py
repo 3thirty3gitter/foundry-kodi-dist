@@ -16,7 +16,7 @@ def package(source, output):
     target.mkdir(parents=True, exist_ok=True)
     archive = target / (addon_id + "-" + version + ".zip")
     # These unreferenced assets duplicate the active Foundry artwork.
-    unused_skin_artwork = {"resources/fanart.png", "media/foundry-backdrops/foundry-loading-splash.png"}
+    unused_skin_artwork = {"resources/fanart.png"}
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
         for path in sorted(source.rglob("*"), key=lambda p: p.relative_to(source).as_posix()):
             relative = path.relative_to(source)

@@ -21,7 +21,7 @@ class StartupSplash(unittest.TestCase):
         self.addCleanup(self.temporary.cleanup)
         self.home = Path(self.temporary.name)
         self.media = self.home / 'media'
-        self.source = SKIN / 'media/foundry-home-backdrop.png'
+        self.source = SKIN / 'media/foundry-backdrops/foundry-loading-splash.png'
         self.module = load('foundry_splash_test', HELPER / 'resources/lib/modules/startup_splash.py')
         addon = lambda aid: type('Addon', (), {'getAddonInfo': lambda _, key: str(SKIN if aid == 'skin.foundry' else HELPER)})()
         self.addCleanup(patch.stopall)
@@ -90,3 +90,28 @@ class StartupSplash(unittest.TestCase):
         with patch.object(build, 'ensure_trailers', side_effect=trailers) as setup:
             build.main()
         setup.assert_called_once()
+
+    def test_startup_artwork_is_separate_from_clean_generic_fallbacks(self):
+        import hashlib
+        expected='9d254d3949ab9dc2690ac285bc8da5a51b42c0644ec48566464a5aaf057c6212'
+        self.assertNotEqual(hashlib.sha256(self.source.read_bytes()).hexdigest(),expected)
+        self.module.install_startup_splash()
+        for relative in ('media/foundry-home-backdrop.png','media/foundry-widget-base.png','media/streampilot/catalog-base.png'):
+            self.assertEqual(hashlib.sha256((SKIN/relative).read_bytes()).hexdigest(),expected)
+
+    def test_package_contains_dedicated_startup_artwork(self):
+        import shutil
+        import sys
+        import zipfile
+        sys.path.insert(0,str(ROOT/'tools'))
+        from build_release import package
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            skin=root/'source'
+            splash=skin/'media/foundry-backdrops/foundry-loading-splash.png'
+            splash.parent.mkdir(parents=True)
+            shutil.copyfile(self.source,splash)
+            shutil.copyfile(SKIN/'addon.xml',skin/'addon.xml')
+            _,record=package(skin,root/'output')
+            with zipfile.ZipFile(root/'output'/record['path']) as archive:
+                self.assertEqual(archive.read('skin.foundry/media/foundry-backdrops/foundry-loading-splash.png'),self.source.read_bytes())

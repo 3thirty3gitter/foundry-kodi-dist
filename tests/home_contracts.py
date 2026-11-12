@@ -7,6 +7,10 @@ GAMES = 'System.HasAddon(plugin.games.foundry)'
 
 def restore_home_feature_additions(root):
     """Undo only exact, separately tested Weather/Games/Movies additions."""
+    # The approved fixed-background set replaces only this fallback asset route.
+    for node in root.iter('texture'):
+        if node.get('fallback') == 'special://skin/media/foundry-widget-base.png':
+            node.set('fallback', 'special://skin/media/foundry-widget-base.svg')
     for parent in list(root.iter()):
         for child in list(parent):
             if (child.tag == 'onunload' and parent is root and child.text ==

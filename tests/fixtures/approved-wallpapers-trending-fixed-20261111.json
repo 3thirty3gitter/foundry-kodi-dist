@@ -1,0 +1,402 @@
+{
+  "home/home.png": {
+    "sha256": "6216450ac8bd07b0144c28301b09b086a600e837e4b4d0e6c4723f97bbb16510",
+    "foreground_bbox": [
+      925,
+      220,
+      1624,
+      673
+    ]
+  },
+  "home/movies.png": {
+    "sha256": "7ff9ec2632761625f9419a0facf66d410925e5f540b98aa5d831749a1e66b56f",
+    "foreground_bbox": [
+      1004,
+      233,
+      1434,
+      603
+    ]
+  },
+  "home/tvshows.png": {
+    "sha256": "b216cfd01bc8d2b1302446a26bcee78016d2d6e73dd3aaf84f3e9b366339ad70",
+    "foreground_bbox": [
+      1091,
+      307,
+      1459,
+      602
+    ]
+  },
+  "home/music.png": {
+    "sha256": "7da9a9d237fd1d223604f302d61f8300530b52ae3be103e706652012f4c2f4ca",
+    "foreground_bbox": [
+      1006,
+      256,
+      1560,
+      608
+    ]
+  },
+  "home/musicvideos.png": {
+    "sha256": "84efed9cdfc7366a26c5d0888408bed998db4fbe20e0462845b8794854225db0",
+    "foreground_bbox": [
+      1059,
+      325,
+      1447,
+      603
+    ]
+  },
+  "home/livetv.png": {
+    "sha256": "5defca5df83020e5e49279bc7d402f597d4c130eb2202d75250c7acaaee5ce34",
+    "foreground_bbox": [
+      1037,
+      232,
+      1474,
+      613
+    ]
+  },
+  "home/radio.png": {
+    "sha256": "879b57df9ab5baf7672edd4d214aa54b237a30a3b3d4099e4f5ac2217224ab23",
+    "foreground_bbox": [
+      1073,
+      279,
+      1415,
+      639
+    ]
+  },
+  "home/games.png": {
+    "sha256": "d05521e29060899e72e71abfc87c127fd8e9739cc25f75e9147e0415fe409de5",
+    "foreground_bbox": [
+      1095,
+      322,
+      1617,
+      600
+    ]
+  },
+  "home/addons.png": {
+    "sha256": "ca2a50a04508da629616a4ddeca3524aceefc54f618aedd6805483e18a974a89",
+    "foreground_bbox": [
+      1003,
+      248,
+      1489,
+      643
+    ]
+  },
+  "home/pictures.png": {
+    "sha256": "68e88d9b507481a6f0337f9f7ee980b71c1a034862e2344cffc6ddeaf6f22cbb",
+    "foreground_bbox": [
+      990,
+      228,
+      1529,
+      646
+    ]
+  },
+  "home/video.png": {
+    "sha256": "8d150579da43587ca87299ad143b07718c9cb99b905a6fadbcc9806c3176d5cb",
+    "foreground_bbox": [
+      974,
+      232,
+      1521,
+      673
+    ]
+  },
+  "home/favorites.png": {
+    "sha256": "a8a45cbfdcf891ef3809ec47796bd4d13ba89a7a3eea6222181da097d62f698e",
+    "foreground_bbox": [
+      1006,
+      267,
+      1535,
+      657
+    ]
+  },
+  "home/weather.png": {
+    "sha256": "3c2f932543ddd14d38a4b687bb436b13d4b620cc651355aa212eee3ff0863470",
+    "foreground_bbox": [
+      1103,
+      220,
+      1451,
+      602
+    ]
+  },
+  "home/settings.png": {
+    "sha256": "2af6411d52a4c43f1f8350de5021a2cc23ab632369e0cb702bc9265960f3429d",
+    "foreground_bbox": [
+      1078,
+      220,
+      1576,
+      608
+    ]
+  },
+  "widget/home.png": {
+    "sha256": "1fc34001f6913cee3a20032df67b6acf8a06a5195b7698fc6a1be8719d1ea99d",
+    "foreground_bbox": [
+      1070,
+      99,
+      1456,
+      349
+    ]
+  },
+  "widget/movies.png": {
+    "sha256": "479832ec26f8693a172c30fb66993d9353433dd4eab29632551e4bf7b47ffb0c",
+    "foreground_bbox": [
+      1114,
+      105,
+      1351,
+      310
+    ]
+  },
+  "widget/tvshows.png": {
+    "sha256": "1e945b2de3ebad146897ee70e3b159dd4d9d20d4a68db96617e882bd64ed4f37",
+    "foreground_bbox": [
+      1162,
+      146,
+      1365,
+      310
+    ]
+  },
+  "widget/music.png": {
+    "sha256": "4fe67530049c41964c6dfa9d64ef27b3b6af283586e3301f7b5f340d9035d6be",
+    "foreground_bbox": [
+      1115,
+      118,
+      1421,
+      313
+    ]
+  },
+  "widget/musicvideos.png": {
+    "sha256": "483e46dfac891254269644c84a253ca19f46267f15e1e3414800b4b03666d9e4",
+    "foreground_bbox": [
+      1144,
+      156,
+      1359,
+      310
+    ]
+  },
+  "widget/livetv.png": {
+    "sha256": "0d2d0a96e16ee03db29741ae77a0f80192123f4e6aad2193a25e4b8073b0e4ed",
+    "foreground_bbox": [
+      1132,
+      105,
+      1373,
+      316
+    ]
+  },
+  "widget/radio.png": {
+    "sha256": "a1e3d7b79a6b61a550199793fbf5ccb5d0018067fb7707174c5b5d28a6d3743f",
+    "foreground_bbox": [
+      1151,
+      131,
+      1341,
+      330
+    ]
+  },
+  "widget/games.png": {
+    "sha256": "b3292c3af6a39fab86cf682eee362f9992be5218e9687d25af06f06f8286e904",
+    "foreground_bbox": [
+      1164,
+      154,
+      1452,
+      309
+    ]
+  },
+  "widget/addons.png": {
+    "sha256": "51612a87bb7ce31822843dcd359724f35b36287dac9b3691af9ad97f1abd0296",
+    "foreground_bbox": [
+      1113,
+      114,
+      1382,
+      332
+    ]
+  },
+  "widget/pictures.png": {
+    "sha256": "53522370b4d31b810372a493a250120a7a939b12a07c180e629859b95683edb0",
+    "foreground_bbox": [
+      1106,
+      103,
+      1403,
+      334
+    ]
+  },
+  "widget/video.png": {
+    "sha256": "bab1cbade5f6c6d348d8ea4e1ace933cafd3ef670f90016ad3c45a0573b4fb9b",
+    "foreground_bbox": [
+      1097,
+      105,
+      1399,
+      349
+    ]
+  },
+  "widget/favorites.png": {
+    "sha256": "a44b5bd656830ef5f26acb5d72f4fb3c508788cfa0b5b1bfd227defa503cec0b",
+    "foreground_bbox": [
+      1115,
+      124,
+      1407,
+      340
+    ]
+  },
+  "widget/weather.png": {
+    "sha256": "bd3be8d6dd860032349bbdb334e68336da20d58b24dd8f4db4b7cfc6e3561b48",
+    "foreground_bbox": [
+      1168,
+      99,
+      1361,
+      310
+    ]
+  },
+  "widget/settings.png": {
+    "sha256": "20542829aebe92ba620ae8ae16bf0d7966815d7014a2768bd449f0aab340a937",
+    "foreground_bbox": [
+      1154,
+      99,
+      1429,
+      313
+    ]
+  },
+  "categories/trending.png": {
+    "sha256": "e815d9e21d5243c63bda01cbd86c676208d496a8dd914f2d0589962ce88384ea",
+    "foreground_bbox": [
+      972,
+      224,
+      1461,
+      647
+    ]
+  },
+  "categories/trending-recent.png": {
+    "sha256": "920cdb3b8072709bf993068dca0bcfe773423677afd1bd187282b83e053deed2",
+    "foreground_bbox": [
+      990,
+      220,
+      1616,
+      673
+    ]
+  },
+  "categories/popular.png": {
+    "sha256": "937fc0a363c8ba55a6d73c654668277a94093445d192d7e77079b2e066bb3071",
+    "foreground_bbox": [
+      1107,
+      276,
+      1568,
+      601
+    ]
+  },
+  "categories/popular-today.png": {
+    "sha256": "9d81bd6c3b0abdfd99b87a917df205c14778a9b7ba6a9d11317195f6b09d612a",
+    "foreground_bbox": [
+      966,
+      261,
+      1572,
+      664
+    ]
+  },
+  "categories/premieres.png": {
+    "sha256": "47614ad19144e8c22247a329c4f4276024e84c069f023b1f5bdd8dc39770c879",
+    "foreground_bbox": [
+      972,
+      244,
+      1570,
+      602
+    ]
+  },
+  "categories/latest-releases.png": {
+    "sha256": "d851bf0f45837085a446d09d4b9a03b8daa2f93be84d2d23f54ea3a67d30445b",
+    "foreground_bbox": [
+      939,
+      226,
+      1545,
+      657
+    ]
+  },
+  "categories/most-watched.png": {
+    "sha256": "e775c339414a2289f0dcb3e55a93ad64876e20c9b7ec22032e6f4bb43e43e0fa",
+    "foreground_bbox": [
+      957,
+      240,
+      1563,
+      657
+    ]
+  },
+  "categories/most-favorited.png": {
+    "sha256": "c595d5f6e96d52234478e3ad51a13c6f8fe4717e254786b2aa6f7a0797ce085f",
+    "foreground_bbox": [
+      907,
+      220,
+      1594,
+      602
+    ]
+  },
+  "categories/top-10-box-office.png": {
+    "sha256": "c5af97e846fd55b1b7c24ef0439288f112e013c8310fbe5457a270cb20032af8",
+    "foreground_bbox": [
+      1014,
+      265,
+      1528,
+      649
+    ]
+  },
+  "categories/blockbusters.png": {
+    "sha256": "5354c5d8f252536065e5b7f0d1ae84b810d6a827ed75c99344f4857fe480a5fc",
+    "foreground_bbox": [
+      955,
+      226,
+      1539,
+      627
+    ]
+  },
+  "categories/in-theaters.png": {
+    "sha256": "4e7fd2462a763bfffcac331c77b60323233233d4c754d893eb6bf008d862b898",
+    "foreground_bbox": [
+      969,
+      234,
+      1482,
+      601
+    ]
+  },
+  "categories/up-coming.png": {
+    "sha256": "a4542cbe29c1f3856a3180622524eee92e98254a6942899f5a73e82a1057e850",
+    "foreground_bbox": [
+      933,
+      264,
+      1636,
+      625
+    ]
+  },
+  "categories/oscar-winners.png": {
+    "sha256": "f3e60790bdd3f253883df9e059945ea91d3dfec174ff4d15325adc9243672250",
+    "foreground_bbox": [
+      901,
+      234,
+      1610,
+      673
+    ]
+  },
+  "navigation/back.png": {
+    "sha256": "95234224504eb804cb10cb3e489dce581614da7db0b54b6f051d5ea960e87400",
+    "foreground_bbox": [
+      957,
+      301,
+      1487,
+      603
+    ]
+  },
+  "navigation/search.png": {
+    "sha256": "8a81bc436747800ec1a6d48a0e9edb73d6b2a0c44e705d943902700160cb9de6",
+    "foreground_bbox": [
+      1020,
+      226,
+      1473,
+      603
+    ]
+  },
+  "navigation/shutdown.png": {
+    "sha256": "8d6a3019a8cecc6dfd4ceb2bf3b2a2fbe6906a58c4a8d2404b2ce2debb9063b3",
+    "foreground_bbox": [
+      986,
+      268,
+      1463,
+      663
+    ]
+  },
+  "background/trending-fixed.png": {
+    "sha256": "9d254d3949ab9dc2690ac285bc8da5a51b42c0644ec48566464a5aaf057c6212",
+    "foreground_bbox": null
+  }
+}

@@ -68,8 +68,8 @@ class HomePresentation(unittest.TestCase):
         for widgets in (False, True):
             self.assertEqual(self.choose("FoundryHomeWallpaper", "movies", widgets, {"NimbusCustomBackground": "/mine.png"}), "/mine.png")
             self.assertEqual(self.choose("FoundryHomeWallpaper", "tvshows", widgets, {"HomeFanart.path": "/custom/", "HomeFanart.ext": ".jpg"}), "/custom/tvshows.jpg")
-            self.assertTrue(self.choose("FoundryHomeWallpaper", "movies", widgets, action=801).endswith("foundry-shutdown-wallpaper.svg"))
-            self.assertTrue(self.choose("FoundryHomeWallpaper", "movies", widgets, action=803).endswith("foundry-search-wallpaper.svg"))
+            self.assertTrue(self.choose("FoundryHomeWallpaper", "movies", widgets, action=801).endswith("foundry-navigation/shutdown.png"))
+            self.assertTrue(self.choose("FoundryHomeWallpaper", "movies", widgets, action=803).endswith("foundry-navigation/search.png"))
 
     def test_crossfade_keeps_one_owner_fixed_geometry_and_missing_image_fallback(self):
         image = next(c for c in self.home.findall("./controls/control") if c.findtext("description") == "Foundry full-frame Home wallpaper")
@@ -77,7 +77,7 @@ class HomePresentation(unittest.TestCase):
         self.assertEqual(image.find("texture").get("fallback"), "$VAR[FoundryMenuBackground]")
         self.assertEqual(image.findall("animation"), [])
         self.assertNotIn("HasFocus", image.findtext("visible"))
-        self.assertEqual(self.variables["FoundryBackgroundImage"][0].text, "special://skin/media/foundry-widget-base.svg")
+        self.assertEqual(self.variables["FoundryBackgroundImage"][0].text, "special://skin/media/foundry-widget-base.png")
 
     def test_first_return_and_repeated_entries_cannot_enable_home_hero_presentation(self):
         expression = ET.parse(SKIN / "xml/Expressions.xml").findtext("expression[@name='FoundryHomeRowPresentation']")
