@@ -7,6 +7,7 @@ import shutil
 import xml.etree.ElementTree as ET
 import zipfile
 from validate_widget_assets import validate_widget_assets, validate_rich_pairs
+from validate_extra_movie_wallpapers import validate_extra_movie_wallpapers
 
 
 def package(source, output):
@@ -57,6 +58,11 @@ def main():
     if tuple(int(n) for n in skin_version.split(".")) >= (1, 2, 0):
         try:
             validate_rich_pairs(args.skin, root / "src/resource.images.foundry.wallpapers")
+        except (ValueError, OSError) as error:
+            parser.error(str(error))
+    if tuple(int(n) for n in skin_version.split(".")) >= (1, 5, 4):
+        try:
+            validate_extra_movie_wallpapers(args.skin)
         except (ValueError, OSError) as error:
             parser.error(str(error))
     sources = [root / "src/repository.foundry",

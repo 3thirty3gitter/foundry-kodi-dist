@@ -191,7 +191,7 @@ class MoviesSubmenuWallpapers(unittest.TestCase):
                 self.assertNotIn('$VAR[',condition or '');self.assertNotIn('$INFO[',condition or '')
         includes=E.parse(SKIN/'xml/Includes.xml')
         self.assertEqual(len(includes.findall("include[@file='Includes_FoundryMovieSubmenus.xml']")),1)
-        self.assertEqual(E.parse(SKIN/'addon.xml').getroot().get('version'),'1.5.3')
-        self.assertEqual(E.parse(SKIN/'addon.xml').find("requires/import[@addon='script.foundry.helper']").get('version'),'1.3.4')
+        self.assertEqual(E.parse(SKIN/'addon.xml').getroot().get('version'),'1.5.4')
+        self.assertEqual(E.parse(SKIN/'addon.xml').find("requires/import[@addon='script.foundry.helper']").get('version'),'1.3.5')
 
 if __name__=='__main__':unittest.main()

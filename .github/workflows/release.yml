@@ -8,7 +8,7 @@ on:
       - "tools/**"
       - "tests/**"
       - "src/**"
-      - "releases/1.5.3-source-snapshot.json.gz"
+      - "releases/1.5.4-source-snapshot.json.gz"
   workflow_dispatch:
 
 permissions:
@@ -29,7 +29,7 @@ jobs:
         working-directory: foundry-kodi-dist
     env:
       PYTHONDONTWRITEBYTECODE: '1'
-      QA: releases/1.5.3-qa
+      QA: releases/1.5.4-qa
       NATIVE_QA_IMAGE: foundry-native-qa:debian13-kodi21.2
     steps:
       - uses: actions/checkout@v4
@@ -45,8 +45,8 @@ jobs:
           printf '%s\n' "$GITHUB_RUN_ID/$GITHUB_RUN_ATTEMPT" > "$QA/workflow-run.txt"
       - name: Install validation dependencies
         run: python -m pip install requests==2.34.2 Pillow==13.0.0
-      - name: Restore pinned 1.5.3 source snapshots
-        run: python tools/materialize_sources.py --release 1.5.3 2>&1 | tee "$QA/materialize.log"
+      - name: Restore pinned 1.5.4 source snapshots
+        run: python tools/materialize_sources.py --release 1.5.4 2>&1 | tee "$QA/materialize.log"
       - name: Build and test committed sources
         run: |
           python tools/build_release.py --skin ../skin.foundry-nimbus --helper ../script.foundry.helper 2>&1 | tee "$QA/build.log"
@@ -106,8 +106,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: foundry-1.5.3-release-qa-${{ github.run_id }}-${{ github.run_attempt }}
-          path: foundry-kodi-dist/releases/1.5.3-qa/
+          name: foundry-1.5.4-release-qa-${{ github.run_id }}-${{ github.run_attempt }}
+          path: foundry-kodi-dist/releases/1.5.4-qa/
           if-no-files-found: warn
           retention-days: 14
       - name: Publish verified packages and repository feed together
@@ -118,5 +118,5 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           python tools/record_release_validation.py
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'Publish verified Foundry 1.5.3 packages and native QA'
+          git commit -m 'Publish verified Foundry 1.5.4 packages and native QA'
           git push origin HEAD:main
