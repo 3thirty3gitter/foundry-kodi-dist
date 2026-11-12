@@ -1,0 +1,1013 @@
+{
+  "checks": [
+    {
+      "case": "games-consoles",
+      "capture_state_stable_seconds": 0.5,
+      "png_completion_ack": true,
+      "buried_busy_render_suppressed": false,
+      "busy_suppression_source": "",
+      "window": 10821,
+      "path": "plugin://plugin.games.foundry/?action=home",
+      "plugin": "plugin.games.foundry",
+      "content": "",
+      "viewmode": "List",
+      "directory_id": "15cb82b6e24d40d7be27c61ba4574a8f",
+      "games_content": false,
+      "foundry_plugin": true,
+      "view58_visible": false,
+      "current_game_id": "",
+      "label": "Search games",
+      "title": "",
+      "position": "1",
+      "game_id": "",
+      "platform": "",
+      "overview": "",
+      "modal": false,
+      "updating": false,
+      "progress_visible": false,
+      "busy_visible": false,
+      "busy_dialog_visible": false,
+      "busy_nocancel_visible": false,
+      "dialog_id": 9999,
+      "dialog_heading": "",
+      "dialog_message": ""
+    },
+    {
+      "case": "games-automatic-view",
+      "capture_state_stable_seconds": 0.5,
+      "png_completion_ack": true,
+      "buried_busy_render_suppressed": false,
+      "busy_suppression_source": "",
+      "window": 10821,
+      "path": "plugin://plugin.games.foundry/?action=games&system=nes",
+      "plugin": "plugin.games.foundry",
+      "content": "games",
+      "viewmode": "Foundry Games",
+      "directory_id": "50a4e90c4bbe478f81109995f6f413c3",
+      "games_content": true,
+      "foundry_plugin": true,
+      "view58_visible": true,
+      "current_game_id": "939c88404a9b07e345f3f4a98a12b20e53b21a1188b0d921729c3b828df3ad0a",
+      "label": "Fixture 00",
+      "title": "",
+      "position": "1",
+      "game_id": "939c88404a9b07e345f3f4a98a12b20e53b21a1188b0d921729c3b828df3ad0a",
+      "platform": "Nintendo Entertainment System",
+      "overview": "Original local metadata fixture with a long description to test bounded hero text.",
+      "modal": false,
+      "updating": false,
+      "progress_visible": false,
+      "busy_visible": false,
+      "busy_dialog_visible": false,
+      "busy_nocancel_visible": false,
+      "dialog_id": 9999,
+      "dialog_heading": "",
+      "dialog_message": ""
+    },
+    {
+      "case": "games-focused-hero",
+      "capture_state_stable_seconds": 0.5,
+      "png_completion_ack": true,
+      "buried_busy_render_suppressed": false,
+      "busy_suppression_source": "",
+      "window": 10821,
+      "path": "plugin://plugin.games.foundry/?action=games&system=nes",
+      "plugin": "plugin.games.foundry",
+      "content": "games",
+      "viewmode": "Foundry Games",
+      "directory_id": "50a4e90c4bbe478f81109995f6f413c3",
+      "games_content": true,
+      "foundry_plugin": true,
+      "view58_visible": true,
+      "current_game_id": "0d490e212379de0dce4a8a87deb53fca35fd4c3db2f1b50328a420b6e4b4acef",
+      "label": "Fixture 02",
+      "title": "",
+      "position": "3",
+      "game_id": "0d490e212379de0dce4a8a87deb53fca35fd4c3db2f1b50328a420b6e4b4acef",
+      "platform": "Nintendo Entertainment System",
+      "overview": "Original local metadata fixture with a long description to test bounded hero text.",
+      "modal": false,
+      "updating": false,
+      "progress_visible": false,
+      "busy_visible": false,
+      "busy_dialog_visible": false,
+      "busy_nocancel_visible": false,
+      "dialog_id": 9999,
+      "dialog_heading": "",
+      "dialog_message": ""
+    },
+    {
+      "case": "games-page-two",
+      "capture_state_stable_seconds": 0.5,
+      "png_completion_ack": true,
+      "buried_busy_render_suppressed": false,
+      "busy_suppression_source": "",
+      "window": 10821,
+      "path": "plugin://plugin.games.foundry/?action=games&mode&page=1&query&system=nes",
+      "plugin": "plugin.games.foundry",
+      "content": "games",
+      "viewmode": "Foundry Games",
+      "directory_id": "cec88804f93e454a9c5dba2e201d9716",
+      "games_content": true,
+      "foundry_plugin": true,
+      "view58_visible": true,
+      "current_game_id": "8ec7eb534c674ccd48c4bd0877f4d419d59afc3b0cad63bae026a693cbdf0176",
+      "label": "Fixture 20",
+      "title": "",
+      "position": "1",
+      "game_id": "8ec7eb534c674ccd48c4bd0877f4d419d59afc3b0cad63bae026a693cbdf0176",
+      "platform": "Nintendo Entertainment System",
+      "overview": "Original local metadata fixture with a long description to test bounded hero text.",
+      "modal": false,
+      "updating": false,
+      "progress_visible": false,
+      "busy_visible": false,
+      "busy_dialog_visible": false,
+      "busy_nocancel_visible": false,
+      "dialog_id": 9999,
+      "dialog_heading": "",
+      "dialog_message": ""
+    },
+    {
+      "case": "games-page-back-focus",
+      "capture_state_stable_seconds": 0.5,
+      "png_completion_ack": true,
+      "buried_busy_render_suppressed": false,
+      "busy_suppression_source": "",
+      "window": 10821,
+      "path": "plugin://plugin.games.foundry/?action=games&system=nes",
+      "plugin": "plugin.games.foundry",
+      "content": "games",
+      "viewmode": "Foundry Games",
+      "directory_id": "228ff5c0f1ae4819acc94080391edce2",
+      "games_content": true,
+      "foundry_plugin": true,
+      "view58_visible": true,
+      "current_game_id": "",
+      "label": "Next page",
+      "title": "",
+      "position": "21",
+      "game_id": "",
+      "platform": "",
+      "overview": "",
+      "modal": false,
+      "updating": false,
+      "progress_visible": false,
+      "busy_visible": false,
+      "busy_dialog_visible": false,
+      "busy_nocancel_visible": false,
+      "dialog_id": 9999,
+      "dialog_heading": "",
+      "dialog_message": ""
+    },
+    {
+      "case": "games-favorite-refresh-complete",
+      "capture_state_stable_seconds": 0.5,
+      "png_completion_ack": true,
+      "buried_busy_render_suppressed": false,
+      "busy_suppression_source": "",
+      "window": 10821,
+      "path": "plugin://plugin.games.foundry/?action=games&system=nes",
+      "plugin": "plugin.games.foundry",
+      "content": "games",
+      "viewmode": "Foundry Games",
+      "directory_id": "10020cb1febd485b81bf5e1d6032adf5",
+      "games_content": true,
+      "foundry_plugin": true,
+      "view58_visible": true,
+      "current_game_id": "",
+      "label": "Next page",
+      "title": "",
+      "position": "21",
+      "game_id": "",
+      "platform": "",
+      "overview": "",
+      "modal": false,
+      "updating": false,
+      "progress_visible": false,
+      "busy_visible": false,
+      "busy_dialog_visible": false,
+      "busy_nocancel_visible": false,
+      "dialog_id": 9999,
+      "dialog_heading": "",
+      "dialog_message": ""
+    },
+    {
+      "case": "games-favorites",
+      "capture_state_stable_seconds": 0.5,
+      "png_completion_ack": true,
+      "buried_busy_render_suppressed": false,
+      "busy_suppression_source": "",
+      "window": 10821,
+      "path": "plugin://plugin.games.foundry/?action=games&mode=favorites",
+      "plugin": "plugin.games.foundry",
+      "content": "games",
+      "viewmode": "Foundry Games",
+      "directory_id": "f540028d21814eb4a2af9ce43dac96ed",
+      "games_content": true,
+      "foundry_plugin": true,
+      "view58_visible": true,
+      "current_game_id": "939c88404a9b07e345f3f4a98a12b20e53b21a1188b0d921729c3b828df3ad0a",
+      "label": "Fixture 00",
+      "title": "",
+      "position": "1",
+      "game_id": "939c88404a9b07e345f3f4a98a12b20e53b21a1188b0d921729c3b828df3ad0a",
+      "platform": "Nintendo Entertainment System",
+      "overview": "Original local metadata fixture with a long description to test bounded hero text.",
+      "modal": false,
+      "updating": false,
+      "progress_visible": false,
+      "busy_visible": false,
+      "busy_dialog_visible": false,
+      "busy_nocancel_visible": false,
+      "dialog_id": 9999,
+      "dialog_heading": "",
+      "dialog_message": ""
+    },
+    {
+      "case": "games-search-results",
+      "capture_state_stable_seconds": 0.5,
+      "png_completion_ack": true,
+      "buried_busy_render_suppressed": false,
+      "busy_suppression_source": "",
+      "window": 10821,
+      "path": "plugin://plugin.games.foundry/?action=search",
+      "plugin": "plugin.games.foundry",
+      "content": "games",
+      "viewmode": "Foundry Games",
+      "directory_id": "7004c39ad66a40d3981e2f631dacbf6d",
+      "games_content": true,
+      "foundry_plugin": true,
+      "view58_visible": true,
+      "current_game_id": "cd11e3dd004256bc178c172876813135ba5636502c133327cee13c10fda59bb6",
+      "label": "Fixture 04",
+      "title": "",
+      "position": "1",
+      "game_id": "cd11e3dd004256bc178c172876813135ba5636502c133327cee13c10fda59bb6",
+      "platform": "Nintendo Entertainment System",
+      "overview": "Original local metadata fixture with a long description to test bounded hero text.",
+      "modal": false,
+      "updating": false,
+      "progress_visible": false,
+      "busy_visible": false,
+      "busy_dialog_visible": false,
+      "busy_nocancel_visible": false,
+      "dialog_id": 9999,
+      "dialog_heading": "",
+      "dialog_message": ""
+    },
+    {
+      "case": "games-search-cancel",
+      "capture_state_stable_seconds": 0.5,
+      "png_completion_ack": true,
+      "buried_busy_render_suppressed": false,
+      "busy_suppression_source": "",
+      "window": 10821,
+      "path": "plugin://plugin.games.foundry/?action=home",
+      "plugin": "plugin.games.foundry",
+      "content": "",
+      "viewmode": "List",
+      "directory_id": "c9ca40378de54c03864e34ac028d862b",
+      "games_content": false,
+      "foundry_plugin": true,
+      "view58_visible": false,
+      "current_game_id": "",
+      "label": "Search games",
+      "title": "",
+      "position": "1",
+      "game_id": "",
+      "platform": "",
+      "overview": "",
+      "modal": false,
+      "updating": false,
+      "progress_visible": false,
+      "busy_visible": false,
+      "busy_dialog_visible": false,
+      "busy_nocancel_visible": false,
+      "dialog_id": 9999,
+      "dialog_heading": "",
+      "dialog_message": ""
+    },
+    {
+      "case": "games-missing-core",
+      "capture_state_stable_seconds": 0.5,
+      "png_completion_ack": true,
+      "buried_busy_render_suppressed": true,
+      "busy_suppression_source": "Kodi21.3 GUIDialogBusy.cpp118-132: Render only when topmost",
+      "window": 10821,
+      "path": "plugin://plugin.games.foundry/?action=games&system=nes",
+      "plugin": "plugin.games.foundry",
+      "content": "games",
+      "viewmode": "Foundry Games",
+      "directory_id": "48fb26e2fee94ba0ad017cefb51361bb",
+      "games_content": true,
+      "foundry_plugin": true,
+      "view58_visible": false,
+      "current_game_id": "0d490e212379de0dce4a8a87deb53fca35fd4c3db2f1b50328a420b6e4b4acef",
+      "label": "Fixture 02",
+      "title": "",
+      "position": "",
+      "game_id": "",
+      "platform": "",
+      "overview": "",
+      "modal": true,
+      "updating": false,
+      "progress_visible": false,
+      "busy_visible": true,
+      "busy_dialog_visible": true,
+      "busy_nocancel_visible": false,
+      "dialog_id": 12002,
+      "dialog_heading": "Failed to play game",
+      "dialog_message": "This game isn't compatible with any available emulators."
+    },
+    {
+      "case": "games-launch-cancel-focus",
+      "capture_state_stable_seconds": 0.5,
+      "png_completion_ack": true,
+      "buried_busy_render_suppressed": false,
+      "busy_suppression_source": "",
+      "window": 10821,
+      "path": "plugin://plugin.games.foundry/?action=games&system=nes",
+      "plugin": "plugin.games.foundry",
+      "content": "games",
+      "viewmode": "Foundry Games",
+      "directory_id": "48fb26e2fee94ba0ad017cefb51361bb",
+      "games_content": true,
+      "foundry_plugin": true,
+      "view58_visible": true,
+      "current_game_id": "0d490e212379de0dce4a8a87deb53fca35fd4c3db2f1b50328a420b6e4b4acef",
+      "label": "Fixture 02",
+      "title": "",
+      "position": "3",
+      "game_id": "0d490e212379de0dce4a8a87deb53fca35fd4c3db2f1b50328a420b6e4b4acef",
+      "platform": "Nintendo Entertainment System",
+      "overview": "Original local metadata fixture with a long description to test bounded hero text.",
+      "modal": false,
+      "updating": false,
+      "progress_visible": false,
+      "busy_visible": false,
+      "busy_dialog_visible": false,
+      "busy_nocancel_visible": false,
+      "dialog_id": 9999,
+      "dialog_heading": "",
+      "dialog_message": ""
+    }
+  ],
+  "assertions": {
+    "console_listing": true,
+    "capture_state_settled": true,
+    "screenshot_encoding_acknowledged": true,
+    "automatic_games_view_selected": true,
+    "focused_hero_metadata": true,
+    "remote_navigation": true,
+    "page_back_focus": true,
+    "favorite_persistence": true,
+    "favorite_refresh_complete": true,
+    "favorites_native_route": true,
+    "fresh_directory_acknowledgments": true,
+    "search_results": true,
+    "search_cancel": true,
+    "search_cancel_retains_listing": true,
+    "search_cancel_invoker_completed": true,
+    "launch_cancel_invoker_completed": true,
+    "missing_core_dialog": true,
+    "launch_cancel_focus": true,
+    "cancel_does_not_record_play": true,
+    "full_home_startup_widgets_completed": true,
+    "native_gameclient_path_verified": true,
+    "native_tracebacks_absent": true,
+    "shipped_skin_bytes_unchanged": true,
+    "screenshots_verified": true,
+    "new_skin_boolean_parse_errors_absent": true
+  },
+  "invocations": [
+    {
+      "id": "3bfd0b86cb434ee59edf40d0dc022c15",
+      "action": "home",
+      "mode": "",
+      "phase": "completed",
+      "error": "",
+      "started": 377.962472434,
+      "directory_id": "15cb82b6e24d40d7be27c61ba4574a8f",
+      "completed": 378.048758396,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10821
+    },
+    {
+      "id": "2556e6bc8b464d83a9a4e468bf5e1cbb",
+      "action": "search",
+      "mode": "",
+      "phase": "completed",
+      "error": "",
+      "started": 387.967238264,
+      "directory_id": "7004c39ad66a40d3981e2f631dacbf6d",
+      "completed": 388.429807657,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10821
+    },
+    {
+      "id": "2f8bd52c4bda48e0a9a9148f6a98ab8d",
+      "action": "games",
+      "mode": "",
+      "phase": "completed",
+      "error": "",
+      "started": 379.317510341,
+      "directory_id": "50a4e90c4bbe478f81109995f6f413c3",
+      "completed": 379.47252913,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10821
+    },
+    {
+      "id": "e25d913937354249a3ab2eda2a90ccc6",
+      "action": "home",
+      "mode": "",
+      "phase": "completed",
+      "error": "",
+      "started": 387.618405975,
+      "directory_id": "37fed85b962f404cb25c57916aa70691",
+      "completed": 387.704123645,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10821
+    },
+    {
+      "id": "34f30d0828b849b489896fdb713588c5",
+      "action": "play",
+      "mode": "",
+      "phase": "completed",
+      "error": "",
+      "started": 392.557232902,
+      "completed": 394.199354932,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10821
+    },
+    {
+      "id": "4c67e2608a624923af3eddd278ddbbfc",
+      "action": "home",
+      "mode": "",
+      "phase": "completed",
+      "error": "",
+      "started": 390.267836311,
+      "directory_id": "c9ca40378de54c03864e34ac028d862b",
+      "completed": 390.371174977,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10821
+    },
+    {
+      "id": "de430166c88642c790eba6471df73be7",
+      "action": "games",
+      "mode": "favorites",
+      "phase": "completed",
+      "error": "",
+      "started": 374.749577642,
+      "directory_id": "a4b3c48740f34bf3b5b76716ef8ea6ee",
+      "completed": 375.13626519,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10000
+    },
+    {
+      "id": "a23cc29e65694333a109cb5f86077304",
+      "action": "games",
+      "mode": "favorites",
+      "phase": "completed",
+      "error": "",
+      "started": 386.343436767,
+      "directory_id": "f540028d21814eb4a2af9ce43dac96ed",
+      "completed": 386.493029632,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10821
+    },
+    {
+      "id": "4a05773614634cd096248d78ce205b74",
+      "action": "games",
+      "mode": "",
+      "phase": "completed",
+      "error": "",
+      "started": 383.363472417,
+      "directory_id": "228ff5c0f1ae4819acc94080391edce2",
+      "completed": 383.505811362,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10821
+    },
+    {
+      "id": "4a069dbb9fad4633b0665e5104dbb1e5",
+      "action": "home",
+      "mode": "",
+      "phase": "completed",
+      "error": "",
+      "started": 389.558413775,
+      "directory_id": "37dd2ef80eb2445bac0f46c298194e40",
+      "completed": 389.651820276,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10821
+    },
+    {
+      "id": "ef6fac92bab9401192e14480d92bfbb5",
+      "action": "favorite",
+      "mode": "",
+      "phase": "completed",
+      "error": "",
+      "started": 384.41040841,
+      "completed": 384.503566058,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10821
+    },
+    {
+      "id": "5139f6a9dff34ad0a5f0cd8d52d84a1d",
+      "action": "games",
+      "mode": "",
+      "phase": "completed",
+      "error": "",
+      "started": 392.173828317,
+      "directory_id": "48fb26e2fee94ba0ad017cefb51361bb",
+      "completed": 392.323988877,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10821
+    },
+    {
+      "id": "2d7d148453234535b702bf0ce47ef2cb",
+      "action": "home",
+      "mode": "",
+      "phase": "completed",
+      "error": "",
+      "started": 385.9284934,
+      "directory_id": "1c94cd3a93b147e590f8d33c377574f9",
+      "completed": 386.011859935,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10821
+    },
+    {
+      "id": "c14cd1ae6d6a44cfb3886733fd499952",
+      "action": "games",
+      "mode": "recent",
+      "phase": "completed",
+      "error": "",
+      "started": 374.755321686,
+      "directory_id": "5ce78e2a89bf46d9ba511fc3e0e95efc",
+      "completed": 375.15441825,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10000
+    },
+    {
+      "id": "f142f43c606b42dfb1a9278ebaf54999",
+      "action": "games",
+      "mode": "",
+      "phase": "completed",
+      "error": "",
+      "started": 382.154166669,
+      "directory_id": "cec88804f93e454a9c5dba2e201d9716",
+      "completed": 382.285328374,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10821
+    },
+    {
+      "id": "696dc2b6163f4117ab561d1ad1d4fd7f",
+      "action": "search",
+      "mode": "",
+      "phase": "completed",
+      "error": "",
+      "started": 389.837064964,
+      "completed": 390.122037503,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10821
+    },
+    {
+      "id": "37b72cb986994ac6b8c4579381514755",
+      "action": "games",
+      "mode": "",
+      "phase": "completed",
+      "error": "",
+      "started": 384.730309177,
+      "directory_id": "10020cb1febd485b81bf5e1d6032adf5",
+      "completed": 384.86608556,
+      "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10821
+    }
+  ],
+  "native_core_expected": {
+    "chooser": "Select emulator for .nes file",
+    "heading": "Failed to play game",
+    "messages": [
+      "This game isn't compatible with any available emulators.",
+      "This game can only be played directly from a hard drive or partition. Compressed files must be extracted."
+    ]
+  },
+  "scope": "Native Kodi UI only. Synthetic non-playable files. No cores/ROMs downloaded. Not Shield or gameplay certification.",
+  "limitations": [
+    "No actual gameplay or controller/disconnect/multiplayer validation",
+    "No Shield or Android emulator compatibility validation",
+    "No real VFS provider or Google Drive authorization tested",
+    "PSP remains unsupported"
+  ],
+  "renderer": "Kodi from Debian Media Center 21.2 Debian package version: 2:21.2+dfsg-4\nCopyright (C) 2005-2025 Team Kodi from Debian - http://kodi.tv",
+  "native_busy_modal_contract": {
+    "topmost_modal_api": "https://github.com/xbmc/xbmc/blob/21.3-Omega/xbmc/interfaces/legacy/ModuleXbmcgui.cpp#L31-L35",
+    "busy_render_rule": "https://github.com/xbmc/xbmc/blob/21.3-Omega/xbmc/dialogs/GUIDialogBusy.cpp#L118-L132",
+    "plugin_busy_wait": "https://github.com/xbmc/xbmc/blob/21.3-Omega/xbmc/interfaces/generic/ScriptRunner.cpp#L112-L134"
+  },
+  "capture_acknowledgments": [
+    {
+      "sequence": 1,
+      "case": "games-consoles",
+      "passed": true,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "stable_seconds": 0.5
+    },
+    {
+      "sequence": 2,
+      "case": "games-automatic-view",
+      "passed": true,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "stable_seconds": 0.5
+    },
+    {
+      "sequence": 3,
+      "case": "games-focused-hero",
+      "passed": true,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "stable_seconds": 0.5
+    },
+    {
+      "sequence": 4,
+      "case": "games-page-two",
+      "passed": true,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "stable_seconds": 0.5
+    },
+    {
+      "sequence": 5,
+      "case": "games-page-back-focus",
+      "passed": true,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "stable_seconds": 0.5
+    },
+    {
+      "sequence": 6,
+      "case": "games-favorite-refresh-complete",
+      "passed": true,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "stable_seconds": 0.5
+    },
+    {
+      "sequence": 7,
+      "case": "games-favorites",
+      "passed": true,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "stable_seconds": 0.5
+    },
+    {
+      "sequence": 8,
+      "case": "games-search-results",
+      "passed": true,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "stable_seconds": 0.5
+    },
+    {
+      "sequence": 9,
+      "case": "games-search-cancel",
+      "passed": true,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "stable_seconds": 0.5
+    },
+    {
+      "sequence": 10,
+      "case": "games-missing-core",
+      "passed": true,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "stable_seconds": 0.5
+    },
+    {
+      "sequence": 11,
+      "case": "games-launch-cancel-focus",
+      "passed": true,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "stable_seconds": 0.5
+    }
+  ],
+  "packages": [
+    {
+      "id": "repository.foundry",
+      "version": "1.2.0",
+      "path": "repository.foundry/repository.foundry-1.2.0.zip",
+      "sha256": "2a83d7d4ec2ac362fed010005ec55b6c87aee40a393a7fd82454e7137b48ffcc",
+      "size": 762
+    },
+    {
+      "id": "resource.images.foundry.wallpapers",
+      "version": "1.1.1",
+      "path": "resource.images.foundry.wallpapers/resource.images.foundry.wallpapers-1.1.1.zip",
+      "sha256": "ca31310f602b3c8054a0d79de613f58e42f30901e640e17e1db10453f455c3a3",
+      "size": 17421183
+    },
+    {
+      "id": "resource.images.foundry.osd",
+      "version": "1.0.0",
+      "path": "resource.images.foundry.osd/resource.images.foundry.osd-1.0.0.zip",
+      "sha256": "37ec361ab6b80bb5557ca70512263de24dc9decdbe62e531f3e5f4adb3b4987b",
+      "size": 3770026
+    },
+    {
+      "id": "resource.uisounds.foundry.pulse",
+      "version": "1.1.0",
+      "path": "resource.uisounds.foundry.pulse/resource.uisounds.foundry.pulse-1.1.0.zip",
+      "sha256": "d314f7c06e0b565c09c5f1d0593e013656adc43e6116cc1902062a54aa793ed3",
+      "size": 24581
+    },
+    {
+      "id": "weather.foundry.canada",
+      "version": "0.1.0",
+      "path": "weather.foundry.canada/weather.foundry.canada-0.1.0.zip",
+      "sha256": "fae387a57752af0ec63a5c75bf53bd8f207bb3fc00716af64a2be519178a64f9",
+      "size": 17146
+    },
+    {
+      "id": "plugin.games.foundry",
+      "version": "0.1.0",
+      "path": "plugin.games.foundry/plugin.games.foundry-0.1.0.zip",
+      "sha256": "e55ac14ce17676806e75413157fd59e72b91817a4bc518b303318319d3730f6b",
+      "size": 17449
+    },
+    {
+      "id": "skin.foundry",
+      "version": "1.5.3",
+      "path": "skin.foundry/skin.foundry-1.5.3.zip",
+      "sha256": "edc01ab1fa38f1db13b5f90f75c86f6b840c552776e2db1da612d7c1914ca794",
+      "size": 59213967
+    },
+    {
+      "id": "script.foundry.helper",
+      "version": "1.3.4",
+      "path": "script.foundry.helper/script.foundry.helper-1.3.4.zip",
+      "sha256": "77b6b750459991fdde6d780632989a6d6878635565421716f0f88fdc8dcb095c",
+      "size": 899526
+    },
+    {
+      "id": "script.program.foundry-build",
+      "version": "1.5.3",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.5.3.zip",
+      "sha256": "8e4232fe29789e2013fbf523f55c1cd5e52f4bc788170b62a2ab198c9dec4e79",
+      "size": 2713
+    },
+    {
+      "id": "script.program.foundry-bootstrap",
+      "version": "1.5.3",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.5.3.zip",
+      "sha256": "3e6b3897150319f8981ef9f1581d7edefc0609932ab236f1f81ea8f03f5c80fe",
+      "size": 853
+    }
+  ],
+  "release": "1.5.3",
+  "shipped_skin_hashes": {
+    "addon.xml": "bedd2644b05c4f372c03923df7c207f40419843c5623a941abe3494e1f46c856",
+    "xml/Home.xml": "08a5e81c22b7265ada1dc8c307037d985d716b29d925301cd7553a99fd6a0ee9",
+    "xml/MyGames.xml": "c1149a4958de3e5f6ba4050d981701b86aad95400caa0c9d5384f54b3a226f53",
+    "xml/Includes.xml": "05cc6bc7964f520ce8df402146eaea4a08cfee180d982a501f74ecaa3d7c55be",
+    "xml/View_58_FoundryGames.xml": "92a2bde1193ea046cda8d5af147b0ca23f00a5c7bb4f58ed4f5859aea3f5e9de",
+    "xml/Font.xml": "df9832baa14066ce0933a0a78ebc84bc3b09417c68687ac0f9b4528ada09325a",
+    "xml/Timers.xml": "c2c90596e9362a97dc5ad2e79004273fe014954bf0f976cc39f78e7cf2e02614",
+    "xml/View_51_PosterFlow.xml": "ebcdc5840651253eb0bae2d1241578624d3ee132c5a63ad53a7d58aa2e8c2993",
+    "xml/Expressions.xml": "a466247864ab77f929fabca1197b43003cc3110e0972806b895b27209a154a02",
+    "xml/Includes_Animations.xml": "2fd23cea3521ff5f51643402a93e5e7ecfae7abec7984f5b648ecf0f32793953",
+    "fonts/noto_license.txt": "241c7d3d0e46974855cbbc88840ba15b5a2123b913911aa80d72e66c81da3ae7",
+    "fonts/SF-Pro.ttf": "287c6e4aa1d5a485f6782cff039adabedec8f0510238a1fc900a60a9fc77e575",
+    "fonts/NotoMono-Regular.ttf": "41fd7ccc82375e2a1e47f0cc2c941c14d7c99ba2f57cf69c9f738d07fb257686",
+    "fonts/Roboto-LICENSE.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "fonts/NotoSans-Regular.ttf": "013ca90fb8838b03c57726245c038300051ff7c5014c4f72ed8facd28ff225aa",
+    "fonts/heebo_licence.txt": "6d13374a47f3db882aad98f5788620d425e0b44a2d7221bb14fb185e8425ae2d",
+    "fonts/Roboto-Bold.ttf": "61f89f8db49261c2f6106e8dccc35df7b2f7ed909020db40a3fc905e95f99334",
+    "fonts/Roboto-Regular.ttf": "56a45233d29f11b4dfb86d248e921939d115778f87325e7ae8cc108383d6664d",
+    "fonts/Westmeath.ttf": "50f04551d4389647996f43a9669c830ba85638ae4d87892283478cc3e6409c59",
+    "fonts/Roboto-SOURCE.json": "55722bcac84ac7d5b5df39d8450c41630fa925fdadccff20967c233ec623f2b1",
+    "fonts/Inter-SemiBold.ttf": "2de533bda937a063c595b07c6bd9b70c8c5087d0649a1c8330f7ac11fcc05602",
+    "fonts/Inter-ExtraLight.ttf": "c47ce8df0d6921ef13dca21244e87c8c3f04f60d5079617ba0717a938bbb51d7",
+    "fonts/Inter-Bold.ttf": "e6c172fd8a2f957414a7a63ec8deb7f2aa239182394cfa5ee2ea6927c6194389",
+    "fonts/Inter-Black.ttf": "53a941c664bba47e36a20fe71e89eae3cc92c47b5acb85d7436c39758ddaf530",
+    "fonts/mardoto_license.txt": "5bd41e468075ebba75da768007d24166f67d4e9626e173ce562ab4a95ac4a01c",
+    "fonts/Engebrechtre.ttf": "ae66e426365e34552cb7cd586334948b092d7a704d9ee6168ba398121d67340f",
+    "fonts/Inter-Light.ttf": "d253c410f4d0fd7f16d7b2ecaea19b60fb877cb94f5b2752fda272a3a86fa908",
+    "fonts/remixicon.ttf": "e305b7e23310e1398a20d8449fb279a9b4dcfd5e1982ba39775dc80764e1abc8",
+    "fonts/Inter-Regular.ttf": "529be850e06f62f8904f22bda77e45bde4834498fdbec4ff4201fa3177447a3a",
+    "fonts/Nick-Titling.ttf": "37287a1f023e4650c764ffdfdaaaadbef40e8b05b6fab79ab29b306c04f0bd9c"
+  },
+  "host": "Actual pinned skin.foundry; Home/MyGames/Includes/view/fonts unchanged; only copied helper/services disabled",
+  "skin_boolean_errors": {
+    "passed": true,
+    "known_baseline_warnings": {
+      "timers": [
+        "2026-11-12 00:49:50.112 T:24      error <general>: Error parsing boolean expression control.hasfocus($param[list_id])"
+      ],
+      "posterflow": [
+        "2026-11-12 00:49:53.644 T:24      error <general>: Error parsing boolean expression [string.isempty(listitem.art(clearlogo)) | !skin.hassetting(enable.clearlogo)] + [[string.isequal(listitem.dbtype,movie)] | [string.isequal(listitem.dbtype,tvshow)] | [string.isequal(listitem.dbtype,season)] | [string.isequal(listitem.dbtype,episode)]"
+      ]
+    },
+    "new_errors": [],
+    "unchanged_timer_sha256": "c2c90596e9362a97dc5ad2e79004273fe014954bf0f976cc39f78e7cf2e02614",
+    "posterflow_proof": {
+      "current_sha256": "ebcdc5840651253eb0bae2d1241578624d3ee132c5a63ad53a7d58aa2e8c2993",
+      "published_140_sha256": "ebcdc5840651253eb0bae2d1241578624d3ee132c5a63ad53a7d58aa2e8c2993",
+      "bytes_equal": true,
+      "current_inputs": {
+        "isMovie": "String.IsEqual(ListItem.DBType,movie)",
+        "isTVShow": "String.IsEqual(ListItem.DBType,tvshow)",
+        "isSeason": "String.IsEqual(ListItem.DBType,season)",
+        "isEpisode": "String.IsEqual(ListItem.DBType,episode)"
+      },
+      "published_140_inputs": {
+        "isMovie": "String.IsEqual(ListItem.DBType,movie)",
+        "isTVShow": "String.IsEqual(ListItem.DBType,tvshow)",
+        "isSeason": "String.IsEqual(ListItem.DBType,season)",
+        "isEpisode": "String.IsEqual(ListItem.DBType,episode)"
+      }
+    }
+  },
+  "startup_readiness": {
+    "passed": true,
+    "quiet_seconds": 2,
+    "observations": [
+      {
+        "window": {
+          "id": 10100,
+          "label": "Yes / No dialog"
+        },
+        "skin": {
+          "id": "skin.foundry",
+          "name": "Foundry"
+        },
+        "flags": {
+          "Container.IsUpdating": false,
+          "System.HasActiveModalDialog": false,
+          "Window.IsVisible(startup)": false
+        },
+        "owner": "foundry-games-qa-cq3zowlg",
+        "actual_skin_log": {
+          "ready": true,
+          "loaded_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+          "load_event": "2026-11-12 00:49:50.075 T:24       info <general>:   load skin from: /tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/ (version: 1.5.3)",
+          "last_transition": "2026-11-12 00:49:50.125 T:24      debug <general>: ------ Window Init (Home.xml) ------"
+        },
+        "home_signature": {
+          "Container(9000).ListItem.Property(id)": "",
+          "Container(9000).ListItem.Property(menu_id)": "",
+          "Container(9000).NumItems": "2"
+        },
+        "widgets": []
+      },
+      {
+        "window": {
+          "id": 10000,
+          "label": "Home"
+        },
+        "skin": {
+          "id": "skin.foundry",
+          "name": "Foundry"
+        },
+        "flags": {
+          "Container.IsUpdating": false,
+          "System.HasActiveModalDialog": false,
+          "Window.IsVisible(startup)": false
+        },
+        "owner": "foundry-games-qa-cq3zowlg",
+        "actual_skin_log": {
+          "ready": true,
+          "loaded_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+          "load_event": "2026-11-12 00:49:50.075 T:24       info <general>:   load skin from: /tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/ (version: 1.5.3)",
+          "last_transition": "2026-11-12 00:49:50.125 T:24      debug <general>: ------ Window Init (Home.xml) ------"
+        },
+        "home_signature": {
+          "Container(9000).ListItem.Property(id)": "music",
+          "Container(9000).ListItem.Property(menu_id)": "7000",
+          "Container(9000).NumItems": "10"
+        },
+        "widgets": [
+          [
+            "c14cd1ae6d6a44cfb3886733fd499952",
+            "recent",
+            "started"
+          ],
+          [
+            "de430166c88642c790eba6471df73be7",
+            "favorites",
+            "started"
+          ]
+        ]
+      },
+      {
+        "window": {
+          "id": 10000,
+          "label": "Home"
+        },
+        "skin": {
+          "id": "skin.foundry",
+          "name": "Foundry"
+        },
+        "flags": {
+          "Container.IsUpdating": false,
+          "System.HasActiveModalDialog": false,
+          "Window.IsVisible(startup)": false
+        },
+        "owner": "foundry-games-qa-cq3zowlg",
+        "actual_skin_log": {
+          "ready": true,
+          "loaded_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+          "load_event": "2026-11-12 00:49:50.075 T:24       info <general>:   load skin from: /tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/ (version: 1.5.3)",
+          "last_transition": "2026-11-12 00:49:50.936 T:24      debug <general>: ------ Window Init (Home.xml) ------"
+        },
+        "home_signature": {
+          "Container(9000).ListItem.Property(id)": "music",
+          "Container(9000).ListItem.Property(menu_id)": "7000",
+          "Container(9000).NumItems": "10"
+        },
+        "widgets": [
+          [
+            "c14cd1ae6d6a44cfb3886733fd499952",
+            "recent",
+            "completed"
+          ],
+          [
+            "de430166c88642c790eba6471df73be7",
+            "favorites",
+            "completed"
+          ]
+        ]
+      }
+    ],
+    "completed_game_widgets": [
+      {
+        "id": "de430166c88642c790eba6471df73be7",
+        "action": "games",
+        "mode": "favorites",
+        "phase": "completed",
+        "error": "",
+        "started": 374.749577642,
+        "directory_id": "a4b3c48740f34bf3b5b76716ef8ea6ee",
+        "completed": 375.13626519,
+        "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+        "window_id": 10000
+      },
+      {
+        "id": "c14cd1ae6d6a44cfb3886733fd499952",
+        "action": "games",
+        "mode": "recent",
+        "phase": "completed",
+        "error": "",
+        "started": 374.755321686,
+        "directory_id": "5ce78e2a89bf46d9ba511fc3e0e95efc",
+        "completed": 375.15441825,
+        "runtime_skin_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+        "window_id": 10000
+      }
+    ],
+    "owner": "foundry-games-qa-cq3zowlg",
+    "actual_skin_log": {
+      "ready": true,
+      "loaded_path": "/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/",
+      "load_event": "2026-11-12 00:49:50.075 T:24       info <general>:   load skin from: /tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/skin.foundry/ (version: 1.5.3)",
+      "last_transition": "2026-11-12 00:49:50.936 T:24      debug <general>: ------ Window Init (Home.xml) ------"
+    },
+    "home_signature": {
+      "Container(9000).ListItem.Property(id)": "music",
+      "Container(9000).ListItem.Property(menu_id)": "7000",
+      "Container(9000).NumItems": "10"
+    }
+  },
+  "native_gameclient_log": {
+    "complete": true,
+    "native_gameclient_path": true,
+    "failures": [],
+    "log": "[Foundry Games QA] missing-core begin\n2026-11-12 00:50:08.275 T:24      debug <general>: CScriptRunner: running add-on script Foundry Games('plugin://plugin.games.foundry/', '16', '?action=play&id=0d490e212379de0dce4a8a87deb53fca35fd4c3db2f1b50328a420b6e4b4acef')\n2026-11-12 00:50:08.275 T:468     debug <general>: Thread LanguageInvoker start, auto delete: false\n2026-11-12 00:50:08.275 T:468     debug <general>: initializing python engine.\n2026-11-12 00:50:08.275 T:468     debug <general>: CPythonInvoker(29, /tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/plugin.games.foundry/default.py): start processing\n2026-11-12 00:50:08.285 T:468     debug <general>: -->Python Interpreter Initialized<--\n2026-11-12 00:50:08.285 T:468     debug <general>: \n                                                   \n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29, /tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/plugin.games.foundry/default.py): the source file to load is \"/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/plugin.games.foundry/default.py\"\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29): full python path:\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29):   custom python path:\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29):     /tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/plugin.games.foundry\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29):   default python path:\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29):     /usr/lib/python313.zip\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29):     /usr/lib/python3.13\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29):     /usr/lib/python3.13/lib-dynload\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29):     /usr/local/lib/python3.13/dist-packages\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29):     /usr/lib/python3/dist-packages\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29): adding args:\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29):  plugin://plugin.games.foundry/\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29):  16\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29):  ?action=play&id=0d490e212379de0dce4a8a87deb53fca35fd4c3db2f1b50328a420b6e4b4acef\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29):  resume:false\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29, /tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/plugin.games.foundry/default.py): entering source directory /tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/plugin.games.foundry\n2026-11-12 00:50:08.285 T:468     debug <general>: CPythonInvoker(29, /tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/plugin.games.foundry/default.py): instantiating addon using automatically obtained id of \"plugin.games.foundry\" dependent on version 3.0.0 of the xbmc.python api\n2026-11-12 00:50:08.295 T:469     debug <general>: Thread ScriptObs start, auto delete: false\n2026-11-12 00:50:08.437 T:468     debug <general>: DialogProgress::Open called \n2026-11-12 00:50:08.495 T:24      debug <general>: ------ Window Init (DialogBusy.xml) ------\n2026-11-12 00:50:08.496 T:24      debug <general>: ------ Window Init (DialogConfirm.xml) ------\n2026-11-12 00:50:08.496 T:24       info <general>: Loading skin file: DialogConfirm.xml, load type: KEEP_IN_MEMORY\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerCoreFactory::GetPlayers(/tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/userdata/addon_data/plugin.games.foundry/rom-cache/9dfe857998710dc1dfc8ca8a6056aeaf0298f53ed18f838a3f2c0062e6c49051/Fixture 02.nes)\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerSelectionRule::GetPlayers: considering rule: system rules\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerSelectionRule::GetPlayers: matches rule: system rules\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerSelectionRule::GetPlayers: considering rule: mms/udp\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerSelectionRule::GetPlayers: considering rule: lastfm/shout\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerSelectionRule::GetPlayers: considering rule: rtmp\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerSelectionRule::GetPlayers: considering rule: rtsp\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerSelectionRule::GetPlayers: considering rule: streams\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerSelectionRule::GetPlayers: considering rule: dvd\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerSelectionRule::GetPlayers: considering rule: discimage\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerSelectionRule::GetPlayers: considering rule: sdp/asf\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerSelectionRule::GetPlayers: considering rule: nsv\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerSelectionRule::GetPlayers: considering rule: radio\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerCoreFactory::GetPlayers: matched 0 rules with players\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerCoreFactory::GetPlayers: adding retroplayer\n2026-11-12 00:50:08.557 T:24      debug <general>: CPlayerCoreFactory::GetPlayers: added 1 players\n2026-11-12 00:50:08.558 T:24      debug <general>: CAddonDatabase: SELECT repo.id FROM repo .. took 0 ms\n2026-11-12 00:50:08.558 T:24      debug <general>: CAddonDatabase: query  SELECT addons.*, repo.addonID AS repoID FROM addons JOIN addonlinkrepo ON addons.id=addonlinkrepo.idAddon JOIN repo ON repo.id=addonlinkrepo.idRepo WHERE addonlinkrepo.idRepo IN (1) ORDER BY repo.addonID, addons.addonID returned 77 rows in 0 ms\n2026-11-12 00:50:08.559 T:24      debug <general>: CAddonDatabase::GetAddons took 1 ms\n2026-11-12 00:50:08.560 T:24      debug <general>: ------ Window Init (DialogConfirm.xml) ------\n2026-11-12 00:50:08.560 T:24       info <general>: Loading skin file: DialogConfirm.xml, load type: KEEP_IN_MEMORY\n2026-11-12 00:50:08.583 T:48       info <general>: CActiveAESink::OpenSink - initialize sink\n2026-11-12 00:50:08.583 T:48      debug <general>: CActiveAESink::OpenSink - trying to open device Default\n2026-11-12 00:50:08.583 T:48      error <general>: CActiveAESink::OpenSink - no sink was returned\n2026-11-12 00:50:08.583 T:47      error <general>: ActiveAE::InitSink - returned error\n2026-11-12 00:50:08.763 T:24      debug <general>: ------ Window Deinit (DialogConfirm.xml) ------\n2026-11-12 00:50:09.087 T:48       info <general>: CActiveAESink::OpenSink - initialize sink\n2026-11-12 00:50:09.087 T:48      debug <general>: CActiveAESink::OpenSink - trying to open device Default\n2026-11-12 00:50:09.087 T:48      error <general>: CActiveAESink::OpenSink - no sink was returned\n2026-11-12 00:50:09.088 T:47      error <general>: ActiveAE::InitSink - returned error\n2026-11-12 00:50:09.378 T:24      debug <general>: Saving screenshot /work/foundry-kodi-dist/releases/1.5.3-qa/games/games-missing-core.png\n2026-11-12 00:50:09.379 T:76      debug <general>: cached image '/work/foundry-kodi-dist/releases/1.5.3-qa/games/games-missing-core.png' size 1920x1080\n2026-11-12 00:50:09.589 T:48       info <general>: CActiveAESink::OpenSink - initialize sink\n2026-11-12 00:50:09.589 T:48      debug <general>: CActiveAESink::OpenSink - trying to open device Default\n2026-11-12 00:50:09.589 T:48      error <general>: CActiveAESink::OpenSink - no sink was returned\n2026-11-12 00:50:09.589 T:47      error <general>: ActiveAE::InitSink - returned error\n2026-11-12 00:50:09.911 T:24      debug <general>: ------ Window Deinit (DialogConfirm.xml) ------\n2026-11-12 00:50:09.919 T:24       info <general>: RetroPlayer[PLAYER]: No compatible game client selected, aborting playback\n2026-11-12 00:50:10.022 T:24      debug <general>: ------ Window Deinit (DialogBusy.xml) ------\n2026-11-12 00:50:10.022 T:469     debug <general>: Thread ScriptObs 136933858596544 terminating\n2026-11-12 00:50:10.022 T:24      debug <general>: CScriptRunner: cancelling add-on script Foundry Games (id = 29)\n2026-11-12 00:50:10.022 T:24      debug <general>: CPythonInvoker(29, /tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/plugin.games.foundry/default.py): trigger Monitor abort request\n2026-11-12 00:50:10.023 T:468     debug <general>: CPythonInvoker(29, /tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/plugin.games.foundry/default.py): script successfully run\n2026-11-12 00:50:10.023 T:468     debug <general>: onExecutionDone(29, /tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/plugin.games.foundry/default.py)\n2026-11-12 00:50:10.029 T:468     debug <general>: Python interpreter interrupted by user\n2026-11-12 00:50:10.029 T:24      debug <general>: CPythonInvoker(29, /tmp/foundry-games-qa-cq3zowlg/kodi/portable_data/addons/plugin.games.foundry/default.py): script termination took 7ms\n2026-11-12 00:50:10.029 T:468     debug <general>: Thread LanguageInvoker 136934942344896 terminating\n2026-11-12 00:50:10.089 T:48       info <general>: CActiveAESink::OpenSink - initialize sink\n2026-11-12 00:50:10.089 T:48      debug <general>: CActiveAESink::OpenSink - trying to open device Default\n2026-11-12 00:50:10.089 T:48      error <general>: CActiveAESink::OpenSink - no sink was returned\n2026-11-12 00:50:10.089 T:47      error <general>: ActiveAE::InitSink - returned error\n2026-11-12 00:50:10.300 T:431      info <general>: [Foundry Games QA] missing-core end"
+  },
+  "production_entrypoint_sha256": "d33e6f8be7aeeba9e1d7e10cfe4d0601b38ed2c8335f4f77c790ac1449696823",
+  "passed": true
+}

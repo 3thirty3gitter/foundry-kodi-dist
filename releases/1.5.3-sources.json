@@ -7,7 +7,32 @@
     "script.foundry.helper": "80422a4c0284d7cd7466ba7b1a6e866180f25ff0"
   },
   "validation": {
-    "status": "awaiting_final_ci",
-    "target_device_verification": "Shield gameplay and rendering unverified"
+    "status": "ci_passed_target_device_checks_pending",
+    "source_tests": {
+      "tests": 768,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "successful": true,
+      "python": "3.12.16"
+    },
+    "packaged_tests": {
+      "tests": 768,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "successful": true,
+      "python": "3.12.16"
+    },
+    "deterministic_rebuild": true,
+    "native_reports": [
+      "verification.json",
+      "startup-splash-verification.json",
+      "interface-verification.json",
+      "weather-verification.json",
+      "games/games-verification.json"
+    ],
+    "workflow_run": "43129435062",
+    "target_device_verification": "Shield rendering, navigation, controllers and gameplay unverified; native synthetic Games checks do not certify gameplay"
   }
 }

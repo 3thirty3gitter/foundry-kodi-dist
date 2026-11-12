@@ -1,0 +1,55 @@
+[
+    {
+        "Id": "sha256:81b374d9240e50c2dca9341dde02e2ca1da9e16a0b2f837d0ea88aa769d01a3e",
+        "RepoTags": [
+            "foundry-native-qa:debian13-kodi21.2"
+        ],
+        "RepoDigests": [
+            "foundry-native-qa@sha256:81b374d9240e50c2dca9341dde02e2ca1da9e16a0b2f837d0ea88aa769d01a3e"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-11-12T00:46:04.091024358Z",
+        "Config": {
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "PYTHONDONTWRITEBYTECODE=1",
+                "HOME=/tmp/foundry-home",
+                "XDG_CONFIG_HOME=/tmp/foundry-config",
+                "XDG_CACHE_HOME=/tmp/foundry-cache"
+            ],
+            "Cmd": [
+                "bash"
+            ],
+            "WorkingDir": "/work/foundry-kodi-dist"
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 303230620,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:dd57f90311a2567b55ff22eeacff1602fd04ad7566e315957731359eab173b90",
+                "sha256:9102e3d4f1891da155e72cc872469ad558978541eb96fe26c45635dbeb6dc7a6",
+                "sha256:ab4ca096d48b1b8d20086d95daa4a6779f2db998625da4eb6a59f875789d5377",
+                "sha256:74f0a3433ceca3284ea10c90ac1da467bad7cce35e7ac31bb567f9bf1d93957f"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-11-12T00:46:24.748370116Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:81b374d9240e50c2dca9341dde02e2ca1da9e16a0b2f837d0ea88aa769d01a3e",
+            "size": 856
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "txeif3g5g4emil5gtm99d0o2v",
+                    "CreatedAt": "2026-11-12T00:46:28.012415472Z"
+                }
+            ]
+        }
+    }
+]
