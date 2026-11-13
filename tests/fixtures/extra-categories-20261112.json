@@ -1,0 +1,314 @@
+{
+  "schema_version": 1,
+  "background_sha256": "9d254d3949ab9dc2690ac285bc8da5a51b42c0644ec48566464a5aaf057c6212",
+  "method": "Generated transparent metallic icons and titles composited on exact approved plate; underline copied from approved Trending. Owner authorized deterministic composition.",
+  "files": [
+    {
+      "label": "Genres",
+      "slug": "genres",
+      "filename": "genres.png",
+      "sha256": "b98262d3bb901bdae9499c4b11650d16d255e8ff07e7808490ac37eb0933633f",
+      "bytes": 1296438,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "foreground_bbox": [
+        1129,
+        282,
+        1418,
+        600
+      ],
+      "icon_bbox": [
+        1165,
+        282,
+        1381,
+        500
+      ],
+      "title_bbox": [
+        1129,
+        522,
+        1418,
+        570
+      ],
+      "background_outside_foreground_exact": true
+    },
+    {
+      "label": "Providers",
+      "slug": "providers",
+      "filename": "providers.png",
+      "sha256": "2e453e4d3ee36800ad4d24da6f0e74888f94b7df351007be1c4be00301668fa4",
+      "bytes": 1274539,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "foreground_bbox": [
+        1072,
+        282,
+        1474,
+        600
+      ],
+      "icon_bbox": [
+        1181,
+        282,
+        1365,
+        500
+      ],
+      "title_bbox": [
+        1072,
+        522,
+        1474,
+        570
+      ],
+      "background_outside_foreground_exact": true
+    },
+    {
+      "label": "Languages",
+      "slug": "languages",
+      "filename": "languages.png",
+      "sha256": "d9cd62875f4b511379dd37b8d8d4026fc4e5fdc6d231cae31c09bd1aa8413055",
+      "bytes": 1300550,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "foreground_bbox": [
+        1062,
+        282,
+        1485,
+        600
+      ],
+      "icon_bbox": [
+        1165,
+        282,
+        1381,
+        500
+      ],
+      "title_bbox": [
+        1062,
+        522,
+        1485,
+        570
+      ],
+      "background_outside_foreground_exact": true
+    },
+    {
+      "label": "Years",
+      "slug": "years",
+      "filename": "years.png",
+      "sha256": "a47b1b64d3cf3a6b76a4f7b61c89d3d98dd8ade2459fc3cd88582d5aa4645d09",
+      "bytes": 1279938,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "foreground_bbox": [
+        1138,
+        282,
+        1408,
+        600
+      ],
+      "icon_bbox": [
+        1171,
+        282,
+        1376,
+        500
+      ],
+      "title_bbox": [
+        1154,
+        522,
+        1393,
+        570
+      ],
+      "background_outside_foreground_exact": true
+    },
+    {
+      "label": "Decades",
+      "slug": "decades",
+      "filename": "decades.png",
+      "sha256": "5f25e61a3870480293efc9d00b5de97d0b027488ba432234ae160618439773d9",
+      "bytes": 1286348,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "foreground_bbox": [
+        1110,
+        282,
+        1437,
+        600
+      ],
+      "icon_bbox": [
+        1165,
+        282,
+        1382,
+        500
+      ],
+      "title_bbox": [
+        1110,
+        522,
+        1437,
+        570
+      ],
+      "background_outside_foreground_exact": true
+    },
+    {
+      "label": "Certifications",
+      "slug": "certifications",
+      "filename": "certifications.png",
+      "sha256": "8f24f734a75af8449b87fa3f7c67308be553f2744a8ff42682c63b82c98494ac",
+      "bytes": 1294452,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "foreground_bbox": [
+        1018,
+        282,
+        1528,
+        600
+      ],
+      "icon_bbox": [
+        1179,
+        282,
+        1368,
+        500
+      ],
+      "title_bbox": [
+        1018,
+        524,
+        1528,
+        570
+      ],
+      "background_outside_foreground_exact": true
+    },
+    {
+      "label": "Because You Watched...",
+      "slug": "because-you-watched",
+      "filename": "because-you-watched.png",
+      "sha256": "805e4429c9209524e390bf27c92b74866332605f051896de29d0096ebef2d50f",
+      "bytes": 1304195,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "foreground_bbox": [
+        1018,
+        295,
+        1528,
+        600
+      ],
+      "icon_bbox": [
+        1133,
+        295,
+        1413,
+        500
+      ],
+      "title_bbox": [
+        1018,
+        528,
+        1528,
+        570
+      ],
+      "background_outside_foreground_exact": true
+    },
+    {
+      "label": "Watched",
+      "slug": "watched",
+      "filename": "watched.png",
+      "sha256": "7a8124a81274583dc557ed794ced469e06bcaa22c51640768ca6d8cceebeee13",
+      "bytes": 1290824,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "foreground_bbox": [
+        1097,
+        321,
+        1450,
+        600
+      ],
+      "icon_bbox": [
+        1133,
+        321,
+        1413,
+        500
+      ],
+      "title_bbox": [
+        1097,
+        522,
+        1450,
+        570
+      ],
+      "background_outside_foreground_exact": true
+    },
+    {
+      "label": "Recently Watched",
+      "slug": "recently-watched",
+      "filename": "recently-watched.png",
+      "sha256": "ae9e577fa563d4c15ae371eed574840cf5c68a924791c7dcafb435025df6e18a",
+      "bytes": 1306221,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "foreground_bbox": [
+        1018,
+        282,
+        1528,
+        600
+      ],
+      "icon_bbox": [
+        1141,
+        282,
+        1406,
+        500
+      ],
+      "title_bbox": [
+        1018,
+        525,
+        1528,
+        570
+      ],
+      "background_outside_foreground_exact": true
+    },
+    {
+      "label": "In Progress",
+      "slug": "in-progress",
+      "filename": "in-progress.png",
+      "sha256": "1992ecf4af3dc6b43469751f2358db29d4a2e75544b84bbead29a9fc05d0060e",
+      "bytes": 1284567,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "foreground_bbox": [
+        1049,
+        282,
+        1498,
+        600
+      ],
+      "icon_bbox": [
+        1167,
+        282,
+        1379,
+        500
+      ],
+      "title_bbox": [
+        1049,
+        522,
+        1498,
+        570
+      ],
+      "background_outside_foreground_exact": true
+    }
+  ],
+  "authorization": {
+    "date": "2026-11-12",
+    "request": "We needs wallpapers from genres to in progress",
+    "composition_question": "To keep their backgrounds exactly unchanged, may I place each new icon and title onto the existing Trending background rather than regenerate the entire wallpaper?",
+    "response": "Yes"
+  },
+  "background_source": "media/foundry-home-backdrop.png"
+}

@@ -1,3 +1,11 @@
+# Foundry 1.5.4 development candidate
+
+Adds ten Movies category wallpapers, Genres through In Progress, using the unchanged approved Trending backdrop and matching metallic icon/title art. Exact-label native focus, directory and source-owned catalog routing now cover 23 categories. Skin/build/bootstrap: 1.5.4; helper: 1.3.5. All original approved artwork and historical packages remain unchanged.
+
+Local development only; no push or production publication performed. Full source/extracted and native validation status is tracked in docs/handoffs/LATEST.md. Physical Shield/provider behavior remains unverified.
+
+## Historical candidate notes
+
 # Foundry 1.5.3 development candidate
 
 Local candidate: Movies category wallpaper layering and loading/first-paint transitions, shared studio-logo resolution, and temporary QR phone text entry. Skin/build/bootstrap are 1.5.2; helper is 1.3.3. All other package versions and historical artifacts are preserved. Published production remains 1.5.1 until a fresh approval gate and publication.

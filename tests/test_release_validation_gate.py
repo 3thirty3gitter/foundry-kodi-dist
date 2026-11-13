@@ -83,7 +83,7 @@ class ReleaseEvidenceTests(unittest.TestCase):
                       copied_skin_inputs_sha256={'xml/Variables_Artwork.xml': 'f' * 64},
                       cases=[])
         movies.update({name: True for name in gate.MOVIE_FLAGS})
-        entries = [('movie-wallpaper-' + label.lower().replace(' ', '-'), label) for label in gate.MOVIE_LABELS]
+        entries = [('movie-wallpaper-' + label.lower().rstrip('.').replace(' ', '-'), label) for label in gate.MOVIE_LABELS]
         entries += [('movie-wallpaper-unknown', ''), ('movie-wallpaper-tv', ''),
                     ('movie-wallpaper-mixed', ''), ('movie-wallpaper-custom', 'Trending'),
                     ('movie-wallpaper-title-fanart', 'Trending')]
@@ -240,6 +240,27 @@ class ReleaseEvidenceTests(unittest.TestCase):
             with self.subTest(field=key), self.assertRaises(AssertionError):
                 gate.evidence(self.root, '1.5.0')
         path.write_bytes(original)
+
+    def test_154_requires_all_ten_extra_categories_without_breaking_historical_evidence(self):
+        gate.evidence(self.root, '1.5.0')
+        for path in self.root.rglob('*.json'):
+            path.write_text(path.read_text().replace('1.5.0','1.5.4'))
+        newqa=self.root/'releases/1.5.4-qa'
+        self.qa.rename(newqa);self.qa=newqa
+        with self.assertRaises(AssertionError):gate.evidence(self.root,'1.5.4')
+        path=self.qa/'native/verification.json'
+        report=json.loads(path.read_text());movies=report['movie_submenu_wallpapers']
+        movies.update(approved_count=23,rendered_approved_count=23)
+        for label in gate.EXTRA_MOVIE_LABELS:
+            name='movie-wallpaper-'+label.lower().rstrip('.').replace(' ','-')
+            movies['cases'].append(dict(case=name,canonical_label=label,screenshot=name+'.png',pixel_mean_max_errors=[1,1,1]))
+        self.write(path,report)
+        gate.evidence(self.root,'1.5.4')
+        for label in gate.EXTRA_MOVIE_LABELS:
+            changed=json.loads(json.dumps(report))
+            changed['movie_submenu_wallpapers']['cases']=[case for case in movies['cases'] if case['canonical_label']!=label]
+            self.write(path,changed)
+            with self.subTest(label=label),self.assertRaises(AssertionError):gate.evidence(self.root,'1.5.4')
 
     def test_playback_stop_back_and_traceback_proofs_cannot_be_omitted(self):
         path = self.qa / 'native/interface-verification.json'

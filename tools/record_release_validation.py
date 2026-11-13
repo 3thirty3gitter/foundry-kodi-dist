@@ -18,6 +18,8 @@ NATIVE = ('verification.json', 'startup-splash-verification.json',
 MOVIE_LABELS = ('Trending', 'Trending Recent', 'Popular', 'Popular Today', 'Premieres',
                 'Latest Releases', 'Most Watched', 'Most Favorited', 'Top 10 Box Office',
                 'Blockbusters', 'In Theaters', 'Up Coming', 'Oscar Winners')
+EXTRA_MOVIE_LABELS = ('Genres', 'Providers', 'Languages', 'Years', 'Decades', 'Certifications',
+                      'Because You Watched...', 'Watched', 'Recently Watched', 'In Progress')
 MOVIE_FLAGS = ('passed', 'custom_background_preserved', 'selected_title_fanart_preserved',
                'tv_mixed_unknown_rejected', 'paging_and_rehydration_context_preserved')
 GAMES_ASSERTIONS = ('console_listing', 'capture_state_settled', 'screenshot_encoding_acknowledged', 'automatic_games_view_selected', 'focused_hero_metadata', 'remote_navigation',
@@ -118,13 +120,14 @@ def evidence(root, release):
         assert all(record['phase'] == 'completed' and not record['error'] for record in startup['completed_game_widgets'])
         movies = native['verification.json']['movie_submenu_wallpapers']
         assert all(movies.get(name) is True for name in MOVIE_FLAGS)
-        assert movies['approved_count'] == movies['rendered_approved_count'] == 13
+        movie_labels = MOVIE_LABELS + (EXTRA_MOVIE_LABELS if tuple(int(v) for v in release.split('.')) >= (1, 5, 4) else ())
+        assert movies['approved_count'] == movies['rendered_approved_count'] == len(movie_labels)
         cases = movies['cases']
-        expected = {'movie-wallpaper-' + label.lower().replace(' ', '-'): label for label in MOVIE_LABELS}
+        expected = {'movie-wallpaper-' + label.lower().rstrip('.').replace(' ', '-'): label for label in movie_labels}
         expected.update({'movie-wallpaper-unknown': '', 'movie-wallpaper-tv': '',
                          'movie-wallpaper-mixed': '', 'movie-wallpaper-custom': 'Trending',
                          'movie-wallpaper-title-fanart': 'Trending'})
-        assert len(cases) == 18 and {case['case'] for case in cases} == set(expected)
+        assert len(cases) == len(movie_labels) + 5 and {case['case'] for case in cases} == set(expected)
         for case in cases:
             assert case['canonical_label'] == expected[case['case']]
             assert case['screenshot'] == case['case'] + '.png'

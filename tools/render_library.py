@@ -333,6 +333,9 @@ def main():
         shutil.copyfile(SKIN/'xml/Includes_FoundryMovieSubmenus.xml',active/'xml/Includes_FoundryMovieSubmenus.xml')
         copied_skin_inputs={str(path.relative_to(SKIN)).replace('\\','/'):hashlib.sha256(path.read_bytes()).hexdigest() for path in [SKIN/'xml/script-foundry-vod.xml',SKIN/'xml/Includes_FoundryMovieSubmenus.xml',SKIN/'xml/View_57_StreamPilot.xml',*sorted((SKIN/'media/foundry-movie-submenus').glob('*'))]}
         approved_movies=json.loads((SKIN/'media/foundry-movie-submenus/SOURCE.json').read_text())['files']
+        extra_movies=json.loads((SKIN/'media/foundry-movie-submenus/SOURCE-extra-categories-20261112.json').read_text())['files']
+        assert len(approved_movies)==13 and len(extra_movies)==10
+        approved_movies += [dict(item,proposed_skin_path='media/foundry-movie-submenus/'+item['filename']) for item in extra_movies]
         movie_cases=[dict(name='movie-wallpaper-'+item['slug'],label=item['label'],section='Movies',kind='movie',expected=item['proposed_skin_path']) for item in approved_movies]
         movie_cases += [dict(name='movie-wallpaper-unknown',label='Movies',section='Movies',kind='movie',expected='media/streampilot/catalog-base.png'),dict(name='movie-wallpaper-tv',label='Trending',section='TV Shows',kind='tvshow',expected='media/streampilot/catalog-base.png'),dict(name='movie-wallpaper-mixed',label='Trending',section='Movies',kind='mixed',expected='media/streampilot/catalog-base.png'),dict(name='movie-wallpaper-custom',label='Trending',section='Movies',kind='movie',custom=True,expected='custom'),dict(name='movie-wallpaper-title-fanart',label='Trending',section='Movies',kind='movie',fanart=True,expected='fanart')]
         for name in ('Roboto-Regular.ttf','Roboto-Bold.ttf','NotoSans-Regular.ttf','NotoMono-Regular.ttf'):
@@ -642,12 +645,12 @@ xbmcplugin.setContent(handle,'movies');xbmcplugin.endOfDirectory(handle)
                     assert state()['movie_submenu_label']==wanted,state();time.sleep(.3);artwork_pixels(capture(case['name']+'-rehydrated'),source)
                     record.update(paging_roundtrip_retains_context=True,native_list_loss_rehydration_retains_context=True)
                 wallpaper_evidence.append(record);key('Escape')
-            movie_wallpapers={'approved_count':len(approved_movies),'rendered_approved_count':sum(case['name'] in {entry['case'] for entry in wallpaper_evidence} for case in movie_cases[:13]),
+            movie_wallpapers={'approved_count':len(approved_movies),'rendered_approved_count':sum(case['name'] in {entry['case'] for entry in wallpaper_evidence} for case in movie_cases[:23]),
                               'passed':True,'cases':wallpaper_evidence,'custom_background_preserved':True,'selected_title_fanart_preserved':True,'tv_mixed_unknown_rejected':True,
                               'paging_and_rehydration_context_preserved':True,'copied_skin_inputs_sha256':copied_skin_inputs,
                               'scope':'Shipped catalog XML and exact approved assets copied into isolated Estuary scaffolding. Native desktop Kodi; no Shield, provider or real playback claim for wallpaper context.'}
-            assert movie_wallpapers['approved_count']==movie_wallpapers['rendered_approved_count']==13
-            evidence.append({'section':'Movies submenu wallpapers','passed':True,'rendered_approved_count':13})
+            assert movie_wallpapers['approved_count']==movie_wallpapers['rendered_approved_count']==23
+            evidence.append({'section':'Movies submenu wallpapers','passed':True,'rendered_approved_count':23})
             wait_for(lambda:(base/'complete').exists())
             (output/'verification.json').write_text(json.dumps({'fixture_identity':identity,'fixture_port':port,'renderer':'Native Kodi '+subprocess.check_output(['kodi','--version'],text=True).strip(),'canvas':[1920,1080],'checks':evidence,'movie_submenu_wallpapers':movie_wallpapers,'scope':'Controlled fixtures; not Shield, live providers or Android pixel parity'},indent=2)+'\n',encoding='utf-8')
         finally:
