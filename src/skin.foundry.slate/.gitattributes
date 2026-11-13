@@ -6,3 +6,4 @@
 *.ttf binary
 *.xbt binary
 resources/foundry-header-media-center-source.json -text
+* -text
