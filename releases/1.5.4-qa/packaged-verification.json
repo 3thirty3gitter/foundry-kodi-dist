@@ -72,6 +72,20 @@
       "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.5.4.zip",
       "sha256": "aeef96d237f9f2de43111e0a256e728958438eef27e79485167f3fb15a05dcd3",
       "size": 854
+    },
+    {
+      "id": "script.foundry.slate.helper",
+      "version": "0.1.0",
+      "path": "script.foundry.slate.helper/script.foundry.slate.helper-0.1.0.zip",
+      "sha256": "23013facab131b70125a4088465bcf52c7d49244f2a4e2ad6038348d042e08a6",
+      "size": 899908
+    },
+    {
+      "id": "skin.foundry.slate",
+      "version": "0.1.0",
+      "path": "skin.foundry.slate/skin.foundry.slate-0.1.0.zip",
+      "sha256": "eaaea0d42ae7ebc9d725f2085ca873c41479adad69df1a33a448a80941b228b8",
+      "size": 73064863
     }
   ],
   "deterministic_rebuild": true,

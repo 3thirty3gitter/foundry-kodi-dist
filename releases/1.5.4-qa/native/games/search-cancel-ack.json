@@ -1,16 +1,16 @@
 {
-  "old_directory_id": "2d01374da7d44ce5955bfdff0fb12b1c",
-  "new_directory_id": "d178762ac919409cbf3fdae4da656949",
+  "old_directory_id": "2083975cc1864f04a6caa873f28f277a",
+  "new_directory_id": "8134d3ce7f214e9b8238ff47c930bda0",
   "refresh_ack": {
-    "id": "41cc91c2d396418f92cbbc3c4ddfb704",
+    "id": "01afe118cc2649a5a2b6079dbca50e6d",
     "action": "home",
     "mode": "",
     "phase": "completed",
     "error": "",
-    "started": 502.669748318,
-    "directory_id": "d178762ac919409cbf3fdae4da656949",
-    "completed": 502.780756199,
-    "runtime_skin_path": "/tmp/foundry-games-qa-lxb02inb/kodi/portable_data/addons/skin.foundry/",
+    "started": 517.309960319,
+    "directory_id": "8134d3ce7f214e9b8238ff47c930bda0",
+    "completed": 517.376919311,
+    "runtime_skin_path": "/tmp/foundry-games-qa-q4mu9jy8/kodi/portable_data/addons/skin.foundry/",
     "window_id": 10821
   },
   "before": {
@@ -196,14 +196,14 @@
     "path": "plugin://plugin.games.foundry/?action=home"
   },
   "cancel_invocation": {
-    "id": "4f1edd46ced04fc3921257ab7bfaba71",
+    "id": "98e3ee035c9049d9801698e1aaea24aa",
     "action": "search",
     "mode": "",
     "phase": "completed",
     "error": "",
-    "started": 502.254054944,
-    "completed": 502.480941894,
-    "runtime_skin_path": "/tmp/foundry-games-qa-lxb02inb/kodi/portable_data/addons/skin.foundry/",
+    "started": 516.817199073,
+    "completed": 517.215961827,
+    "runtime_skin_path": "/tmp/foundry-games-qa-q4mu9jy8/kodi/portable_data/addons/skin.foundry/",
     "window_id": 10821
   }
 }
