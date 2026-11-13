@@ -1,0 +1,91 @@
+{
+  "purpose": "Approved standalone full-frame widget wallpapers. Original non-widget images remain unchanged in resource.images.foundry.wallpapers 1.0.0.",
+  "approval": "Parent-coordinated final set from Trent-approved Movies v2; remaining variants visually reviewed by parent.",
+  "resolution_note": "Generated detail is 1672x941 (Live TV 1672x940), not native 4K. Files are copied unchanged.",
+  "files": {
+    "movies": {
+      "library_file_id": "libfile_aa3c002b0e3881918276a87ebc611f70",
+      "file_id": "file_00000000063c81fbb4a824b32d72e1cc",
+      "version": 2,
+      "sha256": "06e8db432070fb92caaa1a3604e1ca912decd798a38964f8ce3049e4a54b35a5"
+    },
+    "tvshows": {
+      "library_file_id": "libfile_89d0465dd17c8191bfbf4109dcf26912",
+      "file_id": "file_000000009f7081f5a5fe855e32c8c2c5",
+      "version": 0,
+      "sha256": "b667e3e8bbd6e17af5158e0e8f7b2c2ae687fd9ffb5636890deef9383835001b"
+    },
+    "music": {
+      "library_file_id": "libfile_44dd854914408191abd21cd2b4cb1875",
+      "file_id": "file_0000000009d881f5ac88d7091f9aefa1",
+      "version": 0,
+      "sha256": "fa56ca42052dd798de9ae6ab88ec622e90d0351256732c6f1db75602f9190de2"
+    },
+    "musicvideos": {
+      "library_file_id": "libfile_46e8ba275fd08191b6375724a3fde97d",
+      "file_id": "file_00000000f1ac81f594209a65bdc656cc",
+      "version": 0,
+      "sha256": "dfc8225d444a38d49db8aed549c0860c5555e6cbd0ccf724ce36b2b2ac1933f5"
+    },
+    "livetv": {
+      "library_file_id": "libfile_f8791522e1b881918aa8abd99a6ec978",
+      "file_id": "file_00000000761881f593b40f8f502b18f0",
+      "version": 0,
+      "sha256": "9caad0b1485cba38bfcc6e3d19b97b67f1f85e76876a48dcad1cc6ea9566efa4"
+    },
+    "radio": {
+      "library_file_id": "libfile_9eb488c3d1e08191b1f84d686b42cc8d",
+      "file_id": "file_00000000ae0081f588c2aa3c6be88421",
+      "version": 0,
+      "sha256": "e4be1e7de7948f83022f2889c3fa93268dbb8be3169f94ae1c25ee502cbb85aa"
+    },
+    "games": {
+      "library_file_id": "libfile_0887405ea8c481919417ede361c23146",
+      "file_id": "file_00000000bc6081f5a2739e34cd933392",
+      "version": 0,
+      "sha256": "0ed5aa9a2015e56dcb278d2467726200c6b578c4c9c7efaecec4217da50fd90c"
+    },
+    "addons": {
+      "library_file_id": "libfile_f490ab29b5e88191b736612ddd7c7d4e",
+      "file_id": "file_00000000cfac81f58d5a97be02b3aa98",
+      "version": 0,
+      "sha256": "5f910cb93721723459dff323508ac8addccafba53b7bb049cb2ed0f9f0d0f76e"
+    },
+    "pictures": {
+      "library_file_id": "libfile_fa70070abdb081918e71177b90bbca64",
+      "file_id": "file_00000000f51c81f582948ce4f32f6ac9",
+      "version": 0,
+      "sha256": "cf67d97dc9e58ab38a9de6794998ebc85913e6deb1155ba0159c99e705363986"
+    },
+    "video": {
+      "library_file_id": "libfile_6440c977b3e88191bee1dc2fae2f16a3",
+      "file_id": "file_000000006dd081f5b569b47e87566655",
+      "version": 0,
+      "sha256": "b3e02abafcd7738792b3bb1288380adfcd67ae28b520510c36575a1815d453a9"
+    },
+    "favorites": {
+      "library_file_id": "libfile_84c866669ca08191a3acccb9a0e00c7a",
+      "file_id": "file_00000000d35c81f5805d1d922847eea3",
+      "version": 0,
+      "sha256": "fcbd4d59eb3e5fe63ea702ba06b3172d9073cc7b92745ea3285bde174e208694"
+    },
+    "weather": {
+      "library_file_id": "libfile_dfe17570f6548191a263e038f355d8a9",
+      "file_id": "file_000000003b0c81f5b8b6bd157f7c56e5",
+      "version": 0,
+      "sha256": "97081761c58413f38782145338020ba8dcf9c27a23390a064f436404d9eddfd6"
+    },
+    "settings": {
+      "library_file_id": "libfile_c46ea57bd8b08191b06829733588c80b",
+      "file_id": "file_000000007fa081f58451a70f2e4ef81c",
+      "version": 0,
+      "sha256": "b9b5b275f261248ead831f00f4a758eda585309526845c8320c0273be93ff01a"
+    },
+    "home": {
+      "library_file_id": "libfile_10ba0c711e3081919afedabaf95ba547",
+      "file_id": "file_00000000d3b481f5bcdfefbb2d656c9f",
+      "version": 0,
+      "sha256": "55f3f1d2a0800f2d4b037a1be7d23892a9729f6a854017fbba71b15e5b77625a"
+    }
+  }
+}

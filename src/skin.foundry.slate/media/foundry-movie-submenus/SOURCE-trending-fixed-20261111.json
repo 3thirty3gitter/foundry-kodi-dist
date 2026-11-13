@@ -1,0 +1,162 @@
+{
+  "schema_version": 3,
+  "artwork_set": "Foundry approved fixed Trending background",
+  "approval": {
+    "date": "2026-11-11",
+    "quote": "Great job nova, update all in the app"
+  },
+  "dimensions": [
+    1672,
+    941
+  ],
+  "widget_group_scale": 0.55,
+  "background_sha256": "9d254d3949ab9dc2690ac285bc8da5a51b42c0644ec48566464a5aaf057c6212",
+  "review_library_file_id": "libfile_fde3_f-83a0db188f8081919d90f568775120d8_2111607db4588191b58d84d14639c769",
+  "background_note": "One fixed Trending background. Identical approved PNG bytes copied without transformations; widget foregrounds were composed at 55% scale in the approved set.",
+  "mode": "category",
+  "files": [
+    {
+      "label": "Trending",
+      "slug": "trending",
+      "filename": "trending.png",
+      "sha256": "e815d9e21d5243c63bda01cbd86c676208d496a8dd914f2d0589962ce88384ea",
+      "bytes": 1237315,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Trending Recent",
+      "slug": "trending-recent",
+      "filename": "trending-recent.png",
+      "sha256": "920cdb3b8072709bf993068dca0bcfe773423677afd1bd187282b83e053deed2",
+      "bytes": 1257291,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Popular",
+      "slug": "popular",
+      "filename": "popular.png",
+      "sha256": "937fc0a363c8ba55a6d73c654668277a94093445d192d7e77079b2e066bb3071",
+      "bytes": 1234148,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Popular Today",
+      "slug": "popular-today",
+      "filename": "popular-today.png",
+      "sha256": "9d81bd6c3b0abdfd99b87a917df205c14778a9b7ba6a9d11317195f6b09d612a",
+      "bytes": 1249320,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Premieres",
+      "slug": "premieres",
+      "filename": "premieres.png",
+      "sha256": "47614ad19144e8c22247a329c4f4276024e84c069f023b1f5bdd8dc39770c879",
+      "bytes": 1248401,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Latest Releases",
+      "slug": "latest-releases",
+      "filename": "latest-releases.png",
+      "sha256": "d851bf0f45837085a446d09d4b9a03b8daa2f93be84d2d23f54ea3a67d30445b",
+      "bytes": 1250458,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Most Watched",
+      "slug": "most-watched",
+      "filename": "most-watched.png",
+      "sha256": "e775c339414a2289f0dcb3e55a93ad64876e20c9b7ec22032e6f4bb43e43e0fa",
+      "bytes": 1245768,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Most Favorited",
+      "slug": "most-favorited",
+      "filename": "most-favorited.png",
+      "sha256": "c595d5f6e96d52234478e3ad51a13c6f8fe4717e254786b2aa6f7a0797ce085f",
+      "bytes": 1240864,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Top 10 Box Office",
+      "slug": "top-10-box-office",
+      "filename": "top-10-box-office.png",
+      "sha256": "c5af97e846fd55b1b7c24ef0439288f112e013c8310fbe5457a270cb20032af8",
+      "bytes": 1253810,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Blockbusters",
+      "slug": "blockbusters",
+      "filename": "blockbusters.png",
+      "sha256": "5354c5d8f252536065e5b7f0d1ae84b810d6a827ed75c99344f4857fe480a5fc",
+      "bytes": 1278533,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "In Theaters",
+      "slug": "in-theaters",
+      "filename": "in-theaters.png",
+      "sha256": "4e7fd2462a763bfffcac331c77b60323233233d4c754d893eb6bf008d862b898",
+      "bytes": 1256966,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Up Coming",
+      "slug": "up-coming",
+      "filename": "up-coming.png",
+      "sha256": "a4542cbe29c1f3856a3180622524eee92e98254a6942899f5a73e82a1057e850",
+      "bytes": 1240696,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Oscar Winners",
+      "slug": "oscar-winners",
+      "filename": "oscar-winners.png",
+      "sha256": "f3e60790bdd3f253883df9e059945ea91d3dfec174ff4d15325adc9243672250",
+      "bytes": 1265864,
+      "dimensions": [
+        1672,
+        941
+      ]
+    }
+  ]
+}

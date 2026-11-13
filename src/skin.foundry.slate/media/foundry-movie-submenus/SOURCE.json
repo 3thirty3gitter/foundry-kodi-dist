@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "name": "Foundry Movies submenu wallpapers",
+  "approval": "Owner approved thirteen designs for the next update; integrated for skin 1.5.0.",
+  "generation": "Built-in image generation, original PNG bytes preserved",
+  "source_manifest_sha256": "a04077cb0d0940eb449fb4463a6c1226270f16f5cf6267cffb12b97f9c4d83b8",
+  "dimensions": [
+    1672,
+    941
+  ],
+  "layout": "Dark left48 percent for menu; small subject and exact category title on right",
+  "routing": "Provider-neutral exact category labels, scoped to Movies submenu navigation.",
+  "files": [
+    {
+      "label": "Trending",
+      "slug": "trending",
+      "file": "wallpapers/trending.png",
+      "sha256": "6928e49789f98ebd39ea1c3ff58a6f10345742161a23e2bc4d1619636deaea4a",
+      "bytes": 1509823,
+      "left_menu_mean_luminance_0_255": 6.61,
+      "proposed_skin_path": "media/foundry-movie-submenus/trending.png"
+    },
+    {
+      "label": "Trending Recent",
+      "slug": "trending-recent",
+      "file": "wallpapers/trending-recent.png",
+      "sha256": "988405977d861693d8e5ad0c65a44024a09bd227e7ba662cdfde8acc90f5cc71",
+      "bytes": 1532629,
+      "left_menu_mean_luminance_0_255": 6.53,
+      "proposed_skin_path": "media/foundry-movie-submenus/trending-recent.png"
+    },
+    {
+      "label": "Popular",
+      "slug": "popular",
+      "file": "wallpapers/popular.png",
+      "sha256": "a9f54cd64f1bd5bb0573294e6416163b45f8729dde7817f4a3a91e3beb2430c7",
+      "bytes": 1511136,
+      "left_menu_mean_luminance_0_255": 6.7,
+      "proposed_skin_path": "media/foundry-movie-submenus/popular.png"
+    },
+    {
+      "label": "Popular Today",
+      "slug": "popular-today",
+      "file": "wallpapers/popular-today.png",
+      "sha256": "b583c971a4cee760773ff63247675a5f8d22dc2e6fcf870fb2fe2c89cc69c924",
+      "bytes": 1531621,
+      "left_menu_mean_luminance_0_255": 6.06,
+      "proposed_skin_path": "media/foundry-movie-submenus/popular-today.png"
+    },
+    {
+      "label": "Premieres",
+      "slug": "premieres",
+      "file": "wallpapers/premieres.png",
+      "sha256": "099d321d4d5ef84a6d3bcd5e59641dbb50f46eb1488861ac1c816c38b93fe221",
+      "bytes": 1528972,
+      "left_menu_mean_luminance_0_255": 6.07,
+      "proposed_skin_path": "media/foundry-movie-submenus/premieres.png"
+    },
+    {
+      "label": "Latest Releases",
+      "slug": "latest-releases",
+      "file": "wallpapers/latest-releases.png",
+      "sha256": "5b2f00878909400094b2dc275bc037d04fd2d3c58a7c4b18aa12c99094b94260",
+      "bytes": 1510192,
+      "left_menu_mean_luminance_0_255": 6.9,
+      "proposed_skin_path": "media/foundry-movie-submenus/latest-releases.png"
+    },
+    {
+      "label": "Most Watched",
+      "slug": "most-watched",
+      "file": "wallpapers/most-watched.png",
+      "sha256": "60cfa20ec05ec7d8e0a98bf25830a8649ea1613a0577fd4920dfeffa068df5bb",
+      "bytes": 1519418,
+      "left_menu_mean_luminance_0_255": 6.38,
+      "proposed_skin_path": "media/foundry-movie-submenus/most-watched.png"
+    },
+    {
+      "label": "Most Favorited",
+      "slug": "most-favorited",
+      "file": "wallpapers/most-favorited.png",
+      "sha256": "6f2501b34ca42055ba36e0d34c317c7d7e9181037d3ebd17d35a96a532a31253",
+      "bytes": 1532917,
+      "left_menu_mean_luminance_0_255": 6.23,
+      "proposed_skin_path": "media/foundry-movie-submenus/most-favorited.png"
+    },
+    {
+      "label": "Top 10 Box Office",
+      "slug": "top-10-box-office",
+      "file": "wallpapers/top-10-box-office.png",
+      "sha256": "0b585ff023a885b447a89ab711bfe1ddba5779e003fbd47ede1852f3adebe89a",
+      "bytes": 1513467,
+      "left_menu_mean_luminance_0_255": 6.48,
+      "proposed_skin_path": "media/foundry-movie-submenus/top-10-box-office.png"
+    },
+    {
+      "label": "Blockbusters",
+      "slug": "blockbusters",
+      "file": "wallpapers/blockbusters.png",
+      "sha256": "bca0e25af74ba4760dae905513a08696a69f9e3632384a455ff79c8cfee83606",
+      "bytes": 1557410,
+      "left_menu_mean_luminance_0_255": 6.69,
+      "proposed_skin_path": "media/foundry-movie-submenus/blockbusters.png"
+    },
+    {
+      "label": "In Theaters",
+      "slug": "in-theaters",
+      "file": "wallpapers/in-theaters.png",
+      "sha256": "fbedbfb72d6b2b3d05559204d1daa4421d4dd3573ba2829e8bd5ab16e2a61b3c",
+      "bytes": 1548167,
+      "left_menu_mean_luminance_0_255": 6.29,
+      "proposed_skin_path": "media/foundry-movie-submenus/in-theaters.png"
+    },
+    {
+      "label": "Up Coming",
+      "slug": "up-coming",
+      "file": "wallpapers/up-coming.png",
+      "sha256": "b93dc18a0cbc5ae7ca5373dcd3ea93a7339a095f728b503278548faa6aebe8f0",
+      "bytes": 1509817,
+      "left_menu_mean_luminance_0_255": 6.67,
+      "proposed_skin_path": "media/foundry-movie-submenus/up-coming.png"
+    },
+    {
+      "label": "Oscar Winners",
+      "slug": "oscar-winners",
+      "file": "wallpapers/oscar-winners.png",
+      "sha256": "f82d322381b6d5952648e80b4ece8343235be293899cc693a74cf5e1af0f399d",
+      "bytes": 1542442,
+      "left_menu_mean_luminance_0_255": 6.83,
+      "proposed_skin_path": "media/foundry-movie-submenus/oscar-winners.png"
+    }
+  ]
+}

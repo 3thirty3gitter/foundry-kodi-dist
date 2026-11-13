@@ -1,0 +1,335 @@
+{
+  "style": "Foundry wallpaper chrome and original category neon colors",
+  "format": "full-color transparent PNG",
+  "size": [
+    256,
+    256
+  ],
+  "icons": [
+    "accessibility",
+    "add",
+    "addons",
+    "audio",
+    "back",
+    "calendar",
+    "check",
+    "clock",
+    "debug",
+    "delete",
+    "disc",
+    "display",
+    "download",
+    "edit",
+    "favorite",
+    "folder",
+    "fullscreen",
+    "games",
+    "help",
+    "home",
+    "info",
+    "interface",
+    "keyboard",
+    "language",
+    "library",
+    "list",
+    "lock",
+    "media",
+    "music",
+    "network",
+    "next",
+    "pictures",
+    "player",
+    "power",
+    "profiles",
+    "reload",
+    "remote",
+    "remove",
+    "search",
+    "settings",
+    "share",
+    "skin",
+    "sleep",
+    "sliders",
+    "sort",
+    "storage",
+    "subtitles",
+    "system",
+    "toggle",
+    "tv",
+    "upload",
+    "weather"
+  ],
+  "provenance": {
+    "accessibility": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "5859403865770d9894de8e19c8b7cfd2314b372412282141ef63418e6bf264df",
+      "sha256": "5383928df91827346a5774342874ab85ee08ace5a9075b5fcd31e1046ec2f714"
+    },
+    "add": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "54cf6eacef6ee209bb8ca0513448508164afc79391513f43176a6aaabd598d40",
+      "sha256": "ad3a808c8f0bcbb72d512c71b7d9158d8ced656cb1d0bab256df2b7214162b11"
+    },
+    "addons": {
+      "kind": "wallpaper extraction",
+      "reference": "addons.png",
+      "source_sha256": "37f38ef204a2de7eaab7c798de54656ffd771656be365a1595a9b0514d3c6c18",
+      "sha256": "96bd1eda6ee2eba72e965b9e8a702e68ac4fb2984bc83e2fbb7baf904b02cfc5"
+    },
+    "audio": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "73ad15b50094dd9b27e1e7a1fbab723d7a76424ee4547b1520fd9f7777ea870e",
+      "sha256": "c85f83cdfb6603ae3b18a6b39eee98b70706125705b3e8e1bc71db3246bcecc4"
+    },
+    "back": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "28cc76bfaaee1cdf0d20622dd18fe36ffc59d764e57fae853be0df5e7645d774",
+      "sha256": "ee4eca0dd6f0891d336905cac56bf21f041a4147879ba7ef433e21f321e60f3b"
+    },
+    "calendar": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "e81166d10d1ae226cbaa50585184e431c344fc1678f6d81b494e7b8a8570f2e4",
+      "sha256": "6d7f817534f70c5ed148964ba77bb75ce9194213cf1dd69d1a80db7d9c461a19"
+    },
+    "check": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "e878a82e7d120650d057611828290fbd58aff7077de9b73be8c0fe21e3ee6f2d",
+      "sha256": "955d8675bd596979e2c790d6662d8d3afa2727c85d0ccbc18bb0032abc3285c2"
+    },
+    "clock": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "8a12f4a2a19bec69c0637101c56ac952e5be78c9ad5e6250841ef9f8c5a87e8a",
+      "sha256": "7f9bc8dace33685fb8b5cf4c9183f13810021dcc9579f35077c5668ad5510360"
+    },
+    "debug": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "1c47fde8e53f21159b539b3f4f424185ced4294b0810f4089e3a90052ddd37ba",
+      "sha256": "8027c23c4e7a3c7dde6f01a1d204fc5cd687b0f34a307104a0699391bd8b0316"
+    },
+    "delete": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "9ddc9ffec0db91c974dfb9a0c5a22cf1e89050984c6425154c90b792d8013391",
+      "sha256": "38f49d3456d7398e52c721838ba33e556479d4ab185beb1f05ec509e74ade39d"
+    },
+    "disc": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "bb2f980098440daf50aecc3640922ad8ad358befefba2f53b8da2513310a67c2",
+      "sha256": "68917a5d1e0976c6adcd29ab9f64b926bb446f15ecac6f4c9db51015d4bfbfff"
+    },
+    "display": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "832a7f83dda29ad8057007c5663357c3958dfc31a49f3fbba58820086db4d188",
+      "sha256": "3a173650e880218b715f8fd171956d3aa98fa915014476ca6ac110d8e990d6e4"
+    },
+    "download": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "842acadb932ae39aca228696ca2f7d20a38dfc54657397d7526b6f0af198c28e",
+      "sha256": "4dfceb7988937f1785e1fd56edbecf89e193512b84ccdfdcfda7bb4e22b75a40"
+    },
+    "edit": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "0e83d2a8b99d253b87e271785bb1bd481b08e6146d174f59cb70add183137564",
+      "sha256": "fac6215cef7865c56c9c8cd9e30109e9de9707c183e0f2cdde26626ee49217fa"
+    },
+    "favorite": {
+      "kind": "wallpaper extraction",
+      "reference": "favorites.png",
+      "source_sha256": "98005ced5065c1c03e0e49bc902154983379e7f000f95b4d87f16bf4c0dabc11",
+      "sha256": "817c46d30cbb4a4794ec36e59d36ca85b30d4644639c0c5dece8661a776a391b"
+    },
+    "folder": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "47e80bf270d17dfee7e6c22097b0cb1a307e1f1a6d8ed8968150f0d0dc312bc0",
+      "sha256": "4118f114349698e8218aa63f5fc942cb81b2c56c588fb029f217e958103bd4e7"
+    },
+    "fullscreen": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "e0e68b1a44580e149ff77d7aba8352b42dfa1d7e37d9548311129e2dfde7f3c5",
+      "sha256": "40cad8d52e6ec236cbbe0db492c3295b576c26f1c88c4310aeb91b0c836c4e65"
+    },
+    "games": {
+      "kind": "wallpaper extraction",
+      "reference": "games.png",
+      "source_sha256": "a1e0e0960f16a3f19be18a64b761fff01d94a5774928b0f7512f507371af4a06",
+      "sha256": "8c06a37cdee48e00510691bd76dded75f682dc1c35f57bc9f4dbe757b7208ee3"
+    },
+    "help": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "eac273458edba8bb41c2cff129c66a9e56036ef57a69dc851147bafef6829e20",
+      "sha256": "ef250692b200dcfc56d82eced3de723280c9275d9d396c9bd13be5b9499affbc"
+    },
+    "home": {
+      "kind": "wallpaper extraction",
+      "reference": "home.png",
+      "source_sha256": "0d712d981e411167f67844244591140567516aeb9ab6608251ea6764964fc8b1",
+      "sha256": "df59aaa97702f05f7ad9d647af526ad720113900671ce42d45ade706dd7234fa"
+    },
+    "info": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "f8a8f9732112db7ea90a687675c04c09ef835dfb01b927ad10f38b69adb16ec1",
+      "sha256": "6062ee471626d94b4bcf7c5b6077845d8a731e3079a5714e27a3896d8297eb71"
+    },
+    "interface": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "d4f7aa0a023b720e0cebc073591513f0a00daaf437b280e1c8d01c6e36433c13",
+      "sha256": "72efb3ec64e16776edeca5c4de74e007094679439fc7ef4a7a32844136e661fb"
+    },
+    "keyboard": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "4b50511c303bcbad8eeea14cf22ec68af6a371a51d99e28ba99b9b0fa1a9b9bb",
+      "sha256": "daabc9ff87f8213629943ff6c6bb6e1a45ffcc74ba3504c2a86cb1043e307a3d"
+    },
+    "language": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "6c7e1462270cd48299f2fa53a66bff6f09f46dbdee29a3c6eb2b74f82453677c",
+      "sha256": "6034ad62eff99f1a9da998ce46465952c2f217def48b158c08c15fc0776958dc"
+    },
+    "library": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "32420cedc4dacaa29b97c88d849c4da512b5c949bca143fda5ead90d05e5c2e6",
+      "sha256": "260a830250caacb9dcc9f38c5e761174eb266086f1e18456a64faea84093780d"
+    },
+    "list": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "0af00ab82660a3c8ad614cef188cc6d9eac3cfd7679b4be2503b1c701d9d7a14",
+      "sha256": "8069a10a4f933a407498adcb069c716d5cb34a6597c3969d85e8062a5a01d804"
+    },
+    "lock": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "f143f9be1f1056d3d8dc140f6e8d1127464d16bc18e150c711fbd0b6aaae5af2",
+      "sha256": "9b96c49e3f037069165cf1d84e5159f0f1e2a4e27c341e1ce08ce987a370412f"
+    },
+    "media": {
+      "kind": "wallpaper extraction",
+      "reference": "movies.png",
+      "source_sha256": "bb2a648c9fda34fb9fee04ef9bbea8881a9d6f9b83d614ea76f64d846f0052fb",
+      "sha256": "79bc9cdd91a7431cd26b8f2d5cdcaa05b444aa399e491de5c961cccab38ae198"
+    },
+    "music": {
+      "kind": "wallpaper extraction",
+      "reference": "music.png",
+      "source_sha256": "38d46d3e1b4d4e1df184dd656d2adc9b1f03f41f3094de861cf6f0eaff5dc9fd",
+      "sha256": "3e97ac8edc8f705c6aac2bc0c59b7462279cf955e859f89d6359b51dd5711da9"
+    },
+    "network": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "5ddacc32ff9736e2e452bb14867b0f322fdbc7812851a4cbae4c01eccd3fc19d",
+      "sha256": "dd0df15b526deaa4ee6e00e3ebed625a6ecfd52d8a0a53ac9d24743235b4dbbe"
+    },
+    "next": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "63e5a0b046420c44f9dcb1db2d35513b73e21b79c88736cb0b1161e3867b1b76",
+      "sha256": "576440ef4256ee417f850f169e8570a65566db53096858fb15b0b75aac989c8b"
+    },
+    "pictures": {
+      "kind": "wallpaper extraction",
+      "reference": "pictures.png",
+      "source_sha256": "77e95274586714487382e785f00a3c161e005b25f898791fdff97f3829715743",
+      "sha256": "c294f7e2bc057092745c01cc9e39d9916274ddfc782614ecc072aa1f1d2fa512"
+    },
+    "player": {
+      "kind": "wallpaper extraction",
+      "reference": "video.png",
+      "source_sha256": "781efbb5af5bb6598677f729b40142270d13a5e57721295b51a7fedc392cee35",
+      "sha256": "9b845fbc384941a71d5a9abe6aa0878eced0175f9074605a93c23718ca7d6a30"
+    },
+    "power": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "08c73dff0344473380249acd6aa42aa503c8c9c177388d599bca519d6504c4f8",
+      "sha256": "94232e21531086db745658f0b6d54159245271baec0331fed19b398aecf63cf1"
+    },
+    "profiles": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "e02ff984fadb9818161cb480e477132ebe2b34a85181c0a5b91305c44e35894a",
+      "sha256": "334c302e1591358fb57bbeb3d189d0f83a6782cb7317b10bc4eebfd9e1836151"
+    },
+    "reload": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "c5212052743be08f3207a3f646d5e3cd23ddc614e7f71fa75117b4867b1f6976",
+      "sha256": "28167f70ec58a69f9ff0067478a2daf730bde88778b33b5865ff212c1c9d9a74"
+    },
+    "remote": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "e1703f318a8a05a886d9c7322b32296b896cccfdeea4a001c5436ab4701ab442",
+      "sha256": "793437049dd989ec3811c344aad8fb2aa9224d6d841833323cdf05f2fe33a6fa"
+    },
+    "remove": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "669fc04454a332804b21e78960e1eba8683e1b6cd883bbb358633e706b5fdae5",
+      "sha256": "ae7feb0a446be46bfb05ca189a2dd696712cfc961f92e7284ca6487fde4cba54"
+    },
+    "search": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "c5563d30ee0cf8b1964bce5f21337079f1b8943f4c8fddb6285cbb3a8fd7cf38",
+      "sha256": "3e2e147a41925c1bcb7fc3a43329dd8835104c4769ae4a48df20b17fd3a46d87"
+    },
+    "settings": {
+      "kind": "wallpaper extraction",
+      "reference": "settings.png",
+      "source_sha256": "99335940b1dfac6f87480e44612c4407f83d63c317386e88163e9580a81d61df",
+      "sha256": "62a32a72c8038cdb258c0e9ad44f1128ee875b57caaecfe462c3e7a955442068"
+    },
+    "share": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "641642f74f2d42fb2d2b9ea4c9b1a4c2dd41415f8d01050e7a419e57948b95a4",
+      "sha256": "a7cbea7ff59f18305ffb7b0710fbc898755082bf8232560eb4534b684b787b12"
+    },
+    "skin": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "05d2ca491a2fb0e56c12929213b86ab18439b330e9003dbadc427254ab5dce62",
+      "sha256": "5b024677bfa06fb1bc21a69d49fea62fc79ada07090aca1c4544c74f47da0b8d"
+    },
+    "sleep": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "7b03077d05e3088f15cad80beb01d7f28cb89792b91a2d093c183d9eb26f7a30",
+      "sha256": "a1b9f5e4562e43aa9f95f4e2dcff2a737f176dc02154ff909517f7abc0762e7f"
+    },
+    "sliders": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "ae347bbfbd2deff4b56cf48307cbb1075491ea9e08908199134b0edcc9f302b3",
+      "sha256": "09664e58567ae6706d9503b8cedbc15dc3b3e042df50048046766e98f630c8d2"
+    },
+    "sort": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "ab72f17280473d63fcf9f932ef49090f6ef4205976651f354fdf3a50467c5c17",
+      "sha256": "c5843f8b092a61841f3bb40789ed571d85799db38d54b538c2ad124070301b09"
+    },
+    "storage": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "f9191845f9377668ad5205a00c986789542791f217ae39bf9806ee3fad9154b8",
+      "sha256": "0997bfa280f027ab92632d0db4c1d848713437b52abafafb40cf274ba24e9178"
+    },
+    "subtitles": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "79f4224862addfe5f148548b71e7f593ae5ef5a8575362945e3a0a8501d98fef",
+      "sha256": "18fb085766e36f02f0dab67c6c4f15443a8f0916a8e7cdc6ce3f12cd5f81a095"
+    },
+    "system": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "e5569e5734b9004cd844a98a963053bdd62f98954d7f5fe7fc2908d0c55ed6ce",
+      "sha256": "359e8992b9ae3d34054370b55f611b278c8d8f44a861468ba7a4c468225bec70"
+    },
+    "toggle": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "02ff3540e3bf9f6f114bf78566e0318de92984ee68e7a0062226dacaa600d0f9",
+      "sha256": "c1aed90937091465d7c17418330139c3a9a786b657cda02287ea07e35d5afc94"
+    },
+    "tv": {
+      "kind": "wallpaper extraction",
+      "reference": "tvshows.png",
+      "source_sha256": "2fd0991d930cd8fbb19d3c6282caa653700ffc40650000a2b952a5c54196bea6",
+      "sha256": "20d1c4f069f9c8dc799099b0d45c76ee746bc0915d5082d3dcd0a0a1348689d6"
+    },
+    "upload": {
+      "kind": "new matching Foundry theme",
+      "source_sha256": "8f05c4e2934b7e242c72a96f48021d45efc8ae8ab143d8926257f42b5fa3f906",
+      "sha256": "b18ecedfeb675a2b9b5a0c755862ed1721031c9defac327060f3d265ae9d2fd9"
+    },
+    "weather": {
+      "kind": "wallpaper extraction",
+      "reference": "weather.png",
+      "source_sha256": "915d336f2f02b56119a361f2832afd557c9f350dbd41bc31fc59b7237efc85de",
+      "sha256": "059fa65ecb9aa6e866a9aa1d12e3dca11460f002e6ca9d41c133cc56c94b620e"
+    }
+  }
+}

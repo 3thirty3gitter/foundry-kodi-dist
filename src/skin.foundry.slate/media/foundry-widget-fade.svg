@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <!-- Blend the unchanged wallpaper texture into its native vector surround. -->
+  <defs>
+    <linearGradient id="left" x2="1">
+      <stop stop-color="white" stop-opacity="0"/>
+      <stop offset=".2" stop-color="white"/>
+    </linearGradient>
+    <linearGradient id="bottom" x2="0" y2="1">
+      <stop offset=".73" stop-color="white"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="fade"><path fill="url(#bottom)" d="M0 0h1280v720H0z"/></mask>
+  </defs>
+  <path fill="url(#left)" mask="url(#fade)" d="M0 0h1280v720H0z"/>
+</svg>
