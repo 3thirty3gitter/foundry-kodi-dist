@@ -1,0 +1,209 @@
+{
+  "old_directory_id": "2d01374da7d44ce5955bfdff0fb12b1c",
+  "new_directory_id": "d178762ac919409cbf3fdae4da656949",
+  "refresh_ack": {
+    "id": "41cc91c2d396418f92cbbc3c4ddfb704",
+    "action": "home",
+    "mode": "",
+    "phase": "completed",
+    "error": "",
+    "started": 502.669748318,
+    "directory_id": "d178762ac919409cbf3fdae4da656949",
+    "completed": 502.780756199,
+    "runtime_skin_path": "/tmp/foundry-games-qa-lxb02inb/kodi/portable_data/addons/skin.foundry/",
+    "window_id": 10821
+  },
+  "before": {
+    "items": [
+      [
+        "Search games",
+        "plugin://plugin.games.foundry/?action=search"
+      ],
+      [
+        "Favorites",
+        "plugin://plugin.games.foundry/?action=games&mode=favorites"
+      ],
+      [
+        "Recently played",
+        "plugin://plugin.games.foundry/?action=games&mode=recent"
+      ],
+      [
+        "Manage sources",
+        "plugin://plugin.games.foundry/?action=sources"
+      ],
+      [
+        "Atari 2600",
+        "plugin://plugin.games.foundry/?action=games&system=a2600"
+      ],
+      [
+        "Atari 7800",
+        "plugin://plugin.games.foundry/?action=games&system=a7800"
+      ],
+      [
+        "Atari Lynx",
+        "plugin://plugin.games.foundry/?action=games&system=lynx"
+      ],
+      [
+        "Nintendo Entertainment System",
+        "plugin://plugin.games.foundry/?action=games&system=nes"
+      ],
+      [
+        "Super Nintendo",
+        "plugin://plugin.games.foundry/?action=games&system=snes"
+      ],
+      [
+        "Game Boy",
+        "plugin://plugin.games.foundry/?action=games&system=gb"
+      ],
+      [
+        "Game Boy Color",
+        "plugin://plugin.games.foundry/?action=games&system=gbc"
+      ],
+      [
+        "Game Boy Advance",
+        "plugin://plugin.games.foundry/?action=games&system=gba"
+      ],
+      [
+        "Sega Genesis",
+        "plugin://plugin.games.foundry/?action=games&system=genesis"
+      ],
+      [
+        "Sega Master System",
+        "plugin://plugin.games.foundry/?action=games&system=sms"
+      ],
+      [
+        "Sega Game Gear",
+        "plugin://plugin.games.foundry/?action=games&system=gg"
+      ],
+      [
+        "Nintendo 64",
+        "plugin://plugin.games.foundry/?action=games&system=n64"
+      ],
+      [
+        "PlayStation",
+        "plugin://plugin.games.foundry/?action=games&system=psx"
+      ],
+      [
+        "PlayStation Portable (unsupported)",
+        "plugin://plugin.games.foundry/?action=games&system=psp"
+      ],
+      [
+        "Nintendo DS",
+        "plugin://plugin.games.foundry/?action=games&system=nds"
+      ],
+      [
+        "PC Engine / TurboGrafx-16",
+        "plugin://plugin.games.foundry/?action=games&system=pce"
+      ],
+      [
+        "Arcade",
+        "plugin://plugin.games.foundry/?action=games&system=arcade"
+      ]
+    ],
+    "selected": "1",
+    "label": "Search games",
+    "path": "plugin://plugin.games.foundry/?action=home"
+  },
+  "after": {
+    "items": [
+      [
+        "Search games",
+        "plugin://plugin.games.foundry/?action=search"
+      ],
+      [
+        "Favorites",
+        "plugin://plugin.games.foundry/?action=games&mode=favorites"
+      ],
+      [
+        "Recently played",
+        "plugin://plugin.games.foundry/?action=games&mode=recent"
+      ],
+      [
+        "Manage sources",
+        "plugin://plugin.games.foundry/?action=sources"
+      ],
+      [
+        "Atari 2600",
+        "plugin://plugin.games.foundry/?action=games&system=a2600"
+      ],
+      [
+        "Atari 7800",
+        "plugin://plugin.games.foundry/?action=games&system=a7800"
+      ],
+      [
+        "Atari Lynx",
+        "plugin://plugin.games.foundry/?action=games&system=lynx"
+      ],
+      [
+        "Nintendo Entertainment System",
+        "plugin://plugin.games.foundry/?action=games&system=nes"
+      ],
+      [
+        "Super Nintendo",
+        "plugin://plugin.games.foundry/?action=games&system=snes"
+      ],
+      [
+        "Game Boy",
+        "plugin://plugin.games.foundry/?action=games&system=gb"
+      ],
+      [
+        "Game Boy Color",
+        "plugin://plugin.games.foundry/?action=games&system=gbc"
+      ],
+      [
+        "Game Boy Advance",
+        "plugin://plugin.games.foundry/?action=games&system=gba"
+      ],
+      [
+        "Sega Genesis",
+        "plugin://plugin.games.foundry/?action=games&system=genesis"
+      ],
+      [
+        "Sega Master System",
+        "plugin://plugin.games.foundry/?action=games&system=sms"
+      ],
+      [
+        "Sega Game Gear",
+        "plugin://plugin.games.foundry/?action=games&system=gg"
+      ],
+      [
+        "Nintendo 64",
+        "plugin://plugin.games.foundry/?action=games&system=n64"
+      ],
+      [
+        "PlayStation",
+        "plugin://plugin.games.foundry/?action=games&system=psx"
+      ],
+      [
+        "PlayStation Portable (unsupported)",
+        "plugin://plugin.games.foundry/?action=games&system=psp"
+      ],
+      [
+        "Nintendo DS",
+        "plugin://plugin.games.foundry/?action=games&system=nds"
+      ],
+      [
+        "PC Engine / TurboGrafx-16",
+        "plugin://plugin.games.foundry/?action=games&system=pce"
+      ],
+      [
+        "Arcade",
+        "plugin://plugin.games.foundry/?action=games&system=arcade"
+      ]
+    ],
+    "selected": "1",
+    "label": "Search games",
+    "path": "plugin://plugin.games.foundry/?action=home"
+  },
+  "cancel_invocation": {
+    "id": "4f1edd46ced04fc3921257ab7bfaba71",
+    "action": "search",
+    "mode": "",
+    "phase": "completed",
+    "error": "",
+    "started": 502.254054944,
+    "completed": 502.480941894,
+    "runtime_skin_path": "/tmp/foundry-games-qa-lxb02inb/kodi/portable_data/addons/skin.foundry/",
+    "window_id": 10821
+  }
+}

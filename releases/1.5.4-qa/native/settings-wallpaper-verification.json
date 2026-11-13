@@ -1,0 +1,54 @@
+{
+  "widget": {
+    "source": "/tmp/foundry-interface-t360uean/kodi/portable_data/addons/skin.foundry/media/foundry-widget-wallpapers/settings.png",
+    "sha256": "20542829aebe92ba620ae8ae16bf0d7966815d7014a2768bd449f0aab340a937",
+    "regions": [
+      [
+        1100,
+        140,
+        1780,
+        560
+      ],
+      [
+        700,
+        300,
+        1500,
+        580
+      ]
+    ],
+    "mean_absolute_errors": [
+      0.2312359943977591,
+      0.16170982142857143
+    ],
+    "other_variant_errors": [
+      10.033070728291317,
+      7.500366071428571
+    ]
+  },
+  "full": {
+    "source": "/tmp/foundry-interface-t360uean/kodi/portable_data/addons/resource.images.foundry.wallpapers/resources/settings.png",
+    "sha256": "2af6411d52a4c43f1f8350de5021a2cc23ab632369e0cb702bc9265960f3429d",
+    "regions": [
+      [
+        1100,
+        140,
+        1780,
+        560
+      ],
+      [
+        700,
+        300,
+        1500,
+        580
+      ]
+    ],
+    "mean_absolute_errors": [
+      0.25441176470588234,
+      0.21901785714285715
+    ],
+    "other_variant_errors": [
+      10.036120448179272,
+      7.498888392857143
+    ]
+  }
+}
