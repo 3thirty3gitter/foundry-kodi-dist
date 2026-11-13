@@ -1,0 +1,1017 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<window>
+  <defaultcontrol always="true">50</defaultcontrol>
+  <views>50</views>
+  <backgroundcolor>FF030303</backgroundcolor>
+  <controls>
+    <control type="group">
+      <control type="image">
+        <left>0</left>
+        <top>0</top>
+        <width>100%</width>
+        <height>100%</height>
+        <texture background="true" fallback="streampilot/catalog-base.png">$VAR[FoundryCatalogFirstPaintBackdrop]</texture>
+        <aspectratio>scale</aspectratio>
+      </control>
+      <left>0</left>
+      <top>0</top>
+      <width>1920</width>
+      <height>1080</height>
+      <visible>String.IsEmpty(Window.Property(catalog.search))</visible>
+      <control type="image">
+        <left>0</left>
+        <top>0</top>
+        <width>1920</width>
+        <height>1080</height>
+        <texture>$INFO[Window.Property(catalog.fanart)]</texture>
+        <aspectratio>scale</aspectratio>
+        <fadetime>0</fadetime>
+      </control>
+      <control type="image">
+        <left>0</left>
+        <top>0</top>
+        <width>1920</width>
+        <height>1080</height>
+        <texture>streampilot/catalog-shade.png</texture>
+      </control>
+      <control type="button" id="5701">
+        <left>56</left>
+        <top>44</top>
+        <width>130</width>
+        <height>80</height>
+        <label>‹ Back</label>
+        <font>sp_library_action</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FF000000</focusedcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturefocus border="36" colordiffuse="FFF4F4F4">streampilot/catalog-pill-72.png</texturefocus>
+        <texturenofocus border="36" colordiffuse="FF242424">streampilot/catalog-pill-72.png</texturenofocus>
+        <ondown>50</ondown>
+        <onright>5701</onright>
+        <animation type="Conditional" condition="Control.HasFocus(5701)" reversible="true">
+          <effect type="zoom" start="100" end="102" center="auto" time="150" />
+        </animation>
+      </control>
+      <control type="label">
+        <left>218</left>
+        <top>28</top>
+        <width>1300</width>
+        <height>64</height>
+        <label>$INFO[Window.Property(catalog.section)]</label>
+        <font>sp_library_header</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <aligny>center</aligny>
+      </control>
+      <control type="label">
+        <left>218</left>
+        <top>92</top>
+        <width>1300</width>
+        <height>32</height>
+        <label>$INFO[Window.Property(catalog.breadcrumb)]</label>
+        <font>sp_library_meta</font>
+        <textcolor>A8D8D8D8</textcolor>
+        <aligny>center</aligny>
+      </control>
+      <control type="group">
+        <left>0</left>
+        <top>0</top>
+        <width>1920</width>
+        <height>566</height>
+        <visible>!String.IsEmpty(Window.Property(catalog.title))</visible>
+        <control type="image">
+          <left>92</left>
+          <top>156</top>
+          <width>520</width>
+          <height>132</height>
+          <visible>!String.IsEmpty(Window.Property(catalog.clearlogo))</visible>
+          <texture>$INFO[Window.Property(catalog.clearlogo)]</texture>
+          <aspectratio>keep</aspectratio>
+        </control>
+        <control type="textbox">
+          <left>92</left>
+          <top>156</top>
+          <width>1157</width>
+          <height>132</height>
+          <visible>String.IsEmpty(Window.Property(catalog.clearlogo))</visible>
+          <label>$INFO[Window.Property(catalog.title)]</label>
+          <font>sp_library_title</font>
+          <textcolor>FFFFFFFF</textcolor>
+        </control>
+        <control type="label" id="5712">
+          <left>92</left>
+          <top>298</top>
+          <width>290</width>
+          <height>32</height>
+          <label>$INFO[Window.Property(catalog.released)]</label>
+          <font>sp_library_meta</font>
+          <textcolor>A8D8D8D8</textcolor>
+          <aligny>center</aligny>
+        </control>
+        <control type="image" id="5710">
+          <left>380</left>
+          <top>298</top>
+          <width>74</width>
+          <height>32</height>
+          <visible>!String.IsEmpty(Window.Property(catalog.certification))</visible>
+          <texture border="12">streampilot/catalog-cert.png</texture>
+        </control>
+        <control type="label" id="5711">
+          <left>380</left>
+          <top>298</top>
+          <width>74</width>
+          <height>32</height>
+          <visible>!String.IsEmpty(Window.Property(catalog.certification))</visible>
+          <label>$INFO[Window.Property(catalog.certification)]</label>
+          <font>sp_library_badge</font>
+          <textcolor>FF000000</textcolor>
+          <align>center</align>
+          <aligny>center</aligny>
+        </control>
+        <control type="grouplist">
+          <left>92</left>
+          <top>338</top>
+          <width>1157</width>
+          <height>40</height>
+          <orientation>horizontal</orientation>
+          <itemgap>18</itemgap>
+          <control type="group">
+            <left>0</left>
+            <top>0</top>
+            <width>128</width>
+            <height>40</height>
+            <visible>!String.IsEmpty(Window.Property(catalog.tmdb))</visible>
+            <control type="image">
+              <left>0</left>
+              <top>8</top>
+              <width>64</width>
+              <height>24</height>
+              <texture>streampilot/catalog-tmdb.png</texture>
+            </control>
+            <control type="label">
+              <left>0</left>
+              <top>8</top>
+              <width>64</width>
+              <height>24</height>
+              <label>TMDB</label>
+              <font>sp_library_rating_badge</font>
+              <textcolor>FFFFFFFF</textcolor>
+              <align>center</align>
+              <aligny>center</aligny>
+            </control>
+            <control type="label">
+              <left>74</left>
+              <top>0</top>
+              <width>54</width>
+              <height>40</height>
+              <label>$INFO[Window.Property(catalog.tmdb)]</label>
+              <font>sp_library_meta</font>
+              <textcolor>A8D8D8D8</textcolor>
+              <aligny>center</aligny>
+            </control>
+          </control>
+          <control type="group">
+            <left>0</left>
+            <top>0</top>
+            <width>148</width>
+            <height>40</height>
+            <visible>!String.IsEmpty(Window.Property(catalog.imdb))</visible>
+            <control type="image">
+              <left>0</left>
+              <top>8</top>
+              <width>56</width>
+              <height>24</height>
+              <texture>streampilot/catalog-imdb.png</texture>
+            </control>
+            <control type="label">
+              <left>0</left>
+              <top>8</top>
+              <width>56</width>
+              <height>24</height>
+              <label>IMDb</label>
+              <font>sp_library_rating_badge</font>
+              <textcolor>FF000000</textcolor>
+              <align>center</align>
+              <aligny>center</aligny>
+            </control>
+            <control type="label">
+              <left>66</left>
+              <top>0</top>
+              <width>82</width>
+              <height>40</height>
+              <label>$INFO[Window.Property(catalog.imdb)]</label>
+              <font>sp_library_meta</font>
+              <textcolor>A8D8D8D8</textcolor>
+              <aligny>center</aligny>
+            </control>
+          </control>
+          <control type="group">
+            <left>0</left>
+            <top>0</top>
+            <width>110</width>
+            <height>40</height>
+            <visible>!String.IsEmpty(Window.Property(catalog.rt))</visible>
+            <control type="image">
+              <left>0</left>
+              <top>0</top>
+              <width>40</width>
+              <height>40</height>
+              <texture>$INFO[Window.Property(catalog.rt_badge)]</texture>
+              <aspectratio>keep</aspectratio>
+            </control>
+            <control type="label">
+              <left>50</left>
+              <top>0</top>
+              <width>60</width>
+              <height>40</height>
+              <label>$INFO[Window.Property(catalog.rt)]</label>
+              <font>sp_library_meta</font>
+              <textcolor>A8D8D8D8</textcolor>
+              <aligny>center</aligny>
+            </control>
+          </control>
+          <control type="group">
+            <left>0</left>
+            <top>0</top>
+            <width>126</width>
+            <height>40</height>
+            <visible>!String.IsEmpty(Window.Property(catalog.metacritic))</visible>
+            <control type="image">
+              <left>0</left>
+              <top>0</top>
+              <width>40</width>
+              <height>40</height>
+              <texture>streampilot/source-rating_metacritic.png</texture>
+              <aspectratio>keep</aspectratio>
+            </control>
+            <control type="label">
+              <left>50</left>
+              <top>0</top>
+              <width>76</width>
+              <height>40</height>
+              <label>$INFO[Window.Property(catalog.metacritic)]</label>
+              <font>sp_library_meta</font>
+              <textcolor>A8D8D8D8</textcolor>
+              <aligny>center</aligny>
+            </control>
+          </control>
+        </control>
+        <control type="label" id="5713">
+          <left>92</left>
+          <top>386</top>
+          <width>1157</width>
+          <height>28</height>
+          <label>$INFO[Window.Property(catalog.details)]</label>
+          <font>sp_library_meta</font>
+          <textcolor>A8D8D8D8</textcolor>
+          <aligny>center</aligny>
+          <scroll>true</scroll>
+          <scroll>true</scroll>
+        </control>
+        <control type="textbox">
+          <left>92</left>
+          <top>426</top>
+          <width>949</width>
+          <height>94</height>
+          <font>sp_library_body</font>
+          <textcolor>D6FFFFFF</textcolor>
+          <label>$INFO[Window.Property(catalog.plot)]</label>
+          <autoscroll delay="4500" time="15000" repeat="3500">Skin.HasSetting(autoscroll)</autoscroll>
+          <linespacing>1.25</linespacing>
+        </control>
+        <control type="image">
+          <left>1568</left>
+          <top>388</top>
+          <width>240</width>
+          <height>80</height>
+          <texture>$INFO[Window.Property(catalog.studio_logo)]</texture>
+          <aspectratio>keep</aspectratio>
+        </control>
+        <description>StreamPilot VodHero: source padding, metadata stack and studio anchor</description>
+      </control>
+      <control type="fixedlist" id="50">
+        <left>56</left>
+        <top>444</top>
+        <width>1808</width>
+        <height>600</height>
+        <viewtype label="StreamPilot VOD">icon</viewtype>
+        <orientation>horizontal</orientation>
+        <scrolltime>280</scrolltime>
+        <onup>5701</onup>
+        <ondown>50</ondown>
+        <onleft>noop</onleft>
+        <onright>noop</onright>
+        <preloaditems>3</preloaditems>
+        <itemlayout width="256" height="600">
+          <control type="group">
+            <left>0</left>
+            <top>0</top>
+            <width>256</width>
+            <height>600</height>
+            <control type="group">
+              <left>56</left>
+              <top>132</top>
+              <width>224</width>
+              <height>336</height>
+              <visible>String.IsEqual(ListItem.Property(catalog.kind),media)</visible>
+              <control type="image">
+                <left>0</left>
+                <top>0</top>
+                <width>224</width>
+                <height>336</height>
+                <texture diffuse="streampilot/catalog-poster-mask.png" fallback="streampilot/catalog-blank.png">$INFO[ListItem.Art(poster)]</texture>
+                <aspectratio>scale</aspectratio>
+              </control>
+            </control>
+            <control type="group">
+              <left>56</left>
+              <top>132</top>
+              <width>220</width>
+              <height>336</height>
+              <visible>!String.IsEqual(ListItem.Property(catalog.kind),media)</visible>
+              <control type="group">
+                <left>6</left>
+                <top>92</top>
+                <width>208</width>
+                <height>152</height>
+                <visible>String.IsEqual(ListItem.Property(catalog.kind),next)</visible>
+                <control type="image">
+                  <left>-56</left>
+                  <top>-56</top>
+                  <width>320</width>
+                  <height>264</height>
+                  <texture>streampilot/catalog-next-glow.png</texture>
+                </control>
+                <control type="image">
+                  <left>0</left>
+                  <top>0</top>
+                  <width>208</width>
+                  <height>152</height>
+                  <texture>streampilot/catalog-next.png</texture>
+                </control>
+              </control>
+              <control type="label">
+                <left>-30</left>
+                <top>0</top>
+                <width>220</width>
+                <height>336</height>
+                <label>NEXT</label>
+                <font>sp_library_page_action</font>
+                <textcolor>FFFFFFFF</textcolor>
+                <align>center</align>
+                <aligny>center</aligny>
+                <visible>String.IsEqual(ListItem.Property(catalog.kind),next)</visible>
+              </control>
+              <control type="group">
+                <left>6</left>
+                <top>92</top>
+                <width>208</width>
+                <height>152</height>
+                <visible>String.IsEqual(ListItem.Property(catalog.kind),previous)</visible>
+                <control type="image">
+                  <left>-56</left>
+                  <top>-56</top>
+                  <width>320</width>
+                  <height>264</height>
+                  <texture>streampilot/catalog-previous-glow.png</texture>
+                </control>
+                <control type="image">
+                  <left>0</left>
+                  <top>0</top>
+                  <width>208</width>
+                  <height>152</height>
+                  <texture>streampilot/catalog-previous.png</texture>
+                </control>
+              </control>
+              <control type="label">
+                <left>30</left>
+                <top>0</top>
+                <width>220</width>
+                <height>336</height>
+                <label>BACK</label>
+                <font>sp_library_page_action</font>
+                <textcolor>FFFFFFFF</textcolor>
+                <align>center</align>
+                <aligny>center</aligny>
+                <visible>String.IsEqual(ListItem.Property(catalog.kind),previous)</visible>
+              </control>
+            </control>
+            <animation type="Conditional" condition="Integer.IsLess(Container(50).NumItems,3)" reversible="true">
+              <effect type="slide" start="0,0" end="-512,0" time="280" tween="sine" easing="inout" />
+            </animation>
+            <animation type="Conditional" condition="Integer.IsGreater(Container(50).NumItems,2) + Integer.IsLess(Container(50).NumItems,5)" reversible="true">
+              <effect type="slide" start="0,0" end="-256,0" time="280" tween="sine" easing="inout" />
+            </animation>
+            <animation type="Conditional" condition="Integer.IsGreater(Container(50).NumItems,6) + Container(50).Position(2)" reversible="true">
+              <effect type="slide" start="0,0" end="-4.32,0" time="280" tween="sine" easing="inout" />
+            </animation>
+            <animation type="Conditional" condition="Integer.IsGreater(Container(50).NumItems,6) + [Container(50).Position(3) | Container(50).Position(4) | Container(50).Position(5) | Container(50).Position(6)] + !String.IsEmpty(Window.Property(catalog.has_next))" reversible="true">
+              <effect type="slide" start="0,0" end="-60,0" time="280" tween="sine" easing="inout" />
+            </animation>
+            <animation type="Conditional" condition="Integer.IsGreater(Container(50).NumItems,6) + [Container(50).Position(3) | Container(50).Position(4) | Container(50).Position(5) | Container(50).Position(6)] + String.IsEmpty(Window.Property(catalog.has_next))" reversible="true">
+              <effect type="slide" start="0,0" end="-64,0" time="280" tween="sine" easing="inout" />
+            </animation>
+          </control>
+        </itemlayout>
+        <focusedlayout width="256" height="600" infoupdate="100">
+          <control type="group">
+            <left>0</left>
+            <top>0</top>
+            <width>256</width>
+            <height>600</height>
+            <control type="group">
+              <control type="image">
+                <left>-96</left>
+                <top>-96</top>
+                <width>416</width>
+                <height>528</height>
+                <texture>$INFO[ListItem.Art(foundry.slate.catalog.glow)]</texture>
+                <visible>Control.HasFocus(50)</visible>
+              </control>
+              <left>56</left>
+              <top>132</top>
+              <width>224</width>
+              <height>336</height>
+              <visible>String.IsEqual(ListItem.Property(catalog.kind),media)</visible>
+              <animation type="Conditional" condition="Control.HasFocus(50)" reversible="true">
+                <effect type="zoom" start="100" end="119" center="auto" time="170" tween="sine" easing="inout" />
+              </animation>
+              <control type="image">
+                <left>0</left>
+                <top>0</top>
+                <width>224</width>
+                <height>336</height>
+                <texture diffuse="streampilot/catalog-poster-mask.png" fallback="streampilot/catalog-blank.png">$INFO[ListItem.Art(poster)]</texture>
+                <aspectratio>scale</aspectratio>
+              </control>
+            </control>
+            <control type="group">
+              <left>56</left>
+              <top>132</top>
+              <width>220</width>
+              <height>336</height>
+              <visible>!String.IsEqual(ListItem.Property(catalog.kind),media)</visible>
+              <control type="group">
+                <left>6</left>
+                <top>92</top>
+                <width>208</width>
+                <height>152</height>
+                <visible>String.IsEqual(ListItem.Property(catalog.kind),next) + !Control.HasFocus(50)</visible>
+                <control type="image">
+                  <left>-56</left>
+                  <top>-56</top>
+                  <width>320</width>
+                  <height>264</height>
+                  <texture>streampilot/catalog-next-glow.png</texture>
+                </control>
+                <control type="image">
+                  <left>0</left>
+                  <top>0</top>
+                  <width>208</width>
+                  <height>152</height>
+                  <texture>streampilot/catalog-next.png</texture>
+                </control>
+              </control>
+              <control type="group">
+                <left>6</left>
+                <top>92</top>
+                <width>208</width>
+                <height>152</height>
+                <visible>String.IsEqual(ListItem.Property(catalog.kind),next) + Control.HasFocus(50)</visible>
+                <animation type="Conditional" condition="Control.HasFocus(50)" reversible="true">
+                  <effect type="zoom" start="100" end="108" center="auto" time="170" />
+                </animation>
+                <control type="image">
+                  <left>-56</left>
+                  <top>-56</top>
+                  <width>320</width>
+                  <height>264</height>
+                  <texture>streampilot/catalog-next-glow-focus.png</texture>
+                </control>
+                <control type="image">
+                  <left>0</left>
+                  <top>0</top>
+                  <width>208</width>
+                  <height>152</height>
+                  <texture>streampilot/catalog-next-focus.png</texture>
+                </control>
+              </control>
+              <control type="label">
+                <left>-30</left>
+                <top>0</top>
+                <width>220</width>
+                <height>336</height>
+                <label>NEXT</label>
+                <font>sp_library_page_action</font>
+                <textcolor>FFFFFFFF</textcolor>
+                <align>center</align>
+                <aligny>center</aligny>
+                <visible>String.IsEqual(ListItem.Property(catalog.kind),next)</visible>
+              </control>
+              <control type="group">
+                <left>6</left>
+                <top>92</top>
+                <width>208</width>
+                <height>152</height>
+                <visible>String.IsEqual(ListItem.Property(catalog.kind),previous) + !Control.HasFocus(50)</visible>
+                <control type="image">
+                  <left>-56</left>
+                  <top>-56</top>
+                  <width>320</width>
+                  <height>264</height>
+                  <texture>streampilot/catalog-previous-glow.png</texture>
+                </control>
+                <control type="image">
+                  <left>0</left>
+                  <top>0</top>
+                  <width>208</width>
+                  <height>152</height>
+                  <texture>streampilot/catalog-previous.png</texture>
+                </control>
+              </control>
+              <control type="group">
+                <left>6</left>
+                <top>92</top>
+                <width>208</width>
+                <height>152</height>
+                <visible>String.IsEqual(ListItem.Property(catalog.kind),previous) + Control.HasFocus(50)</visible>
+                <animation type="Conditional" condition="Control.HasFocus(50)" reversible="true">
+                  <effect type="zoom" start="100" end="108" center="auto" time="170" />
+                </animation>
+                <control type="image">
+                  <left>-56</left>
+                  <top>-56</top>
+                  <width>320</width>
+                  <height>264</height>
+                  <texture>streampilot/catalog-previous-glow-focus.png</texture>
+                </control>
+                <control type="image">
+                  <left>0</left>
+                  <top>0</top>
+                  <width>208</width>
+                  <height>152</height>
+                  <texture>streampilot/catalog-previous-focus.png</texture>
+                </control>
+              </control>
+              <control type="label">
+                <left>30</left>
+                <top>0</top>
+                <width>220</width>
+                <height>336</height>
+                <label>BACK</label>
+                <font>sp_library_page_action</font>
+                <textcolor>FFFFFFFF</textcolor>
+                <align>center</align>
+                <aligny>center</aligny>
+                <visible>String.IsEqual(ListItem.Property(catalog.kind),previous)</visible>
+              </control>
+            </control>
+            <animation type="Conditional" condition="Integer.IsLess(Container(50).NumItems,3)" reversible="true">
+              <effect type="slide" start="0,0" end="-512,0" time="280" tween="sine" easing="inout" />
+            </animation>
+            <animation type="Conditional" condition="Integer.IsGreater(Container(50).NumItems,2) + Integer.IsLess(Container(50).NumItems,5)" reversible="true">
+              <effect type="slide" start="0,0" end="-256,0" time="280" tween="sine" easing="inout" />
+            </animation>
+            <animation type="Conditional" condition="Integer.IsGreater(Container(50).NumItems,6) + Container(50).Position(2)" reversible="true">
+              <effect type="slide" start="0,0" end="-4.32,0" time="280" tween="sine" easing="inout" />
+            </animation>
+            <animation type="Conditional" condition="Integer.IsGreater(Container(50).NumItems,6) + [Container(50).Position(3) | Container(50).Position(4) | Container(50).Position(5) | Container(50).Position(6)] + !String.IsEmpty(Window.Property(catalog.has_next))" reversible="true">
+              <effect type="slide" start="0,0" end="-60,0" time="280" tween="sine" easing="inout" />
+            </animation>
+            <animation type="Conditional" condition="Integer.IsGreater(Container(50).NumItems,6) + [Container(50).Position(3) | Container(50).Position(4) | Container(50).Position(5) | Container(50).Position(6)] + String.IsEmpty(Window.Property(catalog.has_next))" reversible="true">
+              <effect type="slide" start="0,0" end="-64,0" time="280" tween="sine" easing="inout" />
+            </animation>
+          </control>
+        </focusedlayout>
+        <focusposition>2</focusposition>
+        <movement>4</movement>
+      </control>
+      <control type="label" id="5708">
+        <left>112</left>
+        <top>960</top>
+        <width>140</width>
+        <height>76</height>
+        <label>$INFO[Window.Property(catalog.page)]</label>
+        <font>sp_library_meta</font>
+        <textcolor>A8D8D8D8</textcolor>
+        <aligny>center</aligny>
+      </control>
+      <control type="label">
+        <left>560</left>
+        <top>994</top>
+        <width>1100</width>
+        <height>40</height>
+        <label>$INFO[Window.Property(catalog.scope)]</label>
+        <font>sp_catalog_small</font>
+        <textcolor>FFAAB3C7</textcolor>
+        <aligny>center</aligny>
+      </control>
+      <control type="label">
+        <left>310</left>
+        <top>400</top>
+        <width>1300</width>
+        <height>100</height>
+        <visible>!String.IsEmpty(Window.Property(catalog.message))</visible>
+        <label>$INFO[Window.Property(catalog.message)]</label>
+        <font>sp_library_body</font>
+        <textcolor>A8D8D8D8</textcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+      </control>
+    </control>
+    <control type="group">
+      <left>0</left>
+      <top>0</top>
+      <width>1920</width>
+      <height>1080</height>
+      <visible>!String.IsEmpty(Window.Property(catalog.search))</visible>
+      <control type="image">
+        <left>0</left>
+        <top>0</top>
+        <width>1920</width>
+        <height>1080</height>
+        <texture colordiffuse="FF07101D">streampilot/catalog-white.png</texture>
+      </control>
+      <control type="image">
+        <left>48</left>
+        <top>48</top>
+        <width>570</width>
+        <height>984</height>
+        <texture colordiffuse="0AFFFFFF" border="32">streampilot/catalog-search-panel.png</texture>
+      </control>
+      <control type="label">
+        <left>76</left>
+        <top>76</top>
+        <width>500</width>
+        <height>42</height>
+        <label>VOD SEARCH</label>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <aligny>center</aligny>
+      </control>
+      <control type="label">
+        <left>76</left>
+        <top>118</top>
+        <width>500</width>
+        <height>30</height>
+        <label>$INFO[Window.Property(catalog.search_scope)]</label>
+        <font>sp_catalog_small</font>
+        <textcolor>FFE5E8EF</textcolor>
+        <aligny>center</aligny>
+      </control>
+      <control type="edit" id="5801">
+        <left>76</left>
+        <top>174</top>
+        <width>514</width>
+        <height>96</height>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <texturefocus border="20" colordiffuse="55FFFFFF">streampilot/catalog-search-panel.png</texturefocus>
+        <texturenofocus border="20" colordiffuse="18FFFFFF">streampilot/catalog-search-panel.png</texturenofocus>
+        <onright>51</onright>
+        <ondown>5830</ondown>
+      </control>
+      <control type="button" id="5830">
+        <left>76</left>
+        <top>300</top>
+        <width>514</width>
+        <height>54</height>
+        <visible>!String.IsEmpty(Window.Property(catalog.history0))</visible>
+        <label>$INFO[Window.Property(catalog.history0)]</label>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FFFFFFFF</focusedcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturefocus border="27" colordiffuse="FF596A93">streampilot/catalog-pill-54.png</texturefocus>
+        <texturenofocus border="27" colordiffuse="DD39435E">streampilot/catalog-pill-54.png</texturenofocus>
+        <onup>5801</onup>
+        <ondown>5831</ondown>
+        <onright>51</onright>
+      </control>
+      <control type="button" id="5831">
+        <left>76</left>
+        <top>358</top>
+        <width>514</width>
+        <height>54</height>
+        <visible>!String.IsEmpty(Window.Property(catalog.history1))</visible>
+        <label>$INFO[Window.Property(catalog.history1)]</label>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FFFFFFFF</focusedcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturefocus border="27" colordiffuse="FF596A93">streampilot/catalog-pill-54.png</texturefocus>
+        <texturenofocus border="27" colordiffuse="DD39435E">streampilot/catalog-pill-54.png</texturenofocus>
+        <onup>5830</onup>
+        <ondown>5832</ondown>
+        <onright>51</onright>
+      </control>
+      <control type="button" id="5832">
+        <left>76</left>
+        <top>416</top>
+        <width>514</width>
+        <height>54</height>
+        <visible>!String.IsEmpty(Window.Property(catalog.history2))</visible>
+        <label>$INFO[Window.Property(catalog.history2)]</label>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FFFFFFFF</focusedcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturefocus border="27" colordiffuse="FF596A93">streampilot/catalog-pill-54.png</texturefocus>
+        <texturenofocus border="27" colordiffuse="DD39435E">streampilot/catalog-pill-54.png</texturenofocus>
+        <onup>5831</onup>
+        <ondown>5833</ondown>
+        <onright>51</onright>
+      </control>
+      <control type="button" id="5833">
+        <left>76</left>
+        <top>474</top>
+        <width>514</width>
+        <height>54</height>
+        <visible>!String.IsEmpty(Window.Property(catalog.history3))</visible>
+        <label>$INFO[Window.Property(catalog.history3)]</label>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FFFFFFFF</focusedcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturefocus border="27" colordiffuse="FF596A93">streampilot/catalog-pill-54.png</texturefocus>
+        <texturenofocus border="27" colordiffuse="DD39435E">streampilot/catalog-pill-54.png</texturenofocus>
+        <onup>5832</onup>
+        <ondown>5834</ondown>
+        <onright>51</onright>
+      </control>
+      <control type="button" id="5834">
+        <left>76</left>
+        <top>532</top>
+        <width>514</width>
+        <height>54</height>
+        <visible>!String.IsEmpty(Window.Property(catalog.history4))</visible>
+        <label>$INFO[Window.Property(catalog.history4)]</label>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FFFFFFFF</focusedcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturefocus border="27" colordiffuse="FF596A93">streampilot/catalog-pill-54.png</texturefocus>
+        <texturenofocus border="27" colordiffuse="DD39435E">streampilot/catalog-pill-54.png</texturenofocus>
+        <onup>5833</onup>
+        <ondown>5835</ondown>
+        <onright>51</onright>
+      </control>
+      <control type="button" id="5835">
+        <left>76</left>
+        <top>590</top>
+        <width>514</width>
+        <height>54</height>
+        <visible>!String.IsEmpty(Window.Property(catalog.history5))</visible>
+        <label>$INFO[Window.Property(catalog.history5)]</label>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FFFFFFFF</focusedcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturefocus border="27" colordiffuse="FF596A93">streampilot/catalog-pill-54.png</texturefocus>
+        <texturenofocus border="27" colordiffuse="DD39435E">streampilot/catalog-pill-54.png</texturenofocus>
+        <onup>5834</onup>
+        <ondown>5836</ondown>
+        <onright>51</onright>
+      </control>
+      <control type="button" id="5836">
+        <left>76</left>
+        <top>648</top>
+        <width>514</width>
+        <height>54</height>
+        <visible>!String.IsEmpty(Window.Property(catalog.history6))</visible>
+        <label>$INFO[Window.Property(catalog.history6)]</label>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FFFFFFFF</focusedcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturefocus border="27" colordiffuse="FF596A93">streampilot/catalog-pill-54.png</texturefocus>
+        <texturenofocus border="27" colordiffuse="DD39435E">streampilot/catalog-pill-54.png</texturenofocus>
+        <onup>5835</onup>
+        <ondown>5837</ondown>
+        <onright>51</onright>
+      </control>
+      <control type="button" id="5837">
+        <left>76</left>
+        <top>706</top>
+        <width>514</width>
+        <height>54</height>
+        <visible>!String.IsEmpty(Window.Property(catalog.history7))</visible>
+        <label>$INFO[Window.Property(catalog.history7)]</label>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FFFFFFFF</focusedcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturefocus border="27" colordiffuse="FF596A93">streampilot/catalog-pill-54.png</texturefocus>
+        <texturenofocus border="27" colordiffuse="DD39435E">streampilot/catalog-pill-54.png</texturenofocus>
+        <onup>5836</onup>
+        <ondown>5838</ondown>
+        <onright>51</onright>
+      </control>
+      <control type="button" id="5838">
+        <left>76</left>
+        <top>764</top>
+        <width>514</width>
+        <height>54</height>
+        <visible>!String.IsEmpty(Window.Property(catalog.history8))</visible>
+        <label>$INFO[Window.Property(catalog.history8)]</label>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FFFFFFFF</focusedcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturefocus border="27" colordiffuse="FF596A93">streampilot/catalog-pill-54.png</texturefocus>
+        <texturenofocus border="27" colordiffuse="DD39435E">streampilot/catalog-pill-54.png</texturenofocus>
+        <onup>5837</onup>
+        <ondown>5839</ondown>
+        <onright>51</onright>
+      </control>
+      <control type="button" id="5839">
+        <left>76</left>
+        <top>822</top>
+        <width>514</width>
+        <height>54</height>
+        <visible>!String.IsEmpty(Window.Property(catalog.history9))</visible>
+        <label>$INFO[Window.Property(catalog.history9)]</label>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FFFFFFFF</focusedcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturefocus border="27" colordiffuse="FF596A93">streampilot/catalog-pill-54.png</texturefocus>
+        <texturenofocus border="27" colordiffuse="DD39435E">streampilot/catalog-pill-54.png</texturenofocus>
+        <onup>5838</onup>
+        <ondown>5802</ondown>
+        <onright>51</onright>
+      </control>
+      <control type="button" id="5802">
+        <left>76</left>
+        <top>928</top>
+        <width>514</width>
+        <height>76</height>
+        <label>BACK TO LIBRARY</label>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FFFFFFFF</focusedcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturefocus border="38" colordiffuse="FF596A93">streampilot/catalog-pill-76.png</texturefocus>
+        <texturenofocus border="38" colordiffuse="DD39435E">streampilot/catalog-pill-76.png</texturenofocus>
+        <onup>5801</onup>
+        <onright>51</onright>
+      </control>
+      <control type="label">
+        <left>678</left>
+        <top>52</top>
+        <width>1150</width>
+        <height>64</height>
+        <label>$INFO[Window.Property(catalog.results_label)]</label>
+        <font>sp_catalog_results</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <aligny>center</aligny>
+      </control>
+      <control type="panel" id="51">
+        <left>662</left>
+        <top>132</top>
+        <width>1210</width>
+        <height>866</height>
+        <viewtype label="VOD Search">icon</viewtype>
+        <onleft>5801</onleft>
+        <onup>5801</onup>
+        <ondown>5812</ondown>
+        <scrolltime>220</scrolltime>
+        <itemlayout width="396" height="579">
+          <control type="group">
+            <left>24</left>
+            <top>24</top>
+            <width>354</width>
+            <height>531</height>
+            <control type="image">
+              <left>0</left>
+              <top>0</top>
+              <width>354</width>
+              <height>531</height>
+              <texture diffuse="streampilot/catalog-poster-mask.png">$INFO[ListItem.Art(poster)]</texture>
+              <aspectratio>scale</aspectratio>
+            </control>
+            <control type="image">
+              <left>0</left>
+              <top>443</top>
+              <width>354</width>
+              <height>88</height>
+              <texture colordiffuse="CC000000">streampilot/catalog-white.png</texture>
+            </control>
+            <control type="label">
+              <left>16</left>
+              <top>447</top>
+              <width>322</width>
+              <height>78</height>
+              <label>$INFO[ListItem.Label]</label>
+              <font>sp_catalog_small</font>
+              <textcolor>FFFFFFFF</textcolor>
+              <aligny>center</aligny>
+            </control>
+          </control>
+        </itemlayout>
+        <focusedlayout width="396" height="579">
+          <control type="group">
+            <left>24</left>
+            <top>24</top>
+            <width>354</width>
+            <height>531</height>
+            <animation type="Conditional" condition="Control.HasFocus(51)" reversible="true">
+              <effect type="zoom" start="100" end="104" center="auto" time="140" />
+            </animation>
+            <control type="image">
+              <left>0</left>
+              <top>0</top>
+              <width>354</width>
+              <height>531</height>
+              <texture diffuse="streampilot/catalog-poster-mask.png">$INFO[ListItem.Art(poster)]</texture>
+              <aspectratio>scale</aspectratio>
+            </control>
+            <control type="image">
+              <left>0</left>
+              <top>443</top>
+              <width>354</width>
+              <height>88</height>
+              <texture colordiffuse="CC000000">streampilot/catalog-white.png</texture>
+            </control>
+            <control type="label">
+              <left>16</left>
+              <top>447</top>
+              <width>322</width>
+              <height>78</height>
+              <label>$INFO[ListItem.Label]</label>
+              <font>sp_catalog_small</font>
+              <textcolor>FFFFFFFF</textcolor>
+              <aligny>center</aligny>
+            </control>
+          </control>
+        </focusedlayout>
+      </control>
+      <control type="label">
+        <left>678</left>
+        <top>400</top>
+        <width>1150</width>
+        <height>100</height>
+        <visible>!String.IsEmpty(Window.Property(catalog.search_message))</visible>
+        <label>$INFO[Window.Property(catalog.search_message)]</label>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFE5E8EF</textcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+      </control>
+      <control type="button" id="5811">
+        <left>686</left>
+        <top>1000</top>
+        <width>190</width>
+        <height>62</height>
+        <label>PREVIOUS</label>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FFFFFFFF</focusedcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturefocus border="31" colordiffuse="FF596A93">streampilot/catalog-pill-62.png</texturefocus>
+        <texturenofocus border="31" colordiffuse="DD39435E">streampilot/catalog-pill-62.png</texturenofocus>
+        <onup>51</onup>
+        <onright>5812</onright>
+      </control>
+      <control type="label">
+        <left>900</left>
+        <top>1000</top>
+        <width>450</width>
+        <height>62</height>
+        <label>$INFO[Window.Property(catalog.page)]</label>
+        <font>sp_catalog_small</font>
+        <textcolor>FFE5E8EF</textcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+      </control>
+      <control type="button" id="5812">
+        <left>1570</left>
+        <top>1000</top>
+        <width>190</width>
+        <height>62</height>
+        <label>NEXT</label>
+        <font>sp_catalog_meta</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FFFFFFFF</focusedcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturefocus border="31" colordiffuse="FF596A93">streampilot/catalog-pill-62.png</texturefocus>
+        <texturenofocus border="31" colordiffuse="DD39435E">streampilot/catalog-pill-62.png</texturenofocus>
+        <onup>51</onup>
+        <onleft>5811</onleft>
+      </control>
+    </control>
+  </controls>
+</window>

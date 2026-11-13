@@ -1,0 +1,61 @@
+{
+  "repository": "3thirty3gitter/StreamPilot",
+  "commit": "994bcb2d83f0fef96afe8512ecdd66c8429d9097",
+  "sources": [
+    {
+      "path": "app/src/main/java/ca/threethirtythree/streampilot/ui/CompactVodOsd.kt",
+      "blob": "7544aaf4398f9ecfd4c17c268ab15479f6aaf9b9"
+    },
+    {
+      "path": "app/src/main/java/ca/threethirtythree/streampilot/ui/StreamPilotApp.kt",
+      "blob": "2ff21a69d7dc911cd4ab48e7326db420e42aa5a8"
+    }
+  ],
+  "mapping": {
+    "base_canvas": [
+      1920,
+      1080
+    ],
+    "dp_scale": 2,
+    "vod": {
+      "horizontal_margin": 60,
+      "bottom_margin": 44,
+      "panel_height": 202,
+      "panel_corner_radius": 36,
+      "shadow": 24,
+      "poster": [
+        180,
+        270
+      ],
+      "poster_left": 36,
+      "poster_bottom": 24,
+      "title_max": [
+        520,
+        60
+      ],
+      "secondary_button": 60,
+      "primary_button": 68,
+      "control_symbol": 28,
+      "gradient_alpha": [
+        0.96,
+        0.95,
+        0.94
+      ],
+      "media_shade_factor": 0.3
+    },
+    "live": {
+      "horizontal_margin": 60,
+      "bottom_margin": 48,
+      "corner_radius": 44,
+      "shadow": 36,
+      "horizontal_padding": 40,
+      "vertical_padding": 28,
+      "channel_logo": 148
+    }
+  },
+  "notes": [
+    "Kodi controls implement the pinned Compose layout and retain Kodi playback actions.",
+    "Live TV uses native PVR fields. Shield/live-provider pixel parity remains pending.",
+    "No extra feather opacity or reduced-height background remains."
+  ]
+}

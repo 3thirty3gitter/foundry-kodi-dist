@@ -1,0 +1,371 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<includes>
+  <include name="FoundryDialogCastFallback">
+    <control type="image">
+      <width>520</width>
+      <height>780</height>
+      <top>160</top>
+      <right>-20</right>
+      <aspectratio>keep</aspectratio>
+      <texture>$INFO[Container(5050).ListItem.Icon]</texture>
+      <visible>!Integer.IsGreater(Container(50).NumItems,0) + $EXP[FoundryMetadataCurrentItem] + Integer.IsGreater(Container(5050).NumItems,0)</visible>
+    </control>
+    <control type="list" id="5050">
+      <visible>!Integer.IsGreater(Container(50).NumItems,0) + $EXP[FoundryMetadataCurrentItem]</visible>
+      <top>67</top>
+      <height>940</height>
+      <width>540</width>
+      <onleft>20000</onleft>
+      <onback>SetFocus(20000)</onback>
+      <include content="CenterList104">
+        <param name="id" value="5050" />
+      </include>
+      <include content="CastItem">
+        <param name="id" value="5050" />
+        <param name="MainLabel" value="$INFO[ListItem.Label]" />
+        <param name="SubLabel" value="$INFO[ListItem.Label2]" />
+      </include>
+      <content>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.0.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.0.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.0.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.0.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.1.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.1.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.1.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.1.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.2.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.2.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.2.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.2.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.3.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.3.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.3.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.3.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.4.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.4.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.4.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.4.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.5.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.5.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.5.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.5.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.6.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.6.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.6.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.6.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.7.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.7.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.7.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.7.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.8.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.8.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.8.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.8.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.9.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.9.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.9.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.9.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.10.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.10.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.10.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.10.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.11.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.11.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.11.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.11.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.12.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.12.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.12.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.12.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.13.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.13.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.13.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.13.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.14.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.14.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.14.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.14.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.15.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.15.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.15.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.15.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.16.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.16.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.16.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.16.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.17.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.17.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.17.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.17.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.18.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.18.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.18.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.18.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.19.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.19.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.19.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.19.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.20.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.20.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.20.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.20.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.21.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.21.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.21.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.21.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.22.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.22.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.22.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.22.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.23.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.23.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.23.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.23.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.24.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.24.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.24.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.24.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.25.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.25.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.25.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.25.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.26.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.26.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.26.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.26.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.27.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.27.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.27.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.27.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.28.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.28.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.28.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.28.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.29.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.29.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.29.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.29.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.30.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.30.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.30.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.30.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.31.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.31.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.31.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.31.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.32.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.32.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.32.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.32.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.33.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.33.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.33.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.33.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.34.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.34.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.34.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.34.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.35.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.35.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.35.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.35.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.36.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.36.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.36.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.36.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.37.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.37.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.37.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.37.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.38.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.38.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.38.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.38.name))</visible>
+        </item>
+        <item>
+          <label>$INFO[Window(Home).Property(foundry.slate.metadata.cast.39.name)]</label>
+          <label2>$INFO[Window(Home).Property(foundry.slate.metadata.cast.39.role)]</label2>
+          <icon>$INFO[Window(Home).Property(foundry.slate.metadata.cast.39.thumbnail)]</icon>
+          <visible>$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast.39.name))</visible>
+        </item>
+      </content>
+    </control>
+    <control type="textbox">
+      <left>0</left>
+      <top>160</top>
+      <width>540</width>
+      <height>240</height>
+      <font>font32</font>
+      <textcolor>unfocused_text</textcolor>
+      <label>Loading cast information...</label>
+      <visible>!Integer.IsGreater(Container(50).NumItems,0) + !Integer.IsGreater(Container(5050).NumItems,0) + [$EXP[FoundryMetadataCurrentItem] + String.IsEqual(Window(Home).Property(foundry.slate.metadata.loading),true)]</visible>
+    </control>
+    <control type="textbox">
+      <left>0</left>
+      <top>160</top>
+      <width>540</width>
+      <height>240</height>
+      <font>font32</font>
+      <textcolor>unfocused_text</textcolor>
+      <label>Cast information is not available for this title.</label>
+      <visible>!Integer.IsGreater(Container(50).NumItems,0) + !Integer.IsGreater(Container(5050).NumItems,0) + [![$EXP[FoundryMetadataCurrentItem] + String.IsEqual(Window(Home).Property(foundry.slate.metadata.loading),true)]]</visible>
+    </control>
+  </include>
+  <include name="FoundryDialogArtPreview">
+    <control type="group">
+      <visible>String.IsEqual(Container(20000).ListItem.Property(id),art)</visible>
+      <left>620</left>
+      <width>1160</width>
+      <control type="image">
+        <top>160</top>
+        <right>-20</right>
+        <width>520</width>
+        <height>780</height>
+        <aspectratio>keep</aspectratio>
+        <texture>$INFO[Container(5051).ListItem.Icon]</texture>
+        <visible>!String.IsEqual(Container(5051).ListItem.Property(id),edit)</visible>
+      </control>
+      <control type="list" id="5051">
+        <top>67</top>
+        <height>940</height>
+        <width>540</width>
+        <onleft>20000</onleft>
+        <onback>SetFocus(20000)</onback>
+        <include content="CenterList104">
+          <param name="id" value="5051" />
+        </include>
+        <include content="CastItem">
+          <param name="id" value="5051" />
+          <param name="MainLabel" value="$INFO[ListItem.Label]" />
+          <param name="SubLabel" value="$INFO[ListItem.Label2]" />
+        </include>
+        <content>
+          <item>
+            <label>Poster</label>
+            <label2>Artwork for this title</label2>
+            <icon>$VAR[FoundryMetadataPoster]</icon>
+            <visible>!String.IsEmpty(ListItem.Art(poster)) | [$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.poster))]</visible>
+          </item>
+          <item>
+            <label>Background</label>
+            <label2>Artwork for this title</label2>
+            <icon>$VAR[FoundryMetadataFanart]</icon>
+            <visible>!String.IsEmpty(ListItem.Art(fanart)) | [$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.fanart))]</visible>
+          </item>
+          <item>
+            <label>Title artwork</label>
+            <label2>Artwork for this title</label2>
+            <icon>$VAR[FoundryMetadataClearlogo]</icon>
+            <visible>!String.IsEmpty(ListItem.Art(clearlogo)) | [$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.clearlogo))]</visible>
+          </item>
+          <item>
+            <label>Change artwork</label>
+            <label2>Open Kodi artwork editor</label2>
+            <property name="id">edit</property>
+            <onclick>SendClick(10)</onclick>
+            <visible>Control.IsEnabled(10) + Integer.IsGreater(ListItem.DBID,0)</visible>
+          </item>
+        </content>
+      </control>
+      <control type="textbox">
+        <left>0</left>
+        <top>160</top>
+        <width>540</width>
+        <height>240</height>
+        <font>font32</font>
+        <textcolor>unfocused_text</textcolor>
+        <label>Loading artwork...</label>
+        <visible>!Integer.IsGreater(Container(5051).NumItems,0) + [$EXP[FoundryMetadataCurrentItem] + String.IsEqual(Window(Home).Property(foundry.slate.metadata.loading),true)]</visible>
+      </control>
+      <control type="textbox">
+        <left>0</left>
+        <top>160</top>
+        <width>540</width>
+        <height>240</height>
+        <font>font32</font>
+        <textcolor>unfocused_text</textcolor>
+        <label>No artwork is available for this title.</label>
+        <visible>!Integer.IsGreater(Container(5051).NumItems,0) + [![$EXP[FoundryMetadataCurrentItem] + String.IsEqual(Window(Home).Property(foundry.slate.metadata.loading),true)]]</visible>
+      </control>
+    </control>
+  </include>
+</includes>
+

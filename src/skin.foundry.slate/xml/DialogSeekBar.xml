@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+  <visible>Window.IsActive(fullscreenvideo) + !Window.IsVisible(videoosd) +
+    ![Window.IsActive(sliderdialog) | Window.IsActive(1101) | Window.IsActive(osdaudiosettings) | Window.IsActive(osdsubtitlesettings) | Window.IsActive(osdvideosettings) | Window.IsActive(subtitlesearch)] +
+    [Player.Seeking | Player.Forwarding | Player.Rewinding | Player.HasPerformedSeek(2) | [Player.Paused + !Skin.HasSetting(Disable.PauseOSD) + !String.IsEqual(Window(home).Property(foundry.slate.osd.dismissed),true)]]</visible>
+  <onload condition="!VideoPlayer.Content(livetv)">RunScript(script.foundry.slate.helper,mode=osd_artwork)</onload>
+  <controls>
+    <include>FoundryPlaybackStudioLogo</include>
+    <control type="group">
+      <visible>!VideoPlayer.Content(livetv)</visible>
+      <include>StreamPilotVODCard</include>
+    </control>
+    <control type="group">
+      <visible>VideoPlayer.Content(livetv)</visible>
+      <include>StreamPilotLiveCard</include>
+    </control>
+  </controls>
+</window>

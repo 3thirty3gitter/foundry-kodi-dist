@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<colors>
+	<color name="primary_background">FF1D2024</color>
+	<color name="dialog_tint">FF050505</color>
+	<color name="dialog_bg">F21D2024</color>
+	<color name="dialog_bg2">FA1D2024</color>
+	<color name="dialog_bg3">FF1D2024</color>
+	<color name="button_focus">FFC8BCA5</color>
+	<color name="button_focus2">FF040505</color>
+	<color name="focused_text">FF141515</color>
+	<!-- <color name="unfocused_text">FFE6E4DF</color> -->
+	<!-- <color name="unfocused_text">FFE6E4DF</color> -->
+	<color name="unfocused_text">FFE6E4DF</color>
+	<color name="artwork_dim">FFE9E9E9</color>
+	<color name="accent_color">FFC8BCA5</color>
+	<color name="selected">FFC8BCA5</color>
+	<color name="keyboard_selected">FFC8BCA5</color>
+	<color name="primary_content_panel_bg">FF24272C</color>
+	<color name="background">FF17191D</color>
+	<color name="bg_image">FF909090</color>
+	<color name="bg_overlay">00FFFFFF</color>
+	<color name="black">FF000000</color>
+	<color name="white">FFF0F0F0</color>
+	<color name="grey">FFA0A0A0</color>
+	<color name="blue">FF7ACAFE</color>
+	<color name="red">FFCE4421</color>
+	<color name="text_shadow">00000000</color>
+	<color name="border_alpha">80E6E4DF</color>
+	<color name="disabled">40FFFFFF</color>
+	<color name="invalid">FFFF0000</color>
+  <color name="osd_light">fffafafa</color>
+  <color name="osd_grey">b0a0a0a0</color>
+  <color name="osd_dark">e0404040</color>
+	<!-- <color name="player_cache">FF9A9388</color> -->
+	<color name="player_cache">FF9A9388</color>
+</colors>

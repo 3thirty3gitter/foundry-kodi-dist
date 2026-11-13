@@ -1,0 +1,20 @@
+{
+  "xml_parsed": 170,
+  "python_syntax_checked": 54,
+  "phone_security_network_keyboard_tests_passed": 40,
+  "native_kodi": "21.2",
+  "native_content_navigation_switchback_passed": true,
+  "both_real_helper_services_live": true,
+  "native_phone_delivery_cancel_passed": true,
+  "original_sources_unchanged": true,
+  "published": false,
+  "installed_in_production": false,
+  "remaining_blocker": "Canonical distribution lease belongs to Codex-Publish Foundry 1.5.4; cannot integrate optional repository packages until owner safely closes/transfers.",
+  "untested": [
+    "Physical phone scan/LAN from separate device",
+    "Physical Shield",
+    "External provider credentials/playback"
+  ],
+  "candidate_packages": "candidate-packages/candidate-manifest.json",
+  "native_preview": "service-native-evidence/slate-content.png"
+}

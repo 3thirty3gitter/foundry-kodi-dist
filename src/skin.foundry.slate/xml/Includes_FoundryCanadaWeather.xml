@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Foundry Canada provider card; other selected weather providers retain the existing Home widgets. -->
+<includes>
+  <variable name="FoundryCanadaHomeWeatherVar">
+    <!-- Native manager polling is demand-driven; custom Window properties do not poll it. -->
+    <value condition="String.IsEqual(Weather.Plugin,weather.foundry.canada) + !Weather.IsFetched"></value>
+    <value condition="String.IsEqual(Weather.Plugin,weather.foundry.canada) + String.IsEqual(Window(weather).Property(Foundry.Weather.HasCurrent),true)">$INFO[Window(weather).Property(Foundry.Weather.Temperature)] $INFO[Window(weather).Property(Foundry.Weather.Condition)]</value>
+    <value condition="String.IsEqual(Weather.Plugin,weather.foundry.canada)"></value>
+    <value>$VAR[HomeMenuWeatherVar]</value>
+  </variable>
+  <include name="FoundryCanadaWeatherWidget">
+    <param name="x" default="0" /><param name="y" default="0" />
+    <param name="id" default="15150" />
+    <param name="body_font" default="foundry_weather_body" />
+    <param name="small_font" default="foundry_weather_small" />
+    <param name="temperature_font" default="foundry_weather_temperature" />
+    <param name="title_font" default="foundry_weather_title" />
+    <definition>
+      <control type="group">
+        <left>$PARAM[x]</left><top>$PARAM[y]</top><width>900</width><height>460</height>
+        <visible>String.IsEqual(Weather.Plugin,weather.foundry.canada)</visible>
+        <control type="button" id="$PARAM[id]">
+          <left>0</left><top>0</top><width>900</width><height>460</height><label></label>
+          <texturenofocus border="20" colordiffuse="F210202D">foundry-weather/card.png</texturenofocus>
+          <texturefocus border="20" colordiffuse="FF183947">foundry-weather/card.png</texturefocus>
+          <onleft>9000</onleft><onback>9000</onback><onup>9000</onup><ondown>15151</ondown><onright>15151</onright>
+          <onclick condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Status),needs_location)">Addon.OpenSettings(weather.foundry.canada)</onclick>
+          <onclick condition="!String.IsEqual(Window(weather).Property(Foundry.Weather.Status),needs_location)">RunScript(weather.foundry.canada,forecast)</onclick>
+        </control>
+        <control type="label"><left>28</left><top>18</top><width>300</width><height>32</height><font>$PARAM[small_font]</font><textcolor>FF49DCF2</textcolor><label>$ADDON[weather.foundry.canada 30010]</label></control>
+        <control type="label"><left>28</left><top>70</top><width>290</width><height>32</height><font>$PARAM[body_font]</font><label>$LOCALIZE[503]</label><visible>!Weather.IsFetched + String.IsEmpty(Window(weather).Property(Foundry.Weather.Status))</visible></control>
+        <control type="label"><left>350</left><top>18</top><width>522</width><height>32</height><font>$PARAM[title_font]</font><align>right</align><label>$INFO[Window(weather).Property(Foundry.Weather.Location)]</label></control>
+        <control type="group">
+          <visible>String.IsEqual(Window(weather).Property(Foundry.Weather.HasCurrent),true)</visible>
+          <control type="label"><left>28</left><top>65</top><width>240</width><height>96</height><font>$PARAM[temperature_font]</font><label>$INFO[Window(weather).Property(Foundry.Weather.Temperature)]</label></control>
+          <control type="image"><left>230</left><top>72</top><width>84</width><height>84</height><aspectratio>keep</aspectratio><texture>$INFO[Window(weather).Property(Foundry.Weather.Icon)]</texture></control>
+          <control type="label"><left>28</left><top>165</top><width>300</width><height>34</height><font>$PARAM[body_font]</font><label>$INFO[Window(weather).Property(Foundry.Weather.Condition)]</label></control>
+          <control type="label"><left>28</left><top>201</top><width>300</width><height>28</height><font>$PARAM[small_font]</font><textcolor>FFA9BAC5</textcolor><label>$ADDON[weather.foundry.canada 30011] $INFO[Window(weather).Property(Foundry.Weather.FeelsLike)]</label><visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.FeelsLike))</visible></control>
+        </control>
+        <control type="textbox"><left>28</left><top>100</top><width>290</width><height>110</height><font>$PARAM[body_font]</font><label>$ADDON[weather.foundry.canada 30020]</label><visible>!String.IsEqual(Window(weather).Property(Foundry.Weather.HasCurrent),true) + !String.IsEmpty(Window(weather).Property(Foundry.Weather.Location))</visible></control>
+        <control type="label"><left>350</left><top>69</top><width>522</width><height>28</height><font>$PARAM[small_font]</font><textcolor>FFA9BAC5</textcolor><label>$ADDON[weather.foundry.canada 30012]</label><visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.Hour.1.Timestamp))</visible></control>
+        <control type="group"><left>350</left><top>105</top><visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.Hour.1.Timestamp))</visible>
+ <control type="label"><left>0</left><top>0</top><width>80</width><height>26</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Hour.1.Time)]</label></control>
+ <control type="image"><left>16</left><top>35</top><width>48</width><height>48</height><aspectratio>keep</aspectratio><texture>$INFO[Window(weather).Property(Foundry.Weather.Hour.1.Icon)]</texture></control>
+ <control type="label"><left>0</left><top>89</top><width>80</width><height>28</height><font>$PARAM[body_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Hour.1.Temperature)]</label></control></control>
+<control type="group"><left>437</left><top>105</top><visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.Hour.2.Timestamp))</visible>
+ <control type="label"><left>0</left><top>0</top><width>80</width><height>26</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Hour.2.Time)]</label></control>
+ <control type="image"><left>16</left><top>35</top><width>48</width><height>48</height><aspectratio>keep</aspectratio><texture>$INFO[Window(weather).Property(Foundry.Weather.Hour.2.Icon)]</texture></control>
+ <control type="label"><left>0</left><top>89</top><width>80</width><height>28</height><font>$PARAM[body_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Hour.2.Temperature)]</label></control></control>
+<control type="group"><left>524</left><top>105</top><visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.Hour.3.Timestamp))</visible>
+ <control type="label"><left>0</left><top>0</top><width>80</width><height>26</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Hour.3.Time)]</label></control>
+ <control type="image"><left>16</left><top>35</top><width>48</width><height>48</height><aspectratio>keep</aspectratio><texture>$INFO[Window(weather).Property(Foundry.Weather.Hour.3.Icon)]</texture></control>
+ <control type="label"><left>0</left><top>89</top><width>80</width><height>28</height><font>$PARAM[body_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Hour.3.Temperature)]</label></control></control>
+<control type="group"><left>611</left><top>105</top><visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.Hour.4.Timestamp))</visible>
+ <control type="label"><left>0</left><top>0</top><width>80</width><height>26</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Hour.4.Time)]</label></control>
+ <control type="image"><left>16</left><top>35</top><width>48</width><height>48</height><aspectratio>keep</aspectratio><texture>$INFO[Window(weather).Property(Foundry.Weather.Hour.4.Icon)]</texture></control>
+ <control type="label"><left>0</left><top>89</top><width>80</width><height>28</height><font>$PARAM[body_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Hour.4.Temperature)]</label></control></control>
+<control type="group"><left>698</left><top>105</top><visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.Hour.5.Timestamp))</visible>
+ <control type="label"><left>0</left><top>0</top><width>80</width><height>26</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Hour.5.Time)]</label></control>
+ <control type="image"><left>16</left><top>35</top><width>48</width><height>48</height><aspectratio>keep</aspectratio><texture>$INFO[Window(weather).Property(Foundry.Weather.Hour.5.Icon)]</texture></control>
+ <control type="label"><left>0</left><top>89</top><width>80</width><height>28</height><font>$PARAM[body_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Hour.5.Temperature)]</label></control></control>
+<control type="group"><left>785</left><top>105</top><visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.Hour.6.Timestamp))</visible>
+ <control type="label"><left>0</left><top>0</top><width>80</width><height>26</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Hour.6.Time)]</label></control>
+ <control type="image"><left>16</left><top>35</top><width>48</width><height>48</height><aspectratio>keep</aspectratio><texture>$INFO[Window(weather).Property(Foundry.Weather.Hour.6.Icon)]</texture></control>
+ <control type="label"><left>0</left><top>89</top><width>80</width><height>28</height><font>$PARAM[body_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Hour.6.Temperature)]</label></control></control>
+        <control type="image"><left>28</left><top>244</top><width>844</width><height>1</height><texture colordiffuse="FF294454">foundry-weather/line.png</texture><visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))</visible></control>
+        <control type="group"><left>28</left><top>259</top><visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))</visible>
+ <control type="label"><left>0</left><top>0</top><width>160</width><height>27</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Day.1.Title)]</label></control>
+ <control type="image"><left>55</left><top>32</top><width>50</width><height>50</height><aspectratio>keep</aspectratio><texture>$INFO[Window(weather).Property(Foundry.Weather.Day.1.Icon)]</texture></control>
+ <control type="label"><left>0</left><top>87</top><width>160</width><height>28</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Day.1.Range)]</label></control></control>
+<control type="group"><left>197</left><top>259</top><visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.2.Title))</visible>
+ <control type="label"><left>0</left><top>0</top><width>160</width><height>27</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Day.2.Title)]</label></control>
+ <control type="image"><left>55</left><top>32</top><width>50</width><height>50</height><aspectratio>keep</aspectratio><texture>$INFO[Window(weather).Property(Foundry.Weather.Day.2.Icon)]</texture></control>
+ <control type="label"><left>0</left><top>87</top><width>160</width><height>28</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Day.2.Range)]</label></control></control>
+<control type="group"><left>366</left><top>259</top><visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.3.Title))</visible>
+ <control type="label"><left>0</left><top>0</top><width>160</width><height>27</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Day.3.Title)]</label></control>
+ <control type="image"><left>55</left><top>32</top><width>50</width><height>50</height><aspectratio>keep</aspectratio><texture>$INFO[Window(weather).Property(Foundry.Weather.Day.3.Icon)]</texture></control>
+ <control type="label"><left>0</left><top>87</top><width>160</width><height>28</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Day.3.Range)]</label></control></control>
+<control type="group"><left>535</left><top>259</top><visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.4.Title))</visible>
+ <control type="label"><left>0</left><top>0</top><width>160</width><height>27</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Day.4.Title)]</label></control>
+ <control type="image"><left>55</left><top>32</top><width>50</width><height>50</height><aspectratio>keep</aspectratio><texture>$INFO[Window(weather).Property(Foundry.Weather.Day.4.Icon)]</texture></control>
+ <control type="label"><left>0</left><top>87</top><width>160</width><height>28</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Day.4.Range)]</label></control></control>
+<control type="group"><left>704</left><top>259</top><visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.5.Title))</visible>
+ <control type="label"><left>0</left><top>0</top><width>160</width><height>27</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Day.5.Title)]</label></control>
+ <control type="image"><left>55</left><top>32</top><width>50</width><height>50</height><aspectratio>keep</aspectratio><texture>$INFO[Window(weather).Property(Foundry.Weather.Day.5.Icon)]</texture></control>
+ <control type="label"><left>0</left><top>87</top><width>160</width><height>28</height><font>$PARAM[small_font]</font><align>center</align><label>$INFO[Window(weather).Property(Foundry.Weather.Day.5.Range)]</label></control></control>
+        <control type="label"><left>28</left><top>378</top><width>620</width><height>24</height><font>$PARAM[small_font]</font><textcolor>FFA9BAC5</textcolor><label>$ADDON[weather.foundry.canada 30015] $INFO[Window(weather).Property(Foundry.Weather.ObservedLocal)]</label><visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.ObservedLocal))</visible></control>
+        <control type="label"><left>28</left><top>402</top><width>620</width><height>24</height><font>$PARAM[small_font]</font><textcolor>FFFFC46B</textcolor><label>$ADDON[weather.foundry.canada 30014]</label><visible>String.IsEqual(Window(weather).Property(Foundry.Weather.Stale),true)</visible></control>
+        <control type="label"><left>28</left><top>432</top><width>844</width><height>20</height><font>$PARAM[small_font]</font><textcolor>FF8CA4B2</textcolor><label>$INFO[Window(weather).Property(Foundry.Weather.Attribution)]</label></control>
+        <control type="label"><left>660</left><top>390</top><width>212</width><height>30</height><font>$PARAM[small_font]</font><align>right</align><textcolor>FFFFC46B</textcolor><label>$INFO[Window(weather).Property(Foundry.Weather.AlertCount)] $ADDON[weather.foundry.canada 30018]</label><visible>String.IsEqual(Window(weather).Property(Foundry.Weather.HasAlerts),true)</visible></control>
+        <control type="textbox"><left>28</left><top>70</top><width>840</width><height>110</height><font>$PARAM[body_font]</font><label>$ADDON[weather.foundry.canada 30016]</label><visible>String.IsEqual(Window(weather).Property(Foundry.Weather.Status),needs_location)</visible></control>
+        <control type="textbox"><left>28</left><top>70</top><width>840</width><height>110</height><font>$PARAM[body_font]</font><label>$ADDON[weather.foundry.canada 30017]</label><visible>String.IsEqual(Window(weather).Property(Foundry.Weather.Status),unavailable)</visible></control>
+        <control type="button" id="15151">
+          <left>0</left><top>480</top><width>213</width><height>52</height>
+          <font>$PARAM[small_font]</font><label>$ADDON[weather.foundry.canada 30018]</label>
+          <texturenofocus border="16" colordiffuse="E6172B39">foundry-weather/card.png</texturenofocus>
+          <texturefocus border="16" colordiffuse="FF276171">foundry-weather/card.png</texturefocus>
+          <textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor><align>center</align>
+          <onleft>9000</onleft><onright>15152</onright><onup>$PARAM[id]</onup><ondown>9000</ondown><onback>9000</onback>
+          <onclick>RunScript(weather.foundry.canada,alerts)</onclick>
+        </control>
+        <control type="button" id="15152">
+          <left>225</left><top>480</top><width>213</width><height>52</height>
+          <font>$PARAM[small_font]</font><label>$ADDON[weather.foundry.canada 30022]</label>
+          <texturenofocus border="16" colordiffuse="E6172B39">foundry-weather/card.png</texturenofocus>
+          <texturefocus border="16" colordiffuse="FF276171">foundry-weather/card.png</texturefocus>
+          <textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor><align>center</align>
+          <onleft>15151</onleft><onright>15153</onright><onup>$PARAM[id]</onup><ondown>9000</ondown><onback>9000</onback>
+          <onclick>RunScript(weather.foundry.canada,next)</onclick>
+        </control>
+        <control type="button" id="15153">
+          <left>450</left><top>480</top><width>213</width><height>52</height>
+          <font>$PARAM[small_font]</font><label>$ADDON[weather.foundry.canada 30023]</label>
+          <texturenofocus border="16" colordiffuse="E6172B39">foundry-weather/card.png</texturenofocus>
+          <texturefocus border="16" colordiffuse="FF276171">foundry-weather/card.png</texturefocus>
+          <textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor><align>center</align>
+          <onleft>15152</onleft><onright>15154</onright><onup>$PARAM[id]</onup><ondown>9000</ondown><onback>9000</onback>
+          <onclick>RunScript(weather.foundry.canada,refresh)</onclick>
+        </control>
+        <control type="button" id="15154">
+          <left>675</left><top>480</top><width>213</width><height>52</height>
+          <font>$PARAM[small_font]</font><label>$ADDON[weather.foundry.canada 30024]</label>
+          <texturenofocus border="16" colordiffuse="E6172B39">foundry-weather/card.png</texturenofocus>
+          <texturefocus border="16" colordiffuse="FF276171">foundry-weather/card.png</texturefocus>
+          <textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor><align>center</align>
+          <onleft>15153</onleft><onright>9000</onright><onup>$PARAM[id]</onup><ondown>9000</ondown><onback>9000</onback>
+          <onclick>Addon.OpenSettings(weather.foundry.canada)</onclick>
+        </control>
+      </control>
+    </definition>
+  </include>
+</includes>

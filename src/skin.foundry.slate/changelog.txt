@@ -1,0 +1,49 @@
+1.1.8
+- Restore the exact original Foundry header PNG at unchanged 380x115 geometry: sufficient source density at 1080p and native 4K, without redraw or upscaling.
+- Keep all Home widget category stacks in a fixed native scrolling viewport, retaining lower-row offset and selected item when returning to the menu.
+- Replace VOD and live-TV OSD card borders and shadows with a feathered backdrop, preserving foreground controls and navigation.
+- Keep all wallpaper assets and optional disabled-by-default OMDb configuration unchanged.
+
+1.1.7
+- Use fourteen approved standalone widget wallpapers and a stable 450 ms full-frame crossfade, without repair patches or runtime title overlays.
+- Keep restored Home widgets in row presentation without resetting their selected item.
+- Add the StreamPilot-style native VOD catalog, protected poster glow bounds, and studio logo above the rail.
+- Add optional OMDb-backed IMDb ratings through Helper 1.1.2, disabled by default.
+- Preserve native playback, library context menus, sorting and existing search.
+
+1.1.6
+- Replace the Home logo lettering with clean vector outlines and a high-resolution Kodi-compatible texture.
+- Keep widget backdrops at full screen size; isolate and move only the category title artwork.
+
+1.1.5
+- Enlarge and tightly trim the Home logo at the same top-left anchor, clear of the buttons.
+- Show shutdown/search wallpapers on icon focus and remove Home button hover labels.
+- Preserve Home widget selection when returning from the menu; keep search navigation unchanged.
+
+1.1.4
+- Make the Home main menu background fully transparent.
+- Remove empty-library messages and their Home placeholder actions.
+- Show a single smaller category title at the top right whenever widget rows are active, using the original artwork unchanged.
+
+Foundry v1.0.1 (2026-10-26)
+
+- Restores the Nimbus development branch repository setup and installed-provider picker.
+- Restores original Foundry logo and backgrounds from the earlier Foundry skin.
+- Preserves release packaging, XML and helper fixes from the first test package.
+
+Foundry v1.0.0 (2026-09-07)
+
+- Initial Foundry release based on Nimbus v0.1.43 (ivarbrandt/skin.nimbus)
+- Addon ID skin.foundry.slate retained from the Estuary-based Foundry skin; devices
+  upgrade in place (1.0.0 > 0.2.0)
+- Original Foundry logo/icon/fanart applied
+- License retained per upstream: GPLv2 (code) + CC BY-SA 4.0 (artwork),
+  attribution to Ivar Brandt preserved
+- Depends on script.foundry.slate.helper (>= 1.0.2), our fork of script.nimbus.helper
+- Bundled all 12 Foundry repos as zips in extras/repos; helper ensure_repos
+  (skin home onload) installs any missing ones automatically at skin load
+- Search providers: settings/search-window picker lists installed add-ons only;
+  empty state redirects to the repository installer
+- Search: removed FEN hard-dependency (upstream conditiom= typo made the FEN
+  collections path unconditional); all provider routes are now addon-aware
+- Extras: new "Foundry Repositories" installer (12 repos via helper show_repos)

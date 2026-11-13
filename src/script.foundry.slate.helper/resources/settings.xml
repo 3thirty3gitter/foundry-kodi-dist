@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+  <category label="TMDb / OMDb shared metadata">
+    <setting type="lsep" label="Enter keys once for Foundry libraries, widgets, add-ons, details and playback." />
+    <setting id="tmdb_enabled" type="bool" label="Enable TMDb metadata and artwork" default="true" />
+    <setting id="tmdb_api_key" type="text" label="Personal TMDb API key or read access token" option="hidden" default="" />
+    <setting id="metadata_language" type="text" label="Metadata language (e.g. en-US)" default="en-US" />
+    <setting id="metadata_region" type="text" label="Certification country (e.g. CA)" default="CA" />
+    <setting id="metadata_show_tmdb" type="bool" label="Show TMDb rating" default="true" />
+    <setting id="metadata_show_imdb" type="bool" label="Show IMDb rating" default="true" />
+    <setting type="action" label="Clear shared metadata cache" action="RunScript(script.foundry.slate.helper,mode=clear_metadata_cache)" />
+    <setting type="lsep" label="TMDb supplies media details and artwork; OMDb supplies IMDb, Rotten Tomatoes and Metacritic." />
+    <setting type="lsep" label="This product uses the TMDB API but is not endorsed or certified by TMDB." />
+    <setting type="lsep" label="Metadata and ratings supplied by TMDb and OMDb. Playback stays with your source." />
+    <setting type="lsep" label="Keys are masked on screen. Kodi profile settings are not encrypted." />
+  </category>
+  <category label="OMDb / IMDb ratings">
+    <setting id="omdb_enabled" type="bool" label="Enable optional OMDb-backed IMDb ratings" default="false" />
+    <setting id="omdb_api_key" type="text" label="Personal OMDb API key" option="hidden" default="" />
+    <setting id="omdb_show_rotten_tomatoes" type="bool" label="Show Rotten Tomatoes rating when available" default="false" />
+    <setting id="omdb_show_metacritic" type="bool" label="Show Metacritic rating when available" default="false" />
+    <setting type="lsep" label="Uses OMDb, not a direct IMDb API. Provider terms apply." />
+    <setting type="lsep" label="Kodi masks this key on screen; profile settings are not encrypted." />
+  </category>
+</settings>

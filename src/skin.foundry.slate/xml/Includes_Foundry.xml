@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+  <!-- Hold the native view until the current directory has been classified. -->
+  <expression name="FoundryCatalogPending">[String.IsEqual(Window(Home).Property(foundry.slate.catalog.routing),true) + [Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(videos) | Container.Content(files)]] | Container.IsUpdating | [!String.IsEmpty(Container.FolderPath) + !String.IsEqual(Window(Home).Property(foundry.slate.catalog.handled_path),Container.FolderPath) + [Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(videos) | Container.Content(files)]]</expression>
+  <include name="ProgressBar">
+    <param name="left">0</param>
+    <param name="top">0</param>
+    <param name="width">435</param>
+    <definition>
+      <control type="progress">
+        <left>$PARAM[left]</left>
+        <top>$PARAM[top]</top>
+        <width>$PARAM[width]</width>
+        <height>6</height>
+        <info>ListItem.PercentPlayed</info>
+        <visible>Integer.IsGreater(ListItem.PercentPlayed,0)</visible>
+      </control>
+    </definition>
+  </include>
+  <include name="VideoInfoButtonsCommon">
+    <param name="icon" />
+    <definition>
+      <width>264</width>
+      <height>110</height>
+      <align>center</align>
+      <aligny>center</aligny>
+      <font>font13</font>
+      <textcolor>unfocused_text</textcolor>
+      <focusedcolor>$VAR[FocusedTextColorVar]</focusedcolor>
+      <texturefocus border="21" colordiffuse="$VAR[FocusColorTheme]">buttons/button-fo.png</texturefocus>
+      <texturenofocus border="21">buttons/button-nofo.png</texturenofocus>
+    </definition>
+  </include>
+</includes>

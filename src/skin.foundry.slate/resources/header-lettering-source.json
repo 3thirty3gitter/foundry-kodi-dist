@@ -1,0 +1,22 @@
+{
+  "approval": "Owner-approved text-only vector trace; original icon retained; no substitute font",
+  "library_png": "libfile_1687137795388191a642dc9ec265eaae",
+  "library_svg": "libfile_cad6d30301dc8191bf789107e891bbd7",
+  "png_sha256": "aea0d4aa3396adf0610704c20add0e49bc0dd468bec0094b7f6692558e636236",
+  "source_original_sha256": "a0e3eae94bdcedba575b20cd60c07c80881169512a28369a4182425999d612a7",
+  "source_size": [
+    760,
+    230
+  ],
+  "raster_size": [
+    3040,
+    920
+  ],
+  "header_geometry": [
+    60,
+    40,
+    380,
+    115
+  ],
+  "graphic_4x_resample_identical": true
+}

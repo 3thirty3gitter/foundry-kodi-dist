@@ -1,0 +1,14 @@
+{
+  "Roboto-Regular.ttf": {
+    "source": "https://raw.githubusercontent.com/googlefonts/roboto-2/main/src/hinted/Roboto-Regular.ttf",
+    "sha256": "56a45233d29f11b4dfb86d248e921939d115778f87325e7ae8cc108383d6664d"
+  },
+  "Roboto-Bold.ttf": {
+    "source": "https://raw.githubusercontent.com/googlefonts/roboto-2/main/src/hinted/Roboto-Bold.ttf",
+    "sha256": "61f89f8db49261c2f6106e8dccc35df7b2f7ed909020db40a3fc905e95f99334"
+  },
+  "Roboto-LICENSE.txt": {
+    "source": "https://raw.githubusercontent.com/googlefonts/roboto-2/main/LICENSE",
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  }
+}
