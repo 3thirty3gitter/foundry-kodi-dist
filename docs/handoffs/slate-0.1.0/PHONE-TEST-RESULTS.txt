@@ -1,0 +1,45 @@
+test_content_type_size_and_payload_rejected (test_phone_entry.HTTPTests.test_content_type_size_and_payload_rejected) ... ok
+test_host_rebinding_and_cross_origin_rejected (test_phone_entry.HTTPTests.test_host_rebinding_and_cross_origin_rejected) ... ok
+test_page_private_headers_no_embedded_token (test_phone_entry.HTTPTests.test_page_private_headers_no_embedded_token) ... ok
+test_same_origin_success_and_duplicate (test_phone_entry.HTTPTests.test_same_origin_success_and_duplicate) ... ok
+test_token_and_path_rejected (test_phone_entry.HTTPTests.test_token_and_path_rejected) ... ok
+test_trickled_headers_have_absolute_deadline (test_phone_entry.HTTPTests.test_trickled_headers_have_absolute_deadline) ... ok
+test_truncated_body_is_not_accepted (test_phone_entry.HTTPTests.test_truncated_body_is_not_accepted) ... ok
+test_hidden_numeric_inactive_wrong_skin_or_owner_rejected (test_phone_entry.KodiIntegration.test_hidden_numeric_inactive_wrong_skin_or_owner_rejected) ... ok
+test_keyboard_xml_clears_session_and_keeps_native_defaults (test_phone_entry.KodiIntegration.test_keyboard_xml_clears_session_and_keeps_native_defaults) ... ok
+test_qr_local_png_has_quiet_zone (test_phone_entry.KodiIntegration.test_qr_local_png_has_quiet_zone) ... ok
+test_second_click_revokes_without_starting_server (test_phone_entry.KodiIntegration.test_second_click_revokes_without_starting_server) ... ok
+test_text_is_json_data_and_never_auto_confirmed (test_phone_entry.KodiIntegration.test_text_is_json_data_and_never_auto_confirmed) ... ok
+test_dialog_closed_or_replaced (test_phone_entry.SessionTests.test_dialog_closed_or_replaced) ... ok
+test_expiry_at_boundary (test_phone_entry.SessionTests.test_expiry_at_boundary) ... ok
+test_failed_or_uncertain_delivery_is_not_retried (test_phone_entry.SessionTests.test_failed_or_uncertain_delivery_is_not_retried) ... ok
+test_invalid_token_does_not_consume_session (test_phone_entry.SessionTests.test_invalid_token_does_not_consume_session) ... ok
+test_networks_are_rfc1918_only (test_phone_entry.SessionTests.test_networks_are_rfc1918_only) ... ok
+test_success_unicode_empty_and_one_use (test_phone_entry.SessionTests.test_success_unicode_empty_and_one_use) ... ok
+test_validation_does_not_execute_commands (test_phone_entry.SessionTests.test_validation_does_not_execute_commands) ... ok
+test_ambiguous_network_keeps_keyboard_without_listener (test_phone_entry_network.AddressSelection.test_ambiguous_network_keeps_keyboard_without_listener) ... ok
+test_android_names_fallback (test_phone_entry_network.AddressSelection.test_android_names_fallback) ... ok
+test_duplicate_routes_use_lowest_metric_in_any_order (test_phone_entry_network.AddressSelection.test_duplicate_routes_use_lowest_metric_in_any_order) ... ok
+test_ioctl_discovers_active_physical_lan_only (test_phone_entry_network.AddressSelection.test_ioctl_discovers_active_physical_lan_only) ... ok
+test_ioctl_permission_failure_fails_closed (test_phone_entry_network.AddressSelection.test_ioctl_permission_failure_fails_closed) ... ok
+test_missing_ioctl_module_fails_closed_on_android (test_phone_entry_network.AddressSelection.test_missing_ioctl_module_fails_closed_on_android) ... ok
+test_other_platforms_do_not_use_linux_ioctl (test_phone_entry_network.AddressSelection.test_other_platforms_do_not_use_linux_ioctl) ... ok
+test_physical_and_virtual_names (test_phone_entry_network.AddressSelection.test_physical_and_virtual_names) ... ok
+test_physical_route_parse_ignores_tunnel_and_non_default (test_phone_entry_network.AddressSelection.test_physical_route_parse_ignores_tunnel_and_non_default) ... ok
+test_resolver_wires_discovery (test_phone_entry_network.AddressSelection.test_resolver_wires_discovery) ... ok
+test_selection_matrix (test_phone_entry_network.AddressSelection.test_selection_matrix) ... ok
+test_full_size_default_and_reversible_active_transform (test_phone_keyboard_layout.KeyboardLayout.test_full_size_default_and_reversible_active_transform) ... ok
+test_qr_slides_from_offscreen_and_keeps_remote_focus (test_phone_keyboard_layout.KeyboardLayout.test_qr_slides_from_offscreen_and_keeps_remote_focus) ... ok
+test_cancel_revokes_immediately_but_retains_invalid_image (test_phone_keyboard_layout.KeyboardLifecycle.test_cancel_revokes_immediately_but_retains_invalid_image) ... ok
+test_old_cleanup_does_not_clear_new_session (test_phone_keyboard_layout.KeyboardLifecycle.test_old_cleanup_does_not_clear_new_session) ... ok
+test_security_closed_before_visual_delay (test_phone_keyboard_layout.KeyboardLifecycle.test_security_closed_before_visual_delay) ... ok
+test_original_cancel_preserves_slate_session (test_phone_dual_skin.DualSkin.test_original_cancel_preserves_slate_session) ... ok
+test_property_keys_are_disjoint (test_phone_dual_skin.DualSkin.test_property_keys_are_disjoint) ... ok
+test_slate_cancel_preserves_original_session (test_phone_dual_skin.DualSkin.test_slate_cancel_preserves_original_session) ... ok
+test_switching_skin_prevents_stale_original_delivery (test_phone_dual_skin.DualSkin.test_switching_skin_prevents_stale_original_delivery) ... ok
+test_switching_skin_prevents_stale_slate_delivery (test_phone_dual_skin.DualSkin.test_switching_skin_prevents_stale_slate_delivery) ... ok
+
+----------------------------------------------------------------------
+Ran 40 tests in 3.761s
+
+OK

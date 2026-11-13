@@ -1,0 +1,70 @@
+{
+  "repository": "3thirty3gitter/StreamPilot",
+  "commit": "994bcb2d83f0fef96afe8512ecdd66c8429d9097",
+  "assets": [
+    {
+      "path": "app/src/main/res/drawable-nodpi/rating_metacritic.png",
+      "blob": "0a969eef9e2e5fa8729b4e5b5f47210373d0516d",
+      "file": "source-rating_metacritic.png"
+    },
+    {
+      "path": "app/src/main/res/drawable-nodpi/rating_rt_fresh.png",
+      "blob": "073420a2195e54cf5cac480e044aa1d29bc28c1d",
+      "file": "source-rating_rt_fresh.png"
+    },
+    {
+      "path": "app/src/main/res/drawable-nodpi/rating_rt_rotten.png",
+      "blob": "b0ac72ef4fe4bb6454249237ae244d5d790d0a28",
+      "file": "source-rating_rt_rotten.png"
+    }
+  ],
+  "layout_source": {
+    "path": "app/src/main/java/ca/threethirtythree/streampilot/ui/VodCatalogScreen.kt",
+    "blob": "4c73ab24d77f45b828efb2a5517357a507f76da1",
+    "functions": [
+      "VodCatalogScreen",
+      "VodHero",
+      "VodPoster",
+      "CertificationBadge",
+      "LibraryAction",
+      "LibrarySearchAction"
+    ],
+    "logical_canvas": [
+      960,
+      540
+    ],
+    "row_dp": 204,
+    "overflow_dp": 48,
+    "content_padding_dp": [
+      28,
+      66
+    ],
+    "poster_pixels": [
+      224,
+      336
+    ],
+    "item_gap_pixels": 32,
+    "focused_scale": 1.19,
+    "shadow_elevations_dp": [
+      34,
+      14,
+      5
+    ],
+    "font_sizes_sp": {
+      "header": 27,
+      "title": 25,
+      "metadata": 11,
+      "description": 12,
+      "action": 12,
+      "rating_badge": 8
+    },
+    "tv_focus_parent_fraction": 0.3,
+    "page_arrow_dp": [
+      104,
+      76
+    ],
+    "page_arrow_slot_dp": 110,
+    "page_arrow_focus_scale": 1.08,
+    "page_arrow_text_offset_dp": 15
+  }
+}

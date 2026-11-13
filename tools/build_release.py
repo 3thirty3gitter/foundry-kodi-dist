@@ -71,7 +71,8 @@ def main():
                root / "src/resource.uisounds.foundry.pulse",
                root / "src/weather.foundry.canada", root / "src/plugin.games.foundry",
                args.skin, args.helper,
-               root / "src/script.program.foundry-build", root / "src/script.program.foundry-bootstrap"]
+               root / "src/script.program.foundry-build", root / "src/script.program.foundry-bootstrap",
+               root / "src/script.foundry.slate.helper", root / "src/skin.foundry.slate"]
     feed, packages = ET.Element("addons"), []
     for source in sources:
         manifest, details = package(source, root)

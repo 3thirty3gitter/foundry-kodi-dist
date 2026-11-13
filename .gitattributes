@@ -9,3 +9,5 @@
 *.xbt binary
 releases/1.2.11-artwork-approval.json -text
 releases/1.2.11.json -text
+src/skin.foundry.slate/** -text
+src/script.foundry.slate.helper/** -text

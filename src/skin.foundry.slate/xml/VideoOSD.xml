@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+  <defaultcontrol always="true">8702</defaultcontrol>
+  <onload>ClearProperty(foundry.slate.osd.dismissed,home)</onload>
+  <onload condition="VideoPlayer.Content(livetv)">SetFocus(8802)</onload>
+  <onload condition="!VideoPlayer.Content(livetv) + !Player.PauseEnabled">SetFocus(8704)</onload>
+  <onload condition="!VideoPlayer.Content(livetv)">RunScript(script.foundry.slate.helper,mode=osd_artwork)</onload>
+  <onunload>SetProperty(foundry.slate.osd.dismissed,true,home)</onunload>
+  <depth>DepthOSD</depth>
+  <controls>
+    <include>FoundryPlaybackStudioLogo</include>
+    <control type="group">
+      <visible>!VideoPlayer.Content(livetv)</visible>
+      <include>StreamPilotVODCard</include>
+    </control>
+    <control type="group">
+      <visible>VideoPlayer.Content(livetv)</visible>
+      <include>StreamPilotLiveCard</include>
+    </control>
+  </controls>
+</window>

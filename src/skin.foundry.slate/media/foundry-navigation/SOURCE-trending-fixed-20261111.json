@@ -1,0 +1,52 @@
+{
+  "schema_version": 3,
+  "artwork_set": "Foundry approved fixed Trending background",
+  "approval": {
+    "date": "2026-11-11",
+    "quote": "Great job nova, update all in the app"
+  },
+  "dimensions": [
+    1672,
+    941
+  ],
+  "widget_group_scale": 0.55,
+  "background_sha256": "9d254d3949ab9dc2690ac285bc8da5a51b42c0644ec48566464a5aaf057c6212",
+  "review_library_file_id": "libfile_fde3_f-83a0db188f8081919d90f568775120d8_2111607db4588191b58d84d14639c769",
+  "background_note": "One fixed Trending background. Identical approved PNG bytes copied without transformations; widget foregrounds were composed at 55% scale in the approved set.",
+  "mode": "navigation",
+  "files": [
+    {
+      "label": "Back",
+      "slug": "back",
+      "filename": "movies-back.png",
+      "sha256": "95234224504eb804cb10cb3e489dce581614da7db0b54b6f051d5ea960e87400",
+      "bytes": 1215982,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Search",
+      "slug": "search",
+      "filename": "search.png",
+      "sha256": "8a81bc436747800ec1a6d48a0e9edb73d6b2a0c44e705d943902700160cb9de6",
+      "bytes": 1226883,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Shutdown",
+      "slug": "shutdown",
+      "filename": "shutdown.png",
+      "sha256": "8d6a3019a8cecc6dfd4ceb2bf3b2a2fbe6906a58c4a8d2404b2ce2debb9063b3",
+      "bytes": 1235238,
+      "dimensions": [
+        1672,
+        941
+      ]
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<includes>
+  <expression name="FoundryMetadataCurrentItem">!String.IsEmpty(Window(Home).Property(foundry.slate.metadata.owner_label)) + String.IsEqual(Window(Home).Property(foundry.slate.metadata.owner_label),ListItem.Label) + String.IsEqual(Window(Home).Property(foundry.slate.metadata.owner_year),ListItem.Year) + String.IsEqual(Window(Home).Property(foundry.slate.metadata.owner_type),ListItem.DBTYPE) + String.IsEqual(Window(Home).Property(foundry.slate.metadata.owner_season),ListItem.Season) + String.IsEqual(Window(Home).Property(foundry.slate.metadata.owner_episode),ListItem.Episode) + String.IsEqual(Window(Home).Property(foundry.slate.metadata.owner_imdb),ListItem.UniqueID(imdb)) + String.IsEqual(Window(Home).Property(foundry.slate.metadata.owner_tmdb),ListItem.UniqueID(tmdb)) + String.IsEqual(Window(Home).Property(foundry.slate.metadata.owner_imdbnumber),ListItem.IMDBNumber) + String.IsEqual(Window(Home).Property(foundry.slate.metadata.owner_showtitle),ListItem.TVShowTitle) + [String.IsEmpty(Window(Home).Property(foundry.slate.metadata.owner_path)) | String.IsEqual(Window(Home).Property(foundry.slate.metadata.owner_path),ListItem.FileNameAndPath) | String.IsEqual(Window(Home).Property(foundry.slate.metadata.owner_path),ListItem.Path)]</expression>
+  <expression name="FoundryPlayerCurrentItem">Player.HasVideo + !VideoPlayer.Content(livetv) + !String.IsEmpty(Window(Home).Property(foundry.slate.player.owner_label)) + String.IsEqual(Window(Home).Property(foundry.slate.player.owner_label),VideoPlayer.Title) + String.IsEqual(Window(Home).Property(foundry.slate.player.owner_year),VideoPlayer.Year) + String.IsEqual(Window(Home).Property(foundry.slate.player.owner_season),VideoPlayer.Season) + String.IsEqual(Window(Home).Property(foundry.slate.player.owner_episode),VideoPlayer.Episode) + [[String.IsEqual(Window(Home).Property(foundry.slate.player.owner_type),movie) + VideoPlayer.Content(movies)] | [String.IsEqual(Window(Home).Property(foundry.slate.player.owner_type),episode) + VideoPlayer.Content(episodes)]] + String.IsEqual(Window(Home).Property(foundry.slate.player.owner_imdb),VideoPlayer.UniqueID(imdb)) + String.IsEqual(Window(Home).Property(foundry.slate.player.owner_tmdb),VideoPlayer.UniqueID(tmdb)) + String.IsEqual(Window(Home).Property(foundry.slate.player.owner_imdbnumber),VideoPlayer.IMDBNumber) + String.IsEqual(Window(Home).Property(foundry.slate.player.owner_showtitle),VideoPlayer.TVShowTitle) + [String.IsEmpty(Window(Home).Property(foundry.slate.player.owner_path)) | String.IsEqual(Window(Home).Property(foundry.slate.player.owner_path),Player.FilenameAndPath) | String.IsEqual(Window(Home).Property(foundry.slate.player.owner_path),ListItem.Path)]</expression>
+  <expression name="FoundryPlayerMetadataVisible">$EXP[FoundryPlayerCurrentItem] + [Window.IsVisible(videoosd) | Window.IsVisible(seekbar) | Window.IsVisible(fullscreenvideo)]</expression>
+  <variable name="FoundryMetadataPlot">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.plot))">$INFO[Window(Home).Property(foundry.slate.metadata.plot)]</value>
+    <value>$INFO[ListItem.Plot]</value>
+  </variable>
+  <variable name="FoundryPlayerPlot">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.plot))">$INFO[Window(Home).Property(foundry.slate.player.plot)]</value>
+    <value>$INFO[VideoPlayer.Plot]</value>
+  </variable>
+  <variable name="FoundryMetadataPoster">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.poster))">$INFO[Window(Home).Property(foundry.slate.metadata.poster)]</value>
+    <value>$INFO[ListItem.Art(poster)]</value>
+  </variable>
+  <variable name="FoundryPlayerPoster">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.poster))">$INFO[Window(Home).Property(foundry.slate.player.poster)]</value>
+    <value>$INFO[Player.Art(poster)]</value>
+  </variable>
+  <variable name="FoundryMetadataFanart">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.fanart))">$INFO[Window(Home).Property(foundry.slate.metadata.fanart)]</value>
+    <value>$INFO[ListItem.Art(fanart)]</value>
+  </variable>
+  <variable name="FoundryPlayerFanart">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.fanart))">$INFO[Window(Home).Property(foundry.slate.player.fanart)]</value>
+    <value>$INFO[Player.Art(fanart)]</value>
+  </variable>
+  <variable name="FoundryMetadataClearlogo">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.clearlogo))">$INFO[Window(Home).Property(foundry.slate.metadata.clearlogo)]</value>
+    <value>$INFO[ListItem.Art(clearlogo)]</value>
+  </variable>
+  <variable name="FoundryPlayerClearlogo">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.clearlogo))">$INFO[Window(Home).Property(foundry.slate.player.clearlogo)]</value>
+    <value>$INFO[Player.Art(clearlogo)]</value>
+  </variable>
+  <variable name="FoundryMetadataGenre">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.genre))">$INFO[Window(Home).Property(foundry.slate.metadata.genre)]</value>
+    <value>$INFO[ListItem.Genre]</value>
+  </variable>
+  <variable name="FoundryPlayerGenre">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.genre))">$INFO[Window(Home).Property(foundry.slate.player.genre)]</value>
+    <value>$INFO[VideoPlayer.Genre]</value>
+  </variable>
+  <variable name="FoundryMetadataStudio">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.studio))">$INFO[Window(Home).Property(foundry.slate.metadata.studio)]</value>
+    <value>$INFO[ListItem.Studio]</value>
+  </variable>
+  <variable name="FoundryPlayerStudio">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.studio))">$INFO[Window(Home).Property(foundry.slate.player.studio)]</value>
+    <value>$INFO[VideoPlayer.Studio]</value>
+  </variable>
+  <variable name="FoundryMetadataPremiered">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.premiered))">$INFO[Window(Home).Property(foundry.slate.metadata.premiered)]</value>
+    <value>$INFO[ListItem.Premiered]</value>
+  </variable>
+  <variable name="FoundryPlayerPremiered">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.premiered))">$INFO[Window(Home).Property(foundry.slate.player.premiered)]</value>
+    <value>$INFO[VideoPlayer.Premiered]</value>
+  </variable>
+  <variable name="FoundryMetadataMpaa">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.mpaa))">$INFO[Window(Home).Property(foundry.slate.metadata.mpaa)]</value>
+    <value>$INFO[ListItem.MPAA]</value>
+  </variable>
+  <variable name="FoundryPlayerMpaa">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.mpaa))">$INFO[Window(Home).Property(foundry.slate.player.mpaa)]</value>
+    <value>$INFO[VideoPlayer.MPAA]</value>
+  </variable>
+  <variable name="FoundryMetadataRuntime">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.runtime))">$INFO[Window(Home).Property(foundry.slate.metadata.runtime)]</value>
+    <value>$INFO[ListItem.Duration]</value>
+  </variable>
+  <variable name="FoundryPlayerRuntime">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.runtime))">$INFO[Window(Home).Property(foundry.slate.player.runtime)]</value>
+    <value>$INFO[VideoPlayer.Duration]</value>
+  </variable>
+  <variable name="FoundryMetadataCast">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.cast))">$INFO[Window(Home).Property(foundry.slate.metadata.cast)]</value>
+    <value>$INFO[ListItem.Cast]</value>
+  </variable>
+  <variable name="FoundryPlayerCast">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.cast))">$INFO[Window(Home).Property(foundry.slate.player.cast)]</value>
+    <value>$INFO[VideoPlayer.Cast]</value>
+  </variable>
+  <variable name="FoundryMetadataDirector">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.director))">$INFO[Window(Home).Property(foundry.slate.metadata.director)]</value>
+    <value>$INFO[ListItem.Director]</value>
+  </variable>
+  <variable name="FoundryPlayerDirector">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.director))">$INFO[Window(Home).Property(foundry.slate.player.director)]</value>
+    <value>$INFO[VideoPlayer.Director]</value>
+  </variable>
+  <variable name="FoundryMetadataWriter">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.writer))">$INFO[Window(Home).Property(foundry.slate.metadata.writer)]</value>
+    <value>$INFO[ListItem.Writer]</value>
+  </variable>
+  <variable name="FoundryPlayerWriter">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.writer))">$INFO[Window(Home).Property(foundry.slate.player.writer)]</value>
+    <value>$INFO[VideoPlayer.Writer]</value>
+  </variable>
+  <variable name="FoundryMetadataCountry">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.country))">$INFO[Window(Home).Property(foundry.slate.metadata.country)]</value>
+    <value>$INFO[ListItem.Country]</value>
+  </variable>
+  <variable name="FoundryPlayerCountry">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.country))">$INFO[Window(Home).Property(foundry.slate.player.country)]</value>
+    <value>$INFO[VideoPlayer.Country]</value>
+  </variable>
+  <variable name="FoundryMetadataTagline">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.tagline))">$INFO[Window(Home).Property(foundry.slate.metadata.tagline)]</value>
+    <value>$INFO[ListItem.Tagline]</value>
+  </variable>
+  <variable name="FoundryPlayerTagline">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.tagline))">$INFO[Window(Home).Property(foundry.slate.player.tagline)]</value>
+    <value>$INFO[VideoPlayer.Tagline]</value>
+  </variable>
+  <variable name="FoundryRatingIMDb">
+    <value condition="$EXP[FoundryPlayerMetadataVisible] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.imdb))">$INFO[Window(Home).Property(foundry.slate.player.imdb)]</value>
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.imdb))">$INFO[Window(Home).Property(foundry.slate.metadata.imdb)]</value>
+  </variable>
+  <variable name="FoundryRatingTMDb">
+    <value condition="$EXP[FoundryPlayerMetadataVisible] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.tmdb))">$INFO[Window(Home).Property(foundry.slate.player.tmdb)]</value>
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.tmdb))">$INFO[Window(Home).Property(foundry.slate.metadata.tmdb)]</value>
+  </variable>
+  <variable name="FoundryRatingRT">
+    <value condition="$EXP[FoundryPlayerMetadataVisible] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.rotten_tomatoes))">$INFO[Window(Home).Property(foundry.slate.player.rotten_tomatoes)]</value>
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.rotten_tomatoes))">$INFO[Window(Home).Property(foundry.slate.metadata.rotten_tomatoes)]</value>
+  </variable>
+  <variable name="FoundryRatingMetacritic">
+    <value condition="$EXP[FoundryPlayerMetadataVisible] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.metacritic))">$INFO[Window(Home).Property(foundry.slate.player.metacritic)]</value>
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.metacritic))">$INFO[Window(Home).Property(foundry.slate.metadata.metacritic)]</value>
+  </variable>
+</includes>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Neutral native-vector continuation of the compact Foundry wallpaper. -->
+  <defs>
+    <linearGradient id="upper" x2="1" y2="1">
+      <stop stop-color="#101214"/>
+      <stop offset="1" stop-color="#192022"/>
+    </linearGradient>
+    <linearGradient id="lower" x2="0" y2="1">
+      <stop stop-color="#080b0d"/>
+      <stop offset="1" stop-color="#010203"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#upper)" d="M0 0h1920v1080H0z"/>
+  <path fill="url(#lower)" d="M0 583L1920 31v1049H0z"/>
+  <path fill="#010203" d="M0 865Q850 735 1920 990v90H0z"/>
+</svg>

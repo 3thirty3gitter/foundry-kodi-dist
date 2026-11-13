@@ -1,0 +1,1331 @@
+{
+  "static_entries_and_templates": [
+    {
+      "window": "DialogContextMenu.xml",
+      "id": "1000",
+      "label": null,
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "DialogAddonSettings.xml",
+      "id": "10",
+      "label": null,
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "DialogAddonSettings.xml",
+      "id": "7",
+      "label": null,
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "DialogAddonSettings.xml",
+      "id": "8",
+      "label": null,
+      "icon": "toggle",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "DialogAddonSettings.xml",
+      "id": "9",
+      "label": null,
+      "icon": "list",
+      "kind": "spincontrolex"
+    },
+    {
+      "window": "DialogAddonSettings.xml",
+      "id": "12",
+      "label": null,
+      "icon": "edit",
+      "kind": "edit"
+    },
+    {
+      "window": "DialogAddonSettings.xml",
+      "id": "13",
+      "label": null,
+      "icon": "sliders",
+      "kind": "sliderex"
+    },
+    {
+      "window": "DialogAddonSettings.xml",
+      "id": "15",
+      "label": null,
+      "icon": "skin",
+      "kind": "colorbutton"
+    },
+    {
+      "window": "SettingsSystemInfo.xml",
+      "id": "95",
+      "label": "$LOCALIZE[20037]",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "SettingsSystemInfo.xml",
+      "id": "94",
+      "label": "$LOCALIZE[13277]",
+      "icon": "storage",
+      "kind": "button"
+    },
+    {
+      "window": "SettingsSystemInfo.xml",
+      "id": "96",
+      "label": "$LOCALIZE[13279]",
+      "icon": "network",
+      "kind": "button"
+    },
+    {
+      "window": "SettingsSystemInfo.xml",
+      "id": "97",
+      "label": "$LOCALIZE[13280]",
+      "icon": "media",
+      "kind": "button"
+    },
+    {
+      "window": "SettingsSystemInfo.xml",
+      "id": "98",
+      "label": "$LOCALIZE[13281]",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "SettingsSystemInfo.xml",
+      "id": "99",
+      "label": "$LOCALIZE[19191]",
+      "icon": "tv",
+      "kind": "button"
+    },
+    {
+      "window": "SettingsSystemInfo.xml",
+      "id": "100",
+      "label": "$LOCALIZE[12389]",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "11111",
+      "label": "$LOCALIZE[13396]",
+      "icon": "audio",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "11106",
+      "label": "$LOCALIZE[24133]",
+      "icon": "subtitles",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "11102",
+      "label": "$LOCALIZE[13395]",
+      "icon": "media",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "11103",
+      "label": "$LOCALIZE[36560]",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "11104",
+      "label": "$LOCALIZE[31112]",
+      "icon": "audio",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "11108",
+      "label": "$LOCALIZE[31115]",
+      "icon": "subtitles",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "11105",
+      "label": "$LOCALIZE[31132]",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "11107",
+      "label": "$LOCALIZE[31133]",
+      "icon": "display",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "7",
+      "label": "$LOCALIZE[31142]",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "13101",
+      "label": "$LOCALIZE[24022]",
+      "icon": "toggle",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "13102",
+      "label": "$LOCALIZE[31004]",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "13103",
+      "label": "$LOCALIZE[31005]",
+      "icon": "toggle",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "14101",
+      "label": "$LOCALIZE[35225]",
+      "icon": "media",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "14102",
+      "label": "$LOCALIZE[35233]",
+      "icon": "games",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "14106",
+      "label": "$LOCALIZE[35227]",
+      "icon": "media",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "14104",
+      "label": "$LOCALIZE[13376]",
+      "icon": "audio",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "14103",
+      "label": "$LOCALIZE[35234]",
+      "icon": "games",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "14107",
+      "label": "$LOCALIZE[35110]",
+      "icon": "games",
+      "kind": "button"
+    },
+    {
+      "window": "Custom_1101_SettingsList.xml",
+      "id": "14105",
+      "label": "$LOCALIZE[35226]",
+      "icon": "games",
+      "kind": "button"
+    },
+    {
+      "window": "DialogButtonMenu.xml",
+      "label": "Reload skin",
+      "icon": "reload",
+      "kind": "menu item"
+    },
+    {
+      "window": "DialogButtonMenu.xml",
+      "label": "Skin settings",
+      "icon": "skin",
+      "kind": "menu item"
+    },
+    {
+      "window": "DialogButtonMenu.xml",
+      "label": "Toggle debugging",
+      "icon": "debug",
+      "kind": "menu item"
+    },
+    {
+      "window": "DialogButtonMenu.xml",
+      "label": "System information",
+      "icon": "info",
+      "kind": "menu item"
+    },
+    {
+      "window": "DialogButtonMenu.xml",
+      "label": "$LOCALIZE[13016]",
+      "icon": "power",
+      "kind": "menu item"
+    },
+    {
+      "window": "DialogButtonMenu.xml",
+      "label": "$LOCALIZE[20150]",
+      "icon": "power",
+      "kind": "menu item"
+    },
+    {
+      "window": "DialogButtonMenu.xml",
+      "label": "$LOCALIZE[20151] $INFO[System.AlarmPos,(,)]",
+      "icon": "power",
+      "kind": "menu item"
+    },
+    {
+      "window": "DialogButtonMenu.xml",
+      "label": "$LOCALIZE[13011]",
+      "icon": "sleep",
+      "kind": "menu item"
+    },
+    {
+      "window": "DialogButtonMenu.xml",
+      "label": "$LOCALIZE[13010]",
+      "icon": "sleep",
+      "kind": "menu item"
+    },
+    {
+      "window": "DialogButtonMenu.xml",
+      "label": "$LOCALIZE[13013]",
+      "icon": "reload",
+      "kind": "menu item"
+    },
+    {
+      "window": "DialogButtonMenu.xml",
+      "label": "$LOCALIZE[20126] $INFO[system.profilename]",
+      "icon": "profiles",
+      "kind": "menu item"
+    },
+    {
+      "window": "DialogButtonMenu.xml",
+      "label": "$VAR[MasterModeLabel]",
+      "icon": "settings",
+      "kind": "menu item"
+    },
+    {
+      "window": "DialogButtonMenu.xml",
+      "label": "$LOCALIZE[13017]",
+      "icon": "power",
+      "kind": "menu item"
+    },
+    {
+      "window": "DialogButtonMenu.xml",
+      "label": "$LOCALIZE[13018]",
+      "icon": "power",
+      "kind": "menu item"
+    },
+    {
+      "window": "DialogButtonMenu.xml",
+      "label": "$LOCALIZE[13012]",
+      "icon": "power",
+      "kind": "menu item"
+    },
+    {
+      "window": "SettingsCategory.xml",
+      "id": "7",
+      "label": null,
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "SettingsCategory.xml",
+      "id": "8",
+      "label": null,
+      "icon": "toggle",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SettingsCategory.xml",
+      "id": "9",
+      "label": null,
+      "icon": "list",
+      "kind": "spincontrolex"
+    },
+    {
+      "window": "SettingsCategory.xml",
+      "id": "13",
+      "label": null,
+      "icon": "sliders",
+      "kind": "sliderex"
+    },
+    {
+      "window": "SettingsCategory.xml",
+      "id": "15",
+      "label": null,
+      "icon": "skin",
+      "kind": "colorbutton"
+    },
+    {
+      "window": "SettingsCategory.xml",
+      "id": "10",
+      "label": null,
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "DialogSettings.xml",
+      "id": "7",
+      "label": null,
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "DialogSettings.xml",
+      "id": "8",
+      "label": null,
+      "icon": "toggle",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "DialogSettings.xml",
+      "id": "9",
+      "label": null,
+      "icon": "list",
+      "kind": "spincontrolex"
+    },
+    {
+      "window": "DialogSettings.xml",
+      "id": "12",
+      "label": null,
+      "icon": "edit",
+      "kind": "edit"
+    },
+    {
+      "window": "DialogSettings.xml",
+      "id": "13",
+      "label": null,
+      "icon": "sliders",
+      "kind": "sliderex"
+    },
+    {
+      "window": "SettingsProfile.xml",
+      "label": "$LOCALIZE[128]",
+      "icon": "settings",
+      "kind": "menu item"
+    },
+    {
+      "window": "SettingsProfile.xml",
+      "label": "$LOCALIZE[13200]",
+      "icon": "settings",
+      "kind": "menu item"
+    },
+    {
+      "window": "SettingsProfile.xml",
+      "id": "4",
+      "label": "$LOCALIZE[31057]",
+      "icon": "toggle",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SettingsProfile.xml",
+      "id": "5",
+      "label": "$LOCALIZE[31058]",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "Settings.xml",
+      "label": "Skin settings",
+      "icon": "skin",
+      "kind": "menu item"
+    },
+    {
+      "window": "Settings.xml",
+      "label": "$LOCALIZE[10003]",
+      "icon": "folder",
+      "kind": "menu item"
+    },
+    {
+      "window": "Settings.xml",
+      "label": "$LOCALIZE[24001]",
+      "icon": "addons",
+      "kind": "menu item"
+    },
+    {
+      "window": "Settings.xml",
+      "label": "$LOCALIZE[138]",
+      "icon": "info",
+      "kind": "menu item"
+    },
+    {
+      "window": "Settings.xml",
+      "label": "$LOCALIZE[14200]",
+      "icon": "player",
+      "kind": "menu item"
+    },
+    {
+      "window": "Settings.xml",
+      "label": "$LOCALIZE[14211]",
+      "icon": "media",
+      "kind": "menu item"
+    },
+    {
+      "window": "Settings.xml",
+      "label": "$LOCALIZE[14204]",
+      "icon": "tv",
+      "kind": "menu item"
+    },
+    {
+      "window": "Settings.xml",
+      "label": "$LOCALIZE[14036]",
+      "icon": "network",
+      "kind": "menu item"
+    },
+    {
+      "window": "Settings.xml",
+      "label": "$LOCALIZE[15016]",
+      "icon": "games",
+      "kind": "menu item"
+    },
+    {
+      "window": "Settings.xml",
+      "label": "$LOCALIZE[14206]",
+      "icon": "interface",
+      "kind": "menu item"
+    },
+    {
+      "window": "Settings.xml",
+      "label": "$LOCALIZE[13200]",
+      "icon": "profiles",
+      "kind": "menu item"
+    },
+    {
+      "window": "Settings.xml",
+      "label": "$LOCALIZE[13000]",
+      "icon": "system",
+      "kind": "menu item"
+    },
+    {
+      "window": "Settings.xml",
+      "label": "LibreELEC",
+      "icon": "system",
+      "kind": "menu item"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "label": "$LOCALIZE[31061]",
+      "icon": "settings",
+      "kind": "menu item"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "label": "General configuration",
+      "icon": "settings",
+      "kind": "menu item"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "label": "Widget options",
+      "icon": "interface",
+      "kind": "menu item"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "label": "Customization",
+      "icon": "edit",
+      "kind": "menu item"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "label": "Artwork display",
+      "icon": "pictures",
+      "kind": "menu item"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "label": "Ratings management",
+      "icon": "settings",
+      "kind": "menu item"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "label": "Trailer setup",
+      "icon": "media",
+      "kind": "menu item"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "label": "Search options",
+      "icon": "search",
+      "kind": "menu item"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "label": "$LOCALIZE[31170]",
+      "icon": "settings",
+      "kind": "menu item"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "label": "Extras",
+      "icon": "settings",
+      "kind": "menu item"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "624",
+      "label": "Remake menus and widgets",
+      "icon": "folder",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6240",
+      "label": "$INFO[Skin.String(MenuMovieLabel)]",
+      "icon": "media",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6241",
+      "label": "   - Set main menu path",
+      "icon": "media",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6242",
+      "label": "   - Set widgets",
+      "icon": "media",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "625",
+      "label": "$INFO[Skin.String(MenuTVShowLabel)]",
+      "icon": "tv",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6250",
+      "label": "   - Set main menu path",
+      "icon": "tv",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6251",
+      "label": "   - Set widgets",
+      "icon": "tv",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "626",
+      "label": "$INFO[Skin.String(MenuCustom1Label)]",
+      "icon": "interface",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6260",
+      "label": "   - Set main menu path",
+      "icon": "folder",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6261",
+      "label": "   - Set widgets",
+      "icon": "folder",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "627",
+      "label": "$INFO[Skin.String(MenuCustom2Label)]",
+      "icon": "interface",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6270",
+      "label": "   - Set main menu path",
+      "icon": "folder",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6271",
+      "label": "   - Set widgets",
+      "icon": "folder",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "628",
+      "label": "$INFO[Skin.String(MenuCustom3Label)]",
+      "icon": "interface",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6280",
+      "label": "   - Set main menu path",
+      "icon": "folder",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6281",
+      "label": "   - Set widgets",
+      "icon": "folder",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "629",
+      "label": "$LOCALIZE[31008]",
+      "icon": "interface",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6290",
+      "label": "$LOCALIZE[2]",
+      "icon": "music",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6291",
+      "label": "$LOCALIZE[20389]",
+      "icon": "media",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6292",
+      "label": "$LOCALIZE[19020]",
+      "icon": "tv",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6293",
+      "label": "$LOCALIZE[19021]",
+      "icon": "interface",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6294",
+      "label": "$LOCALIZE[24001]",
+      "icon": "interface",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6295",
+      "label": "$LOCALIZE[1]",
+      "icon": "pictures",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6296",
+      "label": "$LOCALIZE[3]",
+      "icon": "media",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6297",
+      "label": "$LOCALIZE[15016]",
+      "icon": "games",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6298",
+      "label": "$LOCALIZE[10134]",
+      "icon": "interface",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6299",
+      "label": "$LOCALIZE[8]",
+      "icon": "interface",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "63701",
+      "label": "Default power button behavior",
+      "icon": "skin",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "63702",
+      "label": "Menu items case",
+      "icon": "interface",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "63703",
+      "label": "Accent color theme",
+      "icon": "interface",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "63704",
+      "label": "Focus color theme",
+      "icon": "skin",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "63705",
+      "label": "Dialog background color theme",
+      "icon": "skin",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "63706",
+      "label": "Enable current time in InfoLine",
+      "icon": "clock",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "63707",
+      "label": "Enable auto ending of playback",
+      "icon": "skin",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "63708",
+      "label": "    - Set delay (minutes)",
+      "icon": "help",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "63709",
+      "label": "Enable smart status (movies)",
+      "icon": "media",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "63710",
+      "label": "    - Recent window (days)",
+      "icon": "skin",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "63711",
+      "label": "    - Expiry window (days)",
+      "icon": "skin",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64700",
+      "label": "Set Search Provider",
+      "icon": "search",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64701",
+      "label": "Home screen search icon opens...",
+      "icon": "display",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64702",
+      "label": "   - $LOCALIZE[342]",
+      "icon": "media",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64703",
+      "label": "   - TV Shows",
+      "icon": "tv",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64704",
+      "label": "   - Anime",
+      "icon": "skin",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64705",
+      "label": "   - Collections",
+      "icon": "skin",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64706",
+      "label": "   - Actors/Actresses",
+      "icon": "skin",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64707",
+      "label": "   - Actors/Actresses (Movies)",
+      "icon": "media",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64708",
+      "label": "   - Actors/Actresses (TV Shows)",
+      "icon": "tv",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64709",
+      "label": "   - $VAR[KeywordMoviesLabelVar]",
+      "icon": "media",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64710",
+      "label": "   - $VAR[KeywordTVShowsLabelVar]",
+      "icon": "tv",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64711",
+      "label": "   - TRAKT Lists",
+      "icon": "skin",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64712",
+      "label": "   - TRAKT Lists (Movies)",
+      "icon": "media",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64713",
+      "label": "   - TRAKT Lists (TV Shows)",
+      "icon": "tv",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6480",
+      "label": "MDbList API Key",
+      "icon": "help",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6481",
+      "label": "Reset all ratings",
+      "icon": "reload",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6482",
+      "label": "    - Rating 1",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6483",
+      "label": "    - Rating 2",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6484",
+      "label": "    - Rating 3",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6485",
+      "label": "    - Rating 4",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6486",
+      "label": "    - Rating 5",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6487",
+      "label": "    - Rating 6",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "703",
+      "label": "$LOCALIZE[20189]",
+      "icon": "skin",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "704",
+      "label": "$LOCALIZE[31158]",
+      "icon": "skin",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "705",
+      "label": "$LOCALIZE[31093]",
+      "icon": "network",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "706",
+      "label": "$LOCALIZE[31160]",
+      "icon": "skin",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "708",
+      "label": "$LOCALIZE[31024]",
+      "icon": "profiles",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "709",
+      "label": "$LOCALIZE[31164]",
+      "icon": "profiles",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6002",
+      "label": "Enable clearlogo",
+      "icon": "skin",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6003",
+      "label": "    - Font style",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6004",
+      "label": "Choose default background",
+      "icon": "pictures",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6005",
+      "label": "   - Restore default background",
+      "icon": "reload",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6006",
+      "label": "Enable background blur",
+      "icon": "skin",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6007",
+      "label": "    - Set blur radius",
+      "icon": "help",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6008",
+      "label": "    - Set blur saturation",
+      "icon": "help",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6009",
+      "label": "Home screen artwork style",
+      "icon": "pictures",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6010",
+      "label": "    - Artwork type for movies/tvshows/seasons (Landscape)",
+      "icon": "media",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6011",
+      "label": "    - Artwork type for episodes (Landscape)",
+      "icon": "pictures",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6012",
+      "label": "Home screen landscape widget artwork type (movies/tvshows/seasons)",
+      "icon": "media",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6013",
+      "label": "Enable persistent home screen artwork",
+      "icon": "pictures",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6014",
+      "label": "$LOCALIZE[31131]",
+      "icon": "pictures",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6015",
+      "label": "$LOCALIZE[31062]",
+      "icon": "pictures",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6016",
+      "label": "$LOCALIZE[31149]",
+      "icon": "media",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6017",
+      "label": "$LOCALIZE[31168]",
+      "icon": "media",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "62205",
+      "label": "OSD style",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "62201",
+      "label": "Hide playback controls after",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "62204",
+      "label": "Show OSD while paused",
+      "icon": "skin",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6301",
+      "label": "Trailers",
+      "icon": "media",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6302",
+      "label": "    - Trailer source",
+      "icon": "media",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6303",
+      "label": "    - Map custom key",
+      "icon": "profiles",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6304",
+      "label": "    - Set trailer delay (seconds)",
+      "icon": "media",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "6305",
+      "label": "    - Enable trailer ready icon in InfoLine (movies/tvshows)",
+      "icon": "media",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64001",
+      "label": "On back action",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64002",
+      "label": "On left action",
+      "icon": "settings",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64003",
+      "label": "Choose landscape sublabel",
+      "icon": "interface",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64004",
+      "label": "Show item title in InfoLine",
+      "icon": "interface",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64005",
+      "label": "Enable widget navigation arrows",
+      "icon": "interface",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64006",
+      "label": "Dim widgets on main menu focus",
+      "icon": "interface",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64100",
+      "label": "Foundry Repositories",
+      "icon": "help",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64101",
+      "label": "View changelog",
+      "icon": "help",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64102",
+      "label": "View welcome screen",
+      "icon": "display",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64103",
+      "label": "Reset forced views",
+      "icon": "reload",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64104",
+      "label": "Clear blur cache",
+      "icon": "pictures",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64110",
+      "label": "TMDb / OMDb shared metadata settings",
+      "icon": "addons",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64105",
+      "label": "Clear ratings cache",
+      "icon": "storage",
+      "kind": "button"
+    },
+    {
+      "window": "SkinSettings.xml",
+      "id": "64106",
+      "label": "Clear search history",
+      "icon": "folder",
+      "kind": "button"
+    },
+    {
+      "window": "AddonBrowser.xml",
+      "id": "7",
+      "label": "$LOCALIZE[25001]",
+      "icon": "toggle",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "AddonBrowser.xml",
+      "id": "8",
+      "label": "$LOCALIZE[24999]",
+      "icon": "toggle",
+      "kind": "radiobutton"
+    },
+    {
+      "window": "AddonBrowser.xml",
+      "id": "9",
+      "label": "$LOCALIZE[24034]",
+      "icon": "download",
+      "kind": "button"
+    },
+    {
+      "window": "AddonBrowser.xml",
+      "id": "5",
+      "label": "$LOCALIZE[10004]",
+      "icon": "addons",
+      "kind": "button"
+    }
+  ],
+  "generated_settings_rows": "Native category, button, toggle, selector, edit, color and slider templates reserve an inline icon for every generated row.",
+  "dynamic_context_rows": "Native context template supplies its action icon; power-menu entries use their own icons."
+}

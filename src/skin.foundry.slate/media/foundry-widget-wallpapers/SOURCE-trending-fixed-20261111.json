@@ -1,0 +1,173 @@
+{
+  "schema_version": 3,
+  "artwork_set": "Foundry approved fixed Trending background",
+  "approval": {
+    "date": "2026-11-11",
+    "quote": "Great job nova, update all in the app"
+  },
+  "dimensions": [
+    1672,
+    941
+  ],
+  "widget_group_scale": 0.55,
+  "background_sha256": "9d254d3949ab9dc2690ac285bc8da5a51b42c0644ec48566464a5aaf057c6212",
+  "review_library_file_id": "libfile_fde3_f-83a0db188f8081919d90f568775120d8_2111607db4588191b58d84d14639c769",
+  "background_note": "One fixed Trending background. Identical approved PNG bytes copied without transformations; widget foregrounds were composed at 55% scale in the approved set.",
+  "mode": "widget",
+  "files": [
+    {
+      "label": "Foundry",
+      "slug": "home",
+      "filename": "home.png",
+      "sha256": "1fc34001f6913cee3a20032df67b6acf8a06a5195b7698fc6a1be8719d1ea99d",
+      "bytes": 1205774,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Movies",
+      "slug": "movies",
+      "filename": "movies.png",
+      "sha256": "479832ec26f8693a172c30fb66993d9353433dd4eab29632551e4bf7b47ffb0c",
+      "bytes": 1205694,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "TV Shows",
+      "slug": "tvshows",
+      "filename": "tvshows.png",
+      "sha256": "1e945b2de3ebad146897ee70e3b159dd4d9d20d4a68db96617e882bd64ed4f37",
+      "bytes": 1204929,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Music",
+      "slug": "music",
+      "filename": "music.png",
+      "sha256": "4fe67530049c41964c6dfa9d64ef27b3b6af283586e3301f7b5f340d9035d6be",
+      "bytes": 1206753,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Music Videos",
+      "slug": "musicvideos",
+      "filename": "musicvideos.png",
+      "sha256": "483e46dfac891254269644c84a253ca19f46267f15e1e3414800b4b03666d9e4",
+      "bytes": 1209376,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Live TV",
+      "slug": "livetv",
+      "filename": "livetv.png",
+      "sha256": "0d2d0a96e16ee03db29741ae77a0f80192123f4e6aad2193a25e4b8073b0e4ed",
+      "bytes": 1203008,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Radio",
+      "slug": "radio",
+      "filename": "radio.png",
+      "sha256": "a1e3d7b79a6b61a550199793fbf5ccb5d0018067fb7707174c5b5d28a6d3743f",
+      "bytes": 1218057,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Games",
+      "slug": "games",
+      "filename": "games.png",
+      "sha256": "b3292c3af6a39fab86cf682eee362f9992be5218e9687d25af06f06f8286e904",
+      "bytes": 1214819,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Add-ons",
+      "slug": "addons",
+      "filename": "addons.png",
+      "sha256": "51612a87bb7ce31822843dcd359724f35b36287dac9b3691af9ad97f1abd0296",
+      "bytes": 1205115,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Pictures",
+      "slug": "pictures",
+      "filename": "pictures.png",
+      "sha256": "53522370b4d31b810372a493a250120a7a939b12a07c180e629859b95683edb0",
+      "bytes": 1205525,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Video",
+      "slug": "video",
+      "filename": "video.png",
+      "sha256": "bab1cbade5f6c6d348d8ea4e1ace933cafd3ef670f90016ad3c45a0573b4fb9b",
+      "bytes": 1201287,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Favorites",
+      "slug": "favorites",
+      "filename": "favorites.png",
+      "sha256": "a44b5bd656830ef5f26acb5d72f4fb3c508788cfa0b5b1bfd227defa503cec0b",
+      "bytes": 1204156,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Weather",
+      "slug": "weather",
+      "filename": "weather.png",
+      "sha256": "bd3be8d6dd860032349bbdb334e68336da20d58b24dd8f4db4b7cfc6e3561b48",
+      "bytes": 1203507,
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "label": "Settings",
+      "slug": "settings",
+      "filename": "settings.png",
+      "sha256": "20542829aebe92ba620ae8ae16bf0d7966815d7014a2768bd449f0aab340a937",
+      "bytes": 1206037,
+      "dimensions": [
+        1672,
+        941
+      ]
+    }
+  ]
+}

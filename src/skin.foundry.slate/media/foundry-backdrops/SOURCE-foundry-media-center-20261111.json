@@ -1,0 +1,40 @@
+{
+  "schema_version": 3,
+  "artwork_set": "Foundry Media Center app wallpaper",
+  "dimensions": [
+    1672,
+    941
+  ],
+  "background_sha256": "9d254d3949ab9dc2690ac285bc8da5a51b42c0644ec48566464a5aaf057c6212",
+  "library_file_id": "libfile_fde3_f-81b8a3b65f448191978fb2b4d831adaf_2111607db4588191b58d84d14639c769",
+  "sha256": "a30da8f51f0828f2b11f398eab546ae2f880550b624244aff4810cf98a3971a9",
+  "request": "Just realized we need the app wallpaper as well, foundry media center",
+  "files": [
+    {
+      "label": "Foundry Media Center",
+      "slug": "foundry-loading-splash",
+      "filename": "foundry-loading-splash.png",
+      "sha256": "a30da8f51f0828f2b11f398eab546ae2f880550b624244aff4810cf98a3971a9",
+      "bytes": 1248711,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "role": "app-branding",
+      "library_file_id": "libfile_fde3_f-81b8a3b65f448191978fb2b4d831adaf_2111607db4588191b58d84d14639c769"
+    },
+    {
+      "label": "Foundry Media Center",
+      "slug": "home-fanart",
+      "filename": "../../resources/foundry-fanart.png",
+      "sha256": "a30da8f51f0828f2b11f398eab546ae2f880550b624244aff4810cf98a3971a9",
+      "bytes": 1248711,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "role": "app-branding",
+      "library_file_id": "libfile_fde3_f-81b8a3b65f448191978fb2b4d831adaf_2111607db4588191b58d84d14639c769"
+    }
+  ]
+}

@@ -1,0 +1,602 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<includes>
+  <!-- Glow belongs to the selected native row item, not a repeated texture context. -->
+  <expression name="FoundryVODGlowCurrentItem">!String.IsEmpty(Window(Home).Property(foundry.slate.vod.owner_label)) + String.IsEqual(Window(Home).Property(foundry.slate.vod.owner_label),Container(57).ListItem.Label) + String.IsEqual(Window(Home).Property(foundry.slate.vod.owner_year),Container(57).ListItem.Year) + String.IsEqual(Window(Home).Property(foundry.slate.vod.owner_type),Container(57).ListItem.DBTYPE) + [String.IsEqual(Window(Home).Property(foundry.slate.vod.owner_path),Container(57).ListItem.FileNameAndPath) | String.IsEqual(Window(Home).Property(foundry.slate.vod.owner_path),Container(57).ListItem.Path)]</expression>
+  <variable name="FoundryVODGlow">
+    <value condition="$EXP[FoundryVODGlowCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.vod.glow))">$INFO[Window(Home).Property(foundry.slate.vod.glow)]</value>
+    <value>streampilot/glow-pending.svg</value>
+  </variable>
+  <variable name="FoundryVODPosterImage">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.poster))">$INFO[Window(Home).Property(foundry.slate.metadata.poster)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(tvshow.poster))">$INFO[ListItem.Art(tvshow.poster)]</value>
+    <value>$INFO[ListItem.Icon]</value>
+  </variable>
+  <variable name="FoundryVODAccent">
+    <value condition="!String.IsEmpty(Window(Home).Property(foundry.slate.vod.accent)) + !String.IsEqual(Window(Home).Property(foundry.slate.vod.accent),N/A) + !String.IsEqual(Window(Home).Property(foundry.slate.vod.accent),0) + !String.IsEqual(Window(Home).Property(foundry.slate.vod.accent),0.0)">$INFO[Window(Home).Property(foundry.slate.vod.accent)]</value>
+    <value>FF48A8F0</value>
+  </variable>
+  <variable name="FoundryVODPlot">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.plot))">$INFO[Window(Home).Property(foundry.slate.metadata.plot)]</value>
+    <value condition="!String.IsEmpty(ListItem.Plot) + !String.IsEqual(ListItem.Plot,N/A) + !String.IsEqual(ListItem.Plot,0) + !String.IsEqual(ListItem.Plot,0.0)">$INFO[ListItem.Plot]</value>
+    <value condition="$EXP[FoundryOmdbCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.omdb.plot)) + !String.IsEqual(Window(Home).Property(foundry.slate.omdb.plot),N/A) + !String.IsEqual(Window(Home).Property(foundry.slate.omdb.plot),0) + !String.IsEqual(Window(Home).Property(foundry.slate.omdb.plot),0.0)">$INFO[Window(Home).Property(foundry.slate.omdb.plot)]</value>
+    <value>No description available.</value>
+  </variable>
+  <variable name="FoundryVODReleased">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.released_label))">$INFO[Window(Home).Property(foundry.slate.metadata.released_label)]</value>
+    <value condition="$EXP[FoundryVODCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.vod.released_label))">$INFO[Window(Home).Property(foundry.slate.vod.released_label)]</value>
+    <value condition="!String.IsEmpty(ListItem.Premiered) + !String.IsEqual(ListItem.Premiered,N/A) + !String.IsEqual(ListItem.Premiered,0) + !String.IsEqual(ListItem.Premiered,0.0)">$INFO[ListItem.Premiered]</value>
+    <value condition="$EXP[FoundryOmdbCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.omdb.released)) + !String.IsEqual(Window(Home).Property(foundry.slate.omdb.released),N/A) + !String.IsEqual(Window(Home).Property(foundry.slate.omdb.released),0) + !String.IsEqual(Window(Home).Property(foundry.slate.omdb.released),0.0)">$INFO[Window(Home).Property(foundry.slate.omdb.released)]</value>
+    <value />
+  </variable>
+  <variable name="FoundryVODCertification">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.certification))">$INFO[Window(Home).Property(foundry.slate.metadata.certification)]</value>
+    <value condition="!String.IsEmpty(ListItem.MPAA) + !String.IsEqual(ListItem.MPAA,N/A) + !String.IsEqual(ListItem.MPAA,0) + !String.IsEqual(ListItem.MPAA,0.0)">$INFO[ListItem.MPAA]</value>
+    <value condition="$EXP[FoundryOmdbCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.omdb.certification)) + !String.IsEqual(Window(Home).Property(foundry.slate.omdb.certification),N/A) + !String.IsEqual(Window(Home).Property(foundry.slate.omdb.certification),0) + !String.IsEqual(Window(Home).Property(foundry.slate.omdb.certification),0.0)">$INFO[Window(Home).Property(foundry.slate.omdb.certification)]</value>
+    <value />
+  </variable>
+  <variable name="FoundryVODStudio">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.studio))">$INFO[Window(Home).Property(foundry.slate.metadata.studio)]</value>
+    <value condition="!String.IsEmpty(ListItem.Studio) + !String.IsEqual(ListItem.Studio,N/A) + !String.IsEqual(ListItem.Studio,0) + !String.IsEqual(ListItem.Studio,0.0)">$INFO[ListItem.Studio]</value>
+    <value condition="$EXP[FoundryOmdbCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.omdb.studio)) + !String.IsEqual(Window(Home).Property(foundry.slate.omdb.studio),N/A) + !String.IsEqual(Window(Home).Property(foundry.slate.omdb.studio),0) + !String.IsEqual(Window(Home).Property(foundry.slate.omdb.studio),0.0)">$INFO[Window(Home).Property(foundry.slate.omdb.studio)]</value>
+    <value />
+  </variable>
+  <variable name="FoundryVODIMDb">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.imdb))">$INFO[Window(Home).Property(foundry.slate.metadata.imdb)]</value>
+    <value condition="$EXP[FoundryOmdbCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.omdb.imdb_rating)) + !String.IsEqual(Window(Home).Property(foundry.slate.omdb.imdb_rating),N/A) + !String.IsEqual(Window(Home).Property(foundry.slate.omdb.imdb_rating),0) + !String.IsEqual(Window(Home).Property(foundry.slate.omdb.imdb_rating),0.0)">$INFO[Window(Home).Property(foundry.slate.omdb.imdb_rating)]</value>
+    <value condition="!String.IsEmpty(ListItem.Rating(imdb)) + !String.IsEqual(ListItem.Rating(imdb),N/A) + !String.IsEqual(ListItem.Rating(imdb),0) + !String.IsEqual(ListItem.Rating(imdb),0.0)">$INFO[ListItem.Rating(imdb)]/10</value>
+    <value />
+  </variable>
+  <variable name="FoundryVODTMDb">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.tmdb))">$INFO[Window(Home).Property(foundry.slate.metadata.tmdb)]</value>
+    <value condition="!String.IsEmpty(ListItem.Rating(themoviedb)) + !String.IsEqual(ListItem.Rating(themoviedb),N/A) + !String.IsEqual(ListItem.Rating(themoviedb),0) + !String.IsEqual(ListItem.Rating(themoviedb),0.0)">$INFO[ListItem.Rating(themoviedb)]</value>
+    <value condition="!String.IsEmpty(ListItem.Rating(tmdb)) + !String.IsEqual(ListItem.Rating(tmdb),N/A) + !String.IsEqual(ListItem.Rating(tmdb),0) + !String.IsEqual(ListItem.Rating(tmdb),0.0)">$INFO[ListItem.Rating(tmdb)]</value>
+    <value />
+  </variable>
+  <variable name="FoundryVODTitle">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.title))">$INFO[Window(Home).Property(foundry.slate.metadata.title)]</value>
+    <value>$INFO[ListItem.Title]</value>
+    <value>$INFO[ListItem.Label]</value>
+  </variable>
+  <variable name="FoundryVODSection">
+    <value condition="Window.IsActive(favouritesbrowser)">Favorites</value>
+    <value condition="Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)">TV Series</value>
+    <value>Movies</value>
+  </variable>
+  <variable name="FoundryVODType">
+    <value condition="String.IsEqual(ListItem.DBTYPE,episode) | Container.Content(episodes)">TV Episode</value>
+    <value condition="String.IsEqual(ListItem.DBTYPE,season) | Container.Content(seasons)">TV Season</value>
+    <value condition="String.IsEqual(ListItem.DBTYPE,tvshow) | Container.Content(tvshows)">TV Series</value>
+    <value>Movie</value>
+  </variable>
+  <variable name="FoundryVODDetails">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.details))">$INFO[Window(Home).Property(foundry.slate.metadata.details)]</value>
+    <value condition="$EXP[FoundryVODCurrentItem]">$INFO[Window(Home).Property(foundry.slate.vod.details)]</value>
+    <value>$VAR[FoundryVODType]$INFO[ListItem.Genre,  •  ,]$INFO[ListItem.Studio,  •  ,]$INFO[ListItem.AudioLanguage,  •  ,]</value>
+  </variable>
+  <variable name="FoundryVODStudioLogo">
+    <value condition="$EXP[FoundryVODCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.vod.studio_logo))">$INFO[Window(Home).Property(foundry.slate.vod.studio_logo)]</value>
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.studiologo))">$INFO[Window(Home).Property(foundry.slate.metadata.studiologo)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(studiologo)) + !String.IsEqual(ListItem.Art(studiologo),N/A) + !String.IsEqual(ListItem.Art(studiologo),0) + !String.IsEqual(ListItem.Art(studiologo),0.0)">$INFO[ListItem.Art(studiologo)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(studio.logo))">$INFO[ListItem.Art(studio.logo)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(tvshow.studiologo))">$INFO[ListItem.Art(tvshow.studiologo)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(tvshow.studio.logo))">$INFO[ListItem.Art(tvshow.studio.logo)]</value>
+    <value />
+  </variable>
+  <variable name="FoundryVODPage">
+    <value condition="Integer.IsGreater(Container(57).NumPages,0)">Page $INFO[Container(57).CurrentPage]</value>
+    <value>Page 1</value>
+  </variable>
+  <include name="FoundryVODPoster">
+    <param name="focused" default="false" />
+    <definition>
+      <control type="group">
+        <control type="group">
+          <control type="image">
+            <left>-96</left>
+            <top>-96</top>
+            <width>416</width>
+            <height>528</height>
+            <texture>$VAR[FoundryVODGlow]</texture>
+            <visible>$PARAM[focused] + Control.HasFocus(57) + $EXP[FoundryVODGlowCurrentItem]</visible>
+          </control>
+          <left>56</left>
+          <top>132</top>
+          <width>224</width>
+          <height>336</height>
+          <depth>DepthContentPopout</depth>
+          <animation type="Conditional" condition="$PARAM[focused] + Control.HasFocus(57)" reversible="true">
+            <effect type="zoom" start="100" end="119" center="auto" time="170" tween="sine" easing="inout" />
+          </animation>
+          <control type="image">
+            <width>224</width>
+            <height>336</height>
+            <texture background="true" diffuse="streampilot/catalog-poster-mask.png" fallback="streampilot/catalog-blank.png">$VAR[FoundryVODPosterImage]</texture>
+            <aspectratio>scale</aspectratio>
+          </control>
+          <visible>!$EXP[FoundryVODNextItem] + !$EXP[FoundryVODPreviousItem]</visible>
+        </control>
+        <control type="group">
+          <left>56</left>
+          <top>132</top>
+          <width>220</width>
+          <height>336</height>
+          <visible>$EXP[FoundryVODNextItem] | $EXP[FoundryVODPreviousItem]</visible>
+          <control type="group">
+            <left>6</left>
+            <top>92</top>
+            <width>208</width>
+            <height>152</height>
+            <visible>$EXP[FoundryVODNextItem] + ![$PARAM[focused] + Control.HasFocus(57)]</visible>
+            <control type="image">
+              <left>-56</left>
+              <top>-56</top>
+              <width>320</width>
+              <height>264</height>
+              <texture>streampilot/catalog-next-glow.png</texture>
+            </control>
+            <control type="image">
+              <left>0</left>
+              <top>0</top>
+              <width>208</width>
+              <height>152</height>
+              <texture>streampilot/catalog-next.png</texture>
+            </control>
+          </control>
+          <control type="group">
+            <left>6</left>
+            <top>92</top>
+            <width>208</width>
+            <height>152</height>
+            <visible>$EXP[FoundryVODNextItem] + $PARAM[focused] + Control.HasFocus(57)</visible>
+            <animation type="Conditional" condition="$PARAM[focused] + Control.HasFocus(57)" reversible="true">
+              <effect type="zoom" start="100" end="108" center="auto" time="170" />
+            </animation>
+            <control type="image">
+              <left>-56</left>
+              <top>-56</top>
+              <width>320</width>
+              <height>264</height>
+              <texture>streampilot/catalog-next-glow-focus.png</texture>
+            </control>
+            <control type="image">
+              <left>0</left>
+              <top>0</top>
+              <width>208</width>
+              <height>152</height>
+              <texture>streampilot/catalog-next-focus.png</texture>
+            </control>
+          </control>
+          <control type="label">
+            <left>-30</left>
+            <top>0</top>
+            <width>220</width>
+            <height>336</height>
+            <label>NEXT</label>
+            <font>sp_library_page_action</font>
+            <textcolor>FFFFFFFF</textcolor>
+            <align>center</align>
+            <aligny>center</aligny>
+            <visible>$EXP[FoundryVODNextItem]</visible>
+          </control>
+          <control type="group">
+            <left>6</left>
+            <top>92</top>
+            <width>208</width>
+            <height>152</height>
+            <visible>$EXP[FoundryVODPreviousItem] + ![$PARAM[focused] + Control.HasFocus(57)]</visible>
+            <control type="image">
+              <left>-56</left>
+              <top>-56</top>
+              <width>320</width>
+              <height>264</height>
+              <texture>streampilot/catalog-previous-glow.png</texture>
+            </control>
+            <control type="image">
+              <left>0</left>
+              <top>0</top>
+              <width>208</width>
+              <height>152</height>
+              <texture>streampilot/catalog-previous.png</texture>
+            </control>
+          </control>
+          <control type="group">
+            <left>6</left>
+            <top>92</top>
+            <width>208</width>
+            <height>152</height>
+            <visible>$EXP[FoundryVODPreviousItem] + $PARAM[focused] + Control.HasFocus(57)</visible>
+            <animation type="Conditional" condition="$PARAM[focused] + Control.HasFocus(57)" reversible="true">
+              <effect type="zoom" start="100" end="108" center="auto" time="170" />
+            </animation>
+            <control type="image">
+              <left>-56</left>
+              <top>-56</top>
+              <width>320</width>
+              <height>264</height>
+              <texture>streampilot/catalog-previous-glow-focus.png</texture>
+            </control>
+            <control type="image">
+              <left>0</left>
+              <top>0</top>
+              <width>208</width>
+              <height>152</height>
+              <texture>streampilot/catalog-previous-focus.png</texture>
+            </control>
+          </control>
+          <control type="label">
+            <left>30</left>
+            <top>0</top>
+            <width>220</width>
+            <height>336</height>
+            <label>BACK</label>
+            <font>sp_library_page_action</font>
+            <textcolor>FFFFFFFF</textcolor>
+            <align>center</align>
+            <aligny>center</aligny>
+            <visible>$EXP[FoundryVODPreviousItem]</visible>
+          </control>
+        </control>
+        <animation type="Conditional" condition="Integer.IsLess(Container(57).NumItems,3)" reversible="true">
+          <effect type="slide" start="0,0" end="-512,0" time="280" tween="sine" easing="inout" />
+        </animation>
+        <animation type="Conditional" condition="Integer.IsGreater(Container(57).NumItems,2) + Integer.IsLess(Container(57).NumItems,5)" reversible="true">
+          <effect type="slide" start="0,0" end="-256,0" time="280" tween="sine" easing="inout" />
+        </animation>
+        <animation type="Conditional" condition="Integer.IsGreater(Container(57).NumItems,6) + Container(57).Position(2)" reversible="true">
+          <effect type="slide" start="0,0" end="-4.32,0" time="280" tween="sine" easing="inout" />
+        </animation>
+        <animation type="Conditional" condition="Integer.IsGreater(Container(57).NumItems,6) + [Container(57).Position(3) | Container(57).Position(4) | Container(57).Position(5) | Container(57).Position(6)]" reversible="true">
+          <effect type="slide" start="0,0" end="-64,0" time="280" tween="sine" easing="inout" />
+        </animation>
+      </control>
+    </definition>
+  </include>
+  <include name="View_57_StreamPilot">
+    <control type="group">
+      <control type="image">
+        <left>0</left>
+        <top>0</top>
+        <width>100%</width>
+        <height>100%</height>
+        <texture background="true" fallback="streampilot/catalog-base.png">$VAR[FoundryMovieSubmenuBase]</texture>
+        <aspectratio>scale</aspectratio>
+      </control>
+      <description>StreamPilot VOD catalog</description>
+      <visible>Control.IsVisible(57)</visible>
+      <control type="image">
+        <left>0</left>
+        <top>0</top>
+        <width>100%</width>
+        <height>100%</height>
+        <aspectratio>scale</aspectratio>
+        <fadetime>0</fadetime>
+        <texture background="true">$VAR[MediaFanartVar]</texture>
+      </control>
+      <control type="image">
+        <left>0</left>
+        <top>0</top>
+        <width>100%</width>
+        <height>100%</height>
+        <texture>streampilot/catalog-shade.png</texture>
+      </control>
+      <control type="button" id="5701">
+        <description>Catalog Back</description>
+        <left>56</left>
+        <top>44</top>
+        <width>130</width>
+        <height>80</height>
+        <font>sp_library_action</font>
+        <align>center</align>
+        <aligny>center</aligny>
+        <label>‹ Back</label>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FF000000</focusedcolor>
+        <texturefocus colordiffuse="FFF4F4F4" border="36">streampilot/catalog-pill-72.png</texturefocus>
+        <texturenofocus colordiffuse="FF242424" border="36">streampilot/catalog-pill-72.png</texturenofocus>
+        <onclick>Action(Back)</onclick>
+        <onup>9000</onup>
+        <onright>57</onright>
+        <ondown>57</ondown>
+      </control>
+      <control type="label">
+        <left>218</left>
+        <top>28</top>
+        <width>1300</width>
+        <height>64</height>
+        <font>sp_library_header</font>
+        <label>$VAR[FoundryVODSection]</label>
+        <textcolor>FFFFFFFF</textcolor>
+      </control>
+      <control type="label">
+        <left>218</left>
+        <top>92</top>
+        <width>1300</width>
+        <height>32</height>
+        <font>sp_library_meta</font>
+        <label>$VAR[BreadcrumbsVideoVar]</label>
+        <textcolor>A8D8D8D8</textcolor>
+      </control>
+      <control type="group">
+        <left>0</left>
+        <top>0</top>
+        <width>1920</width>
+        <height>566</height>
+        <visible>Integer.IsGreater(Container(57).NumItems,0) + !Container(57).IsUpdating + !ListItem.IsParentFolder</visible>
+        <control type="image">
+          <left>92</left>
+          <top>156</top>
+          <width>520</width>
+          <height>132</height>
+          <visible>$EXP[FoundryVODHasClearlogo]</visible>
+          <texture>$VAR[FoundryVODClearlogo]</texture>
+          <aspectratio>keep</aspectratio>
+        </control>
+        <control type="textbox">
+          <left>92</left>
+          <top>156</top>
+          <width>1157</width>
+          <height>132</height>
+          <visible>!$EXP[FoundryVODHasClearlogo]</visible>
+          <label>$VAR[FoundryVODTitle]</label>
+          <font>sp_library_title</font>
+          <textcolor>FFFFFFFF</textcolor>
+        </control>
+        <control type="label">
+          <left>92</left>
+          <top>298</top>
+          <width>290</width>
+          <height>32</height>
+          <label>$VAR[FoundryVODReleased]</label>
+          <font>sp_library_meta</font>
+          <textcolor>A8D8D8D8</textcolor>
+          <aligny>center</aligny>
+        </control>
+        <control type="image">
+          <left>380</left>
+          <top>298</top>
+          <width>74</width>
+          <height>32</height>
+          <visible>[$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.certification))] | !String.IsEmpty(ListItem.MPAA) | [$EXP[FoundryVODCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.vod.certification))]</visible>
+          <texture border="12">streampilot/catalog-cert.png</texture>
+        </control>
+        <control type="label">
+          <left>380</left>
+          <top>298</top>
+          <width>74</width>
+          <height>32</height>
+          <visible>[$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.certification))] | !String.IsEmpty(ListItem.MPAA) | [$EXP[FoundryVODCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.vod.certification))]</visible>
+          <label>$VAR[FoundryVODCertification]</label>
+          <font>sp_library_badge</font>
+          <textcolor>FF000000</textcolor>
+          <align>center</align>
+          <aligny>center</aligny>
+        </control>
+        <control type="grouplist">
+          <left>92</left>
+          <top>338</top>
+          <width>1157</width>
+          <height>40</height>
+          <orientation>horizontal</orientation>
+          <itemgap>18</itemgap>
+          <control type="group">
+            <left>0</left>
+            <top>0</top>
+            <width>128</width>
+            <height>40</height>
+            <visible>[$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.tmdb))] | !String.IsEmpty(ListItem.Rating(tmdb)) | !String.IsEmpty(ListItem.Rating(themoviedb))</visible>
+            <control type="image">
+              <left>0</left>
+              <top>8</top>
+              <width>64</width>
+              <height>24</height>
+              <texture>streampilot/catalog-tmdb.png</texture>
+            </control>
+            <control type="label">
+              <left>0</left>
+              <top>8</top>
+              <width>64</width>
+              <height>24</height>
+              <label>TMDB</label>
+              <font>sp_library_rating_badge</font>
+              <textcolor>FFFFFFFF</textcolor>
+              <align>center</align>
+              <aligny>center</aligny>
+            </control>
+            <control type="label">
+              <left>74</left>
+              <top>0</top>
+              <width>54</width>
+              <height>40</height>
+              <label>$VAR[FoundryVODTMDb]</label>
+              <font>sp_library_meta</font>
+              <textcolor>A8D8D8D8</textcolor>
+              <aligny>center</aligny>
+            </control>
+          </control>
+          <control type="group">
+            <left>0</left>
+            <top>0</top>
+            <width>148</width>
+            <height>40</height>
+            <visible>[$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.imdb))] | !String.IsEmpty(ListItem.Rating(imdb)) | [$EXP[FoundryOmdbCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.omdb.imdb_rating))]</visible>
+            <control type="image">
+              <left>0</left>
+              <top>8</top>
+              <width>56</width>
+              <height>24</height>
+              <texture>streampilot/catalog-imdb.png</texture>
+            </control>
+            <control type="label">
+              <left>0</left>
+              <top>8</top>
+              <width>56</width>
+              <height>24</height>
+              <label>IMDb</label>
+              <font>sp_library_rating_badge</font>
+              <textcolor>FF000000</textcolor>
+              <align>center</align>
+              <aligny>center</aligny>
+            </control>
+            <control type="label">
+              <left>66</left>
+              <top>0</top>
+              <width>82</width>
+              <height>40</height>
+              <label>$VAR[FoundryVODIMDb]</label>
+              <font>sp_library_meta</font>
+              <textcolor>A8D8D8D8</textcolor>
+              <aligny>center</aligny>
+            </control>
+          </control>
+          <control type="group">
+            <left>0</left>
+            <top>0</top>
+            <width>110</width>
+            <height>40</height>
+            <visible>$EXP[FoundryOmdbCurrentItem] + String.IsEqual(Window(Home).Property(foundry.slate.omdb.show_rotten_tomatoes),true) + !String.IsEmpty(Window(Home).Property(foundry.slate.omdb.rotten_tomatoes))</visible>
+            <control type="image">
+              <left>0</left>
+              <top>0</top>
+              <width>40</width>
+              <height>40</height>
+              <texture>$INFO[Window(Home).Property(foundry.slate.vod.rt_badge)]</texture>
+              <aspectratio>keep</aspectratio>
+            </control>
+            <control type="label">
+              <left>50</left>
+              <top>0</top>
+              <width>60</width>
+              <height>40</height>
+              <label>$INFO[Window(Home).Property(foundry.slate.omdb.rotten_tomatoes)]</label>
+              <font>sp_library_meta</font>
+              <textcolor>A8D8D8D8</textcolor>
+              <aligny>center</aligny>
+            </control>
+          </control>
+          <control type="group">
+            <left>0</left>
+            <top>0</top>
+            <width>126</width>
+            <height>40</height>
+            <visible>$EXP[FoundryOmdbCurrentItem] + String.IsEqual(Window(Home).Property(foundry.slate.omdb.show_metacritic),true) + !String.IsEmpty(Window(Home).Property(foundry.slate.omdb.metacritic))</visible>
+            <control type="image">
+              <left>0</left>
+              <top>0</top>
+              <width>40</width>
+              <height>40</height>
+              <texture>streampilot/source-rating_metacritic.png</texture>
+              <aspectratio>keep</aspectratio>
+            </control>
+            <control type="label">
+              <left>50</left>
+              <top>0</top>
+              <width>76</width>
+              <height>40</height>
+              <label>$INFO[Window(Home).Property(foundry.slate.omdb.metacritic)]</label>
+              <font>sp_library_meta</font>
+              <textcolor>A8D8D8D8</textcolor>
+              <aligny>center</aligny>
+            </control>
+          </control>
+        </control>
+        <control type="label" id="5713">
+          <left>92</left>
+          <top>386</top>
+          <width>1157</width>
+          <height>28</height>
+          <label>$VAR[FoundryVODDetails]</label>
+          <font>sp_library_meta</font>
+          <textcolor>A8D8D8D8</textcolor>
+          <aligny>center</aligny>
+          <scroll>true</scroll>
+        </control>
+        <control type="textbox">
+          <left>92</left>
+          <top>426</top>
+          <width>949</width>
+          <height>94</height>
+          <font>sp_library_body</font>
+          <textcolor>D6FFFFFF</textcolor>
+          <label>$VAR[FoundryVODPlot]</label>
+          <autoscroll delay="4500" time="15000" repeat="3500">Skin.HasSetting(autoscroll)</autoscroll>
+          <linespacing>1.25</linespacing>
+        </control>
+        <control type="image">
+          <left>1568</left>
+          <top>388</top>
+          <width>240</width>
+          <height>80</height>
+          <texture>$VAR[FoundryVODStudioLogo]</texture>
+          <aspectratio>keep</aspectratio>
+        </control>
+        <description>StreamPilot VodHero: source padding, metadata stack and studio anchor</description>
+      </control>
+      <control type="fixedlist" id="57">
+        <description>Native Kodi single-row VOD posters</description>
+        <left>56</left>
+        <top>444</top>
+        <width>1808</width>
+        <height>600</height>
+        <orientation>horizontal</orientation>
+        <scrolltime>280</scrolltime>
+        <preloaditems>2</preloaditems>
+        <viewtype label="StreamPilot VOD">icon</viewtype>
+        <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Window.IsActive(favouritesbrowser)</visible>
+        <onup>5701</onup>
+        <onfocus>RunScript(script.foundry.slate.helper,mode=vod_catalog_artwork)</onfocus>
+        <itemlayout width="256" height="600">
+          <include content="FoundryVODPoster" />
+        </itemlayout>
+        <focusedlayout width="256" height="600" infoupdate="100">
+          <include content="FoundryVODPoster">
+            <param name="focused" value="true" />
+          </include>
+        </focusedlayout>
+        <focusposition>2</focusposition>
+        <movement>4</movement>
+        <onleft>noop</onleft>
+        <onright>noop</onright>
+        <ondown>57</ondown>
+      </control>
+      <control type="label">
+        <left>112</left>
+        <top>960</top>
+        <width>140</width>
+        <height>76</height>
+        <font>sp_library_meta</font>
+        <textcolor>A8D8D8D8</textcolor>
+        <label>$VAR[FoundryVODPage]</label>
+        <aligny>center</aligny>
+      </control>
+      <control type="label">
+        <left>560</left>
+        <top>994</top>
+        <width>1000</width>
+        <height>32</height>
+        <font>sp_library_meta</font>
+        <textcolor>FFAAB3C7</textcolor>
+        <label>Saved ratings</label>
+        <visible>$EXP[FoundryOmdbCurrentItem] + String.IsEqual(Window(Home).Property(foundry.slate.omdb.status),offline) + !String.IsEmpty(Window(Home).Property(foundry.slate.omdb.imdb_rating))</visible>
+      </control>
+      <control type="label">
+        <left>310</left>
+        <top>420</top>
+        <width>1300</width>
+        <height>80</height>
+        <align>center</align>
+        <font>sp_library_body</font>
+        <textcolor>FFCBD0DD</textcolor>
+        <label>No library matches. Choose another category or check the provider.</label>
+        <visible>!Container(57).IsUpdating + Integer.IsEqual(Container(57).NumItems,0)</visible>
+      </control>
+    </control>
+  </include>
+  <expression name="FoundryVODNextItem">ListItem.IsFolder + [String.IsEqual(ListItem.Label,Next) | String.Contains(ListItem.Label,Next Page) | String.Contains(ListItem.Label,Next page)]</expression>
+  <expression name="FoundryVODPreviousItem">ListItem.IsParentFolder | [ListItem.IsFolder + [String.IsEqual(ListItem.Label,Previous) | String.IsEqual(ListItem.Label,Back) | String.Contains(ListItem.Label,Previous Page) | String.Contains(ListItem.Label,Previous page) | String.Contains(ListItem.Label,Back Page)]]</expression>
+  <variable name="FoundryVODClearlogo">
+    <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.clearlogo))">$INFO[Window(Home).Property(foundry.slate.metadata.clearlogo)]</value>
+    <value>$INFO[ListItem.Art(clearlogo)]</value>
+  </variable>
+  <expression name="FoundryVODHasClearlogo">!String.IsEmpty(ListItem.Art(clearlogo)) | [$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.clearlogo))]</expression>
+</includes>

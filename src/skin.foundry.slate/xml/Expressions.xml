@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+  
+  <expression name="isPlugin">String.StartsWith(Container.FolderPath,plugin://)</expression>
+  <expression name="isContent">String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,season)</expression>
+  <expression name="isMovie">String.IsEqual(ListItem.DBType,movie)</expression>
+  <expression name="isVideo">String.IsEqual(ListItem.DBType,video)</expression>
+  <expression name="isTVShow">String.IsEqual(ListItem.DBType,tvshow)</expression>
+  <expression name="isSeason">String.IsEqual(ListItem.DBType,season)</expression>
+  <expression name="isSet">String.IsEqual(ListItem.DBType,set)</expression>
+  <expression name="isEpisode">String.IsEqual(ListItem.DBType,episode)</expression>
+  <!-- <expression name="isMusicVideo">String.IsEqual(ListItem.DBType,musicvideo)</expression>
+  <expression name="isArtist">String.IsEqual(ListItem.DBType,artist)</expression>
+  <expression name="isAlbum">String.IsEqual(ListItem.DBType,album)</expression>
+  <expression name="isSong">String.IsEqual(ListItem.DBType,song)</expression> -->
+  <expression name="noDBType">String.IsEmpty(ListItem.DBType)</expression>
+
+  <expression name="infodialog_active">Window.IsActive(musicinformation) | Window.IsActive(songinformation) | Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(pvrguideinfo) | Window.IsActive(pvrrecordinginfo) | Window.IsActive(pictureinfo) | Window.IsVisible(script-embuary-video.xml) | Window.IsVisible(script-embuary-person.xml) | Window.IsVisible(script-embuary-image.xml)</expression>
+	<expression name="sidebar_visible">ControlGroup(9000).HasFocus | Control.HasFocus(6130) | Control.HasFocus(6131)</expression>
+
+  <!-- A focused/restored Home widget stays a row, not a full-screen hero. -->
+  <expression name="FoundryHomeRowPresentation">Window.IsActive(Home) + $EXP[FoundryHomeHasWidgets]</expression>
+  <!-- Prevent a previous focused title's OMDb data flashing during debounce. -->
+  <expression name="FoundryOmdbCurrentItem">!String.IsEmpty(Window(Home).Property(foundry.slate.omdb.owner_label)) + String.IsEqual(Window(Home).Property(foundry.slate.omdb.owner_label),ListItem.Label) + String.IsEqual(Window(Home).Property(foundry.slate.omdb.owner_year),ListItem.Year) + String.IsEqual(Window(Home).Property(foundry.slate.omdb.owner_type),ListItem.DBTYPE) + String.IsEqual(Window(Home).Property(foundry.slate.omdb.owner_path),ListItem.FileNameAndPath)</expression>
+  <expression name="FoundryVODCurrentItem">!String.IsEmpty(Window(Home).Property(foundry.slate.vod.owner_label)) + String.IsEqual(Window(Home).Property(foundry.slate.vod.owner_label),ListItem.Label) + String.IsEqual(Window(Home).Property(foundry.slate.vod.owner_year),ListItem.Year) + String.IsEqual(Window(Home).Property(foundry.slate.vod.owner_type),ListItem.DBTYPE) + String.IsEqual(Window(Home).Property(foundry.slate.vod.owner_path),ListItem.FileNameAndPath)</expression>
+  <!-- Populated/loading widget rows, independent of which side has focus. -->
+  <expression name="FoundryHomeHasWidgets">!ControlGroup(700).HasFocus + [
+    [String.IsEqual(Container(9000).ListItem.Property(id),movies) + [
+      [Control.IsVisible(19011) + [Integer.IsGreater(Container(19011).NumItems,0) | Container(19011).IsUpdating]] |
+      [Control.IsVisible(19012) + [Integer.IsGreater(Container(19012).NumItems,0) | Container(19012).IsUpdating]] |
+      [Control.IsVisible(19013) + [Integer.IsGreater(Container(19013).NumItems,0) | Container(19013).IsUpdating]] |
+      [Control.IsVisible(19014) + [Integer.IsGreater(Container(19014).NumItems,0) | Container(19014).IsUpdating]] |
+      [Control.IsVisible(19015) + [Integer.IsGreater(Container(19015).NumItems,0) | Container(19015).IsUpdating]] |
+      [Control.IsVisible(19016) + [Integer.IsGreater(Container(19016).NumItems,0) | Container(19016).IsUpdating]] |
+      [Control.IsVisible(19017) + [Integer.IsGreater(Container(19017).NumItems,0) | Container(19017).IsUpdating]] |
+      [Control.IsVisible(19018) + [Integer.IsGreater(Container(19018).NumItems,0) | Container(19018).IsUpdating]] |
+      [Control.IsVisible(19019) + [Integer.IsGreater(Container(19019).NumItems,0) | Container(19019).IsUpdating]] |
+      [Control.IsVisible(19020) + [Integer.IsGreater(Container(19020).NumItems,0) | Container(19020).IsUpdating]] |
+      [Control.IsVisible(19021) + [Integer.IsGreater(Container(19021).NumItems,0) | Container(19021).IsUpdating]] |
+      [Control.IsVisible(19022) + [Integer.IsGreater(Container(19022).NumItems,0) | Container(19022).IsUpdating]] |
+      [Control.IsVisible(19023) + [Integer.IsGreater(Container(19023).NumItems,0) | Container(19023).IsUpdating]] |
+      [Control.IsVisible(19024) + [Integer.IsGreater(Container(19024).NumItems,0) | Container(19024).IsUpdating]] |
+      [Control.IsVisible(19025) + [Integer.IsGreater(Container(19025).NumItems,0) | Container(19025).IsUpdating]] |
+      [Control.IsVisible(19026) + [Integer.IsGreater(Container(19026).NumItems,0) | Container(19026).IsUpdating]] |
+      [Control.IsVisible(19027) + [Integer.IsGreater(Container(19027).NumItems,0) | Container(19027).IsUpdating]] |
+      [Control.IsVisible(19028) + [Integer.IsGreater(Container(19028).NumItems,0) | Container(19028).IsUpdating]] |
+      [Control.IsVisible(19029) + [Integer.IsGreater(Container(19029).NumItems,0) | Container(19029).IsUpdating]] |
+      [Control.IsVisible(19030) + [Integer.IsGreater(Container(19030).NumItems,0) | Container(19030).IsUpdating]] |
+      [Control.IsVisible(19031) + [Integer.IsGreater(Container(19031).NumItems,0) | Container(19031).IsUpdating]] |
+      [Control.IsVisible(19032) + [Integer.IsGreater(Container(19032).NumItems,0) | Container(19032).IsUpdating]] |
+      [Control.IsVisible(19033) + [Integer.IsGreater(Container(19033).NumItems,0) | Container(19033).IsUpdating]] |
+      [Control.IsVisible(19034) + [Integer.IsGreater(Container(19034).NumItems,0) | Container(19034).IsUpdating]] |
+      [Control.IsVisible(19035) + [Integer.IsGreater(Container(19035).NumItems,0) | Container(19035).IsUpdating]] |
+      [Control.IsVisible(19036) + [Integer.IsGreater(Container(19036).NumItems,0) | Container(19036).IsUpdating]] |
+      [Control.IsVisible(19037) + [Integer.IsGreater(Container(19037).NumItems,0) | Container(19037).IsUpdating]] |
+      [Control.IsVisible(19038) + [Integer.IsGreater(Container(19038).NumItems,0) | Container(19038).IsUpdating]] |
+      [Control.IsVisible(19039) + [Integer.IsGreater(Container(19039).NumItems,0) | Container(19039).IsUpdating]] |
+      [Control.IsVisible(19040) + [Integer.IsGreater(Container(19040).NumItems,0) | Container(19040).IsUpdating]] |
+      [Control.IsVisible(19041) + [Integer.IsGreater(Container(19041).NumItems,0) | Container(19041).IsUpdating]] |
+      [Control.IsVisible(19042) + [Integer.IsGreater(Container(19042).NumItems,0) | Container(19042).IsUpdating]] |
+      [Control.IsVisible(19043) + [Integer.IsGreater(Container(19043).NumItems,0) | Container(19043).IsUpdating]] |
+      [Control.IsVisible(19044) + [Integer.IsGreater(Container(19044).NumItems,0) | Container(19044).IsUpdating]] |
+      [Control.IsVisible(19045) + [Integer.IsGreater(Container(19045).NumItems,0) | Container(19045).IsUpdating]] |
+      [Control.IsVisible(19046) + [Integer.IsGreater(Container(19046).NumItems,0) | Container(19046).IsUpdating]] |
+      [Control.IsVisible(19047) + [Integer.IsGreater(Container(19047).NumItems,0) | Container(19047).IsUpdating]] |
+      [Control.IsVisible(19048) + [Integer.IsGreater(Container(19048).NumItems,0) | Container(19048).IsUpdating]] |
+      [Control.IsVisible(19049) + [Integer.IsGreater(Container(19049).NumItems,0) | Container(19049).IsUpdating]] |
+      [Control.IsVisible(19050) + [Integer.IsGreater(Container(19050).NumItems,0) | Container(19050).IsUpdating]] |
+      [Control.IsVisible(19051) + [Integer.IsGreater(Container(19051).NumItems,0) | Container(19051).IsUpdating]] |
+      [Control.IsVisible(19052) + [Integer.IsGreater(Container(19052).NumItems,0) | Container(19052).IsUpdating]] |
+      [Control.IsVisible(19053) + [Integer.IsGreater(Container(19053).NumItems,0) | Container(19053).IsUpdating]] |
+      [Control.IsVisible(19054) + [Integer.IsGreater(Container(19054).NumItems,0) | Container(19054).IsUpdating]] |
+      [Control.IsVisible(19055) + [Integer.IsGreater(Container(19055).NumItems,0) | Container(19055).IsUpdating]] |
+      [Control.IsVisible(19056) + [Integer.IsGreater(Container(19056).NumItems,0) | Container(19056).IsUpdating]] |
+      [Control.IsVisible(19057) + [Integer.IsGreater(Container(19057).NumItems,0) | Container(19057).IsUpdating]] |
+      [Control.IsVisible(19058) + [Integer.IsGreater(Container(19058).NumItems,0) | Container(19058).IsUpdating]] |
+      [Control.IsVisible(19059) + [Integer.IsGreater(Container(19059).NumItems,0) | Container(19059).IsUpdating]] |
+      [Control.IsVisible(19060) + [Integer.IsGreater(Container(19060).NumItems,0) | Container(19060).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),tvshows) + [
+      [Control.IsVisible(22011) + [Integer.IsGreater(Container(22011).NumItems,0) | Container(22011).IsUpdating]] |
+      [Control.IsVisible(22012) + [Integer.IsGreater(Container(22012).NumItems,0) | Container(22012).IsUpdating]] |
+      [Control.IsVisible(22013) + [Integer.IsGreater(Container(22013).NumItems,0) | Container(22013).IsUpdating]] |
+      [Control.IsVisible(22014) + [Integer.IsGreater(Container(22014).NumItems,0) | Container(22014).IsUpdating]] |
+      [Control.IsVisible(22015) + [Integer.IsGreater(Container(22015).NumItems,0) | Container(22015).IsUpdating]] |
+      [Control.IsVisible(22016) + [Integer.IsGreater(Container(22016).NumItems,0) | Container(22016).IsUpdating]] |
+      [Control.IsVisible(22017) + [Integer.IsGreater(Container(22017).NumItems,0) | Container(22017).IsUpdating]] |
+      [Control.IsVisible(22018) + [Integer.IsGreater(Container(22018).NumItems,0) | Container(22018).IsUpdating]] |
+      [Control.IsVisible(22019) + [Integer.IsGreater(Container(22019).NumItems,0) | Container(22019).IsUpdating]] |
+      [Control.IsVisible(22020) + [Integer.IsGreater(Container(22020).NumItems,0) | Container(22020).IsUpdating]] |
+      [Control.IsVisible(22021) + [Integer.IsGreater(Container(22021).NumItems,0) | Container(22021).IsUpdating]] |
+      [Control.IsVisible(22022) + [Integer.IsGreater(Container(22022).NumItems,0) | Container(22022).IsUpdating]] |
+      [Control.IsVisible(22023) + [Integer.IsGreater(Container(22023).NumItems,0) | Container(22023).IsUpdating]] |
+      [Control.IsVisible(22024) + [Integer.IsGreater(Container(22024).NumItems,0) | Container(22024).IsUpdating]] |
+      [Control.IsVisible(22025) + [Integer.IsGreater(Container(22025).NumItems,0) | Container(22025).IsUpdating]] |
+      [Control.IsVisible(22026) + [Integer.IsGreater(Container(22026).NumItems,0) | Container(22026).IsUpdating]] |
+      [Control.IsVisible(22027) + [Integer.IsGreater(Container(22027).NumItems,0) | Container(22027).IsUpdating]] |
+      [Control.IsVisible(22028) + [Integer.IsGreater(Container(22028).NumItems,0) | Container(22028).IsUpdating]] |
+      [Control.IsVisible(22029) + [Integer.IsGreater(Container(22029).NumItems,0) | Container(22029).IsUpdating]] |
+      [Control.IsVisible(22030) + [Integer.IsGreater(Container(22030).NumItems,0) | Container(22030).IsUpdating]] |
+      [Control.IsVisible(22031) + [Integer.IsGreater(Container(22031).NumItems,0) | Container(22031).IsUpdating]] |
+      [Control.IsVisible(22032) + [Integer.IsGreater(Container(22032).NumItems,0) | Container(22032).IsUpdating]] |
+      [Control.IsVisible(22033) + [Integer.IsGreater(Container(22033).NumItems,0) | Container(22033).IsUpdating]] |
+      [Control.IsVisible(22034) + [Integer.IsGreater(Container(22034).NumItems,0) | Container(22034).IsUpdating]] |
+      [Control.IsVisible(22035) + [Integer.IsGreater(Container(22035).NumItems,0) | Container(22035).IsUpdating]] |
+      [Control.IsVisible(22036) + [Integer.IsGreater(Container(22036).NumItems,0) | Container(22036).IsUpdating]] |
+      [Control.IsVisible(22037) + [Integer.IsGreater(Container(22037).NumItems,0) | Container(22037).IsUpdating]] |
+      [Control.IsVisible(22038) + [Integer.IsGreater(Container(22038).NumItems,0) | Container(22038).IsUpdating]] |
+      [Control.IsVisible(22039) + [Integer.IsGreater(Container(22039).NumItems,0) | Container(22039).IsUpdating]] |
+      [Control.IsVisible(22040) + [Integer.IsGreater(Container(22040).NumItems,0) | Container(22040).IsUpdating]] |
+      [Control.IsVisible(22041) + [Integer.IsGreater(Container(22041).NumItems,0) | Container(22041).IsUpdating]] |
+      [Control.IsVisible(22042) + [Integer.IsGreater(Container(22042).NumItems,0) | Container(22042).IsUpdating]] |
+      [Control.IsVisible(22043) + [Integer.IsGreater(Container(22043).NumItems,0) | Container(22043).IsUpdating]] |
+      [Control.IsVisible(22044) + [Integer.IsGreater(Container(22044).NumItems,0) | Container(22044).IsUpdating]] |
+      [Control.IsVisible(22045) + [Integer.IsGreater(Container(22045).NumItems,0) | Container(22045).IsUpdating]] |
+      [Control.IsVisible(22046) + [Integer.IsGreater(Container(22046).NumItems,0) | Container(22046).IsUpdating]] |
+      [Control.IsVisible(22047) + [Integer.IsGreater(Container(22047).NumItems,0) | Container(22047).IsUpdating]] |
+      [Control.IsVisible(22048) + [Integer.IsGreater(Container(22048).NumItems,0) | Container(22048).IsUpdating]] |
+      [Control.IsVisible(22049) + [Integer.IsGreater(Container(22049).NumItems,0) | Container(22049).IsUpdating]] |
+      [Control.IsVisible(22050) + [Integer.IsGreater(Container(22050).NumItems,0) | Container(22050).IsUpdating]] |
+      [Control.IsVisible(22051) + [Integer.IsGreater(Container(22051).NumItems,0) | Container(22051).IsUpdating]] |
+      [Control.IsVisible(22052) + [Integer.IsGreater(Container(22052).NumItems,0) | Container(22052).IsUpdating]] |
+      [Control.IsVisible(22053) + [Integer.IsGreater(Container(22053).NumItems,0) | Container(22053).IsUpdating]] |
+      [Control.IsVisible(22054) + [Integer.IsGreater(Container(22054).NumItems,0) | Container(22054).IsUpdating]] |
+      [Control.IsVisible(22055) + [Integer.IsGreater(Container(22055).NumItems,0) | Container(22055).IsUpdating]] |
+      [Control.IsVisible(22056) + [Integer.IsGreater(Container(22056).NumItems,0) | Container(22056).IsUpdating]] |
+      [Control.IsVisible(22057) + [Integer.IsGreater(Container(22057).NumItems,0) | Container(22057).IsUpdating]] |
+      [Control.IsVisible(22058) + [Integer.IsGreater(Container(22058).NumItems,0) | Container(22058).IsUpdating]] |
+      [Control.IsVisible(22059) + [Integer.IsGreater(Container(22059).NumItems,0) | Container(22059).IsUpdating]] |
+      [Control.IsVisible(22060) + [Integer.IsGreater(Container(22060).NumItems,0) | Container(22060).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),custom1) + [
+      [Control.IsVisible(23011) + [Integer.IsGreater(Container(23011).NumItems,0) | Container(23011).IsUpdating]] |
+      [Control.IsVisible(23012) + [Integer.IsGreater(Container(23012).NumItems,0) | Container(23012).IsUpdating]] |
+      [Control.IsVisible(23013) + [Integer.IsGreater(Container(23013).NumItems,0) | Container(23013).IsUpdating]] |
+      [Control.IsVisible(23014) + [Integer.IsGreater(Container(23014).NumItems,0) | Container(23014).IsUpdating]] |
+      [Control.IsVisible(23015) + [Integer.IsGreater(Container(23015).NumItems,0) | Container(23015).IsUpdating]] |
+      [Control.IsVisible(23016) + [Integer.IsGreater(Container(23016).NumItems,0) | Container(23016).IsUpdating]] |
+      [Control.IsVisible(23017) + [Integer.IsGreater(Container(23017).NumItems,0) | Container(23017).IsUpdating]] |
+      [Control.IsVisible(23018) + [Integer.IsGreater(Container(23018).NumItems,0) | Container(23018).IsUpdating]] |
+      [Control.IsVisible(23019) + [Integer.IsGreater(Container(23019).NumItems,0) | Container(23019).IsUpdating]] |
+      [Control.IsVisible(23020) + [Integer.IsGreater(Container(23020).NumItems,0) | Container(23020).IsUpdating]] |
+      [Control.IsVisible(23021) + [Integer.IsGreater(Container(23021).NumItems,0) | Container(23021).IsUpdating]] |
+      [Control.IsVisible(23022) + [Integer.IsGreater(Container(23022).NumItems,0) | Container(23022).IsUpdating]] |
+      [Control.IsVisible(23023) + [Integer.IsGreater(Container(23023).NumItems,0) | Container(23023).IsUpdating]] |
+      [Control.IsVisible(23024) + [Integer.IsGreater(Container(23024).NumItems,0) | Container(23024).IsUpdating]] |
+      [Control.IsVisible(23025) + [Integer.IsGreater(Container(23025).NumItems,0) | Container(23025).IsUpdating]] |
+      [Control.IsVisible(23026) + [Integer.IsGreater(Container(23026).NumItems,0) | Container(23026).IsUpdating]] |
+      [Control.IsVisible(23027) + [Integer.IsGreater(Container(23027).NumItems,0) | Container(23027).IsUpdating]] |
+      [Control.IsVisible(23028) + [Integer.IsGreater(Container(23028).NumItems,0) | Container(23028).IsUpdating]] |
+      [Control.IsVisible(23029) + [Integer.IsGreater(Container(23029).NumItems,0) | Container(23029).IsUpdating]] |
+      [Control.IsVisible(23030) + [Integer.IsGreater(Container(23030).NumItems,0) | Container(23030).IsUpdating]] |
+      [Control.IsVisible(23031) + [Integer.IsGreater(Container(23031).NumItems,0) | Container(23031).IsUpdating]] |
+      [Control.IsVisible(23032) + [Integer.IsGreater(Container(23032).NumItems,0) | Container(23032).IsUpdating]] |
+      [Control.IsVisible(23033) + [Integer.IsGreater(Container(23033).NumItems,0) | Container(23033).IsUpdating]] |
+      [Control.IsVisible(23034) + [Integer.IsGreater(Container(23034).NumItems,0) | Container(23034).IsUpdating]] |
+      [Control.IsVisible(23035) + [Integer.IsGreater(Container(23035).NumItems,0) | Container(23035).IsUpdating]] |
+      [Control.IsVisible(23036) + [Integer.IsGreater(Container(23036).NumItems,0) | Container(23036).IsUpdating]] |
+      [Control.IsVisible(23037) + [Integer.IsGreater(Container(23037).NumItems,0) | Container(23037).IsUpdating]] |
+      [Control.IsVisible(23038) + [Integer.IsGreater(Container(23038).NumItems,0) | Container(23038).IsUpdating]] |
+      [Control.IsVisible(23039) + [Integer.IsGreater(Container(23039).NumItems,0) | Container(23039).IsUpdating]] |
+      [Control.IsVisible(23040) + [Integer.IsGreater(Container(23040).NumItems,0) | Container(23040).IsUpdating]] |
+      [Control.IsVisible(23041) + [Integer.IsGreater(Container(23041).NumItems,0) | Container(23041).IsUpdating]] |
+      [Control.IsVisible(23042) + [Integer.IsGreater(Container(23042).NumItems,0) | Container(23042).IsUpdating]] |
+      [Control.IsVisible(23043) + [Integer.IsGreater(Container(23043).NumItems,0) | Container(23043).IsUpdating]] |
+      [Control.IsVisible(23044) + [Integer.IsGreater(Container(23044).NumItems,0) | Container(23044).IsUpdating]] |
+      [Control.IsVisible(23045) + [Integer.IsGreater(Container(23045).NumItems,0) | Container(23045).IsUpdating]] |
+      [Control.IsVisible(23046) + [Integer.IsGreater(Container(23046).NumItems,0) | Container(23046).IsUpdating]] |
+      [Control.IsVisible(23047) + [Integer.IsGreater(Container(23047).NumItems,0) | Container(23047).IsUpdating]] |
+      [Control.IsVisible(23048) + [Integer.IsGreater(Container(23048).NumItems,0) | Container(23048).IsUpdating]] |
+      [Control.IsVisible(23049) + [Integer.IsGreater(Container(23049).NumItems,0) | Container(23049).IsUpdating]] |
+      [Control.IsVisible(23050) + [Integer.IsGreater(Container(23050).NumItems,0) | Container(23050).IsUpdating]] |
+      [Control.IsVisible(23051) + [Integer.IsGreater(Container(23051).NumItems,0) | Container(23051).IsUpdating]] |
+      [Control.IsVisible(23052) + [Integer.IsGreater(Container(23052).NumItems,0) | Container(23052).IsUpdating]] |
+      [Control.IsVisible(23053) + [Integer.IsGreater(Container(23053).NumItems,0) | Container(23053).IsUpdating]] |
+      [Control.IsVisible(23054) + [Integer.IsGreater(Container(23054).NumItems,0) | Container(23054).IsUpdating]] |
+      [Control.IsVisible(23055) + [Integer.IsGreater(Container(23055).NumItems,0) | Container(23055).IsUpdating]] |
+      [Control.IsVisible(23056) + [Integer.IsGreater(Container(23056).NumItems,0) | Container(23056).IsUpdating]] |
+      [Control.IsVisible(23057) + [Integer.IsGreater(Container(23057).NumItems,0) | Container(23057).IsUpdating]] |
+      [Control.IsVisible(23058) + [Integer.IsGreater(Container(23058).NumItems,0) | Container(23058).IsUpdating]] |
+      [Control.IsVisible(23059) + [Integer.IsGreater(Container(23059).NumItems,0) | Container(23059).IsUpdating]] |
+      [Control.IsVisible(23060) + [Integer.IsGreater(Container(23060).NumItems,0) | Container(23060).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),custom2) + [
+      [Control.IsVisible(24011) + [Integer.IsGreater(Container(24011).NumItems,0) | Container(24011).IsUpdating]] |
+      [Control.IsVisible(24012) + [Integer.IsGreater(Container(24012).NumItems,0) | Container(24012).IsUpdating]] |
+      [Control.IsVisible(24013) + [Integer.IsGreater(Container(24013).NumItems,0) | Container(24013).IsUpdating]] |
+      [Control.IsVisible(24014) + [Integer.IsGreater(Container(24014).NumItems,0) | Container(24014).IsUpdating]] |
+      [Control.IsVisible(24015) + [Integer.IsGreater(Container(24015).NumItems,0) | Container(24015).IsUpdating]] |
+      [Control.IsVisible(24016) + [Integer.IsGreater(Container(24016).NumItems,0) | Container(24016).IsUpdating]] |
+      [Control.IsVisible(24017) + [Integer.IsGreater(Container(24017).NumItems,0) | Container(24017).IsUpdating]] |
+      [Control.IsVisible(24018) + [Integer.IsGreater(Container(24018).NumItems,0) | Container(24018).IsUpdating]] |
+      [Control.IsVisible(24019) + [Integer.IsGreater(Container(24019).NumItems,0) | Container(24019).IsUpdating]] |
+      [Control.IsVisible(24020) + [Integer.IsGreater(Container(24020).NumItems,0) | Container(24020).IsUpdating]] |
+      [Control.IsVisible(24021) + [Integer.IsGreater(Container(24021).NumItems,0) | Container(24021).IsUpdating]] |
+      [Control.IsVisible(24022) + [Integer.IsGreater(Container(24022).NumItems,0) | Container(24022).IsUpdating]] |
+      [Control.IsVisible(24023) + [Integer.IsGreater(Container(24023).NumItems,0) | Container(24023).IsUpdating]] |
+      [Control.IsVisible(24024) + [Integer.IsGreater(Container(24024).NumItems,0) | Container(24024).IsUpdating]] |
+      [Control.IsVisible(24025) + [Integer.IsGreater(Container(24025).NumItems,0) | Container(24025).IsUpdating]] |
+      [Control.IsVisible(24026) + [Integer.IsGreater(Container(24026).NumItems,0) | Container(24026).IsUpdating]] |
+      [Control.IsVisible(24027) + [Integer.IsGreater(Container(24027).NumItems,0) | Container(24027).IsUpdating]] |
+      [Control.IsVisible(24028) + [Integer.IsGreater(Container(24028).NumItems,0) | Container(24028).IsUpdating]] |
+      [Control.IsVisible(24029) + [Integer.IsGreater(Container(24029).NumItems,0) | Container(24029).IsUpdating]] |
+      [Control.IsVisible(24030) + [Integer.IsGreater(Container(24030).NumItems,0) | Container(24030).IsUpdating]] |
+      [Control.IsVisible(24031) + [Integer.IsGreater(Container(24031).NumItems,0) | Container(24031).IsUpdating]] |
+      [Control.IsVisible(24032) + [Integer.IsGreater(Container(24032).NumItems,0) | Container(24032).IsUpdating]] |
+      [Control.IsVisible(24033) + [Integer.IsGreater(Container(24033).NumItems,0) | Container(24033).IsUpdating]] |
+      [Control.IsVisible(24034) + [Integer.IsGreater(Container(24034).NumItems,0) | Container(24034).IsUpdating]] |
+      [Control.IsVisible(24035) + [Integer.IsGreater(Container(24035).NumItems,0) | Container(24035).IsUpdating]] |
+      [Control.IsVisible(24036) + [Integer.IsGreater(Container(24036).NumItems,0) | Container(24036).IsUpdating]] |
+      [Control.IsVisible(24037) + [Integer.IsGreater(Container(24037).NumItems,0) | Container(24037).IsUpdating]] |
+      [Control.IsVisible(24038) + [Integer.IsGreater(Container(24038).NumItems,0) | Container(24038).IsUpdating]] |
+      [Control.IsVisible(24039) + [Integer.IsGreater(Container(24039).NumItems,0) | Container(24039).IsUpdating]] |
+      [Control.IsVisible(24040) + [Integer.IsGreater(Container(24040).NumItems,0) | Container(24040).IsUpdating]] |
+      [Control.IsVisible(24041) + [Integer.IsGreater(Container(24041).NumItems,0) | Container(24041).IsUpdating]] |
+      [Control.IsVisible(24042) + [Integer.IsGreater(Container(24042).NumItems,0) | Container(24042).IsUpdating]] |
+      [Control.IsVisible(24043) + [Integer.IsGreater(Container(24043).NumItems,0) | Container(24043).IsUpdating]] |
+      [Control.IsVisible(24044) + [Integer.IsGreater(Container(24044).NumItems,0) | Container(24044).IsUpdating]] |
+      [Control.IsVisible(24045) + [Integer.IsGreater(Container(24045).NumItems,0) | Container(24045).IsUpdating]] |
+      [Control.IsVisible(24046) + [Integer.IsGreater(Container(24046).NumItems,0) | Container(24046).IsUpdating]] |
+      [Control.IsVisible(24047) + [Integer.IsGreater(Container(24047).NumItems,0) | Container(24047).IsUpdating]] |
+      [Control.IsVisible(24048) + [Integer.IsGreater(Container(24048).NumItems,0) | Container(24048).IsUpdating]] |
+      [Control.IsVisible(24049) + [Integer.IsGreater(Container(24049).NumItems,0) | Container(24049).IsUpdating]] |
+      [Control.IsVisible(24050) + [Integer.IsGreater(Container(24050).NumItems,0) | Container(24050).IsUpdating]] |
+      [Control.IsVisible(24051) + [Integer.IsGreater(Container(24051).NumItems,0) | Container(24051).IsUpdating]] |
+      [Control.IsVisible(24052) + [Integer.IsGreater(Container(24052).NumItems,0) | Container(24052).IsUpdating]] |
+      [Control.IsVisible(24053) + [Integer.IsGreater(Container(24053).NumItems,0) | Container(24053).IsUpdating]] |
+      [Control.IsVisible(24054) + [Integer.IsGreater(Container(24054).NumItems,0) | Container(24054).IsUpdating]] |
+      [Control.IsVisible(24055) + [Integer.IsGreater(Container(24055).NumItems,0) | Container(24055).IsUpdating]] |
+      [Control.IsVisible(24056) + [Integer.IsGreater(Container(24056).NumItems,0) | Container(24056).IsUpdating]] |
+      [Control.IsVisible(24057) + [Integer.IsGreater(Container(24057).NumItems,0) | Container(24057).IsUpdating]] |
+      [Control.IsVisible(24058) + [Integer.IsGreater(Container(24058).NumItems,0) | Container(24058).IsUpdating]] |
+      [Control.IsVisible(24059) + [Integer.IsGreater(Container(24059).NumItems,0) | Container(24059).IsUpdating]] |
+      [Control.IsVisible(24060) + [Integer.IsGreater(Container(24060).NumItems,0) | Container(24060).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),custom3) + [
+      [Control.IsVisible(25011) + [Integer.IsGreater(Container(25011).NumItems,0) | Container(25011).IsUpdating]] |
+      [Control.IsVisible(25012) + [Integer.IsGreater(Container(25012).NumItems,0) | Container(25012).IsUpdating]] |
+      [Control.IsVisible(25013) + [Integer.IsGreater(Container(25013).NumItems,0) | Container(25013).IsUpdating]] |
+      [Control.IsVisible(25014) + [Integer.IsGreater(Container(25014).NumItems,0) | Container(25014).IsUpdating]] |
+      [Control.IsVisible(25015) + [Integer.IsGreater(Container(25015).NumItems,0) | Container(25015).IsUpdating]] |
+      [Control.IsVisible(25016) + [Integer.IsGreater(Container(25016).NumItems,0) | Container(25016).IsUpdating]] |
+      [Control.IsVisible(25017) + [Integer.IsGreater(Container(25017).NumItems,0) | Container(25017).IsUpdating]] |
+      [Control.IsVisible(25018) + [Integer.IsGreater(Container(25018).NumItems,0) | Container(25018).IsUpdating]] |
+      [Control.IsVisible(25019) + [Integer.IsGreater(Container(25019).NumItems,0) | Container(25019).IsUpdating]] |
+      [Control.IsVisible(25020) + [Integer.IsGreater(Container(25020).NumItems,0) | Container(25020).IsUpdating]] |
+      [Control.IsVisible(25021) + [Integer.IsGreater(Container(25021).NumItems,0) | Container(25021).IsUpdating]] |
+      [Control.IsVisible(25022) + [Integer.IsGreater(Container(25022).NumItems,0) | Container(25022).IsUpdating]] |
+      [Control.IsVisible(25023) + [Integer.IsGreater(Container(25023).NumItems,0) | Container(25023).IsUpdating]] |
+      [Control.IsVisible(25024) + [Integer.IsGreater(Container(25024).NumItems,0) | Container(25024).IsUpdating]] |
+      [Control.IsVisible(25025) + [Integer.IsGreater(Container(25025).NumItems,0) | Container(25025).IsUpdating]] |
+      [Control.IsVisible(25026) + [Integer.IsGreater(Container(25026).NumItems,0) | Container(25026).IsUpdating]] |
+      [Control.IsVisible(25027) + [Integer.IsGreater(Container(25027).NumItems,0) | Container(25027).IsUpdating]] |
+      [Control.IsVisible(25028) + [Integer.IsGreater(Container(25028).NumItems,0) | Container(25028).IsUpdating]] |
+      [Control.IsVisible(25029) + [Integer.IsGreater(Container(25029).NumItems,0) | Container(25029).IsUpdating]] |
+      [Control.IsVisible(25030) + [Integer.IsGreater(Container(25030).NumItems,0) | Container(25030).IsUpdating]] |
+      [Control.IsVisible(25031) + [Integer.IsGreater(Container(25031).NumItems,0) | Container(25031).IsUpdating]] |
+      [Control.IsVisible(25032) + [Integer.IsGreater(Container(25032).NumItems,0) | Container(25032).IsUpdating]] |
+      [Control.IsVisible(25033) + [Integer.IsGreater(Container(25033).NumItems,0) | Container(25033).IsUpdating]] |
+      [Control.IsVisible(25034) + [Integer.IsGreater(Container(25034).NumItems,0) | Container(25034).IsUpdating]] |
+      [Control.IsVisible(25035) + [Integer.IsGreater(Container(25035).NumItems,0) | Container(25035).IsUpdating]] |
+      [Control.IsVisible(25036) + [Integer.IsGreater(Container(25036).NumItems,0) | Container(25036).IsUpdating]] |
+      [Control.IsVisible(25037) + [Integer.IsGreater(Container(25037).NumItems,0) | Container(25037).IsUpdating]] |
+      [Control.IsVisible(25038) + [Integer.IsGreater(Container(25038).NumItems,0) | Container(25038).IsUpdating]] |
+      [Control.IsVisible(25039) + [Integer.IsGreater(Container(25039).NumItems,0) | Container(25039).IsUpdating]] |
+      [Control.IsVisible(25040) + [Integer.IsGreater(Container(25040).NumItems,0) | Container(25040).IsUpdating]] |
+      [Control.IsVisible(25041) + [Integer.IsGreater(Container(25041).NumItems,0) | Container(25041).IsUpdating]] |
+      [Control.IsVisible(25042) + [Integer.IsGreater(Container(25042).NumItems,0) | Container(25042).IsUpdating]] |
+      [Control.IsVisible(25043) + [Integer.IsGreater(Container(25043).NumItems,0) | Container(25043).IsUpdating]] |
+      [Control.IsVisible(25044) + [Integer.IsGreater(Container(25044).NumItems,0) | Container(25044).IsUpdating]] |
+      [Control.IsVisible(25045) + [Integer.IsGreater(Container(25045).NumItems,0) | Container(25045).IsUpdating]] |
+      [Control.IsVisible(25046) + [Integer.IsGreater(Container(25046).NumItems,0) | Container(25046).IsUpdating]] |
+      [Control.IsVisible(25047) + [Integer.IsGreater(Container(25047).NumItems,0) | Container(25047).IsUpdating]] |
+      [Control.IsVisible(25048) + [Integer.IsGreater(Container(25048).NumItems,0) | Container(25048).IsUpdating]] |
+      [Control.IsVisible(25049) + [Integer.IsGreater(Container(25049).NumItems,0) | Container(25049).IsUpdating]] |
+      [Control.IsVisible(25050) + [Integer.IsGreater(Container(25050).NumItems,0) | Container(25050).IsUpdating]] |
+      [Control.IsVisible(25051) + [Integer.IsGreater(Container(25051).NumItems,0) | Container(25051).IsUpdating]] |
+      [Control.IsVisible(25052) + [Integer.IsGreater(Container(25052).NumItems,0) | Container(25052).IsUpdating]] |
+      [Control.IsVisible(25053) + [Integer.IsGreater(Container(25053).NumItems,0) | Container(25053).IsUpdating]] |
+      [Control.IsVisible(25054) + [Integer.IsGreater(Container(25054).NumItems,0) | Container(25054).IsUpdating]] |
+      [Control.IsVisible(25055) + [Integer.IsGreater(Container(25055).NumItems,0) | Container(25055).IsUpdating]] |
+      [Control.IsVisible(25056) + [Integer.IsGreater(Container(25056).NumItems,0) | Container(25056).IsUpdating]] |
+      [Control.IsVisible(25057) + [Integer.IsGreater(Container(25057).NumItems,0) | Container(25057).IsUpdating]] |
+      [Control.IsVisible(25058) + [Integer.IsGreater(Container(25058).NumItems,0) | Container(25058).IsUpdating]] |
+      [Control.IsVisible(25059) + [Integer.IsGreater(Container(25059).NumItems,0) | Container(25059).IsUpdating]] |
+      [Control.IsVisible(25060) + [Integer.IsGreater(Container(25060).NumItems,0) | Container(25060).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),music) + [
+      [Control.IsVisible(7011) + [Integer.IsGreater(Container(7011).NumItems,0) | Container(7011).IsUpdating]] |
+      [Control.IsVisible(7100) + [Integer.IsGreater(Container(7100).NumItems,0) | Container(7100).IsUpdating]] |
+      [Control.IsVisible(7200) + [Integer.IsGreater(Container(7200).NumItems,0) | Container(7200).IsUpdating]] |
+      [Control.IsVisible(7300) + [Integer.IsGreater(Container(7300).NumItems,0) | Container(7300).IsUpdating]] |
+      [Control.IsVisible(7400) + [Integer.IsGreater(Container(7400).NumItems,0) | Container(7400).IsUpdating]] |
+      [Control.IsVisible(7500) + [Integer.IsGreater(Container(7500).NumItems,0) | Container(7500).IsUpdating]] |
+      [Control.IsVisible(7600) + [Integer.IsGreater(Container(7600).NumItems,0) | Container(7600).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),addons) + [
+      [Control.IsVisible(8011) + [Integer.IsGreater(Container(8011).NumItems,0) | Container(8011).IsUpdating]] |
+      [Control.IsVisible(8100) + [Integer.IsGreater(Container(8100).NumItems,0) | Container(8100).IsUpdating]] |
+      [Control.IsVisible(8200) + [Integer.IsGreater(Container(8200).NumItems,0) | Container(8200).IsUpdating]] |
+      [Control.IsVisible(8300) + [Integer.IsGreater(Container(8300).NumItems,0) | Container(8300).IsUpdating]] |
+      [Control.IsVisible(8400) + [Integer.IsGreater(Container(8400).NumItems,0) | Container(8400).IsUpdating]] |
+      [Control.IsVisible(8500) + [Integer.IsGreater(Container(8500).NumItems,0) | Container(8500).IsUpdating]] |
+      [Control.IsVisible(8700) + [Integer.IsGreater(Container(8700).NumItems,0) | Container(8700).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),video) + [
+      [Control.IsVisible(11011) + [Integer.IsGreater(Container(11011).NumItems,0) | Container(11011).IsUpdating]] |
+      [Control.IsVisible(11100) + [Integer.IsGreater(Container(11100).NumItems,0) | Container(11100).IsUpdating]] |
+      [Control.IsVisible(11200) + [Integer.IsGreater(Container(11200).NumItems,0) | Container(11200).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),livetv) + [
+      [Control.IsVisible(12011) + [Integer.IsGreater(Container(12011).NumItems,0) | Container(12011).IsUpdating]] |
+      [Control.IsVisible(12200) + [Integer.IsGreater(Container(12200).NumItems,0) | Container(12200).IsUpdating]] |
+      [Control.IsVisible(12300) + [Integer.IsGreater(Container(12300).NumItems,0) | Container(12300).IsUpdating]] |
+      [Control.IsVisible(12400) + [Integer.IsGreater(Container(12400).NumItems,0) | Container(12400).IsUpdating]] |
+      [Control.IsVisible(12500) + [Integer.IsGreater(Container(12500).NumItems,0) | Container(12500).IsUpdating]] |
+      [Control.IsVisible(12600) + [Integer.IsGreater(Container(12600).NumItems,0) | Container(12600).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),radio) + [
+      [Control.IsVisible(13011) + [Integer.IsGreater(Container(13011).NumItems,0) | Container(13011).IsUpdating]] |
+      [Control.IsVisible(13200) + [Integer.IsGreater(Container(13200).NumItems,0) | Container(13200).IsUpdating]] |
+      [Control.IsVisible(13300) + [Integer.IsGreater(Container(13300).NumItems,0) | Container(13300).IsUpdating]] |
+      [Control.IsVisible(13400) + [Integer.IsGreater(Container(13400).NumItems,0) | Container(13400).IsUpdating]] |
+      [Control.IsVisible(13500) + [Integer.IsGreater(Container(13500).NumItems,0) | Container(13500).IsUpdating]] |
+      [Control.IsVisible(13600) + [Integer.IsGreater(Container(13600).NumItems,0) | Container(13600).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),favorites) + [
+      [Control.IsVisible(14100) + [Integer.IsGreater(Container(14100).NumItems,0) | Container(14100).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),weather) + [
+      [Control.IsVisible(15011) + [Integer.IsGreater(Container(15011).NumItems,0) | Container(15011).IsUpdating]] |
+      [Control.IsVisible(15200) + [Integer.IsGreater(Container(15200).NumItems,0) | Container(15200).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),musicvideos) + [
+      [Control.IsVisible(16011) + [Integer.IsGreater(Container(16011).NumItems,0) | Container(16011).IsUpdating]] |
+      [Control.IsVisible(16200) + [Integer.IsGreater(Container(16200).NumItems,0) | Container(16200).IsUpdating]] |
+      [Control.IsVisible(16300) + [Integer.IsGreater(Container(16300).NumItems,0) | Container(16300).IsUpdating]] |
+      [Control.IsVisible(16400) + [Integer.IsGreater(Container(16400).NumItems,0) | Container(16400).IsUpdating]] |
+      [Control.IsVisible(16500) + [Integer.IsGreater(Container(16500).NumItems,0) | Container(16500).IsUpdating]] |
+      [Control.IsVisible(16600) + [Integer.IsGreater(Container(16600).NumItems,0) | Container(16600).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),pictures) + [
+      [Control.IsVisible(4100) + [Integer.IsGreater(Container(4100).NumItems,0) | Container(4100).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),games) + [
+      [Control.IsVisible(17200) + [Integer.IsGreater(Container(17200).NumItems,0) | Container(17200).IsUpdating]]
+    ]]
+  ]</expression>
+
+  <expression name="FoundryHomeWidgetsPresent">[
+    [String.IsEqual(Container(9000).ListItem.Property(id),movies) + [
+      [[Integer.IsGreater(Container(19011).NumItems,0) | Container(19011).IsUpdating]] |
+      [[Integer.IsGreater(Container(19012).NumItems,0) | Container(19012).IsUpdating]] |
+      [[Integer.IsGreater(Container(19013).NumItems,0) | Container(19013).IsUpdating]] |
+      [[Integer.IsGreater(Container(19014).NumItems,0) | Container(19014).IsUpdating]] |
+      [[Integer.IsGreater(Container(19015).NumItems,0) | Container(19015).IsUpdating]] |
+      [[Integer.IsGreater(Container(19016).NumItems,0) | Container(19016).IsUpdating]] |
+      [[Integer.IsGreater(Container(19017).NumItems,0) | Container(19017).IsUpdating]] |
+      [[Integer.IsGreater(Container(19018).NumItems,0) | Container(19018).IsUpdating]] |
+      [[Integer.IsGreater(Container(19019).NumItems,0) | Container(19019).IsUpdating]] |
+      [[Integer.IsGreater(Container(19020).NumItems,0) | Container(19020).IsUpdating]] |
+      [[Integer.IsGreater(Container(19021).NumItems,0) | Container(19021).IsUpdating]] |
+      [[Integer.IsGreater(Container(19022).NumItems,0) | Container(19022).IsUpdating]] |
+      [[Integer.IsGreater(Container(19023).NumItems,0) | Container(19023).IsUpdating]] |
+      [[Integer.IsGreater(Container(19024).NumItems,0) | Container(19024).IsUpdating]] |
+      [[Integer.IsGreater(Container(19025).NumItems,0) | Container(19025).IsUpdating]] |
+      [[Integer.IsGreater(Container(19026).NumItems,0) | Container(19026).IsUpdating]] |
+      [[Integer.IsGreater(Container(19027).NumItems,0) | Container(19027).IsUpdating]] |
+      [[Integer.IsGreater(Container(19028).NumItems,0) | Container(19028).IsUpdating]] |
+      [[Integer.IsGreater(Container(19029).NumItems,0) | Container(19029).IsUpdating]] |
+      [[Integer.IsGreater(Container(19030).NumItems,0) | Container(19030).IsUpdating]] |
+      [[Integer.IsGreater(Container(19031).NumItems,0) | Container(19031).IsUpdating]] |
+      [[Integer.IsGreater(Container(19032).NumItems,0) | Container(19032).IsUpdating]] |
+      [[Integer.IsGreater(Container(19033).NumItems,0) | Container(19033).IsUpdating]] |
+      [[Integer.IsGreater(Container(19034).NumItems,0) | Container(19034).IsUpdating]] |
+      [[Integer.IsGreater(Container(19035).NumItems,0) | Container(19035).IsUpdating]] |
+      [[Integer.IsGreater(Container(19036).NumItems,0) | Container(19036).IsUpdating]] |
+      [[Integer.IsGreater(Container(19037).NumItems,0) | Container(19037).IsUpdating]] |
+      [[Integer.IsGreater(Container(19038).NumItems,0) | Container(19038).IsUpdating]] |
+      [[Integer.IsGreater(Container(19039).NumItems,0) | Container(19039).IsUpdating]] |
+      [[Integer.IsGreater(Container(19040).NumItems,0) | Container(19040).IsUpdating]] |
+      [[Integer.IsGreater(Container(19041).NumItems,0) | Container(19041).IsUpdating]] |
+      [[Integer.IsGreater(Container(19042).NumItems,0) | Container(19042).IsUpdating]] |
+      [[Integer.IsGreater(Container(19043).NumItems,0) | Container(19043).IsUpdating]] |
+      [[Integer.IsGreater(Container(19044).NumItems,0) | Container(19044).IsUpdating]] |
+      [[Integer.IsGreater(Container(19045).NumItems,0) | Container(19045).IsUpdating]] |
+      [[Integer.IsGreater(Container(19046).NumItems,0) | Container(19046).IsUpdating]] |
+      [[Integer.IsGreater(Container(19047).NumItems,0) | Container(19047).IsUpdating]] |
+      [[Integer.IsGreater(Container(19048).NumItems,0) | Container(19048).IsUpdating]] |
+      [[Integer.IsGreater(Container(19049).NumItems,0) | Container(19049).IsUpdating]] |
+      [[Integer.IsGreater(Container(19050).NumItems,0) | Container(19050).IsUpdating]] |
+      [[Integer.IsGreater(Container(19051).NumItems,0) | Container(19051).IsUpdating]] |
+      [[Integer.IsGreater(Container(19052).NumItems,0) | Container(19052).IsUpdating]] |
+      [[Integer.IsGreater(Container(19053).NumItems,0) | Container(19053).IsUpdating]] |
+      [[Integer.IsGreater(Container(19054).NumItems,0) | Container(19054).IsUpdating]] |
+      [[Integer.IsGreater(Container(19055).NumItems,0) | Container(19055).IsUpdating]] |
+      [[Integer.IsGreater(Container(19056).NumItems,0) | Container(19056).IsUpdating]] |
+      [[Integer.IsGreater(Container(19057).NumItems,0) | Container(19057).IsUpdating]] |
+      [[Integer.IsGreater(Container(19058).NumItems,0) | Container(19058).IsUpdating]] |
+      [[Integer.IsGreater(Container(19059).NumItems,0) | Container(19059).IsUpdating]] |
+      [[Integer.IsGreater(Container(19060).NumItems,0) | Container(19060).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),tvshows) + [
+      [[Integer.IsGreater(Container(22011).NumItems,0) | Container(22011).IsUpdating]] |
+      [[Integer.IsGreater(Container(22012).NumItems,0) | Container(22012).IsUpdating]] |
+      [[Integer.IsGreater(Container(22013).NumItems,0) | Container(22013).IsUpdating]] |
+      [[Integer.IsGreater(Container(22014).NumItems,0) | Container(22014).IsUpdating]] |
+      [[Integer.IsGreater(Container(22015).NumItems,0) | Container(22015).IsUpdating]] |
+      [[Integer.IsGreater(Container(22016).NumItems,0) | Container(22016).IsUpdating]] |
+      [[Integer.IsGreater(Container(22017).NumItems,0) | Container(22017).IsUpdating]] |
+      [[Integer.IsGreater(Container(22018).NumItems,0) | Container(22018).IsUpdating]] |
+      [[Integer.IsGreater(Container(22019).NumItems,0) | Container(22019).IsUpdating]] |
+      [[Integer.IsGreater(Container(22020).NumItems,0) | Container(22020).IsUpdating]] |
+      [[Integer.IsGreater(Container(22021).NumItems,0) | Container(22021).IsUpdating]] |
+      [[Integer.IsGreater(Container(22022).NumItems,0) | Container(22022).IsUpdating]] |
+      [[Integer.IsGreater(Container(22023).NumItems,0) | Container(22023).IsUpdating]] |
+      [[Integer.IsGreater(Container(22024).NumItems,0) | Container(22024).IsUpdating]] |
+      [[Integer.IsGreater(Container(22025).NumItems,0) | Container(22025).IsUpdating]] |
+      [[Integer.IsGreater(Container(22026).NumItems,0) | Container(22026).IsUpdating]] |
+      [[Integer.IsGreater(Container(22027).NumItems,0) | Container(22027).IsUpdating]] |
+      [[Integer.IsGreater(Container(22028).NumItems,0) | Container(22028).IsUpdating]] |
+      [[Integer.IsGreater(Container(22029).NumItems,0) | Container(22029).IsUpdating]] |
+      [[Integer.IsGreater(Container(22030).NumItems,0) | Container(22030).IsUpdating]] |
+      [[Integer.IsGreater(Container(22031).NumItems,0) | Container(22031).IsUpdating]] |
+      [[Integer.IsGreater(Container(22032).NumItems,0) | Container(22032).IsUpdating]] |
+      [[Integer.IsGreater(Container(22033).NumItems,0) | Container(22033).IsUpdating]] |
+      [[Integer.IsGreater(Container(22034).NumItems,0) | Container(22034).IsUpdating]] |
+      [[Integer.IsGreater(Container(22035).NumItems,0) | Container(22035).IsUpdating]] |
+      [[Integer.IsGreater(Container(22036).NumItems,0) | Container(22036).IsUpdating]] |
+      [[Integer.IsGreater(Container(22037).NumItems,0) | Container(22037).IsUpdating]] |
+      [[Integer.IsGreater(Container(22038).NumItems,0) | Container(22038).IsUpdating]] |
+      [[Integer.IsGreater(Container(22039).NumItems,0) | Container(22039).IsUpdating]] |
+      [[Integer.IsGreater(Container(22040).NumItems,0) | Container(22040).IsUpdating]] |
+      [[Integer.IsGreater(Container(22041).NumItems,0) | Container(22041).IsUpdating]] |
+      [[Integer.IsGreater(Container(22042).NumItems,0) | Container(22042).IsUpdating]] |
+      [[Integer.IsGreater(Container(22043).NumItems,0) | Container(22043).IsUpdating]] |
+      [[Integer.IsGreater(Container(22044).NumItems,0) | Container(22044).IsUpdating]] |
+      [[Integer.IsGreater(Container(22045).NumItems,0) | Container(22045).IsUpdating]] |
+      [[Integer.IsGreater(Container(22046).NumItems,0) | Container(22046).IsUpdating]] |
+      [[Integer.IsGreater(Container(22047).NumItems,0) | Container(22047).IsUpdating]] |
+      [[Integer.IsGreater(Container(22048).NumItems,0) | Container(22048).IsUpdating]] |
+      [[Integer.IsGreater(Container(22049).NumItems,0) | Container(22049).IsUpdating]] |
+      [[Integer.IsGreater(Container(22050).NumItems,0) | Container(22050).IsUpdating]] |
+      [[Integer.IsGreater(Container(22051).NumItems,0) | Container(22051).IsUpdating]] |
+      [[Integer.IsGreater(Container(22052).NumItems,0) | Container(22052).IsUpdating]] |
+      [[Integer.IsGreater(Container(22053).NumItems,0) | Container(22053).IsUpdating]] |
+      [[Integer.IsGreater(Container(22054).NumItems,0) | Container(22054).IsUpdating]] |
+      [[Integer.IsGreater(Container(22055).NumItems,0) | Container(22055).IsUpdating]] |
+      [[Integer.IsGreater(Container(22056).NumItems,0) | Container(22056).IsUpdating]] |
+      [[Integer.IsGreater(Container(22057).NumItems,0) | Container(22057).IsUpdating]] |
+      [[Integer.IsGreater(Container(22058).NumItems,0) | Container(22058).IsUpdating]] |
+      [[Integer.IsGreater(Container(22059).NumItems,0) | Container(22059).IsUpdating]] |
+      [[Integer.IsGreater(Container(22060).NumItems,0) | Container(22060).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),custom1) + [
+      [[Integer.IsGreater(Container(23011).NumItems,0) | Container(23011).IsUpdating]] |
+      [[Integer.IsGreater(Container(23012).NumItems,0) | Container(23012).IsUpdating]] |
+      [[Integer.IsGreater(Container(23013).NumItems,0) | Container(23013).IsUpdating]] |
+      [[Integer.IsGreater(Container(23014).NumItems,0) | Container(23014).IsUpdating]] |
+      [[Integer.IsGreater(Container(23015).NumItems,0) | Container(23015).IsUpdating]] |
+      [[Integer.IsGreater(Container(23016).NumItems,0) | Container(23016).IsUpdating]] |
+      [[Integer.IsGreater(Container(23017).NumItems,0) | Container(23017).IsUpdating]] |
+      [[Integer.IsGreater(Container(23018).NumItems,0) | Container(23018).IsUpdating]] |
+      [[Integer.IsGreater(Container(23019).NumItems,0) | Container(23019).IsUpdating]] |
+      [[Integer.IsGreater(Container(23020).NumItems,0) | Container(23020).IsUpdating]] |
+      [[Integer.IsGreater(Container(23021).NumItems,0) | Container(23021).IsUpdating]] |
+      [[Integer.IsGreater(Container(23022).NumItems,0) | Container(23022).IsUpdating]] |
+      [[Integer.IsGreater(Container(23023).NumItems,0) | Container(23023).IsUpdating]] |
+      [[Integer.IsGreater(Container(23024).NumItems,0) | Container(23024).IsUpdating]] |
+      [[Integer.IsGreater(Container(23025).NumItems,0) | Container(23025).IsUpdating]] |
+      [[Integer.IsGreater(Container(23026).NumItems,0) | Container(23026).IsUpdating]] |
+      [[Integer.IsGreater(Container(23027).NumItems,0) | Container(23027).IsUpdating]] |
+      [[Integer.IsGreater(Container(23028).NumItems,0) | Container(23028).IsUpdating]] |
+      [[Integer.IsGreater(Container(23029).NumItems,0) | Container(23029).IsUpdating]] |
+      [[Integer.IsGreater(Container(23030).NumItems,0) | Container(23030).IsUpdating]] |
+      [[Integer.IsGreater(Container(23031).NumItems,0) | Container(23031).IsUpdating]] |
+      [[Integer.IsGreater(Container(23032).NumItems,0) | Container(23032).IsUpdating]] |
+      [[Integer.IsGreater(Container(23033).NumItems,0) | Container(23033).IsUpdating]] |
+      [[Integer.IsGreater(Container(23034).NumItems,0) | Container(23034).IsUpdating]] |
+      [[Integer.IsGreater(Container(23035).NumItems,0) | Container(23035).IsUpdating]] |
+      [[Integer.IsGreater(Container(23036).NumItems,0) | Container(23036).IsUpdating]] |
+      [[Integer.IsGreater(Container(23037).NumItems,0) | Container(23037).IsUpdating]] |
+      [[Integer.IsGreater(Container(23038).NumItems,0) | Container(23038).IsUpdating]] |
+      [[Integer.IsGreater(Container(23039).NumItems,0) | Container(23039).IsUpdating]] |
+      [[Integer.IsGreater(Container(23040).NumItems,0) | Container(23040).IsUpdating]] |
+      [[Integer.IsGreater(Container(23041).NumItems,0) | Container(23041).IsUpdating]] |
+      [[Integer.IsGreater(Container(23042).NumItems,0) | Container(23042).IsUpdating]] |
+      [[Integer.IsGreater(Container(23043).NumItems,0) | Container(23043).IsUpdating]] |
+      [[Integer.IsGreater(Container(23044).NumItems,0) | Container(23044).IsUpdating]] |
+      [[Integer.IsGreater(Container(23045).NumItems,0) | Container(23045).IsUpdating]] |
+      [[Integer.IsGreater(Container(23046).NumItems,0) | Container(23046).IsUpdating]] |
+      [[Integer.IsGreater(Container(23047).NumItems,0) | Container(23047).IsUpdating]] |
+      [[Integer.IsGreater(Container(23048).NumItems,0) | Container(23048).IsUpdating]] |
+      [[Integer.IsGreater(Container(23049).NumItems,0) | Container(23049).IsUpdating]] |
+      [[Integer.IsGreater(Container(23050).NumItems,0) | Container(23050).IsUpdating]] |
+      [[Integer.IsGreater(Container(23051).NumItems,0) | Container(23051).IsUpdating]] |
+      [[Integer.IsGreater(Container(23052).NumItems,0) | Container(23052).IsUpdating]] |
+      [[Integer.IsGreater(Container(23053).NumItems,0) | Container(23053).IsUpdating]] |
+      [[Integer.IsGreater(Container(23054).NumItems,0) | Container(23054).IsUpdating]] |
+      [[Integer.IsGreater(Container(23055).NumItems,0) | Container(23055).IsUpdating]] |
+      [[Integer.IsGreater(Container(23056).NumItems,0) | Container(23056).IsUpdating]] |
+      [[Integer.IsGreater(Container(23057).NumItems,0) | Container(23057).IsUpdating]] |
+      [[Integer.IsGreater(Container(23058).NumItems,0) | Container(23058).IsUpdating]] |
+      [[Integer.IsGreater(Container(23059).NumItems,0) | Container(23059).IsUpdating]] |
+      [[Integer.IsGreater(Container(23060).NumItems,0) | Container(23060).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),custom2) + [
+      [[Integer.IsGreater(Container(24011).NumItems,0) | Container(24011).IsUpdating]] |
+      [[Integer.IsGreater(Container(24012).NumItems,0) | Container(24012).IsUpdating]] |
+      [[Integer.IsGreater(Container(24013).NumItems,0) | Container(24013).IsUpdating]] |
+      [[Integer.IsGreater(Container(24014).NumItems,0) | Container(24014).IsUpdating]] |
+      [[Integer.IsGreater(Container(24015).NumItems,0) | Container(24015).IsUpdating]] |
+      [[Integer.IsGreater(Container(24016).NumItems,0) | Container(24016).IsUpdating]] |
+      [[Integer.IsGreater(Container(24017).NumItems,0) | Container(24017).IsUpdating]] |
+      [[Integer.IsGreater(Container(24018).NumItems,0) | Container(24018).IsUpdating]] |
+      [[Integer.IsGreater(Container(24019).NumItems,0) | Container(24019).IsUpdating]] |
+      [[Integer.IsGreater(Container(24020).NumItems,0) | Container(24020).IsUpdating]] |
+      [[Integer.IsGreater(Container(24021).NumItems,0) | Container(24021).IsUpdating]] |
+      [[Integer.IsGreater(Container(24022).NumItems,0) | Container(24022).IsUpdating]] |
+      [[Integer.IsGreater(Container(24023).NumItems,0) | Container(24023).IsUpdating]] |
+      [[Integer.IsGreater(Container(24024).NumItems,0) | Container(24024).IsUpdating]] |
+      [[Integer.IsGreater(Container(24025).NumItems,0) | Container(24025).IsUpdating]] |
+      [[Integer.IsGreater(Container(24026).NumItems,0) | Container(24026).IsUpdating]] |
+      [[Integer.IsGreater(Container(24027).NumItems,0) | Container(24027).IsUpdating]] |
+      [[Integer.IsGreater(Container(24028).NumItems,0) | Container(24028).IsUpdating]] |
+      [[Integer.IsGreater(Container(24029).NumItems,0) | Container(24029).IsUpdating]] |
+      [[Integer.IsGreater(Container(24030).NumItems,0) | Container(24030).IsUpdating]] |
+      [[Integer.IsGreater(Container(24031).NumItems,0) | Container(24031).IsUpdating]] |
+      [[Integer.IsGreater(Container(24032).NumItems,0) | Container(24032).IsUpdating]] |
+      [[Integer.IsGreater(Container(24033).NumItems,0) | Container(24033).IsUpdating]] |
+      [[Integer.IsGreater(Container(24034).NumItems,0) | Container(24034).IsUpdating]] |
+      [[Integer.IsGreater(Container(24035).NumItems,0) | Container(24035).IsUpdating]] |
+      [[Integer.IsGreater(Container(24036).NumItems,0) | Container(24036).IsUpdating]] |
+      [[Integer.IsGreater(Container(24037).NumItems,0) | Container(24037).IsUpdating]] |
+      [[Integer.IsGreater(Container(24038).NumItems,0) | Container(24038).IsUpdating]] |
+      [[Integer.IsGreater(Container(24039).NumItems,0) | Container(24039).IsUpdating]] |
+      [[Integer.IsGreater(Container(24040).NumItems,0) | Container(24040).IsUpdating]] |
+      [[Integer.IsGreater(Container(24041).NumItems,0) | Container(24041).IsUpdating]] |
+      [[Integer.IsGreater(Container(24042).NumItems,0) | Container(24042).IsUpdating]] |
+      [[Integer.IsGreater(Container(24043).NumItems,0) | Container(24043).IsUpdating]] |
+      [[Integer.IsGreater(Container(24044).NumItems,0) | Container(24044).IsUpdating]] |
+      [[Integer.IsGreater(Container(24045).NumItems,0) | Container(24045).IsUpdating]] |
+      [[Integer.IsGreater(Container(24046).NumItems,0) | Container(24046).IsUpdating]] |
+      [[Integer.IsGreater(Container(24047).NumItems,0) | Container(24047).IsUpdating]] |
+      [[Integer.IsGreater(Container(24048).NumItems,0) | Container(24048).IsUpdating]] |
+      [[Integer.IsGreater(Container(24049).NumItems,0) | Container(24049).IsUpdating]] |
+      [[Integer.IsGreater(Container(24050).NumItems,0) | Container(24050).IsUpdating]] |
+      [[Integer.IsGreater(Container(24051).NumItems,0) | Container(24051).IsUpdating]] |
+      [[Integer.IsGreater(Container(24052).NumItems,0) | Container(24052).IsUpdating]] |
+      [[Integer.IsGreater(Container(24053).NumItems,0) | Container(24053).IsUpdating]] |
+      [[Integer.IsGreater(Container(24054).NumItems,0) | Container(24054).IsUpdating]] |
+      [[Integer.IsGreater(Container(24055).NumItems,0) | Container(24055).IsUpdating]] |
+      [[Integer.IsGreater(Container(24056).NumItems,0) | Container(24056).IsUpdating]] |
+      [[Integer.IsGreater(Container(24057).NumItems,0) | Container(24057).IsUpdating]] |
+      [[Integer.IsGreater(Container(24058).NumItems,0) | Container(24058).IsUpdating]] |
+      [[Integer.IsGreater(Container(24059).NumItems,0) | Container(24059).IsUpdating]] |
+      [[Integer.IsGreater(Container(24060).NumItems,0) | Container(24060).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),custom3) + [
+      [[Integer.IsGreater(Container(25011).NumItems,0) | Container(25011).IsUpdating]] |
+      [[Integer.IsGreater(Container(25012).NumItems,0) | Container(25012).IsUpdating]] |
+      [[Integer.IsGreater(Container(25013).NumItems,0) | Container(25013).IsUpdating]] |
+      [[Integer.IsGreater(Container(25014).NumItems,0) | Container(25014).IsUpdating]] |
+      [[Integer.IsGreater(Container(25015).NumItems,0) | Container(25015).IsUpdating]] |
+      [[Integer.IsGreater(Container(25016).NumItems,0) | Container(25016).IsUpdating]] |
+      [[Integer.IsGreater(Container(25017).NumItems,0) | Container(25017).IsUpdating]] |
+      [[Integer.IsGreater(Container(25018).NumItems,0) | Container(25018).IsUpdating]] |
+      [[Integer.IsGreater(Container(25019).NumItems,0) | Container(25019).IsUpdating]] |
+      [[Integer.IsGreater(Container(25020).NumItems,0) | Container(25020).IsUpdating]] |
+      [[Integer.IsGreater(Container(25021).NumItems,0) | Container(25021).IsUpdating]] |
+      [[Integer.IsGreater(Container(25022).NumItems,0) | Container(25022).IsUpdating]] |
+      [[Integer.IsGreater(Container(25023).NumItems,0) | Container(25023).IsUpdating]] |
+      [[Integer.IsGreater(Container(25024).NumItems,0) | Container(25024).IsUpdating]] |
+      [[Integer.IsGreater(Container(25025).NumItems,0) | Container(25025).IsUpdating]] |
+      [[Integer.IsGreater(Container(25026).NumItems,0) | Container(25026).IsUpdating]] |
+      [[Integer.IsGreater(Container(25027).NumItems,0) | Container(25027).IsUpdating]] |
+      [[Integer.IsGreater(Container(25028).NumItems,0) | Container(25028).IsUpdating]] |
+      [[Integer.IsGreater(Container(25029).NumItems,0) | Container(25029).IsUpdating]] |
+      [[Integer.IsGreater(Container(25030).NumItems,0) | Container(25030).IsUpdating]] |
+      [[Integer.IsGreater(Container(25031).NumItems,0) | Container(25031).IsUpdating]] |
+      [[Integer.IsGreater(Container(25032).NumItems,0) | Container(25032).IsUpdating]] |
+      [[Integer.IsGreater(Container(25033).NumItems,0) | Container(25033).IsUpdating]] |
+      [[Integer.IsGreater(Container(25034).NumItems,0) | Container(25034).IsUpdating]] |
+      [[Integer.IsGreater(Container(25035).NumItems,0) | Container(25035).IsUpdating]] |
+      [[Integer.IsGreater(Container(25036).NumItems,0) | Container(25036).IsUpdating]] |
+      [[Integer.IsGreater(Container(25037).NumItems,0) | Container(25037).IsUpdating]] |
+      [[Integer.IsGreater(Container(25038).NumItems,0) | Container(25038).IsUpdating]] |
+      [[Integer.IsGreater(Container(25039).NumItems,0) | Container(25039).IsUpdating]] |
+      [[Integer.IsGreater(Container(25040).NumItems,0) | Container(25040).IsUpdating]] |
+      [[Integer.IsGreater(Container(25041).NumItems,0) | Container(25041).IsUpdating]] |
+      [[Integer.IsGreater(Container(25042).NumItems,0) | Container(25042).IsUpdating]] |
+      [[Integer.IsGreater(Container(25043).NumItems,0) | Container(25043).IsUpdating]] |
+      [[Integer.IsGreater(Container(25044).NumItems,0) | Container(25044).IsUpdating]] |
+      [[Integer.IsGreater(Container(25045).NumItems,0) | Container(25045).IsUpdating]] |
+      [[Integer.IsGreater(Container(25046).NumItems,0) | Container(25046).IsUpdating]] |
+      [[Integer.IsGreater(Container(25047).NumItems,0) | Container(25047).IsUpdating]] |
+      [[Integer.IsGreater(Container(25048).NumItems,0) | Container(25048).IsUpdating]] |
+      [[Integer.IsGreater(Container(25049).NumItems,0) | Container(25049).IsUpdating]] |
+      [[Integer.IsGreater(Container(25050).NumItems,0) | Container(25050).IsUpdating]] |
+      [[Integer.IsGreater(Container(25051).NumItems,0) | Container(25051).IsUpdating]] |
+      [[Integer.IsGreater(Container(25052).NumItems,0) | Container(25052).IsUpdating]] |
+      [[Integer.IsGreater(Container(25053).NumItems,0) | Container(25053).IsUpdating]] |
+      [[Integer.IsGreater(Container(25054).NumItems,0) | Container(25054).IsUpdating]] |
+      [[Integer.IsGreater(Container(25055).NumItems,0) | Container(25055).IsUpdating]] |
+      [[Integer.IsGreater(Container(25056).NumItems,0) | Container(25056).IsUpdating]] |
+      [[Integer.IsGreater(Container(25057).NumItems,0) | Container(25057).IsUpdating]] |
+      [[Integer.IsGreater(Container(25058).NumItems,0) | Container(25058).IsUpdating]] |
+      [[Integer.IsGreater(Container(25059).NumItems,0) | Container(25059).IsUpdating]] |
+      [[Integer.IsGreater(Container(25060).NumItems,0) | Container(25060).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),music) + [
+      [[Integer.IsGreater(Container(7011).NumItems,0) | Container(7011).IsUpdating]] |
+      [[Integer.IsGreater(Container(7100).NumItems,0) | Container(7100).IsUpdating]] |
+      [[Integer.IsGreater(Container(7200).NumItems,0) | Container(7200).IsUpdating]] |
+      [[Integer.IsGreater(Container(7300).NumItems,0) | Container(7300).IsUpdating]] |
+      [[Integer.IsGreater(Container(7400).NumItems,0) | Container(7400).IsUpdating]] |
+      [[Integer.IsGreater(Container(7500).NumItems,0) | Container(7500).IsUpdating]] |
+      [[Integer.IsGreater(Container(7600).NumItems,0) | Container(7600).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),addons) + [
+      [[Integer.IsGreater(Container(8011).NumItems,0) | Container(8011).IsUpdating]] |
+      [[Integer.IsGreater(Container(8100).NumItems,0) | Container(8100).IsUpdating]] |
+      [[Integer.IsGreater(Container(8200).NumItems,0) | Container(8200).IsUpdating]] |
+      [[Integer.IsGreater(Container(8300).NumItems,0) | Container(8300).IsUpdating]] |
+      [[Integer.IsGreater(Container(8400).NumItems,0) | Container(8400).IsUpdating]] |
+      [[Integer.IsGreater(Container(8500).NumItems,0) | Container(8500).IsUpdating]] |
+      [[Integer.IsGreater(Container(8700).NumItems,0) | Container(8700).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),video) + [
+      [[Integer.IsGreater(Container(11011).NumItems,0) | Container(11011).IsUpdating]] |
+      [[Integer.IsGreater(Container(11100).NumItems,0) | Container(11100).IsUpdating]] |
+      [[Integer.IsGreater(Container(11200).NumItems,0) | Container(11200).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),livetv) + [
+      [[Integer.IsGreater(Container(12011).NumItems,0) | Container(12011).IsUpdating]] |
+      [[Integer.IsGreater(Container(12200).NumItems,0) | Container(12200).IsUpdating]] |
+      [[Integer.IsGreater(Container(12300).NumItems,0) | Container(12300).IsUpdating]] |
+      [[Integer.IsGreater(Container(12400).NumItems,0) | Container(12400).IsUpdating]] |
+      [[Integer.IsGreater(Container(12500).NumItems,0) | Container(12500).IsUpdating]] |
+      [[Integer.IsGreater(Container(12600).NumItems,0) | Container(12600).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),radio) + [
+      [[Integer.IsGreater(Container(13011).NumItems,0) | Container(13011).IsUpdating]] |
+      [[Integer.IsGreater(Container(13200).NumItems,0) | Container(13200).IsUpdating]] |
+      [[Integer.IsGreater(Container(13300).NumItems,0) | Container(13300).IsUpdating]] |
+      [[Integer.IsGreater(Container(13400).NumItems,0) | Container(13400).IsUpdating]] |
+      [[Integer.IsGreater(Container(13500).NumItems,0) | Container(13500).IsUpdating]] |
+      [[Integer.IsGreater(Container(13600).NumItems,0) | Container(13600).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),favorites) + [
+      [[Integer.IsGreater(Container(14100).NumItems,0) | Container(14100).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),weather) + [
+      [[Integer.IsGreater(Container(15011).NumItems,0) | Container(15011).IsUpdating]] |
+      [[Integer.IsGreater(Container(15200).NumItems,0) | Container(15200).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),musicvideos) + [
+      [[Integer.IsGreater(Container(16011).NumItems,0) | Container(16011).IsUpdating]] |
+      [[Integer.IsGreater(Container(16200).NumItems,0) | Container(16200).IsUpdating]] |
+      [[Integer.IsGreater(Container(16300).NumItems,0) | Container(16300).IsUpdating]] |
+      [[Integer.IsGreater(Container(16400).NumItems,0) | Container(16400).IsUpdating]] |
+      [[Integer.IsGreater(Container(16500).NumItems,0) | Container(16500).IsUpdating]] |
+      [[Integer.IsGreater(Container(16600).NumItems,0) | Container(16600).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),pictures) + [
+      [[Integer.IsGreater(Container(4100).NumItems,0) | Container(4100).IsUpdating]]
+    ]] |
+    [String.IsEqual(Container(9000).ListItem.Property(id),games) + [
+      [[Integer.IsGreater(Container(17200).NumItems,0) | Container(17200).IsUpdating]]
+    ]]
+  ]</expression>
+</includes>

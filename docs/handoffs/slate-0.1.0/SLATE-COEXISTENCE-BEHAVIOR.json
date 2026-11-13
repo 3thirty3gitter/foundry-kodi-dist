@@ -1,0 +1,7 @@
+[
+  "startup_splash.py global migration no-op",
+  "file_sources.py global migration no-op",
+  "experience.py global migration no-op",
+  "Slate pause preserves original metadata properties",
+  "Generated includes cannot target active original skin"
+]

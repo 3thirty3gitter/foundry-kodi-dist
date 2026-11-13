@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+  <expression name="FoundryMovieSubmenuBackdropVisible">$EXP[FoundryMovieSubmenuNativeContext] + $EXP[FoundryMovieSubmenuAvailable] + !Control.IsVisible(57) + !Player.HasVideo + !Player.HasAudio + String.IsEmpty(Skin.String(HomeFanart.path)) + String.IsEmpty(Skin.String(NimbusCustomBackground)) + [ListItem.IsFolder | [String.IsEmpty(ListItem.Art(fanart)) + String.IsEmpty(Window(Home).Property(foundry.slate.metadata.fanart))]]</expression>
+  <!-- Exact labels and explicit Movies context; provider IDs/URLs are never matched. -->
+  <expression name="FoundryMovieSubmenuNativeContext">Window.IsActive(videos) + !String.IsEqual(Container.FolderName,TV Shows) + !String.IsEqual(Container.FolderName,TV) + !String.IsEqual(Container.FolderName,Television) + !String.IsEqual(Container.PluginCategory,TV Shows) + !String.IsEqual(Container.PluginCategory,TV) + !String.IsEqual(Container.PluginCategory,Television) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(episodes) + !Container.Content(addons) + [Container.Content(movies) | [String.IsEqual(Window(Home).Property(foundry.slate.navigation.category),movies) + [Container.Content(videos) | Container.Content(files) | String.IsEmpty(Container.Content)]]]</expression>
+  <expression name="FoundryMovieSubmenuFocused">$EXP[FoundryMovieSubmenuNativeContext] + ListItem.IsFolder + !ListItem.IsParentFolder + [String.IsEqual(ListItem.Label,Trending) | String.IsEqual(ListItem.Label,Trending Recent) | String.IsEqual(ListItem.Label,Popular) | String.IsEqual(ListItem.Label,Popular Today) | String.IsEqual(ListItem.Label,Premieres) | String.IsEqual(ListItem.Label,Latest Releases) | String.IsEqual(ListItem.Label,Most Watched) | String.IsEqual(ListItem.Label,Most Favorited) | String.IsEqual(ListItem.Label,Top 10 Box Office) | String.IsEqual(ListItem.Label,Blockbusters) | String.IsEqual(ListItem.Label,In Theaters) | String.IsEqual(ListItem.Label,Up Coming) | String.IsEqual(ListItem.Label,Oscar Winners) | String.IsEqual(ListItem.Label,Genres) | String.IsEqual(ListItem.Label,Providers) | String.IsEqual(ListItem.Label,Languages) | String.IsEqual(ListItem.Label,Years) | String.IsEqual(ListItem.Label,Decades) | String.IsEqual(ListItem.Label,Certifications) | String.IsEqual(ListItem.Label,Because You Watched...) | String.IsEqual(ListItem.Label,Watched) | String.IsEqual(ListItem.Label,Recently Watched) | String.IsEqual(ListItem.Label,In Progress)]</expression>
+  <expression name="FoundryMovieSubmenuDirectory">$EXP[FoundryMovieSubmenuNativeContext] + [String.IsEqual(Container.FolderName,Trending) | String.IsEqual(Container.FolderName,Trending Recent) | String.IsEqual(Container.FolderName,Popular) | String.IsEqual(Container.FolderName,Popular Today) | String.IsEqual(Container.FolderName,Premieres) | String.IsEqual(Container.FolderName,Latest Releases) | String.IsEqual(Container.FolderName,Most Watched) | String.IsEqual(Container.FolderName,Most Favorited) | String.IsEqual(Container.FolderName,Top 10 Box Office) | String.IsEqual(Container.FolderName,Blockbusters) | String.IsEqual(Container.FolderName,In Theaters) | String.IsEqual(Container.FolderName,Up Coming) | String.IsEqual(Container.FolderName,Oscar Winners) | String.IsEqual(Container.FolderName,Genres) | String.IsEqual(Container.FolderName,Providers) | String.IsEqual(Container.FolderName,Languages) | String.IsEqual(Container.FolderName,Years) | String.IsEqual(Container.FolderName,Decades) | String.IsEqual(Container.FolderName,Certifications) | String.IsEqual(Container.FolderName,Because You Watched...) | String.IsEqual(Container.FolderName,Watched) | String.IsEqual(Container.FolderName,Recently Watched) | String.IsEqual(Container.FolderName,In Progress)]</expression>
+  <expression name="FoundryMovieSubmenuCatalog">String.IsEqual(Window.Property(catalog.section),Movies) + [String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Trending) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Trending Recent) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Popular) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Popular Today) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Premieres) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Latest Releases) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Most Watched) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Most Favorited) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Top 10 Box Office) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Blockbusters) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),In Theaters) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Up Coming) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Oscar Winners) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Genres) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Providers) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Languages) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Years) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Decades) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Certifications) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Because You Watched...) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Watched) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Recently Watched) | String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),In Progress)]</expression>
+  <!-- Parent entry on the Movies category page uses its own matching Back plate.
+       Inside a known submenu, retain that directory's existing category plate. -->
+  <expression name="FoundryMovieSubmenuBack">$EXP[FoundryMovieSubmenuNativeContext] + ListItem.IsParentFolder + String.IsEqual(Container.FolderName,Movies)</expression>
+  <expression name="FoundryMovieSubmenuAvailable">$EXP[FoundryMovieSubmenuCatalog] | $EXP[FoundryMovieSubmenuFocused] | $EXP[FoundryMovieSubmenuDirectory] | $EXP[FoundryMovieSubmenuBack]</expression>
+  <variable name="FoundryMovieSubmenuLabel">
+    <!-- Helper supplies verified canonical Movies context and restores it on Back. -->
+    <value condition="$EXP[FoundryMovieSubmenuCatalog]">$INFO[Window.Property(foundry.slate.movie_submenu_label)]</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused]">$INFO[ListItem.Label]</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory]">$INFO[Container.FolderName]</value>
+    <value />
+  </variable>
+  <variable name="FoundryMovieSubmenuWallpaper">
+    <value condition="$EXP[FoundryMovieSubmenuBack]">special://skin/media/foundry-navigation/movies-back.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Trending)">special://skin/media/foundry-movie-submenus/trending.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Trending Recent)">special://skin/media/foundry-movie-submenus/trending-recent.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Popular)">special://skin/media/foundry-movie-submenus/popular.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Popular Today)">special://skin/media/foundry-movie-submenus/popular-today.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Premieres)">special://skin/media/foundry-movie-submenus/premieres.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Latest Releases)">special://skin/media/foundry-movie-submenus/latest-releases.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Most Watched)">special://skin/media/foundry-movie-submenus/most-watched.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Most Favorited)">special://skin/media/foundry-movie-submenus/most-favorited.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Top 10 Box Office)">special://skin/media/foundry-movie-submenus/top-10-box-office.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Blockbusters)">special://skin/media/foundry-movie-submenus/blockbusters.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),In Theaters)">special://skin/media/foundry-movie-submenus/in-theaters.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Up Coming)">special://skin/media/foundry-movie-submenus/up-coming.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Oscar Winners)">special://skin/media/foundry-movie-submenus/oscar-winners.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Genres)">special://skin/media/foundry-movie-submenus/genres.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Providers)">special://skin/media/foundry-movie-submenus/providers.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Languages)">special://skin/media/foundry-movie-submenus/languages.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Years)">special://skin/media/foundry-movie-submenus/years.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Decades)">special://skin/media/foundry-movie-submenus/decades.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Certifications)">special://skin/media/foundry-movie-submenus/certifications.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Because You Watched...)">special://skin/media/foundry-movie-submenus/because-you-watched.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Watched)">special://skin/media/foundry-movie-submenus/watched.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),Recently Watched)">special://skin/media/foundry-movie-submenus/recently-watched.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuCatalog] + String.IsEqual(Window.Property(foundry.slate.movie_submenu_label),In Progress)">special://skin/media/foundry-movie-submenus/in-progress.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Trending)">special://skin/media/foundry-movie-submenus/trending.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Trending Recent)">special://skin/media/foundry-movie-submenus/trending-recent.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Popular)">special://skin/media/foundry-movie-submenus/popular.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Popular Today)">special://skin/media/foundry-movie-submenus/popular-today.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Premieres)">special://skin/media/foundry-movie-submenus/premieres.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Latest Releases)">special://skin/media/foundry-movie-submenus/latest-releases.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Most Watched)">special://skin/media/foundry-movie-submenus/most-watched.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Most Favorited)">special://skin/media/foundry-movie-submenus/most-favorited.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Top 10 Box Office)">special://skin/media/foundry-movie-submenus/top-10-box-office.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Blockbusters)">special://skin/media/foundry-movie-submenus/blockbusters.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,In Theaters)">special://skin/media/foundry-movie-submenus/in-theaters.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Up Coming)">special://skin/media/foundry-movie-submenus/up-coming.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Oscar Winners)">special://skin/media/foundry-movie-submenus/oscar-winners.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Genres)">special://skin/media/foundry-movie-submenus/genres.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Providers)">special://skin/media/foundry-movie-submenus/providers.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Languages)">special://skin/media/foundry-movie-submenus/languages.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Years)">special://skin/media/foundry-movie-submenus/years.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Decades)">special://skin/media/foundry-movie-submenus/decades.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Certifications)">special://skin/media/foundry-movie-submenus/certifications.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Because You Watched...)">special://skin/media/foundry-movie-submenus/because-you-watched.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Watched)">special://skin/media/foundry-movie-submenus/watched.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,Recently Watched)">special://skin/media/foundry-movie-submenus/recently-watched.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuFocused] + String.IsEqual(ListItem.Label,In Progress)">special://skin/media/foundry-movie-submenus/in-progress.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Trending)">special://skin/media/foundry-movie-submenus/trending.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Trending Recent)">special://skin/media/foundry-movie-submenus/trending-recent.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Popular)">special://skin/media/foundry-movie-submenus/popular.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Popular Today)">special://skin/media/foundry-movie-submenus/popular-today.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Premieres)">special://skin/media/foundry-movie-submenus/premieres.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Latest Releases)">special://skin/media/foundry-movie-submenus/latest-releases.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Most Watched)">special://skin/media/foundry-movie-submenus/most-watched.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Most Favorited)">special://skin/media/foundry-movie-submenus/most-favorited.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Top 10 Box Office)">special://skin/media/foundry-movie-submenus/top-10-box-office.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Blockbusters)">special://skin/media/foundry-movie-submenus/blockbusters.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,In Theaters)">special://skin/media/foundry-movie-submenus/in-theaters.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Up Coming)">special://skin/media/foundry-movie-submenus/up-coming.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Oscar Winners)">special://skin/media/foundry-movie-submenus/oscar-winners.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Genres)">special://skin/media/foundry-movie-submenus/genres.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Providers)">special://skin/media/foundry-movie-submenus/providers.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Languages)">special://skin/media/foundry-movie-submenus/languages.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Years)">special://skin/media/foundry-movie-submenus/years.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Decades)">special://skin/media/foundry-movie-submenus/decades.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Certifications)">special://skin/media/foundry-movie-submenus/certifications.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Because You Watched...)">special://skin/media/foundry-movie-submenus/because-you-watched.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Watched)">special://skin/media/foundry-movie-submenus/watched.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,Recently Watched)">special://skin/media/foundry-movie-submenus/recently-watched.png</value>
+    <value condition="$EXP[FoundryMovieSubmenuDirectory] + String.IsEqual(Container.FolderName,In Progress)">special://skin/media/foundry-movie-submenus/in-progress.png</value>
+    <value />
+  </variable>
+  <!-- Fallback only: existing selected-title fanart still renders above this image. -->
+  <variable name="FoundryMovieSubmenuBase">
+    <value condition="$EXP[FoundryMovieSubmenuAvailable] + !String.IsEmpty(Skin.String(HomeFanart.path))">$INFO[Skin.String(HomeFanart.path)]movies$INFO[Skin.String(HomeFanart.ext)]</value>
+    <value condition="$EXP[FoundryMovieSubmenuAvailable] + !String.IsEmpty(Skin.String(NimbusCustomBackground))">$INFO[Skin.String(NimbusCustomBackground)]</value>
+    <value condition="$EXP[FoundryMovieSubmenuAvailable]">$VAR[FoundryMovieSubmenuWallpaper]</value>
+    <value>streampilot/catalog-base.png</value>
+  </variable>
+  <variable name="FoundryNativeLoadingBackdrop">
+    <value condition="$EXP[FoundryMovieSubmenuAvailable]">$VAR[FoundryMovieSubmenuBase]</value>
+    <value condition="String.IsEqual(Window(Home).Property(foundry.slate.navigation.category),movies) + !String.IsEmpty(Skin.String(HomeFanart.path))">$INFO[Skin.String(HomeFanart.path)]movies$INFO[Skin.String(HomeFanart.ext)]</value>
+    <value condition="!String.IsEmpty(Skin.String(NimbusCustomBackground))">$INFO[Skin.String(NimbusCustomBackground)]</value>
+    <value condition="String.IsEqual(Window(Home).Property(foundry.slate.navigation.category),movies)">resource://resource.images.foundry.wallpapers/movies.png</value>
+    <value>streampilot/catalog-base.png</value>
+  </variable>
+  <variable name="FoundryCatalogFirstPaintBackdrop">
+    <value condition="String.IsEmpty(Window.Property(catalog.section))">$VAR[FoundryNativeLoadingBackdrop]</value>
+    <value>$VAR[FoundryMovieSubmenuBase]</value>
+  </variable>
+  <include name="FoundryMovieSubmenuBackdrop">
+    <control type="image">
+      <description>Approved Movies submenu wallpaper</description>
+      <left>0</left><top>0</top><width>100%</width><height>100%</height>
+      <aspectratio>keep</aspectratio>
+      <fadetime>450</fadetime>
+      <texture background="true">$VAR[FoundryMovieSubmenuWallpaper]</texture>
+      <visible>$EXP[FoundryMovieSubmenuBackdropVisible]</visible>
+    </control>
+  </include>
+</includes>

@@ -1,0 +1,189 @@
+{
+  "schema_version": 2,
+  "artwork_set": "Foundry approved rich pairs, corrected widget version 1",
+  "approval": "Owner-approved combined rich wallpaper and lighter shorter OSD publication, 2026-11-01",
+  "resolution_note": "Exact approved 1672x941 source images; no claim of native 4K detail. All are copied unchanged.",
+  "widget_group_scale": 0.55,
+  "registration_note": "Background clean plates are visually registered, not pixel-identical. The skin keeps fixed full-frame fit geometry and a 450ms filename crossfade; it does not zoom, crop or rearrange artwork.",
+  "previews": [
+    {
+      "library_file_id": "libfile_a3c99e19f0d481919c054b0c4f237fea",
+      "version": 1
+    },
+    {
+      "library_file_id": "libfile_3bb5d4dc803c81919a1f1be66fb9f16e",
+      "version": 1
+    }
+  ],
+  "mode": "widget",
+  "files": {
+    "movies": {
+      "library_file_id": "libfile_66dd91dc2d8c81919eef14f539827cd3",
+      "current_version_number": 1,
+      "sha256": "ce9c60c230cd2a64cc6b7cfbe77d439e963996f93ffaca8cc7952c7b9794e142",
+      "file_id": "file_00000000228c81f5b4c70d8187a44907",
+      "version": 1,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "movies.png"
+    },
+    "addons": {
+      "library_file_id": "libfile_aeb1dea70530819194c198282f60bcc8",
+      "current_version_number": 1,
+      "sha256": "ba4b1ed3d018c51cd351bfd06ff1bd8b94ca393635b798b033a88aa53ffae8ea",
+      "file_id": "file_00000000775881f5958cc7476ef5ceac",
+      "version": 1,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "addons.png"
+    },
+    "settings": {
+      "library_file_id": "libfile_1d921b0d8df48191ba3335beaa5f6113",
+      "current_version_number": 1,
+      "sha256": "2a58e88d1f5b39a2280653dda8b37b760fcec0e958d9913ba73fd9d4ae0dc2e2",
+      "file_id": "file_000000003f1081f5ae5c4620b34be743",
+      "version": 1,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "settings.png"
+    },
+    "home": {
+      "library_file_id": "libfile_d565e1ef6ea08191bc3dc1dc7e95542a",
+      "current_version_number": 1,
+      "sha256": "3a5a3ecbf2880f96a4a5f707c73e6694ac0d264b1d8738ba58a7565cf7a29f92",
+      "file_id": "file_000000005b4881f5bc428e6517db24e7",
+      "version": 1,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "home.png"
+    },
+    "tvshows": {
+      "library_file_id": "libfile_64deb4effbe88191acef6f41da92b9a6",
+      "current_version_number": 1,
+      "sha256": "3f081b61041b20983362d7ad374aadc1e34337a9402b6c1f2a8b3819f119fcbe",
+      "file_id": "file_00000000e26881f5a15ffa7cfb08da8d",
+      "version": 1,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "tvshows.png"
+    },
+    "music": {
+      "library_file_id": "libfile_b17c2fd63bb08191b84243416399ae42",
+      "current_version_number": 1,
+      "sha256": "06da6f08e01c4ca95543ed3d3ee6f7e7071d9c0c17f9031200f31a95c7fa257b",
+      "file_id": "file_00000000a11481f5aff2194feb67d28c",
+      "version": 1,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "music.png"
+    },
+    "musicvideos": {
+      "library_file_id": "libfile_539954b936d48191b586e118e6edf130",
+      "current_version_number": 1,
+      "sha256": "3292f416a8fb4ce9fe194f3c89bbb8aad681362a119d12ab5be04d84fc1c2c89",
+      "file_id": "file_00000000f7a081f59dadac787771c25c",
+      "version": 1,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "musicvideos.png"
+    },
+    "livetv": {
+      "library_file_id": "libfile_429921da04f48191a45a55792213b2cf",
+      "current_version_number": 1,
+      "sha256": "634138083022f67a853f69df4ac8f24847b133fac9b9752393377a3224015a96",
+      "file_id": "file_00000000d13c81f5bd4fd49c9c99659e",
+      "version": 1,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "livetv.png"
+    },
+    "radio": {
+      "library_file_id": "libfile_7aceb4de6b888191873651ced0717fa0",
+      "current_version_number": 1,
+      "sha256": "79c1775b4bf38c29eef5e67fe5482ec358ca63d705405b944fc59ae4fc5949dd",
+      "file_id": "file_000000003f3081f5914178a784f1fb02",
+      "version": 1,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "radio.png"
+    },
+    "games": {
+      "library_file_id": "libfile_232e568b75188191910f1684e4f9d0c2",
+      "current_version_number": 1,
+      "sha256": "dc3c1c0121a0c38ec95bc979b729fd771fb3f69ea34a7837dd9688d5c4443a0f",
+      "file_id": "file_00000000ae0481f5a1e1179b87735563",
+      "version": 1,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "games.png"
+    },
+    "pictures": {
+      "library_file_id": "libfile_fa377769b0f88191ab3ae00075b03f9d",
+      "current_version_number": 1,
+      "sha256": "ca9f49671ab76ea3796132bc38be17b5dbfcc0a4bdff801c1add9cba90a9a1ab",
+      "file_id": "file_00000000b9bc81f591451e3e673d67ef",
+      "version": 1,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "pictures.png"
+    },
+    "video": {
+      "library_file_id": "libfile_bc87db981838819184350a7b8f3eda84",
+      "current_version_number": 1,
+      "sha256": "73accf1af0214cf8d62e0179375f81d5f216914fdd2031dc3a7c37ceaca4def4",
+      "file_id": "file_0000000064f081f5beef6f6b06eb8b07",
+      "version": 1,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "video.png"
+    },
+    "favorites": {
+      "library_file_id": "libfile_fd936baa3a3c81919fa16c7ac5f1f1e0",
+      "current_version_number": 1,
+      "sha256": "455bbc94364e9daf9a3a0f638eccc54fd79ae6b3f83bed2b362fc74622746fd4",
+      "file_id": "file_0000000013d481f5b8078bd166fed887",
+      "version": 1,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "favorites.png"
+    },
+    "weather": {
+      "library_file_id": "libfile_03ddaf0962c88191bc3ac877f4ad4e63",
+      "current_version_number": 1,
+      "sha256": "1cabcd0deea3aac6fa0da7e608e74a21fcb8b883dffd13a27467a4e96c2552de",
+      "file_id": "file_00000000392881f5bfaa2d129254a152",
+      "version": 1,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "filename": "weather.png"
+    }
+  }
+}

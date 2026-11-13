@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.foundry.slate.helper" name="Foundry Slate Helper" version="0.1.0" provider-name="3Thirty3 / Ivar Brandt">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.requests" version="2.19.1"/>
+        <import addon="script.module.pil" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.python.library" library="resources/lib/default.py"/>
+    <extension point="xbmc.service" library="resources/lib/service.py" start="startup" />
+    <extension point="xbmc.addon.metadata">
+        <news />
+        <platform>all</platform>
+        <license>GPL-2.0-only, CC BY-SA 4.0 (artwork)</license>
+        <forum />
+        <source>https://github.com/3thirty3gitter/script.foundry.slate.helper</source>
+        <assets>
+            <icon>resources/media/icon.png</icon>
+            <fanart>resources/media/fanart.png</fanart>
+        </assets>
+        <description lang="en_GB">Foundry Helper for the Foundry Skin. Forked from Nimbus Helper by Ivar Brandt.</description>
+        <description lang="en_NZ">Foundry Helper for the Foundry Skin. Forked from Nimbus Helper by Ivar Brandt.</description>
+        <description lang="en_US">Foundry Helper for the Foundry Skin. Forked from Nimbus Helper by Ivar Brandt.</description>
+    </extension>
+</addon>

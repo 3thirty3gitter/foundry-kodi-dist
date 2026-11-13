@@ -1,0 +1,34 @@
+Foundry 1.1.3
+- Port StreamPilot VOD and live-TV OSDs with original format badges, artwork, clock and remote navigation.
+- Restore the 14 original category wallpapers through a native automatic image-resource dependency.
+
+Foundry Helper: Latest: v1.1.0 [B]|[/B] Installed: v$INFO[System.AddonVersion(script.foundry.slate.helper)]
+
+[B][COLOR FFFFFFFF]Version $INFO[System.AddonVersion(skin.foundry.slate)][/COLOR][/B]
+- Restore all 14 original Foundry 4K wallpapers, unchanged from the original project
+- Render the selected category full-screen in both home layouts, with or without blur
+- Keep category wallpapers visible after an unsuccessful trailer request
+- Install the Foundry Wallpapers resource automatically with the skin
+
+[B][COLOR FFFFFFFF]Version 1.1.1[/COLOR][/B]
+- Translucent navy message cards with shadows, theme accents and brighter text
+- Dialog backgrounds render before any Home settings initialize
+
+[B][COLOR FFFFFFFF]Version 1.1.0[/COLOR][/B]
+- Separate logo, action buttons and scrolling menu to prevent header overlap
+- Menu-specific backgrounds and accents, with focused widget artwork taking priority
+- Default SlyGuy trailer integration, including items without a scraped trailer URL
+- Apply Android TV UI Sounds once per profile and preserve later user changes
+- Foundry Build 1.2.0 installs the standard add-ons through Kodi's dependency manager
+- Requires script.foundry.slate.helper (>= 1.1.0)
+
+[B][COLOR FFFFFFFF]Version 1.0.1[/COLOR][/B]
+- All 12 Foundry repositories now ship inside the skin package (extras/repos)
+  and install automatically on skin load - no download needed
+- Requires script.foundry.slate.helper (>= 1.0.2)
+
+[B][COLOR FFFFFFFF]Version 1.0.0[/COLOR][/B]
+- Initial Foundry release re-based onto Nimbus (v0.1.43) by Ivar Brandt
+- Replaces the Estuary-based Foundry build
+- Foundry development features restored
+

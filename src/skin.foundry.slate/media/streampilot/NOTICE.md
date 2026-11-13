@@ -1,0 +1,1 @@
+Control icons use the original Material Icons paths (Google, Apache-2.0), also used by StreamPilot Compose Icons.Filled. Source: https://github.com/google/material-design-icons/tree/master/src . Panel geometry follows CompactVodOsd.kt and PlayerScreen at StreamPilot commit 9f746fc90af40128e5fcfba60056ada99770b796.

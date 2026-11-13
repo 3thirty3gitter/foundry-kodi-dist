@@ -1,0 +1,9 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.gif binary
+*.wav binary
+*.ttf binary
+*.xbt binary
+resources/foundry-header-media-center-source.json -text
+* -text

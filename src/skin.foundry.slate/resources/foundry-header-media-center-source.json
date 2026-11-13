@@ -1,0 +1,102 @@
+{
+  "library_png": "libfile_197f6e318f088191abe80423b35e16b0",
+  "library_svg": "libfile_5c8f56955f8c8191819905a7f478da41",
+  "wording": "MEDIA CENTER",
+  "png_sha256": "e60c91fa4083614177c6600be56a47257c1bf2be384f060df14d6c2cdded1f99",
+  "svg_qa": {
+    "wording": "MEDIA CENTER",
+    "canvas": [
+      760,
+      230
+    ],
+    "native_png": [
+      760,
+      230
+    ],
+    "highres_png": [
+      3040,
+      920
+    ],
+    "tagline_x_bounds": [
+      290.30496374158344,
+      659.75
+    ],
+    "regular_gap": 18.077426256382978,
+    "positions": [
+      {
+        "letter": "M",
+        "x": 290.30496374158344,
+        "width": 18.707146503656872
+      },
+      {
+        "letter": "E",
+        "x": 327.0895365016233,
+        "width": 15.247412520994258
+      },
+      {
+        "letter": "D",
+        "x": 360.4143752790005,
+        "width": 17.2
+      },
+      {
+        "letter": "I",
+        "x": 395.6918015353835,
+        "width": 2.75
+      },
+      {
+        "letter": "A",
+        "x": 416.51922779176647,
+        "width": 18.204104474045224
+      },
+      {
+        "letter": "C",
+        "x": 470.87818477857763,
+        "width": 17.200000000000003
+      },
+      {
+        "letter": "E",
+        "x": 506.1556110349606,
+        "width": 15.247412520994258
+      },
+      {
+        "letter": "N",
+        "x": 539.4804498123378,
+        "width": 17.85
+      },
+      {
+        "letter": "T",
+        "x": 575.4078760687208,
+        "width": 15.87238761435773
+      },
+      {
+        "letter": "E",
+        "x": 609.3576899394616,
+        "width": 15.247412520994258
+      },
+      {
+        "letter": "R",
+        "x": 642.6825287168388,
+        "width": 17.067471283161204
+      }
+    ],
+    "reused_letters": "M E A T R",
+    "reconstructed_letters": "D I C N",
+    "source": "foundry-trace/Foundry-header-restored.svg",
+    "changed_svg_scope": "tagline only, plus title/description metadata",
+    "independent_qa": "Production passed; preview clipping corrected and re-inspected.",
+    "same_renderer_changed_pixel_bounds_inclusive": [
+      290,
+      165,
+      659,
+      185
+    ],
+    "original_image_element_identical": true,
+    "original_main_path_identical": true
+  },
+  "display": {
+    "left": 60,
+    "top": 40,
+    "width": 380,
+    "height": 115
+  }
+}

@@ -1,0 +1,575 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<includes>
+  <variable name="StreamPilotOSDAccent">
+    <value condition="!String.IsEmpty(Window(home).Property(foundry.slate.osd.accent))">$INFO[Window(home).Property(foundry.slate.osd.accent)]</value>
+    <value>FF182A3B</value>
+  </variable>
+  <variable name="StreamPilotOSDShade">
+    <value condition="!String.IsEmpty(Window(home).Property(foundry.slate.osd.shade))">$INFO[Window(home).Property(foundry.slate.osd.shade)]</value>
+    <value>FF070D12</value>
+  </variable>
+  <variable name="StreamPilotOSDPoster">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.poster))">$INFO[Window(Home).Property(foundry.slate.player.poster)]</value>
+    <value condition="!String.IsEmpty(Player.Art(poster))">$INFO[Player.Art(poster)]</value>
+    <value condition="!String.IsEmpty(Player.Art(tvshow.poster))">$INFO[Player.Art(tvshow.poster)]</value>
+    <value>$INFO[Player.Icon]</value>
+  </variable>
+  <variable name="StreamPilotOSDLogo">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.clearlogo))">$INFO[Window(Home).Property(foundry.slate.player.clearlogo)]</value>
+    <value condition="!String.IsEmpty(Player.Art(clearlogo))">$INFO[Player.Art(clearlogo)]</value>
+    <value>$INFO[Player.Art(tvshow.clearlogo)]</value>
+  </variable>
+  <variable name="StreamPilotOSDTitle">
+    <value condition="!String.IsEmpty(VideoPlayer.Title)">$INFO[VideoPlayer.Title]</value>
+    <value>$INFO[Player.Title]</value>
+  </variable>
+  <variable name="StreamPilotOSDPauseIcon">
+    <value condition="Player.Paused | Player.Forwarding | Player.Rewinding">streampilot/play_arrow.png</value>
+    <value>streampilot/pause.png</value>
+  </variable>
+  <variable name="StreamPilotOSDResolution">
+    <value condition="String.IsEqual(VideoPlayer.VideoResolution,4K)">resource://resource.images.foundry.osd/resolution_4k_supplied.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.VideoResolution,2160)">resource://resource.images.foundry.osd/resolution_4k_supplied.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.VideoResolution,1080)">resource://resource.images.foundry.osd/resolution_fhd_supplied.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.VideoResolution,720)">resource://resource.images.foundry.osd/resolution_hd_supplied.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.VideoResolution,576)">resource://resource.images.foundry.osd/resolution_sd_supplied.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.VideoResolution,540)">resource://resource.images.foundry.osd/resolution_sd_supplied.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.VideoResolution,480)">resource://resource.images.foundry.osd/resolution_sd_supplied.jpg</value>
+    <value />
+  </variable>
+  <variable name="StreamPilotOSDChannels">
+    <value condition="String.IsEqual(VideoPlayer.AudioChannels,2)">resource://resource.images.foundry.osd/audio_2_0.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.AudioChannels,6)">resource://resource.images.foundry.osd/audio_5_1.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.AudioChannels,8)">resource://resource.images.foundry.osd/audio_7_1.jpg</value>
+    <value />
+  </variable>
+  <variable name="StreamPilotOSDAudio">
+    <value condition="String.IsEqual(VideoPlayer.AudioCodec,eac3-joc)">resource://resource.images.foundry.osd/audio_dolby_atmos.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.AudioCodec,truehd)">resource://resource.images.foundry.osd/audio_dolby_truehd.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.AudioCodec,eac3)">resource://resource.images.foundry.osd/audio_dolby_digital_plus.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.AudioCodec,ac3)">resource://resource.images.foundry.osd/audio_dolby_digital.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.AudioCodec,dtshd_ma)">resource://resource.images.foundry.osd/audio_dts_hd.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.AudioCodec,dtshd_hra)">resource://resource.images.foundry.osd/audio_dts_hd.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.AudioCodec,dca_ma)">resource://resource.images.foundry.osd/audio_dts_hd.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.AudioCodec,dca_hra)">resource://resource.images.foundry.osd/audio_dts_hd.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.AudioCodec,flac)">resource://resource.images.foundry.osd/audio_flac.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.AudioCodec,aac)">resource://resource.images.foundry.osd/audio_aac.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.AudioCodec,aac_latm)">resource://resource.images.foundry.osd/audio_aac.jpg</value>
+    <value condition="String.IsEqual(VideoPlayer.AudioCodec,pcm)">resource://resource.images.foundry.osd/audio_pcm.jpg</value>
+    <value condition="String.StartsWith(VideoPlayer.AudioCodec,pcm_)">resource://resource.images.foundry.osd/audio_pcm.jpg</value>
+    <value />
+  </variable>
+  <variable name="StreamPilotOSDAudioLabel">
+    <value condition="String.IsEqual(VideoPlayer.AudioCodec,dts) | String.IsEqual(VideoPlayer.AudioCodec,dca)">DTS</value>
+    <value condition="String.IsEqual(VideoPlayer.AudioCodec,ac4)">AC-4</value>
+    <value condition="String.IsEqual(VideoPlayer.AudioCodec,mp3) | String.IsEqual(VideoPlayer.AudioCodec,mp2)">MPEG</value>
+    <value>Audio</value>
+  </variable>
+  <variable name="StreamPilotOSDLiveStart">
+    <value condition="VideoPlayer.HasEPG">$INFO[PVR.EpgEventStartTime]</value>
+    <value>LIVE</value>
+  </variable>
+  <variable name="StreamPilotOSDLiveEnd">
+    <value condition="VideoPlayer.HasEPG">$INFO[PVR.EpgEventFinishTime]</value>
+    <value />
+  </variable>
+  <variable name="FoundryPlaybackStudioLogo">
+    <value condition="$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.studiologo))">$INFO[Window(Home).Property(foundry.slate.player.studiologo)]</value>
+    <value condition="!String.IsEmpty(Player.Art(studiologo))">$INFO[Player.Art(studiologo)]</value>
+    <value condition="!String.IsEmpty(Player.Art(studio.logo))">$INFO[Player.Art(studio.logo)]</value>
+    <value condition="!String.IsEmpty(Player.Art(tvshow.studiologo))">$INFO[Player.Art(tvshow.studiologo)]</value>
+    <value />
+  </variable>
+  <include name="FoundryPlaybackStudioLogo">
+    <control type="image">
+      <description>Current playback studio logo at the top right</description>
+      <right>60</right>
+      <top>40</top>
+      <width>320</width>
+      <height>110</height>
+      <aspectratio align="right" aligny="center">keep</aspectratio>
+      <visible>Player.HasVideo + !VideoPlayer.Content(livetv) + [[$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.studiologo))] | !String.IsEmpty(Player.Art(studiologo)) | !String.IsEmpty(Player.Art(studio.logo)) | !String.IsEmpty(Player.Art(tvshow.studiologo))]</visible>
+      <texture background="true">$VAR[FoundryPlaybackStudioLogo]</texture>
+    </control>
+  </include>
+  <variable name="FoundryOSDPlaybackTime">
+    <value condition="Player.Seeking">$INFO[Player.SeekTime(h:mm:ss)]  /  $INFO[Player.Duration(h:mm:ss)]</value>
+    <value>$INFO[Player.Time(h:mm:ss)]  /  $INFO[Player.Duration(h:mm:ss)]</value>
+  </variable>
+  <variable name="FoundryOSDLiveSeekTime">
+    <value condition="Player.Seeking + VideoPlayer.HasEPG">$INFO[PVR.EpgEventSeekTime]$INFO[PVR.EpgEventDuration, / ]</value>
+    <value condition="VideoPlayer.HasEPG">$INFO[PVR.EpgEventElapsedTime]$INFO[PVR.EpgEventDuration, / ]</value>
+    <value>$VAR[FoundryOSDPlaybackTime]</value>
+  </variable>
+  <include name="StreamPilotFormatBadges">
+    <control type="grouplist">
+      <height>54</height>
+      <orientation>horizontal</orientation>
+      <itemgap>10</itemgap>
+      <aligny>center</aligny>
+      <control type="image">
+        <width>76</width>
+        <height>54</height>
+        <aspectratio>keep</aspectratio>
+        <visible>!String.IsEmpty(VideoPlayer.VideoResolution)</visible>
+        <texture>$VAR[StreamPilotOSDResolution]</texture>
+      </control>
+      <control type="image">
+        <width>76</width>
+        <height>54</height>
+        <aspectratio>keep</aspectratio>
+        <visible>String.IsEqual(VideoPlayer.AudioChannels,2) | String.IsEqual(VideoPlayer.AudioChannels,6) | String.IsEqual(VideoPlayer.AudioChannels,8)</visible>
+        <texture>$VAR[StreamPilotOSDChannels]</texture>
+      </control>
+      <control type="image">
+        <width>76</width>
+        <height>54</height>
+        <aspectratio>keep</aspectratio>
+        <visible>!String.IsEmpty(VideoPlayer.AudioCodec) + [String.IsEqual(VideoPlayer.AudioCodec,eac3-joc) | String.IsEqual(VideoPlayer.AudioCodec,truehd) | String.IsEqual(VideoPlayer.AudioCodec,eac3) | String.IsEqual(VideoPlayer.AudioCodec,ac3) | String.IsEqual(VideoPlayer.AudioCodec,dtshd_ma) | String.IsEqual(VideoPlayer.AudioCodec,dtshd_hra) | String.IsEqual(VideoPlayer.AudioCodec,dca_ma) | String.IsEqual(VideoPlayer.AudioCodec,dca_hra) | String.IsEqual(VideoPlayer.AudioCodec,flac) | String.IsEqual(VideoPlayer.AudioCodec,aac) | String.IsEqual(VideoPlayer.AudioCodec,aac_latm) | String.IsEqual(VideoPlayer.AudioCodec,pcm) | String.StartsWith(VideoPlayer.AudioCodec,pcm_)]</visible>
+        <texture>$VAR[StreamPilotOSDAudio]</texture>
+      </control>
+      <control type="label">
+        <font>SPTime</font>
+        <textcolor>FFB9CBD7</textcolor>
+        <height>54</height>
+        <aligny>center</aligny>
+        <width>76</width>
+        <visible>!String.IsEmpty(VideoPlayer.AudioCodec) + ![String.IsEqual(VideoPlayer.AudioCodec,eac3-joc) | String.IsEqual(VideoPlayer.AudioCodec,truehd) | String.IsEqual(VideoPlayer.AudioCodec,eac3) | String.IsEqual(VideoPlayer.AudioCodec,ac3) | String.IsEqual(VideoPlayer.AudioCodec,dtshd_ma) | String.IsEqual(VideoPlayer.AudioCodec,dtshd_hra) | String.IsEqual(VideoPlayer.AudioCodec,dca_ma) | String.IsEqual(VideoPlayer.AudioCodec,dca_hra) | String.IsEqual(VideoPlayer.AudioCodec,flac) | String.IsEqual(VideoPlayer.AudioCodec,aac) | String.IsEqual(VideoPlayer.AudioCodec,aac_latm) | String.IsEqual(VideoPlayer.AudioCodec,pcm) | String.StartsWith(VideoPlayer.AudioCodec,pcm_)]</visible>
+        <label>$VAR[StreamPilotOSDAudioLabel]</label>
+      </control>
+    </control>
+  </include>
+  <include name="StreamPilotVODCard">
+    <control type="group">
+      <control type="image">
+        <left>-24</left>
+        <top>-24</top>
+        <width>1848</width>
+        <height>250</height>
+        <texture>streampilot/vod-shadow.png</texture>
+      </control>
+      <control type="image">
+        <left>0</left>
+        <top>0</top>
+        <width>1800</width>
+        <height>202</height>
+        <texture colordiffuse="$VAR[StreamPilotOSDShade]">streampilot/vod-panel.png</texture>
+      </control>
+      <left>60</left>
+      <right>60</right>
+      <bottom>44</bottom>
+      <height>202</height>
+      <animation effect="slide" start="0,50" end="0,0" time="150" tween="cubic" easing="out">WindowOpen</animation>
+      <animation effect="fade" start="100" end="0" time="160">WindowClose</animation>
+      <control type="image">
+        <left>36</left>
+        <top>-92</top>
+        <width>180</width>
+        <height>270</height>
+        <aspectratio>scale</aspectratio>
+        <texture diffuse="streampilot/poster-mask.png" fallback="DefaultVideo.png">$VAR[StreamPilotOSDPoster]</texture>
+      </control>
+      <control type="group">
+        <left>272</left>
+        <right>508</right>
+        <top>9</top>
+        <height>184</height>
+        <control type="image">
+          <left>0</left>
+          <top>0</top>
+          <width>520</width>
+          <height>60</height>
+          <aspectratio>keep</aspectratio>
+          <visible>!String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearlogo)) | [$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.clearlogo))]</visible>
+          <texture>$VAR[StreamPilotOSDLogo]</texture>
+        </control>
+        <control type="label">
+          <font>SPTitle</font>
+          <textcolor>FFFFFFFF</textcolor>
+          <height>60</height>
+          <aligny>center</aligny>
+          <left>0</left>
+          <top>0</top>
+          <width>100%</width>
+          <scroll>True</scroll>
+          <visible>![!String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearlogo)) | [$EXP[FoundryPlayerCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.player.clearlogo))]]</visible>
+          <label>$VAR[StreamPilotOSDTitle]</label>
+        </control>
+        <control type="group">
+          <left>0</left>
+          <top>74</top>
+          <width>100%</width>
+          <height>54</height>
+          <include>StreamPilotFormatBadges</include>
+        </control>
+        <control type="progress">
+          <left>0</left>
+          <top>142</top>
+          <width>100%</width>
+          <height>8</height>
+          <info>Player.Progress</info>
+          <visible>!Player.Seeking</visible>
+          <texturebg colordiffuse="3DB9CBD7">colors/white.png</texturebg>
+          <midtexture colordiffuse="$VAR[StreamPilotOSDAccent]">colors/white.png</midtexture>
+        </control>
+        <control type="progress">
+          <left>0</left>
+          <top>142</top>
+          <width>100%</width>
+          <height>8</height>
+          <info>Player.Seekbar</info>
+          <visible>Player.Seeking</visible>
+          <texturebg colordiffuse="3DB9CBD7">colors/white.png</texturebg>
+          <midtexture colordiffuse="$VAR[StreamPilotOSDAccent]">colors/white.png</midtexture>
+        </control>
+        <control type="label">
+          <font>SPTime</font>
+          <textcolor>FFB9CBD7</textcolor>
+          <height>20</height>
+          <aligny>center</aligny>
+          <left>0</left>
+          <top>164</top>
+          <right>210</right>
+          <label>$VAR[FoundryOSDPlaybackTime]</label>
+        </control>
+        <control type="label">
+          <font>SPTime</font>
+          <textcolor>FFFFFFFF</textcolor>
+          <height>20</height>
+          <aligny>center</aligny>
+          <right>0</right>
+          <top>164</top>
+          <width>200</width>
+          <align>right</align>
+          <label>$INFO[System.Time(h:mm xx)]</label>
+        </control>
+      </control>
+      <!-- Native seek feedback remains non-focusable; Kodi owns directional actions. -->
+      <control type="label">
+        <description>Foundry VOD directional seek feedback</description>
+        <right>36</right>
+        <top>16</top>
+        <width>440</width>
+        <height>36</height>
+        <font>SPTime</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <align>center</align>
+        <aligny>center</aligny>
+        <visible>Player.Seeking | Player.HasPerformedSeek(2) | Player.Forwarding | Player.Rewinding</visible>
+        <label>$VAR[SeekLabel]</label>
+      </control>
+      <control type="button" id="8701">
+        <right>396</right>
+        <top>71</top>
+        <width>60</width>
+        <height>60</height>
+        <label />
+        <textoffsetx>0</textoffsetx>
+        <textoffsety>0</textoffsety>
+        <texturefocus>streampilot/button-focus.png</texturefocus>
+        <texturenofocus>streampilot/button.png</texturenofocus>
+        <onleft>8705</onleft>
+        <onright>8702</onright>
+        <onup>8701</onup>
+        <ondown>8701</ondown>
+        <onback>Dialog.Close(videoosd)</onback>
+        <enable>Player.SeekEnabled</enable>
+        <onclick>RunScript(script.foundry.slate.helper,mode=osd_seek&amp;seconds=-30)</onclick>
+      </control>
+      <control type="image">
+        <right>412</right>
+        <top>87</top>
+        <width>28</width>
+        <height>28</height>
+        <aspectratio>keep</aspectratio>
+        <texture>streampilot/fast_rewind.png</texture>
+        <animation effect="fade" start="40" end="40" time="0" condition="![Player.SeekEnabled]">Conditional</animation>
+      </control>
+      <control type="button" id="8702">
+        <right>300</right>
+        <top>67</top>
+        <width>68</width>
+        <height>68</height>
+        <label />
+        <textoffsetx>0</textoffsetx>
+        <textoffsety>0</textoffsety>
+        <texturefocus>streampilot/button-focus.png</texturefocus>
+        <texturenofocus>streampilot/button-primary.png</texturenofocus>
+        <onleft>8701</onleft>
+        <onright>8703</onright>
+        <onup>8702</onup>
+        <ondown>8702</ondown>
+        <onback>Dialog.Close(videoosd)</onback>
+        <enable>Player.PauseEnabled</enable>
+        <onclick>PlayerControl(Play)</onclick>
+      </control>
+      <control type="image">
+        <right>320</right>
+        <top>87</top>
+        <width>28</width>
+        <height>28</height>
+        <aspectratio>keep</aspectratio>
+        <texture>$VAR[StreamPilotOSDPauseIcon]</texture>
+        <animation effect="fade" start="40" end="40" time="0" condition="![Player.PauseEnabled]">Conditional</animation>
+      </control>
+      <control type="button" id="8703">
+        <right>212</right>
+        <top>71</top>
+        <width>60</width>
+        <height>60</height>
+        <label />
+        <textoffsetx>0</textoffsetx>
+        <textoffsety>0</textoffsety>
+        <texturefocus>streampilot/button-focus.png</texturefocus>
+        <texturenofocus>streampilot/button.png</texturenofocus>
+        <onleft>8702</onleft>
+        <onright>8704</onright>
+        <onup>8703</onup>
+        <ondown>8703</ondown>
+        <onback>Dialog.Close(videoosd)</onback>
+        <enable>Player.SeekEnabled</enable>
+        <onclick>RunScript(script.foundry.slate.helper,mode=osd_seek&amp;seconds=30)</onclick>
+      </control>
+      <control type="image">
+        <right>228</right>
+        <top>87</top>
+        <width>28</width>
+        <height>28</height>
+        <aspectratio>keep</aspectratio>
+        <texture>streampilot/fast_forward.png</texture>
+        <animation effect="fade" start="40" end="40" time="0" condition="![Player.SeekEnabled]">Conditional</animation>
+      </control>
+      <control type="button" id="8704">
+        <right>124</right>
+        <top>71</top>
+        <width>60</width>
+        <height>60</height>
+        <label />
+        <textoffsetx>0</textoffsetx>
+        <textoffsety>0</textoffsety>
+        <texturefocus>streampilot/button-focus.png</texturefocus>
+        <texturenofocus>streampilot/button.png</texturenofocus>
+        <onleft>8703</onleft>
+        <onright>8705</onright>
+        <onup>8704</onup>
+        <ondown>8704</ondown>
+        <onback>Dialog.Close(videoosd)</onback>
+        <onclick>PlayerControl(Stop)</onclick>
+      </control>
+      <control type="image">
+        <right>140</right>
+        <top>87</top>
+        <width>28</width>
+        <height>28</height>
+        <aspectratio>keep</aspectratio>
+        <texture>streampilot/stop.png</texture>
+      </control>
+      <control type="button" id="8705">
+        <right>36</right>
+        <top>71</top>
+        <width>60</width>
+        <height>60</height>
+        <label />
+        <textoffsetx>0</textoffsetx>
+        <textoffsety>0</textoffsety>
+        <texturefocus>streampilot/button-focus.png</texturefocus>
+        <texturenofocus>streampilot/button.png</texturenofocus>
+        <onleft>8704</onleft>
+        <onright>8701</onright>
+        <onup>8705</onup>
+        <ondown>8705</ondown>
+        <onback>Dialog.Close(videoosd)</onback>
+        <onclick>SetProperty(settingslist_content,osd,home)</onclick>
+        <onclick>SetProperty(settingslist_header,$LOCALIZE[5],home)</onclick>
+        <onclick>ActivateWindow(1101)</onclick>
+      </control>
+      <control type="image">
+        <right>52</right>
+        <top>87</top>
+        <width>28</width>
+        <height>28</height>
+        <aspectratio>keep</aspectratio>
+        <texture>streampilot/settings.png</texture>
+      </control>
+    </control>
+  </include>
+  <include name="StreamPilotLiveCard">
+    <control type="group">
+      <control type="image">
+        <left>-36</left>
+        <top>-36</top>
+        <width>1872</width>
+        <height>320</height>
+        <texture>streampilot/live-shadow.png</texture>
+      </control>
+      <control type="image">
+        <left>0</left>
+        <top>0</top>
+        <width>1800</width>
+        <height>248</height>
+        <texture>streampilot/live-panel.png</texture>
+      </control>
+      <control type="image">
+        <left>0</left>
+        <top>0</top>
+        <width>1800</width>
+        <height>248</height>
+        <texture>streampilot/live-edge.png</texture>
+      </control>
+      <left>60</left>
+      <right>60</right>
+      <bottom>48</bottom>
+      <height>248</height>
+      <animation effect="slide" start="0,50" end="0,0" time="150" tween="cubic" easing="out">WindowOpen</animation>
+      <animation effect="fade" start="100" end="0" time="160">WindowClose</animation>
+      <control type="image">
+        <left>40</left>
+        <top>50</top>
+        <width>148</width>
+        <height>148</height>
+        <aspectratio>keep</aspectratio>
+        <texture>$INFO[Player.Icon]</texture>
+      </control>
+      <control type="group">
+        <left>228</left>
+        <right>452</right>
+        <top>28</top>
+        <height>192</height>
+        <control type="label">
+          <font>SPLiveTitle</font>
+          <textcolor>FFFFFFFF</textcolor>
+          <height>48</height>
+          <aligny>center</aligny>
+          <left>0</left>
+          <top>0</top>
+          <width>100%</width>
+          <scroll>True</scroll>
+          <label>$VAR[StreamPilotOSDTitle]</label>
+        </control>
+        <control type="textbox">
+          <left>0</left>
+          <top>48</top>
+          <width>100%</width>
+          <height>66</height>
+          <font>SPBody</font>
+          <textcolor>FFB9CBD7</textcolor>
+          <label>$VAR[FoundryPlayerPlot]</label>
+        </control>
+        <control type="progress">
+          <left>0</left>
+          <top>132</top>
+          <width>100%</width>
+          <height>10</height>
+          <info>PVR.EpgEventProgress</info>
+          <visible>VideoPlayer.HasEPG</visible>
+          <texturebg colordiffuse="29FFFFFF">colors/white.png</texturebg>
+          <midtexture colordiffuse="FF67F2D5">colors/white.png</midtexture>
+        </control>
+        <control type="label">
+          <font>SPTime</font>
+          <textcolor>FFB9CBD7</textcolor>
+          <height>28</height>
+          <aligny>center</aligny>
+          <left>0</left>
+          <top>152</top>
+          <width>300</width>
+          <label>$VAR[StreamPilotOSDLiveStart]</label>
+        </control>
+        <control type="label">
+          <font>SPTime</font>
+          <textcolor>FFB9CBD7</textcolor>
+          <height>28</height>
+          <aligny>center</aligny>
+          <right>0</right>
+          <top>152</top>
+          <width>300</width>
+          <align>right</align>
+          <label>$VAR[StreamPilotOSDLiveEnd]</label>
+        </control>
+      </control>
+      <control type="label">
+        <font>SPClock</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <height>40</height>
+        <aligny>center</aligny>
+        <right>164</right>
+        <top>39</top>
+        <width>260</width>
+        <align>right</align>
+        <label>$INFO[System.Time(h:mm xx)]</label>
+      </control>
+      <control type="label">
+        <font>SPTime</font>
+        <textcolor>FFB9CBD7</textcolor>
+        <height>26</height>
+        <aligny>center</aligny>
+        <right>164</right>
+        <top>79</top>
+        <width>290</width>
+        <align>right</align>
+        <visible>VideoPlayer.HasEPG</visible>
+        <label>$VAR[StreamPilotOSDLiveStart] – $VAR[StreamPilotOSDLiveEnd]</label>
+      </control>
+      <control type="group">
+        <right>164</right>
+        <top>115</top>
+        <width>248</width>
+        <height>54</height>
+        <include>StreamPilotFormatBadges</include>
+      </control>
+      <control type="label">
+        <description>Foundry live directional seek feedback</description>
+        <right>164</right>
+        <top>176</top>
+        <width>290</width>
+        <height>30</height>
+        <font>SPTime</font>
+        <textcolor>FFFFFFFF</textcolor>
+        <align>right</align>
+        <aligny>center</aligny>
+        <visible>Player.Seeking | Player.HasPerformedSeek(2) | Player.Forwarding | Player.Rewinding</visible>
+        <label>$VAR[SeekLabel]</label>
+      </control>
+      <control type="label">
+        <description>Foundry live seek target time</description>
+        <right>164</right>
+        <top>208</top>
+        <width>290</width>
+        <height>28</height>
+        <font>SPTime</font>
+        <textcolor>FFB9CBD7</textcolor>
+        <align>right</align>
+        <aligny>center</aligny>
+        <visible>Player.Seeking | Player.HasPerformedSeek(2)</visible>
+        <label>$VAR[FoundryOSDLiveSeekTime]</label>
+      </control>
+      <control type="button" id="8802">
+        <right>40</right>
+        <top>80</top>
+        <width>88</width>
+        <height>88</height>
+        <label />
+        <textoffsetx>0</textoffsetx>
+        <textoffsety>0</textoffsety>
+        <texturefocus>streampilot/button-focus.png</texturefocus>
+        <texturenofocus>streampilot/live-button.png</texturenofocus>
+        <onleft>8802</onleft>
+        <onright>8802</onright>
+        <onup>8802</onup>
+        <ondown>8802</ondown>
+        <onback>Dialog.Close(videoosd)</onback>
+        <enable>Player.PauseEnabled</enable>
+        <onclick>PlayerControl(Play)</onclick>
+      </control>
+      <control type="image">
+        <right>54</right>
+        <top>94</top>
+        <width>60</width>
+        <height>60</height>
+        <aspectratio>keep</aspectratio>
+        <texture>$VAR[StreamPilotOSDPauseIcon]</texture>
+        <animation effect="fade" start="40" end="40" time="0" condition="![Player.PauseEnabled]">Conditional</animation>
+      </control>
+    </control>
+  </include>
+</includes>

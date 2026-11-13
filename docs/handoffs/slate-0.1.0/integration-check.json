@@ -1,0 +1,34 @@
+{
+  "original_packages_unchanged": true,
+  "canonical_content_checks": [
+    {
+      "id": "script.foundry.slate.helper",
+      "members": 61,
+      "omitted_build_only": [
+        "script.foundry.slate.helper/.gitattributes",
+        "script.foundry.slate.helper/.gitignore",
+        "script.foundry.slate.helper/Makefile"
+      ]
+    },
+    {
+      "id": "skin.foundry.slate",
+      "members": 943,
+      "omitted_build_only": [
+        "skin.foundry.slate/.gitattributes",
+        "skin.foundry.slate/.gitignore",
+        "skin.foundry.slate/Makefile",
+        "skin.foundry.slate/resources/Blank xmls/script-FENtastic-main_menu_movies.xml",
+        "skin.foundry.slate/resources/Blank xmls/script-FENtastic-main_menu_tvshows.xml",
+        "skin.foundry.slate/resources/Blank xmls/script-FENtastic-widget_movie_category_bottom.xml",
+        "skin.foundry.slate/resources/Blank xmls/script-FENtastic-widget_movie_category_top.xml",
+        "skin.foundry.slate/resources/Blank xmls/script-FENtastic-widget_movies.xml",
+        "skin.foundry.slate/resources/Blank xmls/script-FENtastic-widget_tvshow_category_bottom.xml",
+        "skin.foundry.slate/resources/Blank xmls/script-FENtastic-widget_tvshow_category_top.xml",
+        "skin.foundry.slate/resources/Blank xmls/script-FENtastic-widget_tvshows.xml",
+        "skin.foundry.slate/scripts/build_catalog_layout.py",
+        "skin.foundry.slate/scripts/check_case.py",
+        "skin.foundry.slate/xml/DialogVideoInfo-old.xml"
+      ]
+    }
+  ]
+}
