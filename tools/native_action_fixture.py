@@ -60,7 +60,7 @@ def verify(rpc,base,output,playback_command,state,wait_for,capture,skin_label='o
             captures=[]
             if route=='info':
                 rpc('Input.Select')
-                wait_for(lambda:boolean('Window.IsActive(videoinfo)'))
+                wait_for(lambda:boolean('Window.IsActive(12003)'))
                 labels=rpc('XBMC.GetInfoLabels',{'labels':['ListItem.FileNameAndPath','ListItem.DBTYPE']})
                 assert labels['ListItem.FileNameAndPath']==path,('Info path changed',labels)
                 assert labels['ListItem.DBTYPE']=='movie',('Info type unavailable',labels)

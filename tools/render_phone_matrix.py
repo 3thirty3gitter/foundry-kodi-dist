@@ -14,6 +14,7 @@ for name,skin,helper in [('original',a.original_skin or r.parent/'skin.foundry-n
   target=out/(name+('-restricted' if restricted else '-normal'))
   command=[sys.executable,str(Path(__file__).with_name('native_phone_qa.py')),'--root',str(r),'--skin',str(skin),'--helper',str(helper),'--output',str(target)]
   if restricted:command.append('--restricted-enumeration')
+  command.append('--native-debugger')
   try:subprocess.run(command,check=True)
   except subprocess.CalledProcessError:
    (out/'phone-matrix-verification.json').write_text(json.dumps({'passed':False,'completed_cases':rows,'failed_case':target.name,'failure_report':str(target/'phone-verification.json')},indent=2))

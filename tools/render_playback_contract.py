@@ -220,9 +220,25 @@ def main():
   finally:
    for p in (profile/'temp').glob('kodi*.log'):shutil.copy2(p,out/p.name)
    (out/'native-contract-report.json').write_text(json.dumps(report,indent=2))
-   try:rpc('Application.Quit');kodi.wait(timeout=15)
-   except Exception:os.killpg(kodi.pid,signal.SIGTERM)
-   x.terminate();log.close()
+   # Reap both processes before TemporaryDirectory cleanup. A signalled but
+   # running Kodi can still create profile files and mask the primary failure.
+   try:
+    try:rpc('Application.Quit')
+    except Exception:pass
+    try:kodi.wait(timeout=15)
+    except subprocess.TimeoutExpired:
+     try:os.killpg(kodi.pid,signal.SIGTERM)
+     except ProcessLookupError:pass
+     try:kodi.wait(timeout=10)
+     except subprocess.TimeoutExpired:
+      try:os.killpg(kodi.pid,signal.SIGKILL)
+      except ProcessLookupError:pass
+      kodi.wait(timeout=10)
+   finally:
+    x.terminate()
+    try:x.wait(timeout=10)
+    except subprocess.TimeoutExpired:x.kill();x.wait(timeout=10)
+    log.close()
 if __name__=='__main__':
  try:main()
  except BaseException:

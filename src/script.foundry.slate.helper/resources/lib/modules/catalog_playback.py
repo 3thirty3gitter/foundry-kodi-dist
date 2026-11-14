@@ -34,7 +34,7 @@ def play_item(item):
 
 def play_info_action():
     # Capture the native video-info item before closing its dialog.
-    if not xbmc.getCondVisibility('Window.IsActive(videoinfo)'):
+    if not xbmc.getCondVisibility('Window.IsActive(12003)'):
         return False
     item = {'file': xbmc.getInfoLabel('ListItem.FileNameAndPath'),
             'type': xbmc.getInfoLabel('ListItem.DBTYPE').lower()}
@@ -43,6 +43,6 @@ def play_info_action():
     path = item['file']
     if any(c in path for c in ('"', '\r', '\n', '\x00')):
         return False
-    xbmc.executebuiltin('Dialog.Close(videoinfo)')
+    xbmc.executebuiltin('Dialog.Close(12003)')
     run_action(path)
     return True

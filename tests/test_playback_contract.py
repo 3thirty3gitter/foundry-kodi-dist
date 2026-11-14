@@ -12,7 +12,7 @@ class Tests(unittest.TestCase):
   global commands,rpcs,labels,m,ROOT,HELPER,SKIN,P
   ROOT=self.apps;HELPER=self.helper;SKIN=self.skin;P=ROOT/HELPER/"resources/lib/modules"
   commands=[];rpcs=[];labels={}
-  xbmc=types.ModuleType('xbmc');xbmc.executebuiltin=commands.append;xbmc.getInfoLabel=lambda k:labels.get(k,'');xbmc.getCondVisibility=lambda c:True
+  xbmc=types.ModuleType('xbmc');xbmc.executebuiltin=commands.append;xbmc.getInfoLabel=lambda k:labels.get(k,'');xbmc.getCondVisibility=lambda c:c=='Window.IsActive(12003)'
   pkg=types.ModuleType('testmodules');pkg.__path__=[str(P)]
   src=types.ModuleType('testmodules.catalog_source');src.rpc=lambda *args:rpcs.append(args)
   self.modules=patch.dict(sys.modules,{'xbmc':xbmc,'testmodules':pkg,'testmodules.catalog_source':src})
@@ -29,9 +29,12 @@ class Tests(unittest.TestCase):
  def test_namespace_and_kind_guards(self):
   for i in [self.item('plugin://plugin.video.fenskeleton.evil/?mode=x'),self.item(kind='tvshow'),self.item(filetype='directory')]:self.assertFalse(m.action_provider(i))
  def test_info_captures_then_closes_then_action(self):
-  i=self.item();labels.update({'ListItem.FileNameAndPath':i['file'],'ListItem.DBTYPE':'movie'});self.assertTrue(m.play_info_action());self.assertEqual(commands,['Dialog.Close(videoinfo)','RunPlugin("'+i['file']+'")']);self.assertEqual(rpcs,[])
+  i=self.item();labels.update({'ListItem.FileNameAndPath':i['file'],'ListItem.DBTYPE':'movie'});self.assertTrue(m.play_info_action());self.assertEqual(commands,['Dialog.Close(12003)','RunPlugin("'+i['file']+'")']);self.assertEqual(rpcs,[])
  def test_info_other_provider_noop(self):
   labels.update({'ListItem.FileNameAndPath':'plugin://plugin.video.youtube/a','ListItem.DBTYPE':'movie'});self.assertFalse(m.play_info_action());self.assertEqual(commands,[])
+ def test_info_requires_native_dialog(self):
+  with patch.object(m.xbmc,"getCondVisibility",return_value=False):self.assertFalse(m.play_info_action())
+  self.assertEqual(commands,[])
  def test_bad_url_rejected(self):
   with self.assertRaises(ValueError):m.run_action('plugin://plugin.video.fenskeleton/?x="),Quit()')
   self.assertEqual(commands,[])

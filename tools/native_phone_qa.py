@@ -93,6 +93,7 @@ def main():
     parser.add_argument('--skin',type=Path,required=True)
     parser.add_argument('--helper',type=Path,required=True)
     parser.add_argument('--restricted-enumeration',action='store_true')
+    parser.add_argument('--native-debugger',action='store_true',help='Diagnostic only: existing gdb records native crash stack, no retry')
     parser.add_argument('--keyboard-xml',type=Path)
     parser.add_argument('--display',default=':98',help='A free private X11 display')
     parser.add_argument('--port',type=int,default=0)
@@ -155,7 +156,17 @@ def main():
         try:
             time.sleep(1)
             assert xserver.poll() is None,'Private Xvfb failed to start'
-            kodi=subprocess.Popen(['kodi','-p','-fs','--windowing=x11','--debug'],env=environment,stdout=log,stderr=log,start_new_session=True)
+            command=['kodi','-p','-fs','--windowing=x11','--debug']
+            if args.native_debugger:
+                candidates=list(Path('/usr/lib').glob('*/kodi/kodi.bin'))+[Path('/usr/lib/kodi/kodi.bin')]
+                binaries=[p for p in candidates if p.is_file()]
+                assert len(binaries)==1 and shutil.which('gdb'),'Expected one installed kodi.bin and existing gdb'
+                environment['KODI_BIN_HOME']=str(binaries[0].parent)
+                wrapper=Path(shutil.which('kodi'))
+                shutil.copyfile(wrapper,output/'installed-kodi-launcher.txt')
+                command=['gdb','--batch','--return-child-result','-ex','set pagination off','-ex','set logging file '+str(output/'native-gdb.log'),'-ex','set logging enabled on','-ex','run','-ex','thread apply all bt full','--args',str(binaries[0]),'-p','-fs','--windowing=x11','--debug']
+            (output/'native-launch-command.json').write_text(json.dumps({'command':command,'debugger':args.native_debugger,'KODI_HOME':environment.get('KODI_HOME'),'KODI_BIN_HOME':environment.get('KODI_BIN_HOME')},indent=2))
+            kodi=subprocess.Popen(command,env=environment,stdout=log,stderr=log,start_new_session=True)
             def rpc(method,params=None):
                 data=json.dumps({'jsonrpc':'2.0','id':1,'method':method,'params':params or {}}).encode()
                 with urlopen(Request('http://127.0.0.1:%d/jsonrpc'%port,data=data,headers={'Content-Type':'application/json'}),timeout=5) as response:result=json.loads(response.read())
@@ -199,14 +210,17 @@ def main():
                 try:return json.loads((base/'state.json').read_text())
                 except (OSError,ValueError):return {}
             wait_for(lambda:state().get('dialog')==10103)
+            def captured(path):
+                state()  # Detect native exit even while awaiting screenshot I/O.
+                return path.exists()
             def capture(name):
                 time.sleep(.7);(base/'capture').write_text(name)
-                wait_for(lambda:(output/(name+'.png')).exists(),10)
+                wait_for(lambda:captured(output/(name+'.png')),10)
                 time.sleep(.1)
                 if name in ('keyboard-normal','keyboard-qr','keyboard-cancelled'):
                     for index in range(6):
                         extra=name+'-repeat-'+str(index)
-                        (base/'capture').write_text(extra);wait_for(lambda:(output/(extra+'.png')).exists(),10);time.sleep(.15)
+                        (base/'capture').write_text(extra);wait_for(lambda:captured(output/(extra+'.png')),10);time.sleep(.15)
                     (output/(name+'-state.json')).write_text(json.dumps(state(),indent=2))
             capture('keyboard-normal')
             assert state()['phone_visible'],state()

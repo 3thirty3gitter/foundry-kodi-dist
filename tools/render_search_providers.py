@@ -16,6 +16,13 @@ for helper in addons.glob('script.*helper'):
  for n in list(r.find('requires')):
   if n.get('addon')!='xbmc.python':r.find('requires').remove(n)
  t.write(helper/'addon.xml') # Keep actual helper entry/router for skin-control QA
+ # Isolate picker UI from first-run menu rebuild/repository bootstrap. These
+ # unrelated Home callbacks can ReloadSkin while Keep skin? is still open.
+ entry=helper/'resources/lib/default.py'
+ original=entry.read_text()
+ guard='import sys as _qa_sys\nfrom urllib.parse import parse_qsl as _qa_parse\n_qa_mode=dict(_qa_parse(_qa_sys.argv[1] if len(_qa_sys.argv)>1 else "")).get("mode", "")\nif _qa_mode not in ("choose_search_provider", "toggle_search_provider", "open_selected_video_provider", "open_search_window", "search_input"):\n raise SystemExit\n'
+ entry.write_text(guard+original)
+
 for p in (home/'addons').glob('*/addon.xml'):
  t=E.parse(p)
  for e in t.getroot().findall("extension[@point='xbmc.service']"):t.getroot().remove(e)
@@ -96,7 +103,7 @@ def accept_disclosure():
  wait(lambda:not cond('Window.IsVisible(yesnodialog)'))
 def selected():
  return rpc('XBMC.GetInfoLabels',{'labels':['Skin.String(current_search_provider)']})['Skin.String(current_search_provider)']
-report={'passed':False,'scope':'Disposable native Kodi real picker and video metadata; unknown providers are open-only, no integrated search claim.','skins':{}}
+report={'passed':False,'scope':'Disposable native Kodi real picker and video metadata; unrelated Home startup helper callbacks suppressed in fixture entry only; actual search router/module and SkinSettings unchanged; unknown providers are open-only, no integrated search claim.','skins':{}}
 try:
  wait(lambda:rpc('JSONRPC.Ping')=='pong')
  # Startup asks about every new disposable addon; require a quiet interval.
