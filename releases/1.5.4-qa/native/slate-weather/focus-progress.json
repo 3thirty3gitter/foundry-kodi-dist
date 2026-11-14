@@ -1,0 +1,216 @@
+{
+  "passed": false,
+  "trace": [
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 2"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 3"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 4"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 5"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 6"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 7"
+    },
+    {
+      "action": "Right",
+      "focus": 9000,
+      "day": "Fixture day 7"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Back",
+      "focus": 9000,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Up",
+      "focus": 9000,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Left",
+      "focus": 9000,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Down",
+      "focus": 15151,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Down",
+      "focus": 801,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Back",
+      "focus": 9000,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 2"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 3"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 4"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 5"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 6"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 7"
+    },
+    {
+      "action": "Right",
+      "focus": 9000,
+      "day": "Fixture day 7"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Back",
+      "focus": 9000,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Up",
+      "focus": 9000,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Left",
+      "focus": 9000,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Down",
+      "focus": 15151,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Down",
+      "focus": 801,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Back",
+      "focus": 9000,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Back",
+      "focus": 9000,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Right",
+      "focus": 15150,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Back",
+      "focus": 9000,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Right",
+      "focus": 15154,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Back",
+      "focus": 9000,
+      "day": "Fixture day 1"
+    }
+  ],
+  "scope": "Native Slate XML with synthetic weather property fixture. No live-provider, physical Shield or provider parsing claim."
+}

@@ -379,7 +379,65 @@
         "modal": 9999
       }
     ],
-    "scope": "Native desktop shipped Home XML with offline helpers suppressed. Search uses configured built-in window1107. No Shield/live-provider/widget population claim."
+    "scope": "Native desktop shipped Home XML with offline helpers suppressed. Search uses configured built-in window1107. No Shield/live-provider/widget population claim.",
+    "radio_visual_states": [
+      {
+        "hidden": true,
+        "window": 10035,
+        "focus": 6243
+      },
+      {
+        "hidden": false,
+        "window": 10035,
+        "focus": 6243
+      },
+      {
+        "hidden": true,
+        "window": 10035,
+        "focus": 6243
+      },
+      {
+        "hidden": false,
+        "window": 10035,
+        "focus": 6243
+      },
+      {
+        "hidden": true,
+        "window": 10035,
+        "focus": 6243
+      }
+    ],
+    "real_radio_toggles": 5,
+    "hidden_before_restart": true
   },
-  "home_sha256": "0c88d1e857081a0f03f581e0e43d9c38281c5ed9b4dfeb416f0ff87e0749e02c"
+  "home_sha256": "a823da7963a308f759f0bc848599e94e0dd10ccea1ba7a3240ac114a05ca8301",
+  "radio_visual_polarity": {
+    "True": {
+      "left_rgb_sum": 104.5,
+      "right_rgb_sum": 115.5
+    },
+    "False": {
+      "left_rgb_sum": 115.5,
+      "right_rgb_sum": 60.5
+    }
+  },
+  "footer_visual_differences": {
+    "power": 253752.0,
+    "settings": 255282.0,
+    "search": 222709.0
+  },
+  "saved_icon_settings": [
+    {
+      "phase": "hidden-before-restart",
+      "id": "slatehidemainmenuicons",
+      "value": "true"
+    },
+    {
+      "phase": "shown-before-restart",
+      "id": "slatehidemainmenuicons",
+      "value": "false"
+    }
+  ],
+  "hidden_persisted_after_restart": true,
+  "shown_persisted_after_second_restart": true
 }

@@ -33,10 +33,10 @@
     },
     {
       "id": "weather.foundry.canada",
-      "version": "0.1.0",
-      "path": "weather.foundry.canada/weather.foundry.canada-0.1.0.zip",
-      "sha256": "fae387a57752af0ec63a5c75bf53bd8f207bb3fc00716af64a2be519178a64f9",
-      "size": 17146
+      "version": "0.1.1",
+      "path": "weather.foundry.canada/weather.foundry.canada-0.1.1.zip",
+      "sha256": "c263cb66663df099c7a7f57cbe41537d92c3cf6d987385bdd9ed02da1c09f5a8",
+      "size": 17156
     },
     {
       "id": "plugin.games.foundry",
@@ -82,10 +82,10 @@
     },
     {
       "id": "skin.foundry.slate",
-      "version": "0.1.1",
-      "path": "skin.foundry.slate/skin.foundry.slate-0.1.1.zip",
-      "sha256": "e1d4f3bc1250bd6c898e2f2e419a41658f889694c4c38b8f0cec4f1b342f8484",
-      "size": 21988599
+      "version": "0.1.2",
+      "path": "skin.foundry.slate/skin.foundry.slate-0.1.2.zip",
+      "sha256": "915a52e6cb963585b982344552634610134435d6e43cf1b29bf09927f4325244",
+      "size": 22240336
     }
   ],
   "deterministic_rebuild": true,

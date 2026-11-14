@@ -9,7 +9,7 @@
   "validation": {
     "status": "ci_passed_target_device_checks_pending",
     "source_tests": {
-      "tests": 783,
+      "tests": 802,
       "failures": 0,
       "errors": 0,
       "skipped": 0,
@@ -17,7 +17,7 @@
       "python": "3.12.16"
     },
     "packaged_tests": {
-      "tests": 783,
+      "tests": 802,
       "failures": 0,
       "errors": 0,
       "skipped": 1,
@@ -32,7 +32,7 @@
       "weather-verification.json",
       "games/games-verification.json"
     ],
-    "workflow_run": "43538506483",
+    "workflow_run": "43546863338",
     "target_device_verification": "Shield rendering, navigation, controllers and gameplay unverified; native synthetic Games checks do not certify gameplay"
   }
 }

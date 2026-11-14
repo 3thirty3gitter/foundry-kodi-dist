@@ -368,5 +368,34 @@
       "modal": 9999
     }
   ],
-  "scope": "Native desktop shipped Home XML with offline helpers suppressed. Search uses configured built-in window1107. No Shield/live-provider/widget population claim."
+  "scope": "Native desktop shipped Home XML with offline helpers suppressed. Search uses configured built-in window1107. No Shield/live-provider/widget population claim.",
+  "radio_visual_states": [
+    {
+      "hidden": true,
+      "window": 10035,
+      "focus": 6243
+    },
+    {
+      "hidden": false,
+      "window": 10035,
+      "focus": 6243
+    },
+    {
+      "hidden": true,
+      "window": 10035,
+      "focus": 6243
+    },
+    {
+      "hidden": false,
+      "window": 10035,
+      "focus": 6243
+    },
+    {
+      "hidden": true,
+      "window": 10035,
+      "focus": 6243
+    }
+  ],
+  "real_radio_toggles": 5,
+  "hidden_before_restart": true
 }
