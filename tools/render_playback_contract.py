@@ -44,7 +44,7 @@ def main():
  root=args.root.resolve();out=args.output.resolve();out.mkdir(parents=True,exist_ok=True)
  spec=importlib.util.spec_from_file_location('render_util',root/'tools/render_interface.py');util=importlib.util.module_from_spec(spec);spec.loader.exec_module(util)
  port=util.available_port(0)
- with tempfile.TemporaryDirectory(prefix='foundry-action-contract-') as temp:
+ with tempfile.TemporaryDirectory(prefix='foundry-action-contract-',ignore_cleanup_errors=True) as temp:
   base=Path(temp);home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
   profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True);addons=profile/'addons';addons.mkdir()
   sources=[root.parent/'skin.foundry-nimbus',root.parent/'script.foundry.helper']+[root/'src'/x for x in ('skin.foundry.slate','script.foundry.slate.helper','resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons')]
@@ -101,7 +101,7 @@ def main():
     time.sleep(.2)
    raise AssertionError('Startup dialogs never reached a stable quiet interval')
   identity_sequence=0
-  def identity(focus_yes=False):
+  def identity(focus_yes=False,screenshot=None):
    nonlocal identity_sequence
    identity_sequence+=1
    marker=base/('identity-%03d.json'%identity_sequence)
@@ -111,6 +111,7 @@ def main():
    if focus_yes:body+='xbmc.executebuiltin("SetFocus(11)",True)\nxbmc.sleep(100)\n'
    body+="skin_path=Path(xbmcvfs.translatePath('special://skin/')).resolve()\n"
    body+="data={'skin_id':xbmc.getSkinDir(),'skin_path':str(skin_path),'dialog_id':xbmcgui.getCurrentWindowDialogId(),'modal':bool(xbmc.getCondVisibility('System.HasActiveModalDialog')),'yesno':bool(xbmc.getCondVisibility('Window.IsActive(yesnodialog)')),'yes_focused':bool(xbmc.getCondVisibility('Control.HasFocus(11)')),'prompt':{str(i):xbmc.getInfoLabel('Control.GetLabel(%d)'%i) for i in (1,9,10,11)},'dialog_info_sha256':hashlib.sha256((skin_path/'xml/DialogVideoInfo.xml').read_bytes()).hexdigest()}\n"
+   if screenshot is not None:body+='xbmc.executebuiltin(%r)\n'%('TakeScreenshot('+str(screenshot)+')')
    body+='Path(%r).write_text(json.dumps(data),encoding="utf-8")\n'%str(marker)
    error_marker=marker.with_suffix('.error.json')
    wrapped='import traceback\nfrom pathlib import Path\ntry:\n'+''.join(' '+line+'\n' for line in body.splitlines())+'except BaseException:\n Path(%r).write_text(traceback.format_exc(),encoding="utf-8")\n raise\n'%str(error_marker)
@@ -158,7 +159,13 @@ def main():
    path=base/'command.json';tmp=base/'command.tmp';tmp.write_text(json.dumps(dict(values,action=action)));tmp.replace(path);wait(lambda:not path.exists())
   screenshots=[]
   def capture(name):
-   path=out/(name+'.png');path.unlink(missing_ok=True);command('capture',path=str(path))
+   path=out/(name+'.png');path.unlink(missing_ok=True)
+   # Dialog.info blocks the catalog driver. Use the separate, serialized
+   # native identity interpreter to request a Kodi screenshot, not stale X data.
+   capture_identity=identity(screenshot=path)
+   if name.endswith('-info'):
+    assert capture_identity['dialog_id']==12003 and capture_identity['modal'],('Info not visible at screenshot',capture_identity)
+   else:assert not capture_identity['modal'],('Unexpected modal at stopped screenshot',capture_identity)
    def valid():
     try:
      with Image.open(path) as im:im.verify()
@@ -171,7 +178,7 @@ def main():
     width,height=im.size;stddev=ImageStat.Stat(im.convert('RGB')).stddev
    assert width>=640 and height>=360,('Undersized screenshot',path,width,height)
    assert max(stddev)>2,('Blank screenshot',path,stddev)
-   receipt={'file':path.name,'sha256':hashlib.sha256(data).hexdigest(),'bytes':len(data),'width':width,'height':height,'rgb_stddev':stddev,'nonblank':True}
+   receipt={'file':path.name,'sha256':hashlib.sha256(data).hexdigest(),'bytes':len(data),'width':width,'height':height,'rgb_stddev':stddev,'nonblank':True,'native_identity':capture_identity}
    screenshots.append(receipt)
    return receipt
   source_receipts=[]
@@ -220,25 +227,45 @@ def main():
   finally:
    for p in (profile/'temp').glob('kodi*.log'):shutil.copy2(p,out/p.name)
    (out/'native-contract-report.json').write_text(json.dumps(report,indent=2))
-   # Reap both processes before TemporaryDirectory cleanup. A signalled but
-   # running Kodi can still create profile files and mask the primary failure.
+   # Kodi's shell wrapper can exit before kodi.bin. Always drain the owned
+   # process group, not merely Popen.wait(), before removing its profile.
+   def group_members():
+    members=[]
+    for entry in Path('/proc').iterdir():
+     if not entry.name.isdigit():continue
+     try:
+      fields=(entry/'stat').read_text().rsplit(')',1)[1].split()
+      # stat tail begins state, ppid, pgrp, session. Zombies cannot write.
+      if int(fields[2])==kodi.pid and fields[0]!='Z':members.append(int(entry.name))
+     except (FileNotFoundError,ProcessLookupError,PermissionError,ValueError):pass
+    return members
+   def drain_group(timeout):
+    deadline=time.monotonic()+timeout
+    while group_members() and time.monotonic()<deadline:time.sleep(.1)
+    return group_members()
+   cleanup_errors=[]
    try:
     try:rpc('Application.Quit')
     except Exception:pass
-    try:kodi.wait(timeout=15)
-    except subprocess.TimeoutExpired:
-     try:os.killpg(kodi.pid,signal.SIGTERM)
+    remaining=drain_group(10)
+    for sig,timeout in ((signal.SIGTERM,5),(signal.SIGKILL,5)):
+     if not remaining:break
+     try:os.killpg(kodi.pid,sig)
      except ProcessLookupError:pass
-     try:kodi.wait(timeout=10)
-     except subprocess.TimeoutExpired:
-      try:os.killpg(kodi.pid,signal.SIGKILL)
-      except ProcessLookupError:pass
-      kodi.wait(timeout=10)
+     remaining=drain_group(timeout)
+    if remaining:cleanup_errors.append('Live Kodi process group members: '+repr(remaining))
+    try:kodi.wait(timeout=5)
+    except subprocess.TimeoutExpired:cleanup_errors.append('Kodi wrapper not reaped')
    finally:
     x.terminate()
     try:x.wait(timeout=10)
     except subprocess.TimeoutExpired:x.kill();x.wait(timeout=10)
     log.close()
+    report['process_cleanup']={'owned_process_group':kodi.pid,'live_group_members':group_members(),'errors':cleanup_errors}
+    if cleanup_errors:report['passed']=False
+    (out/'native-contract-report.json').write_text(json.dumps(report,indent=2))
+   if cleanup_errors:raise RuntimeError('; '.join(cleanup_errors))
+
 if __name__=='__main__':
  try:main()
  except BaseException:

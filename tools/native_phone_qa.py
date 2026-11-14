@@ -122,6 +122,26 @@ def main():
             aid=E.parse(source/'addon.xml').getroot().get('id');shutil.copytree(source,addons/aid)
         helper=addons/helper_id;skin=addons/skin_id
         if args.keyboard_xml:shutil.copyfile(args.keyboard_xml,skin/'xml/DialogKeyboard.xml')
+        # Offline phone fixture must not start unrelated no-op Python interpreters.
+        # Native trace showed PyThreadState_Swap crashing during teardown of
+        # QA's check_for_profile_change dispatcher before any phone action.
+        # Modify disposable onload actions only; keyboard XML remains untouched.
+        suppressed=[];modified_xml=[]
+        original_home_sha=hashlib.sha256((SKIN/'xml/Home.xml').read_bytes()).hexdigest()
+        for xml_path in (skin/'xml').glob('*.xml'):
+            if xml_path.name=='DialogKeyboard.xml':continue
+            before_sha=hashlib.sha256(xml_path.read_bytes()).hexdigest()
+            tree=E.parse(xml_path);changed=False
+            for node in tree.getroot().iter('onload'):
+                action=(node.text or '').strip()
+                if action.lower().startswith('runscript('+helper_id.lower()+',') and 'mode=phone_entry' not in action:
+                    suppressed.append({'file':xml_path.name,'action':action})
+                    node.text='noop';changed=True
+            if changed:
+                tree.write(xml_path,encoding='UTF-8',xml_declaration=True)
+                modified_xml.append({'file':xml_path.name,'original_sha256':before_sha,'fixture_sha256':hashlib.sha256(xml_path.read_bytes()).hexdigest()})
+        (output/'suppressed-unrelated-startup-actions.json').write_text(json.dumps({'callbacks':suppressed,'modified_xml':modified_xml,'original_home_sha256':original_home_sha,'copied_home_sha256':hashlib.sha256((skin/'xml/Home.xml').read_bytes()).hexdigest(),'limitation':'Debian Kodi 21.2/Python 3.13 startup interpreter teardown crashed in PyThreadState_Swap during QA check_for_profile_change no-op. This isolates unrelated startup only, not a shipped product fix or full startup compatibility certification.'},indent=2))
+
         tested={'phone_entry_http.py':helper/'resources/lib/modules/phone_entry_http.py','DialogKeyboard.xml':skin/'xml/DialogKeyboard.xml','phone_entry.py':helper/'resources/lib/modules/phone_entry.py','phone_entry_network.py':helper/'resources/lib/modules/phone_entry_network.py'}
         (output/'tested-source-hashes.json').write_text(json.dumps({name:hashlib.sha256(path.read_bytes()).hexdigest() for name,path in tested.items()},indent=2))
         manifest=E.parse(helper/'addon.xml')
@@ -298,7 +318,7 @@ def main():
             (base/'hidden').touch();wait_for(lambda:state().get('dialog')==10103 and state().get('hidden'))
             capture('keyboard-hidden');assert not state()['phone_visible'],state()
             rpc('Input.Back');(base/'complete').touch()
-            (output/'phone-verification.json').write_text(json.dumps({'passed':True,'qr_decode_verified':False,'physical_phone_verified':False,'url_source':'QA render wrapper observes the URL passed to the actual QR renderer; no QR decode performed','source_sha256':json.loads((output/'tested-source-hashes.json').read_text()),'image_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(output.glob('*.png'))},'native_kodi':kodi_version,'skin':skin_id,'helper':helper_id,'restricted_enumeration_real_ioctl':args.restricted_enumeration,'remote_reachable':True,'vpn_reported_ip_replaced_by_discovered_interface':True,'http_text_no_auto_confirm':True,'bad_origin_and_token_rejected':True,'cancel_closed_listener':True,'back_closed_listener':True,'rapid_cancel_reopen_retains_new_session':True,'hidden_has_no_phone':True,'scope':'Isolated offline Kodi; actual modules/XML; actual generated QR image retained and hashed, but QR scan/decode and physical phone are unverified. QA dispatcher observes transient URL. HTTP runs on discovered interface within native QA host/container, not an independent phone/LAN test.'},indent=2))
+            (output/'phone-verification.json').write_text(json.dumps({'passed':True,'qr_decode_verified':False,'physical_phone_verified':False,'url_source':'QA render wrapper observes the URL passed to the actual QR renderer; no QR decode performed','source_sha256':json.loads((output/'tested-source-hashes.json').read_text()),'image_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(output.glob('*.png'))},'native_kodi':kodi_version,'skin':skin_id,'helper':helper_id,'restricted_enumeration_real_ioctl':args.restricted_enumeration,'remote_reachable':True,'vpn_reported_ip_replaced_by_discovered_interface':True,'http_text_no_auto_confirm':True,'bad_origin_and_token_rejected':True,'cancel_closed_listener':True,'back_closed_listener':True,'rapid_cancel_reopen_retains_new_session':True,'hidden_has_no_phone':True,'scope':'Isolated offline phone fixture with unrelated helper onload dispatch suppressed and audited; whole-skin startup/concurrency is not validated by this gate. Isolated Kodi; actual modules/XML; actual generated QR image retained and hashed, but QR scan/decode and physical phone are unverified. QA dispatcher observes transient URL. HTTP runs on discovered interface within native QA host/container, not an independent phone/LAN test.'},indent=2))
 
         except Exception:
             import traceback
