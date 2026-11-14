@@ -68,6 +68,42 @@
       },
       {
         "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
         "focus": 801,
         "window": 10000,
         "modal": 9999
@@ -410,7 +446,54 @@
     "real_radio_toggles": 5,
     "hidden_before_restart": true
   },
-  "home_sha256": "a823da7963a308f759f0bc848599e94e0dd10ccea1ba7a3240ac114a05ca8301",
+  "home_sha256": "6544d2808e4ff22ff2ca5251052ea80b7941786edebfa852a0d3cf7b238f5d72",
+  "hidden_label_shift_pixels": 51,
+  "selector_alignment": [
+    {
+      "row": 0,
+      "offset": 0.0
+    },
+    {
+      "row": 1,
+      "offset": 0.0
+    },
+    {
+      "row": 2,
+      "offset": 0.0
+    },
+    {
+      "row": 3,
+      "offset": 0.0
+    },
+    {
+      "row": 4,
+      "offset": 0.0
+    },
+    {
+      "row": 5,
+      "offset": 0.0
+    }
+  ],
+  "footer_pixel_bounds": {
+    "power": [
+      72,
+      900,
+      105,
+      935
+    ],
+    "settings": [
+      140,
+      900,
+      177,
+      937
+    ],
+    "search": [
+      212,
+      901,
+      247,
+      937
+    ]
+  },
   "radio_visual_polarity": {
     "True": {
       "left_rgb_sum": 104.5,
@@ -422,9 +505,9 @@
     }
   },
   "footer_visual_differences": {
-    "power": 253752.0,
-    "settings": 255282.0,
-    "search": 222709.0
+    "power": 118513.0,
+    "settings": 129200.0,
+    "search": 170726.0
   },
   "saved_icon_settings": [
     {

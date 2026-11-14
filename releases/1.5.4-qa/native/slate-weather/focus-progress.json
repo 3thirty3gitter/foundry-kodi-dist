@@ -38,6 +38,11 @@
     },
     {
       "action": "Right",
+      "focus": 15149,
+      "day": "Fixture day 7"
+    },
+    {
+      "action": "Back",
       "focus": 9000,
       "day": "Fixture day 7"
     },
@@ -57,16 +62,6 @@
       "day": "Fixture day 1"
     },
     {
-      "action": "Up",
-      "focus": 9000,
-      "day": "Fixture day 1"
-    },
-    {
-      "action": "Right",
-      "focus": 15150,
-      "day": "Fixture day 1"
-    },
-    {
       "action": "Left",
       "focus": 9000,
       "day": "Fixture day 1"
@@ -77,8 +72,18 @@
       "day": "Fixture day 1"
     },
     {
+      "action": "Up",
+      "focus": 15149,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Right",
+      "focus": 15149,
+      "day": "Fixture day 1"
+    },
+    {
       "action": "Down",
-      "focus": 15151,
+      "focus": 15150,
       "day": "Fixture day 1"
     },
     {
@@ -128,6 +133,11 @@
     },
     {
       "action": "Right",
+      "focus": 15149,
+      "day": "Fixture day 7"
+    },
+    {
+      "action": "Back",
       "focus": 9000,
       "day": "Fixture day 7"
     },
@@ -147,16 +157,6 @@
       "day": "Fixture day 1"
     },
     {
-      "action": "Up",
-      "focus": 9000,
-      "day": "Fixture day 1"
-    },
-    {
-      "action": "Right",
-      "focus": 15150,
-      "day": "Fixture day 1"
-    },
-    {
       "action": "Left",
       "focus": 9000,
       "day": "Fixture day 1"
@@ -167,8 +167,18 @@
       "day": "Fixture day 1"
     },
     {
+      "action": "Up",
+      "focus": 15149,
+      "day": "Fixture day 1"
+    },
+    {
+      "action": "Right",
+      "focus": 15149,
+      "day": "Fixture day 1"
+    },
+    {
       "action": "Down",
-      "focus": 15151,
+      "focus": 15150,
       "day": "Fixture day 1"
     },
     {
@@ -203,7 +213,7 @@
     },
     {
       "action": "Right",
-      "focus": 15154,
+      "focus": 15149,
       "day": "Fixture day 1"
     },
     {

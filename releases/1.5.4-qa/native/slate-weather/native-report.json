@@ -49,6 +49,11 @@
       },
       {
         "action": "Right",
+        "focus": 15149,
+        "day": "Fixture day 7"
+      },
+      {
+        "action": "Back",
         "focus": 9000,
         "day": "Fixture day 7"
       },
@@ -68,16 +73,6 @@
         "day": "Fixture day 1"
       },
       {
-        "action": "Up",
-        "focus": 9000,
-        "day": "Fixture day 1"
-      },
-      {
-        "action": "Right",
-        "focus": 15150,
-        "day": "Fixture day 1"
-      },
-      {
         "action": "Left",
         "focus": 9000,
         "day": "Fixture day 1"
@@ -88,8 +83,18 @@
         "day": "Fixture day 1"
       },
       {
+        "action": "Up",
+        "focus": 15149,
+        "day": "Fixture day 1"
+      },
+      {
+        "action": "Right",
+        "focus": 15149,
+        "day": "Fixture day 1"
+      },
+      {
         "action": "Down",
-        "focus": 15151,
+        "focus": 15150,
         "day": "Fixture day 1"
       },
       {
@@ -139,6 +144,11 @@
       },
       {
         "action": "Right",
+        "focus": 15149,
+        "day": "Fixture day 7"
+      },
+      {
+        "action": "Back",
         "focus": 9000,
         "day": "Fixture day 7"
       },
@@ -158,16 +168,6 @@
         "day": "Fixture day 1"
       },
       {
-        "action": "Up",
-        "focus": 9000,
-        "day": "Fixture day 1"
-      },
-      {
-        "action": "Right",
-        "focus": 15150,
-        "day": "Fixture day 1"
-      },
-      {
         "action": "Left",
         "focus": 9000,
         "day": "Fixture day 1"
@@ -178,8 +178,18 @@
         "day": "Fixture day 1"
       },
       {
+        "action": "Up",
+        "focus": 15149,
+        "day": "Fixture day 1"
+      },
+      {
+        "action": "Right",
+        "focus": 15149,
+        "day": "Fixture day 1"
+      },
+      {
         "action": "Down",
-        "focus": 15151,
+        "focus": 15150,
         "day": "Fixture day 1"
       },
       {
@@ -214,7 +224,7 @@
       },
       {
         "action": "Right",
-        "focus": 15154,
+        "focus": 15149,
         "day": "Fixture day 1"
       },
       {
@@ -225,6 +235,6 @@
     ],
     "scope": "Native Slate XML with synthetic weather property fixture. No live-provider, physical Shield or provider parsing claim."
   },
-  "home_sha256": "a823da7963a308f759f0bc848599e94e0dd10ccea1ba7a3240ac114a05ca8301",
-  "visual_contracts": "Action caption/contrast and all seven rendered icon silhouettes verified; inspect overall layout separately."
+  "home_sha256": "6544d2808e4ff22ff2ca5251052ea80b7941786edebfa852a0d3cf7b238f5d72",
+  "visual_contracts": "Seven selected-day icons plus Today hero missing-current-icon fallback verified; inspect overall layout separately."
 }

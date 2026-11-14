@@ -57,6 +57,42 @@
     },
     {
       "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
       "focus": 801,
       "window": 10000,
       "modal": 9999
