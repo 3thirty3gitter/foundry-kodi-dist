@@ -103,14 +103,15 @@ try:
    assert max(bounds[2]-bounds[0],bounds[3]-bounds[1])<=47,('Footer too large',button,bounds)
    report['footer_pixel_bounds'][button]=bounds
   # Assert rendered radio polarity externally: no getControl binding inside Kodi.
-  # In shipped focused switch, on knob is right/dark, off knob left/dim.
+  # Slate dark resource rows use bright sand focused native switch glyphs.
+  # On knob is right/bright; off knob left/bright. Retain real radio toggles.
   report['radio_visual_polarity']={}
   for hidden in (True,False):
    im=Image.open(out/('icons-setting-after-'+str(hidden)+'.png')).convert('RGB')
    assert im.size==(1920,1080),'Fixture coordinates require 1080p native render'
    left=sum(ImageStat.Stat(im.crop((1807,163,1815,171))).mean)
    right=sum(ImageStat.Stat(im.crop((1835,163,1843,171))).mean)
-   assert (right-left>5 if hidden else left-right>15),('Rendered radio polarity wrong',hidden,left,right)
+   assert (left-right>15 if hidden else right-left>15),('Rendered radio polarity wrong',hidden,left,right)
    report['radio_visual_polarity'][str(hidden)]={'left_rgb_sum':left,'right_rgb_sum':right}
   on=Image.open(out/'icons-setting-after-False.png').convert('RGB').crop((1790,145,1860,190))
   off=Image.open(out/'icons-setting-after-True.png').convert('RGB').crop((1790,145,1860,190))

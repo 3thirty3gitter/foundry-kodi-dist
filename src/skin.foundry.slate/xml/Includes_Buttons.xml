@@ -52,6 +52,9 @@
       <focusedcolor>FFFFFFFF</focusedcolor>
       <texturefocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-focus.png</texturefocus>
       <texturenofocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-normal.png</texturenofocus>
+          <!-- Slate resource rows are dark: keep the native stateful switch visible. -->
+      <textureradioonfocus colordiffuse="FFDFC4A0">buttons/radio-button-on.png</textureradioonfocus>
+      <textureradioofffocus colordiffuse="FFDFC4A0">buttons/radio-button-off.png</textureradioofffocus>
     </definition>
     <param name="system_icon">settings</param>
     <param name="system_icon_height" />
@@ -75,6 +78,9 @@
       <focusedcolor>FFFFFFFF</focusedcolor>
       <texturefocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-focus.png</texturefocus>
       <texturenofocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-normal.png</texturenofocus>
+          <!-- Slate resource rows are dark: keep the native stateful switch visible. -->
+      <textureradioonfocus colordiffuse="FFDFC4A0">buttons/radio-button-on.png</textureradioonfocus>
+      <textureradioofffocus colordiffuse="FFDFC4A0">buttons/radio-button-off.png</textureradioofffocus>
     </definition>
     <param name="system_icon">settings</param>
     <param name="system_icon_height" />
@@ -98,6 +104,9 @@
       <selectedcolor>selected</selectedcolor>
       <texturefocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-focus.png</texturefocus>
       <texturenofocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-normal.png</texturenofocus>
+          <!-- Slate resource rows are dark: keep the native stateful switch visible. -->
+      <textureradioonfocus colordiffuse="FFDFC4A0">buttons/radio-button-on.png</textureradioonfocus>
+      <textureradioofffocus colordiffuse="FFDFC4A0">buttons/radio-button-off.png</textureradioofffocus>
     </definition>
     <param name="system_icon">settings</param>
     <param name="system_icon_height" />
@@ -118,6 +127,9 @@
       <texturefocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-focus.png</texturefocus>
       <texturenofocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-normal.png</texturenofocus>
       <focusedcolor>FFFFFFFF</focusedcolor>
+          <!-- Slate resource rows are dark: keep the native stateful switch visible. -->
+      <textureradioonfocus colordiffuse="FFDFC4A0">buttons/radio-button-on.png</textureradioonfocus>
+      <textureradioofffocus colordiffuse="FFDFC4A0">buttons/radio-button-off.png</textureradioofffocus>
     </definition>
     <param name="system_icon">settings</param>
     <param name="system_icon_height" />
