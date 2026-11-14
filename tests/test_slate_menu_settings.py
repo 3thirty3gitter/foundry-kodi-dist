@@ -10,7 +10,7 @@ class MenuContract(unittest.TestCase):
   home=E.parse(X/'Home.xml');conditions=[]
   for layout in ('itemlayout','focusedlayout'):
    menu=home.find('.//control[@id="9000"]/'+layout)
-   images=[c for c in menu.findall('control') if c.findtext('texture','').startswith('slate-icons/')]
+   images=[c for c in menu.findall('control') if c.findtext('texture','').startswith('resource://resource.images.foundry.slate.icons/aliases/slate-icons/')]
    self.assertEqual(len(images),1)
    self.assertEqual(images[0].findtext('visible'),'!Skin.HasSetting(SlateHideMainMenuIcons)')
    self.assertEqual(menu.find('control[@type="label"]/font').text,'SlateNav')
@@ -27,8 +27,8 @@ class MenuContract(unittest.TestCase):
   for i,icon in zip(('801','802','803'),('power','settings','search')):
    c=h.find('.//control[@id="'+i+'"]')
    self.assertEqual(c.find('texturefocus').get('colordiffuse'),'accent_color')
-   self.assertEqual(c.findtext('texturefocus'),'slate-icons/'+icon+'.png')
-   self.assertEqual(c.findtext('texturenofocus'),'slate-icons/'+icon+'.png')
+   self.assertEqual(c.findtext('texturefocus'),'resource://resource.images.foundry.slate.icons/aliases/slate-icons/'+icon+'.png')
+   self.assertEqual(c.findtext('texturenofocus'),'resource://resource.images.foundry.slate.icons/aliases/slate-icons/'+icon+'.png')
    a=c.findall('animation');self.assertEqual(len(a),2)
    self.assertEqual([(x.text,x.get('start'),x.get('end')) for x in a],[('Focus','100','115'),('UnFocus','115','100')])
  def test_native_fixture_requires_fresh_evidence_and_real_toggle(self):

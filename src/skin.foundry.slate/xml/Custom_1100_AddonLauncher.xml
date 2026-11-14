@@ -160,18 +160,18 @@
 						<include content="IconButton">
 							<param name="control_id" value="801" />
 							<param name="onclick" value="ActivateWindow(addonbrowser,root)" />
-							<param name="icon" value="icons/submenu/addons.png" />
+							<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/submenu/addons.png" />
 						</include>
 						<include content="IconButton">
 							<param name="control_id" value="802" />
 							<param name="onclick" value="ActivateWindow(addonbrowser,addons://outdated/,return)" />
-							<param name="icon" value="icons/submenu/updates.png" />
+							<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/submenu/updates.png" />
 							<param name="visible" value="Integer.IsGreater(System.AddonUpdateCount,0)" />
 						</include>
 						<include content="IconButton">
 							<param name="control_id" value="803" />
 							<param name="onclick" value="ActivateWindow(systemsettings,addons)" />
-							<param name="icon" value="icons/submenu/settings.png" />
+							<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/submenu/settings.png" />
 						</include>
 					</control>
 					<control type="label">

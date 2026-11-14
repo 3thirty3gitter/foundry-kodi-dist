@@ -573,8 +573,8 @@
 				<width>300</width>
 				<height>215</height>
 				<aspectratio align="left" aligny="center">keep</aspectratio>
-				<!-- <texture fallback="DefaultTVShows.png">masks/addons.png</texture> -->
-				<texture fallback="DefaultTVShows.png">$VAR[ChannelListEPGIconVar]</texture>
+				<!-- <texture fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultTVShows.png">masks/addons.png</texture> -->
+				<texture fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultTVShows.png">$VAR[ChannelListEPGIconVar]</texture>
 				<visible>!String.IsEmpty(ListItem.ChannelName)</visible>
 				
 			</control>
@@ -948,7 +948,7 @@
 						<width>16</width>
 						<height>16</height>
 						<aspectratio>keep</aspectratio>
-						<texture colordiffuse="$VAR[FocusColorTheme]">icons/pvr/premiere.png</texture>
+						<texture colordiffuse="$VAR[FocusColorTheme]">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/premiere.png</texture>
 					</control>
 					<control type="image">
 						<left>6</left>
@@ -986,7 +986,7 @@
 						<width>16</width>
 						<height>16</height>
 						<aspectratio>keep</aspectratio>
-						<texture colordiffuse="$VAR[FocusColorTheme]">icons/pvr/premiere.png</texture>
+						<texture colordiffuse="$VAR[FocusColorTheme]">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/premiere.png</texture>
 					</control>
 					<control type="image">
 						<left>6</left>

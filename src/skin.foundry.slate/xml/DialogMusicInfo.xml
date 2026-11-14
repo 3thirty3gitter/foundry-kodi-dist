@@ -280,7 +280,7 @@
 							<top>21</top>
 							<width>190</width>
 							<height>190</height>
-							<texture border="2" fallback="DefaultAudio.png" background="true">$INFO[ListItem.Thumb]</texture>
+							<texture border="2" fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultAudio.png" background="true">$INFO[ListItem.Thumb]</texture>
 							<aspectratio>keep</aspectratio>
 							<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
 							<bordersize>4</bordersize>
@@ -316,7 +316,7 @@
 								<top>21</top>
 								<width>190</width>
 								<height>190</height>
-								<texture border="2" fallback="DefaultAudio.png" background="true">$INFO[ListItem.Thumb]</texture>
+								<texture border="2" fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultAudio.png" background="true">$INFO[ListItem.Thumb]</texture>
 								<aspectratio>keep</aspectratio>
 								<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
 								<bordersize>4</bordersize>
@@ -383,7 +383,7 @@
 							<align>center</align>
 						</control>
 						<control type="image">
-							<texture>icons/infodialogs/rating.png</texture>
+							<texture>resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/rating.png</texture>
 							<left>108</left>
 							<top>30</top>
 							<width>48</width>
@@ -394,7 +394,7 @@
 					</control>
 					<control type="radiobutton" id="120">
 						<include content="VideoInfoButtonsCommon">
-							<param name="icon" value="icons/infodialogs/image.png" />
+							<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/image.png" />
 						</include>
 						<label>$LOCALIZE[31028]</label>
 						<enable>!String.IsEmpty(ListItem.Art(fanart))</enable>
@@ -404,22 +404,22 @@
 					</control>
 					<include content="InfoDialogButton">
 						<param name="id" value="8" />
-						<param name="icon" value="icons/infodialogs/play.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/play.png" />
 						<param name="label" value="$LOCALIZE[208]" />
 					</include>
 					<include content="InfoDialogButton">
 						<param name="id" value="6" />
-						<param name="icon" value="icons/infodialogs/update.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/update.png" />
 						<param name="label" value="$LOCALIZE[184]" />
 					</include>
 					<include content="InfoDialogButton">
 						<param name="id" value="10" />
-						<param name="icon" value="icons/infodialogs/choose_image.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/choose_image.png" />
 						<param name="label" value="$LOCALIZE[13405]" />
 					</include>
 					<include content="InfoDialogButton">
 						<param name="id" value="12" />
-						<param name="icon" value="icons/infodialogs/info.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/info.png" />
 						<param name="label" value="" />
 					</include>
 				</control>

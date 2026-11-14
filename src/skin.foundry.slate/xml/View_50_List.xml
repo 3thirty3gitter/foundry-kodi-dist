@@ -447,7 +447,7 @@
 						<bottom>124</bottom>
 						<fadetime>200</fadetime>
 						<aspectratio aligny="top">keep</aspectratio>
-						<texture diffuse="masks/poster-50.png" fallback="DefaultVideo.png" background="true">$VAR[FlixThumbVar]</texture>
+						<texture diffuse="masks/poster-50.png" fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultVideo.png" background="true">$VAR[FlixThumbVar]</texture>
 					</control>
 					<control type="group">
 						<left>540</left>
@@ -479,7 +479,7 @@
 						<height>470</height>
 						<aspectratio aligny="bottom">keep</aspectratio>
 						<fadetime>300</fadetime>
-						<texture fallback="DefaultAudio.png" background="true">$INFO[Player.Icon]</texture>
+						<texture fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultAudio.png" background="true">$INFO[Player.Icon]</texture>
 					</control>
 					<control type="group">
 						<left>301</left>
@@ -1109,7 +1109,7 @@
 					<height>470</height>
 					<aspectratio aligny="bottom">keep</aspectratio>
 					<fadetime>300</fadetime>
-					<texture diffuse="masks/addons.png" fallback="DefaultAudio.png" background="true">$VAR[IconWallThumbVar]</texture>
+					<texture diffuse="masks/addons.png" fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultAudio.png" background="true">$VAR[IconWallThumbVar]</texture>
 					<visible>String.IsEqual(ListItem.DBType,song)</visible>
 				</control>
 				<control type="group">

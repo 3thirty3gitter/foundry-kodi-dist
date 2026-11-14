@@ -178,12 +178,12 @@
 							<include content="IconButton">
 								<param name="control_id" value="801" />
 								<param name="onclick" value="RunScript(script.foundry.slate.helper,mode=choose_search_provider)" />
-								<param name="icon" value="icons/submenu/cycleproviders.png" />
+								<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/submenu/cycleproviders.png" />
 							</include>
 							<include content="IconButton">
 								<param name="control_id" value="802" />
 								<param name="onclick" value="RunScript(script.foundry.slate.helper,mode=search_input)" />
-								<param name="icon" value="icons/submenu/search.png" />
+								<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/submenu/search.png" />
 							</include>
 							<include content="IconButton">
 								<param name="control_id" value="803" />
@@ -193,12 +193,12 @@
 							<include content="IconButton">
 								<param name="control_id" value="804" />
 								<param name="onclick" value="RunScript(script.foundry.slate.helper,mode=remove_all_spaths)" />
-								<param name="icon" value="icons/submenu/trash.png" />
+								<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/submenu/trash.png" />
 							</include>
 							<include content="IconButton">
 								<param name="control_id" value="805" />
 								<param name="onclick" value="Fullscreen" />
-								<param name="icon" value="icons/submenu/fullscreen.png" />
+								<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/submenu/fullscreen.png" />
 								<param name="visible" value="Player.HasMedia" />
 							</include>
 						</control>

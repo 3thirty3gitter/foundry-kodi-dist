@@ -66,8 +66,8 @@
 			<top>900</top>
 			<width>100</width>
 			<height>100</height>
-			<texturefocus colordiffuse="button_focus">calibrate/reset.png</texturefocus>
-			<texturenofocus>calibrate/reset.png</texturenofocus>
+			<texturefocus colordiffuse="button_focus">resource://resource.images.foundry.slate.icons/aliases/calibrate/reset.png</texturefocus>
+			<texturenofocus>resource://resource.images.foundry.slate.icons/aliases/calibrate/reset.png</texturenofocus>
 		</control>
 		<control type="label">
 			<description>window title</description>

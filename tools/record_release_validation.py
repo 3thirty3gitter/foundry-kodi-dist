@@ -52,10 +52,23 @@ def require_release_scope(manifest):
         raise ValueError('Foundry 1.5.0+ requires exactly one Games 0.1.0 package and native validation')
 
 
+def require_icon_evidence(qa, manifest):
+    if not any(p['id'] == 'resource.images.foundry.slate.icons' for p in manifest['packages']):
+        return
+    report = read(qa / 'native/slate-icons/native-icon-report.json')
+    assert report['passed'] is True
+    assert report['native']['passed'] is True
+    assert report['texture_failures'] == []
+    required = {'icons-home', 'icons-settings', 'icons-skinsettings', 'icons-keyboard', 'icons-default-placeholders', 'icons-playback-osd'}
+    assert required <= set(report['captures'])
+    assert all(re.fullmatch(r'[0-9a-f]{64}', report['captures'][name]) for name in required)
+
+
 def evidence(root, release):
     manifest = read(root / 'release.json')
     require_release_scope(manifest)
     qa = root / 'releases' / (release + '-qa')
+    require_icon_evidence(qa, manifest)
     source, packaged = read(qa / 'source-tests.json'), read(qa / 'packaged-tests.json')
     for report in (source, packaged):
         assert report['successful'] and report['tests'] > 0

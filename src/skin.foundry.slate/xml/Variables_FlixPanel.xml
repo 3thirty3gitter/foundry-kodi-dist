@@ -186,9 +186,9 @@
     <value> • [COLOR unfocused_text]Collection[/COLOR]</value>
 	</variable>
 	<variable name="CollectionStatus">
-    <value condition="String.IsEqual(Window(Home).Property(slate.nimbus.first_in_collection),true)">icons/collection_first.png</value>
-    <value condition="String.IsEqual(Window(Home).Property(slate.nimbus.collection_follow_up),true)">icons/collection.png</value>
-    <value>icons/collection.png</value>
+    <value condition="String.IsEqual(Window(Home).Property(slate.nimbus.first_in_collection),true)">resource://resource.images.foundry.slate.icons/aliases/icons/collection_first.png</value>
+    <value condition="String.IsEqual(Window(Home).Property(slate.nimbus.collection_follow_up),true)">resource://resource.images.foundry.slate.icons/aliases/icons/collection.png</value>
+    <value>resource://resource.images.foundry.slate.icons/aliases/icons/collection.png</value>
 	</variable>
 	<!-- Watched Progress -->
 	<variable name="RI_WatchedProgress">
@@ -206,9 +206,9 @@
 	</variable>
 	<!-- Status -->
 	<variable name="TVShowStatusIcon">
-		<value condition="!String.IsEmpty(ListItem.Status) + String.StartsWith(ListItem.Status,Returning)">icons/returning.png</value>
-		<value condition="!String.IsEmpty(ListItem.Status) + String.StartsWith(ListItem.Status,Ended)">icons/ended.png</value>
-		<value condition="!String.IsEmpty(ListItem.Status) + String.StartsWith(ListItem.Status,Canceled)">icons/canceled.png</value>
+		<value condition="!String.IsEmpty(ListItem.Status) + String.StartsWith(ListItem.Status,Returning)">resource://resource.images.foundry.slate.icons/aliases/icons/returning.png</value>
+		<value condition="!String.IsEmpty(ListItem.Status) + String.StartsWith(ListItem.Status,Ended)">resource://resource.images.foundry.slate.icons/aliases/icons/ended.png</value>
+		<value condition="!String.IsEmpty(ListItem.Status) + String.StartsWith(ListItem.Status,Canceled)">resource://resource.images.foundry.slate.icons/aliases/icons/canceled.png</value>
 		<!-- <value> • [COLOR unfocused_text]$INFO[Container.ListItem.Status][/COLOR]</value> -->
 	</variable>
 	<variable name="RI_Status">

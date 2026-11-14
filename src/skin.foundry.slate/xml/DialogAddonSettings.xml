@@ -36,8 +36,8 @@
         <align>center</align>
         <aligny>left</aligny>
         <font>font27_title</font>
-        <texturefocus border="72,0,8,0">foundry-icons/rows/settings-80-focus.png</texturefocus>
-        <texturenofocus border="72,0,8,0">foundry-icons/rows/settings-80-normal.png</texturenofocus>
+        <texturefocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/settings-80-focus.png</texturefocus>
+        <texturenofocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/settings-80-normal.png</texturenofocus>
       </control>
       <control type="grouplist" id="5">
         <description>control area</description>

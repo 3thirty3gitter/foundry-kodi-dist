@@ -50,8 +50,8 @@
       <font>font32</font>
       <textcolor>unfocused_text</textcolor>
       <focusedcolor>FFFFFFFF</focusedcolor>
-      <texturefocus border="72,0,8,0">foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-focus.png</texturefocus>
-      <texturenofocus border="72,0,8,0">foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-normal.png</texturenofocus>
+      <texturefocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-focus.png</texturefocus>
+      <texturenofocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-normal.png</texturenofocus>
     </definition>
     <param name="system_icon">settings</param>
     <param name="system_icon_height" />
@@ -73,8 +73,8 @@
       <font>font32</font>
       <textcolor>darkgrey</textcolor>
       <focusedcolor>FFFFFFFF</focusedcolor>
-      <texturefocus border="72,0,8,0">foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-focus.png</texturefocus>
-      <texturenofocus border="72,0,8,0">foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-normal.png</texturenofocus>
+      <texturefocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-focus.png</texturefocus>
+      <texturenofocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-normal.png</texturenofocus>
     </definition>
     <param name="system_icon">settings</param>
     <param name="system_icon_height" />
@@ -96,8 +96,8 @@
       <font>font37</font>
       <invalidcolor>invalid</invalidcolor>
       <selectedcolor>selected</selectedcolor>
-      <texturefocus border="72,0,8,0">foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-focus.png</texturefocus>
-      <texturenofocus border="72,0,8,0">foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-normal.png</texturenofocus>
+      <texturefocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-focus.png</texturefocus>
+      <texturenofocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-normal.png</texturenofocus>
     </definition>
     <param name="system_icon">settings</param>
     <param name="system_icon_height" />
@@ -115,8 +115,8 @@
       <font>font14</font>
       <invalidcolor>invalid</invalidcolor>
       <selectedcolor>selected</selectedcolor>
-      <texturefocus border="72,0,8,0">foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-focus.png</texturefocus>
-      <texturenofocus border="72,0,8,0">foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-normal.png</texturenofocus>
+      <texturefocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-focus.png</texturefocus>
+      <texturenofocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/$PARAM[system_icon]$PARAM[system_icon_height]-normal.png</texturenofocus>
       <focusedcolor>FFFFFFFF</focusedcolor>
     </definition>
     <param name="system_icon">settings</param>
@@ -355,7 +355,7 @@
         <width>28</width>
         <height>28</height>
         <aspectratio>keep</aspectratio>
-        <texture fallback="foundry-icons/settings.png">$INFO[ListItem.Icon]</texture>
+        <texture fallback="resource://resource.images.foundry.slate.icons/aliases/foundry-icons/settings.png">$INFO[ListItem.Icon]</texture>
       </control>
     </itemlayout>
     <focusedlayout height="70" width="446">
@@ -383,7 +383,7 @@
         <width>28</width>
         <height>28</height>
         <aspectratio>keep</aspectratio>
-        <texture fallback="foundry-icons/settings.png">$INFO[ListItem.Icon]</texture>
+        <texture fallback="resource://resource.images.foundry.slate.icons/aliases/foundry-icons/settings.png">$INFO[ListItem.Icon]</texture>
       </control>
     </focusedlayout>
   </include>

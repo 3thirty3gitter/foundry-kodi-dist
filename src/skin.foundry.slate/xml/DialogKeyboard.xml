@@ -457,10 +457,10 @@
 						<ondown>100</ondown>
 						<texturefocus colordiffuse="$VAR[FocusColorTheme]">buttons/roundbutton-fo.png</texturefocus>
 						<texturenofocus />
-						<textureradioonfocus colordiffuse="$VAR[FocusedTextColorVar]">icons/keyboard/letters.png</textureradioonfocus>
-						<textureradioonnofocus colordiffuse="darkgrey">icons/keyboard/letters.png</textureradioonnofocus>
-						<textureradioofffocus colordiffuse="$VAR[FocusedTextColorVar]">icons/keyboard/accents.png</textureradioofffocus>
-						<textureradiooffnofocus colordiffuse="darkgrey">icons/keyboard/accents.png</textureradiooffnofocus>
+						<textureradioonfocus colordiffuse="$VAR[FocusedTextColorVar]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/letters.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="darkgrey">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/letters.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="$VAR[FocusedTextColorVar]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/accents.png</textureradioofffocus>
+						<textureradiooffnofocus colordiffuse="darkgrey">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/accents.png</textureradiooffnofocus>
 						<radioposx>32l</radioposx>
 						<radiowidth>56</radiowidth>
 						<radioheight>36</radioheight>
@@ -473,10 +473,10 @@
 						<ondown>101</ondown>
 						<texturefocus colordiffuse="$VAR[FocusColorTheme]">buttons/roundbutton-fo.png</texturefocus>
 						<texturenofocus />
-						<textureradioonfocus colordiffuse="$VAR[FocusedTextColorVar]">icons/keyboard/capslock.png</textureradioonfocus>
-						<textureradioonnofocus colordiffuse="$VAR[FocusColorTheme]">icons/keyboard/capslock.png</textureradioonnofocus>
-						<textureradioofffocus colordiffuse="$VAR[FocusedTextColorVar]">icons/keyboard/capslock.png</textureradioofffocus>
-						<textureradiooffnofocus colordiffuse="darkgrey">icons/keyboard/capslock.png</textureradiooffnofocus>
+						<textureradioonfocus colordiffuse="$VAR[FocusedTextColorVar]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/capslock.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="$VAR[FocusColorTheme]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/capslock.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="$VAR[FocusedTextColorVar]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/capslock.png</textureradioofffocus>
+						<textureradiooffnofocus colordiffuse="darkgrey">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/capslock.png</textureradiooffnofocus>
 						<radioposx>40</radioposx>
 						<radioposy>42</radioposy>
 						<radiowidth>42</radiowidth>
@@ -490,10 +490,10 @@
 						<ondown>102</ondown>
 						<texturefocus colordiffuse="$VAR[FocusColorTheme]">buttons/roundbutton-fo.png</texturefocus>
 						<texturenofocus />
-						<textureradioonfocus colordiffuse="$VAR[FocusedTextColorVar]">icons/keyboard/shift.png</textureradioonfocus>
-						<textureradioonnofocus colordiffuse="$VAR[FocusColorTheme]">icons/keyboard/shift.png</textureradioonnofocus>
-						<textureradioofffocus colordiffuse="$VAR[FocusedTextColorVar]">icons/keyboard/shift.png</textureradioofffocus>
-						<textureradiooffnofocus colordiffuse="darkgrey">icons/keyboard/shift.png</textureradiooffnofocus>
+						<textureradioonfocus colordiffuse="$VAR[FocusedTextColorVar]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/shift.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="$VAR[FocusColorTheme]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/shift.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="$VAR[FocusedTextColorVar]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/shift.png</textureradioofffocus>
+						<textureradiooffnofocus colordiffuse="darkgrey">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/shift.png</textureradiooffnofocus>
 						<radioposx>42</radioposx>
 						<radiowidth>36</radiowidth>
 						<radioheight>36</radioheight>
@@ -506,10 +506,10 @@
 						<ondown>104</ondown>
 						<texturefocus />
 						<texturenofocus />
-						<textureradioonfocus colordiffuse="$VAR[FocusColorTheme]">icons/keyboard/spacebar.png</textureradioonfocus>
-						<textureradioonnofocus colordiffuse="darkgrey">icons/keyboard/spacebar.png</textureradioonnofocus>
-						<textureradioofffocus colordiffuse="$VAR[FocusColorTheme]">icons/keyboard/spacebar.png</textureradioofffocus>
-						<textureradiooffnofocus colordiffuse="darkgrey">icons/keyboard/spacebar.png</textureradiooffnofocus>
+						<textureradioonfocus colordiffuse="$VAR[FocusColorTheme]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/spacebar.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="darkgrey">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/spacebar.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="$VAR[FocusColorTheme]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/spacebar.png</textureradioofffocus>
+						<textureradiooffnofocus colordiffuse="darkgrey">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/spacebar.png</textureradiooffnofocus>
 						<radioposx>34</radioposx>
 						<radiowidth>328</radiowidth>
 						<radioheight>36</radioheight>
@@ -522,10 +522,10 @@
 						<onup>167</onup>
 						<texturefocus colordiffuse="$VAR[FocusColorTheme]">buttons/roundbutton-fo.png</texturefocus>
 						<texturenofocus />
-						<textureradioonfocus colordiffuse="$VAR[FocusedTextColorVar]">icons/keyboard/arrowleft.png</textureradioonfocus>
-						<textureradioonnofocus colordiffuse="darkgrey">icons/keyboard/arrowleft.png</textureradioonnofocus>
-						<textureradioofffocus colordiffuse="$VAR[FocusedTextColorVar]">icons/keyboard/arrowleft.png</textureradioofffocus>
-						<textureradiooffnofocus colordiffuse="darkgrey">icons/keyboard/arrowleft.png</textureradiooffnofocus>
+						<textureradioonfocus colordiffuse="$VAR[FocusedTextColorVar]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/arrowleft.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="darkgrey">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/arrowleft.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="$VAR[FocusedTextColorVar]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/arrowleft.png</textureradioofffocus>
+						<textureradiooffnofocus colordiffuse="darkgrey">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/arrowleft.png</textureradiooffnofocus>
 						<radioposx>38</radioposx>
 						<radiowidth>36</radiowidth>
 						<radioheight>36</radioheight>
@@ -538,10 +538,10 @@
 						<onup>168</onup>
 						<texturefocus colordiffuse="$VAR[FocusColorTheme]">buttons/roundbutton-fo.png</texturefocus>
 						<texturenofocus />
-						<textureradioonfocus colordiffuse="$VAR[FocusedTextColorVar]">icons/keyboard/arrowright.png</textureradioonfocus>
-						<textureradioonnofocus colordiffuse="darkgrey">icons/keyboard/arrowright.png</textureradioonnofocus>
-						<textureradioofffocus colordiffuse="$VAR[FocusedTextColorVar]">icons/keyboard/arrowright.png</textureradioofffocus>
-						<textureradiooffnofocus colordiffuse="darkgrey">icons/keyboard/arrowright.png</textureradiooffnofocus>
+						<textureradioonfocus colordiffuse="$VAR[FocusedTextColorVar]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/arrowright.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="darkgrey">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/arrowright.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="$VAR[FocusedTextColorVar]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/arrowright.png</textureradioofffocus>
+						<textureradiooffnofocus colordiffuse="darkgrey">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/arrowright.png</textureradiooffnofocus>
 						<radioposx>45</radioposx>
 						<radiowidth>36</radiowidth>
 						<radioheight>36</radioheight>
@@ -554,10 +554,10 @@
 						<ondown>109</ondown>
 						<texturefocus colordiffuse="$VAR[FocusColorTheme]">buttons/roundbutton-fo.png</texturefocus>
 						<texturenofocus />
-						<textureradioonfocus colordiffuse="$VAR[FocusedTextColorVar]">icons/keyboard/backspace.png</textureradioonfocus>
-						<textureradioonnofocus colordiffuse="darkgrey">icons/keyboard/backspace.png</textureradioonnofocus>
-						<textureradioofffocus colordiffuse="$VAR[FocusedTextColorVar]">icons/keyboard/backspace.png</textureradioofffocus>
-						<textureradiooffnofocus colordiffuse="darkgrey">icons/keyboard/backspace.png</textureradiooffnofocus>
+						<textureradioonfocus colordiffuse="$VAR[FocusedTextColorVar]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/backspace.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="darkgrey">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/backspace.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="$VAR[FocusedTextColorVar]">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/backspace.png</textureradioofffocus>
+						<textureradiooffnofocus colordiffuse="darkgrey">resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/backspace.png</textureradiooffnofocus>
 						<radioposx>31</radioposx>
 						<radiowidth>51</radiowidth>
 						<radioheight>36</radioheight>

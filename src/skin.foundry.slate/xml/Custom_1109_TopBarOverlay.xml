@@ -266,7 +266,7 @@
 						<height>40</height>
 						<fadetime>300</fadetime>
 						<aspectratio aligny="center" align="right">keep</aspectratio>
-						<texture>dialogs/volume/mute.png</texture>
+						<texture>resource://resource.images.foundry.slate.icons/aliases/dialogs/volume/mute.png</texture>
 						<visible>Player.Muted</visible>
 					</control>
 				</control>

@@ -44,7 +44,7 @@
 							<top>10</top>
 							<width>20</width>
 							<height>30</height>
-							<texture>icons/keyboard/arrowleft.png</texture>
+							<texture>resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/arrowleft.png</texture>
 							<animation effect="fade" start="0" end="100" time="150">VisibleChange</animation>
 							<visible>Control.HasFocus(11) + Container(11).HasPrevious</visible>
 						</control>
@@ -53,7 +53,7 @@
 							<top>10</top>
 							<width>20</width>
 							<height>30</height>
-							<texture>icons/keyboard/arrowright.png</texture>
+							<texture>resource://resource.images.foundry.slate.icons/aliases/icons/keyboard/arrowright.png</texture>
 							<animation effect="fade" start="0" end="100" time="150">VisibleChange</animation>
 							<visible>Control.HasFocus(11) + !String.IsEqual(Container(11).CurrentItem, Container(11).NumItems)</visible>
 						</control>

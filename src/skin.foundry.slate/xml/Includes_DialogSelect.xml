@@ -55,7 +55,7 @@
 						<height>80</height>
 						<aspectratio align="top">keep</aspectratio>
 						<aligny>center</aligny>
-						<texture>icons/pvr/timers/recording.png</texture>
+						<texture>resource://resource.images.foundry.slate.icons/aliases/icons/pvr/timers/recording.png</texture>
 						<visible>ListItem.Property(PVR.IsRecordingTimer)</visible>
 					</control>
 					<control type="image">
@@ -65,7 +65,7 @@
 						<height>80</height>
 						<aspectratio align="top">keep</aspectratio>
 						<aligny>center</aligny>
-						<texture>icons/pvr/timers/bell.png</texture>
+						<texture>resource://resource.images.foundry.slate.icons/aliases/icons/pvr/timers/bell.png</texture>
 						<visible>ListItem.Property(PVR.IsRemindingTimer)</visible>
 					</control>
 					<control type="label">
@@ -114,7 +114,7 @@
 						<height>80</height>
 						<aspectratio align="top">keep</aspectratio>
 						<aligny>center</aligny>
-						<texture>icons/pvr/timers/recording.png</texture>
+						<texture>resource://resource.images.foundry.slate.icons/aliases/icons/pvr/timers/recording.png</texture>
 						<visible>ListItem.Property(PVR.IsRecordingTimer)</visible>
 					</control>
 					<control type="image">
@@ -124,7 +124,7 @@
 						<height>80</height>
 						<aspectratio align="top">keep</aspectratio>
 						<aligny>center</aligny>
-						<texture>icons/pvr/timers/bell.png</texture>
+						<texture>resource://resource.images.foundry.slate.icons/aliases/icons/pvr/timers/bell.png</texture>
 						<visible>ListItem.Property(PVR.IsRemindingTimer)</visible>
 					</control>
 					<control type="label">
@@ -427,7 +427,7 @@
 							<width>444</width>
 							<height>250</height>
 							<aspectratio>scale</aspectratio>
-							<texture border="4">DefaultVideo.png</texture>
+							<texture border="4">resource://resource.images.foundry.slate.icons/aliases/DefaultVideo.png</texture>
 							<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
 							<bordersize>4</bordersize>
 						</control>
@@ -458,7 +458,7 @@
 							<width>444</width>
 							<height>250</height>
 							<aspectratio>scale</aspectratio>
-							<texture border="4">DefaultVideo.png</texture>
+							<texture border="4">resource://resource.images.foundry.slate.icons/aliases/DefaultVideo.png</texture>
 							<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
 							<bordersize>4</bordersize>
 						</control>
@@ -533,7 +533,7 @@
 							<width>444</width>
 							<height>250</height>
 							<aspectratio>scale</aspectratio>
-							<texture border="4">DefaultVideo.png</texture>
+							<texture border="4">resource://resource.images.foundry.slate.icons/aliases/DefaultVideo.png</texture>
 							<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
 							<bordersize>4</bordersize>
 						</control>
@@ -564,7 +564,7 @@
 							<width>444</width>
 							<height>250</height>
 							<aspectratio>scale</aspectratio>
-							<texture border="4">DefaultVideo.png</texture>
+							<texture border="4">resource://resource.images.foundry.slate.icons/aliases/DefaultVideo.png</texture>
 							<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
 							<bordersize>4</bordersize>
 						</control>

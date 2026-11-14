@@ -46,7 +46,7 @@
 							<width>380</width>
 							<height>50</height>
 							<aspectratio align="center">keep</aspectratio>
-							<texture colordiffuse="$VAR[UnfcusedTextColor]">DefaultIconInfo.png</texture>
+							<texture colordiffuse="$VAR[UnfcusedTextColor]">resource://resource.images.foundry.slate.icons/aliases/DefaultIconInfo.png</texture>
 						</control>
 						<control type="label">
 							<description>notification</description>
@@ -110,7 +110,7 @@
 							<top>60</top>
 							<width>30</width>
 							<height>20</height>
-							<texture colordiffuse="unfocused_text">windows/subtitles/icon_close_caption.png</texture>
+							<texture colordiffuse="unfocused_text">resource://resource.images.foundry.slate.icons/aliases/windows/subtitles/icon_close_caption.png</texture>
 							<visible>ListItem.property(hearing_imp)</visible>
 						</control>
 						<control type="image">
@@ -118,7 +118,7 @@
 							<top>60</top>
 							<width>60</width>
 							<height>20</height>
-							<texture colordiffuse="unfocused_text">windows/subtitles/icon_sync.png</texture>
+							<texture colordiffuse="unfocused_text">resource://resource.images.foundry.slate.icons/aliases/windows/subtitles/icon_sync.png</texture>
 							<visible>ListItem.property(sync)</visible>
 						</control>
 						<control type="textbox">
@@ -171,7 +171,7 @@
 							<top>60</top>
 							<width>30</width>
 							<height>20</height>
-							<texture colordiffuse="focused_text">windows/subtitles/icon_close_caption.png</texture>
+							<texture colordiffuse="focused_text">resource://resource.images.foundry.slate.icons/aliases/windows/subtitles/icon_close_caption.png</texture>
 							<visible>ListItem.property(hearing_imp)</visible>
 						</control>
 						<control type="image">
@@ -179,7 +179,7 @@
 							<top>60</top>
 							<width>60</width>
 							<height>20</height>
-							<texture colordiffuse="focused_text">windows/subtitles/icon_sync.png</texture>
+							<texture colordiffuse="focused_text">resource://resource.images.foundry.slate.icons/aliases/windows/subtitles/icon_sync.png</texture>
 							<visible>ListItem.property(sync)</visible>
 						</control>
 						<control type="textbox">

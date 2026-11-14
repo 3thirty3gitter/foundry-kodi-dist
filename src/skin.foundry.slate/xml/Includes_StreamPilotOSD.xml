@@ -24,8 +24,8 @@
     <value>$INFO[Player.Title]</value>
   </variable>
   <variable name="StreamPilotOSDPauseIcon">
-    <value condition="Player.Paused | Player.Forwarding | Player.Rewinding">streampilot/play_arrow.png</value>
-    <value>streampilot/pause.png</value>
+    <value condition="Player.Paused | Player.Forwarding | Player.Rewinding">resource://resource.images.foundry.slate.icons/aliases/streampilot/play_arrow.png</value>
+    <value>resource://resource.images.foundry.slate.icons/aliases/streampilot/pause.png</value>
   </variable>
   <variable name="StreamPilotOSDResolution">
     <value condition="String.IsEqual(VideoPlayer.VideoResolution,4K)">resource://resource.images.foundry.osd/resolution_4k_supplied.jpg</value>
@@ -167,7 +167,7 @@
         <width>180</width>
         <height>270</height>
         <aspectratio>scale</aspectratio>
-        <texture diffuse="streampilot/poster-mask.png" fallback="DefaultVideo.png">$VAR[StreamPilotOSDPoster]</texture>
+        <texture diffuse="streampilot/poster-mask.png" fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultVideo.png">$VAR[StreamPilotOSDPoster]</texture>
       </control>
       <control type="group">
         <left>272</left>
@@ -282,7 +282,7 @@
         <width>28</width>
         <height>28</height>
         <aspectratio>keep</aspectratio>
-        <texture>streampilot/fast_rewind.png</texture>
+        <texture>resource://resource.images.foundry.slate.icons/aliases/streampilot/fast_rewind.png</texture>
         <animation effect="fade" start="40" end="40" time="0" condition="![Player.SeekEnabled]">Conditional</animation>
       </control>
       <control type="button" id="8702">
@@ -336,7 +336,7 @@
         <width>28</width>
         <height>28</height>
         <aspectratio>keep</aspectratio>
-        <texture>streampilot/fast_forward.png</texture>
+        <texture>resource://resource.images.foundry.slate.icons/aliases/streampilot/fast_forward.png</texture>
         <animation effect="fade" start="40" end="40" time="0" condition="![Player.SeekEnabled]">Conditional</animation>
       </control>
       <control type="button" id="8704">
@@ -362,7 +362,7 @@
         <width>28</width>
         <height>28</height>
         <aspectratio>keep</aspectratio>
-        <texture>streampilot/stop.png</texture>
+        <texture>resource://resource.images.foundry.slate.icons/aliases/streampilot/stop.png</texture>
       </control>
       <control type="button" id="8705">
         <right>36</right>
@@ -389,7 +389,7 @@
         <width>28</width>
         <height>28</height>
         <aspectratio>keep</aspectratio>
-        <texture>streampilot/settings.png</texture>
+        <texture>resource://resource.images.foundry.slate.icons/aliases/streampilot/settings.png</texture>
       </control>
     </control>
   </include>

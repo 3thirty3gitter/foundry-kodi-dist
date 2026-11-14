@@ -172,7 +172,7 @@ class DevelopmentWorkflowTests(unittest.TestCase):
         for renderer in ('library', 'startup_splash', 'interface', 'weather', 'games', 'slate_navigation', 'slate_weather'):
             self.assertGreater(self.workflow.index('tools/render_' + renderer + '.py'),
                                self.workflow.index('tools/verify_packaged_sources.py'))
-        self.assertEqual(self.workflow.count("steps.packaged.outcome == 'success'"), 7)
+        self.assertEqual(self.workflow.count("steps.packaged.outcome == 'success'"), 8)
         self.assertIn('tools/record_release_validation.py --check-scope', self.workflow)
 
     def test_all_five_shipped_native_reports_are_retained(self):
