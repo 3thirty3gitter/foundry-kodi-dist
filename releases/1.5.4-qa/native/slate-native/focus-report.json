@@ -1,0 +1,372 @@
+{
+  "passed": true,
+  "trace": [
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 801,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Right",
+      "focus": 802,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Select",
+      "focus": 802,
+      "window": 10004,
+      "modal": 9999
+    },
+    {
+      "action": "Back",
+      "focus": 802,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Right",
+      "focus": 803,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Select",
+      "focus": 803,
+      "window": 10000,
+      "modal": 11107
+    },
+    {
+      "action": "Back",
+      "focus": 803,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Up",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 803,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Back",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 803,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Left",
+      "focus": 802,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Left",
+      "focus": 801,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Right",
+      "focus": 802,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Select",
+      "focus": 802,
+      "window": 10004,
+      "modal": 9999
+    },
+    {
+      "action": "Back",
+      "focus": 802,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Right",
+      "focus": 803,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Select",
+      "focus": 803,
+      "window": 10000,
+      "modal": 11107
+    },
+    {
+      "action": "Back",
+      "focus": 803,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Up",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 803,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Back",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 803,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Left",
+      "focus": 802,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Left",
+      "focus": 801,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Right",
+      "focus": 802,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Select",
+      "focus": 802,
+      "window": 10004,
+      "modal": 9999
+    },
+    {
+      "action": "Back",
+      "focus": 802,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Right",
+      "focus": 803,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Select",
+      "focus": 803,
+      "window": 10000,
+      "modal": 11107
+    },
+    {
+      "action": "Back",
+      "focus": 803,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Up",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Down",
+      "focus": 803,
+      "window": 10000,
+      "modal": 9999
+    },
+    {
+      "action": "Back",
+      "focus": 9000,
+      "window": 10000,
+      "modal": 9999
+    }
+  ],
+  "scope": "Native desktop shipped Home XML with offline helpers suppressed. Search uses configured built-in window1107. No Shield/live-provider/widget population claim."
+}
