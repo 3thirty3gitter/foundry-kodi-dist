@@ -92,7 +92,9 @@ def require_icon_evidence(qa, manifest):
     assert report['passed'] is True
     assert report['native']['passed'] is True
     assert report['texture_failures'] == []
-    required = {'icons-home', 'icons-settings', 'icons-skinsettings', 'icons-keyboard', 'icons-default-placeholders', 'icons-default-folder', 'icons-default-file', 'icons-playback-osd'}
+    matches = report['placeholder_pixel_matches']
+    assert len(matches) == 2 and all(x['stroke_recall'] > .65 for x in matches)
+    required = {'icons-home', 'icons-settings', 'icons-skinsettings', 'icons-keyboard', 'icons-default-placeholders', 'icons-wall-default-folder', 'icons-wall-default-file', 'icons-playback-osd'}
     assert required <= set(report['captures'])
     assert all(re.fullmatch(r'[0-9a-f]{64}', report['captures'][name]) for name in required)
 

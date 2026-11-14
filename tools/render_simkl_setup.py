@@ -95,9 +95,12 @@ try:
   assert observed['dialog_id']==expected_id, ('Wrong native dialog',phase,observed)
   text=' '.join(' '.join(str(v['text']).split()) for v in observed['values'])
   assert 'Foundry SIMKL' in text, ('Wrong dialog heading',observed)
-  assert 'queued history' in text and 'Foundry will not sign you in' in text, ('Missing disclosure',observed)
-  expected={'missing':'Ask Kodi to install the official SIMKL tracker?', 'disabled':'SIMKL is installed but disabled. Foundry will leave it disabled.', 'enabled':'Open its settings?'}[phase]
+  assert 'queued history' in text and "Foundry won't sign you in" in text, ('Missing disclosure',observed)
+  expected={'missing':'Install the official SIMKL tracker?', 'disabled':'SIMKL is disabled and will stay disabled.', 'enabled':'Open SIMKL settings?'}[phase]
   assert expected in text, ('Wrong phase dialog body',phase,observed)
+  consent="Linked profiles may resume tracking and upload queued history. Foundry won't sign you in or change settings. "
+  complete=("SIMKL is disabled and will stay disabled. Enable via My add-ons > Services. Linked profiles may resume tracking and upload queued history. Foundry won't sign you in or change settings." if phase=='disabled' else consent+expected)
+  assert complete in text, ('Incomplete native disclosure text',phase,observed)
   if phase!='disabled':
    assert 'Cancel' in text, ('Cancel button missing',observed)
    assert ('Install' if phase=='missing' else 'Settings') in text, ('Action button missing',observed)

@@ -5,10 +5,12 @@ import xbmcaddon
 import xbmcgui
 
 ADDON = 'script.simkl'
-NOTICE = ('SIMKL can send watched activity and ratings to your account. Installing '
-          'or enabling its service may resume tracking and queued history on an '
-          'already-linked profile. New accounts link through the official PIN flow. '
-          'Foundry will not sign you in or change your tracking settings.')
+NOTICE = ('Linked profiles may resume tracking and upload queued history.\n'
+          "Foundry won't sign you in or change settings.\n")
+DISABLED_NOTICE = ('SIMKL is disabled and will stay disabled.\n'
+                   'Enable via My add-ons > Services. Linked profiles may\n'
+                   'resume tracking and upload queued history.\n'
+                   "Foundry won't sign you in or change settings.")
 
 
 def details():
@@ -28,12 +30,12 @@ def main():
         installed = details()
         if installed is not None:
             if not installed.get('enabled'):
-                dialog.ok('Foundry SIMKL', 'SIMKL is installed but disabled. Foundry will leave it disabled. ' + NOTICE + ' Enable it yourself in My add-ons > Services if desired.')
+                dialog.ok('Foundry SIMKL', DISABLED_NOTICE)
                 return
-            if dialog.yesno('Foundry SIMKL', NOTICE + ' Open its settings?', nolabel='Cancel', yeslabel='Settings'):
+            if dialog.yesno('Foundry SIMKL', NOTICE + 'Open SIMKL settings?', nolabel='Cancel', yeslabel='Settings'):
                 xbmcaddon.Addon(ADDON).openSettings()
             return
-        if dialog.yesno('Foundry SIMKL', NOTICE + ' Ask Kodi to install the official SIMKL tracker?', nolabel='Cancel', yeslabel='Install'):
+        if dialog.yesno('Foundry SIMKL', NOTICE + 'Install the official SIMKL tracker?', nolabel='Cancel', yeslabel='Install'):
             xbmc.executebuiltin('InstallAddon(script.simkl)')
             # Kodi owns install/dependencies and any confirmation. No forced enable,
             # polling, login action, account read or automatic settings changes.

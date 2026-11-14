@@ -26,6 +26,16 @@ class SetupTests(unittest.TestCase):
         mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
         self.assertEqual(calls, [])  # loading never runs setup
         mod.main(); return calls
+    def test_consent_text_is_concise_and_complete(self):
+        for state, question in ((None, 'Install the official SIMKL tracker?'), ({'enabled':True}, 'Open SIMKL settings?')):
+            body = self.run_case(state, False)[0][1]
+            self.assertIn('Linked profiles may resume tracking and upload queued history.', body)
+            self.assertIn("Foundry won't sign you in or change settings.", body)
+            self.assertTrue(body.endswith(question))
+            self.assertLessEqual(len(body), 160)
+        disabled = self.run_case({'enabled':False},False)[0][1][1]
+        self.assertIn('will stay disabled',disabled)
+        self.assertLessEqual(max(map(len,disabled.splitlines())), 55)
     def test_cancel_no_install(self):
         calls = self.run_case(None, False)
         self.assertFalse(any(c[0] in ('builtin', 'settings') for c in calls))
