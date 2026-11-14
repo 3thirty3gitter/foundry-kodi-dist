@@ -95,6 +95,11 @@ jobs:
         timeout-minutes: 6
         working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
         run: bash tools/run_native_qa.sh tools/render_games.py --output "$QA/games" 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-games-run.log"
+      - name: Verify Slate footer navigation in native Kodi
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && steps.kodi.outcome == 'success' }}
+        timeout-minutes: 6
+        working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
+        run: bash tools/run_native_qa.sh tools/render_slate_navigation.py --output "$QA/slate-native" 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-slate-run.log"
       - name: Collect all native QA evidence
         if: always()
         run: |
