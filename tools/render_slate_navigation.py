@@ -39,6 +39,17 @@ def wait(fn,t=45):
   except Exception:pass
   time.sleep(.3)
  raise AssertionError('timeout')
+def assert_saved_icon_setting(path,expected,phase):
+ raw=path.read_bytes()
+ (out/('skin-settings-'+phase+'.xml')).write_bytes(raw)
+ root=E.fromstring(raw)
+ matches=[n for n in root.findall('setting') if n.get('id','').casefold()=='slatehidemainmenuicons']
+ assert len(matches)==1,('Missing or duplicate persisted icon setting',[(n.get('id'),n.text) for n in matches])
+ n=matches[0]
+ assert n.get('type')=='bool',('Wrong saved setting type',n.attrib)
+ assert (n.text or '').strip()==expected,('Wrong saved icon preference',n.attrib,n.text,expected)
+ report.setdefault('saved_icon_settings',[]).append({'phase':phase,'id':n.get('id'),'value':n.text})
+
 def modal():return rpc('XBMC.GetInfoBooleans',{'booleans':['System.HasActiveModalDialog']}).get('System.HasActiveModalDialog')
 report={'scope':'Offline native Home/navigation/switch-back smoke; helper services/setup suppressed in disposable copies only. Not a full runtime/coexistence certification.','passed':False}
 try:
@@ -86,7 +97,7 @@ try:
   # Stop gracefully so skin settings are persisted, then restart exact disposable profile.
   rpc('Application.Quit');k.wait(timeout=30)
   setting=userdata/'addon_data/skin.foundry.slate/settings.xml'
-  assert E.parse(setting).find("setting[@id='SlateHideMainMenuIcons']").text=='true'
+  assert_saved_icon_setting(setting,'true','hidden-before-restart')
   k=subprocess.Popen(['kodi','-p','-fs','--windowing=x11','--debug'],env=env,stdout=log,stderr=log)
   wait(lambda:rpc('JSONRPC.Ping')=='pong');time.sleep(4)
   assert rpc('XBMC.GetInfoBooleans',{'booleans':['Skin.HasSetting(SlateHideMainMenuIcons)']})['Skin.HasSetting(SlateHideMainMenuIcons)']
@@ -98,7 +109,7 @@ try:
   rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.slate.navigationqa','wait':False})
   wait(lambda:(out/'restored.json').exists())
   rpc('Application.Quit');k.wait(timeout=30)
-  assert E.parse(setting).find("setting[@id='SlateHideMainMenuIcons']").text=='false'
+  assert_saved_icon_setting(setting,'false','shown-before-restart')
   k=subprocess.Popen(['kodi','-p','-fs','--windowing=x11','--debug'],env=env,stdout=log,stderr=log)
   wait(lambda:rpc('JSONRPC.Ping')=='pong');time.sleep(4)
   assert not rpc('XBMC.GetInfoBooleans',{'booleans':['Skin.HasSetting(SlateHideMainMenuIcons)']})['Skin.HasSetting(SlateHideMainMenuIcons)']
