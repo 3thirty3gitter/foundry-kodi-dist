@@ -3,13 +3,13 @@
   <section id="weather.foundry.canada">
     <category id="locations" label="30000">
       <group id="1">
-        <setting id="choose1" type="action" label="30001"><data>RunScript(weather.foundry.canada,choose:1)</data><control type="button" format="action" /></setting>
+        <setting id="choose1" type="action" label="30001"><data>RunScript(weather.foundry.canada,choose:1)</data><control type="button" format="action"><close>true</close></control></setting>
         <setting id="location1_label" type="string" label="30004"><default></default><control type="edit" format="string" /><dependencies><dependency type="enable">false</dependency></dependencies></setting>
         <setting id="location1_id" type="string" label="30005"><default></default><visible>false</visible><control type="edit" format="string" /></setting>
-        <setting id="choose2" type="action" label="30002"><data>RunScript(weather.foundry.canada,choose:2)</data><control type="button" format="action" /></setting>
+        <setting id="choose2" type="action" label="30002"><data>RunScript(weather.foundry.canada,choose:2)</data><control type="button" format="action"><close>true</close></control></setting>
         <setting id="location2_label" type="string" label="30004"><default></default><control type="edit" format="string" /><dependencies><dependency type="enable">false</dependency></dependencies></setting>
         <setting id="location2_id" type="string" label="30005"><default></default><visible>false</visible><control type="edit" format="string" /></setting>
-        <setting id="choose3" type="action" label="30003"><data>RunScript(weather.foundry.canada,choose:3)</data><control type="button" format="action" /></setting>
+        <setting id="choose3" type="action" label="30003"><data>RunScript(weather.foundry.canada,choose:3)</data><control type="button" format="action"><close>true</close></control></setting>
         <setting id="location3_label" type="string" label="30004"><default></default><control type="edit" format="string" /><dependencies><dependency type="enable">false</dependency></dependencies></setting>
         <setting id="location3_id" type="string" label="30005"><default></default><visible>false</visible><control type="edit" format="string" /></setting>
       </group>

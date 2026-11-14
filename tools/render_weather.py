@@ -92,6 +92,12 @@ class SyntheticClient:
     def get(self,path,validator,**kwargs):
         data=json.loads((BASE/'scenario.json').read_text(encoding='utf-8'))
         locations={'on-118':'Ottawa','bc-74':'Vancouver'}
+        if path == client.CATALOGUE:
+            catalogue={'type':'FeatureCollection','features':[
+                {'id':key,'properties':{'name':{'en':name,'fr':name}}}
+                for key,name in locations.items()]}
+            validator(catalogue)
+            return catalogue,data['fetched'],False,'fresh'
         identifier=path.removeprefix(client.COLLECTION+'/items/').removesuffix('?f=json')
         if identifier not in locations or path != client.COLLECTION+'/items/'+identifier+'?f=json':
             raise AssertionError('Unexpected fixture endpoint: '+path)
@@ -148,7 +154,7 @@ try:
             if xbmc.getInfoLabel('Container(9000).ListItem.Property(id)')=='weather':return
         raise AssertionError('Weather menu item is missing')
     first_state=True
-    deadline=time.monotonic()+240
+    deadline=time.monotonic()+360
     while not (BASE/'complete').exists() and time.monotonic()<deadline:
         weather=xbmcgui.Window(12600)
         try:focus=home.getFocusId()
@@ -180,6 +186,9 @@ try:
             value=json.loads(command.read_text(encoding='utf-8'))
             phase('command-started',command=value)
             if value['action']=='focus-menu':focus_menu()
+            elif value['action']=='open-provider-settings':
+                # Asynchronous: modal settings must not block the observer acknowledgment.
+                xbmc.executebuiltin('Addon.OpenSettings(weather.foundry.canada)')
             elif value['action']=='capture':xbmc.executebuiltin('TakeScreenshot('+str(OUTPUT/(value['name']+'.png'))+')')
             # Consumption is the host's completion acknowledgment, not merely
             # receipt. Never let host input race the menu-selection loop.
@@ -559,16 +568,78 @@ def run(output, display, port):
                 assert state().get('focus') not in range(15150, 15155), state()
                 capture('weather-other-provider-navigation')
                 assert rpc('Settings.GetSettingValue', {'setting': 'weather.addon'})['value'] == ALTERNATE
+                # Real settings action/search selection, not scripted setSetting.
+                alternate_navigation_focus = state().get('focus')
+                assert rpc('Settings.SetSettingValue', {'setting': 'weather.addon', 'value': PROVIDER})
+                rpc('Input.Back')
+                atomic_json(base / 'scenario.json', scenario('fresh'))
+                def visible(name):
+                    key = 'Window.IsVisible(%s)' % name
+                    return rpc('XBMC.GetInfoBooleans', {'booleans': [key]})[key]
+                def focused_label():
+                    return rpc('XBMC.GetInfoLabels', {'labels': ['System.CurrentControl']})['System.CurrentControl']
+                saved_path = userdata / 'addon_data' / PROVIDER / 'settings.xml'
+                def saved_locations():
+                    try:return {x.get('id'):x.text or '' for x in E.parse(saved_path).getroot().findall('setting')}
+                    except (OSError,E.ParseError):return {}
+                expected_location = {'location1_id':'bc-74','location1_label':'Vancouver, BC'}
+                native_index = rpc('Settings.GetSettingValue', {'setting':'weather.currentlocation'})['value']
+                command('open-provider-settings')
+                wait_for(lambda: visible('addonsettings'))
+                if 'Choose location 1' not in focused_label():rpc('Input.Right')
+                wait_for(lambda: 'Choose location 1' in focused_label())
+                rpc('Input.Select')
+                wait_for(lambda: visible('keyboard'))
+                assert not visible('addonsettings'), 'Chooser must close settings before writing'
+                rpc('Input.SendText', {'text':'Vancouver','done':True})
+                wait_for(lambda: visible('select'))
+                rpc('Input.Select')
+                wait_for(lambda: not visible('select') and not visible('keyboard'))
+                wait_for(lambda: all(saved_locations().get(k)==v for k,v in expected_location.items()))
+                command('open-provider-settings')
+                wait_for(lambda: visible('addonsettings'))
+                capture('weather-location-saved-settings')
+                rpc('Input.Back')
+                wait_for(lambda: not visible('addonsettings'))
+                assert all(saved_locations().get(k)==v for k,v in expected_location.items())
+                # Clean restart of exactly the same disposable profile. Never reseed.
+                write(base / 'complete', 'ok')
+                time.sleep(.2)
+                rpc('Application.Quit')
+                kodi.wait(timeout=30)
+                stop_process_group(kodi)
+                shutil.copyfile(profile/'temp/kodi.log',output/'weather-before-restart-kodi.log')
+                for name in ('complete','state.json','fixture-phase.json'):
+                    (base/name).unlink(missing_ok=True)
+                kodi = subprocess.Popen(['kodi','-p','-fs','--windowing=x11','--debug'],
+                    env=environment,stdout=log,stderr=log,start_new_session=True)
+                wait_for(ready,75)
+                restart_startup=settle_cold_home(rpc,profile/'temp/kodi.log',profile/'addons/skin.foundry',port,
+                    identity,PROVIDER,lambda:kodi.poll() is None,output)
+                rpc('Addons.ExecuteAddon', {'addonid':'script.foundry.weatherqa'})
+                wait_for(lambda: observer_home_ready(state(),profile/'addons/skin.foundry',PROVIDER))
+                assert all(saved_locations().get(k)==v for k,v in expected_location.items())
+                assert rpc('Settings.GetSettingValue',{'setting':'weather.currentlocation'})['value']==native_index
+                command('open-provider-settings')
+                wait_for(lambda: visible('addonsettings'))
+                capture('weather-location-after-restart')
+                rpc('Input.Back')
+                wait_for(lambda: not visible('addonsettings'))
+                location_persistence={'passed':True,'actual_gui_selection':True,'saved':expected_location,
+                    'native_index':native_index,'restart_same_profile':True,'restart_startup':restart_startup}
+                atomic_json(output/'weather-location-persistence.json',location_persistence)
                 write(base / 'complete', 'ok')
                 atomic_json(output / 'weather-verification.json', {'passed': True, 'kodi_version': version,
                     'checks': ['provider_entrypoint', 'untouched_shipped_home_card', 'current_zero', '24_hourly', '7_daily',
                                'advisory_headline', 'forecast_click_back', 'advisory_click_back', 'menu_back_reentry',
                                'native_home_initial_fetch', 'next_city_native_index', 'refresh_preserves_city',
                                'next_city_wrap', 'missing_values', 'stale_unverified', 'alternate_provider_hides_card',
-                               'alternate_card_render_absent', 'alternate_normal_navigation_uses_legacy'],
+                               'alternate_card_render_absent', 'alternate_normal_navigation_uses_legacy',
+                               'location_actual_settings_search_select', 'location_saved_before_back', 'location_survives_restart'],
+                    'location_persistence':location_persistence,
                     'alternate_visibility': {'shipped_parent_condition': parent_visibility,
                         'state': alternate_state, 'fresh_title_pixels': fresh_title,
-                        'alternate_title_pixels': alternate_title, 'normal_navigation_focus': state().get('focus')},
+                        'alternate_title_pixels': alternate_title, 'normal_navigation_focus': alternate_navigation_focus},
                     'source_sha256': hashes, 'data': 'Synthetic only; no live weather or account requests',
                     'fixture_identity': identity, 'fixture_port': port,'cold_home_startup':startup,
                     'isolation': 'Disposable HOME, XDG and Kodi portable profile; copied helper/services disabled',
