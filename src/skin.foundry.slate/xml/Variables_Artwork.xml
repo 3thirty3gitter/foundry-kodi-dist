@@ -11,15 +11,61 @@
 
   <variable name="NimbusCustomBackgroundImage"><value>special://skin/media/slate-background.png</value></variable>
 
-  <!-- Original Foundry artwork; the image-resource dependency is installed by Kodi. -->
-  <variable name="FoundryDefaultMenuBackground"><value>special://skin/media/slate-background.png</value></variable>
+  <!-- Slate-only category artwork. Original Foundry resources remain untouched. -->
+  <variable name="FoundryDefaultMenuBackground">
+    <value condition="Control.HasFocus(801)">special://skin/media/foundry-navigation/shutdown.png</value>
+    <value condition="Control.HasFocus(803)">special://skin/media/foundry-navigation/search.png</value>
+    <value condition="Control.HasFocus(802)">special://skin/media/slate-wallpapers/settings.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),movies)">special://skin/media/slate-wallpapers/movies.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),tvshows)">special://skin/media/slate-wallpapers/tvshows.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),music)">special://skin/media/slate-wallpapers/music.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),musicvideos)">special://skin/media/slate-wallpapers/musicvideos.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),livetv)">special://skin/media/slate-wallpapers/livetv.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),radio)">special://skin/media/slate-wallpapers/radio.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),games)">special://skin/media/slate-wallpapers/games.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),addons)">special://skin/media/slate-wallpapers/addons.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),pictures)">special://skin/media/slate-wallpapers/pictures.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),video)">special://skin/media/slate-wallpapers/video.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),favorites)">special://skin/media/slate-wallpapers/favorites.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),weather)">special://skin/media/slate-wallpapers/weather.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),settings)">special://skin/media/slate-wallpapers/settings.png</value>
+    <value>special://skin/media/slate-wallpapers/home.png</value>
+  </variable>
 
-  <variable name="FoundryMenuBackground"><value>special://skin/media/slate-background.png</value></variable>
+  <variable name="FoundryMenuBackground">
+    <value condition="Control.HasFocus(801) | Control.HasFocus(802) | Control.HasFocus(803)">$VAR[FoundryDefaultMenuBackground]</value>
+    <value condition="!String.IsEmpty(Skin.String(HomeFanart.path))">$INFO[Skin.String(HomeFanart.path)]$INFO[Container(9000).ListItem.Property(id)]$INFO[Skin.String(HomeFanart.ext)]</value>
+    <value condition="!String.IsEmpty(Skin.String(NimbusCustomBackground))">$INFO[Skin.String(NimbusCustomBackground)]</value>
+    <value>$VAR[FoundryDefaultMenuBackground]</value>
+  </variable>
 
   <!-- Complete, independently approved widget wallpapers; no repair layers. -->
-  <variable name="FoundryWidgetWallpaper"><value>special://skin/media/slate-background.png</value></variable>
+  <variable name="FoundryWidgetWallpaper">
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),movies)">special://skin/media/foundry-widget-wallpapers/movies.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),tvshows)">special://skin/media/foundry-widget-wallpapers/tvshows.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),music)">special://skin/media/foundry-widget-wallpapers/music.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),musicvideos)">special://skin/media/foundry-widget-wallpapers/musicvideos.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),livetv)">special://skin/media/foundry-widget-wallpapers/livetv.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),radio)">special://skin/media/foundry-widget-wallpapers/radio.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),games)">special://skin/media/foundry-widget-wallpapers/games.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),addons)">special://skin/media/foundry-widget-wallpapers/addons.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),pictures)">special://skin/media/foundry-widget-wallpapers/pictures.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),video)">special://skin/media/foundry-widget-wallpapers/video.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),favorites)">special://skin/media/foundry-widget-wallpapers/favorites.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),weather)">special://skin/media/foundry-widget-wallpapers/weather.png</value>
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),settings)">special://skin/media/foundry-widget-wallpapers/settings.png</value>
+    <value>special://skin/media/foundry-widget-wallpapers/home.png</value>
+  </variable>
 
-  <variable name="FoundryHomeWallpaper"><value>special://skin/media/slate-background.png</value></variable>
+  <variable name="FoundryHomeWallpaper">
+    <value condition="Control.HasFocus(801) + $EXP[FoundryHomeWidgetsPresent]">special://skin/media/foundry-widget-wallpapers/shutdown.png</value>
+    <value condition="Control.HasFocus(803) + $EXP[FoundryHomeWidgetsPresent]">special://skin/media/foundry-widget-wallpapers/search.png</value>
+    <value condition="Control.HasFocus(802) + $EXP[FoundryHomeWidgetsPresent]">special://skin/media/foundry-widget-wallpapers/settings.png</value>
+    <value condition="Control.HasFocus(801) | Control.HasFocus(802) | Control.HasFocus(803)">$VAR[FoundryDefaultMenuBackground]</value>
+    <value condition="!String.IsEmpty(Skin.String(HomeFanart.path)) | !String.IsEmpty(Skin.String(NimbusCustomBackground))">$VAR[FoundryMenuBackground]</value>
+    <value condition="$EXP[FoundryHomeHasWidgets]">$VAR[FoundryWidgetWallpaper]</value>
+    <value>$VAR[FoundryMenuBackground]</value>
+  </variable>
 
   <variable name="FoundryMenuBackgroundTint">
     <value>FFFFFFFF</value>
