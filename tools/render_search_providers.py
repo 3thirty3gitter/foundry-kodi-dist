@@ -75,22 +75,44 @@ def selected():
 report={'passed':False,'scope':'Disposable native Kodi real picker and video metadata; unknown providers are open-only, no integrated search claim.','skins':{}}
 try:
  wait(lambda:rpc('JSONRPC.Ping')=='pong')
- for _ in range(15):
-  if cond('System.HasActiveModalDialog'):act('back')
+ # Startup asks about every new disposable addon; require a quiet interval.
+ quiet=None;deadline=time.monotonic()+90
+ while time.monotonic()<deadline:
+  if cond('System.HasActiveModalDialog'):
+   act('back');quiet=None
+  elif quiet is None:quiet=time.monotonic()
+  elif time.monotonic()-quiet>2:break
   time.sleep(.2)
+ else:raise AssertionError('Startup dialogs did not settle')
  for aid in ['resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','script.foundry.helper','script.foundry.slate.helper','skin.foundry','skin.foundry.slate','script.foundry.searchqa','script.foundry.searchdriver','plugin.qa.video','plugin.qa.disabled','plugin.qa.audio']+LEGACY_IDS:
   rpc('Addons.SetAddonEnabled',{'addonid':aid,'enabled':True})
  rpc('Addons.SetAddonEnabled',{'addonid':'plugin.qa.disabled','enabled':False})
  for skin,helper in [('skin.foundry','script.foundry.helper'),('skin.foundry.slate','script.foundry.slate.helper')]:
-  rpc('Settings.SetSettingValue',{'setting':'lookandfeel.skin','value':skin});wait(lambda:cond('System.HasActiveModalDialog'));act('left');act('select');time.sleep(3)
+  # Drain any addon-enabled prompts before issuing the skin switch.
+  for _ in range(30):
+   if not cond('System.HasActiveModalDialog'):
+    time.sleep(.7)
+    if not cond('System.HasActiveModalDialog'):break
+   act('back')
+  assert not cond('System.HasActiveModalDialog'), 'Outstanding pre-switch modal'
+  assert rpc('Settings.SetSettingValue',{'setting':'lookandfeel.skin','value':skin})
+  wait(lambda:cond('Window.IsVisible(yesnodialog)'))
+  snap(skin+'-switch-confirmation')
+  drive('xbmc.executebuiltin("SetFocus(11)",True)\nxbmc.sleep(250)')
+  assert cond('Control.HasFocus(11)'), 'Skin switch affirmative button not focused'
+  act('select');wait(lambda:not cond('System.HasActiveModalDialog'));time.sleep(2)
+  actual=out/(skin+'-active-skin.json')
+  drive('Path('+repr(str(actual))+').write_text(json.dumps({"active":xbmc.getSkinDir()}))')
+  observed=json.loads(actual.read_text())['active']
+  assert observed==skin, ('Configured setting is not actual rendered skin',skin,observed)
   assert rpc('Settings.GetSettingValue',{'setting':'lookandfeel.skin'})['value']==skin
   entry=addons/helper/'resources/lib';marker=out/(skin+'-probe.json')
   def run(body):
    if marker.exists():marker.unlink()
-   (qa/'default.py').write_text('import sys,json,xbmc\nfrom pathlib import Path\nsys.path.insert(0,'+repr(str(entry))+')\nfrom modules import search_provider as p\n'+body+'\nxbmc.sleep(350)\nPath('+repr(str(marker))+').write_text(json.dumps({"selection":xbmc.getInfoLabel("Skin.String(current_search_provider)")}))\n')
+   (qa/'default.py').write_text('import sys,json,xbmc\nfrom pathlib import Path\nsys.path.insert(0,'+repr(str(entry))+')\nfrom modules import search_provider as p\nassert xbmc.getSkinDir()=='+repr(skin)+', (\"Wrong actual skin\",xbmc.getSkinDir())\n'+body+'\nxbmc.sleep(350)\nPath('+repr(str(marker))+').write_text(json.dumps({"selection":xbmc.getInfoLabel("Skin.String(current_search_provider)")}))\n')
    rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.searchqa','wait':False})
   run('rows=p.installed_video_providers()\nassert "plugin.qa.audio" not in [r["id"] for r in rows]\nassert any(r["id"]=="plugin.qa.disabled" and not r["enabled"] for r in rows)\nPath('+repr(str(out/(skin+'-inventory.json')))+').write_text(json.dumps(rows))')
-  wait(marker.exists);rows=json.loads((out/(skin+'-inventory.json')).read_text());report['skins'][skin]={'inventory':rows}
+  wait(marker.exists);rows=json.loads((out/(skin+'-inventory.json')).read_text());report['skins'][skin]={'inventory':rows,'active_skin_verified':observed}
   # Navigate shipped SkinSettings with real remote actions and click its control.
   # This is separate from direct picker cases, preserving the actual entry point.
   run('xbmc.executebuiltin("Skin.Reset(current_search_provider)",True)\nxbmc.executebuiltin("ActivateWindow(skinsettings)",False)\nxbmc.sleep(1000)')

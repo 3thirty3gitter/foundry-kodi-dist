@@ -66,6 +66,8 @@ def main():
   (userdata/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">%d</setting><setting id="services.webserverauthentication">false</setting></settings>'%port)
   util.video(base/'fixture.avi');contract.prepare(addons,base)
   driver=addons/'script.foundry.contractqa';driver.mkdir();(driver/'addon.xml').write_text('<addon id="script.foundry.contractqa" version="1.0.0" name="Contract driver" provider-name="QA"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/></addon>')
+  probe_addon=addons/'script.foundry.contractidentity';probe_addon.mkdir()
+  (probe_addon/'addon.xml').write_text('<addon id="script.foundry.contractidentity" version="1.0.0" name="Native skin identity probe" provider-name="QA"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/></addon>')
   env=dict(os.environ,HOME=str(base/'home'),DISPLAY=args.display,KODI_HOME=str(home),LIBGL_ALWAYS_SOFTWARE='1',AE_SINK='NULL');(base/'home').mkdir()
   log=(out/'console.log').open('w');x=subprocess.Popen(['Xvfb',args.display,'-screen','0','1920x1080x24','-ac','-nolisten','tcp'],stdout=log,stderr=log);time.sleep(1)
   kodi=subprocess.Popen(['kodi','-p','-fs','--windowing=x11','--debug'],env=env,stdout=log,stderr=log,start_new_session=True)
@@ -85,6 +87,45 @@ def main():
    try:return rpc('JSONRPC.Ping')=='pong'
    except Exception:return False
   def cond(name):return rpc('XBMC.GetInfoBooleans',{'booleans':[name]}).get(name,False)
+  def drain_modals():
+   # A transient gap between queued first-start dialogs is not readiness.
+   deadline=time.monotonic()+90;quiet=None
+   while time.monotonic()<deadline:
+    if cond('System.HasActiveModalDialog'):
+     rpc('Input.Back');quiet=None
+    elif quiet is None:quiet=time.monotonic()
+    elif time.monotonic()-quiet>=2:return
+    time.sleep(.2)
+   raise AssertionError('Startup dialogs never reached a stable quiet interval')
+  def identity(focus_yes=False):
+   marker=base/'identity.json';marker.unlink(missing_ok=True)
+   body="import xbmc,xbmcgui,xbmcvfs,json,hashlib\nfrom pathlib import Path\n"
+   if focus_yes:body+='xbmc.executebuiltin("SetFocus(11)",True)\nxbmc.sleep(100)\n'
+   body+="skin_path=Path(xbmcvfs.translatePath('special://skin/')).resolve()\n"
+   body+="data={'skin_id':xbmc.getSkinDir(),'skin_path':str(skin_path),'dialog_id':xbmcgui.getCurrentWindowDialogId(),'modal':bool(xbmc.getCondVisibility('System.HasActiveModalDialog')),'yesno':bool(xbmc.getCondVisibility('Window.IsActive(yesnodialog)')),'yes_focused':bool(xbmc.getCondVisibility('Control.HasFocus(11)')),'prompt':{str(i):xbmc.getInfoLabel('Control.GetLabel(%d)'%i) for i in (1,9,10,11)},'dialog_info_sha256':hashlib.sha256((skin_path/'xml/DialogVideoInfo.xml').read_bytes()).hexdigest()}\n"
+   body+='Path(%r).write_text(json.dumps(data),encoding="utf-8")\n'%str(marker)
+   (probe_addon/'default.py').write_text(body,encoding='utf-8')
+   rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.contractidentity','wait':True})
+   wait(marker.exists);return json.loads(marker.read_text(encoding='utf-8'))
+  def assert_identity(sample,skin):
+   assert sample['skin_id']==skin,('Setting is not actual loaded skin',sample,skin)
+   assert Path(sample['skin_path']).resolve()==(addons/skin).resolve(),('Wrong special skin path',sample)
+   assert sample['dialog_info_sha256']==hashlib.sha256((addons/skin/'xml/DialogVideoInfo.xml').read_bytes()).hexdigest(),('Runtime skin XML differs',sample)
+  def switch_skin(skin):
+   drain_modals();assert not cond('System.HasActiveModalDialog')
+   assert rpc('Settings.SetSettingValue',{'setting':'lookandfeel.skin','value':skin})
+   wait(lambda:cond('Window.IsActive(yesnodialog)'))
+   pending=identity();assert_identity(pending,skin)
+   text=' '.join(pending['prompt'].values()).lower()
+   assert 'keep' in text and ('skin' in text or 'change' in text),('Unexpected confirmation; refusing to accept',pending)
+   assert pending['yesno'] and pending['prompt']['11'].strip().lower()=='yes',('Unexpected Yes control',pending)
+   focused=identity(focus_yes=True);assert_identity(focused,skin)
+   focused_text=' '.join(focused['prompt'].values()).lower()
+   assert focused['yesno'] and focused['yes_focused'] and all(focused['prompt'][i]==pending['prompt'][i] for i in ('1','10','11')) and 'keep' in focused_text and ('skin' in focused_text or 'change' in focused_text),('Confirmation changed before acceptance',focused,pending)
+   rpc('Input.Select');wait(lambda:not cond('System.HasActiveModalDialog'));time.sleep(.5)
+   loaded=identity();assert_identity(loaded,skin)
+   assert not loaded['modal'] and rpc('Settings.GetSettingValue',{'setting':'lookandfeel.skin'})['value']==skin
+   return {'skin':skin,'pending_confirmation':pending,'focused_confirmation':focused,'loaded':loaded}
   def state():
    try:return json.loads((base/'state.json').read_text())
    except (OSError,ValueError):return {}
@@ -119,18 +160,18 @@ def main():
   report={'schema_version':1,'passed':False,'source_receipts':source_receipts,'screenshots':screenshots,'cases':[],'scope':'Disposable native Kodi, both shipped skins and helper entry points, synthetic action and resolver addons/local video; no live FEN service or affected device validation.'}
   try:
    wait(ready,60);version=rpc('Application.GetProperties',{'properties':['version']})['version'];assert version['major']>=21,version;report['kodi']=version
-   for _ in range(20):
-    if cond('System.HasActiveModalDialog'):rpc('Input.Back')
-    time.sleep(.2)
-   for aid in aids+list(contract.ADDONS)+['script.foundry.contractqa']:rpc('Addons.SetAddonEnabled',{'addonid':aid,'enabled':True})
+   drain_modals()
+   for aid in aids+list(contract.ADDONS)+['script.foundry.contractqa','script.foundry.contractidentity']:rpc('Addons.SetAddonEnabled',{'addonid':aid,'enabled':True})
+   drain_modals();report['skin_identity_receipts']=[]
    report['cases']=[]
    for skin,helper in [('skin.foundry','script.foundry.helper'),('skin.foundry.slate','script.foundry.slate.helper')]:
-    rpc('Settings.SetSettingValue',{'setting':'lookandfeel.skin','value':skin});wait(lambda:cond('Window.IsActive(yesnodialog)'));rpc('Input.Left');rpc('Input.Select');time.sleep(2)
-    assert rpc('Settings.GetSettingValue',{'setting':'lookandfeel.skin'})['value']==skin
+    report['skin_identity_receipts'].append(switch_skin(skin))
     (base/'driver-done').unlink(missing_ok=True);(base/'state.json').unlink(missing_ok=True)
     (driver/'default.py').write_text('from pathlib import Path\nBASE=Path(%r)\nHELPER=Path(%r)\n'%(str(base),str(addons/helper))+DRIVER)
     rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.contractqa','wait':False});wait(lambda:bool(state()))
     report['cases']+=contract.verify(rpc,base,out,command,state,wait,capture,skin)
+    completed_identity=identity();assert_identity(completed_identity,skin)
+    report['skin_identity_receipts'][-1]['after_cases']=completed_identity
     (base/'driver-done').write_text('done');time.sleep(.5)
    logs=(profile/'temp/kodi.log').read_text(errors='replace')
    forbidden=['one or more items failed to play','skipping unplayable item','PythonToCppException','Error Contents:','Traceback (most recent call last):']
@@ -140,7 +181,8 @@ def main():
    assert len(actual)==8 and len(set(actual))==8 and set(actual)==expected,('Incomplete or duplicate contract cases',actual)
    assert len(source_receipts)==8 and len(screenshots)==12,('Missing evidence',len(source_receipts),len(screenshots))
    assert all(c['stop_without_failure'] and c['screenshots'] for c in report['cases'])
-   report['exact_eight_cases']=True;report['playback_log_error_gate']=True;report['passed']=True
+   assert len(report['skin_identity_receipts'])==2
+   report['actual_skin_identity_gate']=True;report['exact_eight_cases']=True;report['playback_log_error_gate']=True;report['passed']=True
   except BaseException:
    report['passed']=False;report['error_trace']=traceback.format_exc()
    raise
