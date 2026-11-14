@@ -62,15 +62,15 @@
       "id": "script.program.foundry-build",
       "version": "1.5.5",
       "path": "script.program.foundry-build/script.program.foundry-build-1.5.5.zip",
-      "sha256": "6fe883d662e3299c7bc5d33f2b6f1a838375fbc229225585a98e066c5a76d96e",
-      "size": 2717
+      "sha256": "d55fde676bf95b05158696b21455d8d20bcaff7bc78efa5e5fff798199b98e83",
+      "size": 2712
     },
     {
       "id": "script.program.foundry-bootstrap",
       "version": "1.5.5",
       "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.5.5.zip",
-      "sha256": "82179cf6ef6a7a4d5b8e67edef806bdd9b1c37bc99e567242e3e265f246e1cb0",
-      "size": 856
+      "sha256": "479abe159c3c82d611fe11663403e056df772dd688d9392975ecf288088c28eb",
+      "size": 853
     },
     {
       "id": "script.foundry.slate.helper",
