@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="skin.foundry.slate" version="0.1.0" name="Foundry Slate"
+<addon id="skin.foundry.slate" version="0.1.1" name="Foundry Slate"
 	provider-name="3Thirty3 / Ivar Brandt">
 	<requires>
 		<import addon="xbmc.gui" version="5.17.0" />

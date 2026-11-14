@@ -81,10 +81,10 @@
     },
     {
       "id": "skin.foundry.slate",
-      "version": "0.1.0",
-      "path": "skin.foundry.slate/skin.foundry.slate-0.1.0.zip",
-      "sha256": "eaaea0d42ae7ebc9d725f2085ca873c41479adad69df1a33a448a80941b228b8",
-      "size": 73064863
+      "version": "0.1.1",
+      "path": "skin.foundry.slate/skin.foundry.slate-0.1.1.zip",
+      "sha256": "e1d4f3bc1250bd6c898e2f2e419a41658f889694c4c38b8f0cec4f1b342f8484",
+      "size": 21988599
     }
   ]
 }

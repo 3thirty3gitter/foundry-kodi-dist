@@ -169,10 +169,10 @@ class DevelopmentWorkflowTests(unittest.TestCase):
     def test_source_and_packaged_tests_precede_all_native_runners(self):
         self.assertIn('materialize_sources.py --release 1.5.4', self.workflow)
         self.assertLess(self.workflow.index('tools/run_tests.py'), self.workflow.index('tools/verify_packaged_sources.py'))
-        for renderer in ('library', 'startup_splash', 'interface', 'weather', 'games'):
+        for renderer in ('library', 'startup_splash', 'interface', 'weather', 'games', 'slate_navigation'):
             self.assertGreater(self.workflow.index('tools/render_' + renderer + '.py'),
                                self.workflow.index('tools/verify_packaged_sources.py'))
-        self.assertEqual(self.workflow.count("steps.packaged.outcome == 'success'"), 5)
+        self.assertEqual(self.workflow.count("steps.packaged.outcome == 'success'"), 6)
         self.assertIn('tools/record_release_validation.py --check-scope', self.workflow)
 
     def test_all_five_shipped_native_reports_are_retained(self):

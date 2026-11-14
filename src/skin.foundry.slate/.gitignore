@@ -14,3 +14,8 @@ xml/script-nimbus-widget_custom2.xml
 xml/script-nimbus-widget_custom3.xml
 xml/script-nimbus-search_history.xml
 xml/script-skinshortcuts-includes.xml
+# Source-controlled Slate artwork, including newly introduced widget utilities.
+!media/slate-wallpapers/
+!media/slate-wallpapers/**
+!media/foundry-widget-wallpapers/
+!media/foundry-widget-wallpapers/*.png

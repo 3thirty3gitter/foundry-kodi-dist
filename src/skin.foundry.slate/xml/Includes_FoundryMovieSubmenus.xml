@@ -101,7 +101,7 @@
     <value condition="$EXP[FoundryMovieSubmenuAvailable]">$VAR[FoundryMovieSubmenuBase]</value>
     <value condition="String.IsEqual(Window(Home).Property(foundry.slate.navigation.category),movies) + !String.IsEmpty(Skin.String(HomeFanart.path))">$INFO[Skin.String(HomeFanart.path)]movies$INFO[Skin.String(HomeFanart.ext)]</value>
     <value condition="!String.IsEmpty(Skin.String(NimbusCustomBackground))">$INFO[Skin.String(NimbusCustomBackground)]</value>
-    <value condition="String.IsEqual(Window(Home).Property(foundry.slate.navigation.category),movies)">resource://resource.images.foundry.wallpapers/movies.png</value>
+    <value condition="String.IsEqual(Window(Home).Property(foundry.slate.navigation.category),movies)">special://skin/media/slate-wallpapers/movies.png</value>
     <value>streampilot/catalog-base.png</value>
   </variable>
   <variable name="FoundryCatalogFirstPaintBackdrop">

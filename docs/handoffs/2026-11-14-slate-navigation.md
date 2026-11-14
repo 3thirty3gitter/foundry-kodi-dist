@@ -1,0 +1,9 @@
+# Slate footer navigation fix, awaiting bundled wallpaper publication
+
+User requests Down access to Power, Settings and Search from the home menu, bundled with pending Slate wallpapers. Original Foundry must remain untouched.
+
+Changed only the menu 9000 bottom exit in src/skin.foundry.slate/xml/Home.xml from 9000 (self-loop) to 700 (footer grouplist). Existing Up/Back footer access, menu Right widget route, utility horizontal traversal, action bindings and footer Up/Down/Back return routes are retained. Existing wallpaper edits in this checkout are preserved.
+
+New tests/test_slate_home_navigation.py contains two focus-wiring regressions. Full source suite: 783 tests pass, zero errors/failures/skips with /usr/bin/python3 (3.13.5). Evidence ../slate-navigation-source-tests-system.json and ../slate-navigation-tests-system.log. Initial default Python3.12 attempt lacked requests; not a product failure. Focused9 Slate tests pass including all59 artwork assets and original-package SHA256 checks. Original src/skin.foundry has no diff. Native Kodi/Shield navigation not tested here; no Kodi or Docker available in cloud.
+
+NOT PUBLISHED. Spaceship connected and attached successfully. Transactional startup on apps/foundry-kodi-dist using Codex /root/slate_navigation returned BLOCKED_DIRTY, not SESSION_READY. Existing dirty Pulse1.1.0 source audio/addon, ZIPs, feed, release metadata and handoff work was left untouched. No canonical edits, no lease bypass, no git push, no version bump. No publish owner available in current agent inventory. Resume by coordinating existing Pulse work and obtaining normal ready ownership, then integrate candidate, run package/native gates, version separate Slate and publish/verify through existing flow. Do not claim candidate tests establish physical device behavior.

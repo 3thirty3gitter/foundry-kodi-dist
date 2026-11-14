@@ -8,7 +8,7 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-GATES = ('library', 'startup_splash', 'interface', 'weather', 'games')
+GATES = ('library', 'startup_splash', 'interface', 'weather', 'games', 'slate_navigation')
 
 
 class NativeQARuntimeTests(unittest.TestCase):
@@ -39,18 +39,18 @@ class NativeQARuntimeTests(unittest.TestCase):
         self.assertIn('--rm --init --platform linux/amd64', wrapper)
         self.assertNotIn('--privileged', wrapper)
 
-    def test_both_workflows_run_exact_five_gates_and_preserve_evidence_and_timeouts(self):
+    def test_both_workflows_run_exact_six_gates_and_preserve_evidence_and_timeouts(self):
         for name in ('dev-validation.yml', 'release.yml'):
             workflow = (ROOT / '.github/workflows' / name).read_text()
             with self.subTest(workflow=name):
                 self.assertIn('docker build --platform linux/amd64', workflow)
                 self.assertNotIn('sudo apt-get', workflow)
-                self.assertEqual(workflow.count('run: bash tools/run_native_qa.sh tools/render_'), 5)
-                self.assertEqual(workflow.count("steps.packaged.outcome == 'success'"), 5)
-                self.assertEqual(workflow.count("steps.kodi.outcome == 'success'"), 5)
+                self.assertEqual(workflow.count('run: bash tools/run_native_qa.sh tools/render_'), 6)
+                self.assertEqual(workflow.count("steps.packaged.outcome == 'success'"), 6)
+                self.assertEqual(workflow.count("steps.kodi.outcome == 'success'"), 6)
                 blocks = re.findall(r'      - name: Render .*?(?=      - name:|      - uses:)', workflow, re.S)
-                self.assertEqual(len(blocks), 5)
-                for block, gate, timeout in zip(blocks, GATES, (6, 3, 8, 6, 6)):
+                self.assertEqual(len(blocks), 6)
+                for block, gate, timeout in zip(blocks, GATES, (6, 3, 8, 6, 6, 6)):
                     self.assertIn('tools/render_' + gate + '.py', block)
                     self.assertIn('timeout-minutes: ' + str(timeout), block)
                     self.assertIn('!cancelled()', block)

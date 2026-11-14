@@ -1,0 +1,654 @@
+{
+  "base_sha256": "a4f2b7cce0d99330e51e3aee5283794793018751594542739e727dcc86fb9801",
+  "artwork": [
+    {
+      "path": "slate-wallpapers/home.png",
+      "title": "Home",
+      "icon": "home",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "d67b6435afea009b5cd20476ddc06bd8265a743f0e2cecddacd6900aad2dd5a6"
+    },
+    {
+      "path": "foundry-widget-wallpapers/home.png",
+      "title": "Home",
+      "icon": "home",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "bc2c708e165e7cb57f3a73925d712014764db3674ce370a90de7da84ad95e5c4"
+    },
+    {
+      "path": "slate-wallpapers/movies.png",
+      "title": "Movies",
+      "icon": "film",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "9207249be14fafe86b0dfd686b144134e6604b8b4a971ce9486871612748dfc6"
+    },
+    {
+      "path": "foundry-widget-wallpapers/movies.png",
+      "title": "Movies",
+      "icon": "film",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "d3bacc57c2068b30cbbc7848a0405d7e2ce0a3dd121c577a8958180df9f3c56c"
+    },
+    {
+      "path": "slate-wallpapers/tvshows.png",
+      "title": "TV Shows",
+      "icon": "screen",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "2a57a0e0aaccc3525d6fa738f5adede69869a162b107d1d1991ad8add898a2d2"
+    },
+    {
+      "path": "foundry-widget-wallpapers/tvshows.png",
+      "title": "TV Shows",
+      "icon": "screen",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "7fe55259127422e2fecf87a340e3e1d124df81c31aa8277bc168f0dd1eb31914"
+    },
+    {
+      "path": "slate-wallpapers/music.png",
+      "title": "Music",
+      "icon": "music",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "27c916830f2b53dd1c1fdf5f348465da553da675ff44f029a4ce2e7a64b5aab4"
+    },
+    {
+      "path": "foundry-widget-wallpapers/music.png",
+      "title": "Music",
+      "icon": "music",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "06aee8c631e65bc1ac35f12c3493bf5a9cfa2246af0b2eec24297b21e947e1ee"
+    },
+    {
+      "path": "slate-wallpapers/musicvideos.png",
+      "title": "Music Videos",
+      "icon": "music",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "c3a3607bb3830470b3bfa64346c56a69fda1db719ebc4d343768973cfdbf9978"
+    },
+    {
+      "path": "foundry-widget-wallpapers/musicvideos.png",
+      "title": "Music Videos",
+      "icon": "music",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "c72da2edec8b85b597df64ecc093454839126c0eb930e210bcf2cb6eed979f64"
+    },
+    {
+      "path": "slate-wallpapers/livetv.png",
+      "title": "Live TV",
+      "icon": "broadcast",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "478bef1125bce14510315fd073cfe6d3173e94157d2bac8b6579bc6e24c770d6"
+    },
+    {
+      "path": "foundry-widget-wallpapers/livetv.png",
+      "title": "Live TV",
+      "icon": "broadcast",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "5d9abd6258c954c310cff7637211a708f6bbc671a32f0337aac6ac62e94b7d5e"
+    },
+    {
+      "path": "slate-wallpapers/radio.png",
+      "title": "Radio",
+      "icon": "broadcast",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "74673217010bcd2a2020c225ce96f65fea1b6acf0bdbc8d6362db0581fd9c5a9"
+    },
+    {
+      "path": "foundry-widget-wallpapers/radio.png",
+      "title": "Radio",
+      "icon": "broadcast",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "797d0ce4902825f611005db8856f21d16aa42212e511769fed3cdb24663b2022"
+    },
+    {
+      "path": "slate-wallpapers/games.png",
+      "title": "Games",
+      "icon": "games",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "79bada2a3270e410cba201aba421117b0db920caf0f09a94200098b6f053ca94"
+    },
+    {
+      "path": "foundry-widget-wallpapers/games.png",
+      "title": "Games",
+      "icon": "games",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "a37735e94f93406639d3e1c01d2c3bc78d44fad45b47c8a70353daf4e77e6e59"
+    },
+    {
+      "path": "slate-wallpapers/addons.png",
+      "title": "Add-ons",
+      "icon": "grid",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "2b617b5cce865e9a62d6aadcd17c1890388116a9b0e0591ae5300b6032bce519"
+    },
+    {
+      "path": "foundry-widget-wallpapers/addons.png",
+      "title": "Add-ons",
+      "icon": "grid",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "caef5e47ae2c3e8dfbe933317395f3497567a914dd40269222e4f25c86806494"
+    },
+    {
+      "path": "slate-wallpapers/pictures.png",
+      "title": "Pictures",
+      "icon": "picture",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "6c6c6ad8e00dccec87a716dfe5379fbf473186f7351e611b88879417a0f2be72"
+    },
+    {
+      "path": "foundry-widget-wallpapers/pictures.png",
+      "title": "Pictures",
+      "icon": "picture",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "f92151d7dafd0fe64268635b104fa17a481b7f810096d57f9dfddfad43ffd96e"
+    },
+    {
+      "path": "slate-wallpapers/video.png",
+      "title": "Videos",
+      "icon": "play",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "426934fa6ef2bc3763d40d0171bd7499a8cee217ae54bf8112656f7968897ae5"
+    },
+    {
+      "path": "foundry-widget-wallpapers/video.png",
+      "title": "Videos",
+      "icon": "play",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "8011deeb98e8f02fd599193f128f1176dff4d6d5860174535ccf719b12d76fcb"
+    },
+    {
+      "path": "slate-wallpapers/favorites.png",
+      "title": "Favorites",
+      "icon": "heart",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "42800f156b6373c044d9e970c9da865a8c4a9ad74d2c5896997e61e46778f2ee"
+    },
+    {
+      "path": "foundry-widget-wallpapers/favorites.png",
+      "title": "Favorites",
+      "icon": "heart",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "f35e44e647d3ab9845acbaced075ca77c71524aab7f4b9f0ca7a33e6f5486836"
+    },
+    {
+      "path": "slate-wallpapers/weather.png",
+      "title": "Weather",
+      "icon": "weather",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "0d98a15b75e6223075016ddc547bb3e0941cdb111261656bedffc9ddee0e0eec"
+    },
+    {
+      "path": "foundry-widget-wallpapers/weather.png",
+      "title": "Weather",
+      "icon": "weather",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "f87a61bfd9ab3c3e9005dc7ef1d44dcfb44744e1806da22923eb97ef654b9abb"
+    },
+    {
+      "path": "slate-wallpapers/settings.png",
+      "title": "Settings",
+      "icon": "settings",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "e689a12f7d9dfa7b6ee587f5d888865669db5f468c577d1afbf1ce1c41ba3560"
+    },
+    {
+      "path": "foundry-widget-wallpapers/settings.png",
+      "title": "Settings",
+      "icon": "settings",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "414123b8f5832ecaa8be9c00c8851da4793e5c460762697fe2c0ccdb78416979"
+    },
+    {
+      "path": "slate-wallpapers/search.png",
+      "title": "Search",
+      "icon": "search",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "a53168a2c08d4ac8575ee2592b7d337581c93d79fc71689b5b76abaa157246c5"
+    },
+    {
+      "path": "foundry-widget-wallpapers/search.png",
+      "title": "Search",
+      "icon": "search",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "cabe7d34692ece073d37ca28c125430c44c801b0c3c11366ed9b2b4651c6aa8e"
+    },
+    {
+      "path": "slate-wallpapers/shutdown.png",
+      "title": "Power",
+      "icon": "power",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "8fed0205358c9212932dd9ea83c950647a24146ad7cc020c2a4c6eacd760fe0f"
+    },
+    {
+      "path": "foundry-widget-wallpapers/shutdown.png",
+      "title": "Power",
+      "icon": "power",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "4f14f8ac65cdff1b125d1df3d3cd3049d2eacd3a62eb5d55bd23559dc3448f35"
+    },
+    {
+      "path": "foundry-movie-submenus/because-you-watched.png",
+      "title": "Because You Watched\u2026",
+      "icon": "play",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "b3d51d5bc29cb6c4367b3d3a72ceaf24e751ca393e5974bc9214c21098ab8061"
+    },
+    {
+      "path": "foundry-movie-submenus/blockbusters.png",
+      "title": "Blockbusters",
+      "icon": "arrow",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "326948cf721e4a099b7c18a5bf72e28a63ff2705212154a8880c2f400c615ab9"
+    },
+    {
+      "path": "foundry-movie-submenus/certifications.png",
+      "title": "Certifications",
+      "icon": "check",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "b053da110a66b41c63b86dac6b9f3758c2787de6cc3bfae45d0dbd00e316ffb5"
+    },
+    {
+      "path": "foundry-movie-submenus/decades.png",
+      "title": "Decades",
+      "icon": "calendar",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "97449c7242f783ed1816c9658d37f4a86968d1bd95d6d76bba47883d193615d8"
+    },
+    {
+      "path": "foundry-movie-submenus/genres.png",
+      "title": "Genres",
+      "icon": "grid",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "3649b5caa844fedc9623e481bad8651d0a88da521c5cad721375f51cee7cd9ef"
+    },
+    {
+      "path": "foundry-movie-submenus/in-progress.png",
+      "title": "In Progress",
+      "icon": "clock",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "cec846e450a82cb19baa1630036969f743ab59d7a5ba59161d821ff96a8c9332"
+    },
+    {
+      "path": "foundry-movie-submenus/in-theaters.png",
+      "title": "In Theaters",
+      "icon": "film",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "191a05570d727e74459aef27c03febf94811d8713a28dfc3db83ab9df56d8a06"
+    },
+    {
+      "path": "foundry-movie-submenus/languages.png",
+      "title": "Languages",
+      "icon": "globe",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "3571b81e3104fd955c5aff64067b27f00b4ce5be49f443f13fc21fcb84edb532"
+    },
+    {
+      "path": "foundry-movie-submenus/latest-releases.png",
+      "title": "Latest Releases",
+      "icon": "calendar",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "46ebda9b616614e818f395018202f785d6495e8daa6a3050f95d3756e81cce15"
+    },
+    {
+      "path": "foundry-movie-submenus/most-favorited.png",
+      "title": "Most Favorited",
+      "icon": "heart",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "311ad996f86c7a3a5e98cc4df62d7f2fd9ee6358f863eaedc87f418c53984aa5"
+    },
+    {
+      "path": "foundry-movie-submenus/most-watched.png",
+      "title": "Most Watched",
+      "icon": "check",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "97e71ceb7db05d19976809d4bbbb03e565cd5d10a378a3899f53391a286bcd72"
+    },
+    {
+      "path": "foundry-movie-submenus/oscar-winners.png",
+      "title": "Oscar Winners",
+      "icon": "star",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "7061fa70d216c0a3d291754d66f419815a3d21f379bf836eb11057c22f902a24"
+    },
+    {
+      "path": "foundry-movie-submenus/popular-today.png",
+      "title": "Popular Today",
+      "icon": "film",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "286426cc4452d61850b8b2501153b3fa7d00fa982872a23e9f1a181610fcffec"
+    },
+    {
+      "path": "foundry-movie-submenus/popular.png",
+      "title": "Popular",
+      "icon": "arrow",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "704806d5fd021603bed0b92d99a116178ae461ab8b56a517feb4013e10535fe7"
+    },
+    {
+      "path": "foundry-movie-submenus/premieres.png",
+      "title": "Premieres",
+      "icon": "calendar",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "f83c49f400e9a098441d263000e5cbcd3b5fd98a4957855c591c6f4a7f61238f"
+    },
+    {
+      "path": "foundry-movie-submenus/providers.png",
+      "title": "Providers",
+      "icon": "grid",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "33bf8b99ae49dfffa5d6aaa321b5c0019d6e24afbdff40d2eb904f947492d65d"
+    },
+    {
+      "path": "foundry-movie-submenus/recently-watched.png",
+      "title": "Recently Watched",
+      "icon": "clock",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "d242df434c40afa445d76cd3b243f1a29a8de473fca312441c6dec4c081d3e14"
+    },
+    {
+      "path": "foundry-movie-submenus/top-10-box-office.png",
+      "title": "Top 10 Box Office",
+      "icon": "star",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "b83cb625cba4b22c592ba75e3e98cbcb0589df44434c379bc699bff095578e81"
+    },
+    {
+      "path": "foundry-movie-submenus/trending-recent.png",
+      "title": "Trending Recent",
+      "icon": "film",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "9731c5ab1ed34496c8aeefb6c7ae7615d2487fd8f54082493954f98569be08fc"
+    },
+    {
+      "path": "foundry-movie-submenus/trending.png",
+      "title": "Trending",
+      "icon": "arrow",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "e2521ba96b0cad866e35f937422ee33e374348a1b554297b05ed3324e8f7ff9f"
+    },
+    {
+      "path": "foundry-movie-submenus/up-coming.png",
+      "title": "Up Coming",
+      "icon": "calendar",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "e032e0d997253d76c827118039fb38ca59ddb47de8b36e33536f13f44a312ef4"
+    },
+    {
+      "path": "foundry-movie-submenus/watched.png",
+      "title": "Watched",
+      "icon": "check",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "b22a5cb371d776f58ac7c0ebb789323726b8ad0dfc6d10b12dbb9f635c87af12"
+    },
+    {
+      "path": "foundry-movie-submenus/years.png",
+      "title": "Years",
+      "icon": "calendar",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "f8246f2728c8112d94cc93355a2460993daf54dbaa216f5ba9196356dd119838"
+    },
+    {
+      "path": "foundry-navigation/search.png",
+      "title": "Search",
+      "icon": "search",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "a53168a2c08d4ac8575ee2592b7d337581c93d79fc71689b5b76abaa157246c5"
+    },
+    {
+      "path": "foundry-navigation/shutdown.png",
+      "title": "Power",
+      "icon": "power",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "8fed0205358c9212932dd9ea83c950647a24146ad7cc020c2a4c6eacd760fe0f"
+    },
+    {
+      "path": "foundry-navigation/movies-back.png",
+      "title": "Movies",
+      "icon": "back",
+      "widget": true,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "3805e6729cc0504c819ba5bce6315fb1cf33525fee63bb7cb5fd0eafe26dfb1b"
+    },
+    {
+      "path": "foundry-backdrops/foundry-loading-splash.png",
+      "title": "Foundry Media Center",
+      "icon": "home",
+      "widget": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "81db24b0a7513527761aa75c97dd4a96d996df3b1ba864ad183f325eefc03412"
+    }
+  ]
+}
