@@ -194,6 +194,8 @@ def main():
             rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.interfaceqa'})
 
             def state():
+                if kodi.poll() is not None:
+                    raise RuntimeError('Native Kodi exited before phone verification completed (exit %s); inspect retained console/crash logs'%kodi.returncode)
                 try:return json.loads((base/'state.json').read_text())
                 except (OSError,ValueError):return {}
             wait_for(lambda:state().get('dialog')==10103)
@@ -291,6 +293,17 @@ def main():
             except Exception:pass
             raise
         finally:
+            # Preserve native crash diagnostics before TemporaryDirectory cleanup.
+            # Do not copy core dumps: stack text and process outcome suffice.
+            crash_logs=[]
+            for label,directory in [('user-home',isolated_home),('profile-temp',profile/'temp')]:
+                if directory.exists():
+                    for diagnostic in directory.rglob('*.log'):
+                        target=output/'native-diagnostics'/label/diagnostic.relative_to(directory)
+                        target.parent.mkdir(parents=True,exist_ok=True)
+                        shutil.copyfile(diagnostic,target)
+                        crash_logs.append(str(target.relative_to(output)))
+            (output/'native-process-outcome.json').write_text(json.dumps({'exit_before_cleanup':kodi.poll() if kodi else None,'crash_logs':crash_logs},indent=2))
             if kodi:
                 try:os.killpg(kodi.pid,signal.SIGTERM)
                 except ProcessLookupError:pass
@@ -307,7 +320,7 @@ def main():
                 playback=playback_log_report((output/'interface-kodi.log').read_text(encoding='utf-8',errors='replace'))
                 (output/'interface-playback-kodi.log').write_text(playback.pop('log'),encoding='utf-8')
                 (output/'interface-playback-errors.json').write_text(json.dumps(playback,indent=2)+'\n',encoding='utf-8')
-            for name in ['state.json','error.txt','sounds.json']:
+            for name in ['state.json','error.txt','sounds.json','keyboard-result.json','discovery-evidence.json']:
                 if (base/name).exists():shutil.copyfile(base/name,output/('interface-'+name))
 
 
