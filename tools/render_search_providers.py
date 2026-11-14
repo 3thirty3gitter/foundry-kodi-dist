@@ -53,8 +53,35 @@ def wait(fn,t=45):
 def cond(c):return rpc('XBMC.GetInfoBooleans',{'booleans':[c]})[c]
 def act(a):rpc('Input.ExecuteAction',{'action':a});time.sleep(.3)
 def drive(body):
- (driver/'default.py').write_text('import xbmc,xbmcgui,json\nfrom pathlib import Path\n'+body)
- rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.searchdriver','wait':True})
+ # Wait for both a result receipt and the same native interpreter teardown.
+ import re
+ receipt=out/('driver-'+str(time.time_ns())+'.json')
+ logpath=profile/'temp/kodi.log'
+ offset=logpath.stat().st_size if logpath.exists() else 0
+ source='import xbmc,xbmcgui,json,traceback\nfrom pathlib import Path\nresult={"ok":False}\ntry:\n'
+ source+='\n'.join(' '+line for line in body.splitlines())
+ source+='\n result["ok"]=True\nexcept Exception:\n result["error"]=traceback.format_exc()\nfinally:\n Path('+repr(str(receipt))+').write_text(json.dumps(result))\n'
+ (driver/'default.py').write_text(source)
+ rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.searchdriver','wait':False})
+ wait(receipt.exists)
+ def stopped():
+  with logpath.open('rb') as f:f.seek(offset);tail=f.read().decode('utf-8',errors='replace')
+  match=re.search(r'T:(\d+)\s+.*CPythonInvoker.*script\.foundry\.searchdriver/default\.py.*script successfully run',tail)
+  return bool(match and re.search(r'T:'+match.group(1)+r'\s+.*Python interpreter stopped',tail[match.end():]))
+ wait(stopped)
+ result=json.loads(receipt.read_text())
+ assert result['ok'], result.get('error')
+def focus_yes(expected):
+ state=out/'dialog-focus.json'
+ def observe():
+  drive('w=xbmcgui.Window(xbmcgui.getCurrentWindowDialogId())\nPath('+repr(str(state))+').write_text(json.dumps({"id":w.getFocusId(),"yes":xbmc.getInfoLabel("Control.GetLabel(11)")}))')
+  return json.loads(state.read_text())
+ current=observe()
+ assert current['yes']==expected, current
+ for _ in range(2):
+  if current['id']==11:return
+  act('left');current=observe()
+ assert current['id']==11, current
 def snap(n):
  dest=out/(n+'.png')
  if dest.exists():dest.unlink()
@@ -63,10 +90,7 @@ def snap(n):
 def accept_disclosure():
  wait(lambda:cond('Window.IsVisible(yesnodialog)'))
  # Assert the actual yes control, rather than assuming a left press means Yes.
- drive('xbmc.executebuiltin("SetFocus(11)",True)\nxbmc.sleep(250)')
- assert cond('Control.HasFocus(11)'), 'Disclosure yes control not focused'
- labels=rpc('XBMC.GetInfoLabels',{'labels':['Control.GetLabel(11)']})
- assert labels['Control.GetLabel(11)']=='Use add-on', labels
+ focus_yes('Use add-on')
  snap(skin+'-disclosure-accept')
  act('select')
  wait(lambda:not cond('Window.IsVisible(yesnodialog)'))
@@ -98,8 +122,7 @@ try:
   assert rpc('Settings.SetSettingValue',{'setting':'lookandfeel.skin','value':skin})
   wait(lambda:cond('Window.IsVisible(yesnodialog)'))
   snap(skin+'-switch-confirmation')
-  drive('xbmc.executebuiltin("SetFocus(11)",True)\nxbmc.sleep(250)')
-  assert cond('Control.HasFocus(11)'), 'Skin switch affirmative button not focused'
+  focus_yes('Yes')
   act('select');wait(lambda:not cond('System.HasActiveModalDialog'));time.sleep(2)
   actual=out/(skin+'-active-skin.json')
   drive('Path('+repr(str(actual))+').write_text(json.dumps({"active":xbmc.getSkinDir()}))')
@@ -107,16 +130,27 @@ try:
   assert observed==skin, ('Configured setting is not actual rendered skin',skin,observed)
   assert rpc('Settings.GetSettingValue',{'setting':'lookandfeel.skin'})['value']==skin
   entry=addons/helper/'resources/lib';marker=out/(skin+'-probe.json')
+  probe_offset=[None]
+  def wait_probe_completed():
+   import re
+   wait(marker.exists)
+   def stopped():
+    with (profile/'temp/kodi.log').open('rb') as f:f.seek(probe_offset[0]);tail=f.read().decode('utf-8',errors='replace')
+    match=re.search(r'T:(\d+)\s+.*CPythonInvoker.*script\.foundry\.searchqa/default\.py.*script successfully run',tail)
+    return bool(match and re.search(r'T:'+match.group(1)+r'\s+.*Python interpreter stopped',tail[match.end():]))
+   wait(stopped)
   def run(body):
+   if probe_offset[0] is not None:wait_probe_completed()
+   probe_offset[0]=(profile/'temp/kodi.log').stat().st_size
    if marker.exists():marker.unlink()
    (qa/'default.py').write_text('import sys,json,xbmc\nfrom pathlib import Path\nsys.path.insert(0,'+repr(str(entry))+')\nfrom modules import search_provider as p\nassert xbmc.getSkinDir()=='+repr(skin)+', (\"Wrong actual skin\",xbmc.getSkinDir())\n'+body+'\nxbmc.sleep(350)\nPath('+repr(str(marker))+').write_text(json.dumps({"selection":xbmc.getInfoLabel("Skin.String(current_search_provider)")}))\n')
    rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.searchqa','wait':False})
   run('rows=p.installed_video_providers()\nassert "plugin.qa.audio" not in [r["id"] for r in rows]\nassert any(r["id"]=="plugin.qa.disabled" and not r["enabled"] for r in rows)\nPath('+repr(str(out/(skin+'-inventory.json')))+').write_text(json.dumps(rows))')
-  wait(marker.exists);rows=json.loads((out/(skin+'-inventory.json')).read_text());report['skins'][skin]={'inventory':rows,'active_skin_verified':observed}
+  wait_probe_completed();rows=json.loads((out/(skin+'-inventory.json')).read_text());report['skins'][skin]={'inventory':rows,'active_skin_verified':observed}
   # Navigate shipped SkinSettings with real remote actions and click its control.
   # This is separate from direct picker cases, preserving the actual entry point.
   run('xbmc.executebuiltin("Skin.Reset(current_search_provider)",True)\nxbmc.executebuiltin("ActivateWindow(skinsettings)",False)\nxbmc.sleep(1000)')
-  wait(marker.exists)
+  wait_probe_completed()
   wait(lambda:cond('Control.HasFocus(9000)'))
   snap(skin+'-settings-start')
   for _ in range(20):
@@ -147,10 +181,10 @@ try:
    act('firstpage')
    for _ in range(idx):act('down')
    act('select')
-  choose();wait(marker.exists);assert json.loads(marker.read_text())['selection']==''
-  choose('plugin.qa.disabled');wait(lambda:cond('Window.IsVisible(okdialog)'));snap(skin+'-disabled');act('select');wait(marker.exists);assert json.loads(marker.read_text())['selection']==''
-  choose('plugin.qa.video');wait(lambda:cond('Window.IsVisible(yesnodialog)'));snap(skin+'-disclosure');act('back');wait(marker.exists);assert json.loads(marker.read_text())['selection']==''
-  choose('plugin.qa.video');accept_disclosure();wait(marker.exists);wait(lambda:selected()=='plugin.qa.video')
+  choose();wait_probe_completed();assert json.loads(marker.read_text())['selection']==''
+  choose('plugin.qa.disabled');wait(lambda:cond('Window.IsVisible(okdialog)'));snap(skin+'-disabled');act('select');wait_probe_completed();assert json.loads(marker.read_text())['selection']==''
+  choose('plugin.qa.video');wait(lambda:cond('Window.IsVisible(yesnodialog)'));snap(skin+'-disclosure');act('back');wait_probe_completed();assert json.loads(marker.read_text())['selection']==''
+  choose('plugin.qa.video');accept_disclosure();wait_probe_completed();wait(lambda:selected()=='plugin.qa.video')
   # Legacy numeric selections and existing XML routes remain unchanged.
   report['skins'][skin]['legacy_selections']=[]
   for i,aid in enumerate(LEGACY_IDS):
@@ -162,14 +196,14 @@ try:
   assert routes==LEGACY_ROUTES[skin], 'Legacy search route contract changed'
   report['skins'][skin]['legacy_xml_routes_unchanged']=True
   # Restore open-only source for restart test, with the same explicit disclosure.
-  choose('plugin.qa.video');accept_disclosure();wait(marker.exists);wait(lambda:selected()=='plugin.qa.video')
+  choose('plugin.qa.video');accept_disclosure();wait_probe_completed();wait(lambda:selected()=='plugin.qa.video')
   # Native skin string is persisted on graceful shutdown, then reopened.
   rpc('Application.Quit');k.wait(timeout=30)
   settings=userdata/'addon_data'/skin/'settings.xml';t=E.parse(settings)
   assert any(n.get('id')=='current_search_provider' and n.text=='plugin.qa.video' for n in t.getroot().findall('setting'))
-  shutil.copy2(settings,out/(skin+'-settings.xml'));k=launch();wait(lambda:rpc('JSONRPC.Ping')=='pong');time.sleep(3)
+  shutil.copy2(settings,out/(skin+'-settings.xml'));probe_offset[0]=None;k=launch();wait(lambda:rpc('JSONRPC.Ping')=='pong');time.sleep(3)
   run('assert xbmc.getInfoLabel("Skin.String(current_search_provider)")=="plugin.qa.video"\np.use_external_video_provider()')
-  wait(marker.exists);wait(lambda:(out/'root-opened.json').exists());snap(skin+'-addon-root');(out/'root-opened.json').unlink()
+  wait_probe_completed();wait(lambda:(out/'root-opened.json').exists());snap(skin+'-addon-root');(out/'root-opened.json').unlink()
   report['skins'][skin]['passed']=True
  report['passed']=True
 finally:

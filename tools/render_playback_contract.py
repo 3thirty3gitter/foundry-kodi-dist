@@ -1,5 +1,5 @@
 """Run isolated Kodi21+ action/resolver playback contracts under BOTH shipped skins."""
-import argparse,importlib.util,json,os,shutil,signal,subprocess,tempfile,time,traceback,hashlib,sys,xml.etree.ElementTree as E
+import argparse,importlib.util,json,os,shutil,signal,subprocess,tempfile,time,traceback,hashlib,sys,re,xml.etree.ElementTree as E
 from PIL import Image,ImageStat
 from pathlib import Path
 from urllib.request import Request,urlopen
@@ -57,6 +57,9 @@ def main():
    for n in list(r.find('requires')):
     if n.get('addon')!='xbmc.python':r.find('requires').remove(n)
    tree.write(helper/'addon.xml')
+   # Isolate out-of-scope first-run installers/rebuilders in this temporary
+   # profile only. Retain the actual router and playback modules byte-for-byte.
+   (helper/'resources/lib/default.py').write_text("import sys\nfrom urllib.parse import parse_qsl\nmode=dict(parse_qsl(sys.argv[1] if len(sys.argv)>1 else '')).get('mode','check_for_update')\nif mode not in ('check_for_update','check_for_profile_change','configure_experience'):\n from modules.router import routing\n routing()\n",encoding='utf-8')
   for p in (home/'addons').glob('*/addon.xml'):
    tree=E.parse(p)
    for e in tree.getroot().findall("extension[@point='xbmc.service']"):tree.getroot().remove(e)
@@ -97,16 +100,38 @@ def main():
     elif time.monotonic()-quiet>=2:return
     time.sleep(.2)
    raise AssertionError('Startup dialogs never reached a stable quiet interval')
+  identity_sequence=0
   def identity(focus_yes=False):
-   marker=base/'identity.json';marker.unlink(missing_ok=True)
+   nonlocal identity_sequence
+   identity_sequence+=1
+   marker=base/('identity-%03d.json'%identity_sequence)
+   logfile=profile/'temp/kodi.log'
+   log_offset=len(logfile.read_text(encoding='utf-8',errors='replace'))
    body="import xbmc,xbmcgui,xbmcvfs,json,hashlib\nfrom pathlib import Path\n"
    if focus_yes:body+='xbmc.executebuiltin("SetFocus(11)",True)\nxbmc.sleep(100)\n'
    body+="skin_path=Path(xbmcvfs.translatePath('special://skin/')).resolve()\n"
    body+="data={'skin_id':xbmc.getSkinDir(),'skin_path':str(skin_path),'dialog_id':xbmcgui.getCurrentWindowDialogId(),'modal':bool(xbmc.getCondVisibility('System.HasActiveModalDialog')),'yesno':bool(xbmc.getCondVisibility('Window.IsActive(yesnodialog)')),'yes_focused':bool(xbmc.getCondVisibility('Control.HasFocus(11)')),'prompt':{str(i):xbmc.getInfoLabel('Control.GetLabel(%d)'%i) for i in (1,9,10,11)},'dialog_info_sha256':hashlib.sha256((skin_path/'xml/DialogVideoInfo.xml').read_bytes()).hexdigest()}\n"
    body+='Path(%r).write_text(json.dumps(data),encoding="utf-8")\n'%str(marker)
-   (probe_addon/'default.py').write_text(body,encoding='utf-8')
+   error_marker=marker.with_suffix('.error.json')
+   wrapped='import traceback\nfrom pathlib import Path\ntry:\n'+''.join(' '+line+'\n' for line in body.splitlines())+'except BaseException:\n Path(%r).write_text(traceback.format_exc(),encoding="utf-8")\n raise\n'%str(error_marker)
+   (probe_addon/'default.py').write_text(wrapped,encoding='utf-8')
    rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.contractidentity','wait':True})
-   wait(marker.exists);return json.loads(marker.read_text(encoding='utf-8'))
+   def marker_ready():
+    if error_marker.exists():raise AssertionError(error_marker.read_text(encoding='utf-8'))
+    return marker.exists()
+   wait(marker_ready)
+   # A marker proves the body finished, not that Kodi released this script
+   # instance. Wait for its native interpreter teardown before re-executing
+   # the same addon; otherwise ExecuteAddon may stop the prior instance.
+   def probe_exited():
+    tail=logfile.read_text(encoding='utf-8',errors='replace')[log_offset:]
+    pattern=r'T:(\d+)\s+debug <general>: CPythonInvoker\(\d+, '+re.escape(str(probe_addon/'default.py'))+r'\): script successfully run'
+    matches=list(re.finditer(pattern,tail))
+    return bool(matches and re.search(r'T:'+matches[-1].group(1)+r'\s+debug <general>: Python interpreter stopped',tail[matches[-1].end():]))
+   wait(probe_exited,15)
+   sample=json.loads(marker.read_text(encoding='utf-8'))
+   sample['probe_sequence']=identity_sequence;sample['native_interpreter_exited']=True
+   return sample
   def assert_identity(sample,skin):
    assert sample['skin_id']==skin,('Setting is not actual loaded skin',sample,skin)
    assert Path(sample['skin_path']).resolve()==(addons/skin).resolve(),('Wrong special skin path',sample)
@@ -122,7 +147,7 @@ def main():
    focused=identity(focus_yes=True);assert_identity(focused,skin)
    focused_text=' '.join(focused['prompt'].values()).lower()
    assert focused['yesno'] and focused['yes_focused'] and all(focused['prompt'][i]==pending['prompt'][i] for i in ('1','10','11')) and 'keep' in focused_text and ('skin' in focused_text or 'change' in focused_text),('Confirmation changed before acceptance',focused,pending)
-   rpc('Input.Select');wait(lambda:not cond('System.HasActiveModalDialog'));time.sleep(.5)
+   rpc('Input.Select');wait(lambda:not cond('System.HasActiveModalDialog'));drain_modals()
    loaded=identity();assert_identity(loaded,skin)
    assert not loaded['modal'] and rpc('Settings.GetSettingValue',{'setting':'lookandfeel.skin'})['value']==skin
    return {'skin':skin,'pending_confirmation':pending,'focused_confirmation':focused,'loaded':loaded}
@@ -157,7 +182,7 @@ def main():
     content=(source/rel).read_bytes();copied=(addons/aid/rel).read_bytes()
     assert content==copied,('Tested source differs from checkout',aid,rel)
     source_receipts.append({'addon':aid,'path':rel,'sha256':hashlib.sha256(content).hexdigest(),'bytes':len(content),'profile_copy_verified':True})
-  report={'schema_version':1,'passed':False,'source_receipts':source_receipts,'screenshots':screenshots,'cases':[],'scope':'Disposable native Kodi, both shipped skins and helper entry points, synthetic action and resolver addons/local video; no live FEN service or affected device validation.'}
+  report={'schema_version':1,'passed':False,'source_receipts':source_receipts,'screenshots':screenshots,'cases':[],'fixture_isolation':{'disabled_setup_entry_modes':['check_for_update','check_for_profile_change','configure_experience'],'helper_service_disabled':True,'playback_router_source_unmodified':True},'scope':'Disposable native Kodi, both shipped skins and real playback helper entry routes, setup-only entry modes/service disabled; synthetic action and resolver addons/local video; no live FEN service or affected device validation.'}
   try:
    wait(ready,60);version=rpc('Application.GetProperties',{'properties':['version']})['version'];assert version['major']>=21,version;report['kodi']=version
    drain_modals()
@@ -168,11 +193,17 @@ def main():
     report['skin_identity_receipts'].append(switch_skin(skin))
     (base/'driver-done').unlink(missing_ok=True);(base/'state.json').unlink(missing_ok=True)
     (driver/'default.py').write_text('from pathlib import Path\nBASE=Path(%r)\nHELPER=Path(%r)\n'%(str(base),str(addons/helper))+DRIVER)
+    driver_log_offset=len((profile/'temp/kodi.log').read_text(encoding='utf-8',errors='replace'))
     rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.contractqa','wait':False});wait(lambda:bool(state()))
     report['cases']+=contract.verify(rpc,base,out,command,state,wait,capture,skin)
-    completed_identity=identity();assert_identity(completed_identity,skin)
+    completed_identity=identity();assert_identity(completed_identity,skin);assert not completed_identity['modal']
     report['skin_identity_receipts'][-1]['after_cases']=completed_identity
-    (base/'driver-done').write_text('done');time.sleep(.5)
+    (base/'driver-done').write_text('done')
+    def driver_exited():
+     tail=(profile/'temp/kodi.log').read_text(encoding='utf-8',errors='replace')[driver_log_offset:]
+     matches=list(re.finditer(r'T:(\d+)\s+debug <general>: CPythonInvoker\(\d+, '+re.escape(str(driver/'default.py'))+r'\): script successfully run',tail))
+     return bool(matches and re.search(r'T:'+matches[-1].group(1)+r'\s+debug <general>: Python interpreter stopped',tail[matches[-1].end():]))
+    wait(driver_exited,15)
    logs=(profile/'temp/kodi.log').read_text(errors='replace')
    forbidden=['one or more items failed to play','skipping unplayable item','PythonToCppException','Error Contents:','Traceback (most recent call last):']
    errors=[line for line in logs.splitlines() if any(f in line for f in forbidden)];assert not errors,errors
