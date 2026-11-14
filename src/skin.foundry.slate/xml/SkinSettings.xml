@@ -19,6 +19,14 @@
         <pagecontrol>60</pagecontrol>
         <ondown>610</ondown>
         <visible>Container(9000).HasFocus(1)</visible>
+        <control type="radiobutton" id="6243">
+          <label>Show main menu icons</label>
+          <include content="DefaultSettingButton">
+            <param name="system_icon" value="interface" />
+          </include>
+          <selected>!Skin.HasSetting(SlateHideMainMenuIcons)</selected>
+          <onclick>Skin.ToggleSetting(SlateHideMainMenuIcons)</onclick>
+        </control>
         <control type="button" id="624">
           <label>Remake menus and widgets</label>
           <include content="DefaultSettingButton">

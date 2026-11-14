@@ -19,3 +19,6 @@ xml/script-skinshortcuts-includes.xml
 !media/slate-wallpapers/**
 !media/foundry-widget-wallpapers/
 !media/foundry-widget-wallpapers/*.png
+
+!media/slate-weather/
+!media/slate-weather/**

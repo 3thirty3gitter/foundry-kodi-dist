@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <fonts>
-	<fontset id="Default" idloc="15109"><font><name>SlateBrand</name><filename>Inter-ExtraLight.ttf</filename><size>40</size></font><font><name>SlateNav</name><filename>Inter-Light.ttf</filename><size>28</size></font>
+	<fontset id="Default" idloc="15109"><font><name>SlateBrand</name><filename>Inter-ExtraLight.ttf</filename><size>40</size></font><font><name>SlateNav</name><filename>Inter-Light.ttf</filename><size>31</size></font>
 		
 		<font>
 			<name>font10</name>
@@ -354,7 +354,7 @@
 		<font><name>foundry_weather_title</name><filename>Inter-Light.ttf</filename><size>26</size></font>
 		<font><name>foundry_weather_temperature</name><filename>Inter-ExtraLight.ttf</filename><size>80</size></font>
   <font><name>SlateCategory</name><filename>Inter-ExtraLight.ttf</filename><size>84</size></font></fontset>
-	<fontset id="Arial" idloc="31053">
+	<fontset id="Arial" idloc="31053"><font><name>SlateNav</name><filename>arial.ttf</filename><size>31</size></font>
 		
 		
 		<font>

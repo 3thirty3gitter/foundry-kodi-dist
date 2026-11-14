@@ -13,7 +13,10 @@ class SlateHomeNavigation(unittest.TestCase):
         self.assertEqual(menu.findtext('ondown'), '700')
         self.assertEqual(menu.findtext('onup'), '700')
         self.assertEqual(menu.findtext('onback'), '700')
-        self.assertEqual(menu.findtext('onright'), 'SetFocus($INFO[Container(9000).ListItem.Property(menu_id)])')
+        routes=menu.findall('onright')
+        self.assertEqual(len(routes),3)
+        self.assertEqual(routes[-1].text,'SetFocus($INFO[Container(9000).ListItem.Property(menu_id)])')
+        self.assertEqual(routes[-1].get('condition'),'!String.IsEqual(Container(9000).ListItem.Property(id),weather) | !String.IsEqual(Weather.Plugin,weather.foundry.canada)')
     def test_footer_returns_to_menu_and_preserves_horizontal_navigation(self):
         footer = self.control(700)
         self.assertEqual(footer.findtext('orientation'), 'horizontal')

@@ -27,7 +27,7 @@
             <left>0</left><top>0</top><width>100%</width><height>100%</height>
             <aspectratio>keep</aspectratio>
             <fadetime>450</fadetime>
-            <texture background="true" fallback="$VAR[FoundryMenuBackground]">$VAR[FoundryHomeWallpaper]</texture>
+            <texture background="true" fallback="$VAR[FoundryMenuBackground]">$VAR[SlateWeatherCanvasWallpaper]</texture>
             <visible>!Player.HasVideo + ![Player.HasAudio + Visualisation.Enabled + !String.IsEmpty(Visualisation.Name)]</visible>
         </control>
 		<control type="group">
@@ -556,7 +556,7 @@
 						<param name="id" value="weather" />
 					</include>
 					<include content="FoundryCanadaWeatherWidget">
-                        <param name="x" value="310" /><param name="y" value="-210" /><param name="id" value="15150" />
+                        <param name="x" value="310" /><param name="y" value="-240" /><param name="id" value="15150" />
                     </include>
                     <control type="group">
                         <visible>!String.IsEqual(Weather.Plugin,weather.foundry.canada)</visible>
@@ -788,12 +788,14 @@
 						<onunfocus condition="ControlGroup(2000).HasFocus + String.IsEqual(Container(9000).ListItem.Property(id),custom3)">ClearProperty(slate_nimbus_custom3_first_widget,home)</onunfocus>
 						
 						<onfocus>ClearProperty(listposition,home)</onfocus>
-						<onright>SetFocus($INFO[Container(9000).ListItem.Property(menu_id)])</onright>
+						<onright condition="String.IsEqual(Container(9000).ListItem.Property(id),weather) + String.IsEqual(Weather.Plugin,weather.foundry.canada) + !String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))">SetFocus(15150,0,absolute)</onright>
+<onright condition="String.IsEqual(Container(9000).ListItem.Property(id),weather) + String.IsEqual(Weather.Plugin,weather.foundry.canada) + String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))">SetFocus(15154)</onright>
+<onright condition="!String.IsEqual(Container(9000).ListItem.Property(id),weather) | !String.IsEqual(Weather.Plugin,weather.foundry.canada)">SetFocus($INFO[Container(9000).ListItem.Property(menu_id)])</onright>
 						<onback>700</onback>
 						<onup>700</onup>
 						<ondown>700</ondown>
 						<scrolltime tween="cubic" easing="out">500</scrolltime>
-						<itemlayout width="390" height="80"><control type="image"><left>25</left><top>24</top><width>30</width><height>30</height><texture fallback="slate-icons/home.png" colordiffuse="grey">slate-icons/$INFO[ListItem.Property(id)].png</texture></control><control type="label"><left>76</left><top>10</top><width>295</width><height>60</height><font>SlateNav</font><label>$INFO[ListItem.Label]</label><textcolor>grey</textcolor><shadowcolor>00000000</shadowcolor></control></itemlayout><focusedlayout width="390" height="80"><control type="image"><left>2</left><top>18</top><width>2</width><height>44</height><texture colordiffuse="accent_color">colors/white.png</texture></control><control type="image"><left>25</left><top>24</top><width>30</width><height>30</height><texture fallback="slate-icons/home.png" colordiffuse="white">slate-icons/$INFO[ListItem.Property(id)].png</texture></control><control type="label"><left>76</left><top>10</top><width>295</width><height>60</height><font>SlateNav</font><label>$INFO[ListItem.Label]</label><textcolor>white</textcolor><shadowcolor>00000000</shadowcolor></control></focusedlayout>
+						<itemlayout width="390" height="80"><control type="image"><left>25</left><top>24</top><width>30</width><height>30</height><visible>!Skin.HasSetting(SlateHideMainMenuIcons)</visible><texture fallback="slate-icons/home.png" colordiffuse="grey">slate-icons/$INFO[ListItem.Property(id)].png</texture></control><control type="label"><left>76</left><top>10</top><width>295</width><height>60</height><font>SlateNav</font><label>$INFO[ListItem.Label]</label><textcolor>grey</textcolor><shadowcolor>00000000</shadowcolor></control></itemlayout><focusedlayout width="390" height="80"><control type="image"><left>2</left><top>18</top><width>2</width><height>44</height><texture colordiffuse="accent_color">colors/white.png</texture></control><control type="image"><left>25</left><top>24</top><width>30</width><height>30</height><visible>!Skin.HasSetting(SlateHideMainMenuIcons)</visible><texture fallback="slate-icons/home.png" colordiffuse="white">slate-icons/$INFO[ListItem.Property(id)].png</texture></control><control type="label"><left>76</left><top>10</top><width>295</width><height>60</height><font>SlateNav</font><label>$INFO[ListItem.Label]</label><textcolor>white</textcolor><shadowcolor>00000000</shadowcolor></control></focusedlayout>
 						<content>
 							
 							<include content="MoviesMainMenu" condition="!Skin.HasSetting(HomeMenuNoMoviesButton)" />
@@ -878,7 +880,8 @@
 							</item>
 							<item>
 								<label>$LOCALIZE[8]</label>
-                                <onclick condition="String.IsEqual(Weather.Plugin,weather.foundry.canada)">SetFocus(15150)</onclick>
+                                <onclick condition="String.IsEqual(Weather.Plugin,weather.foundry.canada) + !String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))">SetFocus(15150,0,absolute)</onclick>
+<onclick condition="String.IsEqual(Weather.Plugin,weather.foundry.canada) + String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))">SetFocus(15154)</onclick>
 								
 								<onclick condition="!String.IsEmpty(Weather.Plugin) + !String.IsEqual(Weather.Plugin,weather.foundry.canada) + String.IsEmpty(Window(Home).Property(weather_cycling))">SetProperty(weather_cycling,true,home)</onclick>
 								<onclick condition="!String.IsEmpty(Weather.Plugin) + !String.IsEqual(Weather.Plugin,weather.foundry.canada) + String.IsEmpty(Window(Home).Property(weather_cycling))">ReplaceWindow(Weather)</onclick>
@@ -906,9 +909,9 @@
 							<onright>2000</onright>
 							<onback>9000</onback>
 							<align>left</align>
-							<control type="button" id="801"><width>70</width><height>70</height><label /><texturefocus>slate-icons/power.png</texturefocus><texturenofocus>slate-icons/power.png</texturenofocus><onclick>$VAR[HomePowerButtonActionVar]</onclick><visible>true</visible></control>
-							<control type="button" id="802"><width>70</width><height>70</height><label /><texturefocus>slate-icons/settings.png</texturefocus><texturenofocus>slate-icons/settings.png</texturenofocus><onclick>ActivateWindow(settings)</onclick><visible>true</visible></control>
-							<control type="button" id="803"><width>70</width><height>70</height><label /><texturefocus>slate-icons/search.png</texturefocus><texturenofocus>slate-icons/search.png</texturenofocus><onclick>$VAR[HomeSearchButtonActionVar]</onclick><visible>true</visible></control>
+							<control type="button" id="801"><width>70</width><height>70</height><label /><texturefocus colordiffuse="accent_color">slate-icons/power.png</texturefocus><animation effect="zoom" start="100" end="115" center="auto" time="120" reversible="true">Focus</animation><animation effect="zoom" start="115" end="100" center="auto" time="120" reversible="true">UnFocus</animation><texturenofocus>slate-icons/power.png</texturenofocus><onclick>$VAR[HomePowerButtonActionVar]</onclick><visible>true</visible></control>
+							<control type="button" id="802"><width>70</width><height>70</height><label /><texturefocus colordiffuse="accent_color">slate-icons/settings.png</texturefocus><animation effect="zoom" start="100" end="115" center="auto" time="120" reversible="true">Focus</animation><animation effect="zoom" start="115" end="100" center="auto" time="120" reversible="true">UnFocus</animation><texturenofocus>slate-icons/settings.png</texturenofocus><onclick>ActivateWindow(settings)</onclick><visible>true</visible></control>
+							<control type="button" id="803"><width>70</width><height>70</height><label /><texturefocus colordiffuse="accent_color">slate-icons/search.png</texturefocus><animation effect="zoom" start="100" end="115" center="auto" time="120" reversible="true">Focus</animation><animation effect="zoom" start="115" end="100" center="auto" time="120" reversible="true">UnFocus</animation><texturenofocus>slate-icons/search.png</texturenofocus><onclick>$VAR[HomeSearchButtonActionVar]</onclick><visible>true</visible></control>
 							<control type="button" id="804"><width>70</width><height>70</height><label /><texturefocus>slate-icons/addons.png</texturefocus><texturenofocus>slate-icons/addons.png</texturenofocus><onclick>ActivateWindow(addonbrowser,addons://outdated/,return)</onclick><visible>Integer.IsGreater(System.AddonUpdateCount,0)</visible></control>
 							<control type="button" id="805"><width>70</width><height>70</height><label /><texturefocus>slate-icons/tvshows.png</texturefocus><texturenofocus>slate-icons/tvshows.png</texturenofocus><onclick>Fullscreen</onclick><visible>Player.HasMedia</visible></control>
 						</control>

@@ -5,7 +5,11 @@ class SlateOptional(unittest.TestCase):
  def test_original_unchanged(self):
   old=json.loads((ROOT/'tests/fixtures/slate-original-packages.json').read_text())
   new=json.loads((ROOT/'release.json').read_text())
-  self.assertEqual(new['packages'][:10],old['packages'])
+  # The separately authorized weather persistence fix updates only its provider.
+  current={p['id']:p for p in new['packages']}
+  for package in old['packages']:
+   if package['id']!='weather.foundry.canada':self.assertEqual(current[package['id']],package)
+  self.assertEqual(current['weather.foundry.canada']['version'],'0.1.1')
   self.assertEqual(new['release'],old['release'])
   for p in old['packages']: self.assertEqual(hashlib.sha256((ROOT/p['path']).read_bytes()).hexdigest(),p['sha256'])
  def test_optional_separate_ids(self):

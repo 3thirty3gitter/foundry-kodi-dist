@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="weather.foundry.canada" name="Foundry Canada Weather" version="0.1.0" provider-name="Foundry">
+<addon id="weather.foundry.canada" name="Foundry Canada Weather" version="0.1.1" provider-name="Foundry">
   <requires><import addon="xbmc.python" version="3.0.0" /></requires>
   <extension point="xbmc.python.weather" library="default.py" />
   <extension point="xbmc.addon.metadata">

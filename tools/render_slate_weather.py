@@ -1,0 +1,96 @@
+from pathlib import Path
+import os,json,shutil,subprocess,time,urllib.request,xml.etree.ElementTree as E
+import argparse,tempfile,hashlib,sys
+from PIL import ImageGrab
+parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,required=True);args=parser.parse_args();ROOT=Path(__file__).resolve().parents[1];base=Path(tempfile.mkdtemp(prefix='slate-weather-'));out=args.output.resolve();out.mkdir(parents=True,exist_ok=True);home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
+# Do not accept evidence copied from a prior published release.
+for stale in out.iterdir():
+ if stale.is_file() and (stale.suffix == '.png' or stale.name in ('focus-report.json','focus-progress.json','native-report.json')):
+  stale.unlink()
+profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True);addons=profile/'addons';addons.mkdir()
+for source in [ROOT/'src/weather.foundry.canada',ROOT/'src/skin.foundry.slate',ROOT/'src/script.foundry.slate.helper',ROOT.parent/'skin.foundry-nimbus',ROOT.parent/'script.foundry.helper']+[ROOT/'src'/x for x in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse')]:
+ aid=E.parse(source/'addon.xml').getroot().get('id');shutil.copytree(source,addons/aid,ignore=shutil.ignore_patterns('.git'))
+for helper in addons.glob('script.*helper'):
+ t=E.parse(helper/'addon.xml');r=t.getroot()
+ for n in list(r.findall("extension[@point='xbmc.service']")):r.remove(n)
+ for n in list(r.find('requires')):
+  if n.get('addon')!='xbmc.python':r.find('requires').remove(n)
+ t.write(helper/'addon.xml');(helper/'resources/lib/default.py').write_text('# offline UI fixture only\n')
+for p in (home/'addons').glob('*/addon.xml'):
+ t=E.parse(p)
+ for e in t.getroot().findall("extension[@point='xbmc.service']"):t.getroot().remove(e)
+ t.write(p)
+for aid in ('skin.foundry','skin.foundry.slate'):
+ d=userdata/'addon_data'/aid;d.mkdir(parents=True);(d/'settings.xml').write_text('<settings><setting id="firsttimerun" type="bool">true</setting></settings>')
+(userdata/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">18991</setting><setting id="services.webserverauthentication">false</setting><resolutions/><viewstates/><skinsettings/></settings>')
+qa=addons/'script.foundry.slate.navigationqa';qa.mkdir();(qa/'addon.xml').write_text('<addon id="script.foundry.slate.navigationqa" version="1.0.0" name="Slate QA" provider-name="QA"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/></addon>');(qa/'default.py').write_text("\nimport xbmc,xbmcgui,json,time,traceback\nfrom pathlib import Path\nOUT=Path(__OUT__)\nreport={'passed':False,'trace':[],'scope':'Native Slate XML with synthetic weather property fixture. No live-provider, physical Shield or provider parsing claim.'}\ndef focus():return xbmcgui.Window(10000).getFocusId()\ndef require(ok,msg):\n if not ok:raise AssertionError(msg)\ndef wait(fn,msg,t=12):\n end=time.monotonic()+t\n while time.monotonic()<end:\n  if fn():return\n  xbmc.sleep(100)\n raise AssertionError(msg)\ndef step(a):\n xbmc.executebuiltin('Action('+a+')',False);xbmc.sleep(500)\n report['trace'].append({'action':a,'focus':focus(),'day':xbmc.getInfoLabel('Container(15150).ListItem.Label')})\n (OUT/'focus-progress.json').write_text(json.dumps(report,indent=2))\ndef snap(n):\n xbmc.executebuiltin('TakeScreenshot('+str(OUT/(n+'.png'))+')');xbmc.sleep(600)\ndef menu():\n for i in range(int(xbmc.getInfoLabel('Container(9000).NumItems') or '0')):\n  xbmc.executebuiltin('SetFocus(9000,%d,absolute)'%i,True);xbmc.sleep(100)\n  if xbmc.getInfoLabel('Container(9000).ListItem.Property(id)')=='weather':return\n raise AssertionError('Weather menu missing')\ntry:\n require(xbmc.getSkinDir()=='skin.foundry.slate','Wrong active skin')\n xbmc.executebuiltin('ActivateWindow(Home)',True);xbmc.sleep(700)\n xbmc.executebuiltin('Weather.Refresh',False)\n weather=xbmcgui.Window(12600)\n wait(lambda:weather.getProperty('Foundry.Weather.DayCount')=='7','Synthetic provider did not populate')\n menu();snap('weather-hover')\n for cycle in range(2):\n  step('Right');wait(lambda:focus()==15150,'Right must focus first day')\n  wait(lambda:int(xbmc.getInfoLabel('Container(15150).NumItems') or 0)==7,'Seven fixture days not visible')\n  for n in range(1,8):\n   wait(lambda:xbmc.getInfoLabel('Container(15150).ListItem.Label')=='Fixture day '+str(n),'Selected day title mismatch')\n   require(xbmc.getInfoLabel('Container(15150).ListItem.Property(summary)')==weather.getProperty('Foundry.Weather.Day.%d.Summary'%n),'Detail summary mismatch')\n   require(xbmc.getCondVisibility('Control.HasFocus(15150)'),'Forecast not focused')\n   require(xbmc.getInfoLabel('Container(15150).ListItem.Icon')=='slate-weather/'+str([32,30,12,16,24,31,4][n-1])+'.png','Wrong mapped forecast icon')\n   snap('cycle%d-day%d'%(cycle,n))\n   if n<7:step('Right')\n  step('Right');wait(lambda:focus()==9000,'Last day edge must return to menu')\n  for a in ['Back','Up','Left']:\n   step('Right');wait(lambda:focus()==15150,'Reentry failed');step(a);wait(lambda:focus()==9000,a+' did not return menu')\n  step('Right');step('Down');wait(lambda:focus()==15151,'Days Down actions');step('Down')\n  wait(lambda:focus() in (801,802,803,804,805),'Actions Down footer');step('Back');menu()\n # Sparse and empty property changes exercise visibility without falsifying a live feed.\n for count in [3,1,0]:\n  for n in range(count+1,8):\n   for key in ['Title','Range','Condition','Summary','Icon']:weather.clearProperty('Foundry.Weather.Day.%d.%s'%(n,key))\n  weather.setProperty('Foundry.Weather.DayCount',str(count))\n  menu();xbmc.sleep(1000);step('Right')\n  if count:\n   wait(lambda:focus()==15150,'Sparse forecast focus')\n   wait(lambda:int(xbmc.getInfoLabel('Container(15150).NumItems') or 0)==count,'Stale extra days remain')\n  else:\n   wait(lambda:focus()==15154,'Empty forecast must route settings action')\n  snap('days-'+str(count));step('Back');menu()\n for status in ['needs_location','unavailable']:\n  weather.setProperty('Foundry.Weather.Status',status);weather.setProperty('Foundry.Weather.HasCurrent','false');xbmc.sleep(500);snap(status)\n weather.setProperty('Foundry.Weather.Stale','true');weather.setProperty('Foundry.Weather.HasAlerts','true');weather.setProperty('Foundry.Weather.AlertCount','1');snap('stale-alert-state')\n report['passed']=True\nexcept Exception:report['error']=traceback.format_exc()\nfinally:(OUT/'focus-report.json').write_text(json.dumps(report,indent=2))\n".replace('__OUT__',repr(str(out))))
+(addons/'weather.foundry.canada/default.py').write_text("\nimport xbmcgui\nw=xbmcgui.Window(12600)\nvalues={'Current.Location':'Synthetic Ottawa','Current.Condition':'Synthetic snow','Current.Temperature':'0','Current.OutlookIcon':'16.png','Current.Wind':'12','Current.Humidity':'70','Current.IsFetched':'true','Daily.IsFetched':'true',\n'Foundry.Weather.Icon':'resource://resource.images.weathericons.default/16.png','Foundry.Weather.Status':'fresh','Foundry.Weather.HasCurrent':'true','Foundry.Weather.DayCount':'7','Foundry.Weather.Location':'Synthetic Ottawa','Foundry.Weather.Temperature':'0°C','Foundry.Weather.Condition':'Synthetic snow','Foundry.Weather.FeelsLike':'Feels like −7°C','Foundry.Weather.Wind':'N 12 km/h','Foundry.Weather.Humidity':'70%','Foundry.Weather.Attribution':'SYNTHETIC OFFLINE QA DATA','Foundry.Weather.Stale':'false'}\nfor n in range(1,8):\n for key,val in {'Title':'Fixture day '+str(n),'Range':str(n)+'° / −8°','Condition':'Condition '+str(n),'Summary':'Unique synthetic detail for day '+str(n)+'. No live weather data.','Icon':'resource://resource.images.weathericons.default/'+str([32,30,12,16,24,31,4][n-1])+'.png'}.items():\n  values['Foundry.Weather.Day.'+str(n)+'.'+key]=val\n values['Day'+str(n-1)+'.OutlookIcon']=str([32,30,12,16,24,31,4][n-1])+'.png'\nfor key,val in values.items():w.setProperty(key,val)\n",encoding='utf-8')
+env=dict(os.environ,HOME=str(base/'home'),XDG_CONFIG_HOME=str(base/'home/.config'),XDG_CACHE_HOME=str(base/'home/.cache'),DISPLAY=':98',KODI_HOME=str(home),LIBGL_ALWAYS_SOFTWARE='1',AE_SINK='NULL');(base/'home').mkdir()
+log=(out/'native-console.log').open('w');x=subprocess.Popen(['Xvfb',':98','-screen','0','1920x1080x24','-ac','-nolisten','tcp'],stdout=log,stderr=log);time.sleep(1)
+k=subprocess.Popen(['kodi','-p','-fs','--windowing=x11','--debug'],env=env,stdout=log,stderr=log)
+def rpc(method,params=None):
+ data=json.dumps({'jsonrpc':'2.0','id':1,'method':method,'params':params or {}}).encode();r=json.load(urllib.request.urlopen(urllib.request.Request('http://127.0.0.1:18991/jsonrpc',data=data,headers={'Content-Type':'application/json'}),timeout=5))
+ if 'error' in r: raise RuntimeError((method,params,r['error']))
+ return r['result']
+def wait(fn,t=45):
+ end=time.monotonic()+t
+ while time.monotonic()<end:
+  try:
+   if fn():return
+  except Exception:pass
+  time.sleep(.3)
+ raise AssertionError('timeout')
+def modal():return rpc('XBMC.GetInfoBooleans',{'booleans':['System.HasActiveModalDialog']}).get('System.HasActiveModalDialog')
+report={'scope':'Offline native Slate forecast list and detail focus tests, synthetic properties only; no live provider or Shield claim.','passed':False}
+try:
+ wait(lambda:rpc('JSONRPC.Ping')=='pong');report['kodi']=rpc('Application.GetProperties',{'properties':['version']})
+ for _ in range(20):
+  if modal():rpc('Input.Back')
+  time.sleep(.3)
+ for aid in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','script.foundry.helper','script.foundry.slate.helper','skin.foundry','skin.foundry.slate','weather.foundry.canada','script.foundry.slate.navigationqa'):rpc('Addons.SetAddonEnabled',{'addonid':aid,'enabled':True})
+ assert rpc('Settings.SetSettingValue',{'setting':'weather.addon','value':'weather.foundry.canada'})
+ for aid,label in [('skin.foundry.slate','slate')]:
+  assert rpc('Settings.SetSettingValue',{'setting':'lookandfeel.skin','value':aid})
+  wait(modal);rpc('Input.Left');rpc('Input.Select');wait(lambda:not modal());time.sleep(3)
+  assert rpc('Settings.GetSettingValue',{'setting':'lookandfeel.skin'})['value']==aid
+  rpc('GUI.ActivateWindow',{'window':'home'});time.sleep(1)
+  ImageGrab.grab(xdisplay=':98').save(out/(label+'.png'))
+  rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.slate.navigationqa','wait':False})
+  wait(lambda:(out/'focus-report.json').exists(),240)
+  report['navigation']=json.loads((out/'focus-report.json').read_text())
+  assert report['navigation']['passed'],report['navigation'].get('error')
+  shipped=ROOT/'src/skin.foundry.slate/xml/Home.xml'
+  assert (addons/'skin.foundry.slate/xml/Home.xml').read_bytes()==shipped.read_bytes()
+  report['home_sha256']=hashlib.sha256(shipped.read_bytes()).hexdigest()
+  from PIL import Image
+  import math
+  shot=Image.open(out/'cycle0-day3.png').convert('RGB')
+  for bx in (690,965,1240,1515):
+   crop=shot.crop((bx,810,bx+255,862)); pixels=list(crop.getdata())
+   assert sum(min(p)>235 for p in pixels)/len(pixels)<0.15, 'White action rectangle regression'
+   assert sum(min(p)>150 for p in pixels)>20, 'Missing action caption'
+  for day,code in enumerate([32,30,12,16,24,31,4],1):
+   shot=Image.open(out/('cycle0-day%d.png'%day)).convert('RGB').crop((690,322,845,477))
+   actual=[min(p)>130 for p in shot.getdata()]
+   icon=Image.open(ROOT/('src/skin.foundry.slate/media/slate-weather/%d.png'%code)).convert('RGBA').resize((155,155),Image.Resampling.LANCZOS)
+   expected=[p[3]>100 for p in icon.getdata()]
+   union=sum(a or b for a,b in zip(actual,expected));overlap=sum(a and b for a,b in zip(actual,expected))
+   assert union and overlap/union>.35, 'Rendered condition icon mismatch: day%d'%day
+  report['visual_contracts']='Action caption/contrast and all seven rendered icon silhouettes verified; inspect overall layout separately.'
+
+ report['passed']=True
+except Exception as e:report['error']=repr(e)
+finally:
+ 
+ for logfile in Path('/tmp').rglob('kodi.log'):
+  shutil.copy(logfile,out/('diagnostic-'+str(logfile).replace('/','_')))
+ ImageGrab.grab(xdisplay=':98').save(out/'final-screen.png')
+ (out/'native-report.json').write_text(json.dumps(report,indent=2));k.terminate();x.terminate();time.sleep(1)
+ if (profile/'temp/kodi.log').exists():shutil.copy(profile/'temp/kodi.log',out/'kodi.log')
+print(json.dumps(report,indent=2))
+
+
+
+
+sys.exit(0 if report['passed'] else 1)
+
