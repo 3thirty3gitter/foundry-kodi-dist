@@ -1,5 +1,273 @@
 <?xml version='1.0' encoding='utf-8'?>
 <includes>
+  <variable name="SlateWeatherCanvasWallpaper">
+    <value condition="String.IsEqual(Container(9000).ListItem.Property(id),weather) + String.IsEqual(Weather.Plugin,weather.foundry.canada)">slate-weather/canvas.png</value>
+    <value>$VAR[FoundryHomeWallpaper]</value>
+  </variable>
+  <variable name="SlateWeatherDay7Icon">
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/0.png)">slate-weather/0.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/4.png)">slate-weather/4.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/5.png)">slate-weather/5.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/9.png)">slate-weather/9.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/10.png)">slate-weather/10.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/11.png)">slate-weather/11.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/12.png)">slate-weather/12.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/15.png)">slate-weather/15.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/16.png)">slate-weather/16.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/18.png)">slate-weather/18.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/19.png)">slate-weather/19.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/20.png)">slate-weather/20.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/21.png)">slate-weather/21.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/22.png)">slate-weather/22.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/24.png)">slate-weather/24.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/26.png)">slate-weather/26.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/27.png)">slate-weather/27.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/28.png)">slate-weather/28.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/29.png)">slate-weather/29.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/30.png)">slate-weather/30.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/31.png)">slate-weather/31.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/32.png)">slate-weather/32.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/33.png)">slate-weather/33.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/34.png)">slate-weather/34.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/37.png)">slate-weather/37.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/39.png)">slate-weather/39.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/41.png)">slate-weather/41.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/45.png)">slate-weather/45.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/46.png)">slate-weather/46.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/47.png)">slate-weather/47.png</value>
+    <value>slate-weather/na.png</value>
+  </variable>
+  <variable name="SlateWeatherDay6Icon">
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/0.png)">slate-weather/0.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/4.png)">slate-weather/4.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/5.png)">slate-weather/5.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/9.png)">slate-weather/9.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/10.png)">slate-weather/10.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/11.png)">slate-weather/11.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/12.png)">slate-weather/12.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/15.png)">slate-weather/15.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/16.png)">slate-weather/16.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/18.png)">slate-weather/18.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/19.png)">slate-weather/19.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/20.png)">slate-weather/20.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/21.png)">slate-weather/21.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/22.png)">slate-weather/22.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/24.png)">slate-weather/24.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/26.png)">slate-weather/26.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/27.png)">slate-weather/27.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/28.png)">slate-weather/28.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/29.png)">slate-weather/29.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/30.png)">slate-weather/30.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/31.png)">slate-weather/31.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/32.png)">slate-weather/32.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/33.png)">slate-weather/33.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/34.png)">slate-weather/34.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/37.png)">slate-weather/37.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/39.png)">slate-weather/39.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/41.png)">slate-weather/41.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/45.png)">slate-weather/45.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/46.png)">slate-weather/46.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.6.Icon),resource://resource.images.weathericons.default/47.png)">slate-weather/47.png</value>
+    <value>slate-weather/na.png</value>
+  </variable>
+  <variable name="SlateWeatherDay5Icon">
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/0.png)">slate-weather/0.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/4.png)">slate-weather/4.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/5.png)">slate-weather/5.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/9.png)">slate-weather/9.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/10.png)">slate-weather/10.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/11.png)">slate-weather/11.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/12.png)">slate-weather/12.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/15.png)">slate-weather/15.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/16.png)">slate-weather/16.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/18.png)">slate-weather/18.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/19.png)">slate-weather/19.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/20.png)">slate-weather/20.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/21.png)">slate-weather/21.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/22.png)">slate-weather/22.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/24.png)">slate-weather/24.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/26.png)">slate-weather/26.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/27.png)">slate-weather/27.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/28.png)">slate-weather/28.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/29.png)">slate-weather/29.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/30.png)">slate-weather/30.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/31.png)">slate-weather/31.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/32.png)">slate-weather/32.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/33.png)">slate-weather/33.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/34.png)">slate-weather/34.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/37.png)">slate-weather/37.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/39.png)">slate-weather/39.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/41.png)">slate-weather/41.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/45.png)">slate-weather/45.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/46.png)">slate-weather/46.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.5.Icon),resource://resource.images.weathericons.default/47.png)">slate-weather/47.png</value>
+    <value>slate-weather/na.png</value>
+  </variable>
+  <variable name="SlateWeatherDay4Icon">
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/0.png)">slate-weather/0.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/4.png)">slate-weather/4.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/5.png)">slate-weather/5.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/9.png)">slate-weather/9.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/10.png)">slate-weather/10.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/11.png)">slate-weather/11.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/12.png)">slate-weather/12.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/15.png)">slate-weather/15.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/16.png)">slate-weather/16.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/18.png)">slate-weather/18.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/19.png)">slate-weather/19.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/20.png)">slate-weather/20.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/21.png)">slate-weather/21.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/22.png)">slate-weather/22.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/24.png)">slate-weather/24.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/26.png)">slate-weather/26.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/27.png)">slate-weather/27.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/28.png)">slate-weather/28.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/29.png)">slate-weather/29.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/30.png)">slate-weather/30.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/31.png)">slate-weather/31.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/32.png)">slate-weather/32.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/33.png)">slate-weather/33.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/34.png)">slate-weather/34.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/37.png)">slate-weather/37.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/39.png)">slate-weather/39.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/41.png)">slate-weather/41.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/45.png)">slate-weather/45.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/46.png)">slate-weather/46.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.4.Icon),resource://resource.images.weathericons.default/47.png)">slate-weather/47.png</value>
+    <value>slate-weather/na.png</value>
+  </variable>
+  <variable name="SlateWeatherDay3Icon">
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/0.png)">slate-weather/0.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/4.png)">slate-weather/4.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/5.png)">slate-weather/5.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/9.png)">slate-weather/9.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/10.png)">slate-weather/10.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/11.png)">slate-weather/11.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/12.png)">slate-weather/12.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/15.png)">slate-weather/15.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/16.png)">slate-weather/16.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/18.png)">slate-weather/18.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/19.png)">slate-weather/19.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/20.png)">slate-weather/20.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/21.png)">slate-weather/21.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/22.png)">slate-weather/22.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/24.png)">slate-weather/24.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/26.png)">slate-weather/26.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/27.png)">slate-weather/27.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/28.png)">slate-weather/28.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/29.png)">slate-weather/29.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/30.png)">slate-weather/30.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/31.png)">slate-weather/31.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/32.png)">slate-weather/32.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/33.png)">slate-weather/33.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/34.png)">slate-weather/34.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/37.png)">slate-weather/37.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/39.png)">slate-weather/39.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/41.png)">slate-weather/41.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/45.png)">slate-weather/45.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/46.png)">slate-weather/46.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.3.Icon),resource://resource.images.weathericons.default/47.png)">slate-weather/47.png</value>
+    <value>slate-weather/na.png</value>
+  </variable>
+  <variable name="SlateWeatherDay2Icon">
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/0.png)">slate-weather/0.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/4.png)">slate-weather/4.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/5.png)">slate-weather/5.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/9.png)">slate-weather/9.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/10.png)">slate-weather/10.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/11.png)">slate-weather/11.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/12.png)">slate-weather/12.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/15.png)">slate-weather/15.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/16.png)">slate-weather/16.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/18.png)">slate-weather/18.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/19.png)">slate-weather/19.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/20.png)">slate-weather/20.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/21.png)">slate-weather/21.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/22.png)">slate-weather/22.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/24.png)">slate-weather/24.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/26.png)">slate-weather/26.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/27.png)">slate-weather/27.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/28.png)">slate-weather/28.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/29.png)">slate-weather/29.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/30.png)">slate-weather/30.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/31.png)">slate-weather/31.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/32.png)">slate-weather/32.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/33.png)">slate-weather/33.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/34.png)">slate-weather/34.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/37.png)">slate-weather/37.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/39.png)">slate-weather/39.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/41.png)">slate-weather/41.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/45.png)">slate-weather/45.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/46.png)">slate-weather/46.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.2.Icon),resource://resource.images.weathericons.default/47.png)">slate-weather/47.png</value>
+    <value>slate-weather/na.png</value>
+  </variable>
+  <variable name="SlateWeatherDay1Icon">
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/0.png)">slate-weather/0.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/4.png)">slate-weather/4.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/5.png)">slate-weather/5.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/9.png)">slate-weather/9.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/10.png)">slate-weather/10.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/11.png)">slate-weather/11.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/12.png)">slate-weather/12.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/15.png)">slate-weather/15.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/16.png)">slate-weather/16.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/18.png)">slate-weather/18.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/19.png)">slate-weather/19.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/20.png)">slate-weather/20.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/21.png)">slate-weather/21.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/22.png)">slate-weather/22.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/24.png)">slate-weather/24.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/26.png)">slate-weather/26.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/27.png)">slate-weather/27.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/28.png)">slate-weather/28.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/29.png)">slate-weather/29.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/30.png)">slate-weather/30.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/31.png)">slate-weather/31.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/32.png)">slate-weather/32.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/33.png)">slate-weather/33.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/34.png)">slate-weather/34.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/37.png)">slate-weather/37.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/39.png)">slate-weather/39.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/41.png)">slate-weather/41.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/45.png)">slate-weather/45.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/46.png)">slate-weather/46.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.1.Icon),resource://resource.images.weathericons.default/47.png)">slate-weather/47.png</value>
+    <value>slate-weather/na.png</value>
+  </variable>
+  <variable name="SlateWeatherCurrentIcon">
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/0.png)">slate-weather/0.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/4.png)">slate-weather/4.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/5.png)">slate-weather/5.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/9.png)">slate-weather/9.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/10.png)">slate-weather/10.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/11.png)">slate-weather/11.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/12.png)">slate-weather/12.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/15.png)">slate-weather/15.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/16.png)">slate-weather/16.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/18.png)">slate-weather/18.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/19.png)">slate-weather/19.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/20.png)">slate-weather/20.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/21.png)">slate-weather/21.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/22.png)">slate-weather/22.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/24.png)">slate-weather/24.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/26.png)">slate-weather/26.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/27.png)">slate-weather/27.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/28.png)">slate-weather/28.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/29.png)">slate-weather/29.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/30.png)">slate-weather/30.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/31.png)">slate-weather/31.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/32.png)">slate-weather/32.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/33.png)">slate-weather/33.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/34.png)">slate-weather/34.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/37.png)">slate-weather/37.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/39.png)">slate-weather/39.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/41.png)">slate-weather/41.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/45.png)">slate-weather/45.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/46.png)">slate-weather/46.png</value>
+    <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/47.png)">slate-weather/47.png</value>
+    <value>slate-weather/na.png</value>
+  </variable>
   <variable name="FoundryCanadaHomeWeatherVar">
     <value condition="String.IsEqual(Weather.Plugin,weather.foundry.canada) + !Weather.IsFetched" />
     <value condition="String.IsEqual(Weather.Plugin,weather.foundry.canada) + String.IsEqual(Window(weather).Property(Foundry.Weather.HasCurrent),true)">$INFO[Window(weather).Property(Foundry.Weather.Temperature)] $INFO[Window(weather).Property(Foundry.Weather.Condition)]</value>
@@ -38,7 +306,7 @@
             <width>155</width>
             <height>155</height>
             <aspectratio>keep</aspectratio>
-            <texture fallback="slate-weather/na.png">$INFO[Window(weather).Property(Current.OutlookIcon),slate-weather/]</texture>
+            <texture fallback="slate-weather/na.png">$VAR[SlateWeatherCurrentIcon]</texture>
           </control>
           <control type="label">
             <left>180</left>
@@ -204,7 +472,7 @@
             <item id="1">
               <label>$INFO[Window(weather).Property(Foundry.Weather.Day.1.Title)]</label>
               <label2>$INFO[Window(weather).Property(Foundry.Weather.Day.1.Range)]</label2>
-              <icon>$INFO[Window(weather).Property(Day0.OutlookIcon),slate-weather/]</icon>
+              <icon>$VAR[SlateWeatherDay1Icon]</icon>
               <property name="condition">$INFO[Window(weather).Property(Foundry.Weather.Day.1.Condition)]</property>
               <property name="summary">$INFO[Window(weather).Property(Foundry.Weather.Day.1.Summary)]</property>
               <onclick>RunScript(weather.foundry.canada,forecast)</onclick>
@@ -213,7 +481,7 @@
             <item id="2">
               <label>$INFO[Window(weather).Property(Foundry.Weather.Day.2.Title)]</label>
               <label2>$INFO[Window(weather).Property(Foundry.Weather.Day.2.Range)]</label2>
-              <icon>$INFO[Window(weather).Property(Day1.OutlookIcon),slate-weather/]</icon>
+              <icon>$VAR[SlateWeatherDay2Icon]</icon>
               <property name="condition">$INFO[Window(weather).Property(Foundry.Weather.Day.2.Condition)]</property>
               <property name="summary">$INFO[Window(weather).Property(Foundry.Weather.Day.2.Summary)]</property>
               <onclick>RunScript(weather.foundry.canada,forecast)</onclick>
@@ -222,7 +490,7 @@
             <item id="3">
               <label>$INFO[Window(weather).Property(Foundry.Weather.Day.3.Title)]</label>
               <label2>$INFO[Window(weather).Property(Foundry.Weather.Day.3.Range)]</label2>
-              <icon>$INFO[Window(weather).Property(Day2.OutlookIcon),slate-weather/]</icon>
+              <icon>$VAR[SlateWeatherDay3Icon]</icon>
               <property name="condition">$INFO[Window(weather).Property(Foundry.Weather.Day.3.Condition)]</property>
               <property name="summary">$INFO[Window(weather).Property(Foundry.Weather.Day.3.Summary)]</property>
               <onclick>RunScript(weather.foundry.canada,forecast)</onclick>
@@ -231,7 +499,7 @@
             <item id="4">
               <label>$INFO[Window(weather).Property(Foundry.Weather.Day.4.Title)]</label>
               <label2>$INFO[Window(weather).Property(Foundry.Weather.Day.4.Range)]</label2>
-              <icon>$INFO[Window(weather).Property(Day3.OutlookIcon),slate-weather/]</icon>
+              <icon>$VAR[SlateWeatherDay4Icon]</icon>
               <property name="condition">$INFO[Window(weather).Property(Foundry.Weather.Day.4.Condition)]</property>
               <property name="summary">$INFO[Window(weather).Property(Foundry.Weather.Day.4.Summary)]</property>
               <onclick>RunScript(weather.foundry.canada,forecast)</onclick>
@@ -240,7 +508,7 @@
             <item id="5">
               <label>$INFO[Window(weather).Property(Foundry.Weather.Day.5.Title)]</label>
               <label2>$INFO[Window(weather).Property(Foundry.Weather.Day.5.Range)]</label2>
-              <icon>$INFO[Window(weather).Property(Day4.OutlookIcon),slate-weather/]</icon>
+              <icon>$VAR[SlateWeatherDay5Icon]</icon>
               <property name="condition">$INFO[Window(weather).Property(Foundry.Weather.Day.5.Condition)]</property>
               <property name="summary">$INFO[Window(weather).Property(Foundry.Weather.Day.5.Summary)]</property>
               <onclick>RunScript(weather.foundry.canada,forecast)</onclick>
@@ -249,7 +517,7 @@
             <item id="6">
               <label>$INFO[Window(weather).Property(Foundry.Weather.Day.6.Title)]</label>
               <label2>$INFO[Window(weather).Property(Foundry.Weather.Day.6.Range)]</label2>
-              <icon>$INFO[Window(weather).Property(Day5.OutlookIcon),slate-weather/]</icon>
+              <icon>$VAR[SlateWeatherDay6Icon]</icon>
               <property name="condition">$INFO[Window(weather).Property(Foundry.Weather.Day.6.Condition)]</property>
               <property name="summary">$INFO[Window(weather).Property(Foundry.Weather.Day.6.Summary)]</property>
               <onclick>RunScript(weather.foundry.canada,forecast)</onclick>
@@ -258,7 +526,7 @@
             <item id="7">
               <label>$INFO[Window(weather).Property(Foundry.Weather.Day.7.Title)]</label>
               <label2>$INFO[Window(weather).Property(Foundry.Weather.Day.7.Range)]</label2>
-              <icon>$INFO[Window(weather).Property(Day6.OutlookIcon),slate-weather/]</icon>
+              <icon>$VAR[SlateWeatherDay7Icon]</icon>
               <property name="condition">$INFO[Window(weather).Property(Foundry.Weather.Day.7.Condition)]</property>
               <property name="summary">$INFO[Window(weather).Property(Foundry.Weather.Day.7.Summary)]</property>
               <onclick>RunScript(weather.foundry.canada,forecast)</onclick>
@@ -282,7 +550,7 @@
           <height>28</height>
           <font>$PARAM[small_font]</font>
           <textcolor>accent_color</textcolor>
-          <label>$ADDON[weather.foundry.canada 30014]</label>
+          <label>Saved weather · may be out of date</label>
           <visible>String.IsEqual(Window(weather).Property(Foundry.Weather.Stale),true)</visible>
         </control>
         <control type="label">
@@ -301,7 +569,7 @@
           <height>80</height>
           <font>$PARAM[body_font]</font>
           <textcolor>white</textcolor>
-          <label>$ADDON[weather.foundry.canada 30016]</label>
+          <label>Choose your location in weather settings</label>
           <visible>String.IsEqual(Window(weather).Property(Foundry.Weather.Status),needs_location)</visible>
         </control>
         <control type="label">
@@ -311,7 +579,7 @@
           <height>80</height>
           <font>$PARAM[body_font]</font>
           <textcolor>white</textcolor>
-          <label>$ADDON[weather.foundry.canada 30017]</label>
+          <label>Weather temporarily unavailable</label>
           <visible>String.IsEqual(Window(weather).Property(Foundry.Weather.Status),unavailable)</visible>
         </control>
         <control type="label">
@@ -330,11 +598,11 @@
           <width>255</width>
           <height>52</height>
           <font>$PARAM[small_font]</font>
-          <label>$ADDON[weather.foundry.canada 30018]</label>
-          <texturenofocus colordiffuse="00000000">colors/white.png</texturenofocus>
-          <texturefocus colordiffuse="2249DCF2">colors/white.png</texturefocus>
-          <textcolor>FFFFFFFF</textcolor>
-          <focusedcolor>FFFFFFFF</focusedcolor>
+          <label>Advisories</label>
+          <texturenofocus>slate-weather/action-normal.png</texturenofocus>
+          <texturefocus>slate-weather/action-focus.png</texturefocus>
+          <textcolor>FFE5E7E9</textcolor>
+          <focusedcolor>FFF2D9B4</focusedcolor>
           <align>center</align>
           <onleft>9000</onleft>
           <onright>15152</onright>
@@ -350,11 +618,11 @@
           <width>255</width>
           <height>52</height>
           <font>$PARAM[small_font]</font>
-          <label>$ADDON[weather.foundry.canada 30022]</label>
-          <texturenofocus colordiffuse="00000000">colors/white.png</texturenofocus>
-          <texturefocus colordiffuse="2249DCF2">colors/white.png</texturefocus>
-          <textcolor>FFFFFFFF</textcolor>
-          <focusedcolor>FFFFFFFF</focusedcolor>
+          <label>Next city</label>
+          <texturenofocus>slate-weather/action-normal.png</texturenofocus>
+          <texturefocus>slate-weather/action-focus.png</texturefocus>
+          <textcolor>FFE5E7E9</textcolor>
+          <focusedcolor>FFF2D9B4</focusedcolor>
           <align>center</align>
           <onleft>15151</onleft>
           <onright>15153</onright>
@@ -370,11 +638,11 @@
           <width>255</width>
           <height>52</height>
           <font>$PARAM[small_font]</font>
-          <label>$ADDON[weather.foundry.canada 30023]</label>
-          <texturenofocus colordiffuse="00000000">colors/white.png</texturenofocus>
-          <texturefocus colordiffuse="2249DCF2">colors/white.png</texturefocus>
-          <textcolor>FFFFFFFF</textcolor>
-          <focusedcolor>FFFFFFFF</focusedcolor>
+          <label>Refresh</label>
+          <texturenofocus>slate-weather/action-normal.png</texturenofocus>
+          <texturefocus>slate-weather/action-focus.png</texturefocus>
+          <textcolor>FFE5E7E9</textcolor>
+          <focusedcolor>FFF2D9B4</focusedcolor>
           <align>center</align>
           <onleft>15152</onleft>
           <onright>15154</onright>
@@ -390,11 +658,11 @@
           <width>255</width>
           <height>52</height>
           <font>$PARAM[small_font]</font>
-          <label>$ADDON[weather.foundry.canada 30024]</label>
-          <texturenofocus colordiffuse="00000000">colors/white.png</texturenofocus>
-          <texturefocus colordiffuse="2249DCF2">colors/white.png</texturefocus>
-          <textcolor>FFFFFFFF</textcolor>
-          <focusedcolor>FFFFFFFF</focusedcolor>
+          <label>Settings</label>
+          <texturenofocus>slate-weather/action-normal.png</texturenofocus>
+          <texturefocus>slate-weather/action-focus.png</texturefocus>
+          <textcolor>FFE5E7E9</textcolor>
+          <focusedcolor>FFF2D9B4</focusedcolor>
           <align>center</align>
           <onleft>15153</onleft>
           <onright>9000</onright>
@@ -411,7 +679,7 @@
           <height>28</height>
           <font>$PARAM[small_font]</font>
           <textcolor>accent_color</textcolor>
-          <label>$INFO[Window(weather).Property(Foundry.Weather.AlertCount)] $ADDON[weather.foundry.canada 30018]</label>
+          <label>$INFO[Window(weather).Property(Foundry.Weather.AlertCount)] Advisories</label>
           <visible>String.IsEqual(Window(weather).Property(Foundry.Weather.HasAlerts),true)</visible>
         </control>
       </control>

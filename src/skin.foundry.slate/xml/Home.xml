@@ -27,7 +27,7 @@
             <left>0</left><top>0</top><width>100%</width><height>100%</height>
             <aspectratio>keep</aspectratio>
             <fadetime>450</fadetime>
-            <texture background="true" fallback="$VAR[FoundryMenuBackground]">$VAR[FoundryHomeWallpaper]</texture>
+            <texture background="true" fallback="$VAR[FoundryMenuBackground]">$VAR[SlateWeatherCanvasWallpaper]</texture>
             <visible>!Player.HasVideo + ![Player.HasAudio + Visualisation.Enabled + !String.IsEmpty(Visualisation.Name)]</visible>
         </control>
 		<control type="group">

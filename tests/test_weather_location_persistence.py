@@ -19,3 +19,13 @@ class LocationPersistenceContract(unittest.TestCase):
                 setting = root.find(".//setting[@id='location%d_%s']" % (slot, field))
                 self.assertEqual(setting.get('type'), 'string')
                 self.assertFalse(setting.findtext('default'))
+
+    def test_empty_locations_are_valid_kodi_strings(self):
+        root = ET.parse(ROOT / 'src/weather.foundry.canada/resources/settings.xml').getroot()
+        for slot in range(1, 4):
+            for field in ('id', 'label'):
+                setting = root.find(".//setting[@id='location%d_%s']" % (slot, field))
+                self.assertEqual(setting.findtext('constraints/allowempty'), 'true')
+                if field == 'label':
+                    self.assertEqual(setting.findtext('enable'), 'false')
+                    self.assertIsNone(setting.find('dependencies'))

@@ -9,7 +9,7 @@ class Canvas(unittest.TestCase):
  def test_seven_real_days(self):
   items=self.l.findall('content/item');self.assertEqual(len(items),7)
   for n,it in enumerate(items,1):
-   self.assertIn(f'Day.{n}.Title',it.findtext('visible'));self.assertIn(f'Day{n-1}.OutlookIcon',it.findtext('icon'))
+   self.assertIn(f'Day.{n}.Title',it.findtext('visible'));self.assertEqual(it.findtext('icon'),f'$VAR[SlateWeatherDay{n}Icon]')
    self.assertIn(f'Day.{n}.Summary',it.findtext('property[@name="summary"]'))
  def test_focus_drives_expansion(self):
   s=(X/'Includes_FoundryCanadaWeather.xml').read_text();self.assertIn('Control.HasFocus(15150)',s);self.assertIn('Container(15150).ListItem.Property(summary)',s)
@@ -20,11 +20,19 @@ class Canvas(unittest.TestCase):
   for b in self.r.findall('.//control[@type="button"]'):self.assertEqual(b.findtext('ondown'),'700');self.assertEqual(b.findtext('onback'),'9000');self.assertIn('9000',[u.text for u in b.findall('onup')])
  def test_menu_entry_and_empty_fallback(self):
   s=(X/'Home.xml').read_text();self.assertIn('SetFocus(15154)',s);self.assertIn('SetFocus(15150,0,absolute)',s)
- def test_provider_and_original_not_in_patch(self):self.assertEqual(S.name,'skin.foundry.slate'); self.assertNotIn('resource://resource.images.weathericons.default/',(X/'Includes_FoundryCanadaWeather.xml').read_text())
+ def test_provider_and_original_not_in_patch(self):self.assertEqual(S.name,'skin.foundry.slate'); self.assertNotIn('Current.OutlookIcon',(X/'Includes_FoundryCanadaWeather.xml').read_text())
  def test_no_opaque_card(self):self.assertNotIn('foundry-weather/card.png',(X/'Includes_FoundryCanadaWeather.xml').read_text())
  def test_data_states_and_attribution(self):
   s=(X/'Includes_FoundryCanadaWeather.xml').read_text()
   for x in ['Attribution','Stale','needs_location','unavailable','!Weather.IsFetched','HasAlerts']:self.assertIn(x,s)
+ def test_visual_contracts(self):
+  s=(X/'Includes_FoundryCanadaWeather.xml').read_text()
+  for caption in ['Advisories','Next city','Refresh','Settings']:self.assertIn('<label>'+caption+'</label>',s)
+  for b in self.r.findall('.//control[@type="button"]'):
+   self.assertNotIn('colordiffuse',b.find('texturenofocus').attrib)
+   self.assertTrue(b.findtext('texturenofocus').startswith('slate-weather/action-'))
+  self.assertIsNotNone(self.r.find("variable[@name='SlateWeatherCanvasWallpaper']"))
+  self.assertIn('SlateWeatherCanvasWallpaper',(X/'Home.xml').read_text())
  def test_icon_coverage(self):
   m=ast.parse((P/'src/weather.foundry.canada/resources/lib/model.py').read_text());codes=next(ast.literal_eval(n.value) for n in m.body if isinstance(n,ast.Assign) and any(getattr(a,'id','')=='ICONS' for a in n.targets));
   for n in set(codes.values())|{'na'}:
