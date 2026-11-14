@@ -88,8 +88,11 @@ try:
    return (min(x for x,y in pts),min(y for x,y in pts),max(x for x,y in pts),max(y for x,y in pts))
   for row in range(6):
    im=Image.open(out/('menu-alignment-'+str(row)+'.png'))
-   marker=bright_bounds(im,(40,240,45,320),100)
-   text=bright_bounds(im,(115,245,410,310),110)
+   marker=bright_bounds(im,(40,240,45,800),100)
+   # A fixedlist scrolls until the content end, then the focused row advances.
+   # Locate the rendered selector first; compare text on that same actual row.
+   assert marker[3]-marker[1]==43,('Unexpected selector height',row,marker)
+   text=bright_bounds(im,(115,marker[1]-6,410,marker[3]+7),110)
    offset=abs((marker[1]+marker[3]-text[1]-text[3])/2)
    assert offset<=6,('Selector is vertically displaced from text',row,offset)
    report['selector_alignment'].append({'row':row,'offset':offset})
