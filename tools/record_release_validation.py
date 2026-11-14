@@ -99,12 +99,40 @@ def require_icon_evidence(qa, manifest):
     assert all(re.fullmatch(r'[0-9a-f]{64}', report['captures'][name]) for name in required)
 
 
+def require_playback_contract_evidence(qa, manifest):
+    if manifest.get('release', '') < '1.5.5':
+        return
+    report = read(qa / 'native/playback-contract/native-contract-report.json')
+    assert report['passed'] and report['exact_eight_cases'] and report['playback_log_error_gate']
+    expected = {(skin, provider, route) for skin in ('skin.foundry', 'skin.foundry.slate')
+                for provider in ('plugin.video.fenskeleton', 'plugin.video.foundry.resolverfixture')
+                for route in ('info', 'context')}
+    cases = report['cases']
+    assert len(cases) == 8 and {(c['skin'], c['provider'], c['route']) for c in cases} == expected
+    for case in cases:
+        assert case['stop_without_failure'] is True and case['after_stop_modal'] is False
+        assert case['receipt']['provider'] == case['provider']
+        assert case['receipt']['url'].startswith('plugin://' + case['provider'] + '/')
+        assert case['screenshots']
+    expected_sources = {(helper, 'resources/lib/modules/' + name) for helper in ('script.foundry.helper', 'script.foundry.slate.helper')
+                        for name in ('catalog_playback.py', 'catalog_window.py', 'router.py')}
+    expected_sources |= {(skin, 'xml/DialogVideoInfo.xml') for skin in ('skin.foundry', 'skin.foundry.slate')}
+    sources = report['source_receipts']
+    assert len(sources) == 8 and {(x['addon'], x['path']) for x in sources} == expected_sources
+    assert all(x['profile_copy_verified'] is True and x['bytes'] > 0 and re.fullmatch(r'[0-9a-f]{64}', x['sha256']) for x in sources)
+    captures = report['screenshots']
+    assert len(captures) == 12 and len({x['file'] for x in captures}) == 12
+    assert all(x['nonblank'] is True and x['bytes'] > 0 and x['width'] >= 640 and x['height'] >= 360
+               and re.fullmatch(r'[0-9a-f]{64}', x['sha256']) for x in captures)
+
+
 def evidence(root, release):
     manifest = read(root / 'release.json')
     require_release_scope(manifest)
     qa = root / 'releases' / (release + '-qa')
     require_icon_evidence(qa, manifest)
     require_shared_update_evidence(qa, manifest)
+    require_playback_contract_evidence(qa, manifest)
     source, packaged = read(qa / 'source-tests.json'), read(qa / 'packaged-tests.json')
     for report in (source, packaged):
         assert report['successful'] and report['tests'] > 0

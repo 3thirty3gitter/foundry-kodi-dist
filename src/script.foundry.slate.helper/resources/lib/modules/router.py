@@ -21,6 +21,10 @@ def routing():
         xbmcgui.Dialog().notification('Foundry', 'TMDb / OMDb metadata cache cleared')
         return
 
+    if mode == "vod_play_info_action":
+        from modules.catalog_playback import play_info_action
+        return play_info_action()
+
     if mode == "vod_catalog_activate":
         from modules.vod import activate_catalog
         return activate_catalog()

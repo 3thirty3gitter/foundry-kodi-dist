@@ -1,0 +1,163 @@
+"""Run isolated Kodi21+ action/resolver playback contracts under BOTH shipped skins."""
+import argparse,importlib.util,json,os,shutil,signal,subprocess,tempfile,time,traceback,hashlib,sys,xml.etree.ElementTree as E
+from PIL import Image,ImageStat
+from pathlib import Path
+from urllib.request import Request,urlopen
+import native_action_fixture as contract
+
+DRIVER=r'''
+import sys,json,time,traceback
+from pathlib import Path
+import xbmc,xbmcgui
+sys.path.insert(0,str(HELPER/'resources/lib'))
+from modules.catalog_window import CatalogWindow
+window=None
+try:
+ while not (BASE/'driver-done').exists():
+  if window and window.closed:window.dispose();window=None
+  if window:window.tick()
+  snapshot={'catalog':None,'modal':bool(xbmc.getCondVisibility('System.HasActiveModalDialog')),'dialog_id':xbmcgui.getCurrentWindowDialogId()}
+  if window:
+   try:snapshot['catalog']={'native_ready':True,'focus':window.getFocusId()}
+   except RuntimeError:snapshot['catalog']={'native_ready':False}
+  p=BASE/'state.tmp';p.write_text(json.dumps(snapshot));p.replace(BASE/'state.json')
+  command=BASE/'command.json'
+  if command.exists():
+   request=json.loads(command.read_text())
+   if request['action']=='open-catalog':
+    assert window is None
+    xbmc.executebuiltin('ActivateWindow(settings)',True);xbmc.sleep(300)
+    class Source:
+     scope='fixture';path='fixture://contracts';content='movies';movie_submenu_label='Trending';movie_submenu_verified=False
+     def load(self):raise AssertionError('Unexpected source reload')
+    source=Source();source.initial={'items':[{'title':'Contract Movie','type':'movie','filetype':'file','file':request['file'],'plot':'Offline provider contract','art':{}}]}
+    window=CatalogWindow('script-foundry-vod.xml',str(HELPER),'default','1080i',True,source=source,section='Movies',breadcrumb='Movies / Trending');window.show()
+   elif request['action']=='capture':xbmc.executebuiltin('TakeScreenshot('+request['path']+')')
+   else:raise AssertionError(request)
+   command.unlink()
+  xbmc.sleep(30)
+except Exception:(BASE/'driver-error.txt').write_text(traceback.format_exc())
+'''
+
+def main():
+ parser=argparse.ArgumentParser();parser.add_argument('--root',required=True,type=Path);parser.add_argument('--output',required=True,type=Path);parser.add_argument('--display',default=':97');args=parser.parse_args()
+ root=args.root.resolve();out=args.output.resolve();out.mkdir(parents=True,exist_ok=True)
+ spec=importlib.util.spec_from_file_location('render_util',root/'tools/render_interface.py');util=importlib.util.module_from_spec(spec);spec.loader.exec_module(util)
+ port=util.available_port(0)
+ with tempfile.TemporaryDirectory(prefix='foundry-action-contract-') as temp:
+  base=Path(temp);home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
+  profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True);addons=profile/'addons';addons.mkdir()
+  sources=[root.parent/'skin.foundry-nimbus',root.parent/'script.foundry.helper']+[root/'src'/x for x in ('skin.foundry.slate','script.foundry.slate.helper','resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons')]
+  aids=[]
+  for source in sources:
+   aid=E.parse(source/'addon.xml').getroot().get('id');aids.append(aid);shutil.copytree(source,addons/aid,ignore=shutil.ignore_patterns('.git'))
+  for helper in addons.glob('script.*helper'):
+   tree=E.parse(helper/'addon.xml');r=tree.getroot()
+   for n in list(r.findall("extension[@point='xbmc.service']")):r.remove(n)
+   for n in list(r.find('requires')):
+    if n.get('addon')!='xbmc.python':r.find('requires').remove(n)
+   tree.write(helper/'addon.xml')
+  for p in (home/'addons').glob('*/addon.xml'):
+   tree=E.parse(p)
+   for e in tree.getroot().findall("extension[@point='xbmc.service']"):tree.getroot().remove(e)
+   tree.write(p)
+  for aid in ('skin.foundry','skin.foundry.slate'):
+   d=userdata/'addon_data'/aid;d.mkdir(parents=True);(d/'settings.xml').write_text('<settings><setting id="firsttimerun" type="bool">true</setting></settings>')
+  (userdata/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="addons.updatemode">2</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">%d</setting><setting id="services.webserverauthentication">false</setting></settings>'%port)
+  util.video(base/'fixture.avi');contract.prepare(addons,base)
+  driver=addons/'script.foundry.contractqa';driver.mkdir();(driver/'addon.xml').write_text('<addon id="script.foundry.contractqa" version="1.0.0" name="Contract driver" provider-name="QA"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/></addon>')
+  env=dict(os.environ,HOME=str(base/'home'),DISPLAY=args.display,KODI_HOME=str(home),LIBGL_ALWAYS_SOFTWARE='1',AE_SINK='NULL');(base/'home').mkdir()
+  log=(out/'console.log').open('w');x=subprocess.Popen(['Xvfb',args.display,'-screen','0','1920x1080x24','-ac','-nolisten','tcp'],stdout=log,stderr=log);time.sleep(1)
+  kodi=subprocess.Popen(['kodi','-p','-fs','--windowing=x11','--debug'],env=env,stdout=log,stderr=log,start_new_session=True)
+  def rpc(method,params=None):
+   data=json.dumps({'jsonrpc':'2.0','id':1,'method':method,'params':params or {}}).encode()
+   with urlopen(Request('http://127.0.0.1:%d/jsonrpc'%port,data=data,headers={'Content-Type':'application/json'}),timeout=5) as r:result=json.load(r)
+   if 'error' in result:raise RuntimeError(result['error'])
+   return result.get('result')
+  def wait(fn,timeout=45):
+   deadline=time.monotonic()+timeout
+   while time.monotonic()<deadline:
+    if (base/'driver-error.txt').exists():raise AssertionError((base/'driver-error.txt').read_text())
+    if fn():return
+    time.sleep(.1)
+   raise AssertionError('Native contract timeout')
+  def ready():
+   try:return rpc('JSONRPC.Ping')=='pong'
+   except Exception:return False
+  def cond(name):return rpc('XBMC.GetInfoBooleans',{'booleans':[name]}).get(name,False)
+  def state():
+   try:return json.loads((base/'state.json').read_text())
+   except (OSError,ValueError):return {}
+  def command(action,**values):
+   path=base/'command.json';tmp=base/'command.tmp';tmp.write_text(json.dumps(dict(values,action=action)));tmp.replace(path);wait(lambda:not path.exists())
+  screenshots=[]
+  def capture(name):
+   path=out/(name+'.png');path.unlink(missing_ok=True);command('capture',path=str(path))
+   def valid():
+    try:
+     with Image.open(path) as im:im.verify()
+     return True
+    except (OSError,ValueError,SyntaxError):return False
+   wait(valid)
+   data=path.read_bytes()
+   with Image.open(path) as im:
+    assert im.format=='PNG',('Not a PNG',path)
+    width,height=im.size;stddev=ImageStat.Stat(im.convert('RGB')).stddev
+   assert width>=640 and height>=360,('Undersized screenshot',path,width,height)
+   assert max(stddev)>2,('Blank screenshot',path,stddev)
+   receipt={'file':path.name,'sha256':hashlib.sha256(data).hexdigest(),'bytes':len(data),'width':width,'height':height,'rgb_stddev':stddev,'nonblank':True}
+   screenshots.append(receipt)
+   return receipt
+  source_receipts=[]
+  for skin_id,helper_id,skin_source,helper_source in [
+   ('skin.foundry','script.foundry.helper',root.parent/'skin.foundry-nimbus',root.parent/'script.foundry.helper'),
+   ('skin.foundry.slate','script.foundry.slate.helper',root/'src/skin.foundry.slate',root/'src/script.foundry.slate.helper')]:
+   for aid,source,rel in [(helper_id,helper_source,'resources/lib/modules/'+n) for n in ('catalog_playback.py','catalog_window.py','router.py')]+[(skin_id,skin_source,'xml/DialogVideoInfo.xml')]:
+    content=(source/rel).read_bytes();copied=(addons/aid/rel).read_bytes()
+    assert content==copied,('Tested source differs from checkout',aid,rel)
+    source_receipts.append({'addon':aid,'path':rel,'sha256':hashlib.sha256(content).hexdigest(),'bytes':len(content),'profile_copy_verified':True})
+  report={'schema_version':1,'passed':False,'source_receipts':source_receipts,'screenshots':screenshots,'cases':[],'scope':'Disposable native Kodi, both shipped skins and helper entry points, synthetic action and resolver addons/local video; no live FEN service or affected device validation.'}
+  try:
+   wait(ready,60);version=rpc('Application.GetProperties',{'properties':['version']})['version'];assert version['major']>=21,version;report['kodi']=version
+   for _ in range(20):
+    if cond('System.HasActiveModalDialog'):rpc('Input.Back')
+    time.sleep(.2)
+   for aid in aids+list(contract.ADDONS)+['script.foundry.contractqa']:rpc('Addons.SetAddonEnabled',{'addonid':aid,'enabled':True})
+   report['cases']=[]
+   for skin,helper in [('skin.foundry','script.foundry.helper'),('skin.foundry.slate','script.foundry.slate.helper')]:
+    rpc('Settings.SetSettingValue',{'setting':'lookandfeel.skin','value':skin});wait(lambda:cond('Window.IsActive(yesnodialog)'));rpc('Input.Left');rpc('Input.Select');time.sleep(2)
+    assert rpc('Settings.GetSettingValue',{'setting':'lookandfeel.skin'})['value']==skin
+    (base/'driver-done').unlink(missing_ok=True);(base/'state.json').unlink(missing_ok=True)
+    (driver/'default.py').write_text('from pathlib import Path\nBASE=Path(%r)\nHELPER=Path(%r)\n'%(str(base),str(addons/helper))+DRIVER)
+    rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.contractqa','wait':False});wait(lambda:bool(state()))
+    report['cases']+=contract.verify(rpc,base,out,command,state,wait,capture,skin)
+    (base/'driver-done').write_text('done');time.sleep(.5)
+   logs=(profile/'temp/kodi.log').read_text(errors='replace')
+   forbidden=['one or more items failed to play','skipping unplayable item','PythonToCppException','Error Contents:','Traceback (most recent call last):']
+   errors=[line for line in logs.splitlines() if any(f in line for f in forbidden)];assert not errors,errors
+   expected={(skin,provider,route) for skin in ('skin.foundry','skin.foundry.slate') for provider in contract.ADDONS for route in ('info','context')}
+   actual=[(case['skin'],case['provider'],case['route']) for case in report['cases']]
+   assert len(actual)==8 and len(set(actual))==8 and set(actual)==expected,('Incomplete or duplicate contract cases',actual)
+   assert len(source_receipts)==8 and len(screenshots)==12,('Missing evidence',len(source_receipts),len(screenshots))
+   assert all(c['stop_without_failure'] and c['screenshots'] for c in report['cases'])
+   report['exact_eight_cases']=True;report['playback_log_error_gate']=True;report['passed']=True
+  except BaseException:
+   report['passed']=False;report['error_trace']=traceback.format_exc()
+   raise
+  finally:
+   for p in (profile/'temp').glob('kodi*.log'):shutil.copy2(p,out/p.name)
+   (out/'native-contract-report.json').write_text(json.dumps(report,indent=2))
+   try:rpc('Application.Quit');kodi.wait(timeout=15)
+   except Exception:os.killpg(kodi.pid,signal.SIGTERM)
+   x.terminate();log.close()
+if __name__=='__main__':
+ try:main()
+ except BaseException:
+  # Setup failures also emit an explicit failure receipt, never stale success.
+  if '--output' in sys.argv:
+   dest=Path(sys.argv[sys.argv.index('--output')+1]);dest.mkdir(parents=True,exist_ok=True);report_file=dest/'native-contract-report.json'
+   try:failure=json.loads(report_file.read_text(encoding='utf-8'))
+   except (OSError,ValueError):failure={'schema_version':1}
+   failure.update(passed=False,error_trace=traceback.format_exc())
+   report_file.write_text(json.dumps(failure,indent=2),encoding='utf-8')
+  raise

@@ -3,8 +3,8 @@
   "skin": "1.5.5",
   "helper": "1.3.6",
   "source_commits": {
-    "skin.foundry-nimbus": "21f1353f44d2155270d995f2bb5118414c84c656",
-    "script.foundry.helper": "05b38cf11a00df03216c0a8f969962989fb30d73"
+    "skin.foundry-nimbus": "042ef8f3380fb12ee89bc37ea1dccaaace2143ee",
+    "script.foundry.helper": "ce31ce6048e38b49b3d06e5752df4ea2f87a26d4"
   },
   "validation": {
     "status": "awaiting_final_ci",
