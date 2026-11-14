@@ -475,8 +475,8 @@ class ReleaseWorkflowTests(unittest.TestCase):
     def test_failed_validation_cannot_be_downgraded_to_success(self):
         self.assertNotIn('continue-on-error:', self.workflow)
         self.assertIn('shell: bash', self.workflow)  # Actions runs explicit bash with -e -o pipefail.
-        self.assertEqual(self.workflow.count("steps.packaged.outcome == 'success'"), 5)
-        self.assertEqual(self.workflow.count("steps.kodi.outcome == 'success'"), 5)
+        self.assertEqual(self.workflow.count("steps.packaged.outcome == 'success'"), 6)
+        self.assertEqual(self.workflow.count("steps.kodi.outcome == 'success'"), 6)
         self.assertIn('tools/record_release_validation.py --check-scope', self.workflow)
 
     def test_failure_artifacts_are_preserved_and_games_is_required(self):
