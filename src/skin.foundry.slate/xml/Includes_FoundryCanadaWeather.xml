@@ -4,6 +4,26 @@
     <value condition="String.IsEqual(Container(9000).ListItem.Property(id),weather) + String.IsEqual(Weather.Plugin,weather.foundry.canada)">slate-weather/canvas.png</value>
     <value>$VAR[FoundryHomeWallpaper]</value>
   </variable>
+  <variable name="SlateWeatherHeroSummary">
+    <value condition="Control.HasFocus(15150)">$INFO[Container(15150).ListItem.Property(summary)]</value>
+    <value>$INFO[Window(weather).Property(Foundry.Weather.Day.1.Summary)]</value>
+  </variable>
+  <variable name="SlateWeatherHeroCondition">
+    <value condition="Control.HasFocus(15150)">$INFO[Container(15150).ListItem.Property(condition)]</value>
+    <value>$INFO[Window(weather).Property(Foundry.Weather.Day.1.Condition)]</value>
+  </variable>
+  <variable name="SlateWeatherHeroRange">
+    <value condition="Control.HasFocus(15150)">$INFO[Container(15150).ListItem.Label2]</value>
+    <value>$INFO[Window(weather).Property(Foundry.Weather.Day.1.Range)]</value>
+  </variable>
+  <variable name="SlateWeatherHeroTitle">
+    <value condition="Control.HasFocus(15150)">$INFO[Container(15150).ListItem.Label]</value>
+    <value>$INFO[Window(weather).Property(Foundry.Weather.Day.1.Title)] forecast</value>
+  </variable>
+  <variable name="SlateWeatherHeroIcon">
+    <value condition="Control.HasFocus(15150)">$INFO[Container(15150).ListItem.Icon]</value>
+    <value>$VAR[SlateWeatherDay1Icon]</value>
+  </variable>
   <variable name="SlateWeatherDay7Icon">
     <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/0.png)">slate-weather/0.png</value>
     <value condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Day.7.Icon),resource://resource.images.weathericons.default/4.png)">slate-weather/4.png</value>
@@ -287,7 +307,7 @@
         <left>$PARAM[x]</left>
         <top>$PARAM[y]</top>
         <width>1100</width>
-        <height>590</height>
+        <height>450</height>
         <visible>String.IsEqual(Weather.Plugin,weather.foundry.canada)</visible>
         <control type="label">
           <left>0</left>
@@ -298,8 +318,25 @@
           <textcolor>white</textcolor>
           <label>$INFO[Window(weather).Property(Foundry.Weather.Location)]</label>
         </control>
+        <control type="button" id="15149">
+          <left>-12</left>
+          <top>45</top>
+          <width>1110</width>
+          <height>225</height>
+          <label />
+          <texturenofocus />
+          <texturefocus colordiffuse="14FFFFFF">colors/white.png</texturefocus>
+          <onleft>9000</onleft>
+          <onback>9000</onback>
+          <onup>9000</onup>
+          <onright>RunScript(weather.foundry.canada,next)</onright>
+          <ondown condition="!String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))">15150</ondown>
+          <ondown condition="String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))">700</ondown>
+          <onclick condition="String.IsEqual(Window(weather).Property(Foundry.Weather.Status),needs_location)">Addon.OpenSettings(weather.foundry.canada)</onclick>
+          <onclick condition="!String.IsEqual(Window(weather).Property(Foundry.Weather.Status),needs_location)">RunScript(weather.foundry.canada,forecast)</onclick>
+        </control>
         <control type="group">
-          <visible>!Control.HasFocus(15150) + String.IsEqual(Window(weather).Property(Foundry.Weather.HasCurrent),true)</visible>
+          <visible>String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title)) + String.IsEqual(Window(weather).Property(Foundry.Weather.HasCurrent),true)</visible>
           <control type="image">
             <left>0</left>
             <top>62</top>
@@ -307,6 +344,7 @@
             <height>155</height>
             <aspectratio>keep</aspectratio>
             <texture fallback="slate-weather/na.png">$VAR[SlateWeatherCurrentIcon]</texture>
+            <visible>!String.IsEqual(Window(weather).Property(Foundry.Weather.Icon),resource://resource.images.weathericons.default/na.png)</visible>
           </control>
           <control type="label">
             <left>180</left>
@@ -346,14 +384,14 @@
           </control>
         </control>
         <control type="group">
-          <visible>Control.HasFocus(15150)</visible>
+          <visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))</visible>
           <control type="image">
             <left>0</left>
             <top>62</top>
             <width>155</width>
             <height>155</height>
             <aspectratio>keep</aspectratio>
-            <texture fallback="slate-weather/na.png">$INFO[Container(15150).ListItem.Icon]</texture>
+            <texture fallback="slate-weather/na.png">$VAR[SlateWeatherHeroIcon]</texture>
           </control>
           <control type="label">
             <left>180</left>
@@ -362,7 +400,7 @@
             <height>44</height>
             <font>$PARAM[title_font]</font>
             <textcolor>white</textcolor>
-            <label>$INFO[Container(15150).ListItem.Label]</label>
+            <label>$VAR[SlateWeatherHeroTitle]</label>
           </control>
           <control type="label">
             <left>180</left>
@@ -371,7 +409,7 @@
             <height>44</height>
             <font>$PARAM[body_font]</font>
             <textcolor>white</textcolor>
-            <label>$INFO[Container(15150).ListItem.Label2]</label>
+            <label>$VAR[SlateWeatherHeroRange]</label>
           </control>
           <control type="label">
             <left>480</left>
@@ -380,7 +418,7 @@
             <height>42</height>
             <font>$PARAM[title_font]</font>
             <textcolor>white</textcolor>
-            <label>$INFO[Container(15150).ListItem.Property(condition)]</label>
+            <label>$VAR[SlateWeatherHeroCondition]</label>
           </control>
           <control type="textbox">
             <left>480</left>
@@ -388,7 +426,7 @@
             <width>610</width>
             <height>145</height>
             <font>$PARAM[small_font]</font>
-            <label>$INFO[Container(15150).ListItem.Property(summary)]</label>
+            <label>$VAR[SlateWeatherHeroSummary]</label>
             <autoscroll time="4000" delay="8000" repeat="10000">true</autoscroll>
           </control>
         </control>
@@ -399,10 +437,10 @@
           <height>165</height>
           <orientation>horizontal</orientation>
           <onleft>9000</onleft>
-          <onright>9000</onright>
-          <onup>9000</onup>
+          <onright>15149</onright>
+          <onup>15149</onup>
           <onback>9000</onback>
-          <ondown>15151</ondown>
+          <ondown>700</ondown>
           <scrolltime>180</scrolltime>
           <visible>!String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))</visible>
           <itemlayout width="155" height="165">
@@ -536,34 +574,6 @@
         </control>
         <control type="label">
           <left>0</left>
-          <top>467</top>
-          <width>700</width>
-          <height>28</height>
-          <font>$PARAM[small_font]</font>
-          <textcolor>grey</textcolor>
-          <label>$INFO[Window(weather).Property(Foundry.Weather.ObservedLocal)]</label>
-        </control>
-        <control type="label">
-          <left>730</left>
-          <top>467</top>
-          <width>360</width>
-          <height>28</height>
-          <font>$PARAM[small_font]</font>
-          <textcolor>accent_color</textcolor>
-          <label>Saved weather · may be out of date</label>
-          <visible>String.IsEqual(Window(weather).Property(Foundry.Weather.Stale),true)</visible>
-        </control>
-        <control type="label">
-          <left>0</left>
-          <top>501</top>
-          <width>1100</width>
-          <height>28</height>
-          <font>$PARAM[small_font]</font>
-          <textcolor>grey</textcolor>
-          <label>$INFO[Window(weather).Property(Foundry.Weather.Attribution)]</label>
-        </control>
-        <control type="label">
-          <left>0</left>
           <top>90</top>
           <width>1080</width>
           <height>80</height>
@@ -592,95 +602,23 @@
           <label>$LOCALIZE[503]</label>
           <visible>!Weather.IsFetched + String.IsEmpty(Window(weather).Property(Foundry.Weather.Status))</visible>
         </control>
-        <control type="button" id="15151">
+        <control type="image">
           <left>0</left>
-          <top>550</top>
-          <width>255</width>
-          <height>52</height>
-          <font>$PARAM[small_font]</font>
-          <label>Advisories</label>
-          <texturenofocus>slate-weather/action-normal.png</texturenofocus>
-          <texturefocus>slate-weather/action-focus.png</texturefocus>
-          <textcolor>FFE5E7E9</textcolor>
-          <focusedcolor>FFF2D9B4</focusedcolor>
-          <align>center</align>
-          <onleft>9000</onleft>
-          <onright>15152</onright>
-          <onup condition="!String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))">15150</onup>
-          <ondown>700</ondown>
-          <onback>9000</onback>
-          <onclick>RunScript(weather.foundry.canada,alerts)</onclick>
-          <onup condition="String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))">9000</onup>
-        </control>
-        <control type="button" id="15152">
-          <left>275</left>
-          <top>550</top>
-          <width>255</width>
-          <height>52</height>
-          <font>$PARAM[small_font]</font>
-          <label>Next city</label>
-          <texturenofocus>slate-weather/action-normal.png</texturenofocus>
-          <texturefocus>slate-weather/action-focus.png</texturefocus>
-          <textcolor>FFE5E7E9</textcolor>
-          <focusedcolor>FFF2D9B4</focusedcolor>
-          <align>center</align>
-          <onleft>15151</onleft>
-          <onright>15153</onright>
-          <onup condition="!String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))">15150</onup>
-          <ondown>700</ondown>
-          <onback>9000</onback>
-          <onclick>RunScript(weather.foundry.canada,next)</onclick>
-          <onup condition="String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))">9000</onup>
-        </control>
-        <control type="button" id="15153">
-          <left>550</left>
-          <top>550</top>
-          <width>255</width>
-          <height>52</height>
-          <font>$PARAM[small_font]</font>
-          <label>Refresh</label>
-          <texturenofocus>slate-weather/action-normal.png</texturenofocus>
-          <texturefocus>slate-weather/action-focus.png</texturefocus>
-          <textcolor>FFE5E7E9</textcolor>
-          <focusedcolor>FFF2D9B4</focusedcolor>
-          <align>center</align>
-          <onleft>15152</onleft>
-          <onright>15154</onright>
-          <onup condition="!String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))">15150</onup>
-          <ondown>700</ondown>
-          <onback>9000</onback>
-          <onclick>RunScript(weather.foundry.canada,refresh)</onclick>
-          <onup condition="String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))">9000</onup>
-        </control>
-        <control type="button" id="15154">
-          <left>825</left>
-          <top>550</top>
-          <width>255</width>
-          <height>52</height>
-          <font>$PARAM[small_font]</font>
-          <label>Settings</label>
-          <texturenofocus>slate-weather/action-normal.png</texturenofocus>
-          <texturefocus>slate-weather/action-focus.png</texturefocus>
-          <textcolor>FFE5E7E9</textcolor>
-          <focusedcolor>FFF2D9B4</focusedcolor>
-          <align>center</align>
-          <onleft>15153</onleft>
-          <onright>9000</onright>
-          <onup condition="!String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))">15150</onup>
-          <ondown>700</ondown>
-          <onback>9000</onback>
-          <onclick>Addon.OpenSettings(weather.foundry.canada)</onclick>
-          <onup condition="String.IsEmpty(Window(weather).Property(Foundry.Weather.Day.1.Title))">9000</onup>
+          <top>266</top>
+          <width>1085</width>
+          <height>2</height>
+          <texture colordiffuse="accent_color">colors/white.png</texture>
+          <visible>Control.HasFocus(15149)</visible>
         </control>
         <control type="label">
-          <left>730</left>
-          <top>430</top>
-          <width>360</width>
-          <height>28</height>
+          <left>0</left>
+          <top>238</top>
+          <width>450</width>
+          <height>26</height>
           <font>$PARAM[small_font]</font>
           <textcolor>accent_color</textcolor>
-          <label>$INFO[Window(weather).Property(Foundry.Weather.AlertCount)] Advisories</label>
-          <visible>String.IsEqual(Window(weather).Property(Foundry.Weather.HasAlerts),true)</visible>
+          <label>Saved forecast · may be out of date</label>
+          <visible>String.IsEqual(Window(weather).Property(Foundry.Weather.Stale),true)</visible>
         </control>
       </control>
     </definition>

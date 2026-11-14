@@ -22,3 +22,6 @@ xml/script-skinshortcuts-includes.xml
 
 !media/slate-weather/
 !media/slate-weather/**
+
+!media/slate-icons/
+!media/slate-icons/search.svg
