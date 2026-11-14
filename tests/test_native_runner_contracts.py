@@ -61,7 +61,8 @@ class NativeRunnerContracts(unittest.TestCase):
     def test_seek_uses_real_keyboard_mapping_not_navigation_rpc(self):
         source=(ROOT/'tools/render_interface.py').read_text()
         self.assertIn("['xdotool','key','--clearmodifiers',direction]",source)
-        self.assertNotIn("rpc('Input.'+direction)",source)
+        seek=source[source.index('seek_evidence=[]'):source.index("command('live-frame')")]
+        self.assertNotIn("rpc('Input.'+direction)",seek)
 
     def test_async_readiness_waits_for_resolved_metadata_and_closed_osd(self):
         library=(ROOT/'tools/render_library.py').read_text()

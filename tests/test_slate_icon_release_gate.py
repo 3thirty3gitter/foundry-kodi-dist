@@ -8,7 +8,7 @@ class Gate(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    q=Path(d);p=q/'native/slate-icons/native-icon-report.json';p.parent.mkdir(parents=True)
    with self.assertRaises(FileNotFoundError):g.require_icon_evidence(q,m)
-   r={'passed':True,'native':{'passed':True},'texture_failures':[],'captures':{n:'a'*64 for n in ('icons-home','icons-settings','icons-skinsettings','icons-keyboard','icons-default-placeholders','icons-playback-osd')}}
+   r={'passed':True,'native':{'passed':True},'texture_failures':[],'captures':{n:'a'*64 for n in ('icons-home','icons-settings','icons-skinsettings','icons-keyboard','icons-default-placeholders','icons-default-folder','icons-default-file','icons-playback-osd')}}
    p.write_text(json.dumps(r));g.require_icon_evidence(q,m)
    for key,value in [('passed',False),('texture_failures',['bad texture']),('captures',{})]:
     bad=dict(r);bad[key]=value;p.write_text(json.dumps(bad))

@@ -5,6 +5,7 @@ interface IPv4 addresses come from local kernel ioctls (also works on Android).
 Kodi's address is only a tie-breaker among physical interfaces when discovery
 is available. Unsupported platforms retain Kodi's single-address behavior.
 """
+import array
 import os
 import re
 import socket
@@ -24,6 +25,42 @@ def physical_name(name):
                 os.path.exists('/sys/class/net/{}/device'.format(name)))
 
 
+def interface_names(sock, ioctl):
+    """Enumerate locally even when Android blocks netlink and sysfs.
+
+    SIOCGIFCONF supplies IPv4 interface records without remote traffic. The
+    bounded buffer must not be full: truncation could hide a second network.
+    Addresses are still independently verified below with flags/address ioctls.
+    """
+    try:
+        names = [name for _, name in socket.if_nameindex()]
+        if names:
+            return names
+    except (AttributeError, OSError):
+        pass
+    try:
+        names = os.listdir('/sys/class/net')
+        if names:
+            return names
+    except OSError:
+        pass
+    stride = 40 if struct.calcsize('P') == 8 else 32
+    capacity = stride * 128
+    buffer = array.array('B', b'\0' * capacity)
+    try:
+        request = struct.pack('iP', capacity, buffer.buffer_info()[0])
+        response = ioctl(sock.fileno(), 0x8912, request)  # SIOCGIFCONF
+        length = struct.unpack_from('i', response)[0]
+        if length < 0 or length > capacity - stride or length % stride:
+            return []
+        data = buffer.tobytes()
+        return sorted({data[i:i + 16].split(b'\0', 1)[0].decode('ascii')
+                       for i in range(0, length, stride)
+                       if data[i:i + 16].split(b'\0', 1)[0]})
+    except (OSError, ValueError, UnicodeError, struct.error):
+        return []
+
+
 def interface_addresses():
     """Return physical (name, IPv4) pairs, or None on unsupported platforms.
 
@@ -36,15 +73,9 @@ def interface_addresses():
         import fcntl
     except ImportError:
         return []  # A restricted Linux/Android runtime must not select a tunnel.
-    try:
-        names = [name for _, name in socket.if_nameindex()]
-    except (AttributeError, OSError):
-        try:
-            names = os.listdir('/sys/class/net')
-        except OSError:
-            return []
     result = []
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+        names = interface_names(sock, fcntl.ioctl)
         for name in sorted(names):
             if not physical_name(name):
                 continue

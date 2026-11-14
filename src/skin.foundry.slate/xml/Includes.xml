@@ -1795,7 +1795,7 @@
           <height>140</height>
           <texture>$INFO[ListItem.Icon]</texture>
           <align>center</align>
-          <aspectratio>scale</aspectratio>
+          <aspectratio>keep</aspectratio>
         </control>
         <control type="label">
           <left>25</left>

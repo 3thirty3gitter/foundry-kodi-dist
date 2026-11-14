@@ -147,6 +147,11 @@ try:
             value=command.read_text()
             if value=='clear-widget':row.reset()
             elif value=='icons':xbmc.executebuiltin('ActivateWindow(11126)')
+            elif value=='settings-grid':
+                setting('Settings.SetSettingValue',setting='gamesgeneral.enable',value=True)
+                xbmc.executebuiltin('ActivateWindow(settings)',True);xbmc.sleep(250)
+                xbmc.executebuiltin('SetFocus(9000,0,absolute)',True)
+
             elif value=='live-frame':xbmc.executebuiltin('ActivateWindow(11127)')
             elif value=='favorites':
                 import shutil
@@ -499,6 +504,40 @@ def main():
             capture('home-favorites-second');rpc('Input.Left');wait_for(lambda:state().get('favorite_label')==first)
             rpc('Input.Back');wait_for(lambda:state().get('focus')==9000)
             assert not rpc('Player.GetActivePlayers'),'Favorites focus started playback'
+            # Actual shipped Settings grid; no synthetic replacement or real profile.
+            original_settings=SKIN/'xml/Settings.xml'
+            assert (skin/'xml/Settings.xml').read_bytes()==original_settings.read_bytes()
+            settings_panel=E.parse(skin/'xml/Includes.xml').getroot().find("include[@name='SettingsPanel']")
+            assert settings_panel is not None
+            for image in settings_panel.findall('.//control[@type="image"]'):
+                assert image.findtext('texture')=='$INFO[ListItem.Icon]', 'Settings contains a non-icon background layer'
+                assert image.find('bordertexture') is None, 'Settings contains an icon frame'
+                assert image.findtext('aspectratio')=='keep', 'Settings icon distortion'
+            icons_source={node.text for node in E.parse(original_settings).findall('.//icon')}
+            assert len(icons_source)==12 and all(name.startswith('foundry-settings-icons/') for name in icons_source)
+            for name in icons_source:
+                with Image.open(skin/'media'/name) as icon:
+                    assert icon.mode=='RGBA' and icon.getchannel('A').getextrema()==(0,255), name
+            command('settings-grid');wait_for(lambda:state().get('window')==10004)
+            def settings_label():
+                return rpc('XBMC.GetInfoLabels',{'labels':['Container(9000).ListItem.Label']})['Container(9000).ListItem.Label']
+            # EN locale from fixture. Exercise actual right/down/left/up focus rather than absolute jumps.
+            navigation=[(None,'Skin settings'),('Right','File manager'),('Right','Add-ons'),('Right','System information'),
+                        ('Down','Services'),('Left','PVR & Live TV'),('Left','Media'),('Left','Player'),
+                        ('Down','Games'),('Right','Interface'),('Right','Profiles'),('Right','System'),
+                        ('Up','Services'),('Up','System information'),('Left','Add-ons'),('Left','File manager'),('Left','Skin settings')]
+            settings_steps=[]
+            for index,(direction,expected) in enumerate(navigation):
+                if direction:rpc('Input.'+direction)
+                wait_for(lambda:settings_label().casefold()==expected.casefold(),5)
+                assert state().get('window')==10004, 'Navigation left Settings'
+                time.sleep(.25);capture('settings-grid-%02d'%index)
+                settings_steps.append({'direction':direction,'selected':settings_label(),'screenshot':'settings-grid-%02d.png'%index})
+            (output/'settings-grid-verification.json').write_text(json.dumps({
+                'shipped_settings_xml_sha256':hashlib.sha256(original_settings.read_bytes()).hexdigest(),
+                'transparent_new_icon_count':len(icons_source),'frames_and_background_layers':False,
+                'native_directional_steps':settings_steps,'visual_review_required':True,
+                'scope':'Actual Settings window in isolated disposable Kodi profile; no user profile modified'},indent=2))
             # Actual DialogBusy and selected GIF, with native animation and bounded responsiveness.
             rpc('GUI.ActivateWindow',{'window':'settings'});time.sleep(.5)
             command('busy-open');wait_for(lambda:state().get('busy_visible'))

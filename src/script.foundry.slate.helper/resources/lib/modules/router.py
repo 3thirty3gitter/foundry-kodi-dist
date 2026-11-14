@@ -99,9 +99,9 @@ def routing():
         return SPaths().open_search_window()
     
     if mode == "toggle_search_provider":
-        from modules.search_utils import SPaths
+        from modules.search_provider import choose_search_provider
 
-        return SPaths().toggle_search_provider()
+        return choose_search_provider()
 
     if mode == "set_api_key":
         from modules.custom_actions import set_api_key
@@ -187,6 +187,10 @@ def routing():
         from modules.repo_installer import show_repos
 
         return show_repos()
+
+    if mode == "open_selected_video_provider":
+        from modules.search_provider import open_selected_video_provider
+        return open_selected_video_provider()
 
     if mode == "choose_search_provider":
         from modules.search_provider import choose_search_provider

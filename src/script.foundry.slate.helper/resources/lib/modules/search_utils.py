@@ -152,6 +152,10 @@ class SPaths:
                 self.home_window.setProperty("slate.nimbus.search.history.count", str(count + 1))
 
     def open_search_window(self):
+        from modules.search_provider import use_external_video_provider
+        if use_external_video_provider():
+            return
+
         """Open search window and focus appropriate control based on history state"""
         if xbmcgui.getCurrentWindowId() == 10000:
             xbmc.executebuiltin("ActivateWindow(1121)")
@@ -170,6 +174,10 @@ class SPaths:
             xbmc.executebuiltin("SetFocus(802)")
 
     def search_input(self, search_term=None, from_history=False):
+        from modules.search_provider import use_external_video_provider
+        if use_external_video_provider():
+            return
+
         if search_term is None or not search_term.strip():
             prompt = "Search" if xbmcgui.getCurrentWindowId() == 10000 else "New Search"
             keyboard = xbmc.Keyboard("", prompt, False)
@@ -331,6 +339,10 @@ class SPaths:
 #         return result[0] if result else None
 
 #     def open_search_window(self):
+        from modules.search_provider import use_external_video_provider
+        if use_external_video_provider():
+            return
+
 #         if xbmcgui.getCurrentWindowId() == 10000:
 #             xbmc.executebuiltin("ActivateWindow(1121)")
 #         if self.is_database_empty():
