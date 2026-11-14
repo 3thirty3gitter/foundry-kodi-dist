@@ -151,9 +151,12 @@ try:
             if value=='clear-widget':row.reset()
             elif value=='icons':xbmc.executebuiltin('ActivateWindow(11126)')
             elif value=='settings-grid':
-                setting('Settings.SetSettingValue',setting='gamesgeneral.enable',value=True)
+                require(xbmc.getCondVisibility('System.GetBool(gamesgeneral.enable)'), 'Disposable Kodi profile does not expose Games settings')
                 xbmc.executebuiltin('ActivateWindow(settings)',True);xbmc.sleep(250)
                 xbmc.executebuiltin('SetFocus(9000,0,absolute)',True)
+                limit=time.monotonic()+5
+                while xbmc.getInfoLabel('Container(9000).NumItems')!='12' and time.monotonic()<limit:xbmc.sleep(50)
+                require(xbmc.getInfoLabel('Container(9000).NumItems')=='12', 'Expected all twelve actual Settings tiles')
 
             elif value=='live-frame':xbmc.executebuiltin('ActivateWindow(11127)')
             elif value=='favorites':

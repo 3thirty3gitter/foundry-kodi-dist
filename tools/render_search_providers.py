@@ -95,11 +95,23 @@ try:
   # This is separate from direct picker cases, preserving the actual entry point.
   run('xbmc.executebuiltin("Skin.Reset(current_search_provider)",True)\nxbmc.executebuiltin("ActivateWindow(skinsettings)",False)\nxbmc.sleep(1000)')
   wait(marker.exists)
+  wait(lambda:cond('Control.HasFocus(9000)'))
+  snap(skin+'-settings-start')
   for _ in range(20):
    if cond('Container(9000).HasFocus(3)'):break
    act('down')
   assert cond('Container(9000).HasFocus(3)'), 'Search options category unreachable'
-  act('right');assert cond('Control.HasFocus(64700)'), 'Set Search Provider button unreachable'
+  # Container selection changes before the conditional group has finished
+  # layout/animation. Wait for real visible/enabled target, not a fixed 300ms.
+  wait(lambda:cond('Control.IsVisible(64700)') and cond('Control.IsEnabled(64700)'))
+  time.sleep(.7)
+  snap(skin+'-settings-category-ready')
+  act('right')
+  try:wait(lambda:cond('Control.HasFocus(64700)'),t=5)
+  except Exception:
+   snap(skin+'-settings-navigation-failure')
+   drive('Path('+repr(str(out/(skin+'-focus-failure.json')))+').write_text(json.dumps({"window":xbmcgui.getCurrentWindowId(),"modal":xbmcgui.getCurrentWindowDialogId(),"focus":xbmcgui.Window(xbmcgui.getCurrentWindowId()).getFocusId(),"label":xbmc.getInfoLabel("System.CurrentControl"),"category":xbmc.getInfoLabel("Container(9000).ListItem.Label")}))')
+   raise AssertionError('Set Search Provider button unreachable after group readiness; inspect focus evidence')
   snap(skin+'-settings-search-control')
   act('select');wait(lambda:cond('Window.IsVisible(selectdialog)'));snap(skin+'-settings-picker')
   act('back');wait(lambda:not cond('System.HasActiveModalDialog'))
