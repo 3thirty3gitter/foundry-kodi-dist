@@ -90,15 +90,15 @@
       "id": "resource.images.foundry.slate.icons",
       "version": "0.1.0",
       "path": "resource.images.foundry.slate.icons/resource.images.foundry.slate.icons-0.1.0.zip",
-      "sha256": "f24bb72168e1419ddba338e48e3bc098f7baec33cb7c2cf571098d63448267a1",
-      "size": 5397626
+      "sha256": "274fdeaf529a03881c2e229cf32ebda4e8ce8bdf05bfaea98a9c6a6e3d298645",
+      "size": 5397597
     },
     {
       "id": "script.program.foundry-simkl",
       "version": "0.1.0",
       "path": "script.program.foundry-simkl/script.program.foundry-simkl-0.1.0.zip",
-      "sha256": "9cfd26901859c8b7470cd59fbd8ae9710ee5a571c7bf6fc09c97a484ae073319",
-      "size": 1604
+      "sha256": "e32151459f453ffd781591cc56b19597f6b679dbbd83cf0e9732cb68429ca525",
+      "size": 1601
     }
   ]
 }
