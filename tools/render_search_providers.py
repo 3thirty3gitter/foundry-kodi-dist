@@ -32,6 +32,8 @@ for aid,name,content in [('plugin.qa.video','QA Video','video'),('plugin.qa.disa
  (d/'default.py').write_text('import sys,xbmcplugin\nfrom pathlib import Path\nPath('+repr(str(out/'root-opened.json'))+').write_text("true")\nxbmcplugin.endOfDirectory(int(sys.argv[1]))\n')
 qa=addons/'script.foundry.searchqa';qa.mkdir()
 (qa/'addon.xml').write_text('<addon id="script.foundry.searchqa" version="1.0.0" name="Search QA" provider-name="QA"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/></addon>')
+driver=addons/'script.foundry.searchdriver';driver.mkdir()
+(driver/'addon.xml').write_text('<addon id="script.foundry.searchdriver" version="1.0.0" name="Search driver QA" provider-name="QA"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/></addon>')
 env=dict(os.environ,HOME=str(base/'home'),XDG_CONFIG_HOME=str(base/'home/.config'),XDG_CACHE_HOME=str(base/'home/.cache'),DISPLAY=':98',KODI_HOME=str(home),LIBGL_ALWAYS_SOFTWARE='1',AE_SINK='NULL');(base/'home').mkdir()
 log=(out/'native-console.log').open('w');x=subprocess.Popen(['Xvfb',':98','-screen','0','1920x1080x24','-ac','-nolisten','tcp'],stdout=log,stderr=log);time.sleep(1)
 def launch():return subprocess.Popen(['kodi','-p','-fs','--windowing=x11','--debug'],env=env,stdout=log,stderr=log)
@@ -50,14 +52,33 @@ def wait(fn,t=45):
  raise AssertionError('timeout')
 def cond(c):return rpc('XBMC.GetInfoBooleans',{'booleans':[c]})[c]
 def act(a):rpc('Input.ExecuteAction',{'action':a});time.sleep(.3)
-def snap(n):ImageGrab.grab(xdisplay=':98').save(out/(n+'.png'))
+def drive(body):
+ (driver/'default.py').write_text('import xbmc,xbmcgui,json\nfrom pathlib import Path\n'+body)
+ rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.searchdriver','wait':True})
+def snap(n):
+ dest=out/(n+'.png')
+ if dest.exists():dest.unlink()
+ drive('xbmc.executebuiltin('+repr('TakeScreenshot('+str(dest)+')')+',True)\nxbmc.sleep(700)')
+ wait(dest.exists)
+def accept_disclosure():
+ wait(lambda:cond('Window.IsVisible(yesnodialog)'))
+ # Assert the actual yes control, rather than assuming a left press means Yes.
+ drive('xbmc.executebuiltin("SetFocus(11)",True)\nxbmc.sleep(250)')
+ assert cond('Control.HasFocus(11)'), 'Disclosure yes control not focused'
+ labels=rpc('XBMC.GetInfoLabels',{'labels':['Control.GetLabel(11)']})
+ assert labels['Control.GetLabel(11)']=='Use add-on', labels
+ snap(skin+'-disclosure-accept')
+ act('select')
+ wait(lambda:not cond('Window.IsVisible(yesnodialog)'))
+def selected():
+ return rpc('XBMC.GetInfoLabels',{'labels':['Skin.String(current_search_provider)']})['Skin.String(current_search_provider)']
 report={'passed':False,'scope':'Disposable native Kodi real picker and video metadata; unknown providers are open-only, no integrated search claim.','skins':{}}
 try:
  wait(lambda:rpc('JSONRPC.Ping')=='pong')
  for _ in range(15):
   if cond('System.HasActiveModalDialog'):act('back')
   time.sleep(.2)
- for aid in ['resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','script.foundry.helper','script.foundry.slate.helper','skin.foundry','skin.foundry.slate','script.foundry.searchqa','plugin.qa.video','plugin.qa.disabled','plugin.qa.audio']+LEGACY_IDS:
+ for aid in ['resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','script.foundry.helper','script.foundry.slate.helper','skin.foundry','skin.foundry.slate','script.foundry.searchqa','script.foundry.searchdriver','plugin.qa.video','plugin.qa.disabled','plugin.qa.audio']+LEGACY_IDS:
   rpc('Addons.SetAddonEnabled',{'addonid':aid,'enabled':True})
  rpc('Addons.SetAddonEnabled',{'addonid':'plugin.qa.disabled','enabled':False})
  for skin,helper in [('skin.foundry','script.foundry.helper'),('skin.foundry.slate','script.foundry.slate.helper')]:
@@ -66,7 +87,7 @@ try:
   entry=addons/helper/'resources/lib';marker=out/(skin+'-probe.json')
   def run(body):
    if marker.exists():marker.unlink()
-   (qa/'default.py').write_text('import sys,json,xbmc\nfrom pathlib import Path\nsys.path.insert(0,'+repr(str(entry))+')\nfrom modules import search_provider as p\n'+body+'\nPath('+repr(str(marker))+').write_text(json.dumps({"selection":xbmc.getInfoLabel("Skin.String(current_search_provider)")}))\n')
+   (qa/'default.py').write_text('import sys,json,xbmc\nfrom pathlib import Path\nsys.path.insert(0,'+repr(str(entry))+')\nfrom modules import search_provider as p\n'+body+'\nxbmc.sleep(350)\nPath('+repr(str(marker))+').write_text(json.dumps({"selection":xbmc.getInfoLabel("Skin.String(current_search_provider)")}))\n')
    rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.searchqa','wait':False})
   run('rows=p.installed_video_providers()\nassert "plugin.qa.audio" not in [r["id"] for r in rows]\nassert any(r["id"]=="plugin.qa.disabled" and not r["enabled"] for r in rows)\nPath('+repr(str(out/(skin+'-inventory.json')))+').write_text(json.dumps(rows))')
   wait(marker.exists);rows=json.loads((out/(skin+'-inventory.json')).read_text());report['skins'][skin]={'inventory':rows}
@@ -95,7 +116,7 @@ try:
   choose();wait(marker.exists);assert json.loads(marker.read_text())['selection']==''
   choose('plugin.qa.disabled');wait(lambda:cond('Window.IsVisible(okdialog)'));snap(skin+'-disabled');act('select');wait(marker.exists);assert json.loads(marker.read_text())['selection']==''
   choose('plugin.qa.video');wait(lambda:cond('Window.IsVisible(yesnodialog)'));snap(skin+'-disclosure');act('back');wait(marker.exists);assert json.loads(marker.read_text())['selection']==''
-  choose('plugin.qa.video');wait(lambda:cond('Window.IsVisible(yesnodialog)'));act('left');act('select');wait(marker.exists);assert json.loads(marker.read_text())['selection']=='plugin.qa.video'
+  choose('plugin.qa.video');accept_disclosure();wait(marker.exists);wait(lambda:selected()=='plugin.qa.video')
   # Legacy numeric selections and existing XML routes remain unchanged.
   report['skins'][skin]['legacy_selections']=[]
   for i,aid in enumerate(LEGACY_IDS):
@@ -107,7 +128,7 @@ try:
   assert routes==LEGACY_ROUTES[skin], 'Legacy search route contract changed'
   report['skins'][skin]['legacy_xml_routes_unchanged']=True
   # Restore open-only source for restart test, with the same explicit disclosure.
-  choose('plugin.qa.video');wait(lambda:cond('Window.IsVisible(yesnodialog)'));act('left');act('select');wait(marker.exists);assert json.loads(marker.read_text())['selection']=='plugin.qa.video'
+  choose('plugin.qa.video');accept_disclosure();wait(marker.exists);wait(lambda:selected()=='plugin.qa.video')
   # Native skin string is persisted on graceful shutdown, then reopened.
   rpc('Application.Quit');k.wait(timeout=30)
   settings=userdata/'addon_data'/skin/'settings.xml';t=E.parse(settings)
@@ -118,6 +139,8 @@ try:
   report['skins'][skin]['passed']=True
  report['passed']=True
 finally:
+ for f in (profile/'temp').glob('kodi*.log'):
+  shutil.copy2(f,out/f.name)
  (out/'native-report.json').write_text(json.dumps(report,indent=2))
  try:rpc('Application.Quit');k.wait(timeout=15)
  except Exception:k.terminate()

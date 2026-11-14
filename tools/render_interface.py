@@ -100,6 +100,8 @@ try:
                   'busy_visible':xbmc.getCondVisibility('Window.IsVisible(busydialognocancel)'),
                   'python_optimize':sys.flags.optimize,'playback_command':playback_command,'command_sequence':command_sequence,
                   'playback_parent':playback_parent,'playback_closed_parent':playback_closed_parent,
+                  'active_catalog_instance':xbmcgui.Window(xbmcgui.getCurrentWindowId()).getProperty('foundry.qa.instance'),
+                  'modal':xbmc.getCondVisibility('System.HasActiveModalDialog'),
                   'catalog':None}
         if playback_catalog is not None:
             snapshot['catalog']={'selected':playback_catalog.state.selected,'source':playback_catalog.source.path,
@@ -133,6 +135,7 @@ try:
                     'art':dict(art)} for index in range(6)]}
                 playback_catalog=CatalogWindow('script-foundry-vod.xml',str(HELPER),'default','1080i',True,
                     source=source,section='Movies',breadcrumb='VOD / Movies / Trending')
+                playback_catalog.setProperty('foundry.qa.instance',str(request['id']))
                 playback_catalog.show()
                 limit=time.monotonic()+10
                 while not playback_catalog.initialized and time.monotonic()<limit:xbmc.sleep(20)
@@ -464,8 +467,28 @@ def main():
                 playback_command('open-catalog',fanart=with_fanart)
                 def catalog_ready():
                     current=state();entry=current.get('catalog') or {}
-                    return current.get('window')!=12005 and entry.get('native_ready') and entry.get('focus')==50 and entry.get('size')==6
-                wait_for(catalog_ready)
+                    return (current.get('active_catalog_instance')==str(playback_serial)
+                            and not current.get('modal') and entry.get('native_ready')
+                            and entry.get('focus')==50 and entry.get('size')==6)
+                # A reused/closing Kodi window can report list focus and size before
+                # the new window owns input. Require the active instance AND a settled
+                # first position before sending relative keys. Never reset after Stop.
+                initial_deadline=time.monotonic()+15;initial_since=None;initial_samples=[]
+                while time.monotonic()<initial_deadline:
+                    sample=state();entry=sample.get('catalog') or {}
+                    initial_samples.append({'window':sample.get('window'),
+                        'instance':sample.get('active_catalog_instance'),'modal':sample.get('modal'),
+                        'position':entry.get('position'),'selected':entry.get('selected'),
+                        'focus':entry.get('focus'),'native_ready':entry.get('native_ready')})
+                    if catalog_ready() and entry.get('position')==0 and entry.get('selected')==0:
+                        if initial_since is None:initial_since=time.monotonic()
+                        elif time.monotonic()-initial_since>=.35:break
+                    else:initial_since=None
+                    time.sleep(.05)
+                else:
+                    (output/('catalog-initial-%d.json'%cycle)).write_text(json.dumps(initial_samples,indent=2))
+                    raise AssertionError(('Fresh playback fixture did not settle at item 0',initial_samples[-1]))
+                (output/('catalog-initial-%d.json'%cycle)).write_text(json.dumps(initial_samples,indent=2))
                 for position in range(1,4):
                     rpc('Input.Right');wait_for(lambda:(state().get('catalog') or {}).get('position')==position)
                 before=state();catalog_window_id=before['window']
