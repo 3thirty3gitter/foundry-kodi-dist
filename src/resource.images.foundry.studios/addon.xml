@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="resource.images.foundry.studios" name="Foundry Studio Icons" version="0.1.0" provider-name="Foundry; Team Kodi contributors">
+<requires><import addon="kodi.resource" version="1.0.0"/></requires>
+<extension point="kodi.resource.images" compile="false" type="studios"/>
+<extension point="xbmc.addon.metadata"><summary lang="en_GB">Original-colour studio artwork for Foundry</summary><description lang="en_GB">Audited studio assets with original colour and source resolution preserved. Coverage and HD availability vary; no exhaustive coverage claim.</description><platform>all</platform><license>CC BY-SA 3.0 US; trademarks belong to respective owners</license></extension></addon>

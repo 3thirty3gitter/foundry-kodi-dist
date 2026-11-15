@@ -1,0 +1,59 @@
+name: Validate standalone studio resource
+on:
+  push:
+    branches: [dev]
+    paths:
+      - 'src/resource.images.foundry.studios/**'
+      - 'tools/render_studio_resource.py'
+      - 'tools/test_studio_resource.py'
+      - '.github/workflows/studio-resource-validation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  studio-resource:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: bash
+        working-directory: foundry-kodi-dist
+    env:
+      QA: studio-qa
+      NATIVE_QA_IMAGE: foundry-native-qa:debian13-kodi21.2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: foundry-kodi-dist
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test standalone provenance and create deterministic package
+        run: |
+          python -m pip install Pillow==13.0.0
+          mkdir -p "$QA"
+          python tools/test_studio_resource.py -v 2>&1 | tee "$QA/source-tests.log"
+          python - <<'PY'
+          import sys,pathlib,json,zipfile
+          sys.path.insert(0,'tools')
+          from build_release import package
+          root=pathlib.Path('src/resource.images.foundry.studios')
+          _,receipt=package(root,pathlib.Path('studio-qa/packages'))
+          pathlib.Path('studio-qa/package.json').write_text(json.dumps(receipt,indent=2))
+          with zipfile.ZipFile(pathlib.Path('studio-qa/packages')/receipt['path']) as z:
+              assert z.testzip() is None
+              for n in z.namelist(): assert z.read(n)==(root/n.split('/',1)[1]).read_bytes()
+              z.extractall('studio-qa/extracted/src')
+          PY
+      - name: Build pinned native environment
+        run: docker build --platform linux/amd64 --tag "$NATIVE_QA_IMAGE" tools/native-qa 2>&1 | tee "$QA/native-image.log"
+      - name: Verify actual native standalone resource rendering
+        run: |
+          bash tools/run_native_qa.sh tools/render_studio_resource.py --root studio-qa/extracted --output "$QA/native" 2>&1 | tee "$QA/native.log"
+          python -c "import json; assert json.load(open('studio-qa/native/native-studio-report.json'))['passed'] is True"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: standalone-studio-qa-${{ github.run_id }}
+          path: foundry-kodi-dist/studio-qa
