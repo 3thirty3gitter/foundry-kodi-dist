@@ -474,7 +474,7 @@ class GamesRendererTests(unittest.TestCase):
         runner = importlib.util.module_from_spec(spec); spec.loader.exec_module(runner)
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary); source = base / 'source'; home = base / 'kodi'; profile = home / 'portable_data'
-            for aid in ('resource.images.foundry.wallpapers', 'resource.images.foundry.osd', 'resource.uisounds.foundry.pulse', 'script.foundry.helper', 'skin.foundry'):
+            for aid in ('resource.images.foundry.wallpapers', 'resource.images.foundry.osd', 'resource.images.foundry.media.puremarks', 'resource.uisounds.foundry.pulse', 'script.foundry.helper', 'skin.foundry'):
                 path = source / 'src' / aid; path.mkdir(parents=True)
                 manifest = '<addon id="%s"><requires><import addon="xbmc.python"/><import addon="unused.network"/></requires>' % aid
                 if aid == 'script.foundry.helper':

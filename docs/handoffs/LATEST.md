@@ -1,3 +1,17 @@
+## Final validation correction, 2026-11-15
+
+First complete candidate run 43683456034 passed 13 native gates but failed media selection: the approved 67,919-byte manifest exceeded the old read limit. Both helper parsers now read at most 256 KiB + 1 byte and reject oversize data before strict UTF-8/JSON parsing. Actual complete-manifest and boundary regressions added.
+
+Kodi Linux sets Python optimization and strips native Python `assert` statements. Five QA generators now convert their embedded assertions to explicit conditional failures; production source copies are untouched. The media inventory check is also explicit and duplicated on the host. Prior host-side checks remain evidence for their narrow scope, but the affected native assertions require a fresh full run. No publication yet.
+
+# Media pack selection and complete Pure Marks candidate,2026-11-15
+
+User-approved105-path scope:31 sourced marks and74 original technical glyphs. Not all official brand logos. Adds persisted Media icon pack selection for original Foundry and Slate; missing/disabled/invalid assets preserve builtin icons. Dark-background marks, with pixel-preserving alpha-trimmed audio variants and conditional160px audio layout; default builtin layout unchanged. No network/account access or automatic pack selection.
+
+Candidate versions: Foundry/Build/Bootstrap1.5.6,Helper1.3.7,Slate0.1.5,SlateHelper0.1.2,PureMarks0.1.0. Previous releases immutable. Full final packaged/native validation and public publication remain pending. Earlier isolated selector/audio/art native tests passed; they do not substitute for final release gates. Physical Shield/PVR and all live codecs remain unverified.
+
+---
+
 # Foundry 1.5.4 additional Movies wallpapers, 2026-11-12
 
 Local development candidate only, not pushed or published. Ten requested categories now have matching metallic icon/title wallpapers on the exact fixed Trending background: Genres, Providers, Languages, Years, Decades, Certifications, Because You Watched..., Watched, Recently Watched and In Progress. Original 45 approved frames, both historical category manifests, Home layout, custom-background precedence and selected-title fanart remain unchanged. New source provenance is separate in SOURCE-extra-categories-20261112.json. Source-owned canonical context, native folder focus and directory routing cover 23 exact labels; similar/TV/mixed contexts remain excluded.

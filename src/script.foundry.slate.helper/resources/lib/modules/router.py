@@ -10,6 +10,10 @@ def routing():
     _get = params.get
     mode = _get("mode", "check_for_update")
 
+    if mode == "choose_media_icon_pack":
+        from modules.media_pack import choose
+        return choose()
+
     if mode == "phone_entry":
         from modules.phone_entry import run
         return run()

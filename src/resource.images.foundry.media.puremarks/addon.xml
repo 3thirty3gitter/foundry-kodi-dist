@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="resource.images.foundry.media.puremarks" name="Foundry Media - Pure Marks" version="0.1.0" provider-name="Foundry">
+  <extension point="kodi.resource.images"><filetypes>.png</filetypes></extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Pure Marks media format icons</summary>
+    <description lang="en_GB">Complete 105-path media format pack: 31 sourced authentic mark paths and 74 original technical glyphs. Original diagrams identify formats, resolutions, ratios and channel counts; they are not official brand logos. Restricted VP8, VP9 and Xvid logos are not included. Mixed licenses and trademark restrictions apply. Select in Skin settings > Artwork > Media icon pack.</description>
+    <platform>all</platform>
+    <license>Mixed: CC0-1.0; CC-BY-3.0; source-declared public-domain textlogos. VP8/VP9 excluded. Trademarks reserved. See PROVENANCE.md.</license>
+  </extension>
+</addon>

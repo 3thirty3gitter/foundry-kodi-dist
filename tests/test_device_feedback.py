@@ -1,3 +1,4 @@
+from media_invariant_contracts import strip_live_media_layout
 """Regression of lower-row menu returns and feathered playback backdrop.
 
 The scroll model follows Kodi Omega GUIControlGroupList.cpp's FOCUSED,
@@ -122,6 +123,8 @@ class DeviceFeedback(unittest.TestCase):
         for name in ('StreamPilotVODCard','StreamPilotLiveCard'):
             old=before.find("include[@name='%s']/control"%name)
             new=after.find("include[@name='%s']/control"%name)
+            if name == "StreamPilotLiveCard":
+                strip_live_media_layout(new)
             # Explicit directional seek additions have their own regression suite.
             # Remove only those additions when comparing the older control contract.
             for parent in new.iter():

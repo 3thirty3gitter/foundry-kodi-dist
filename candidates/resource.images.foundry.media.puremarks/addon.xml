@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="resource.images.foundry.media.puremarks" name="Foundry Media - Pure Marks (Candidate)" version="0.0.1" provider-name="Foundry">
+  <extension point="kodi.resource.images"><filetypes>.png</filetypes></extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Experimental authentic Pure Marks media icons</summary>
+    <description lang="en_GB">Review-only candidate containing 31 sourced format-mark paths rendered from vector originals. 74 unresolved paths are intentionally absent and require existing-skin fallback. No provisional neutral pictograms or constructed descriptor lockups are included. Mixed source licenses and trademark restrictions apply; VP8/VP9 artwork is excluded; existing skin fallback is required. Not approved for release.</description>
+    <platform>all</platform>
+    <license>Mixed: CC0-1.0; CC-BY-3.0; source-declared public-domain textlogos. VP8/VP9 excluded. Trademarks reserved. See PROVENANCE.md.</license>
+  </extension>
+</addon>

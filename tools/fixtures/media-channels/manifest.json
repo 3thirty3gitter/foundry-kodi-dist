@@ -1,0 +1,44 @@
+[
+  {
+    "file": "channels-1.mkv",
+    "channels": 1,
+    "codec": "pcm_s16le",
+    "sha256": "ec87cb4ca35d2be343f2f5c36a65872e011b354932fe99f9dce4ca64417d0546",
+    "bytes": 487324
+  },
+  {
+    "file": "channels-10.mkv",
+    "channels": 10,
+    "codec": "pcm_s16le",
+    "sha256": "bf18b3b0300c68b94f4eba3f530874c49904992b65a423992c7a0594ffedde75",
+    "bytes": 4807558
+  },
+  {
+    "file": "channels-3.mkv",
+    "channels": 3,
+    "codec": "pcm_s16le",
+    "sha256": "e5eb335dd0f22d76281c3be09144e659791c0fa080cac0a4fce241519ed748b4",
+    "bytes": 1447324
+  },
+  {
+    "file": "channels-4.mkv",
+    "channels": 4,
+    "codec": "pcm_s16le",
+    "sha256": "b45911ca6bb5315bb80df3af49d491fdbb1c0ba4e2b807fdd67b628b0a3a56ab",
+    "bytes": 1927324
+  },
+  {
+    "file": "channels-5.mkv",
+    "channels": 5,
+    "codec": "pcm_s16le",
+    "sha256": "eced75055e2c740a6478aeb3dbf6172c951b26247bfe3c7aff278e1ef2c9ac62",
+    "bytes": 2407324
+  },
+  {
+    "file": "channels-7.mkv",
+    "channels": 7,
+    "codec": "pcm_s16le",
+    "sha256": "af457b19695c0c964faf1ac50657997826bbcc8a8e4d7ec1419f4e867f4a87cc",
+    "bytes": 3367324
+  }
+]

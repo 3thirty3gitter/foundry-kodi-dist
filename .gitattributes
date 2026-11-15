@@ -11,3 +11,11 @@ releases/1.2.11-artwork-approval.json -text
 releases/1.2.11.json -text
 src/skin.foundry.slate/** -text
 src/script.foundry.slate.helper/** -text
+candidates/resource.images.foundry.studios/sources/*.svg -text
+candidates/media-selector-overlay/** -text
+candidates/resource.images.foundry.media.puremarks/** -text
+
+candidates/media-audio-overlay/** -text
+candidates/media-audio-derived/** -text
+
+src/resource.images.foundry.media.puremarks/** -text

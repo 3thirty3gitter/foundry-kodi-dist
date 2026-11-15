@@ -1,3 +1,13 @@
+# Foundry 1.5.6 / Slate 0.1.5: media icon packs
+
+Adds persisted per-skin selection at Skin settings > Artwork > Media icon pack, and the complete Pure Marks resource: 105 format paths (31 sourced marks, 74 original technical glyphs). The resource is independently installable and included as a skin dependency; Built-in remains the default until you select Pure Marks. Missing/disabled/invalid formats safely retain existing icons.
+
+Audio marks have pixel-preserving transparent-margin trims and a wider conditional OSD layout. Live title text retains its existing scrolling behavior in a slightly narrower area; VOD title geometry is unchanged. White marks target dark surfaces. This is not a claim that every icon is an official brand logo or all fine lettering is readable at every screen distance.
+
+Original Helper 1.3.7, Slate Helper 0.1.2, Build/Bootstrap 1.5.6, Pure Marks 0.1.0. Historical packages stay immutable. Final source/extracted/native/public-download evidence is recorded by the release workflow. Physical Shield and PVR behavior remain unverified.
+
+---
+
 # Foundry 1.5.4 development candidate
 
 Adds ten Movies category wallpapers, Genres through In Progress, using the unchanged approved Trending backdrop and matching metallic icon/title art. Exact-label native focus, directory and source-owned catalog routing now cover 23 categories. Skin/build/bootstrap: 1.5.4; helper: 1.3.5. All original approved artwork and historical packages remain unchanged.

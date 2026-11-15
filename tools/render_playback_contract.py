@@ -1,4 +1,5 @@
 """Run isolated Kodi21+ action/resolver playback contracts under BOTH shipped skins."""
+from native_qa_assertions import harden_qa_source
 import argparse,importlib.util,json,os,shutil,signal,subprocess,tempfile,time,traceback,hashlib,sys,re,xml.etree.ElementTree as E
 from PIL import Image,ImageStat
 from pathlib import Path
@@ -47,7 +48,7 @@ def main():
  with tempfile.TemporaryDirectory(prefix='foundry-action-contract-',ignore_cleanup_errors=True) as temp:
   base=Path(temp);home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
   profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True);addons=profile/'addons';addons.mkdir()
-  sources=[root.parent/'skin.foundry-nimbus',root.parent/'script.foundry.helper']+[root/'src'/x for x in ('skin.foundry.slate','script.foundry.slate.helper','resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons')]
+  sources=[root.parent/'skin.foundry-nimbus',root.parent/'script.foundry.helper']+[root/'src'/x for x in ('skin.foundry.slate','script.foundry.slate.helper','resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','resource.images.foundry.media.puremarks')]
   aids=[]
   for source in sources:
    aid=E.parse(source/'addon.xml').getroot().get('id');aids.append(aid);shutil.copytree(source,addons/aid,ignore=shutil.ignore_patterns('.git'))
@@ -199,7 +200,7 @@ def main():
    for skin,helper in [('skin.foundry','script.foundry.helper'),('skin.foundry.slate','script.foundry.slate.helper')]:
     report['skin_identity_receipts'].append(switch_skin(skin))
     (base/'driver-done').unlink(missing_ok=True);(base/'state.json').unlink(missing_ok=True)
-    (driver/'default.py').write_text('from pathlib import Path\nBASE=Path(%r)\nHELPER=Path(%r)\n'%(str(base),str(addons/helper))+DRIVER)
+    (driver/'default.py').write_text(harden_qa_source('from pathlib import Path\nBASE=Path(%r)\nHELPER=Path(%r)\n'%(str(base),str(addons/helper))+DRIVER))
     driver_log_offset=len((profile/'temp/kodi.log').read_text(encoding='utf-8',errors='replace'))
     rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.contractqa','wait':False});wait(lambda:bool(state()))
     report['cases']+=contract.verify(rpc,base,out,command,state,wait,capture,skin)

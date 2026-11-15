@@ -1,0 +1,63 @@
+name: Validate partial Pure Marks artwork
+on:
+  push:
+    branches: [dev]
+    paths:
+      - 'candidates/resource.images.foundry.media.puremarks/**'
+      - 'tools/render_actual_media_pack.py'
+      - '.github/workflows/media-art-validation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  media-art:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: bash
+        working-directory: foundry-kodi-dist
+    env:
+      QA: media-art-qa
+      NATIVE_QA_IMAGE: foundry-native-qa:debian13-kodi21.2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: foundry-kodi-dist
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify partial inventory and deterministic package
+        run: |
+          python -m pip install Pillow==13.0.0
+          mkdir -p "$QA"
+          python - <<'PY'
+          import sys,pathlib,json,zipfile,hashlib
+          sys.path.insert(0,'tools')
+          from build_release import package
+          root=pathlib.Path('candidates/resource.images.foundry.media.puremarks')
+          manifest=json.loads((root/'resources/media-pack.json').read_text())
+          actual={p.relative_to(root/'resources').as_posix() for p in (root/'resources/flags').rglob('*.png')}
+          assert len(actual)==31 and actual=={x['path'] for x in manifest['assets']}
+          assert not any(p.endswith('/vp8.png') or p.endswith('/vp9.png') for p in actual)
+          assert manifest['release_status']=='experimental-review-required'
+          for row in manifest['assets']: assert hashlib.sha256((root/'resources'/row['path']).read_bytes()).hexdigest()==row['sha256']
+          _,receipt=package(root,pathlib.Path('media-art-qa/packages'))
+          pathlib.Path('media-art-qa/package.json').write_text(json.dumps(receipt,indent=2))
+          with zipfile.ZipFile(pathlib.Path('media-art-qa/packages')/receipt['path']) as z:
+              assert z.testzip() is None
+              for n in z.namelist(): assert z.read(n)==(root/n.split('/',1)[1]).read_bytes()
+              z.extractall('media-art-qa/extracted')
+          PY
+      - name: Build pinned native environment
+        run: docker build --platform linux/amd64 --tag "$NATIVE_QA_IMAGE" tools/native-qa 2>&1 | tee "$QA/native-image.log"
+      - name: Verify every real asset at native badge sizes
+        run: |
+          bash tools/run_native_qa.sh tools/render_actual_media_pack.py --root . --pack "$QA/extracted/resource.images.foundry.media.puremarks" --output "$QA/native" 2>&1 | tee "$QA/native.log"
+          python -c "import json; assert json.load(open('media-art-qa/native/native-mediaflags-report.json'))['passed'] is True"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: media-art-qa-${{ github.run_id }}
+          path: foundry-kodi-dist/media-art-qa/**

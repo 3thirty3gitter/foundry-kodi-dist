@@ -1,0 +1,26 @@
+[
+  {
+    "file": "skin.foundry-nimbus\\xml\\Includes_StreamPilotOSD.xml",
+    "source": "C:\\Users\\TrentTimmerman\\Documents\\Codex\\foundry-media-original-20261115\\apps\\skin.foundry-nimbus\\xml\\Includes_StreamPilotOSD.xml",
+    "before_sha256": "7aeaba031503e64b050f08b423ab331a60a910b5dc69c88d217127db2abc81e8",
+    "after_sha256": "b7bf5374084c8e112bf1e4733ba6124bc86e8e8388e78f6cefdefc81f52916cc"
+  },
+  {
+    "file": "script.foundry.helper\\resources\\lib\\modules\\media_pack.py",
+    "source": "C:\\Users\\TrentTimmerman\\Documents\\Codex\\foundry-media-original-20261115\\apps\\script.foundry.helper\\resources\\lib\\modules\\media_pack.py",
+    "before_sha256": "00831f1a1e53f43e84d66e7662aec7755df0ad35012c57c04a98abd176e294a0",
+    "after_sha256": "9ae29fcb7c09ca1904bb9cc6c9cf2ba789bc41958ae20d33304c374a2480b9f9"
+  },
+  {
+    "file": "skin.foundry.slate\\xml\\Includes_StreamPilotOSD.xml",
+    "source": "C:\\Users\\TrentTimmerman\\Documents\\Codex\\foundry-studios-integration-20261115\\apps\\foundry-kodi-dist\\src\\skin.foundry.slate\\xml\\Includes_StreamPilotOSD.xml",
+    "before_sha256": "f3680619dcd52a73512edfedce2fac2bf77d13aa0d6882d8bddaa363b6fe8d80",
+    "after_sha256": "e56ce2826adc99a31aae792365b2bd74ad98a8656e5f02a5119e57785b7c8ca5"
+  },
+  {
+    "file": "script.foundry.slate.helper\\resources\\lib\\modules\\media_pack.py",
+    "source": "C:\\Users\\TrentTimmerman\\Documents\\Codex\\foundry-studios-integration-20261115\\apps\\foundry-kodi-dist\\src\\script.foundry.slate.helper\\resources\\lib\\modules\\media_pack.py",
+    "before_sha256": "cbe46555e4b76182ef51104d2dbccf4a470636c19b6f372c60a81e5d3479cc32",
+    "after_sha256": "d744ef18303b59f9e6469120687621f47f4e183a98424b0731127bf0f094f2d0"
+  }
+]

@@ -619,4 +619,8 @@
     <value condition="VideoPlayer.SubtitlesEnabled">[B]$INFO[VideoPlayer.SubtitlesLanguage][/B]</value>
     <value>[B]$LOCALIZE[1223][/B]</value>
   </variable>
+  <variable name="MediaIconPackName">
+    <value condition="!String.IsEmpty(Window(Home).Property(foundry.slate.media.name))">$INFO[Window(Home).Property(foundry.slate.media.name)]</value>
+    <value>Built-in icons</value>
+  </variable>
 </includes>

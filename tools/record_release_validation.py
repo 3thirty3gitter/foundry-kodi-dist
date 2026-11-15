@@ -44,6 +44,7 @@ def read(path):
 
 def require_release_scope(manifest):
     """Keep published 1.4 immutable and require the next release's Games scope."""
+    require_media_scope(manifest)
     games = [package for package in manifest['packages'] if package['id'] == 'plugin.games.foundry']
     version = tuple(int(part) for part in manifest['release'].split('.'))
     if version < (1, 5, 0):
@@ -126,6 +127,157 @@ def require_playback_contract_evidence(qa, manifest):
                and re.fullmatch(r'[0-9a-f]{64}', x['sha256']) for x in captures)
 
 
+# Pure Marks release evidence extension. Insert before evidence().
+MEDIA_ID = 'resource.images.foundry.media.puremarks'
+MEDIA_SKINS = ('skin.foundry', 'skin.foundry.slate')
+MEDIA_HELPERS = ('script.foundry.helper', 'script.foundry.slate.helper')
+MEDIA_XML = ('Home.xml', 'Custom_1121_SearchResults.xml', 'Includes.xml',
+             'Includes_StreamPilotOSD.xml', 'SkinSettings.xml', 'Variables.xml')
+
+
+def require_media_scope(manifest):
+    if tuple(int(n) for n in manifest['release'].split('.')) < (1, 5, 6):
+        return False
+    packages = [p for p in manifest['packages'] if p['id'] == MEDIA_ID]
+    assert len(packages) == 1 and packages[0]['version'] == '0.1.0', 'Full Pure Marks 0.1.0 required'
+    return True
+
+
+def require_media_evidence(root, qa, manifest):
+    """Bind final, no-overlay native evidence to the exact published ZIP bytes."""
+    if not require_media_scope(manifest):
+        return
+    import hashlib
+    import zipfile
+    from io import BytesIO
+    from PIL import Image
+    packages = {p['id']: p for p in manifest['packages']}
+    cached = {}
+    def digest(data):
+        return hashlib.sha256(data).hexdigest()
+    def members(aid):
+        if aid not in cached:
+            package = packages[aid]
+            path = Path(package['path'])
+            assert not path.is_absolute() and '..' not in path.parts
+            data = (root / path).read_bytes()
+            assert len(data) == package['size'] and digest(data) == package['sha256']
+            with zipfile.ZipFile(BytesIO(data)) as z:
+                names = z.namelist()
+                assert len(names) == len(set(names))
+                assert all(n.startswith(aid + '/') and '..' not in Path(n).parts for n in names)
+                cached[aid] = {n[len(aid)+1:]: z.read(n) for n in names if not n.endswith('/')}
+        return cached[aid]
+    def capture(folder, name, expected):
+        path = Path(name)
+        assert path.name == name and not path.is_absolute()
+        data = (folder / path).read_bytes()
+        assert digest(data) == expected
+        with Image.open(BytesIO(data)) as im:
+            assert im.format == 'PNG' and im.size == (1920, 1080)
+            im.verify()
+    pack = members(MEDIA_ID)
+    pack_manifest_bytes = pack['resources/media-pack.json']
+    meta = json.loads(pack_manifest_bytes)
+    assert meta['schema_version'] == 1 and meta['kind'] == 'foundry-media-flags'
+    assert meta['release_status'] == 'approved' and meta['coverage_complete'] is True
+    assert meta['asset_root'] == 'flags' and meta['unresolved_paths'] == []
+    assert meta['authentic_mark_paths'] == 31 and meta['original_technical_glyph_paths'] == 74
+    assets = meta['assets']
+    assert len(assets) == 105 and len({a['path'] for a in assets}) == 105
+    assert sum(a['status'] == 'sourced-format-mark' for a in assets) == 31
+    assert sum(a['status'] == 'original-technical-glyph' for a in assets) == 74
+    assert all(a['release_approved'] is True for a in assets)
+    paths = {a['path'] for a in assets}
+    assert {n[len('resources/'): ] for n in pack if n.startswith('resources/flags/') and n.endswith('.png')} == paths
+    assert 'flags/flag.png' not in paths
+    for a in assets:
+        data = pack['resources/' + a['path']]
+        assert digest(data) == a['sha256']
+        with Image.open(BytesIO(data)) as im:
+            assert im.format == 'PNG' and im.mode == 'RGBA' and list(im.size) == a['dimensions']
+            assert im.getchannel('A').getbbox(), 'Blank format asset'
+    artdir = qa / 'native/media-art'
+    art = read(artdir / 'native-mediaflags-report.json')
+    assert art['passed'] is True and art['native']['passed'] is True
+    assert art['asset_count'] == art['native']['resource_hash_verified'] == 105
+    assert art['manifest_release_status'] == 'approved'
+    assert art['manifest_sha256'] == digest(pack_manifest_bytes)
+    receipts = art['source_receipts']
+    assert len({r['file'] for r in receipts}) == len(receipts)
+    assert {r['file'] for r in receipts} == set(pack)
+    for row in receipts:
+        assert digest(pack[row['file']]) == row['sha256']
+    pages = art['pages']; names = art['native']['pages']
+    assert len(pages) == len(names) == len(set(names)) == 105
+    assert {r['file'] for r in pages} == paths
+    expected_cases = {((w,h),bg) for w,h in ((115,60),(76,54)) for bg in ((255,255,255),(32,32,32))}
+    for row, name in zip(pages, names):
+        assert len(row['cases']) == 4
+        assert {(tuple(c['box']),tuple(c['background'])) for c in row['cases']} == expected_cases
+        assert all(0 <= c['mean_rgb_error'] < 12 and 0 <= c['ink_rgb_error'] < 30 and c['visible_pixels'] > 0 for c in row['cases'])
+        capture(artdir, name, row['screenshot_sha256'])
+    selector_dir = qa / 'native/media-selector'
+    result = read(selector_dir / 'native-report.json')
+    assert result['passed'] is True and set(result['skins']) == set(MEDIA_SKINS)
+    assert result['release_source_mode'] == 'packaged-no-overlay'
+    assert result['actual_pack_id'] == MEDIA_ID
+    assert result['actual_pack_manifest_sha256'] == digest(pack_manifest_bytes)
+    required = {aid + '/resources/lib/' + name for aid in MEDIA_HELPERS for name in ('service.py','modules/router.py','modules/media_pack.py')}
+    required |= {aid + '/xml/' + name for aid in MEDIA_SKINS for name in MEDIA_XML}
+    receipts = result['source_receipts']
+    assert len({r['file'] for r in receipts}) == len(receipts)
+    assert required <= {r['file'] for r in receipts}
+    for row in receipts:
+        aid, relative = row['file'].split('/',1)
+        assert digest(members(aid)[relative]) == row['sha256']
+    screenshots = result['screenshots']
+    assert len({r['file'] for r in screenshots}) == len(screenshots) and len(screenshots) >= 102
+    for row in screenshots:
+        capture(selector_dir,row['file'],row['sha256'])
+    expected_geometry = {(card,variant) for card in ('StreamPilotVODCard','StreamPilotLiveCard') for variant in ('wide','builtin','missing-derivative','wide-restored')}
+    for skin in MEDIA_SKINS:
+        assert result['skins'][skin]['passed'] is True
+        geometry = read(selector_dir / (skin + '-audio-geometry.json'))
+        assert geometry['passed'] is True and geometry['original_pack_status'] == 'approved'
+        assert geometry['geometry_source']['source_sha256'] == digest(members(skin)['xml/Includes_StreamPilotOSD.xml'])
+        assert len(geometry['pages']) == 8
+        assert {(p['card'],p['variant']) for p in geometry['pages']} == expected_geometry
+        for page in geometry['pages']:
+            wide = page['variant'] in ('wide','wide-restored')
+            assert page['wide'] is wide and page['codec'] == 'ac3' and str(page['channels']) == '2'
+            assert page['title']
+            rect = page['derived_xml_geometry']
+            assert rect['audio'][2:] == [160 if wide else 76,54]
+            if page['card'] == 'StreamPilotLiveCard':
+                assert rect['gap'] == 40
+            if page['variant'] != 'builtin':
+                assert page['visible_ink_recall'] > .75
+            if wide:
+                assert '/' + MEDIA_ID + '/resources/flags-osd/audiocodec/ac3.png' in page['path']
+            capture(selector_dir,page['file'],page['screenshot_sha256'])
+
+        channels = read(selector_dir / (skin + '-channel-geometry.json'))
+        assert channels['passed'] is True
+        assert channels['geometry_source']['source_sha256'] == digest(members(skin)['xml/Includes_StreamPilotOSD.xml'])
+        expected_channels = {(card,count,selected) for card in ('StreamPilotVODCard','StreamPilotLiveCard') for count in (1,3,4,5,7,10) for selected in (False,True)}
+        assert len(channels['pages']) == 24
+        assert {(p['card'],p['channels'],p['selected']) for p in channels['pages']} == expected_channels
+        for page in channels['pages']:
+            assert str(page['actual_channels']) == str(page['channels'])
+            assert page['actual_codec'].startswith('pcm')
+            assert page['channel_control_visible'] is page['selected']
+            fixture = page['fixture']
+            assert fixture['channels'] == page['channels'] and fixture['bytes'] > 0
+            assert re.fullmatch(r'[0-9a-f]{64}',fixture['sha256'])
+            if page['selected']:
+                member = 'resources/flags/audiochannel/' + str(page['channels']) + '.png'
+                assert '/' + MEDIA_ID + '/' + member in page['path']
+                assert page['source_sha256'] == digest(pack[member])
+                assert page['visible_ink_recall'] > .75
+            capture(selector_dir,page['file'],page['screenshot_sha256'])
+
+
 def evidence(root, release):
     manifest = read(root / 'release.json')
     require_release_scope(manifest)
@@ -133,6 +285,7 @@ def evidence(root, release):
     require_icon_evidence(qa, manifest)
     require_shared_update_evidence(qa, manifest)
     require_playback_contract_evidence(qa, manifest)
+    require_media_evidence(root, qa, manifest)
     source, packaged = read(qa / 'source-tests.json'), read(qa / 'packaged-tests.json')
     for report in (source, packaged):
         assert report['successful'] and report['tests'] > 0

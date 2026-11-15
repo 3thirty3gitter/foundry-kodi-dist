@@ -1,0 +1,716 @@
+{
+  "schema_version": 1,
+  "kind": "foundry-media-flags",
+  "name": "Pure Marks",
+  "asset_root": "flags",
+  "categories": [
+    "aspectratio",
+    "audiochannel",
+    "audiocodec",
+    "videocodec",
+    "videohdr",
+    "videoresolution"
+  ],
+  "release_status": "experimental-review-required",
+  "assets": [
+    {
+      "path": "flags/audiocodec/aac.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:AAC_original_logo.svg",
+      "source_sha256": "e4c4ac2d112cd9490137d2f0ac11bbde071e320d21239a212ad2b99223cc11da",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "316e950242e52ac7c37b814261e76aae18a4dba496f2d803d8133b03d01f336f",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/aac_latm.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:AAC_original_logo.svg",
+      "source_sha256": "e4c4ac2d112cd9490137d2f0ac11bbde071e320d21239a212ad2b99223cc11da",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "316e950242e52ac7c37b814261e76aae18a4dba496f2d803d8133b03d01f336f",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/ac3.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Dolby-Digital.svg",
+      "source_sha256": "02ef59d19c7ac5facdb1776f3697cea6c76d29590815e0cd655440b879c1642f",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "04f93e78daca939e8aa43f050ef5b23d55a86f2c6cb8f2aa8d3fe42e3c30aef5",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/dca.png",
+      "status": "sourced-format-mark",
+      "source": "https://github.com/simple-icons/simple-icons/blob/c37b20d397a710fdd402aae3cb643b820b142074/icons/dts.svg",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "782a275744fbfe6ef7a360d22e4fd3e3052d962dd78ab487ae3af5998876a5f3",
+      "release_approved": false,
+      "license": "CC0-1.0, trademarks reserved"
+    },
+    {
+      "path": "flags/audiocodec/dolbydigital.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Dolby-Digital.svg",
+      "source_sha256": "02ef59d19c7ac5facdb1776f3697cea6c76d29590815e0cd655440b879c1642f",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "04f93e78daca939e8aa43f050ef5b23d55a86f2c6cb8f2aa8d3fe42e3c30aef5",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/dts.png",
+      "status": "sourced-format-mark",
+      "source": "https://github.com/simple-icons/simple-icons/blob/c37b20d397a710fdd402aae3cb643b820b142074/icons/dts.svg",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "782a275744fbfe6ef7a360d22e4fd3e3052d962dd78ab487ae3af5998876a5f3",
+      "release_approved": false,
+      "license": "CC0-1.0, trademarks reserved"
+    },
+    {
+      "path": "flags/audiocodec/dtshd_ma.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:DTS-HD-MA.svg",
+      "source_sha256": "07965a85011102d5135d4f2a193508c49e5b36465c4bfa5000dd7d94dc8c8f08",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/dtsma.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:DTS-HD-MA.svg",
+      "source_sha256": "07965a85011102d5135d4f2a193508c49e5b36465c4bfa5000dd7d94dc8c8f08",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/eac3.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Dolby-Digital-Plus.svg",
+      "source_sha256": "a2f3b84070cdedd60cc4721c265fc1a423a670b72920b0faa2489ee827b431c8",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "a9cd31ab4801975d635f6ba90bb7e99d52e3531a73d54e0664fa5953594035c8",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/flac.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:FLAC_logo_vector.svg",
+      "source_sha256": "00f3e9a6f2a59c26cd7cbd062ebf5fc9f8556f3f992ce7cca97f57685fa24433",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "09194d5195b46458ae3156da92bcfb7b73f24e3befd21dd841875f40049bfe4b",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/mp3.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Mp3_format_logo.svg",
+      "source_sha256": "72b761e5f7172b141b416ab81422e3cfb6bbcef3108f293a3a8497d7b9555706",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "2557a393b51d4e95896ff93b085b963b164e0b277e6801e00233b460478141a4",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/mp3float.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Mp3_format_logo.svg",
+      "source_sha256": "72b761e5f7172b141b416ab81422e3cfb6bbcef3108f293a3a8497d7b9555706",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "2557a393b51d4e95896ff93b085b963b164e0b277e6801e00233b460478141a4",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/opus.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Opus_logo2.svg",
+      "source_sha256": "3f2a90f1e80b66f4d9cd9d76013817f929f097a4f78bfa4ea0450eb59e1f6724",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "ff897f8cabb0d2ed0d8f5156329b3f3f61b6e8f026db885efe6cff0739cb369a",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/truehd.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Dolby_TrueHD.svg",
+      "source_sha256": "41a13b3b99138d13d83262aaa3acdfa8f1e736024327e1601eabc937fdb4ca2a",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "3896c83d2e82a16f85fea86872eb71ea8ba7525b12664279d94e121604a839ae",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/vorbis.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Vorbis_many_fish_logo_2005.svg",
+      "source_sha256": "55bdfc2e5d94ccc68b6d001ff993de6bc2d722d854b04d6d35e6ca5e2e9736ea",
+      "license": "CC BY 3.0, Xiph.Org; white rendered derivative",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "05659b36fcd23d17375999e36caa5898ff96575b8bdff1c409dfda24df917c67",
+      "release_approved": false,
+      "colour_note": "Internal colour details preserved; AV1 wordmark white; explicit visual exception"
+    },
+    {
+      "path": "flags/audiocodec/wavpack.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:WavPack_logo.svg",
+      "source_sha256": "5dc475f1fd8b6088b2fc638f623541806627a2e1627fdfc5ceb692d224b67f82",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "09bb5eeafa3739d88e85177e1995ba7807e3bd93d2c825561a50d9b62334e8a0",
+      "release_approved": false
+    },
+    {
+      "path": "flags/videocodec/av1.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:AV1_logo_2018.svg",
+      "source_sha256": "212fb6cb6edf0ef225a25ef9428314ff491431696b6d5d26639c6f5814a060e0",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "6ec71d0340bc17d4fe57821475ac4f8a375c7de4bc58982d1ea62ec8dcab69c0",
+      "release_approved": false,
+      "colour_note": "Internal colour details preserved; AV1 wordmark white; explicit visual exception"
+    },
+    {
+      "path": "flags/videocodec/bluray.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Blu-ray_Disc.svg",
+      "source_sha256": "575bfcc076b9b137c71b3aa039c1ac1aa2d0fcfb667774496250b82a0dc2d7b1",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "b73f4da63186900dc32c1116ae259860579808cb80bd7828cb4061432b359ff9",
+      "release_approved": false
+    },
+    {
+      "path": "flags/videocodec/div3.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Divx_logo.svg",
+      "source_sha256": "de09aba4e885f1d614b704e4319b0cd36dc57167b94b6ce416dcc924caeca291",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "095e469fa5bcd7d8c1ef2e9b048f35f41085120edd99694c6b17b3ee64caac5b",
+      "release_approved": false
+    },
+    {
+      "path": "flags/videocodec/divx.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Divx_logo.svg",
+      "source_sha256": "de09aba4e885f1d614b704e4319b0cd36dc57167b94b6ce416dcc924caeca291",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "095e469fa5bcd7d8c1ef2e9b048f35f41085120edd99694c6b17b3ee64caac5b",
+      "release_approved": false
+    },
+    {
+      "path": "flags/videocodec/dvd.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:DVD-Video_Logo.svg",
+      "source_sha256": "a29feb3af0cb81741b4c57f1c2b2c8c06a05e02f38fc185c4c51e01aa0b7ee40",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "79ece6a7dd612128c6b7ce704a7158890ed4397016aaf25ba604d6198659b1f4",
+      "release_approved": false
+    },
+    {
+      "path": "flags/videocodec/dx50.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Divx_logo.svg",
+      "source_sha256": "de09aba4e885f1d614b704e4319b0cd36dc57167b94b6ce416dcc924caeca291",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "095e469fa5bcd7d8c1ef2e9b048f35f41085120edd99694c6b17b3ee64caac5b",
+      "release_approved": false
+    },
+    {
+      "path": "flags/videocodec/hddvd.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:HD-DVD.svg",
+      "source_sha256": "89b0b0b63646876e03c9750d7e3b5012d588b0cb84c6adc198a11dae8015333a",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "bafa239bfca12a7772a0a068132a0b51f5c9cae6c1d58874e9c48587b32af04a",
+      "release_approved": false
+    },
+    {
+      "path": "flags/videocodec/hdmv.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Blu-ray_Disc.svg",
+      "source_sha256": "575bfcc076b9b137c71b3aa039c1ac1aa2d0fcfb667774496250b82a0dc2d7b1",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "b73f4da63186900dc32c1116ae259860579808cb80bd7828cb4061432b359ff9",
+      "release_approved": false
+    },
+    {
+      "path": "flags/videocodec/vhs.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:VHS_logo.svg",
+      "source_sha256": "eda89a558c5449fe879ea83456d60a0290d908e23a74b708e594ce224458bc04",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "2c1658ac93fc56b59e76f36402e69c47781c0c2e2146bea0bbf2beaa8c6d25e7",
+      "release_approved": false
+    },
+    {
+      "path": "flags/videohdr/dolbyvision.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Dolby_Vision_%28logo%29.svg",
+      "source_sha256": "2ec59f358894fb5f58d11610817ce2acfac8137e053f25904f5146fb69fea6e7",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "1ea8b64a2bccfa961b2f38b1e13baf9a19fd2b271698618344aba0486c1e32d3",
+      "release_approved": false
+    },
+    {
+      "path": "flags/videohdr/hdr10.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:HDR_10_logo_%28black%29.svg",
+      "source_sha256": "85b9fbdc469fccfc28765f4c9edaf1b07181fe6b9eb41741e7cfa2e782acf0cc",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "55d68ebf508a29d31c7de0bd0a554822a01fbac90bbe8b87132759cd8e9c0af6",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/atmos.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Logo_Dolby_Atmos.svg",
+      "source_sha256": "41573e5e5d9b419aeedd2a9da56f1459408beff8eed5e53bee68c5f73c07ead1",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/eac3-joc.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Logo_Dolby_Atmos.svg",
+      "source_sha256": "41573e5e5d9b419aeedd2a9da56f1459408beff8eed5e53bee68c5f73c07ead1",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/truehd_atmos.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Logo_Dolby_Atmos.svg",
+      "source_sha256": "41573e5e5d9b419aeedd2a9da56f1459408beff8eed5e53bee68c5f73c07ead1",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc",
+      "release_approved": false
+    },
+    {
+      "path": "flags/audiocodec/dca_ma.png",
+      "status": "sourced-format-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:DTS-HD-MA.svg",
+      "source_sha256": "07965a85011102d5135d4f2a193508c49e5b36465c4bfa5000dd7d94dc8c8f08",
+      "license": "Public-domain textlogo per source; trademark restrictions remain",
+      "dimensions": [
+        384,
+        192
+      ],
+      "sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8",
+      "release_approved": false
+    }
+  ],
+  "osd_aliases": {
+    "videoresolution": {
+      "2160": "4k"
+    },
+    "audiocodec": {
+      "dca_ma": "dtshd_ma",
+      "dca_hra": "dtshd_hra"
+    },
+    "audiochannel": {}
+  },
+  "sources_verified": 33,
+  "coverage_complete": false,
+  "unresolved_paths": [
+    "flags/aspectratio/1.00.png",
+    "flags/aspectratio/1.19.png",
+    "flags/aspectratio/1.33.png",
+    "flags/aspectratio/1.37.png",
+    "flags/aspectratio/1.66.png",
+    "flags/aspectratio/1.78.png",
+    "flags/aspectratio/1.85.png",
+    "flags/aspectratio/2.00.png",
+    "flags/aspectratio/2.20.png",
+    "flags/aspectratio/2.35.png",
+    "flags/aspectratio/2.40.png",
+    "flags/aspectratio/2.55.png",
+    "flags/aspectratio/2.76.png",
+    "flags/audiochannel/0.png",
+    "flags/audiochannel/1.png",
+    "flags/audiochannel/10.png",
+    "flags/audiochannel/2.png",
+    "flags/audiochannel/3.png",
+    "flags/audiochannel/4.png",
+    "flags/audiochannel/5.png",
+    "flags/audiochannel/6.png",
+    "flags/audiochannel/7.png",
+    "flags/audiochannel/8.png",
+    "flags/audiocodec/aif.png",
+    "flags/audiocodec/aifc.png",
+    "flags/audiocodec/aiff.png",
+    "flags/audiocodec/alac.png",
+    "flags/audiocodec/ape.png",
+    "flags/audiocodec/avc.png",
+    "flags/audiocodec/cdda.png",
+    "flags/audiocodec/dca_hra.png",
+    "flags/audiocodec/dtshd_hra.png",
+    "flags/audiocodec/mp1.png",
+    "flags/audiocodec/mp2.png",
+    "flags/audiocodec/ogg.png",
+    "flags/audiocodec/pcm.png",
+    "flags/audiocodec/pcm_bluray.png",
+    "flags/audiocodec/pcm_s16le.png",
+    "flags/audiocodec/pcm_s24le.png",
+    "flags/audiocodec/wav.png",
+    "flags/audiocodec/wma.png",
+    "flags/audiocodec/wmapro.png",
+    "flags/audiocodec/wmav2.png",
+    "flags/videocodec/avc1.png",
+    "flags/videocodec/flv.png",
+    "flags/videocodec/h264.png",
+    "flags/videocodec/hev1.png",
+    "flags/videocodec/hevc.png",
+    "flags/videocodec/hvc1.png",
+    "flags/videocodec/mp4v.png",
+    "flags/videocodec/mpeg1.png",
+    "flags/videocodec/mpeg1video.png",
+    "flags/videocodec/mpeg2.png",
+    "flags/videocodec/mpeg2video.png",
+    "flags/videocodec/mpeg4.png",
+    "flags/videocodec/tv.png",
+    "flags/videocodec/vc-1.png",
+    "flags/videocodec/vc1.png",
+    "flags/videocodec/vp8.png",
+    "flags/videocodec/vp9.png",
+    "flags/videocodec/wmv.png",
+    "flags/videocodec/wmv3.png",
+    "flags/videocodec/wvc1.png",
+    "flags/videocodec/xvid.png",
+    "flags/videohdr/hlg.png",
+    "flags/videoresolution/1080.png",
+    "flags/videoresolution/2160.png",
+    "flags/videoresolution/3d.png",
+    "flags/videoresolution/480.png",
+    "flags/videoresolution/4k.png",
+    "flags/videoresolution/540.png",
+    "flags/videoresolution/576.png",
+    "flags/videoresolution/720.png",
+    "flags/videoresolution/8k.png"
+  ],
+  "fallback_policy": "missing asset: retain original skin icon, never substitute a different codec",
+  "redistribution_exclusions": [
+    "flags/videocodec/vp8.png",
+    "flags/videocodec/vp9.png"
+  ],
+  "osd_asset_root": "flags-osd",
+  "osd_derivatives": {
+    "aac": {
+      "source_sha256": "316e950242e52ac7c37b814261e76aae18a4dba496f2d803d8133b03d01f336f",
+      "bbox": [
+        120,
+        16,
+        264,
+        176
+      ],
+      "sha256": "01a2b7e1b4cfd6fcb112fa689c19db8339b99115cab741bde45a2ca7815cca7b"
+    },
+    "aac_latm": {
+      "source_sha256": "316e950242e52ac7c37b814261e76aae18a4dba496f2d803d8133b03d01f336f",
+      "bbox": [
+        120,
+        16,
+        264,
+        176
+      ],
+      "sha256": "01a2b7e1b4cfd6fcb112fa689c19db8339b99115cab741bde45a2ca7815cca7b"
+    },
+    "ac3": {
+      "source_sha256": "04f93e78daca939e8aa43f050ef5b23d55a86f2c6cb8f2aa8d3fe42e3c30aef5",
+      "bbox": [
+        16,
+        52,
+        368,
+        140
+      ],
+      "sha256": "721bab58b1117a02de7c3c597eec51f5a31e60d7caa880b8d4a68dfe6aebdfd3"
+    },
+    "atmos": {
+      "source_sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc",
+      "bbox": [
+        16,
+        51,
+        368,
+        141
+      ],
+      "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382"
+    },
+    "dca": {
+      "source_sha256": "782a275744fbfe6ef7a360d22e4fd3e3052d962dd78ab487ae3af5998876a5f3",
+      "bbox": [
+        117,
+        44,
+        267,
+        106
+      ],
+      "sha256": "a08ae201743f9c118d2af2eca44548b34783b983582eeed0ed363d86fc530bc0"
+    },
+    "dca_ma": {
+      "source_sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8",
+      "bbox": [
+        16,
+        43,
+        368,
+        148
+      ],
+      "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03"
+    },
+    "dolbydigital": {
+      "source_sha256": "04f93e78daca939e8aa43f050ef5b23d55a86f2c6cb8f2aa8d3fe42e3c30aef5",
+      "bbox": [
+        16,
+        52,
+        368,
+        140
+      ],
+      "sha256": "721bab58b1117a02de7c3c597eec51f5a31e60d7caa880b8d4a68dfe6aebdfd3"
+    },
+    "dts": {
+      "source_sha256": "782a275744fbfe6ef7a360d22e4fd3e3052d962dd78ab487ae3af5998876a5f3",
+      "bbox": [
+        117,
+        44,
+        267,
+        106
+      ],
+      "sha256": "a08ae201743f9c118d2af2eca44548b34783b983582eeed0ed363d86fc530bc0"
+    },
+    "dtshd_ma": {
+      "source_sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8",
+      "bbox": [
+        16,
+        43,
+        368,
+        148
+      ],
+      "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03"
+    },
+    "dtsma": {
+      "source_sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8",
+      "bbox": [
+        16,
+        43,
+        368,
+        148
+      ],
+      "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03"
+    },
+    "eac3-joc": {
+      "source_sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc",
+      "bbox": [
+        16,
+        51,
+        368,
+        141
+      ],
+      "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382"
+    },
+    "eac3": {
+      "source_sha256": "a9cd31ab4801975d635f6ba90bb7e99d52e3531a73d54e0664fa5953594035c8",
+      "bbox": [
+        16,
+        53,
+        368,
+        138
+      ],
+      "sha256": "57288e641eecfd088d51f16b8d11bcc0fc0813f8b36648ce5bab3edaf9f2a1e1"
+    },
+    "flac": {
+      "source_sha256": "09194d5195b46458ae3156da92bcfb7b73f24e3befd21dd841875f40049bfe4b",
+      "bbox": [
+        26,
+        16,
+        357,
+        176
+      ],
+      "sha256": "7b7f6ae65fcdd4c36e96f7017e49c448642ad9387c56176dcbe8761b2ce25930"
+    },
+    "mp3": {
+      "source_sha256": "2557a393b51d4e95896ff93b085b963b164e0b277e6801e00233b460478141a4",
+      "bbox": [
+        33,
+        16,
+        351,
+        176
+      ],
+      "sha256": "0ac46b35ec7494272a5b77a4a582375278bff6339656c4101670fa90c800e297"
+    },
+    "mp3float": {
+      "source_sha256": "2557a393b51d4e95896ff93b085b963b164e0b277e6801e00233b460478141a4",
+      "bbox": [
+        33,
+        16,
+        351,
+        176
+      ],
+      "sha256": "0ac46b35ec7494272a5b77a4a582375278bff6339656c4101670fa90c800e297"
+    },
+    "opus": {
+      "source_sha256": "ff897f8cabb0d2ed0d8f5156329b3f3f61b6e8f026db885efe6cff0739cb369a",
+      "bbox": [
+        52,
+        16,
+        332,
+        176
+      ],
+      "sha256": "7c6a04a6d01f4f9bd65e5e30ff7b32768bcd793e367514b3304b4b81157d7f53"
+    },
+    "truehd": {
+      "source_sha256": "3896c83d2e82a16f85fea86872eb71ea8ba7525b12664279d94e121604a839ae",
+      "bbox": [
+        16,
+        52,
+        368,
+        140
+      ],
+      "sha256": "6e21c1f5f88f56c8e3453354a182fbd17e3f82e9412b258208874dcde5a10132"
+    },
+    "truehd_atmos": {
+      "source_sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc",
+      "bbox": [
+        16,
+        51,
+        368,
+        141
+      ],
+      "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382"
+    },
+    "vorbis": {
+      "source_sha256": "05659b36fcd23d17375999e36caa5898ff96575b8bdff1c409dfda24df917c67",
+      "bbox": [
+        96,
+        16,
+        288,
+        176
+      ],
+      "sha256": "e7945462410262e83e8c01fc41f73722e57b5ed6955c2a46ae09f62c840acc70"
+    },
+    "wavpack": {
+      "source_sha256": "09bb5eeafa3739d88e85177e1995ba7807e3bd93d2c825561a50d9b62334e8a0",
+      "bbox": [
+        62,
+        16,
+        322,
+        176
+      ],
+      "sha256": "2676bcc5f9e09356b9025ed507d2f741a7a4e06ea57099aedcc10f867441e826"
+    }
+  }
+}

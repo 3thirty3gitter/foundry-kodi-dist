@@ -1,3 +1,4 @@
+from native_qa_assertions import harden_qa_source
 from pathlib import Path
 import os,json,shutil,subprocess,time,urllib.request,xml.etree.ElementTree as E
 import argparse,tempfile,hashlib,sys
@@ -8,7 +9,7 @@ for stale in out.iterdir():
  if stale.is_file() and (stale.suffix == '.png' or stale.name in ('native-report.json',)):
   stale.unlink()
 profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True);addons=profile/'addons';addons.mkdir()
-for source in [ROOT/'src/skin.foundry.slate',ROOT/'src/script.foundry.slate.helper',ROOT.parent/'skin.foundry-nimbus',ROOT.parent/'script.foundry.helper']+[ROOT/'src'/x for x in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons')]:
+for source in [ROOT/'src/skin.foundry.slate',ROOT/'src/script.foundry.slate.helper',ROOT.parent/'skin.foundry-nimbus',ROOT.parent/'script.foundry.helper']+[ROOT/'src'/x for x in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','resource.images.foundry.media.puremarks')]:
  aid=E.parse(source/'addon.xml').getroot().get('id');shutil.copytree(source,addons/aid,ignore=shutil.ignore_patterns('.git'))
 for helper in addons.glob('script.*helper'):
  t=E.parse(helper/'addon.xml');r=t.getroot()
@@ -115,7 +116,7 @@ try:
   elif time.monotonic()-quiet>2:break
   time.sleep(.2)
  else:raise AssertionError('Startup dialogs did not settle')
- for aid in ['resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','script.foundry.helper','script.foundry.slate.helper','skin.foundry','skin.foundry.slate','script.foundry.searchqa','script.foundry.searchdriver','plugin.qa.video','plugin.qa.disabled','plugin.qa.audio']+LEGACY_IDS:
+ for aid in ['resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','resource.images.foundry.media.puremarks','script.foundry.helper','script.foundry.slate.helper','skin.foundry','skin.foundry.slate','script.foundry.searchqa','script.foundry.searchdriver','plugin.qa.video','plugin.qa.disabled','plugin.qa.audio']+LEGACY_IDS:
   rpc('Addons.SetAddonEnabled',{'addonid':aid,'enabled':True})
  rpc('Addons.SetAddonEnabled',{'addonid':'plugin.qa.disabled','enabled':False})
  for skin,helper in [('skin.foundry','script.foundry.helper'),('skin.foundry.slate','script.foundry.slate.helper')]:
@@ -150,7 +151,7 @@ try:
    if probe_offset[0] is not None:wait_probe_completed()
    probe_offset[0]=(profile/'temp/kodi.log').stat().st_size
    if marker.exists():marker.unlink()
-   (qa/'default.py').write_text('import sys,json,xbmc\nfrom pathlib import Path\nsys.path.insert(0,'+repr(str(entry))+')\nfrom modules import search_provider as p\nassert xbmc.getSkinDir()=='+repr(skin)+', (\"Wrong actual skin\",xbmc.getSkinDir())\n'+body+'\nxbmc.sleep(350)\nPath('+repr(str(marker))+').write_text(json.dumps({"selection":xbmc.getInfoLabel("Skin.String(current_search_provider)")}))\n')
+   (qa/'default.py').write_text(harden_qa_source('import sys,json,xbmc\nfrom pathlib import Path\nsys.path.insert(0,'+repr(str(entry))+')\nfrom modules import search_provider as p\nassert xbmc.getSkinDir()=='+repr(skin)+', (\"Wrong actual skin\",xbmc.getSkinDir())\n'+body+'\nxbmc.sleep(350)\nPath('+repr(str(marker))+').write_text(json.dumps({"selection":xbmc.getInfoLabel("Skin.String(current_search_provider)")}))\n'))
    rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.searchqa','wait':False})
   run('rows=p.installed_video_providers()\nassert "plugin.qa.audio" not in [r["id"] for r in rows]\nassert any(r["id"]=="plugin.qa.disabled" and not r["enabled"] for r in rows)\nPath('+repr(str(out/(skin+'-inventory.json')))+').write_text(json.dumps(rows))')
   wait_probe_completed();rows=json.loads((out/(skin+'-inventory.json')).read_text());report['skins'][skin]={'inventory':rows,'active_skin_verified':observed}

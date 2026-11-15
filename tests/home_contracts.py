@@ -1,5 +1,6 @@
 """Legacy Home invariants with explicit, separately tested feature migrations."""
 import xml.etree.ElementTree as ET
+from media_invariant_contracts import strip_media_context
 
 OURS = 'String.IsEqual(Weather.Plugin,weather.foundry.canada)'
 GAMES = 'System.HasAddon(plugin.games.foundry)'
@@ -7,6 +8,7 @@ GAMES = 'System.HasAddon(plugin.games.foundry)'
 
 def restore_home_feature_additions(root):
     """Undo only exact, separately tested Weather/Games/Movies additions."""
+    strip_media_context(root)
     # The approved fixed-background set replaces only this fallback asset route.
     for node in root.iter('texture'):
         if node.get('fallback') == 'special://skin/media/foundry-widget-base.png':
