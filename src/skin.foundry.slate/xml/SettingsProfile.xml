@@ -45,7 +45,7 @@
             <top>38</top>
             <width>215</width>
             <height>215</height>
-            <texture diffuse="masks/addons.png" fallback="DefaultUser.png">$INFO[Listitem.Icon]</texture>
+            <texture diffuse="masks/addons.png" fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultUser.png">$INFO[Listitem.Icon]</texture>
           </control>
           <control type="label">
             <left>10</left>
@@ -104,7 +104,7 @@
               <top>38</top>
               <width>215</width>
               <height>215</height>
-              <texture diffuse="masks/addons.png" fallback="DefaultUser.png">$INFO[Listitem.Icon]</texture>
+              <texture diffuse="masks/addons.png" fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultUser.png">$INFO[Listitem.Icon]</texture>
             </control>
             <control type="label">
               <left>10</left>
@@ -213,12 +213,12 @@
           <item id="1">
             <label>$LOCALIZE[128]</label>
             <onclick>noop</onclick>
-            <icon>foundry-icons/settings.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/settings.png</icon>
           </item>
           <item id="2">
             <label>$LOCALIZE[13200]</label>
             <onclick>noop</onclick>
-            <icon>foundry-icons/settings.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/settings.png</icon>
           </item>
         </content>
       </control>

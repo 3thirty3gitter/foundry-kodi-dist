@@ -21,6 +21,10 @@ def routing():
         xbmcgui.Dialog().notification('Foundry', 'TMDb / OMDb metadata cache cleared')
         return
 
+    if mode == "vod_play_info_action":
+        from modules.catalog_playback import play_info_action
+        return play_info_action()
+
     if mode == "vod_catalog_activate":
         from modules.vod import activate_catalog
         return activate_catalog()
@@ -99,9 +103,9 @@ def routing():
         return SPaths().open_search_window()
     
     if mode == "toggle_search_provider":
-        from modules.search_utils import SPaths
+        from modules.search_provider import choose_search_provider
 
-        return SPaths().toggle_search_provider()
+        return choose_search_provider()
 
     if mode == "set_api_key":
         from modules.custom_actions import set_api_key
@@ -187,6 +191,10 @@ def routing():
         from modules.repo_installer import show_repos
 
         return show_repos()
+
+    if mode == "open_selected_video_provider":
+        from modules.search_provider import open_selected_video_provider
+        return open_selected_video_provider()
 
     if mode == "choose_search_provider":
         from modules.search_provider import choose_search_provider

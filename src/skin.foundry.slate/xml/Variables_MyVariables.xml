@@ -673,6 +673,7 @@
 	</variable>
 
 	<variable name="HomeSearchButtonActionVar">
+        <value condition="!String.IsEmpty(Skin.String(current_search_provider)) + !String.IsEqual(Skin.String(current_search_provider),0) + !String.IsEqual(Skin.String(current_search_provider),1) + !String.IsEqual(Skin.String(current_search_provider),2) + !String.IsEqual(Skin.String(current_search_provider),3) + !String.IsEqual(Skin.String(current_search_provider),4)">RunScript(script.foundry.slate.helper,mode=open_selected_video_provider)</value>
 		<value condition="String.IsEqual(Skin.String(SearchSetting),0)">RunScript(script.foundry.slate.helper,mode=open_search_window)</value>
 		<value condition="String.IsEqual(Skin.String(SearchSetting),1)">ActivateWindow(1107)</value>
 	</variable>

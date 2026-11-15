@@ -7,7 +7,7 @@
 			<centertop>50%</centertop>
 			<width>256</width>
 			<height>256</height>
-			<texture>icons/settings/player.png</texture>
+			<texture>resource://resource.images.foundry.slate.icons/aliases/icons/settings/player.png</texture>
 			<visible>SlideShow.IsVideo</visible>
 			<visible>![Player.Playing + Player.HasVideo] | SlideShow.IsPaused</visible>
 		</control>

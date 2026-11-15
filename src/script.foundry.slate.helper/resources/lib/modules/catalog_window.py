@@ -19,6 +19,7 @@ from .catalog_enrichment import enrich, identity, media_type
 from .catalog_color import resolved as artwork_color, peek as cached_artwork_color
 from .catalog_presentation import release_geometry, studio_logo as prepare_studio
 from .catalog_items import normalize
+from .catalog_playback import action_provider, play_item
 from .movie_submenu import canonical_label, movie_context
 from .metadata import settings as metadata_settings, fingerprint
 
@@ -83,7 +84,8 @@ def listitem(item,section='Movies'):
     art['poster']=art.get('poster') or art.get('tvshow.poster') or art.get('thumb') or item.get('thumbnail') or 'streampilot/catalog-blank.png'
     entry.setArt(art)
     apply_info(entry,item,section)
-    if item.get('filetype')!='directory':entry.setProperty('IsPlayable','true')
+    if item.get('filetype')!='directory':
+        entry.setProperty('IsPlayable','false' if action_provider(item) else 'true')
     return entry
 
 
@@ -611,7 +613,7 @@ class CatalogWindow(xbmcgui.WindowXML):
                 items=self.rail if cid==50 else self.state.page_items();idx=self.getCurrentListPosition() if cid==50 else self.getControl(cid).getSelectedPosition()
                 if 0<=idx<len(items) and items[idx].get('kind','media')=='media':
                     item=items[idx];choice=xbmcgui.Dialog().contextmenu(['Play','Information','Open in Kodi'])
-                    if choice==0:rpc('Player.Open',{'item':{'file':item.get('file','')}})
+                    if choice==0:play_item(item)
                     elif choice==1:xbmcgui.Dialog().info(listitem(item,self.section))
                     elif choice==2:
                         self.open_native(self.source.path)

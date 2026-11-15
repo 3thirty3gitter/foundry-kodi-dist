@@ -23,7 +23,7 @@
 					<width>320</width>
 					<height>280</height>
 					<aspectratio align="center" aligny="center">keep</aspectratio>
-					<texture fallback="DefaultTVShows.png" >$INFO[Listitem.Icon]</texture>
+					<texture fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultTVShows.png" >$INFO[Listitem.Icon]</texture>
 					<visible>Control.HasFocus(11)</visible>
 				</control>
 				<control type="fixedlist" id="11">

@@ -23,7 +23,7 @@
 				<width>461</width>
 				<height>461</height>
 				<aspectratio>keep</aspectratio>
-				<texture fallback="DefaultTVShows.png">$INFO[ListItem.Icon]</texture>
+				<texture fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultTVShows.png">$INFO[ListItem.Icon]</texture>
 			</control>
 			<control type="group">
 				<top>230</top>
@@ -69,48 +69,48 @@
 					<include content="InfoDialogButton">
 						<param name="width" value="275" />
 						<param name="id" value="5" />
-						<param name="icon" value="icons/infodialogs/launch.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/launch.png" />
 						<param name="label" value="$LOCALIZE[19165]" />
 						<param name="visible" value="Window.IsActive(PVRGuideInfo)" />
 					</include>
 					<include content="InfoDialogButton">
 						<param name="width" value="275" />
 						<param name="id" value="10" />
-						<param name="icon" value="icons/infodialogs/cinema.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/cinema.png" />
 						<param name="label" value="$LOCALIZE[19190]" />
 						<param name="visible" value="Window.IsActive(PVRGuideInfo)" />
 					</include>
 					<include content="InfoDialogButton">
 						<param name="width" value="275" />
 						<param name="id" value="8" />
-						<param name="icon" value="icons/infodialogs/play_record.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/play_record.png" />
 						<param name="label" value="$LOCALIZE[19687]" />
 						<param name="visible" value="Window.IsActive(PVRGuideInfo) | Window.IsActive(PVRRecordingInfo)" />
 					</include>
 					<include content="InfoDialogButton">
 						<param name="width" value="275" />
 						<param name="id" value="6" />
-						<param name="icon" value="icons/infodialogs/record.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/record.png" />
 						<param name="visible" value="Window.IsActive(PVRGuideInfo)" />
 					</include>
 					<include content="InfoDialogButton">
 						<param name="width" value="275" />
 						<param name="id" value="9" />
-						<param name="icon" value="icons/infodialogs/timer.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/timer.png" />
 						<param name="label" value="$LOCALIZE[19061]" />
 						<param name="visible" value="Window.IsActive(PVRGuideInfo)" />
 					</include>
 					<include content="InfoDialogButton">
 						<param name="width" value="275" />
 						<param name="id" value="11" />
-						<param name="icon" value="icons/infodialogs/bell.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/bell.png" />
 						<param name="label" value="$LOCALIZE[826]" />
 						<param name="visible" value="Window.IsActive(PVRGuideInfo)" />
 					</include>
 					<include content="InfoDialogButton">
 						<param name="width" value="275" />
 						<param name="id" value="4" />
-						<param name="icon" value="icons/infodialogs/similar.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/similar.png" />
 						<param name="label" value="$LOCALIZE[19003]" />
 						<param name="visible" value="Window.IsActive(PVRGuideInfo) | Window.IsActive(PVRRecordingInfo)" />
 					</include>

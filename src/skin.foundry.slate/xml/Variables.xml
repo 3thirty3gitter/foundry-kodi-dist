@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <includes>
   <variable name="PVRStatusImageVar">
-    <value condition="ListItem.IsRecording">windows/pvr/record.png</value>
-    <value condition="ListItem.HasTimer | ListItem.HasTimerSchedule">windows/pvr/timer.png</value>
-    <value condition="ListItem.HasArchive">windows/pvr/archive.png</value>
-    <value condition="ListItem.HasReminder">icons/pvr/timers/bell.png</value>
+    <value condition="ListItem.IsRecording">resource://resource.images.foundry.slate.icons/aliases/windows/pvr/record.png</value>
+    <value condition="ListItem.HasTimer | ListItem.HasTimerSchedule">resource://resource.images.foundry.slate.icons/aliases/windows/pvr/timer.png</value>
+    <value condition="ListItem.HasArchive">resource://resource.images.foundry.slate.icons/aliases/windows/pvr/archive.png</value>
+    <value condition="ListItem.HasReminder">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/timers/bell.png</value>
   </variable>
   <variable name="PVRMySearchLabel1Var">
     <value condition="!String.IsEmpty(ListItem.ChannelName)">$INFO[ListItem.ChannelName]</value>
@@ -34,25 +34,25 @@
     <value condition="Player.HasAudio">$INFO[MusicPlayer.Artist]$INFO[MusicPlayer.Album, - ]</value>
   </variable>
   <variable name="NowPlayingIconVar">
-    <value condition="Player.Paused">icons/now-playing/pause.png</value>
-    <value>icons/now-playing/play.png</value>
+    <value condition="Player.Paused">resource://resource.images.foundry.slate.icons/aliases/icons/now-playing/pause.png</value>
+    <value>resource://resource.images.foundry.slate.icons/aliases/icons/now-playing/play.png</value>
   </variable>
   <variable name="NowPlayingPosterVar">
     <value condition="!String.IsEmpty(Player.Art(poster))">$INFO[Player.Art(poster)]</value>
     <value condition="!String.IsEmpty(Player.Art(tvshow.poster))">$INFO[Player.Art(tvshow.poster)]</value>
-    <value condition="String.IsEmpty(Player.Icon) + VideoPlayer.Content(livetv)">DefaultTVShows.png</value>
+    <value condition="String.IsEmpty(Player.Icon) + VideoPlayer.Content(livetv)">resource://resource.images.foundry.slate.icons/aliases/DefaultTVShows.png</value>
     <value>$INFO[Player.Icon]</value>
   </variable>
   <variable name="MusicInfoThumbVar">
     <value condition="!String.IsEmpty(Listitem.Art(thumb))">$INFO[Listitem.Art(thumb)]</value>
-    <value condition="String.IsEqual(listitem.dbtype,artist)">DefaultArtist.png</value>
-    <value condition="String.IsEqual(listitem.dbtype,album)">DefaultAlbumCover.png</value>
-    <value>DefaultAudio.png</value>
+    <value condition="String.IsEqual(listitem.dbtype,artist)">resource://resource.images.foundry.slate.icons/aliases/DefaultArtist.png</value>
+    <value condition="String.IsEqual(listitem.dbtype,album)">resource://resource.images.foundry.slate.icons/aliases/DefaultAlbumCover.png</value>
+    <value>resource://resource.images.foundry.slate.icons/aliases/DefaultAudio.png</value>
   </variable>
   <variable name="FlixThumbVar">
     <value condition="!String.IsEqual(listitem.dbtype,musicvideo) + !String.IsEmpty(Listitem.Art(poster))">$INFO[Listitem.Art(poster)]</value>
     <value condition="$EXP[isEpisode] + System.Setting(hideunwatchedepisodethumbs) + Integer.IsEqual(ListItem.Playcount,0) + !String.IsEmpty(Listitem.Art(fanart))">$INFO[Listitem.Art(fanart)]</value>
-    <value condition="$EXP[isEpisode] + System.Setting(hideunwatchedepisodethumbs) + Integer.IsEqual(ListItem.Playcount,0) + String.IsEmpty(Listitem.Art(fanart))">OverlaySpoiler.png</value>
+    <value condition="$EXP[isEpisode] + System.Setting(hideunwatchedepisodethumbs) + Integer.IsEqual(ListItem.Playcount,0) + String.IsEmpty(Listitem.Art(fanart))">resource://resource.images.foundry.slate.icons/aliases/OverlaySpoiler.png</value>
     <value condition="$EXP[isEpisode] + [ !System.Setting(hideunwatchedepisodethumbs) | Integer.IsGreater(ListItem.Playcount,0) ]">$INFO[Listitem.Art(thumb)]</value>
     <value condition="!String.IsEmpty(Listitem.Art(thumb))">$INFO[Listitem.Art(thumb)]</value>
     <value condition="!String.IsEmpty(Listitem.Art(poster))">$INFO[Listitem.Art(poster)]</value>
@@ -136,11 +136,11 @@
   </variable>
   <variable name="WidgetGenreIconVar">
     <value condition="System.AddonIsEnabled(resource.images.moviegenreicons.transparent)">$INFO[ListItem.Label,resource://resource.images.moviegenreicons.transparent/,.png]</value>
-    <value>DefaultGenre.png</value>
+    <value>resource://resource.images.foundry.slate.icons/aliases/DefaultGenre.png</value>
   </variable>
   <variable name="WidgetStudioIconVar">
     <value condition="System.AddonIsEnabled(resource.images.studios.white)">$INFO[ListItem.Label,resource://resource.images.studios.white/,.png]</value>
-    <value>DefaultStudios.png</value>
+    <value>resource://resource.images.foundry.slate.icons/aliases/DefaultStudios.png</value>
   </variable>
   <variable name="AddonsLabel2Var">
     <value condition="ListItem.Property(addon.downloading)">[COLOR unfocused_text]$INFO[ListItem.Property(addon.status)][/COLOR]</value>
@@ -223,23 +223,23 @@
     <value condition="String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24171])">[COLOR button_focus]$LOCALIZE[24171][/COLOR][CR]$INFO[ListItem.AddonLifecycleDesc]</value>
   </variable>
   <variable name="AddonsListIconVar">
-    <value condition="[String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24170]) | String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24171])] + !ListItem.Property(addon.isenabled)">foundry-icons/lock.png</value>
-    <value condition="ListItem.Property(addon.orphaned)">foundry-icons/help.png</value>
-    <value condition="ListItem.Property(addon.downloading)">foundry-icons/download.png</value>
-    <value condition="ListItem.Property(addon.isinstalled) + !ListItem.Property(addon.isenabled) + Window.IsActive(addonbrowser)">foundry-icons/lock.png</value>
-    <value condition="ListItem.Property(addon.hasupdate) | ListItem.Property(addon.isupdate)">foundry-icons/reload.png</value>
-    <value condition="ListItem.Property(addon.isenabled) + String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24169])">foundry-icons/check.png</value>
-    <value condition="ListItem.Property(addon.isenabled) + String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24170])">foundry-icons/info.png</value>
-    <value condition="ListItem.Property(addon.isenabled) + String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24171])">foundry-icons/debug.png</value>
-    <value condition="!ListItem.IsParentFolder">foundry-icons/addons.png</value>
+    <value condition="[String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24170]) | String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24171])] + !ListItem.Property(addon.isenabled)">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/lock.png</value>
+    <value condition="ListItem.Property(addon.orphaned)">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/help.png</value>
+    <value condition="ListItem.Property(addon.downloading)">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/download.png</value>
+    <value condition="ListItem.Property(addon.isinstalled) + !ListItem.Property(addon.isenabled) + Window.IsActive(addonbrowser)">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/lock.png</value>
+    <value condition="ListItem.Property(addon.hasupdate) | ListItem.Property(addon.isupdate)">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/reload.png</value>
+    <value condition="ListItem.Property(addon.isenabled) + String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24169])">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/check.png</value>
+    <value condition="ListItem.Property(addon.isenabled) + String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24170])">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/info.png</value>
+    <value condition="ListItem.Property(addon.isenabled) + String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24171])">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/debug.png</value>
+    <value condition="!ListItem.IsParentFolder">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/addons.png</value>
   </variable>
   <variable name="AddonsOriginVar">
-    <value condition="ListItem.Property(Addon.IsFromOfficialRepo) + ListItem.IsAutoUpdateable">icons/addonstatus/official.png</value>
-    <value condition="ListItem.Property(Addon.IsFromOfficialRepo)">icons/addonstatus/official-pinned.png</value>
-    <value condition="String.IsEqual(ListItem.AddonOrigin,$LOCALIZE[25014]) + ListItem.IsAutoUpdateable">icons/addonstatus/manual.png</value>
-    <value condition="String.IsEqual(ListItem.AddonOrigin,$LOCALIZE[25014])">icons/addonstatus/manual-pinned.png</value>
-    <value condition="ListItem.IsAutoUpdateable">icons/addonstatus/install.png</value>
-    <value>icons/addonstatus/install-pinned.png</value>
+    <value condition="ListItem.Property(Addon.IsFromOfficialRepo) + ListItem.IsAutoUpdateable">resource://resource.images.foundry.slate.icons/aliases/icons/addonstatus/official.png</value>
+    <value condition="ListItem.Property(Addon.IsFromOfficialRepo)">resource://resource.images.foundry.slate.icons/aliases/icons/addonstatus/official-pinned.png</value>
+    <value condition="String.IsEqual(ListItem.AddonOrigin,$LOCALIZE[25014]) + ListItem.IsAutoUpdateable">resource://resource.images.foundry.slate.icons/aliases/icons/addonstatus/manual.png</value>
+    <value condition="String.IsEqual(ListItem.AddonOrigin,$LOCALIZE[25014])">resource://resource.images.foundry.slate.icons/aliases/icons/addonstatus/manual-pinned.png</value>
+    <value condition="ListItem.IsAutoUpdateable">resource://resource.images.foundry.slate.icons/aliases/icons/addonstatus/install.png</value>
+    <value>resource://resource.images.foundry.slate.icons/aliases/icons/addonstatus/install-pinned.png</value>
   </variable>
   <variable name="ResolutionFlagVar">
     <value condition="ListItem.IsStereoscopic">flags/videoresolution/3D.png</value>
@@ -255,7 +255,7 @@
   </variable>
   <variable name="PosterVar">
     <value condition="$EXP[FoundryMetadataCurrentItem] + !String.IsEmpty(Window(Home).Property(foundry.slate.metadata.poster))">$INFO[Window(Home).Property(foundry.slate.metadata.poster)]</value>
-    <value condition="ListItem.IsParentFolder">DefaultFolderBackPoster.png</value>
+    <value condition="ListItem.IsParentFolder">resource://resource.images.foundry.slate.icons/aliases/DefaultFolderBackPoster.png</value>
     <value condition="!String.IsEmpty(Container.Art(season.poster)) + Container.Content(episodes)">$INFO[Container.Art(season.poster)]</value>
     <value condition="!String.IsEmpty(Container.Art(tvshow.poster)) + Container.Content(episodes)">$INFO[Container.Art(tvshow.poster)]</value>
     <value condition="!String.IsEmpty(Container.Art(tvshow.poster)) + Container.Content(seasons) + Window.IsActive(movieinformation)">$INFO[Container.Art(tvshow.poster)]</value>
@@ -291,11 +291,11 @@
     <value condition="String.IsEmpty(Skin.String(slate_nimbus_digital_expired_window))">21</value>
   </variable>
   <variable name="VolumeIconVar">
-    <value condition="Player.Muted">dialogs/volume/mute.png</value>
-    <value condition="Integer.IsGreater(Player.Volume,66)">dialogs/volume/volume.png</value>
-    <value condition="Integer.IsGreater(Player.Volume,33)">dialogs/volume/volume2.png</value>
-    <value condition="player.passthrough">dialogs/volume/volume.png</value>
-    <value>dialogs/volume/volume1.png</value>
+    <value condition="Player.Muted">resource://resource.images.foundry.slate.icons/aliases/dialogs/volume/mute.png</value>
+    <value condition="Integer.IsGreater(Player.Volume,66)">resource://resource.images.foundry.slate.icons/aliases/dialogs/volume/volume.png</value>
+    <value condition="Integer.IsGreater(Player.Volume,33)">resource://resource.images.foundry.slate.icons/aliases/dialogs/volume/volume2.png</value>
+    <value condition="player.passthrough">resource://resource.images.foundry.slate.icons/aliases/dialogs/volume/volume.png</value>
+    <value>resource://resource.images.foundry.slate.icons/aliases/dialogs/volume/volume1.png</value>
   </variable>
   <variable name="ListSubLabelVar">
     <value condition="ListItem.IsCollection" />
@@ -361,62 +361,62 @@
     <value>$VAR[ListWatchedIconVar.All]</value>
   </variable>
   <variable name="ListWatchedIconVar.All">
-    <value condition="ListItem.IsRecording">windows/pvr/record.png</value>
-    <value condition="ListItem.IsPlaying">overlays/watched/OverlayPlaying-List.png</value>
-    <value condition="ListItem.IsCollection">overlays/set.png</value>
-    <value condition="ListItem.IsFolder + $EXP[noDBType] + !String.IsEqual(ListItem.Overlay,OverlayWatched.png) + !ListItem.IsParentFolder">overlays/folder.png</value>
-    <value condition="[String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + Integer.IsGreater(ListItem.Playcount,0)">OverlayWatched.png</value>
+    <value condition="ListItem.IsRecording">resource://resource.images.foundry.slate.icons/aliases/windows/pvr/record.png</value>
+    <value condition="ListItem.IsPlaying">resource://resource.images.foundry.slate.icons/aliases/overlays/watched/OverlayPlaying-List.png</value>
+    <value condition="ListItem.IsCollection">resource://resource.images.foundry.slate.icons/aliases/overlays/set.png</value>
+    <value condition="ListItem.IsFolder + $EXP[noDBType] + !String.IsEqual(ListItem.Overlay,resource://resource.images.foundry.slate.icons/aliases/OverlayWatched.png) + !ListItem.IsParentFolder">resource://resource.images.foundry.slate.icons/aliases/overlays/folder.png</value>
+    <value condition="[String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + Integer.IsGreater(ListItem.Playcount,0)">resource://resource.images.foundry.slate.icons/aliases/OverlayWatched.png</value>
     <value condition="String.IsEqual(ListItem.DBType,movie) + !Integer.IsEqual(Container.ListItem.Property(WatchedProgress),0)">progress/unwatched/$INFO[ListItem.Property(WatchedProgress),,.png]</value>
     <value condition="String.IsEqual(ListItem.DBType,movie) + Integer.IsGreater(ListItem.Playcount,0) + [!String.IsEmpty(ListItem.ResumeTime) | !String.IsEmpty(ListItem.Property(ResumeTime))]">progress/unwatched/$INFO[ListItem.PercentPlayed,,.png]</value>
-    <value condition="String.IsEqual(ListItem.DBType,movie) + Integer.IsGreater(ListItem.Playcount,0)">OverlayWatched.png</value>
-    <value condition="Integer.IsGreater(ListItem.Playcount,0)">OverlayWatched.png</value>
+    <value condition="String.IsEqual(ListItem.DBType,movie) + Integer.IsGreater(ListItem.Playcount,0)">resource://resource.images.foundry.slate.icons/aliases/OverlayWatched.png</value>
+    <value condition="Integer.IsGreater(ListItem.Playcount,0)">resource://resource.images.foundry.slate.icons/aliases/OverlayWatched.png</value>
     <value condition="!Integer.IsEqual(Container.ListItem.Property(WatchedProgress),0)">progress/unwatched/$INFO[ListItem.Property(WatchedProgress),,.png]</value>
     <value condition="!String.IsEmpty(ListItem.Overlay)">$INFO[ListItem.Overlay]</value>
   </variable>
   <variable name="ListWatchedIconVar.Other">
-    <value condition="ListItem.IsRecording">windows/pvr/record.png</value>
-    <value condition="ListItem.IsPlaying">overlays/watched/OverlayPlaying-List.png</value>
+    <value condition="ListItem.IsRecording">resource://resource.images.foundry.slate.icons/aliases/windows/pvr/record.png</value>
+    <value condition="ListItem.IsPlaying">resource://resource.images.foundry.slate.icons/aliases/overlays/watched/OverlayPlaying-List.png</value>
     <value condition="!Integer.IsEqual(Container.ListItem.Property(WatchedProgress),0)">progress/unwatched/$INFO[ListItem.Property(WatchedProgress),,.png]</value>
-    <value condition="ListItem.IsCollection">overlays/set.png</value>
-    <value condition="ListItem.IsFolder + $EXP[noDBType] + !String.IsEqual(ListItem.Overlay,OverlayWatched.png) + !ListItem.IsParentFolder">overlays/folder.png</value>
+    <value condition="ListItem.IsCollection">resource://resource.images.foundry.slate.icons/aliases/overlays/set.png</value>
+    <value condition="ListItem.IsFolder + $EXP[noDBType] + !String.IsEqual(ListItem.Overlay,resource://resource.images.foundry.slate.icons/aliases/OverlayWatched.png) + !ListItem.IsParentFolder">resource://resource.images.foundry.slate.icons/aliases/overlays/folder.png</value>
     <value condition="!String.IsEmpty(ListItem.Overlay)">$INFO[ListItem.Overlay]</value>
-    <value condition="Integer.IsGreater(ListItem.Playcount,0)">OverlayWatched.png</value>
+    <value condition="Integer.IsGreater(ListItem.Playcount,0)">resource://resource.images.foundry.slate.icons/aliases/OverlayWatched.png</value>
   </variable>
   <variable name="WallWatchedIconVar">
     <value condition="String.IsEqual(Container.PluginName,plugin.video.fenlight) | String.StartsWith(ListItem.Path,plugin://plugin.video.fenlight)">$VAR[WallWatchedIconVar.Other]</value>
     <value>$VAR[WallWatchedIconVar.All]</value>
   </variable>
   <variable name="WallWatchedIconVar.All">
-    <value condition="ListItem.IsPlaying">overlays/watched/OverlayPlaying-List.png</value>
-    <value condition="ListItem.HasArchive">windows/pvr/archive.png</value>
-    <value condition="[$EXP[isTVShow] | $EXP[isSeason] | $EXP[isEpisode]] + Integer.IsGreater(ListItem.Playcount,0)">OverlayWatched.png</value>
+    <value condition="ListItem.IsPlaying">resource://resource.images.foundry.slate.icons/aliases/overlays/watched/OverlayPlaying-List.png</value>
+    <value condition="ListItem.HasArchive">resource://resource.images.foundry.slate.icons/aliases/windows/pvr/archive.png</value>
+    <value condition="[$EXP[isTVShow] | $EXP[isSeason] | $EXP[isEpisode]] + Integer.IsGreater(ListItem.Playcount,0)">resource://resource.images.foundry.slate.icons/aliases/OverlayWatched.png</value>
     <value condition="$EXP[isMovie] + !Integer.IsEqual(Container.ListItem.Property(WatchedProgress),0)">progress/unwatched/$INFO[ListItem.Property(WatchedProgress),,.png]</value>
     <value condition="$EXP[isMovie] + Integer.IsGreater(ListItem.Playcount,0) + [!String.IsEmpty(ListItem.ResumeTime) | !String.IsEmpty(ListItem.Property(ResumeTime))]">progress/unwatched/$INFO[ListItem.PercentPlayed,,.png]</value>
-    <value condition="$EXP[isMovie] + Integer.IsGreater(ListItem.Playcount,0)">OverlayWatched.png</value>
-    <value condition="Integer.IsGreater(ListItem.Playcount,0)">OverlayWatched.png</value>
+    <value condition="$EXP[isMovie] + Integer.IsGreater(ListItem.Playcount,0)">resource://resource.images.foundry.slate.icons/aliases/OverlayWatched.png</value>
+    <value condition="Integer.IsGreater(ListItem.Playcount,0)">resource://resource.images.foundry.slate.icons/aliases/OverlayWatched.png</value>
     <value condition="!Integer.IsEqual(Container.ListItem.Property(WatchedProgress),0)">progress/unwatched/$INFO[ListItem.Property(WatchedProgress),,.png]</value>
   </variable>
   <variable name="WallWatchedIconVar.Other">
-    <value condition="ListItem.IsRecording">windows/pvr/record.png</value>
-    <value condition="ListItem.HasReminder">icons/pvr/timers/bell.png</value>
-    <value condition="ListItem.HasTimer">icons/pvr/timers/recording.png</value>
-    <value condition="ListItem.IsCollection">overlays/set.png</value>
-    <value condition="ListItem.IsPlaying">overlays/watched/OverlayPlaying-List.png</value>
-    <value condition="ListItem.HasArchive">windows/pvr/archive.png</value>
+    <value condition="ListItem.IsRecording">resource://resource.images.foundry.slate.icons/aliases/windows/pvr/record.png</value>
+    <value condition="ListItem.HasReminder">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/timers/bell.png</value>
+    <value condition="ListItem.HasTimer">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/timers/recording.png</value>
+    <value condition="ListItem.IsCollection">resource://resource.images.foundry.slate.icons/aliases/overlays/set.png</value>
+    <value condition="ListItem.IsPlaying">resource://resource.images.foundry.slate.icons/aliases/overlays/watched/OverlayPlaying-List.png</value>
+    <value condition="ListItem.HasArchive">resource://resource.images.foundry.slate.icons/aliases/windows/pvr/archive.png</value>
     <value condition="!Integer.IsEqual(Container.ListItem.Property(WatchedProgress),0)">progress/unwatched/$INFO[ListItem.Property(WatchedProgress),,.png]</value>
     <value condition="Integer.IsGreater(ListItem.Playcount,0) + [!String.IsEmpty(ListItem.ResumeTime) | !String.IsEmpty(ListItem.Property(ResumeTime))]">progress/unwatched/$INFO[ListItem.PercentPlayed,,.png]</value>
-    <value condition="Integer.IsGreater(ListItem.Playcount,0)">OverlayWatched.png</value>
+    <value condition="Integer.IsGreater(ListItem.Playcount,0)">resource://resource.images.foundry.slate.icons/aliases/OverlayWatched.png</value>
   </variable>
   <variable name="ListPVRRecordingsIconVar">
-    <value condition="ListItem.IsRecording">windows/pvr/record.png</value>
-    <value condition="ListItem.IsResumable">overlays/watched/resume.png</value>
-    <value condition="!String.IsEmpty(ListItem.Overlay)">OverlayWatched.png</value>
-    <value condition="!ListItem.IsParentFolder">OverlayUnwatched.png</value>
+    <value condition="ListItem.IsRecording">resource://resource.images.foundry.slate.icons/aliases/windows/pvr/record.png</value>
+    <value condition="ListItem.IsResumable">resource://resource.images.foundry.slate.icons/aliases/overlays/watched/resume.png</value>
+    <value condition="!String.IsEmpty(ListItem.Overlay)">resource://resource.images.foundry.slate.icons/aliases/OverlayWatched.png</value>
+    <value condition="!ListItem.IsParentFolder">resource://resource.images.foundry.slate.icons/aliases/OverlayUnwatched.png</value>
   </variable>
   <variable name="ListPVRTimersIconVar">
-    <value condition="ListItem.IsRecording">windows/pvr/record.png</value>
-    <value condition="ListItem.HasReminder">icons/pvr/timers/bell.png</value>
-    <value>icons/pvr/timers/recording.png</value>
+    <value condition="ListItem.IsRecording">resource://resource.images.foundry.slate.icons/aliases/windows/pvr/record.png</value>
+    <value condition="ListItem.HasReminder">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/timers/bell.png</value>
+    <value>resource://resource.images.foundry.slate.icons/aliases/icons/pvr/timers/recording.png</value>
   </variable>
   <variable name="BreadcrumbsVideoVar">
     <value condition="Container.Content(movies) | String.StartsWith(container.folderpath,library://video/movies/) | String.StartsWith(container.folderpath,videodb://movies)">[COLOR unfocused_text]$LOCALIZE[20342][/COLOR]</value>
@@ -504,13 +504,13 @@
     <value condition="Control.HasFocus(105)">$LOCALIZE[137]</value>
   </variable>
   <variable name="PlayerControlsPlayImageVar">
-    <value condition="Player.Playing">osd/fullscreen/buttons/pause.png</value>
-    <value>osd/fullscreen/buttons/play.png</value>
+    <value condition="Player.Playing">resource://resource.images.foundry.slate.icons/aliases/osd/fullscreen/buttons/pause.png</value>
+    <value>resource://resource.images.foundry.slate.icons/aliases/osd/fullscreen/buttons/play.png</value>
   </variable>
   <variable name="PlayerControlsRepeatImageVar">
-    <value condition="Playlist.IsRepeatOne">osd/fullscreen/buttons/repeat-one.png</value>
-    <value condition="Playlist.IsRepeat">osd/fullscreen/buttons/repeat-all.png</value>
-    <value>osd/fullscreen/buttons/repeat-off.png</value>
+    <value condition="Playlist.IsRepeatOne">resource://resource.images.foundry.slate.icons/aliases/osd/fullscreen/buttons/repeat-one.png</value>
+    <value condition="Playlist.IsRepeat">resource://resource.images.foundry.slate.icons/aliases/osd/fullscreen/buttons/repeat-all.png</value>
+    <value>resource://resource.images.foundry.slate.icons/aliases/osd/fullscreen/buttons/repeat-off.png</value>
   </variable>
   <variable name="PlayerLabel1">
     <value condition="Player.HasVideo">$INFO[VideoPlayer.Title]</value>
@@ -528,18 +528,18 @@
     <value condition="Player.HasAudio">$INFO[MusicPlayer.TrackNumber,,: ][COLOR=grey]$INFO[Player.Title][/COLOR]</value>
   </variable>
   <variable name="PVRTimerIcon">
-    <value condition="ListItem.IsRecording">icons/pvr/PVR-IsRecording.png</value>
-    <value condition="ListItem.HasReminder">icons/pvr/timers/bell.png</value>
-    <value condition="ListItem.HasTimerSchedule + ListItem.TimerHasError">icons/pvr/PVR-HasTimerScheduleError.png</value>
-    <value condition="ListItem.HasTimer + ListItem.TimerHasError">icons/pvr/PVR-HasTimerError.png</value>
-    <value condition="ListItem.HasTimerSchedule + ListItem.TimerHasConflict">icons/pvr/PVR-HasTimerScheduleConflict.png</value>
-    <value condition="ListItem.HasTimer + ListItem.TimerHasConflict">icons/pvr/PVR-HasTimerConflict.png</value>
-    <value condition="ListItem.HasRecording">icons/pvr/PVR-HasRecording.png</value>
-    <value condition="ListItem.HasTimerSchedule + !ListItem.TimerIsActive">icons/pvr/PVR-HasTimerScheduleDisabled.png</value>
-    <value condition="ListItem.HasTimer + !ListItem.TimerIsActive">icons/pvr/PVR-HasTimerDisabled.png</value>
-    <value condition="ListItem.HasTimerSchedule">icons/pvr/PVR-HasTimerSchedule.png</value>
-    <value condition="ListItem.HasTimer">icons/pvr/PVR-HasTimer.png</value>
-    <value condition="ListItem.IsPlayable">icons/pvr/PVR-HasArchive.png</value>
+    <value condition="ListItem.IsRecording">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/PVR-IsRecording.png</value>
+    <value condition="ListItem.HasReminder">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/timers/bell.png</value>
+    <value condition="ListItem.HasTimerSchedule + ListItem.TimerHasError">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/PVR-HasTimerScheduleError.png</value>
+    <value condition="ListItem.HasTimer + ListItem.TimerHasError">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/PVR-HasTimerError.png</value>
+    <value condition="ListItem.HasTimerSchedule + ListItem.TimerHasConflict">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/PVR-HasTimerScheduleConflict.png</value>
+    <value condition="ListItem.HasTimer + ListItem.TimerHasConflict">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/PVR-HasTimerConflict.png</value>
+    <value condition="ListItem.HasRecording">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/PVR-HasRecording.png</value>
+    <value condition="ListItem.HasTimerSchedule + !ListItem.TimerIsActive">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/PVR-HasTimerScheduleDisabled.png</value>
+    <value condition="ListItem.HasTimer + !ListItem.TimerIsActive">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/PVR-HasTimerDisabled.png</value>
+    <value condition="ListItem.HasTimerSchedule">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/PVR-HasTimerSchedule.png</value>
+    <value condition="ListItem.HasTimer">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/PVR-HasTimer.png</value>
+    <value condition="ListItem.IsPlayable">resource://resource.images.foundry.slate.icons/aliases/icons/pvr/PVR-HasArchive.png</value>
   </variable>
   <variable name="SeasonEpisodeLabel">
     <value condition="String.IsEmpty(ListItem.EpisodeName)">$INFO[ListItem.Season,S]$INFO[ListItem.Episode,E]</value>

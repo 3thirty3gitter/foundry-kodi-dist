@@ -100,7 +100,7 @@
 							<param name="sortby" value="lastused" />
 							<param name="sortorder" value="descending" />
 							<param name="list_id" value="27100" />
-							<param name="fallback_icon" value="DefaultAddon.png" />
+							<param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultAddon.png" />
 						</include>
 						<include content="WidgetListSquare">
 							<param name="content_path" value="addons://sources/executable/" />
@@ -109,7 +109,7 @@
 							<param name="sortby" value="lastused" />
 							<param name="sortorder" value="descending" />
 							<param name="list_id" value="27300" />
-							<param name="fallback_icon" value="DefaultAddon.png" />
+							<param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultAddon.png" />
 						</include>
 					</control>
 				</control>
@@ -222,7 +222,7 @@
 							<param name="widget_header" value="$LOCALIZE[517]" />
 							<param name="widget_target" value="music" />
 							<param name="list_id" value="7100" />
-							<param name="fallback_icon" value="DefaultMusicAlbums.png" />
+							<param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultMusicAlbums.png" />
 							<param name="onclick_condition" value="true" />
 							<param name="onclick_action" value="$VAR[AlbumOnClickActionVar]" />
 						</include>
@@ -231,7 +231,7 @@
 							<param name="widget_header" value="$LOCALIZE[359]" />
 							<param name="widget_target" value="music" />
 							<param name="list_id" value="7200" />
-							<param name="fallback_icon" value="DefaultMusicAlbums.png" />
+							<param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultMusicAlbums.png" />
 							<param name="onclick_condition" value="true" />
 							<param name="onclick_action" value="$VAR[AlbumOnClickActionVar]" />
 						</include>
@@ -240,7 +240,7 @@
 							<param name="widget_header" value="$LOCALIZE[31012]" />
 							<param name="widget_target" value="music" />
 							<param name="list_id" value="7300" />
-							<param name="fallback_icon" value="DefaultMusicAlbums.png" />
+							<param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultMusicAlbums.png" />
 							<param name="onclick_condition" value="true" />
 							<param name="onclick_action" value="$VAR[AlbumOnClickActionVar]" />
 						</include>
@@ -249,14 +249,14 @@
 							<param name="widget_header" value="$LOCALIZE[31013]" />
 							<param name="widget_target" value="music" />
 							<param name="list_id" value="7400" />
-							<param name="fallback_icon" value="DefaultMusicArtists.png" />
+							<param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultMusicArtists.png" />
 						</include>
 						<include content="WidgetListSquare" condition="Library.HasContent(music)">
 							<param name="content_path" value="special://skin/playlists/unplayed_albums.xsp" />
 							<param name="widget_header" value="$LOCALIZE[31014]" />
 							<param name="widget_target" value="music" />
 							<param name="list_id" value="7500" />
-							<param name="fallback_icon" value="DefaultMusicAlbums.png" />
+							<param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultMusicAlbums.png" />
 							<param name="onclick_condition" value="true" />
 							<param name="onclick_action" value="$VAR[AlbumOnClickActionVar]" />
 						</include>
@@ -265,7 +265,7 @@
 							<param name="widget_header" value="$LOCALIZE[31011]" />
 							<param name="widget_target" value="music" />
 							<param name="list_id" value="7600" />
-							<param name="fallback_icon" value="DefaultMusicAlbums.png" />
+							<param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultMusicAlbums.png" />
 							<param name="sortby" value="playcount" />
 							<param name="sortorder" value="descending" />
 							<param name="onclick_condition" value="true" />
@@ -302,7 +302,7 @@
 							<param name="sortby" value="lastused" />
 							<param name="sortorder" value="descending" />
 							<param name="list_id" value="8100" />
-							<param name="fallback_icon" value="DefaultAddon.png" />
+							<param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultAddon.png" />
 						</include>
 						<include content="WidgetListSquare">
 							<param name="content_path" value="addons://sources/audio/" />
@@ -311,7 +311,7 @@
 							<param name="sortby" value="lastused" />
 							<param name="sortorder" value="descending" />
 							<param name="list_id" value="8200" />
-							<param name="fallback_icon" value="DefaultAddon.png" />
+							<param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultAddon.png" />
 						</include>
 						<include content="WidgetListSquare">
 							<param name="content_path" value="addons://sources/game/" />
@@ -320,7 +320,7 @@
 							<param name="sortby" value="lastused" />
 							<param name="sortorder" value="descending" />
 							<param name="list_id" value="8700" />
-							<param name="fallback_icon" value="DefaultAddonGame.png" />
+							<param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultAddonGame.png" />
 							<param name="visible" value="System.GetBool(gamesgeneral.enable)" />
 						</include>
 						<include content="WidgetListSquare">
@@ -330,7 +330,7 @@
 							<param name="sortby" value="lastused" />
 							<param name="sortorder" value="descending" />
 							<param name="list_id" value="8300" />
-							<param name="fallback_icon" value="DefaultAddon.png" />
+							<param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultAddon.png" />
 						</include>
 						<include content="WidgetListSquare" condition="System.Platform.Android">
 							<param name="content_path" value="androidapp://sources/apps/" />
@@ -339,7 +339,7 @@
 							<param name="sortby" value="lastused" />
 							<param name="sortorder" value="descending" />
 							<param name="list_id" value="8400" />
-							<param name="fallback_icon" value="DefaultAddon.png" />
+							<param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultAddon.png" />
 						</include>
 						<include content="WidgetListSquare">
 							<param name="content_path" value="addons://sources/image/" />
@@ -382,7 +382,7 @@
 							<param name="widget_header" value="$LOCALIZE[136]" />
 							<param name="widget_target" value="videos" />
 							<param name="list_id" value="11200" />
-							<param name="icon" value="DefaultPlaylist.png" />
+							<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultPlaylist.png" />
 						</include>
 					</control>
 					<include content="WidgetUpDownArrows">
@@ -611,14 +611,14 @@
 							<param name="main_label" value="$INFO[ListItem.Label]" />
 							<param name="sub_label" value="$INFO[ListItem.Artist]" />
 							<param name="thumb_label" value="$INFO[ListItem.Year]" />
-							<param name="fallback_image" value="DefaultMusicSongs.png" />
+							<param name="fallback_image" value="resource://resource.images.foundry.slate.icons/aliases/DefaultMusicSongs.png" />
 							<param name="list_id" value="16300" />
 						</include>
 						<include content="WidgetListPoster" condition="Library.HasContent(musicvideos) + Skin.HasSetting(show_musicvideoposter)">
 							<param name="content_path" value="videodb://recentlyaddedmusicvideos/" />
 							<param name="widget_header" value="$LOCALIZE[20390]" />
 							<param name="widget_target" value="videos" />
-							<param name="fallback_image" value="DefaultMusicSongs.png" />
+							<param name="fallback_image" value="resource://resource.images.foundry.slate.icons/aliases/DefaultMusicSongs.png" />
 							<param name="list_id" value="16300" />
 						</include>
 						<include content="WidgetListLandscape" condition="Library.HasContent(musicvideos) + !Skin.HasSetting(show_musicvideoposter)">
@@ -628,14 +628,14 @@
 							<param name="main_label" value="$INFO[ListItem.Label]" />
 							<param name="sub_label" value="$INFO[ListItem.Artist]" />
 							<param name="thumb_label" value="$INFO[ListItem.Year]" />
-							<param name="fallback_image" value="DefaultMusicSongs.png" />
+							<param name="fallback_image" value="resource://resource.images.foundry.slate.icons/aliases/DefaultMusicSongs.png" />
 							<param name="list_id" value="16400" />
 						</include>
 						<include content="WidgetListPoster" condition="Library.HasContent(musicvideos) + Skin.HasSetting(show_musicvideoposter)">
 							<param name="content_path" value="special://skin/playlists/unwatched_musicvideos.xsp" />
 							<param name="widget_header" value="$LOCALIZE[31151]" />
 							<param name="widget_target" value="videos" />
-							<param name="fallback_image" value="DefaultMusicSongs.png" />
+							<param name="fallback_image" value="resource://resource.images.foundry.slate.icons/aliases/DefaultMusicSongs.png" />
 							<param name="list_id" value="16400" />
 						</include>
 						<include content="WidgetListSquare" condition="Library.HasContent(musicvideos)">
@@ -652,14 +652,14 @@
 							<param name="main_label" value="$INFO[ListItem.Label]" />
 							<param name="sub_label" value="$INFO[ListItem.Artist]" />
 							<param name="thumb_label" value="$INFO[ListItem.Year]" />
-							<param name="fallback_image" value="DefaultMusicSongs.png" />
+							<param name="fallback_image" value="resource://resource.images.foundry.slate.icons/aliases/DefaultMusicSongs.png" />
 							<param name="list_id" value="16500" />
 						</include>
 						<include content="WidgetListPoster" condition="Library.HasContent(musicvideos) + Skin.HasSetting(show_musicvideoposter)">
 							<param name="content_path" value="special://skin/playlists/random_musicvideos.xsp" />
 							<param name="widget_header" value="$LOCALIZE[31152]" />
 							<param name="widget_target" value="videos" />
-							<param name="fallback_image" value="DefaultMusicSongs.png" />
+							<param name="fallback_image" value="resource://resource.images.foundry.slate.icons/aliases/DefaultMusicSongs.png" />
 							<param name="list_id" value="16500" />
 						</include>
 						<include content="WidgetListCategory" condition="Library.HasContent(musicvideos)">
@@ -712,21 +712,21 @@
 							<param name="sortby" value="lastused" />
 							<param name="sortorder" value="descending" />
 							<param name="list_id" value="17200" />
-							<param name="fallback_icon" value="DefaultAddonGame.png" />
+							<param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultAddonGame.png" />
 						</include>
                         <include content="WidgetListPoster" condition="System.HasAddon(plugin.games.foundry)">
                             <param name="content_path" value="plugin://plugin.games.foundry/?action=games&amp;mode=recent" />
                             <param name="widget_header" value="Recently played games" />
                             <param name="widget_target" value="games" />
                             <param name="list_id" value="17300" />
-                            <param name="fallback_icon" value="DefaultGames.png" />
+                            <param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultGames.png" />
                         </include>
                         <include content="WidgetListPoster" condition="System.HasAddon(plugin.games.foundry)">
                             <param name="content_path" value="plugin://plugin.games.foundry/?action=games&amp;mode=favorites" />
                             <param name="widget_header" value="Favorite games" />
                             <param name="widget_target" value="games" />
                             <param name="list_id" value="17400" />
-                            <param name="fallback_icon" value="DefaultGames.png" />
+                            <param name="fallback_icon" value="resource://resource.images.foundry.slate.icons/aliases/DefaultGames.png" />
                         </include>
 					</control>
 					<include content="WidgetUpDownArrows">
@@ -795,7 +795,7 @@
 						<onup>700</onup>
 						<ondown>700</ondown>
 						<scrolltime tween="cubic" easing="out">500</scrolltime>
-						<itemlayout width="390" height="80"><control type="image"><left>25</left><top>24</top><width>30</width><height>30</height><visible>!Skin.HasSetting(SlateHideMainMenuIcons)</visible><texture fallback="slate-icons/home.png" colordiffuse="grey">slate-icons/$INFO[ListItem.Property(id)].png</texture></control><control type="label"><left>76</left><top>10</top><width>295</width><height>60</height><visible>!Skin.HasSetting(SlateHideMainMenuIcons)</visible><font>SlateNav</font><label>$INFO[ListItem.Label]</label><textcolor>grey</textcolor><shadowcolor>00000000</shadowcolor></control><control type="label"><left>25</left><top>10</top><width>346</width><height>60</height><visible>Skin.HasSetting(SlateHideMainMenuIcons)</visible><font>SlateNav</font><label>$INFO[ListItem.Label]</label><textcolor>grey</textcolor><shadowcolor>00000000</shadowcolor></control></itemlayout><focusedlayout width="390" height="80"><control type="image"><left>2</left><top>11</top><width>2</width><height>44</height><texture colordiffuse="accent_color">colors/white.png</texture></control><control type="image"><left>25</left><top>24</top><width>30</width><height>30</height><visible>!Skin.HasSetting(SlateHideMainMenuIcons)</visible><texture fallback="slate-icons/home.png" colordiffuse="white">slate-icons/$INFO[ListItem.Property(id)].png</texture></control><control type="label"><left>76</left><top>10</top><width>295</width><height>60</height><visible>!Skin.HasSetting(SlateHideMainMenuIcons)</visible><font>SlateNav</font><label>$INFO[ListItem.Label]</label><textcolor>white</textcolor><shadowcolor>00000000</shadowcolor></control><control type="label"><left>25</left><top>10</top><width>346</width><height>60</height><visible>Skin.HasSetting(SlateHideMainMenuIcons)</visible><font>SlateNav</font><label>$INFO[ListItem.Label]</label><textcolor>white</textcolor><shadowcolor>00000000</shadowcolor></control></focusedlayout>
+						<itemlayout width="390" height="80"><control type="image"><left>25</left><top>24</top><width>30</width><height>30</height><visible>!Skin.HasSetting(SlateHideMainMenuIcons)</visible><texture fallback="resource://resource.images.foundry.slate.icons/aliases/slate-icons/home.png" colordiffuse="grey">resource://resource.images.foundry.slate.icons/aliases/slate-icons/$INFO[ListItem.Property(id)].png</texture></control><control type="label"><left>76</left><top>10</top><width>295</width><height>60</height><visible>!Skin.HasSetting(SlateHideMainMenuIcons)</visible><font>SlateNav</font><label>$INFO[ListItem.Label]</label><textcolor>grey</textcolor><shadowcolor>00000000</shadowcolor></control><control type="label"><left>25</left><top>10</top><width>346</width><height>60</height><visible>Skin.HasSetting(SlateHideMainMenuIcons)</visible><font>SlateNav</font><label>$INFO[ListItem.Label]</label><textcolor>grey</textcolor><shadowcolor>00000000</shadowcolor></control></itemlayout><focusedlayout width="390" height="80"><control type="image"><left>2</left><top>11</top><width>2</width><height>44</height><texture colordiffuse="accent_color">colors/white.png</texture></control><control type="image"><left>25</left><top>24</top><width>30</width><height>30</height><visible>!Skin.HasSetting(SlateHideMainMenuIcons)</visible><texture fallback="resource://resource.images.foundry.slate.icons/aliases/slate-icons/home.png" colordiffuse="white">resource://resource.images.foundry.slate.icons/aliases/slate-icons/$INFO[ListItem.Property(id)].png</texture></control><control type="label"><left>76</left><top>10</top><width>295</width><height>60</height><visible>!Skin.HasSetting(SlateHideMainMenuIcons)</visible><font>SlateNav</font><label>$INFO[ListItem.Label]</label><textcolor>white</textcolor><shadowcolor>00000000</shadowcolor></control><control type="label"><left>25</left><top>10</top><width>346</width><height>60</height><visible>Skin.HasSetting(SlateHideMainMenuIcons)</visible><font>SlateNav</font><label>$INFO[ListItem.Label]</label><textcolor>white</textcolor><shadowcolor>00000000</shadowcolor></control></focusedlayout>
 						<content>
 							
 							<include content="MoviesMainMenu" condition="!Skin.HasSetting(HomeMenuNoMoviesButton)" />
@@ -909,11 +909,11 @@
 							<onright>2000</onright>
 							<onback>9000</onback>
 							<align>left</align>
-							<control type="button" id="801"><width>48</width><height>48</height><label /><texturefocus colordiffuse="accent_color">slate-icons/power.png</texturefocus><animation effect="zoom" start="100" end="115" center="auto" time="120" reversible="true">Focus</animation><animation effect="zoom" start="115" end="100" center="auto" time="120" reversible="true">UnFocus</animation><texturenofocus>slate-icons/power.png</texturenofocus><onclick>$VAR[HomePowerButtonActionVar]</onclick><visible>true</visible></control>
-							<control type="button" id="802"><width>48</width><height>48</height><label /><texturefocus colordiffuse="accent_color">slate-icons/settings.png</texturefocus><animation effect="zoom" start="100" end="115" center="auto" time="120" reversible="true">Focus</animation><animation effect="zoom" start="115" end="100" center="auto" time="120" reversible="true">UnFocus</animation><texturenofocus>slate-icons/settings.png</texturenofocus><onclick>ActivateWindow(settings)</onclick><visible>true</visible></control>
-							<control type="button" id="803"><width>48</width><height>48</height><label /><texturefocus colordiffuse="accent_color">slate-icons/search.png</texturefocus><animation effect="zoom" start="100" end="115" center="auto" time="120" reversible="true">Focus</animation><animation effect="zoom" start="115" end="100" center="auto" time="120" reversible="true">UnFocus</animation><texturenofocus>slate-icons/search.png</texturenofocus><onclick>$VAR[HomeSearchButtonActionVar]</onclick><visible>true</visible></control>
-							<control type="button" id="804"><width>70</width><height>70</height><label /><texturefocus>slate-icons/addons.png</texturefocus><texturenofocus>slate-icons/addons.png</texturenofocus><onclick>ActivateWindow(addonbrowser,addons://outdated/,return)</onclick><visible>Integer.IsGreater(System.AddonUpdateCount,0)</visible></control>
-							<control type="button" id="805"><width>70</width><height>70</height><label /><texturefocus>slate-icons/tvshows.png</texturefocus><texturenofocus>slate-icons/tvshows.png</texturenofocus><onclick>Fullscreen</onclick><visible>Player.HasMedia</visible></control>
+							<control type="button" id="801"><width>48</width><height>48</height><label /><texturefocus colordiffuse="accent_color">resource://resource.images.foundry.slate.icons/aliases/slate-icons/power.png</texturefocus><animation effect="zoom" start="100" end="115" center="auto" time="120" reversible="true">Focus</animation><animation effect="zoom" start="115" end="100" center="auto" time="120" reversible="true">UnFocus</animation><texturenofocus>resource://resource.images.foundry.slate.icons/aliases/slate-icons/power.png</texturenofocus><onclick>$VAR[HomePowerButtonActionVar]</onclick><visible>true</visible></control>
+							<control type="button" id="802"><width>48</width><height>48</height><label /><texturefocus colordiffuse="accent_color">resource://resource.images.foundry.slate.icons/aliases/slate-icons/settings.png</texturefocus><animation effect="zoom" start="100" end="115" center="auto" time="120" reversible="true">Focus</animation><animation effect="zoom" start="115" end="100" center="auto" time="120" reversible="true">UnFocus</animation><texturenofocus>resource://resource.images.foundry.slate.icons/aliases/slate-icons/settings.png</texturenofocus><onclick>ActivateWindow(settings)</onclick><visible>true</visible></control>
+							<control type="button" id="803"><width>48</width><height>48</height><label /><texturefocus colordiffuse="accent_color">resource://resource.images.foundry.slate.icons/aliases/slate-icons/search.png</texturefocus><animation effect="zoom" start="100" end="115" center="auto" time="120" reversible="true">Focus</animation><animation effect="zoom" start="115" end="100" center="auto" time="120" reversible="true">UnFocus</animation><texturenofocus>resource://resource.images.foundry.slate.icons/aliases/slate-icons/search.png</texturenofocus><onclick>$VAR[HomeSearchButtonActionVar]</onclick><visible>true</visible></control>
+							<control type="button" id="804"><width>70</width><height>70</height><label /><texturefocus>resource://resource.images.foundry.slate.icons/aliases/slate-icons/addons.png</texturefocus><texturenofocus>resource://resource.images.foundry.slate.icons/aliases/slate-icons/addons.png</texturenofocus><onclick>ActivateWindow(addonbrowser,addons://outdated/,return)</onclick><visible>Integer.IsGreater(System.AddonUpdateCount,0)</visible></control>
+							<control type="button" id="805"><width>70</width><height>70</height><label /><texturefocus>resource://resource.images.foundry.slate.icons/aliases/slate-icons/tvshows.png</texturefocus><texturenofocus>resource://resource.images.foundry.slate.icons/aliases/slate-icons/tvshows.png</texturenofocus><onclick>Fullscreen</onclick><visible>Player.HasMedia</visible></control>
 						</control>
 
 					</control>

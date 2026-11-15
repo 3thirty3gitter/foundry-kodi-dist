@@ -23,68 +23,68 @@
           <item>
             <label>Skin settings</label>
             <onclick>ActivateWindow(skinsettings)</onclick>
-            <icon>foundry-icons/skin.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/skin.png</icon>
           </item>
           <item>
             <label>$LOCALIZE[10003]</label>
             <onclick>ActivateWindow(filemanager)</onclick>
-            <icon>foundry-icons/folder.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/folder.png</icon>
           </item>
           <item>
             <label>$LOCALIZE[24001]</label>
             <onclick>ActivateWindow(addonbrowser)</onclick>
-            <icon>foundry-icons/addons.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/addons.png</icon>
           </item>
           <item>
             <label>$LOCALIZE[138]</label>
             <onclick>ActivateWindow(systeminfo)</onclick>
-            <icon>foundry-icons/info.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/info.png</icon>
           </item>
           <item>
             <label>$LOCALIZE[14200]</label>
             <onclick>ActivateWindow(PlayerSettings)</onclick>
-            <icon>foundry-icons/player.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/player.png</icon>
           </item>
           <item>
             <label>$LOCALIZE[14211]</label>
             <onclick>ActivateWindow(MediaSettings)</onclick>
-            <icon>foundry-icons/media.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/media.png</icon>
           </item>
           <item>
             <label>$LOCALIZE[14204]</label>
             <onclick>ActivateWindow(PVRSettings)</onclick>
-            <icon>foundry-icons/tv.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/tv.png</icon>
           </item>
           <item>
             <label>$LOCALIZE[14036]</label>
             <onclick>ActivateWindow(ServiceSettings)</onclick>
-            <icon>foundry-icons/network.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/network.png</icon>
           </item>
           <item>
             <label>$LOCALIZE[15016]</label>
             <visible>System.GetBool(gamesgeneral.enable)</visible>
             <onclick>ActivateWindow(GameSettings)</onclick>
-            <icon>foundry-icons/games.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/games.png</icon>
           </item>
           <item>
             <label>$LOCALIZE[14206]</label>
             <onclick>ActivateWindow(InterfaceSettings)</onclick>
-            <icon>foundry-icons/interface.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/interface.png</icon>
           </item>
           <item>
             <label>$LOCALIZE[13200]</label>
             <onclick>ActivateWindow(Profiles)</onclick>
-            <icon>foundry-icons/profiles.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/profiles.png</icon>
           </item>
           <item>
             <label>$LOCALIZE[13000]</label>
             <onclick>ActivateWindow(SystemSettings)</onclick>
-            <icon>foundry-icons/system.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/system.png</icon>
           </item>
           <item>
             <label>LibreELEC</label>
             <onclick>RunAddon(service.libreelec.settings)</onclick>
-            <icon>foundry-icons/system.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/system.png</icon>
             <visible>System.AddonIsEnabled(service.libreelec.settings)</visible>
           </item>
         </content>

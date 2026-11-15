@@ -47,7 +47,7 @@
 				<visible>Container.Content(addons) | Container.Content()</visible>
 				<include>Visible_Left</include>
 				<include content="ListThumbInfoPanel">
-					<param name="fallback_image" value="DefaultAddon.png" />
+					<param name="fallback_image" value="resource://resource.images.foundry.slate.icons/aliases/DefaultAddon.png" />
 				</include>
 				<control type="group">
 					<visible>String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24170]) | String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24171])</visible>

@@ -54,8 +54,8 @@
         <font>font32</font>
         <textcolor>darkgrey</textcolor>
         <focusedcolor>FFFFFFFF</focusedcolor>
-        <texturefocus border="72,0,8,0">foundry-icons/rows/settings-focus.png</texturefocus>
-        <texturenofocus border="72,0,8,0">foundry-icons/rows/settings-normal.png</texturenofocus>
+        <texturefocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/settings-focus.png</texturefocus>
+        <texturenofocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/settings-normal.png</texturenofocus>
         <textoffsetx>84</textoffsetx>
       </control>
     </control>

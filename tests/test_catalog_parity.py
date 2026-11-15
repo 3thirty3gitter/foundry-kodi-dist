@@ -119,7 +119,10 @@ class WindowContracts(unittest.TestCase):
         body=ast.get_source_segment(self.source,method)
         self.assertNotIn('.refresh(',body);self.assertNotIn('.reset(',body);self.assertNotIn('.selectItem(',body)
     def test_context_playback_uses_structured_jsonrpc(self):
-        self.assertIn("rpc('Player.Open',{'item':{'file':item.get('file','')}})",self.source)
+        self.assertIn('if choice==0:play_item(item)',self.source)
+        playback=(HELPER/'resources/lib/modules/catalog_playback.py').read_text()
+        self.assertIn("rpc('Player.Open', {'item': {'file': item.get('file', '')}})",playback)
+        self.assertIn('if action_provider(item):',playback)
         self.assertNotIn("'PlayMedia('",self.source)
     def test_kodi_bundled_python_compatible_and_generation_guards_exist(self):
         self.assertNotIn('removeprefix(',self.source);self.assertNotIn('cancel_futures=',self.source)

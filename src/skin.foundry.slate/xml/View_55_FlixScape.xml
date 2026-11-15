@@ -46,7 +46,7 @@
 					<top>35.5</top>
 					<width>270</width>
 					<height>270</height>
-					<texture diffuse="masks/addons.png" fallback="DefaultMovies.png" background="true">$VAR[IconWallThumbVar]</texture>
+					<texture diffuse="masks/addons.png" fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultMovies.png" background="true">$VAR[IconWallThumbVar]</texture>
 					<aspectratio scalediffuse="false">scale</aspectratio>
 					<bordersize>20</bordersize>
 					<visible>!ListItem.IsParentFolder + $PARAM[focused] + Control.HasFocus($PARAM[list_id])</visible>
@@ -56,7 +56,7 @@
 					<top>35.5</top>
 					<width>270</width>
 					<height>270</height>
-					<texture diffuse="masks/addons.png" colordiffuse="unfocused_text" fallback="DefaultMovies.png" background="true">$VAR[IconWallThumbVar]</texture>
+					<texture diffuse="masks/addons.png" colordiffuse="unfocused_text" fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultMovies.png" background="true">$VAR[IconWallThumbVar]</texture>
 					<aspectratio scalediffuse="false">scale</aspectratio>
 					<bordersize>20</bordersize>
 					<visible>!ListItem.IsParentFolder + ![$PARAM[focused] + Control.HasFocus($PARAM[list_id])]</visible>

@@ -1,6 +1,6 @@
 {
-  "release": "1.5.4",
-  "skin": "1.5.4",
+  "release": "1.5.5",
+  "skin": "1.5.5",
   "packages": [
     {
       "id": "repository.foundry",
@@ -46,45 +46,59 @@
     },
     {
       "id": "skin.foundry",
-      "version": "1.5.4",
-      "path": "skin.foundry/skin.foundry-1.5.4.zip",
-      "sha256": "114ee9201a15d73c10af90914400606963e9e4d5def2983ded1d7e31ec0b7ebe",
-      "size": 72140250
+      "version": "1.5.5",
+      "path": "skin.foundry/skin.foundry-1.5.5.zip",
+      "sha256": "5817c44054c8d938a33c0b3eace33fae484de46b2c423483a9ba62cf807292ae",
+      "size": 73494755
     },
     {
       "id": "script.foundry.helper",
-      "version": "1.3.5",
-      "path": "script.foundry.helper/script.foundry.helper-1.3.5.zip",
-      "sha256": "6e5daba6dad9dad7c000caaa283030401fc5011ab60c000f261e499786e720b7",
-      "size": 899882
+      "version": "1.3.6",
+      "path": "script.foundry.helper/script.foundry.helper-1.3.6.zip",
+      "sha256": "d7c5174b191b06d5dc52c8e555099c81a4d190adcd74f34d29b45d56bf29fafa",
+      "size": 902832
     },
     {
       "id": "script.program.foundry-build",
-      "version": "1.5.4",
-      "path": "script.program.foundry-build/script.program.foundry-build-1.5.4.zip",
-      "sha256": "8059f2245600abbf1d6cefb118d1aa80fdbf83bcc2b3e7ee581ddcd3905e8d00",
+      "version": "1.5.5",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.5.5.zip",
+      "sha256": "d55fde676bf95b05158696b21455d8d20bcaff7bc78efa5e5fff798199b98e83",
       "size": 2712
     },
     {
       "id": "script.program.foundry-bootstrap",
-      "version": "1.5.4",
-      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.5.4.zip",
-      "sha256": "aeef96d237f9f2de43111e0a256e728958438eef27e79485167f3fb15a05dcd3",
-      "size": 854
+      "version": "1.5.5",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.5.5.zip",
+      "sha256": "479abe159c3c82d611fe11663403e056df772dd688d9392975ecf288088c28eb",
+      "size": 853
     },
     {
       "id": "script.foundry.slate.helper",
-      "version": "0.1.0",
-      "path": "script.foundry.slate.helper/script.foundry.slate.helper-0.1.0.zip",
-      "sha256": "23013facab131b70125a4088465bcf52c7d49244f2a4e2ad6038348d042e08a6",
-      "size": 899908
+      "version": "0.1.1",
+      "path": "script.foundry.slate.helper/script.foundry.slate.helper-0.1.1.zip",
+      "sha256": "06848a1136c2942c218242f69332a70e4ba93747bed16c5a9fce076533bc12e8",
+      "size": 902541
     },
     {
       "id": "skin.foundry.slate",
-      "version": "0.1.3",
-      "path": "skin.foundry.slate/skin.foundry.slate-0.1.3.zip",
-      "sha256": "d2ec6423314e545a798312a5e1d4ef101c4e138f10def139d9b51f5e352bbdd7",
-      "size": 22240048
+      "version": "0.1.4",
+      "path": "skin.foundry.slate/skin.foundry.slate-0.1.4.zip",
+      "sha256": "e54b5e4819b82349fc6e0e2fcf08cdf98387951273c44389908385be491ad0b0",
+      "size": 22699939
+    },
+    {
+      "id": "resource.images.foundry.slate.icons",
+      "version": "0.1.0",
+      "path": "resource.images.foundry.slate.icons/resource.images.foundry.slate.icons-0.1.0.zip",
+      "sha256": "274fdeaf529a03881c2e229cf32ebda4e8ce8bdf05bfaea98a9c6a6e3d298645",
+      "size": 5397597
+    },
+    {
+      "id": "script.program.foundry-simkl",
+      "version": "0.1.0",
+      "path": "script.program.foundry-simkl/script.program.foundry-simkl-0.1.0.zip",
+      "sha256": "e32151459f453ffd781591cc56b19597f6b679dbbd83cf0e9732cb68429ca525",
+      "size": 1601
     }
   ]
 }

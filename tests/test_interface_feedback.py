@@ -40,7 +40,7 @@ class InterfaceFeedback(unittest.TestCase):
         items=E.parse(SKIN/'xml/Settings.xml').findall('.//item')
         self.assertGreaterEqual(len(items),13)
         for item in items:
-            name=item.findtext('icon');self.assertTrue(name.startswith('foundry-icons/'))
+            name=item.findtext('icon');self.assertTrue(name.startswith('foundry-settings-icons/'))
             self.assertTrue((SKIN/'media'/name).is_file(),name)
 
     def test_settings_templates_reserve_an_icon_for_each_native_option_type(self):

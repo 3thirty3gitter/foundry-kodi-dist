@@ -51,7 +51,7 @@
 						<top>20</top>
 						<height>200</height>
 						<width>200</width>
-						<texture diffuse="icons/profiles/profile-diffuse.png">$INFO[ListItem.Icon]</texture>
+						<texture diffuse="resource://resource.images.foundry.slate.icons/aliases/icons/profiles/profile-diffuse.png">$INFO[ListItem.Icon]</texture>
 						<aspectratio scalediffuse="false">scale</aspectratio>
 					</control>
 					<control type="textbox">
@@ -80,7 +80,7 @@
 						<top>20</top>
 						<height>200</height>
 						<width>200</width>
-						<texture diffuse="icons/profiles/profile-diffuse.png">$INFO[ListItem.Icon]</texture>
+						<texture diffuse="resource://resource.images.foundry.slate.icons/aliases/icons/profiles/profile-diffuse.png">$INFO[ListItem.Icon]</texture>
 						<aspectratio scalediffuse="false">scale</aspectratio>
 					</control>
 					<control type="textbox">

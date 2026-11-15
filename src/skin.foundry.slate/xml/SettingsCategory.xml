@@ -107,8 +107,8 @@
         <textoffsety>16</textoffsety>
         <aligny>left</aligny>
         <font>font37</font>
-        <texturefocus border="72,0,8,0">foundry-icons/rows/settings-85-focus.png</texturefocus>
-        <texturenofocus border="72,0,8,0">foundry-icons/rows/settings-85-normal.png</texturenofocus>
+        <texturefocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/settings-85-focus.png</texturefocus>
+        <texturenofocus border="72,0,8,0">resource://resource.images.foundry.slate.icons/aliases/foundry-icons/rows/settings-85-normal.png</texturenofocus>
         <focusedcolor>FFFFFFFF</focusedcolor>
       </control>
     </control>
@@ -162,10 +162,10 @@
         <ondown>3</ondown>
         <textcolor>unfocused_text</textcolor>
         <focusedcolor>$VAR[FocusedTextColorVar]</focusedcolor>
-        <textureradioonfocus colordiffuse="$VAR[FocusedTextColorVar]">icons/settings.png</textureradioonfocus>
-        <textureradioonnofocus colordiffuse="unfocused_text">icons/settings.png</textureradioonnofocus>
-        <textureradioofffocus colordiffuse="$VAR[FocusedTextColorVar]">icons/settings.png</textureradioofffocus>
-        <textureradiooffnofocus colordiffuse="unfocused_text">icons/settings.png</textureradiooffnofocus>
+        <textureradioonfocus colordiffuse="$VAR[FocusedTextColorVar]">resource://resource.images.foundry.slate.icons/aliases/icons/settings.png</textureradioonfocus>
+        <textureradioonnofocus colordiffuse="unfocused_text">resource://resource.images.foundry.slate.icons/aliases/icons/settings.png</textureradioonnofocus>
+        <textureradioofffocus colordiffuse="$VAR[FocusedTextColorVar]">resource://resource.images.foundry.slate.icons/aliases/icons/settings.png</textureradioofffocus>
+        <textureradiooffnofocus colordiffuse="unfocused_text">resource://resource.images.foundry.slate.icons/aliases/icons/settings.png</textureradiooffnofocus>
       </control>
     </control>
     <control type="group">

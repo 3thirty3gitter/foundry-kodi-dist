@@ -252,7 +252,7 @@
 	<include name="WidgetListSquare">
 		<param name="visible">true</param>
 		<param name="sub_label">$INFO[ListItem.Label]</param>
-		<param name="fallback_icon">DefaultFolder.png</param>
+		<param name="fallback_icon">resource://resource.images.foundry.slate.icons/aliases/DefaultFolder.png</param>
 		<param name="onclick_condition">false</param>
 		<definition>
 			<include content="CategoryLabel">

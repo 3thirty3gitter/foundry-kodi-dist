@@ -52,10 +52,87 @@ def require_release_scope(manifest):
         raise ValueError('Foundry 1.5.0+ requires exactly one Games 0.1.0 package and native validation')
 
 
+def require_shared_update_evidence(qa, manifest):
+    if tuple(int(n) for n in manifest['release'].split('.')) < (1, 5, 5):
+        return
+    settings = read(qa / 'native/settings-grid-verification.json')
+    assert settings['transparent_new_icon_count'] == 12
+    assert settings['frames_and_background_layers'] is False
+    assert len(settings['native_directional_steps']) == 17
+    assert re.fullmatch(r'[0-9a-f]{64}', settings['shipped_settings_xml_sha256'])
+    for step in settings['native_directional_steps']:
+        assert step['selected'] and (qa / 'native' / step['screenshot']).is_file()
+    search = read(qa / 'native/search-providers/native-report.json')
+    assert search['passed'] is True
+    assert set(search['skins']) == {'skin.foundry', 'skin.foundry.slate'}
+    for result in search['skins'].values():
+        assert result['passed'] is True and result['legacy_xml_routes_unchanged'] is True
+        assert len(result['legacy_selections']) == 5
+    phone = read(qa / 'native/phone/phone-matrix-verification.json')
+    assert phone['passed'] is True and len(phone['cases']) == 4
+    assert {(r['skin'], r['restricted_enumeration_real_ioctl']) for r in phone['cases']} == {(s, b) for s in ('skin.foundry','skin.foundry.slate') for b in (False,True)}
+    for result in phone['cases']:
+        assert result['passed'] is True and result['http_text_no_auto_confirm'] is True
+        assert result['bad_origin_and_token_rejected'] is True
+        assert result['cancel_closed_listener'] is True and result['back_closed_listener'] is True
+        assert result['hidden_has_no_phone'] is True and result['rapid_cancel_reopen_retains_new_session'] is True
+        assert result['source_sha256'] and re.fullmatch(r'[0-9a-f]{64}', result['image_sha256']['actual-qr.png'])
+    simkl = read(qa / 'native/simkl/native-report.json')
+    assert simkl['passed'] is True and {r['phase'] for r in simkl['phases']} == {'missing','disabled','enabled'}
+    for result in simkl['phases']:
+        assert result['verified_disclosure'] is True and result['cancelled'] is True
+        assert result['enabled_unchanged'] is True and result['fixture_executed'] is False
+        assert result['shipped_setup_unchanged'] is True
+
+
+def require_icon_evidence(qa, manifest):
+    if not any(p['id'] == 'resource.images.foundry.slate.icons' for p in manifest['packages']):
+        return
+    report = read(qa / 'native/slate-icons/native-icon-report.json')
+    assert report['passed'] is True
+    assert report['native']['passed'] is True
+    assert report['texture_failures'] == []
+    matches = report['placeholder_pixel_matches']
+    assert len(matches) == 2 and all(x['stroke_recall'] > .65 for x in matches)
+    required = {'icons-home', 'icons-settings', 'icons-skinsettings', 'icons-keyboard', 'icons-default-placeholders', 'icons-wall-default-folder', 'icons-wall-default-file', 'icons-playback-osd'}
+    assert required <= set(report['captures'])
+    assert all(re.fullmatch(r'[0-9a-f]{64}', report['captures'][name]) for name in required)
+
+
+def require_playback_contract_evidence(qa, manifest):
+    if manifest.get('release', '') < '1.5.5':
+        return
+    report = read(qa / 'native/playback-contract/native-contract-report.json')
+    assert report['passed'] and report['exact_eight_cases'] and report['playback_log_error_gate']
+    expected = {(skin, provider, route) for skin in ('skin.foundry', 'skin.foundry.slate')
+                for provider in ('plugin.video.fenskeleton', 'plugin.video.foundry.resolverfixture')
+                for route in ('info', 'context')}
+    cases = report['cases']
+    assert len(cases) == 8 and {(c['skin'], c['provider'], c['route']) for c in cases} == expected
+    for case in cases:
+        assert case['stop_without_failure'] is True and case['after_stop_modal'] is False
+        assert case['receipt']['provider'] == case['provider']
+        assert case['receipt']['url'].startswith('plugin://' + case['provider'] + '/')
+        assert case['screenshots']
+    expected_sources = {(helper, 'resources/lib/modules/' + name) for helper in ('script.foundry.helper', 'script.foundry.slate.helper')
+                        for name in ('catalog_playback.py', 'catalog_window.py', 'router.py')}
+    expected_sources |= {(skin, 'xml/DialogVideoInfo.xml') for skin in ('skin.foundry', 'skin.foundry.slate')}
+    sources = report['source_receipts']
+    assert len(sources) == 8 and {(x['addon'], x['path']) for x in sources} == expected_sources
+    assert all(x['profile_copy_verified'] is True and x['bytes'] > 0 and re.fullmatch(r'[0-9a-f]{64}', x['sha256']) for x in sources)
+    captures = report['screenshots']
+    assert len(captures) == 12 and len({x['file'] for x in captures}) == 12
+    assert all(x['nonblank'] is True and x['bytes'] > 0 and x['width'] >= 640 and x['height'] >= 360
+               and re.fullmatch(r'[0-9a-f]{64}', x['sha256']) for x in captures)
+
+
 def evidence(root, release):
     manifest = read(root / 'release.json')
     require_release_scope(manifest)
     qa = root / 'releases' / (release + '-qa')
+    require_icon_evidence(qa, manifest)
+    require_shared_update_evidence(qa, manifest)
+    require_playback_contract_evidence(qa, manifest)
     source, packaged = read(qa / 'source-tests.json'), read(qa / 'packaged-tests.json')
     for report in (source, packaged):
         assert report['successful'] and report['tests'] > 0

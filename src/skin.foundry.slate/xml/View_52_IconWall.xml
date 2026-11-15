@@ -61,7 +61,7 @@
 							<top>60</top>
 							<width>120</width>
 							<height>120</height>
-							<texture diffuse="masks/addons.png" colordiffuse="unfocused_text" fallback="DefaultStudios.png">$INFO[ListItem.Icon]</texture>
+							<texture diffuse="masks/addons.png" colordiffuse="unfocused_text" fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultStudios.png">$INFO[ListItem.Icon]</texture>
 							<aspectratio>keep</aspectratio>
 						</control>
 						<control type="label">
@@ -107,7 +107,7 @@
 							<top>60</top>
 							<width>120</width>
 							<height>120</height>
-							<texture diffuse="masks/addons.png" fallback="DefaultStudios.png">$INFO[ListItem.Icon]</texture>
+							<texture diffuse="masks/addons.png" fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultStudios.png">$INFO[ListItem.Icon]</texture>
 							<aspectratio>keep</aspectratio>
 							<align>center</align>
 						</control>

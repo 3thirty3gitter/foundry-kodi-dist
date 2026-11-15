@@ -78,7 +78,8 @@
             <item>
               <visible>Control.IsVisible(8)</visible>
               <label>$VAR[VideoInfoPlayButtonLabelVar]</label>
-              <onclick>SendClick(8)</onclick>
+              <onclick condition="![String.StartsWith(ListItem.FileNameAndPath,plugin://plugin.video.fenskeleton/) + [String.IsEqual(ListItem.DBTYPE,movie) | String.IsEqual(ListItem.DBTYPE,episode) | String.IsEqual(ListItem.DBTYPE,video)]]">SendClick(8)</onclick>
+              <onclick condition="String.StartsWith(ListItem.FileNameAndPath,plugin://plugin.video.fenskeleton/) + [String.IsEqual(ListItem.DBTYPE,movie) | String.IsEqual(ListItem.DBTYPE,episode) | String.IsEqual(ListItem.DBTYPE,video)]">RunScript(script.foundry.slate.helper,mode=vod_play_info_action)</onclick>
             </item>
             <item>
               <visible>Control.IsVisible(11)</visible>

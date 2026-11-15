@@ -8,7 +8,7 @@ on:
       - "tools/**"
       - "tests/**"
       - "src/**"
-      - "releases/1.5.4-source-snapshot.json.gz"
+      - "releases/1.5.5-source-snapshot.json.gz"
   workflow_dispatch:
 
 permissions:
@@ -29,7 +29,7 @@ jobs:
         working-directory: foundry-kodi-dist
     env:
       PYTHONDONTWRITEBYTECODE: '1'
-      QA: releases/1.5.4-qa
+      QA: releases/1.5.5-qa
       NATIVE_QA_IMAGE: foundry-native-qa:debian13-kodi21.2
     steps:
       - uses: actions/checkout@v4
@@ -45,8 +45,8 @@ jobs:
           printf '%s\n' "$GITHUB_RUN_ID/$GITHUB_RUN_ATTEMPT" > "$QA/workflow-run.txt"
       - name: Install validation dependencies
         run: python -m pip install requests==2.34.2 Pillow==13.0.0
-      - name: Restore pinned 1.5.4 source snapshots
-        run: python tools/materialize_sources.py --release 1.5.4 2>&1 | tee "$QA/materialize.log"
+      - name: Restore pinned 1.5.5 source snapshots
+        run: python tools/materialize_sources.py --release 1.5.5 2>&1 | tee "$QA/materialize.log"
       - name: Build and test committed sources
         run: |
           python tools/build_release.py --skin ../skin.foundry-nimbus --helper ../script.foundry.helper 2>&1 | tee "$QA/build.log"
@@ -105,6 +105,31 @@ jobs:
         timeout-minutes: 6
         working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
         run: bash tools/run_native_qa.sh tools/render_slate_weather.py --output "$QA/slate-weather" 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-slate-weather-run.log"
+      - name: Render Slate icon surfaces in native Kodi
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && steps.kodi.outcome == 'success' }}
+        timeout-minutes: 6
+        working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
+        run: bash tools/run_native_qa.sh tools/render_slate_icons.py --output "$QA/slate-icons" 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-slate-icons-run.log"
+      - name: Render SIMKL opt-in setup in native Kodi
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && steps.kodi.outcome == 'success' }}
+        timeout-minutes: 8
+        working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
+        run: bash tools/run_native_qa.sh tools/render_simkl_setup.py --root "." --output "$QA/simkl" 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-simkl-run.log"
+      - name: Render video search provider selection in native Kodi
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && steps.kodi.outcome == 'success' }}
+        timeout-minutes: 10
+        working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
+        run: bash tools/run_native_qa.sh tools/render_search_providers.py --root "." --output "$QA/search-providers" 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-search-providers-run.log"
+      - name: Render phone typing matrix in native Kodi
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && steps.kodi.outcome == 'success' }}
+        timeout-minutes: 15
+        working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
+        run: bash tools/run_native_qa.sh tools/render_phone_matrix.py --root "." --output "$QA/phone" 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-phone-run.log"
+      - name: Render action and resolver playback contracts in native Kodi
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && steps.kodi.outcome == 'success' }}
+        timeout-minutes: 10
+        working-directory: ${{ runner.temp }}/foundry-packaged-validation/foundry-kodi-dist
+        run: bash tools/run_native_qa.sh tools/render_playback_contract.py --root "." --output "$QA/playback-contract" 2>&1 | tee "$GITHUB_WORKSPACE/foundry-kodi-dist/$QA/native-playback-contract-run.log"
       - name: Collect all native QA evidence
         if: always()
         run: |
@@ -116,8 +141,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: foundry-1.5.4-release-qa-${{ github.run_id }}-${{ github.run_attempt }}
-          path: foundry-kodi-dist/releases/1.5.4-qa/
+          name: foundry-1.5.5-release-qa-${{ github.run_id }}-${{ github.run_attempt }}
+          path: foundry-kodi-dist/releases/1.5.5-qa/
           if-no-files-found: warn
           retention-days: 14
       - name: Publish verified packages and repository feed together
@@ -128,5 +153,5 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           python tools/record_release_validation.py
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'Publish verified Foundry 1.5.4 packages and native QA'
+          git commit -m 'Publish verified Foundry 1.5.5 packages and native QA'
           git push origin HEAD:main

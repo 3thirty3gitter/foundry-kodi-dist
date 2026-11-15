@@ -1,0 +1,2 @@
+Original Slate Line vector drawings: Copyright 2026 3Thirty3. Licensed CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/
+Weather drawings retained byte-for-byte from Foundry Slate c44d225. Source add-on declares CC BY-SA 4.0 and GNU GPL v2; retained assets remain under their applicable upstream terms. No relicensing intended.

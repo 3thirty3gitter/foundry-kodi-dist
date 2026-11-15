@@ -38,8 +38,8 @@
 			<top>13</top>
 			<width>48</width>
 			<height>48</height>
-			<texturefocus colordiffuse="button_focus" flipy="true">overlays/arrowdown.png</texturefocus>
-			<texturenofocus colordiffuse="button_focus" flipy="true">overlays/arrowdown.png</texturenofocus>
+			<texturefocus colordiffuse="button_focus" flipy="true">resource://resource.images.foundry.slate.icons/aliases/overlays/arrowdown.png</texturefocus>
+			<texturenofocus colordiffuse="button_focus" flipy="true">resource://resource.images.foundry.slate.icons/aliases/overlays/arrowdown.png</texturenofocus>
 			<onclick>SetFocus(3000)</onclick>
 			<onclick>Up</onclick>
 		</control>
@@ -50,8 +50,8 @@
 			<height>48</height>
 			<onclick>SetFocus(3000)</onclick>
 			<onclick>Down</onclick>
-			<texturefocus colordiffuse="button_focus">overlays/arrowdown.png</texturefocus>
-			<texturenofocus colordiffuse="button_focus">overlays/arrowdown.png</texturenofocus>
+			<texturefocus colordiffuse="button_focus">resource://resource.images.foundry.slate.icons/aliases/overlays/arrowdown.png</texturefocus>
+			<texturenofocus colordiffuse="button_focus">resource://resource.images.foundry.slate.icons/aliases/overlays/arrowdown.png</texturenofocus>
 		</control> -->
 		<control type="label">
 			<left>1342</left>

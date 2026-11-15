@@ -1098,52 +1098,52 @@
           <item id="1">
             <label>$LOCALIZE[31061]</label>
             <onclick>noop</onclick>
-            <icon>foundry-icons/settings.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/settings.png</icon>
           </item>
           <item id="5">
             <label>General configuration</label>
             <onclick>noop</onclick>
-            <icon>foundry-icons/settings.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/settings.png</icon>
           </item>
           <item id="9">
             <label>Widget options</label>
             <onclick>noop</onclick>
-            <icon>foundry-icons/interface.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/interface.png</icon>
           </item>
           <item id="2">
             <label>Customization</label>
             <onclick>noop</onclick>
-            <icon>foundry-icons/edit.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/edit.png</icon>
           </item>
           <item id="6">
             <label>Artwork display</label>
             <onclick>noop</onclick>
-            <icon>foundry-icons/pictures.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/pictures.png</icon>
           </item>
           <item id="4">
             <label>Ratings management</label>
             <onclick>noop</onclick>
-            <icon>foundry-icons/settings.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/settings.png</icon>
           </item>
           <item id="8">
             <label>Trailer setup</label>
             <onclick>noop</onclick>
-            <icon>foundry-icons/media.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/media.png</icon>
           </item>
           <item id="3">
             <label>Search options</label>
             <onclick>noop</onclick>
-            <icon>foundry-icons/search.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/search.png</icon>
           </item>
           <item id="7">
             <label>$LOCALIZE[31170]</label>
             <onclick>noop</onclick>
-            <icon>foundry-icons/settings.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/settings.png</icon>
           </item>
           <item id="10">
             <label>Extras</label>
             <onclick>noop</onclick>
-            <icon>foundry-icons/settings.png</icon>
+            <icon>resource://resource.images.foundry.slate.icons/aliases/foundry-icons/settings.png</icon>
           </item>
         </content>
       </control>

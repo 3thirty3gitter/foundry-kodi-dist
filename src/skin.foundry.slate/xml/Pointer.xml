@@ -6,28 +6,28 @@
 			<left>-10</left>
 			<width>44</width>
 			<height>50</height>
-			<texture>pointer_arrow.png</texture>
+			<texture>resource://resource.images.foundry.slate.icons/aliases/pointer_arrow.png</texture>
 		</control>
 		<control type="image" id="2">
 			<description>Pointer Focus</description>
 			<left>-10</left>
 			<width>44</width>
 			<height>50</height>
-			<texture>pointer_arrow.png</texture>
+			<texture>resource://resource.images.foundry.slate.icons/aliases/pointer_arrow.png</texture>
 		</control>
 		<control type="image" id="3">
 			<description>Pointer Drag</description>
 			<left>-10</left>
 			<width>44</width>
 			<height>50</height>
-			<texture>pointer_arrow.png</texture>
+			<texture>resource://resource.images.foundry.slate.icons/aliases/pointer_arrow.png</texture>
 		</control>
 		<control type="image" id="4">
 			<description>pointer_click</description>
 			<left>-10</left>
 			<width>44</width>
 			<height>50</height>
-			<texture>pointer_click.png</texture>
+			<texture>resource://resource.images.foundry.slate.icons/aliases/pointer_click.png</texture>
 		</control>
 	</controls>
 </window>

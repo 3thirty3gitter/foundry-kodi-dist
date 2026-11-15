@@ -651,10 +651,15 @@ class Runtime(unittest.TestCase):
 
     def test_search_provider_uses_only_installed_enabled_addons(self):
         from modules import search_provider
-        with patch.object(xbmc, "getCondVisibility", side_effect=lambda value: "plugin.video.umbrella" in value), \
+        inventory=json.dumps({'result':{'addons':[{'addonid':'plugin.video.umbrella','name':'Umbrella','enabled':True}]}})
+        with patch.object(xbmc, "executeJSONRPC", return_value=inventory), \
+                patch.object(xbmc, "getCondVisibility", side_effect=lambda value: "plugin.video.umbrella" in value), \
                 patch.object(Dialog, "select", return_value=0), patch.object(xbmc, "executebuiltin") as execute:
             search_provider.choose_search_provider()
-        execute.assert_called_once_with("Skin.SetString(current_search_provider,2)")
+        self.assertEqual([c.args[0] for c in execute.call_args_list], [
+            'Skin.SetString(foundry.search.provider.id,"plugin.video.umbrella")',
+            'Skin.SetString(foundry.search.provider.label,"Umbrella")',
+            'Skin.SetString(current_search_provider,"2")'])
 
     def test_installer_refreshes_existing_foundry_skin(self):
         spec = importlib.util.spec_from_file_location("foundry_refresh", ROOT / "src/script.program.foundry-build/default.py")

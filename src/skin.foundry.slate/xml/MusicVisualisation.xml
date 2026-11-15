@@ -57,7 +57,7 @@
 				<height>400</height>
 				<fadetime>400</fadetime>
 				<aspectratio aligny="bottom">keep</aspectratio>
-				<texture fallback="DefaultAlbumCover.png" border="2">$INFO[MusicPlayer.Cover]</texture>
+				<texture fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultAlbumCover.png" border="2">$INFO[MusicPlayer.Cover]</texture>
 				<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
 				<bordersize>4</bordersize>
 			</control>

@@ -64,7 +64,7 @@
 					<control type="image">
 						<width>425</width>
 						<height>260</height>
-						<texture diffuse="masks/landscape.png" background="true">DefaultNoPreview.png</texture>
+						<texture diffuse="masks/landscape.png" background="true">resource://resource.images.foundry.slate.icons/aliases/DefaultNoPreview.png</texture>
 						<aspectratio>scale</aspectratio>
 						<bordersize>20</bordersize>
 					</control>
@@ -72,7 +72,7 @@
 						<left>405</left>
 						<width>425</width>
 						<height>260</height>
-						<texture diffuse="masks/landscape.png" background="true">DefaultNoPreview.png</texture>
+						<texture diffuse="masks/landscape.png" background="true">resource://resource.images.foundry.slate.icons/aliases/DefaultNoPreview.png</texture>
 						<aspectratio>scale</aspectratio>
 						<bordersize>20</bordersize>
 					</control>
@@ -80,7 +80,7 @@
 						<left>810</left>
 						<width>425</width>
 						<height>260</height>
-						<texture diffuse="masks/landscape.png" background="true">DefaultNoPreview.png</texture>
+						<texture diffuse="masks/landscape.png" background="true">resource://resource.images.foundry.slate.icons/aliases/DefaultNoPreview.png</texture>
 						<aspectratio>scale</aspectratio>
 						<bordersize>20</bordersize>
 					</control>
@@ -98,7 +98,7 @@
 							<left>-12</left>
 							<width>425</width>
 							<height>260</height>
-							<texture diffuse="masks/landscape.png" background="true">DefaultNoPreview.png</texture>
+							<texture diffuse="masks/landscape.png" background="true">resource://resource.images.foundry.slate.icons/aliases/DefaultNoPreview.png</texture>
 							<aspectratio>scale</aspectratio>
 							<bordersize>20</bordersize>
 						</control>
@@ -123,7 +123,7 @@
 							<left>-12</left>
 							<width>425</width>
 							<height>260</height>
-							<texture diffuse="masks/landscape.png" background="true">DefaultNoPreview.png</texture>
+							<texture diffuse="masks/landscape.png" background="true">resource://resource.images.foundry.slate.icons/aliases/DefaultNoPreview.png</texture>
 							<aspectratio>scale</aspectratio>
 							<bordersize>20</bordersize>
 						</control>
@@ -263,12 +263,12 @@
 					<orientation>horizontal</orientation>
 					<include content="InfoDialogButton">
 						<param name="id" value="12" />
-						<param name="icon" value="icons/infodialogs/launch.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/launch.png" />
 						<param name="label" value="$LOCALIZE[518]" />
 					</include>
 					<include content="InfoDialogButton">
 						<param name="id" value="9" />
-						<param name="icon" value="icons/infodialogs/configure.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/configure.png" />
 						<param name="label" value="$LOCALIZE[24020]" />
 					</include>
 					<control type="radiobutton" id="13">
@@ -290,30 +290,30 @@
 					</control>
 					<include content="InfoDialogButton">
 						<param name="id" value="10" />
-						<param name="icon" value="icons/infodialogs/info.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/info.png" />
 						<param name="label" value="$LOCALIZE[39024]" />
 					</include>
 					<include content="InfoDialogToggleButton">
 						<param name="id" value="7" />
-						<param name="icon_on" value="icons/infodialogs/disable.png" />
-						<param name="icon_off" value="icons/infodialogs/enabled.png" />
+						<param name="icon_on" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/disable.png" />
+						<param name="icon_off" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/enabled.png" />
 						<param name="selected" value="!String.StartsWith(Control.GetLabel(7),$LOCALIZE[24022]) | !Window.IsActive(addonbrowser)" />
 						<param name="label" value="" />
 					</include>
 					<include content="InfoDialogButton">
 						<param name="id" value="8" />
-						<param name="icon" value="icons/infodialogs/install.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/install.png" />
 						<param name="label" value="$LOCALIZE[24138]" />
 					</include>
 					<include content="InfoDialogButton">
 						<param name="id" value="14" />
-						<param name="icon" value="icons/infodialogs/update.png" />
+						<param name="icon" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/update.png" />
 						<param name="label" value="$LOCALIZE[24069]" />
 					</include>
 					<include content="InfoDialogToggleButton">
 						<param name="id" value="6" />
-						<param name="icon_on" value="icons/infodialogs/uninstall.png" />
-						<param name="icon_off" value="icons/infodialogs/install.png" />
+						<param name="icon_on" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/uninstall.png" />
+						<param name="icon_off" value="resource://resource.images.foundry.slate.icons/aliases/icons/infodialogs/install.png" />
 						<param name="selected" value="ListItem.Property(addon.isinstalled) | !Window.IsActive(addonbrowser)" />
 						<param name="label" value="" />
 					</include>
@@ -340,7 +340,7 @@
 					<height>500</height>
 					<!-- <aspectratio aligny="top">scale</aspectratio> -->
 					<fadetime>300</fadetime>
-					<texture diffuse="masks/addons.png" fallback="DefaultAddon.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
+					<texture diffuse="masks/addons.png" fallback="resource://resource.images.foundry.slate.icons/aliases/DefaultAddon.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
 				</control>
 				<control type="group">
 					<visible>String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24170]) | String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24171])</visible>

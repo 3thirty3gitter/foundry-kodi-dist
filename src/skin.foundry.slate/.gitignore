@@ -25,3 +25,6 @@ xml/script-skinshortcuts-includes.xml
 
 !media/slate-icons/
 !media/slate-icons/search.svg
+
+!media/Default*.png
+!media/Overlay*.png
