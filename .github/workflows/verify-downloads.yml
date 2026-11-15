@@ -23,6 +23,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install image evidence verification dependency
+        run: python -m pip install Pillow==13.0.0
       - name: Verify both public hosts and the Kodi feed
         run: python tools/verify_public_downloads.py
       - name: Save verification evidence
