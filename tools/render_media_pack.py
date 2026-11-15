@@ -163,6 +163,12 @@ def open_settings():
   labels=['System.CurrentControl','Container(9000).ListItem.Label']
   trace.append({'step':step,'labels':rpc('XBMC.GetInfoLabels',{'labels':labels}),'category6':cond('Container(9000).HasFocus(6)'),'category_focused':cond('Control.HasFocus(9000)'),'target_focused':cond('Control.HasFocus(6098)')})
  try:
+  wait(lambda:cond('Window.IsActive(skinsettings)'))
+  if cond('Control.HasFocus(6098)'):
+   assert cond('Container(9000).HasFocus(6)'), 'Remembered target in wrong category'
+   record('remembered-target');snap(skin+'-media-pack-control');return
+  if not cond('Control.HasFocus(9000)'):
+   act('left');record('return-to-sidebar')
   wait(lambda:cond('Control.HasFocus(9000)'));record('opened');snap(skin+'-settings-opened')
   for _ in range(20):
    if cond('Container(9000).HasFocus(6)'):break
