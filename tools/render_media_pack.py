@@ -242,10 +242,30 @@ finally:(OUT/'fixture-stopped').write_text('true')
 def close_fixture():
  (out/'close-fixture').write_text('true');wait(lambda:(out/'fixture-stopped').exists());time.sleep(1)
 def snapshot(name,expect_pack):
- wait(lambda:info('Window(Home).Property('+prefix+'.pack)')==expect_pack,t=10)
- time.sleep(.8)
+ started=time.monotonic()
  labels=['ListItem.'+x for x in ('VideoCodec','VideoResolution','HdrType','VideoAspect','AudioCodec','AudioChannels')]
  labels+=['Window(Home).Property('+prefix+'.list.'+c+'.'+field+')' for c in CATS for field in ('path','value')]
+ current=[{}]
+ fields=dict(zip(CATS,('VideoCodec','VideoResolution','HdrType','VideoAspect','AudioCodec','AudioChannels')))
+ def fresh():
+  values=rpc('XBMC.GetInfoLabels',{'labels':labels});current[0]=values
+  if info('Window(Home).Property('+prefix+'.pack)')!=expect_pack:return False
+  for category,field in fields.items():
+   value=values['ListItem.'+field]
+   expected_file=addons/expect_pack/'resources/flags'/category/(value.lower()+'.png') if expect_pack and value else None
+   expected=bool(expected_file and expected_file.is_file())
+   actual=values['Window(Home).Property('+prefix+'.list.'+category+'.path)']
+   guard=values['Window(Home).Property('+prefix+'.list.'+category+'.value)']
+   if expected:
+    if actual!=str(expected_file) or guard!=value:return False
+   elif actual or guard:return False
+  return True
+ # Service may be paused in Settings/custom window: 2s cadence plus 3s inventory
+ # refresh. Poll native outputs, never call process() or mutate properties here.
+ try:wait(fresh,t=8)
+ finally:
+  (out/(skin+'-'+name+'-freshness.json')).write_text(json.dumps({'elapsed_seconds':time.monotonic()-started,'bound_seconds':8,'last_values':current[0]},indent=2))
+ time.sleep(.8)
  values=rpc('XBMC.GetInfoLabels',{'labels':labels})
  (out/(skin+'-'+name+'.json')).write_text(json.dumps(values,indent=2));snap(skin+'-'+name)
  assert not (out/'monitor-error.txt').exists()
@@ -269,7 +289,7 @@ try:
   for c in CATS:
    assert v['Window(Home).Property('+prefix+'.list.'+c+'.path)'],('Missing true metadata/category',c,v)
   assert colour_count('pack-a','a')>2000,'Actual include did not render A pixels'
-  act('down');time.sleep(.5);v=snapshot('empty',PACKS[0])
+  act('down');wait(lambda:info('ListItem.Label')=='QA no stream metadata');v=snapshot('empty',PACKS[0])
   assert all(not v['Window(Home).Property('+prefix+'.list.'+c+'.path)'] for c in CATS),'Stale empty-item art'
   close_fixture();choose(2,PACKS[1]);show_fixture();snapshot('pack-b',PACKS[1]);assert colour_count('pack-b','b')>2000
   close_fixture();choose(0,'');show_fixture();snapshot('builtin','');assert colour_count('builtin','a')<100 and colour_count('builtin','b')<100;close_fixture()
