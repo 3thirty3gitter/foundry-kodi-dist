@@ -1,0 +1,96 @@
+{
+  "callbacks": [
+    {
+      "file": "Startup.xml",
+      "action": "RunScript(script.foundry.slate.helper,mode=check_for_update&skin_id=skin.foundry.slate)"
+    },
+    {
+      "file": "Startup.xml",
+      "action": "RunScript(script.foundry.slate.helper,mode=refresh_search_history)"
+    },
+    {
+      "file": "VideoFullScreen.xml",
+      "action": "RunScript(script.foundry.slate.helper,mode=osd_artwork)"
+    },
+    {
+      "file": "MyVideoNav.xml",
+      "action": "RunScript(script.foundry.slate.helper,mode=vod_catalog_activate)"
+    },
+    {
+      "file": "SkinSettings.xml",
+      "action": "RunScript(script.foundry.slate.helper, mode=calculate_cache_size)"
+    },
+    {
+      "file": "VideoOSD.xml",
+      "action": "RunScript(script.foundry.slate.helper,mode=osd_artwork)"
+    },
+    {
+      "file": "Includes_Home.xml",
+      "action": "RunScript(script.foundry.slate.helper,mode=check_for_update&skin_id=skin.foundry.slate)"
+    },
+    {
+      "file": "Includes_Home.xml",
+      "action": "RunScript(script.foundry.slate.helper,mode=check_for_profile_change&skin_id=skin.foundry.slate)"
+    },
+    {
+      "file": "Includes_Home.xml",
+      "action": "RunScript(script.foundry.slate.helper,mode=ensure_repos)"
+    },
+    {
+      "file": "Includes_Home.xml",
+      "action": "RunScript(script.foundry.slate.helper,mode=configure_experience)"
+    },
+    {
+      "file": "Includes_Home.xml",
+      "action": "RunScript(script.foundry.slate.helper,mode=modify_keymap)"
+    },
+    {
+      "file": "Includes_Home.xml",
+      "action": "RunScript(script.foundry.slate.helper, mode=check_api_key_on_load)"
+    },
+    {
+      "file": "DialogSeekBar.xml",
+      "action": "RunScript(script.foundry.slate.helper,mode=osd_artwork)"
+    }
+  ],
+  "modified_xml": [
+    {
+      "file": "Startup.xml",
+      "original_sha256": "22c6f08cb13d7b99d4d04944dbf47007a4304326e10ccffa488fad4915c41155",
+      "fixture_sha256": "4f84295e1302524a3a9d4cead09df5a06dfa4d03bd6d782de67863cdae2c28a8"
+    },
+    {
+      "file": "VideoFullScreen.xml",
+      "original_sha256": "eabf2a1ff76ce77423655397aa78c0c99fe02bcc7b7e7b5611180b6fae60a8f8",
+      "fixture_sha256": "5f791ac25711c2256562de5b607e1bdf748c90edc67e3e83770372879319b7c2"
+    },
+    {
+      "file": "MyVideoNav.xml",
+      "original_sha256": "750903521ce8265aef9fd255657f2f477eaa1b11d866200b5b746195305f4372",
+      "fixture_sha256": "e9b766ab0b252090ef92b7e01eb4da71ecccae7739287cff9c0910c51277a981"
+    },
+    {
+      "file": "SkinSettings.xml",
+      "original_sha256": "a72f7dcaea38ac72126a79031b7e2b1cc868ab6995a28045df209ea8099e43ab",
+      "fixture_sha256": "2a3346888f479816d1df4882ae3b892233a7a0ef42cf8dff342d9272ef61aff8"
+    },
+    {
+      "file": "VideoOSD.xml",
+      "original_sha256": "e3726649c74d8e069d0977e36fbf71fbf0105c778840c8984bff3c2178d4358c",
+      "fixture_sha256": "c5d65197cac87a773b66a89310deb2a97484af240fb185196bddccde4cb84c7d"
+    },
+    {
+      "file": "Includes_Home.xml",
+      "original_sha256": "e3aa16762083546a76337cdc943fd83807fd437c26ee35bd8ec2c66aaad3a1b9",
+      "fixture_sha256": "dc4c5dfc3dda70f5fb18764314e970994c210fd74f7aa3452ea652dee93989f1"
+    },
+    {
+      "file": "DialogSeekBar.xml",
+      "original_sha256": "f7b6c165e73c4db1938d8999c500a1384e5770daa36bbc9bb907d913a47b38b2",
+      "fixture_sha256": "6bf0adb83ff76c468e6c6e171415c97ccf7c1161142c2582b6ede5bf2459f3fc"
+    }
+  ],
+  "original_home_sha256": "d783532532d83b6eda8459bdcae97720de804d11dec6f6566e97f08c6fcd39b2",
+  "copied_home_sha256": "d783532532d83b6eda8459bdcae97720de804d11dec6f6566e97f08c6fcd39b2",
+  "limitation": "Debian Kodi 21.2/Python 3.13 startup interpreter teardown crashed in PyThreadState_Swap during QA check_for_profile_change no-op. This isolates unrelated startup only, not a shipped product fix or full startup compatibility certification."
+}

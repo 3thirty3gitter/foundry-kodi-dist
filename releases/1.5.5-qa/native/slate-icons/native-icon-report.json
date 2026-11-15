@@ -1,0 +1,118 @@
+{
+  "passed": true,
+  "scope": "Offline actual shipped Slate native windows and resource URI lookup; no live media/provider or Shield certification.",
+  "native": {
+    "passed": true,
+    "surfaces": [
+      {
+        "name": "icons-home",
+        "window": 10000,
+        "dialog": 9999
+      },
+      {
+        "name": "icons-settings",
+        "window": 10004,
+        "dialog": 9999
+      },
+      {
+        "name": "icons-skinsettings",
+        "window": 10035,
+        "dialog": 9999
+      },
+      {
+        "name": "icons-keyboard",
+        "window": 10000,
+        "dialog": 10103
+      },
+      {
+        "name": "icons-default-placeholders",
+        "window": 10025,
+        "dialog": 9999
+      },
+      {
+        "name": "icons-wall-default-folder",
+        "window": 10025,
+        "dialog": 9999
+      },
+      {
+        "name": "icons-wall-default-file",
+        "window": 10025,
+        "dialog": 9999
+      },
+      {
+        "name": "icons-playback-osd",
+        "window": 12005,
+        "dialog": 12901
+      }
+    ],
+    "resolved": 765,
+    "actual_skin": "skin.foundry.slate",
+    "actual_skin_path": "/tmp/slate-icons-cn5pajaa/kodi/portable_data/addons/skin.foundry.slate/",
+    "offline_catalog_handshake": true,
+    "placeholder_view": {
+      "id": 52,
+      "name": "IconWall",
+      "visible": true,
+      "focused": true
+    },
+    "placeholder_items": [
+      {
+        "label": "A folder without artwork",
+        "icon": "DefaultFolder.png",
+        "capture": "icons-wall-default-folder",
+        "view": 52
+      },
+      {
+        "label": "B movie without artwork.mp4",
+        "icon": "DefaultVideo.png",
+        "capture": "icons-wall-default-file",
+        "view": 52
+      }
+    ],
+    "placeholder_navigation": [
+      {
+        "target": "A folder",
+        "attempt": 0,
+        "label": ".."
+      },
+      {
+        "target": "A folder",
+        "attempt": 1,
+        "label": "A folder without artwork"
+      },
+      {
+        "target": "B movie",
+        "attempt": 0,
+        "label": "A folder without artwork"
+      },
+      {
+        "target": "B movie",
+        "attempt": 1,
+        "label": "B movie without artwork.mp4"
+      }
+    ],
+    "playback_active": true,
+    "playback_type": "offline MJPG AVI video"
+  },
+  "captures": {
+    "icons-home": "3fa11acfedc35b2683b55acb24a777f412b600d828c92efc12a0bc79e589b38d",
+    "icons-settings": "b8fdb0d9524d33708697d907bb609f68b69cad9998c193b38365886dda4ecee2",
+    "icons-skinsettings": "504cc11796e837d1ba7b341ac570a91ee95c24497a4ca21861b2296eef5574c2",
+    "icons-keyboard": "af0b10e12a5ea7d248710d31fbb83598db5b3e34f224442da27e7a7561e9e81d",
+    "icons-default-placeholders": "97c97094a4db4836ca590105d08ace61d1bfd27e5c74112a62fdd3bb153a68c1",
+    "icons-wall-default-folder": "c78d40d941b460e0ce4c7640c70915f6e1e35b3efaf1667cee031b3a6221dcd7",
+    "icons-wall-default-file": "e6a539aa1cc506a510e7a797fde2ae8eaee123fa17b40842858ebb75cee21ccc",
+    "icons-playback-osd": "d8b74ca88a577c95e96053d78b5a326a4f3031315bd8a4c182ba5771b131fbea"
+  },
+  "placeholder_pixel_matches": [
+    {
+      "icon": "DefaultFolder.png",
+      "stroke_recall": 1.0
+    },
+    {
+      "icon": "DefaultVideo.png",
+      "stroke_recall": 0.9961290322580645
+    }
+  ],
+  "texture_failures": []
+}

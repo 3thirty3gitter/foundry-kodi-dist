@@ -1,0 +1,10 @@
+{
+  "real_kodi_cold_start": true,
+  "writable_home_override_selected": true,
+  "approved_artwork_unchanged": true,
+  "canvas": [
+    1920,
+    1080
+  ],
+  "scope": "Native desktop Kodi; Shield restart remains unverified"
+}

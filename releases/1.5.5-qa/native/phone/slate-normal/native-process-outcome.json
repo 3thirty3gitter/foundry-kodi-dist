@@ -1,0 +1,6 @@
+{
+  "exit_before_cleanup": null,
+  "crash_logs": [
+    "native-diagnostics/profile-temp/kodi.log"
+  ]
+}

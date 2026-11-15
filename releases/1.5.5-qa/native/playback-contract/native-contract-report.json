@@ -1,0 +1,1142 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "source_receipts": [
+    {
+      "addon": "script.foundry.helper",
+      "path": "resources/lib/modules/catalog_playback.py",
+      "sha256": "5c62d4857e9c8e38e0e4ebbcd3dbbd2f64f3bee9eff2ff112069503d77196167",
+      "bytes": 1780,
+      "profile_copy_verified": true
+    },
+    {
+      "addon": "script.foundry.helper",
+      "path": "resources/lib/modules/catalog_window.py",
+      "sha256": "c643a6f140a632d7bd286e81619b7b9781ce03f2f76de9005d3ca84a80536ba5",
+      "bytes": 37011,
+      "profile_copy_verified": true
+    },
+    {
+      "addon": "script.foundry.helper",
+      "path": "resources/lib/modules/router.py",
+      "sha256": "20f1dfffa7fabec87ae0db92c6d5bede63c21e533e9e24c40f17c8b4948d7490",
+      "bytes": 5824,
+      "profile_copy_verified": true
+    },
+    {
+      "addon": "skin.foundry",
+      "path": "xml/DialogVideoInfo.xml",
+      "sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+      "bytes": 19921,
+      "profile_copy_verified": true
+    },
+    {
+      "addon": "script.foundry.slate.helper",
+      "path": "resources/lib/modules/catalog_playback.py",
+      "sha256": "5c62d4857e9c8e38e0e4ebbcd3dbbd2f64f3bee9eff2ff112069503d77196167",
+      "bytes": 1780,
+      "profile_copy_verified": true
+    },
+    {
+      "addon": "script.foundry.slate.helper",
+      "path": "resources/lib/modules/catalog_window.py",
+      "sha256": "5f147454e02bc7043764c74d3cdedb28075489890d68a017b0b1a304acf8f1f3",
+      "bytes": 37802,
+      "profile_copy_verified": true
+    },
+    {
+      "addon": "script.foundry.slate.helper",
+      "path": "resources/lib/modules/router.py",
+      "sha256": "cba0fa315a971c004650e0a2f84fbb788b24dae8f54d2c2a0650ef884aec579f",
+      "bytes": 6043,
+      "profile_copy_verified": true
+    },
+    {
+      "addon": "skin.foundry.slate",
+      "path": "xml/DialogVideoInfo.xml",
+      "sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+      "bytes": 20367,
+      "profile_copy_verified": true
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "contract-skin.foundry-plugin.video.fenskeleton-info.png",
+      "sha256": "85d3bf468f3049d9c41f212441d22df022667bacbf6065d8018437596de88af4",
+      "bytes": 866820,
+      "width": 1920,
+      "height": 1080,
+      "rgb_stddev": [
+        26.080699475566465,
+        25.508505375360937,
+        25.277058934855244
+      ],
+      "nonblank": true,
+      "native_identity": {
+        "skin_id": "skin.foundry",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+        "dialog_id": 12003,
+        "modal": true,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+        "probe_sequence": 4,
+        "native_interpreter_exited": true
+      }
+    },
+    {
+      "file": "contract-skin.foundry-plugin.video.fenskeleton-info-stopped.png",
+      "sha256": "3945d4c3b2eada3c34fac2346b9e205fb46ddc4f2b4897cdb7bed70a9a90393f",
+      "bytes": 1184549,
+      "width": 1920,
+      "height": 1080,
+      "rgb_stddev": [
+        21.929985791815113,
+        21.47405466716169,
+        21.8708862244722
+      ],
+      "nonblank": true,
+      "native_identity": {
+        "skin_id": "skin.foundry",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+        "dialog_id": 9999,
+        "modal": false,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+        "probe_sequence": 5,
+        "native_interpreter_exited": true
+      }
+    },
+    {
+      "file": "contract-skin.foundry-plugin.video.fenskeleton-context-stopped.png",
+      "sha256": "3945d4c3b2eada3c34fac2346b9e205fb46ddc4f2b4897cdb7bed70a9a90393f",
+      "bytes": 1184549,
+      "width": 1920,
+      "height": 1080,
+      "rgb_stddev": [
+        21.929985791815113,
+        21.47405466716169,
+        21.8708862244722
+      ],
+      "nonblank": true,
+      "native_identity": {
+        "skin_id": "skin.foundry",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+        "dialog_id": 9999,
+        "modal": false,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+        "probe_sequence": 6,
+        "native_interpreter_exited": true
+      }
+    },
+    {
+      "file": "contract-skin.foundry-plugin.video.foundry.resolverfixture-info.png",
+      "sha256": "ef7bccdc8430e9330f34f06d76c96c75920a7eaaecc9648210d03ba30db559d2",
+      "bytes": 1016360,
+      "width": 1920,
+      "height": 1080,
+      "rgb_stddev": [
+        23.149396822216303,
+        22.651193289053257,
+        22.665223207971273
+      ],
+      "nonblank": true,
+      "native_identity": {
+        "skin_id": "skin.foundry",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+        "dialog_id": 12003,
+        "modal": true,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+        "probe_sequence": 7,
+        "native_interpreter_exited": true
+      }
+    },
+    {
+      "file": "contract-skin.foundry-plugin.video.foundry.resolverfixture-info-stopped.png",
+      "sha256": "3945d4c3b2eada3c34fac2346b9e205fb46ddc4f2b4897cdb7bed70a9a90393f",
+      "bytes": 1184549,
+      "width": 1920,
+      "height": 1080,
+      "rgb_stddev": [
+        21.929985791815113,
+        21.47405466716169,
+        21.8708862244722
+      ],
+      "nonblank": true,
+      "native_identity": {
+        "skin_id": "skin.foundry",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+        "dialog_id": 9999,
+        "modal": false,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+        "probe_sequence": 8,
+        "native_interpreter_exited": true
+      }
+    },
+    {
+      "file": "contract-skin.foundry-plugin.video.foundry.resolverfixture-context-stopped.png",
+      "sha256": "3945d4c3b2eada3c34fac2346b9e205fb46ddc4f2b4897cdb7bed70a9a90393f",
+      "bytes": 1184549,
+      "width": 1920,
+      "height": 1080,
+      "rgb_stddev": [
+        21.929985791815113,
+        21.47405466716169,
+        21.8708862244722
+      ],
+      "nonblank": true,
+      "native_identity": {
+        "skin_id": "skin.foundry",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+        "dialog_id": 9999,
+        "modal": false,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+        "probe_sequence": 9,
+        "native_interpreter_exited": true
+      }
+    },
+    {
+      "file": "contract-skin.foundry.slate-plugin.video.fenskeleton-info.png",
+      "sha256": "6c58fa3cb5ad2a6e3c3a351dad2cd0b9e5083084984abe91446d2c67a75beb8f",
+      "bytes": 151433,
+      "width": 1920,
+      "height": 1080,
+      "rgb_stddev": [
+        17.966276192455584,
+        18.013202844908935,
+        18.109084473833907
+      ],
+      "nonblank": true,
+      "native_identity": {
+        "skin_id": "skin.foundry.slate",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+        "dialog_id": 12003,
+        "modal": true,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+        "probe_sequence": 14,
+        "native_interpreter_exited": true
+      }
+    },
+    {
+      "file": "contract-skin.foundry.slate-plugin.video.fenskeleton-info-stopped.png",
+      "sha256": "9cdb9c988c165e7d4aad8341eaf4031aa139eed053524f49105e31e50d66de51",
+      "bytes": 130224,
+      "width": 1920,
+      "height": 1080,
+      "rgb_stddev": [
+        14.988300998729171,
+        15.208484021080093,
+        15.676756927645181
+      ],
+      "nonblank": true,
+      "native_identity": {
+        "skin_id": "skin.foundry.slate",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+        "dialog_id": 9999,
+        "modal": false,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+        "probe_sequence": 15,
+        "native_interpreter_exited": true
+      }
+    },
+    {
+      "file": "contract-skin.foundry.slate-plugin.video.fenskeleton-context-stopped.png",
+      "sha256": "9cdb9c988c165e7d4aad8341eaf4031aa139eed053524f49105e31e50d66de51",
+      "bytes": 130224,
+      "width": 1920,
+      "height": 1080,
+      "rgb_stddev": [
+        14.988300998729171,
+        15.208484021080093,
+        15.676756927645181
+      ],
+      "nonblank": true,
+      "native_identity": {
+        "skin_id": "skin.foundry.slate",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+        "dialog_id": 9999,
+        "modal": false,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+        "probe_sequence": 16,
+        "native_interpreter_exited": true
+      }
+    },
+    {
+      "file": "contract-skin.foundry.slate-plugin.video.foundry.resolverfixture-info.png",
+      "sha256": "447b99bba8872af30072f4a59bc4e875f0a631d30f975c38ddc97b22fe423c1e",
+      "bytes": 152259,
+      "width": 1920,
+      "height": 1080,
+      "rgb_stddev": [
+        17.32617902688389,
+        17.408384928005724,
+        17.569067641244533
+      ],
+      "nonblank": true,
+      "native_identity": {
+        "skin_id": "skin.foundry.slate",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+        "dialog_id": 12003,
+        "modal": true,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+        "probe_sequence": 17,
+        "native_interpreter_exited": true
+      }
+    },
+    {
+      "file": "contract-skin.foundry.slate-plugin.video.foundry.resolverfixture-info-stopped.png",
+      "sha256": "9cdb9c988c165e7d4aad8341eaf4031aa139eed053524f49105e31e50d66de51",
+      "bytes": 130224,
+      "width": 1920,
+      "height": 1080,
+      "rgb_stddev": [
+        14.988300998729171,
+        15.208484021080093,
+        15.676756927645181
+      ],
+      "nonblank": true,
+      "native_identity": {
+        "skin_id": "skin.foundry.slate",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+        "dialog_id": 9999,
+        "modal": false,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+        "probe_sequence": 18,
+        "native_interpreter_exited": true
+      }
+    },
+    {
+      "file": "contract-skin.foundry.slate-plugin.video.foundry.resolverfixture-context-stopped.png",
+      "sha256": "9cdb9c988c165e7d4aad8341eaf4031aa139eed053524f49105e31e50d66de51",
+      "bytes": 130224,
+      "width": 1920,
+      "height": 1080,
+      "rgb_stddev": [
+        14.988300998729171,
+        15.208484021080093,
+        15.676756927645181
+      ],
+      "nonblank": true,
+      "native_identity": {
+        "skin_id": "skin.foundry.slate",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+        "dialog_id": 9999,
+        "modal": false,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+        "probe_sequence": 19,
+        "native_interpreter_exited": true
+      }
+    }
+  ],
+  "cases": [
+    {
+      "skin": "skin.foundry",
+      "provider": "plugin.video.fenskeleton",
+      "route": "info",
+      "info_labels": {
+        "ListItem.DBTYPE": "movie",
+        "ListItem.FileNameAndPath": "plugin://plugin.video.fenskeleton/?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only"
+      },
+      "receipt": {
+        "url": "plugin://plugin.video.fenskeleton/?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+        "args": [
+          "plugin://plugin.video.fenskeleton/",
+          "-1",
+          "?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+          "resume:false"
+        ],
+        "provider": "plugin.video.fenskeleton",
+        "phase": "stopped"
+      },
+      "stop_without_failure": true,
+      "screenshots": [
+        {
+          "file": "contract-skin.foundry-plugin.video.fenskeleton-info.png",
+          "sha256": "85d3bf468f3049d9c41f212441d22df022667bacbf6065d8018437596de88af4",
+          "bytes": 866820,
+          "width": 1920,
+          "height": 1080,
+          "rgb_stddev": [
+            26.080699475566465,
+            25.508505375360937,
+            25.277058934855244
+          ],
+          "nonblank": true,
+          "native_identity": {
+            "skin_id": "skin.foundry",
+            "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+            "dialog_id": 12003,
+            "modal": true,
+            "yesno": false,
+            "yes_focused": false,
+            "prompt": {
+              "1": "",
+              "9": "",
+              "10": "",
+              "11": ""
+            },
+            "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+            "probe_sequence": 4,
+            "native_interpreter_exited": true
+          }
+        },
+        {
+          "file": "contract-skin.foundry-plugin.video.fenskeleton-info-stopped.png",
+          "sha256": "3945d4c3b2eada3c34fac2346b9e205fb46ddc4f2b4897cdb7bed70a9a90393f",
+          "bytes": 1184549,
+          "width": 1920,
+          "height": 1080,
+          "rgb_stddev": [
+            21.929985791815113,
+            21.47405466716169,
+            21.8708862244722
+          ],
+          "nonblank": true,
+          "native_identity": {
+            "skin_id": "skin.foundry",
+            "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+            "dialog_id": 9999,
+            "modal": false,
+            "yesno": false,
+            "yes_focused": false,
+            "prompt": {
+              "1": "",
+              "9": "",
+              "10": "",
+              "11": ""
+            },
+            "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+            "probe_sequence": 5,
+            "native_interpreter_exited": true
+          }
+        }
+      ],
+      "after_stop_dialog_id": 9999,
+      "after_stop_modal": false
+    },
+    {
+      "skin": "skin.foundry",
+      "provider": "plugin.video.fenskeleton",
+      "route": "context",
+      "info_labels": {},
+      "receipt": {
+        "url": "plugin://plugin.video.fenskeleton/?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+        "args": [
+          "plugin://plugin.video.fenskeleton/",
+          "-1",
+          "?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+          "resume:false"
+        ],
+        "provider": "plugin.video.fenskeleton",
+        "phase": "stopped"
+      },
+      "stop_without_failure": true,
+      "screenshots": [
+        {
+          "file": "contract-skin.foundry-plugin.video.fenskeleton-context-stopped.png",
+          "sha256": "3945d4c3b2eada3c34fac2346b9e205fb46ddc4f2b4897cdb7bed70a9a90393f",
+          "bytes": 1184549,
+          "width": 1920,
+          "height": 1080,
+          "rgb_stddev": [
+            21.929985791815113,
+            21.47405466716169,
+            21.8708862244722
+          ],
+          "nonblank": true,
+          "native_identity": {
+            "skin_id": "skin.foundry",
+            "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+            "dialog_id": 9999,
+            "modal": false,
+            "yesno": false,
+            "yes_focused": false,
+            "prompt": {
+              "1": "",
+              "9": "",
+              "10": "",
+              "11": ""
+            },
+            "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+            "probe_sequence": 6,
+            "native_interpreter_exited": true
+          }
+        }
+      ],
+      "after_stop_dialog_id": 9999,
+      "after_stop_modal": false
+    },
+    {
+      "skin": "skin.foundry",
+      "provider": "plugin.video.foundry.resolverfixture",
+      "route": "info",
+      "info_labels": {
+        "ListItem.DBTYPE": "movie",
+        "ListItem.FileNameAndPath": "plugin://plugin.video.foundry.resolverfixture/?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only"
+      },
+      "receipt": {
+        "url": "plugin://plugin.video.foundry.resolverfixture/?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+        "args": [
+          "plugin://plugin.video.foundry.resolverfixture/",
+          "1",
+          "?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+          "resume:false"
+        ],
+        "provider": "plugin.video.foundry.resolverfixture",
+        "phase": "resolved"
+      },
+      "stop_without_failure": true,
+      "screenshots": [
+        {
+          "file": "contract-skin.foundry-plugin.video.foundry.resolverfixture-info.png",
+          "sha256": "ef7bccdc8430e9330f34f06d76c96c75920a7eaaecc9648210d03ba30db559d2",
+          "bytes": 1016360,
+          "width": 1920,
+          "height": 1080,
+          "rgb_stddev": [
+            23.149396822216303,
+            22.651193289053257,
+            22.665223207971273
+          ],
+          "nonblank": true,
+          "native_identity": {
+            "skin_id": "skin.foundry",
+            "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+            "dialog_id": 12003,
+            "modal": true,
+            "yesno": false,
+            "yes_focused": false,
+            "prompt": {
+              "1": "",
+              "9": "",
+              "10": "",
+              "11": ""
+            },
+            "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+            "probe_sequence": 7,
+            "native_interpreter_exited": true
+          }
+        },
+        {
+          "file": "contract-skin.foundry-plugin.video.foundry.resolverfixture-info-stopped.png",
+          "sha256": "3945d4c3b2eada3c34fac2346b9e205fb46ddc4f2b4897cdb7bed70a9a90393f",
+          "bytes": 1184549,
+          "width": 1920,
+          "height": 1080,
+          "rgb_stddev": [
+            21.929985791815113,
+            21.47405466716169,
+            21.8708862244722
+          ],
+          "nonblank": true,
+          "native_identity": {
+            "skin_id": "skin.foundry",
+            "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+            "dialog_id": 9999,
+            "modal": false,
+            "yesno": false,
+            "yes_focused": false,
+            "prompt": {
+              "1": "",
+              "9": "",
+              "10": "",
+              "11": ""
+            },
+            "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+            "probe_sequence": 8,
+            "native_interpreter_exited": true
+          }
+        }
+      ],
+      "after_stop_dialog_id": 9999,
+      "after_stop_modal": false
+    },
+    {
+      "skin": "skin.foundry",
+      "provider": "plugin.video.foundry.resolverfixture",
+      "route": "context",
+      "info_labels": {},
+      "receipt": {
+        "url": "plugin://plugin.video.foundry.resolverfixture/?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+        "args": [
+          "plugin://plugin.video.foundry.resolverfixture/",
+          "2",
+          "?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+          "resume:false"
+        ],
+        "provider": "plugin.video.foundry.resolverfixture",
+        "phase": "resolved"
+      },
+      "stop_without_failure": true,
+      "screenshots": [
+        {
+          "file": "contract-skin.foundry-plugin.video.foundry.resolverfixture-context-stopped.png",
+          "sha256": "3945d4c3b2eada3c34fac2346b9e205fb46ddc4f2b4897cdb7bed70a9a90393f",
+          "bytes": 1184549,
+          "width": 1920,
+          "height": 1080,
+          "rgb_stddev": [
+            21.929985791815113,
+            21.47405466716169,
+            21.8708862244722
+          ],
+          "nonblank": true,
+          "native_identity": {
+            "skin_id": "skin.foundry",
+            "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+            "dialog_id": 9999,
+            "modal": false,
+            "yesno": false,
+            "yes_focused": false,
+            "prompt": {
+              "1": "",
+              "9": "",
+              "10": "",
+              "11": ""
+            },
+            "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+            "probe_sequence": 9,
+            "native_interpreter_exited": true
+          }
+        }
+      ],
+      "after_stop_dialog_id": 9999,
+      "after_stop_modal": false
+    },
+    {
+      "skin": "skin.foundry.slate",
+      "provider": "plugin.video.fenskeleton",
+      "route": "info",
+      "info_labels": {
+        "ListItem.DBTYPE": "movie",
+        "ListItem.FileNameAndPath": "plugin://plugin.video.fenskeleton/?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only"
+      },
+      "receipt": {
+        "url": "plugin://plugin.video.fenskeleton/?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+        "args": [
+          "plugin://plugin.video.fenskeleton/",
+          "-1",
+          "?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+          "resume:false"
+        ],
+        "provider": "plugin.video.fenskeleton",
+        "phase": "stopped"
+      },
+      "stop_without_failure": true,
+      "screenshots": [
+        {
+          "file": "contract-skin.foundry.slate-plugin.video.fenskeleton-info.png",
+          "sha256": "6c58fa3cb5ad2a6e3c3a351dad2cd0b9e5083084984abe91446d2c67a75beb8f",
+          "bytes": 151433,
+          "width": 1920,
+          "height": 1080,
+          "rgb_stddev": [
+            17.966276192455584,
+            18.013202844908935,
+            18.109084473833907
+          ],
+          "nonblank": true,
+          "native_identity": {
+            "skin_id": "skin.foundry.slate",
+            "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+            "dialog_id": 12003,
+            "modal": true,
+            "yesno": false,
+            "yes_focused": false,
+            "prompt": {
+              "1": "",
+              "9": "",
+              "10": "",
+              "11": ""
+            },
+            "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+            "probe_sequence": 14,
+            "native_interpreter_exited": true
+          }
+        },
+        {
+          "file": "contract-skin.foundry.slate-plugin.video.fenskeleton-info-stopped.png",
+          "sha256": "9cdb9c988c165e7d4aad8341eaf4031aa139eed053524f49105e31e50d66de51",
+          "bytes": 130224,
+          "width": 1920,
+          "height": 1080,
+          "rgb_stddev": [
+            14.988300998729171,
+            15.208484021080093,
+            15.676756927645181
+          ],
+          "nonblank": true,
+          "native_identity": {
+            "skin_id": "skin.foundry.slate",
+            "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+            "dialog_id": 9999,
+            "modal": false,
+            "yesno": false,
+            "yes_focused": false,
+            "prompt": {
+              "1": "",
+              "9": "",
+              "10": "",
+              "11": ""
+            },
+            "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+            "probe_sequence": 15,
+            "native_interpreter_exited": true
+          }
+        }
+      ],
+      "after_stop_dialog_id": 9999,
+      "after_stop_modal": false
+    },
+    {
+      "skin": "skin.foundry.slate",
+      "provider": "plugin.video.fenskeleton",
+      "route": "context",
+      "info_labels": {},
+      "receipt": {
+        "url": "plugin://plugin.video.fenskeleton/?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+        "args": [
+          "plugin://plugin.video.fenskeleton/",
+          "-1",
+          "?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+          "resume:false"
+        ],
+        "provider": "plugin.video.fenskeleton",
+        "phase": "stopped"
+      },
+      "stop_without_failure": true,
+      "screenshots": [
+        {
+          "file": "contract-skin.foundry.slate-plugin.video.fenskeleton-context-stopped.png",
+          "sha256": "9cdb9c988c165e7d4aad8341eaf4031aa139eed053524f49105e31e50d66de51",
+          "bytes": 130224,
+          "width": 1920,
+          "height": 1080,
+          "rgb_stddev": [
+            14.988300998729171,
+            15.208484021080093,
+            15.676756927645181
+          ],
+          "nonblank": true,
+          "native_identity": {
+            "skin_id": "skin.foundry.slate",
+            "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+            "dialog_id": 9999,
+            "modal": false,
+            "yesno": false,
+            "yes_focused": false,
+            "prompt": {
+              "1": "",
+              "9": "",
+              "10": "",
+              "11": ""
+            },
+            "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+            "probe_sequence": 16,
+            "native_interpreter_exited": true
+          }
+        }
+      ],
+      "after_stop_dialog_id": 9999,
+      "after_stop_modal": false
+    },
+    {
+      "skin": "skin.foundry.slate",
+      "provider": "plugin.video.foundry.resolverfixture",
+      "route": "info",
+      "info_labels": {
+        "ListItem.DBTYPE": "movie",
+        "ListItem.FileNameAndPath": "plugin://plugin.video.foundry.resolverfixture/?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only"
+      },
+      "receipt": {
+        "url": "plugin://plugin.video.foundry.resolverfixture/?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+        "args": [
+          "plugin://plugin.video.foundry.resolverfixture/",
+          "3",
+          "?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+          "resume:false"
+        ],
+        "provider": "plugin.video.foundry.resolverfixture",
+        "phase": "resolved"
+      },
+      "stop_without_failure": true,
+      "screenshots": [
+        {
+          "file": "contract-skin.foundry.slate-plugin.video.foundry.resolverfixture-info.png",
+          "sha256": "447b99bba8872af30072f4a59bc4e875f0a631d30f975c38ddc97b22fe423c1e",
+          "bytes": 152259,
+          "width": 1920,
+          "height": 1080,
+          "rgb_stddev": [
+            17.32617902688389,
+            17.408384928005724,
+            17.569067641244533
+          ],
+          "nonblank": true,
+          "native_identity": {
+            "skin_id": "skin.foundry.slate",
+            "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+            "dialog_id": 12003,
+            "modal": true,
+            "yesno": false,
+            "yes_focused": false,
+            "prompt": {
+              "1": "",
+              "9": "",
+              "10": "",
+              "11": ""
+            },
+            "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+            "probe_sequence": 17,
+            "native_interpreter_exited": true
+          }
+        },
+        {
+          "file": "contract-skin.foundry.slate-plugin.video.foundry.resolverfixture-info-stopped.png",
+          "sha256": "9cdb9c988c165e7d4aad8341eaf4031aa139eed053524f49105e31e50d66de51",
+          "bytes": 130224,
+          "width": 1920,
+          "height": 1080,
+          "rgb_stddev": [
+            14.988300998729171,
+            15.208484021080093,
+            15.676756927645181
+          ],
+          "nonblank": true,
+          "native_identity": {
+            "skin_id": "skin.foundry.slate",
+            "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+            "dialog_id": 9999,
+            "modal": false,
+            "yesno": false,
+            "yes_focused": false,
+            "prompt": {
+              "1": "",
+              "9": "",
+              "10": "",
+              "11": ""
+            },
+            "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+            "probe_sequence": 18,
+            "native_interpreter_exited": true
+          }
+        }
+      ],
+      "after_stop_dialog_id": 9999,
+      "after_stop_modal": false
+    },
+    {
+      "skin": "skin.foundry.slate",
+      "provider": "plugin.video.foundry.resolverfixture",
+      "route": "context",
+      "info_labels": {},
+      "receipt": {
+        "url": "plugin://plugin.video.foundry.resolverfixture/?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+        "args": [
+          "plugin://plugin.video.foundry.resolverfixture/",
+          "4",
+          "?mode=play_media&title=Encoded%20%26%20comma%2C%28paren%29&token=fixture-only",
+          "resume:false"
+        ],
+        "provider": "plugin.video.foundry.resolverfixture",
+        "phase": "resolved"
+      },
+      "stop_without_failure": true,
+      "screenshots": [
+        {
+          "file": "contract-skin.foundry.slate-plugin.video.foundry.resolverfixture-context-stopped.png",
+          "sha256": "9cdb9c988c165e7d4aad8341eaf4031aa139eed053524f49105e31e50d66de51",
+          "bytes": 130224,
+          "width": 1920,
+          "height": 1080,
+          "rgb_stddev": [
+            14.988300998729171,
+            15.208484021080093,
+            15.676756927645181
+          ],
+          "nonblank": true,
+          "native_identity": {
+            "skin_id": "skin.foundry.slate",
+            "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+            "dialog_id": 9999,
+            "modal": false,
+            "yesno": false,
+            "yes_focused": false,
+            "prompt": {
+              "1": "",
+              "9": "",
+              "10": "",
+              "11": ""
+            },
+            "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+            "probe_sequence": 19,
+            "native_interpreter_exited": true
+          }
+        }
+      ],
+      "after_stop_dialog_id": 9999,
+      "after_stop_modal": false
+    }
+  ],
+  "fixture_isolation": {
+    "disabled_setup_entry_modes": [
+      "check_for_update",
+      "check_for_profile_change",
+      "configure_experience"
+    ],
+    "helper_service_disabled": true,
+    "playback_router_source_unmodified": true
+  },
+  "scope": "Disposable native Kodi, both shipped skins and real playback helper entry routes, setup-only entry modes/service disabled; synthetic action and resolver addons/local video; no live FEN service or affected device validation.",
+  "kodi": {
+    "major": 21,
+    "minor": 2,
+    "revision": "20250330-nogitfound",
+    "tag": "stable"
+  },
+  "skin_identity_receipts": [
+    {
+      "skin": "skin.foundry",
+      "pending_confirmation": {
+        "skin_id": "skin.foundry",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+        "dialog_id": 10100,
+        "modal": true,
+        "yesno": true,
+        "yes_focused": false,
+        "prompt": {
+          "1": "Keep skin?",
+          "9": "Would you like to keep this change?",
+          "10": "No",
+          "11": "Yes"
+        },
+        "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+        "probe_sequence": 1,
+        "native_interpreter_exited": true
+      },
+      "focused_confirmation": {
+        "skin_id": "skin.foundry",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+        "dialog_id": 10100,
+        "modal": true,
+        "yesno": true,
+        "yes_focused": true,
+        "prompt": {
+          "1": "Keep skin?",
+          "9": "Would you like to keep this change?",
+          "10": "No",
+          "11": "Yes"
+        },
+        "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+        "probe_sequence": 2,
+        "native_interpreter_exited": true
+      },
+      "loaded": {
+        "skin_id": "skin.foundry",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+        "dialog_id": 9999,
+        "modal": false,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+        "probe_sequence": 3,
+        "native_interpreter_exited": true
+      },
+      "after_cases": {
+        "skin_id": "skin.foundry",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry",
+        "dialog_id": 9999,
+        "modal": false,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "56f657b1ceca0ff8c47232afa9302e23a054f16e1ef97576f839fdc906dc4794",
+        "probe_sequence": 10,
+        "native_interpreter_exited": true
+      }
+    },
+    {
+      "skin": "skin.foundry.slate",
+      "pending_confirmation": {
+        "skin_id": "skin.foundry.slate",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+        "dialog_id": 10100,
+        "modal": true,
+        "yesno": true,
+        "yes_focused": false,
+        "prompt": {
+          "1": "Keep skin?",
+          "9": "Would you like to keep this change?",
+          "10": "No",
+          "11": "Yes"
+        },
+        "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+        "probe_sequence": 11,
+        "native_interpreter_exited": true
+      },
+      "focused_confirmation": {
+        "skin_id": "skin.foundry.slate",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+        "dialog_id": 10100,
+        "modal": true,
+        "yesno": true,
+        "yes_focused": true,
+        "prompt": {
+          "1": "Keep skin?",
+          "9": "Would you like to keep this change?",
+          "10": "No",
+          "11": "Yes"
+        },
+        "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+        "probe_sequence": 12,
+        "native_interpreter_exited": true
+      },
+      "loaded": {
+        "skin_id": "skin.foundry.slate",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+        "dialog_id": 9999,
+        "modal": false,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+        "probe_sequence": 13,
+        "native_interpreter_exited": true
+      },
+      "after_cases": {
+        "skin_id": "skin.foundry.slate",
+        "skin_path": "/tmp/foundry-action-contract-0e9_77kb/kodi/portable_data/addons/skin.foundry.slate",
+        "dialog_id": 9999,
+        "modal": false,
+        "yesno": false,
+        "yes_focused": false,
+        "prompt": {
+          "1": "",
+          "9": "",
+          "10": "",
+          "11": ""
+        },
+        "dialog_info_sha256": "9f59e902a488d6c2c2e2c7c67ec2d20872b58ccc8724ed964363b64789c4a318",
+        "probe_sequence": 20,
+        "native_interpreter_exited": true
+      }
+    }
+  ],
+  "actual_skin_identity_gate": true,
+  "exact_eight_cases": true,
+  "playback_log_error_gate": true,
+  "process_cleanup": {
+    "owned_process_group": 12,
+    "live_group_members": [],
+    "errors": []
+  }
+}

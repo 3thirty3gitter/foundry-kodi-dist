@@ -1,0 +1,93 @@
+{
+  "passed": true,
+  "surfaces": [
+    {
+      "name": "icons-home",
+      "window": 10000,
+      "dialog": 9999
+    },
+    {
+      "name": "icons-settings",
+      "window": 10004,
+      "dialog": 9999
+    },
+    {
+      "name": "icons-skinsettings",
+      "window": 10035,
+      "dialog": 9999
+    },
+    {
+      "name": "icons-keyboard",
+      "window": 10000,
+      "dialog": 10103
+    },
+    {
+      "name": "icons-default-placeholders",
+      "window": 10025,
+      "dialog": 9999
+    },
+    {
+      "name": "icons-wall-default-folder",
+      "window": 10025,
+      "dialog": 9999
+    },
+    {
+      "name": "icons-wall-default-file",
+      "window": 10025,
+      "dialog": 9999
+    },
+    {
+      "name": "icons-playback-osd",
+      "window": 12005,
+      "dialog": 12901
+    }
+  ],
+  "resolved": 765,
+  "actual_skin": "skin.foundry.slate",
+  "actual_skin_path": "/tmp/slate-icons-cn5pajaa/kodi/portable_data/addons/skin.foundry.slate/",
+  "offline_catalog_handshake": true,
+  "placeholder_view": {
+    "id": 52,
+    "name": "IconWall",
+    "visible": true,
+    "focused": true
+  },
+  "placeholder_items": [
+    {
+      "label": "A folder without artwork",
+      "icon": "DefaultFolder.png",
+      "capture": "icons-wall-default-folder",
+      "view": 52
+    },
+    {
+      "label": "B movie without artwork.mp4",
+      "icon": "DefaultVideo.png",
+      "capture": "icons-wall-default-file",
+      "view": 52
+    }
+  ],
+  "placeholder_navigation": [
+    {
+      "target": "A folder",
+      "attempt": 0,
+      "label": ".."
+    },
+    {
+      "target": "A folder",
+      "attempt": 1,
+      "label": "A folder without artwork"
+    },
+    {
+      "target": "B movie",
+      "attempt": 0,
+      "label": "A folder without artwork"
+    },
+    {
+      "target": "B movie",
+      "attempt": 1,
+      "label": "B movie without artwork.mp4"
+    }
+  ],
+  "playback_active": true,
+  "playback_type": "offline MJPG AVI video"
+}

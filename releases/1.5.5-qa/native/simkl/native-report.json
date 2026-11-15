@@ -1,0 +1,129 @@
+{
+  "passed": true,
+  "scope": "Actual native setup dialogs with empty disposable profiles and nonservice SIMKL fixture. No official install, pairing, tracking, account, Shield or live synchronization validation.",
+  "phases": [
+    {
+      "phase": "missing",
+      "dialog_id": 10100,
+      "expected_body": "Install the official SIMKL tracker?",
+      "verified_disclosure": true,
+      "observation_file": "missing-dialog.json",
+      "source_sha256": "bf31051f544cbea2517d0d9a897fac532c5702fb879bde754065472ff11b8e89",
+      "native_dialog_opened": true,
+      "cancelled": true,
+      "enabled_before": null,
+      "enabled_unchanged": true,
+      "fixture_executed": false,
+      "shipped_setup_unchanged": true
+    },
+    {
+      "phase": "disabled",
+      "dialog_id": 12002,
+      "expected_body": "SIMKL is disabled and will stay disabled.",
+      "verified_disclosure": true,
+      "observation_file": "disabled-dialog.json",
+      "source_sha256": "bf31051f544cbea2517d0d9a897fac532c5702fb879bde754065472ff11b8e89",
+      "native_dialog_opened": true,
+      "cancelled": true,
+      "enabled_before": false,
+      "enabled_unchanged": true,
+      "fixture_executed": false,
+      "shipped_setup_unchanged": true
+    },
+    {
+      "phase": "enabled",
+      "dialog_id": 10100,
+      "expected_body": "Open SIMKL settings?",
+      "verified_disclosure": true,
+      "observation_file": "enabled-dialog.json",
+      "source_sha256": "bf31051f544cbea2517d0d9a897fac532c5702fb879bde754065472ff11b8e89",
+      "native_dialog_opened": true,
+      "cancelled": true,
+      "enabled_before": true,
+      "enabled_unchanged": true,
+      "fixture_executed": false,
+      "shipped_setup_unchanged": true
+    }
+  ],
+  "source_sha256": "bf31051f544cbea2517d0d9a897fac532c5702fb879bde754065472ff11b8e89",
+  "screenshots": [
+    {
+      "file": "missing-dialog.png",
+      "sha256": "8b044ab393a94cae4622b9ef53508f003713658a6e29221ac5ed721df0ccfa97",
+      "size": [
+        1920,
+        1080
+      ],
+      "stddev": [
+        22.352757565851878,
+        29.225106095241717,
+        32.834921878074994
+      ]
+    },
+    {
+      "file": "missing-cancelled.png",
+      "sha256": "cc6275941ce668e9ab9733bbe2be156f0221fa22b0390b1f217a99a4bd06b6f1",
+      "size": [
+        1920,
+        1080
+      ],
+      "stddev": [
+        29.225849660981627,
+        32.69282101190393,
+        36.36505020337854
+      ]
+    },
+    {
+      "file": "disabled-dialog.png",
+      "sha256": "a03dbe58f0921c998e0a3f7b8181927859db6b8f99ce85a82782ba9757bc4391",
+      "size": [
+        1920,
+        1080
+      ],
+      "stddev": [
+        23.187990041126554,
+        29.811408767598184,
+        33.34773798631214
+      ]
+    },
+    {
+      "file": "disabled-cancelled.png",
+      "sha256": "cc6275941ce668e9ab9733bbe2be156f0221fa22b0390b1f217a99a4bd06b6f1",
+      "size": [
+        1920,
+        1080
+      ],
+      "stddev": [
+        29.225849660981627,
+        32.69282101190393,
+        36.36505020337854
+      ]
+    },
+    {
+      "file": "enabled-dialog.png",
+      "sha256": "db74cbecfa133021d1d75fadba81b944db9214789ac19341b60463c362fd9c70",
+      "size": [
+        1920,
+        1080
+      ],
+      "stddev": [
+        22.15030056496183,
+        29.088565993724572,
+        32.71823034007562
+      ]
+    },
+    {
+      "file": "enabled-cancelled.png",
+      "sha256": "cc6275941ce668e9ab9733bbe2be156f0221fa22b0390b1f217a99a4bd06b6f1",
+      "size": [
+        1920,
+        1080
+      ],
+      "stddev": [
+        29.225849660981627,
+        32.69282101190393,
+        36.36505020337854
+      ]
+    }
+  ]
+}
