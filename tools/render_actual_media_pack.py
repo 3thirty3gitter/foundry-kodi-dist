@@ -4,6 +4,25 @@ Fixture controls prove resource decoding/compositing, NOT shipped skin coverage.
 import argparse,json,os,shutil,subprocess,tempfile,time,urllib.request,sys,hashlib
 from pathlib import Path
 from PIL import Image
+"""Straight-RGBA GL_LINEAR pixel-centre sampling; no downsample prefilter.
+
+Matches non-mipmapped Kodi Omega TextureGL.cpp lines65-85 and
+GUITextureGL.cpp lines82-85 SRC_ALPHA compositing. PIL.resize(LANCZOS),
+and even PIL.resize(BILINEAR), apply a downsampling prefilter unlike GL.
+"""
+import math
+from PIL import Image
+def gl_linear(image,size):
+ source=image.convert('RGBA');W,H=source.size;w,h=size;pixels=source.load()
+ output=Image.new('RGBA',size);dest=output.load()
+ for y in range(h):
+  fy=(y+.5)*H/h-.5;y0=math.floor(fy);dy=fy-y0
+  for x in range(w):
+   fx=(x+.5)*W/w-.5;x0=math.floor(fx);dx=fx-x0
+   neighbors=[(pixels[min(W-1,max(0,x0+ix)),min(H-1,max(0,y0+iy))],(dx if ix else 1-dx)*(dy if iy else 1-dy)) for ix in (0,1) for iy in (0,1)]
+   dest[x,y]=tuple(round(sum(pixel[c]*weight for pixel,weight in neighbors)) for c in range(4))
+ return output
+
 p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--pack',type=Path);a=p.parse_args()
 out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
 for prior in out.glob('mediaflags-page-*.png'):prior.unlink()
@@ -99,7 +118,7 @@ try:
   cap=Image.open(out/inner['pages'][index]).convert('RGB');assert cap.size==(1920,1080)
   asset_errors=[];case_results=[]
   for case in sample['cases']:
-   src=Image.open(pack/'resources'/sample['file']).convert('RGBA').resize((case['width'],case['height']),Image.Resampling.LANCZOS)
+   src=gl_linear(Image.open(pack/'resources'/sample['file']),(case['width'],case['height']))
    for x,bg in ((100,(255,255,255)),(600,(32,32,32))):
     expected=Image.new('RGBA',src.size,bg+(255,));expected.alpha_composite(src);expected=expected.convert('RGB')
     x+=case['offset_x'];y=case['y']+case['offset_y'];observed=cap.crop((x,y,x+src.width,y+src.height))
@@ -114,7 +133,7 @@ try:
  assert inner['resource_hash_verified']==len(assets)
  assert hashlib.sha256(manifest_path.read_bytes()).hexdigest()==manifest_sha,'Source manifest changed during QA'
  assert all(hashlib.sha256((pack/r['file']).read_bytes()).hexdigest()==r['sha256'] for r in source_receipts),'Source bytes changed during QA'
- report.update(passed=True,native=inner,pages=page_results,source_receipts=source_receipts,manifest_sha256=manifest_sha,manifest_release_status=manifest.get('release_status'),asset_count=len(assets),scope='All included resource files decoded and composited in standalone Estuary fixture at115x60 and76x54 controls, light/dark. Not all format coverage, licensing approval, selector installation, or physical device proof. Manifest is unchanged.')
+ report.update(passed=True,native=inner,pages=page_results,reference_sampling='GL_LINEAR pixel-centre straight-RGBA, no prefilter',source_receipts=source_receipts,manifest_sha256=manifest_sha,manifest_release_status=manifest.get('release_status'),asset_count=len(assets),scope='All included resource files decoded and composited in standalone Estuary fixture at115x60 and76x54 controls, light/dark. Not all format coverage, licensing approval, selector installation, or physical device proof. Manifest is unchanged.')
 except Exception as e:report['error']=repr(e)
 finally:
  try:rpc('Application.Quit')
