@@ -38,7 +38,7 @@ for aid in ('skin.foundry','skin.foundry.slate'):
 import struct
 from io import BytesIO
 # Every resource here is synthetic and restricted to disposable QA.
-CATS={'videocodec':['h264','mjpeg'],'videoresolution':['1080','720','480','360'], 'videohdr':['hdr10'], 'aspectratio':['1.78'], 'audiocodec':['ac3'], 'audiochannel':['6']}
+CATS={'videocodec':['h264','mjpeg'],'videoresolution':['1080','720','480','360'], 'videohdr':['hdr10'], 'aspectratio':['1.78'], 'audiocodec':['ac3','pcm','pcm_s16le'], 'audiochannel':['6','2']}
 PACKS=['resource.images.foundry.media.qaa','resource.images.foundry.media.qab','resource.images.foundry.media.qaexperimental','resource.images.foundry.media.qadisabled']
 for ix,aid in enumerate(PACKS):
  d=addons/aid;(d/'resources').mkdir(parents=True)
@@ -49,27 +49,12 @@ for ix,aid in enumerate(PACKS):
   for alias in aliases:
    dest=d/'resources/flags'/cat/(alias+'.png');dest.parent.mkdir(parents=True,exist_ok=True)
    im=Image.new('RGBA',(120,60),(0,0,0,0));ImageDraw.Draw(im).rectangle((5,5,114,54), fill=(245,30,160,255) if ix==0 else (30,240,90,255));im.save(dest)
-monitor=addons/'script.foundry.mediapackmonitor';monitor.mkdir()
-(monitor/'addon.xml').write_text('<addon id="script.foundry.mediapackmonitor" version="1.0.0" name="QA monitor" provider-name="QA"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/></addon>')
-# Invoke the UNCHANGED production monitor continuously. Rest of helper service isolated.
-(monitor/'default.py').write_text('''import xbmc,importlib.util,json,traceback
-from pathlib import Path
-ROOT=Path('''+repr(str(addons))+''')
-OUT=Path('''+repr(str(out))+''')
-modules=[]
-for h in ('script.foundry.helper','script.foundry.slate.helper'):
- spec=importlib.util.spec_from_file_location(h.replace('.','_'),ROOT/h/'resources/lib/modules/media_pack.py')
- m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);modules.append(m.MediaPackMonitor())
-try:
- while not xbmc.Monitor().abortRequested() and not (OUT/'stop-monitor').exists():
-  for m in modules:m.process()
-  xbmc.sleep(200)
-except Exception:
- (OUT/'monitor-error.txt').write_text(traceback.format_exc());raise
-finally:
- for m in modules:m.clear()
-''')
-
+SERVICE_QA=['script.foundry.mediapackmonitor','script.foundry.mediapackmonitorslate']
+for qaid,helper,tag in zip(SERVICE_QA,('script.foundry.helper','script.foundry.slate.helper'),('original','slate')):
+ d=addons/qaid;d.mkdir()
+ (d/'addon.xml').write_text('<addon id="'+qaid+'" version="1.0.0" name="QA actual service" provider-name="QA"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/></addon>')
+ preamble='from pathlib import Path\nENTRY=Path('+repr(str(addons/helper/'resources/lib'))+')\nOUT=Path('+repr(str(out))+')\nTAG='+repr(tag)+'\n'
+ (d/'default.py').write_text(preamble+'"""QA addon payload. Values ENTRY, OUT and TAG supplied by native runner."""\nimport sys,types,json,time,traceback,hashlib,importlib.util\nfrom pathlib import Path\nimport xbmc\nsys.path.insert(0,str(ENTRY))\nclass Noop:\n def __init__(self,*args,**kwargs):pass\n def __getattr__(self,name):return lambda *args,**kwargs:None\ndef stub(name,**exports):\n m=types.ModuleType(name)\n for k,v in exports.items():setattr(m,k,v)\n sys.modules[name]=m\nstub(\'modules.logger\',logger=lambda *a,**k:None)\nstub(\'modules.file_sources\',ensure_file_sources=lambda:None)\nstub(\'modules.startup_splash\',install_startup_splash=lambda:None)\nstub(\'modules.monitors.ratings\',RatingsMonitor=Noop)\nstub(\'modules.monitors.metadata\',MetadataMonitor=Noop)\nstub(\'modules.vod\',CatalogArtworkMonitor=Noop,CatalogRoutingMonitor=Noop)\nstub(\'modules.monitors.image\',ImageMonitor=Noop,ImageBlur=Noop,ImageAnalysisConfig=Noop)\nstub(\'modules.databases.ratings\',RatingsDatabase=Noop)\nstub(\'modules.config\',SETTINGS_PATH=str(OUT/(TAG+\'-settings\')))\nfrom modules import media_pack\nspec=importlib.util.spec_from_file_location(\'qa_unchanged_service\',ENTRY/\'service.py\')\nm=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)\nreport={\'scope\':\'Unchanged Service loop and native Monitor; unrelated workers/startup stubbed; media monitor unchanged apart from observation wrappers\',\'source\':{},\'samples\':[],\'waits\':[],\'passed\':False}\nfor name,p in [(\'service\',ENTRY/\'service.py\'),(\'media_pack\',ENTRY/\'modules/media_pack.py\')]:report[\'source\'][name]=hashlib.sha256(p.read_bytes()).hexdigest()\ndef save():(OUT/(TAG+\'-scheduler.json\')).write_text(json.dumps(report,indent=2))\ntry:\n service=m.Service()\n process=service.media_pack_monitor.process\n wait=service.waitForAbort\n def observed_process():\n  process()\n  report[\'samples\'].append({\'at\':time.monotonic(),\'skin\':xbmc.getSkinDir(),\'paused\':service._should_pause(),\'pack\':service.media_pack_monitor.window.getProperty(media_pack.PREFIX+\'.pack\'),\'setting\':xbmc.getInfoLabel(\'Skin.String(MediaIconPack)\')})\n  report[\'samples\']=report[\'samples\'][-1000:];save()\n def observed_wait(seconds):\n  report[\'waits\'].append(seconds);report[\'waits\']=report[\'waits\'][-1000:]\n  return wait(seconds)\n service.media_pack_monitor.process=observed_process\n service.waitForAbort=observed_wait\n service.run()\n report[\'passed\']=True\nexcept Exception:report[\'error\']=traceback.format_exc();raise\nfinally:save()\n')
 qa=addons/'script.foundry.searchqa';qa.mkdir()
 (qa/'addon.xml').write_text('<addon id="script.foundry.searchqa" version="1.0.0" name="Search QA" provider-name="QA"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/></addon>')
 driver=addons/'script.foundry.searchdriver';driver.mkdir()
@@ -127,18 +112,28 @@ def snap(n):
  if dest.exists():dest.unlink()
  drive('xbmc.executebuiltin('+repr('TakeScreenshot('+str(dest)+')')+',True)\nxbmc.sleep(700)')
  wait(dest.exists)
+"""Offline AVI fixture: 640x360 MJPEG + actual 48kHz stereo signed PCM."""
+import struct,math
+from io import BytesIO
+from PIL import Image
 def chunk(name,data):return name+struct.pack('<I',len(data))+data+(b'\0' if len(data)%2 else b'')
-
-
 def video(path):
-    width,height,fps,count=640,360,2,120
-    out=BytesIO();Image.new('RGB',(width,height),(85,100,120)).save(out,format='JPEG');frame=out.getvalue()
-    avih=struct.pack('<14I',1000000//fps,len(frame)*fps,0,16,count,0,1,len(frame),width,height,0,0,0,0)
-    strh=struct.pack('<4s4sIHH8I4h',b'vids',b'MJPG',0,0,0,0,1,fps,0,count,len(frame),0xffffffff,0,0,0,width,height)
-    strf=struct.pack('<IiiHH4sIiiII',40,width,height,1,24,b'MJPG',width*height*3,0,0,0,0)
-    header=chunk(b'LIST',b'hdrl'+chunk(b'avih',avih)+chunk(b'LIST',b'strl'+chunk(b'strh',strh)+chunk(b'strf',strf)))
-    data=b'AVI '+header+chunk(b'LIST',b'movi'+chunk(b'00dc',frame)*count)
-    path.write_bytes(chunk(b'RIFF',data))
+ width,height,fps,count,rate=640,360,2,120,48000
+ buf=BytesIO();Image.new('RGB',(width,height),(85,100,120)).save(buf,'JPEG');frame=buf.getvalue()
+ # A quiet actual sine signal avoids treating an empty track as metadata-only.
+ sound=b''.join(struct.pack('<hh',int(1000*math.sin(2*math.pi*440*i/rate)),int(1000*math.sin(2*math.pi*660*i/rate))) for i in range(rate//fps))
+ avih=struct.pack('<14I',1000000//fps,len(frame)*fps+rate*4,0,16,count,0,2,max(len(frame),len(sound)),width,height,0,0,0,0)
+ vh=struct.pack('<4s4sIHH8I4h',b'vids',b'MJPG',0,0,0,0,1,fps,0,count,len(frame),0xffffffff,0,0,0,width,height)
+ vf=struct.pack('<IiiHH4sIiiII',40,width,height,1,24,b'MJPG',width*height*3,0,0,0,0)
+ ah=struct.pack('<4s4sIHH8I4h',b'auds',b'\0'*4,0,0,0,0,4,rate*4,0,count*rate//fps,len(sound),0xffffffff,4,0,0,0,0)
+ af=struct.pack('<HHIIHH',1,2,rate,rate*4,4,16)
+ header=chunk(b'LIST',b'hdrl'+chunk(b'avih',avih)+chunk(b'LIST',b'strl'+chunk(b'strh',vh)+chunk(b'strf',vf))+chunk(b'LIST',b'strl'+chunk(b'strh',ah)+chunk(b'strf',af)))
+ # Relative offsets from 'movi' fourcc, with actual per-chunk index.
+ frames=[];index=[];offset=4
+ for _ in range(count):
+  for name,data in ((b'00dc',frame),(b'01wb',sound)):
+   entry=chunk(name,data);frames.append(entry);index.append(struct.pack('<4sIII',name,16,offset,len(data)));offset+=len(entry)
+ path.write_bytes(chunk(b'RIFF',b'AVI '+header+chunk(b'LIST',b'movi'+b''.join(frames))+chunk(b'idx1',b''.join(index))))
 
 video(base/"fixture.avi")
 def info(label):return rpc('XBMC.GetInfoLabels',{'labels':[label]})[label]
@@ -155,7 +150,7 @@ def identity(skin):
  assert json.loads(dest.read_text())['skin']==skin
 def start_monitor():
  if (out/'stop-monitor').exists():(out/'stop-monitor').unlink()
- rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.mediapackmonitor','wait':False})
+ for qaid in SERVICE_QA:rpc('Addons.ExecuteAddon',{'addonid':qaid,'wait':False})
 def open_settings():
  drive('xbmc.executebuiltin("ActivateWindow(skinsettings)",False)')
  trace=[]
@@ -196,6 +191,17 @@ def choose(index,expected):
  snap(skin+'-picker-'+str(index));act('select')
  wait(lambda:not cond('System.HasActiveModalDialog'))
  wait(lambda:selected()==expected)
+def scheduler_evidence(label,paused):
+ tag='original' if skin=='skin.foundry' else 'slate'
+ path=out/(tag+'-scheduler.json')
+ cutoff=time.monotonic()
+ def ready():
+  data=json.loads(path.read_text());sample=data['samples'][-1]
+  return sample['at']>=cutoff and sample['skin']==skin and sample['paused']==paused and sample['setting']==selected() and (2 if paused else .2) in data['waits']
+ wait(ready,t=12)
+ data=json.loads(path.read_text());dest=out/(skin+'-'+label+'-scheduler.json');dest.write_text(json.dumps(data,indent=2))
+ assert data['source']['service']==hashlib.sha256((addons/helper/'resources/lib/service.py').read_bytes()).hexdigest()
+ report['scheduler_evidence'].append({'phase':label,'skin':skin,'file':dest.name,'paused':paused})
 def inspect_module():
  dest=out/(skin+'-inventory.json')
  drive('import sys\nsys.path.insert(0,'+repr(str(addons/helper/'resources/lib'))+')\nfrom modules import media_pack\nrows=media_pack.discover()\nassert [r["id"] for r in rows]=='+repr(PACKS[:2])+'\nPath('+repr(str(dest))+').write_text(json.dumps(rows))')
@@ -215,7 +221,7 @@ OUT=Path('''+repr(str(out))+''')
 class Fixture(xbmcgui.WindowXML):
  def onInit(self):
   a=xbmcgui.ListItem('QA full video');a.setInfo('video',{'title':'QA full video','mediatype':'movie'})
-  a.addStreamInfo('video',{'codec':'h264','width':1920,'height':1080,'aspect':1.78,'hdrtype':'hdr10'})
+  a.getVideoInfoTag().addVideoStream(xbmc.VideoStreamDetail(1920,1080,1.78,60,'h264','','','hdr10'))
   a.addStreamInfo('audio',{'codec':'ac3','channels':6})
   b=xbmcgui.ListItem('QA no stream metadata');b.setInfo('video',{'title':'QA no stream metadata'})
   self.getControl(900).addItems([a,b]);self.setFocusId(900)
@@ -247,10 +253,10 @@ def snapshot(name,expect_pack):
 def colour_count(name,which):
  with Image.open(out/(skin+'-'+name+'.png')).convert('RGB') as im:
   return sum(1 for r,g,b in im.crop((0,320,1920,450)).getdata() if (r>210 and g<65 and b>120) if which=='a') if which=='a' else sum(1 for r,g,b in im.crop((0,320,1920,450)).getdata() if r<65 and g>200 and b<130)
-report={'passed':False,'skins':{},'scope':'Actual settings button/picker; unchanged production monitor in isolated continuous QA host; shipped MediaFlags/StreamPilotFormatBadges includes in custom window, real ListItem metadata and offline native video. Full service scheduler, catalog window, physical device and OSD audio/channel playback NOT certified by this runner.'}
+report={'passed':False,'skins':{},'scheduler_evidence':[],'scope':'Actual settings button/picker; unchanged production Service loop with actual media monitor; unrelated worker dependencies stubbed; shipped MediaFlags/StreamPilotFormatBadges includes in custom window, real ListItem metadata and offline native video. Catalog window, physical device, non-PCM codecs and unrelated service workers NOT certified by this runner.'}
 try:
  wait(lambda:rpc('JSONRPC.Ping')=='pong');quiet()
- for aid in ['resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','script.foundry.helper','script.foundry.slate.helper','skin.foundry','skin.foundry.slate','script.foundry.searchqa','script.foundry.searchdriver','script.foundry.mediapackmonitor']+PACKS:
+ for aid in ['resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','script.foundry.helper','script.foundry.slate.helper','skin.foundry','skin.foundry.slate','script.foundry.searchqa','script.foundry.searchdriver','script.foundry.mediapackmonitor','script.foundry.mediapackmonitorslate']+PACKS:
   rpc('Addons.SetAddonEnabled',{'addonid':aid,'enabled':True})
  rpc('Addons.SetAddonEnabled',{'addonid':PACKS[3],'enabled':False});quiet();start_monitor()
  for skin,helper,prefix in [('skin.foundry','script.foundry.helper','foundry.media'),('skin.foundry.slate','script.foundry.slate.helper','foundry.slate.media')]:
@@ -258,7 +264,8 @@ try:
   wait(lambda:cond('Window.IsVisible(yesnodialog)'));focus_yes('Yes');act('select');quiet();identity(skin)
   report['skins'][skin]={'inventory':inspect_module()}
   open_settings();act('select');wait(lambda:cond('Window.IsVisible(selectdialog)'));act('back');assert selected()==''
-  choose(1,PACKS[0]);show_fixture();v=snapshot('pack-a',PACKS[0])
+  drive('xbmcgui.Window(10000).setProperty("pause_services","true")')
+  choose(1,PACKS[0]);scheduler_evidence('paused-setting-selection',True);show_fixture();v=snapshot('pack-a',PACKS[0])
   for c in CATS:
    assert v['Window(Home).Property('+prefix+'.list.'+c+'.path)'],('Missing true metadata/category',c,v)
   assert colour_count('pack-a','a')>2000,'Actual include did not render A pixels'
@@ -272,6 +279,7 @@ try:
   asset=addons/PACKS[0]/'resources/flags/videocodec/h264.png';asset_bytes=asset.read_bytes();asset.unlink()
   time.sleep(.5);v=snapshot('missing-file',PACKS[0]);assert not v['Window(Home).Property('+prefix+'.list.videocodec.path)']
   asset.write_bytes(asset_bytes);time.sleep(.5);v=snapshot('file-restored',PACKS[0]);assert v['Window(Home).Property('+prefix+'.list.videocodec.path)'];close_fixture()
+  drive('xbmcgui.Window(10000).clearProperty("pause_services")')
   rpc('Player.Open',{'item':{'file':str(base/'fixture.avi')}});wait(lambda:cond('Player.HasVideo'));show_fixture()
   wait(lambda:bool(info('Window(Home).Property('+prefix+'.player.videoresolution.path)')))
   snapshot('player-resolution',PACKS[0])
@@ -280,6 +288,16 @@ try:
   with Image.open(out/(skin+'-player-resolution.png')).convert('RGB') as im:
    assert sum(1 for r,g,b in im.crop((80,630,400,740)).getdata() if r>210 and g<65 and b>120)>300,'Shipped OSD include did not render pack resolution'
   report['skins'][skin]['actual_player_resolution']=resolution
+  scheduler_evidence('active-video',False)
+  wait(lambda:info('VideoPlayer.AudioChannels')=='2')
+  codec=info('VideoPlayer.AudioCodec');assert codec.startswith('pcm'),codec
+  for cat,field in [('audiocodec','AudioCodec'),('audiochannel','AudioChannels')]:
+   assert info('Window(Home).Property('+prefix+'.player.'+cat+'.value)')==info('VideoPlayer.'+field)
+   assert info('Window(Home).Property('+prefix+'.player.'+cat+'.path)')
+  with Image.open(out/(skin+'-player-resolution.png')).convert('RGB') as im:
+   for x0 in (100,186,272):
+    assert sum(1 for r,g,b in im.crop((x0,650,x0+76,704)).getdata() if r>210 and g<65 and b>120)>300,'Actual OSD resolution/channel/PCM badge missing'
+  report['skins'][skin]['actual_player_audio']={'codec':codec,'channels':2}
   close_fixture();act('stop');wait(lambda:not cond('Player.HasVideo'))
   # Same profile, no prepare/reseed; restarting demonstrates persisted Skin.String.
   drive('xbmc.executebuiltin("ActivateWindow(home)",False)');rpc('Application.Quit');k.wait(timeout=20)

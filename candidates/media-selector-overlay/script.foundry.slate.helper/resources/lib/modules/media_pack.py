@@ -3,6 +3,8 @@ import json
 import os
 import re
 import time
+import struct
+from PIL import Image
 import xbmc
 import xbmcaddon
 import xbmcgui
@@ -23,9 +25,9 @@ _ALIAS = re.compile(r"[a-z0-9_.-]+$")
 def read_pack(addon_id):
     if not isinstance(addon_id, str) or not _ID.fullmatch(addon_id):
         return None
-    if not xbmc.getCondVisibility("System.AddonIsEnabled(%s)" % addon_id):
-        return None
     try:
+        if not xbmc.getCondVisibility("System.AddonIsEnabled(%s)" % addon_id):
+            return None
         addon = xbmcaddon.Addon(addon_id)
         root = os.path.realpath(xbmcvfs.translatePath(addon.getAddonInfo("path")))
         with open(os.path.join(root, "resources", "media-pack.json"), encoding="utf-8") as stream:
@@ -53,10 +55,50 @@ def discover():
     try:
         response = json.loads(xbmc.executeJSONRPC(json.dumps({"jsonrpc":"2.0", "id":1,
             "method":"Addons.GetAddons", "params":{"type":"kodi.resource.images", "enabled":True}})))
-        packs = [read_pack(row.get("addonid", "")) for row in response.get("result", {}).get("addons", [])]
+        if not isinstance(response, dict) or not isinstance(response.get("result"), dict):
+            return []
+        rows = response["result"].get("addons", [])
+        if not isinstance(rows, list):
+            return []
+        packs = [read_pack(row.get("addonid", "")) for row in rows if isinstance(row, dict)]
         return sorted((p for p in packs if p), key=lambda p:(p["name"].casefold(),p["id"]))
     except (ValueError, TypeError, RuntimeError):
         return []
+
+_PNG_CACHE = {}
+
+def valid_png(path):
+    """Validate changed files once; bound memory and decompression, never decode per frame."""
+    try:
+        stat = os.stat(path)
+        stamp = (stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns)
+        cached = _PNG_CACHE.get(path)
+        if cached and cached[0] == stamp:
+            return cached[1]
+        valid = False
+        if 45 <= stat.st_size <= 16 * 1024 * 1024:
+            with open(path, "rb") as stream:
+                header = stream.read(24)
+            if header[:16] == b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR":
+                width, height = struct.unpack(">II", header[16:24])
+                if 0 < width <= 8192 and 0 < height <= 8192 and width * height <= 16777216:
+                    with Image.open(path) as image:
+                        image.verify()
+                    with Image.open(path) as image:
+                        image.load()
+                    valid = True
+        if len(_PNG_CACHE) >= 512:
+            _PNG_CACHE.clear()
+        _PNG_CACHE[path] = (stamp, valid)
+        return valid
+    except (OSError, ValueError, SyntaxError, struct.error, Image.DecompressionBombError):
+        if "stamp" in locals():
+            if len(_PNG_CACHE) >= 512:
+                _PNG_CACHE.clear()
+            _PNG_CACHE[path] = (stamp, False)
+        else:
+            _PNG_CACHE.pop(path, None)
+        return False
 
 def resolve(pack, category, value):
     if not pack or category not in pack["categories"]:
@@ -74,7 +116,7 @@ def resolve(pack, category, value):
         try:
             if os.path.commonpath([pack["root"], path]) != pack["root"]:
                 continue
-            if os.path.isfile(path) and xbmcvfs.exists(path):
+            if os.path.isfile(path) and xbmcvfs.exists(path) and valid_png(path):
                 return path
         except (OSError, ValueError):
             continue
@@ -118,6 +160,21 @@ class MediaPackMonitor:
             self.window.clearProperty(key)
 
     def process(self):
+        try:
+            self._process()
+        except Exception:
+            # An optional visual resource must not take down metadata/playback services.
+            # Clear the pack guard first; native window teardown itself may also fail.
+            try:
+                self.window.clearProperty(PREFIX + ".pack")
+                self.clear()
+            except Exception:
+                pass
+            self.pack = None
+            self.selected = None
+            self.next_refresh = 0
+
+    def _process(self):
         if xbmc.getSkinDir() != SKIN_ID:
             self.clear()
             self.selected = None

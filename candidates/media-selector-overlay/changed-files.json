@@ -36,7 +36,7 @@
   },
   {
     "file": "script.foundry.helper/resources/lib/modules/media_pack.py",
-    "sha256": "17b011c23c4608529342e5a197fa577ce5eb8b227b5cd42a042a155433d48cd7",
+    "sha256": "00831f1a1e53f43e84d66e7662aec7755df0ad35012c57c04a98abd176e294a0",
     "baseline_sha256": null
   },
   {
@@ -81,7 +81,7 @@
   },
   {
     "file": "script.foundry.slate.helper/resources/lib/modules/media_pack.py",
-    "sha256": "65c0832e12c8f64215483db4613270213af80e8d8316d8ae2a13b49d46882d26",
+    "sha256": "cbe46555e4b76182ef51104d2dbccf4a470636c19b6f372c60a81e5d3479cc32",
     "baseline_sha256": null
   },
   {

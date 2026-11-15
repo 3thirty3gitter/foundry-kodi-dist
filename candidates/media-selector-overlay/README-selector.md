@@ -18,7 +18,7 @@ Service monitor executes before normal metadata-service pause, covering skin set
 Legacy MediaFlags six categories receive alternate untinted image controls. Original builtin controls are shown whenever no validated match exists. Existing layout/visibility rules, including hidden legacy flags on the home/catalog views, are retained. StreamPilot OSD resolution/channels/audio variables gain guarded selected-pack preference and retain all old JPEG and unknown-text fallback. Current helper catalog Python contains rating/studio assets but no media format badge generation; no cache rewrite needed.
 
 ## Verification
-- 22 unit tests pass via python test_media_pack.py, including selection/cancel/reset, invalid/missing/experimental manifests, disabled addon, missing file, traversal, context separation, stale clearing, simulated restart persistence and original skin switch.
+- 28 unit tests pass via python test_media_pack.py, including selection/cancel/reset, invalid/missing/experimental manifests, disabled addon, missing file, traversal, context separation, stale clearing, simulated restart persistence and original skin switch.
 - Both helper modules identical after namespace normalization.
 - All XML parses; selector control exactly once per skin.
 - compileall passes for both helpers.
@@ -26,3 +26,5 @@ Legacy MediaFlags six categories receive alternate untinted image controls. Orig
 - Native Kodi rendering, actual remote navigation, physical device and real restart are NOT yet verified. Independent QA worker owns native matrix at ../foundry-media-selector-qa-20261115/NATIVE-QA-CONTRACT.md. No release-ready claim until native proof and owner integration/aggregate gates.
 
 No version bumps made. Release owner should review changes as deltas, preserving independent studio work in shared Includes.xml. Do not replace whole source tree with this snapshot. Source baseline: owner supplied studios integration dev53f0eb5 and original sibling published snapshots042ef8f/7fdeb79. changed-files hashes are authoritative against the read snapshot.
+
+Post-review hardening: malformed discovery shapes fail closed; changed PNGs are validated with declared Pillow dependency and bounded stat-keyed cache; monitor errors clear only selected-pack properties rather than stopping the helper service. Native validation remains pending.
