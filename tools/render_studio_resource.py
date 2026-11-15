@@ -25,6 +25,7 @@ for mode in ('colour','monochrome'):
     samples.append(dict(asset,qa_mode=mode));break
  else:raise AssertionError('No representative '+mode)
 qa=addons/'script.foundry.studioqa';qa.mkdir();(qa/'addon.xml').write_text('<addon id="script.foundry.studioqa" name="Studio QA" version="1.0.0" provider-name="QA"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/></addon>')
+fixture_xml=qa/'resources/skins/default/1080i/studioqa.xml';fixture_xml.parent.mkdir(parents=True);fixture_xml.write_text('<window><defaultcontrol always="true">1</defaultcontrol><controls><control type="label" id="1"><left>0</left><top>0</top><width>1</width><height>1</height><label /></control></controls></window>')
 payload='''import xbmc,xbmcgui,xbmcvfs,json,hashlib,traceback,time
 from pathlib import Path
 OUT=Path(OUT_VALUE); SAMPLES=SAMPLES_VALUE; ASSETS=ASSETS_VALUE
@@ -37,8 +38,8 @@ try:
   f=xbmcvfs.File('resource://resource.images.foundry.studios/'+asset['file']);data=bytes(f.readBytes());f.close()
   assert hashlib.sha256(data).hexdigest()==asset['sha256'],asset['file']
   verified+=1
- w=xbmcgui.WindowDialog();w.setCoordinateResolution(0);w.show()
- # Kodi RES_HDTV_1080i = 0, coordinates 1920x1080, not 720p default.
+ w=xbmcgui.WindowXMLDialog('studioqa.xml',QA_PATH,'default','1080i');w.show()
+ # WindowXMLDialog supported constructor loads explicit 1080i skin resolution.
  for index,sample in enumerate(SAMPLES):
   y=150+index*250
   for x,bg in ((100,'FFFFFFFF'),(600,'FF202020')):
@@ -51,7 +52,7 @@ except Exception:r['error']=traceback.format_exc()
 finally:
  if w:w.close()
  (OUT/'studio-inner.json').write_text(json.dumps(r))
-'''.replace('OUT_VALUE',repr(str(out))).replace('SAMPLES_VALUE',repr(samples)).replace('ASSETS_VALUE',repr(assets));(qa/'default.py').write_text(payload)
+'''.replace('OUT_VALUE',repr(str(out))).replace('SAMPLES_VALUE',repr(samples)).replace('ASSETS_VALUE',repr(assets)).replace('QA_PATH',repr(str(qa)));(qa/'default.py').write_text(payload)
 (user/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">18991</setting><setting id="services.webserverauthentication">false</setting></settings>')
 env=dict(os.environ,HOME=str(base/'home'),XDG_CONFIG_HOME=str(base/'home/.config'),XDG_CACHE_HOME=str(base/'home/.cache'),DISPLAY=':98',KODI_HOME=str(home),LIBGL_ALWAYS_SOFTWARE='1',AE_SINK='NULL');(base/'home').mkdir();processes=[];report={'passed':False}
 def rpc(method,params={}):

@@ -9,3 +9,5 @@ Source pack provenance/manifest tests pass all files. Canonical deterministic pa
 No live network enrichment is wired. The isolated TMDB original-resolution adapter uses existing user-configured provider and needs licensing/attribution, error and live verification before integration. No credentials copied, no account created, no bulk logo harvesting.
 
 Both-skin helper adapters and roughly 50 XML studio references are under separate review for original colour, optional resource preference and safe offline text fallback. They are not shipped by this standalone source commit. Existing released packages and production feeds remain untouched.
+
+Candidate is kept under candidates/, not release src/: the normal release gate correctly refuses unpublished add-ons omitted from the release manifest. No gate exception is added. User subsequently requested faithful HD rebuilds; this low-resolution archive is only a provenance baseline, not fulfillment of that request. Native fixture API corrected to documented WindowXMLDialog 1080i; rerun pending.

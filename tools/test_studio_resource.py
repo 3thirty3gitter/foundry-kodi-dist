@@ -1,7 +1,7 @@
 import hashlib,json,unittest,xml.etree.ElementTree as ET
 from pathlib import Path
 from PIL import Image
-ROOT=Path(__file__).resolve().parents[1]/'src/resource.images.foundry.studios'
+ROOT=Path(__file__).resolve().parents[1]/'candidates/resource.images.foundry.studios'
 class StudioResourceTests(unittest.TestCase):
  def test_standalone_resource_manifest(self):
   x=ET.parse(ROOT/'addon.xml').getroot()

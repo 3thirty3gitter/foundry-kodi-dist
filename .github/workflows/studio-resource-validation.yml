@@ -3,7 +3,7 @@ on:
   push:
     branches: [dev]
     paths:
-      - 'src/resource.images.foundry.studios/**'
+      - 'candidates/resource.images.foundry.studios/**'
       - 'tools/render_studio_resource.py'
       - 'tools/test_studio_resource.py'
       - '.github/workflows/studio-resource-validation.yml'
@@ -38,7 +38,7 @@ jobs:
           import sys,pathlib,json,zipfile
           sys.path.insert(0,'tools')
           from build_release import package
-          root=pathlib.Path('src/resource.images.foundry.studios')
+          root=pathlib.Path('candidates/resource.images.foundry.studios')
           _,receipt=package(root,pathlib.Path('studio-qa/packages'))
           pathlib.Path('studio-qa/package.json').write_text(json.dumps(receipt,indent=2))
           with zipfile.ZipFile(pathlib.Path('studio-qa/packages')/receipt['path']) as z:
@@ -56,4 +56,8 @@ jobs:
         if: always()
         with:
           name: standalone-studio-qa-${{ github.run_id }}
-          path: foundry-kodi-dist/studio-qa
+          path: |
+            foundry-kodi-dist/studio-qa/*.json
+            foundry-kodi-dist/studio-qa/*.log
+            foundry-kodi-dist/studio-qa/native/**
+            foundry-kodi-dist/studio-qa/packages/**
