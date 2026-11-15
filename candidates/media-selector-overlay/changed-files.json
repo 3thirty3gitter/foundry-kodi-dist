@@ -1,0 +1,92 @@
+[
+  {
+    "file": "skin.foundry-nimbus/xml/Custom_1121_SearchResults.xml",
+    "sha256": "ad51e8861161698af5d583bcb09abee02cc2977909a08a7707904bee56134636",
+    "baseline_sha256": "080b726ae638ed3738d4a07e2de6d80dcef4aa3289b5a0a279f461df8ec882d7"
+  },
+  {
+    "file": "skin.foundry-nimbus/xml/Home.xml",
+    "sha256": "a07d5f2c9864f299cbfa25a089eceb5a9f1deac1bf827b60cccefb07513260a0",
+    "baseline_sha256": "08a5e81c22b7265ada1dc8c307037d985d716b29d925301cd7553a99fd6a0ee9"
+  },
+  {
+    "file": "skin.foundry-nimbus/xml/Includes.xml",
+    "sha256": "fb3cd832f0e6720e1c2bc1dc364acb69f74d7ecff8acd6f63ba287a6ff3f7842",
+    "baseline_sha256": "f1e1c0327b57bcc1be4cba488be22b45c142adbd69119fbabda104343f5681f4"
+  },
+  {
+    "file": "skin.foundry-nimbus/xml/Includes_StreamPilotOSD.xml",
+    "sha256": "7aeaba031503e64b050f08b423ab331a60a910b5dc69c88d217127db2abc81e8",
+    "baseline_sha256": "17cc967d3e31db8be364c56193eac344f72a6119f4c4665f0a5abf0798fc82e1"
+  },
+  {
+    "file": "skin.foundry-nimbus/xml/SkinSettings.xml",
+    "sha256": "542692d782e4bfc04507230288fc986d80bbcf05863b356f2c3c9319d72fd12b",
+    "baseline_sha256": "a03e7165e061cafecdc0c3ca900ced20d3e0fce6b8ce120462a8dde8c3343900"
+  },
+  {
+    "file": "skin.foundry-nimbus/xml/Variables.xml",
+    "sha256": "cc2568edfa2e29282d91e09f8d4fba156760772672ad79a796dc9f10d9f37d5d",
+    "baseline_sha256": "30af981245c5716f53da079826783da430dc898cfb085361d10540b7dfbaae47"
+  },
+  {
+    "file": "script.foundry.helper/resources/lib/service.py",
+    "sha256": "5870f8312981a2322b2efb7928a27d80699fcf133386b014815f64f28337733a",
+    "baseline_sha256": "8a9b4f59f1d7c16256b96a0e5277d4591beace9c11b4284e5bdb51776b79c33f"
+  },
+  {
+    "file": "script.foundry.helper/resources/lib/modules/media_pack.py",
+    "sha256": "17b011c23c4608529342e5a197fa577ce5eb8b227b5cd42a042a155433d48cd7",
+    "baseline_sha256": null
+  },
+  {
+    "file": "script.foundry.helper/resources/lib/modules/router.py",
+    "sha256": "526712d5e67a182df9c01e0b877ff99fc21971b6d8816e8ea6b7fe0e7507643e",
+    "baseline_sha256": "20f1dfffa7fabec87ae0db92c6d5bede63c21e533e9e24c40f17c8b4948d7490"
+  },
+  {
+    "file": "skin.foundry.slate/xml/Custom_1121_SearchResults.xml",
+    "sha256": "f288052d35270458212f856b2f295e5491feb0517582d57f1ca38a4d4b1376fe",
+    "baseline_sha256": "f5a6666c3835721f835bcef0bd9cf0a0fdc4137fa5f47c59df9c69fe8df93645"
+  },
+  {
+    "file": "skin.foundry.slate/xml/Home.xml",
+    "sha256": "65faed2808e1b083ab3407a1b002a1ca44274200217d470483e32b57a5b043a3",
+    "baseline_sha256": "d783532532d83b6eda8459bdcae97720de804d11dec6f6566e97f08c6fcd39b2"
+  },
+  {
+    "file": "skin.foundry.slate/xml/Includes.xml",
+    "sha256": "64e1c0b928f20343eb91b6840133f5986d07cb63f15bc41d3d5e1b044bc7a85f",
+    "baseline_sha256": "cf6a84b4870a7943a6cacaf4819c25e7d7199c80c67665de5f8aee8164fb554d"
+  },
+  {
+    "file": "skin.foundry.slate/xml/Includes_StreamPilotOSD.xml",
+    "sha256": "f3680619dcd52a73512edfedce2fac2bf77d13aa0d6882d8bddaa363b6fe8d80",
+    "baseline_sha256": "89d6e3c3ce7241943ae3184eaa74e2c9ed831355a8c042429c4252aa0fcdc8b8"
+  },
+  {
+    "file": "skin.foundry.slate/xml/SkinSettings.xml",
+    "sha256": "bbd9e9480b3c60adeb4c509e7f9912491d07583410322c41a2ec00cc91c0e474",
+    "baseline_sha256": "a72f7dcaea38ac72126a79031b7e2b1cc868ab6995a28045df209ea8099e43ab"
+  },
+  {
+    "file": "skin.foundry.slate/xml/Variables.xml",
+    "sha256": "8c90c9e719517c9b09a9a1b6684fb51e89b89c3e95319e9fd0aaea4cff581654",
+    "baseline_sha256": "6935744de1d2b63cdbb0dd9c75b14786b88afc8fc91f919e9c447a56e4c61975"
+  },
+  {
+    "file": "script.foundry.slate.helper/resources/lib/service.py",
+    "sha256": "71166d3cbe5b9f19df682e0e8a79f013c01bcf155462e16d7e546aec785904e2",
+    "baseline_sha256": "c20c8bf34e9a26ab7f0d9facf2ee4f1d10ab2d5885fe751af75060b9103f5333"
+  },
+  {
+    "file": "script.foundry.slate.helper/resources/lib/modules/media_pack.py",
+    "sha256": "65c0832e12c8f64215483db4613270213af80e8d8316d8ae2a13b49d46882d26",
+    "baseline_sha256": null
+  },
+  {
+    "file": "script.foundry.slate.helper/resources/lib/modules/router.py",
+    "sha256": "2581fcbd1b6a4bb035167cf3f2d2c4e4f045c0aa48c251af3cc11416d46465c7",
+    "baseline_sha256": "cba0fa315a971c004650e0a2f84fbb788b24dae8f54d2c2a0650ef884aec579f"
+  }
+]
