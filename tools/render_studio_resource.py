@@ -24,7 +24,7 @@ for mode in ('colour','monochrome'):
    if (mode=='colour' and coloured>.15) or (mode=='monochrome' and coloured<.01 and dark>.5):
     samples.append(dict(asset,qa_mode=mode));break
  else:raise AssertionError('No representative '+mode)
-qa=addons/'script.foundry.studioqa';qa.mkdir();(qa/'addon.xml').write_text('<addon id="script.foundry.studioqa" name="Studio QA" version="1.0.0" provider-name="QA"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/></addon>')
+qa=addons/'script.foundry.studioqa';qa.mkdir();Image.new('RGBA',(4,4),'white').save(qa/'qa-white.png');(qa/'addon.xml').write_text('<addon id="script.foundry.studioqa" name="Studio QA" version="1.0.0" provider-name="QA"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/></addon>')
 fixture_xml=qa/'resources/skins/default/1080i/studioqa.xml';fixture_xml.parent.mkdir(parents=True);fixture_xml.write_text('<window><defaultcontrol always="true">1</defaultcontrol><controls><control type="label" id="1"><left>0</left><top>0</top><width>1</width><height>1</height><label /></control></controls></window>')
 payload='''import xbmc,xbmcgui,xbmcvfs,json,hashlib,traceback,time
 from pathlib import Path
@@ -43,7 +43,7 @@ try:
  for index,sample in enumerate(SAMPLES):
   y=150+index*250
   for x,bg in ((100,'FFFFFFFF'),(600,'FF202020')):
-   w.addControl(xbmcgui.ControlImage(x,y,400,220,'white.png',colorDiffuse=bg))
+   w.addControl(xbmcgui.ControlImage(x,y,400,220,str(Path(QA_VALUE)/'qa-white.png'),colorDiffuse=bg))
    w.addControl(xbmcgui.ControlImage(x,y,sample['width'],sample['height'],'resource://resource.images.foundry.studios/'+sample['file']))
  w.addControl(xbmcgui.ControlLabel(100,700,800,60,'Unknown Studio (text fallback)',textColor='FFFFFFFF'))
  xbmc.sleep(1500);xbmc.executebuiltin('TakeScreenshot('+str(OUT/'studio-native.png')+')');xbmc.sleep(1000)
@@ -52,7 +52,7 @@ except Exception:r['error']=traceback.format_exc()
 finally:
  if w:w.close()
  (OUT/'studio-inner.json').write_text(json.dumps(r))
-'''.replace('OUT_VALUE',repr(str(out))).replace('SAMPLES_VALUE',repr(samples)).replace('ASSETS_VALUE',repr(assets)).replace('QA_PATH',repr(str(qa)));(qa/'default.py').write_text(payload)
+'''.replace('QA_VALUE',repr(str(qa))).replace('OUT_VALUE',repr(str(out))).replace('SAMPLES_VALUE',repr(samples)).replace('ASSETS_VALUE',repr(assets)).replace('QA_PATH',repr(str(qa)));(qa/'default.py').write_text(payload)
 (user/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">18991</setting><setting id="services.webserverauthentication">false</setting></settings>')
 env=dict(os.environ,HOME=str(base/'home'),XDG_CONFIG_HOME=str(base/'home/.config'),XDG_CACHE_HOME=str(base/'home/.cache'),DISPLAY=':98',KODI_HOME=str(home),LIBGL_ALWAYS_SOFTWARE='1',AE_SINK='NULL');(base/'home').mkdir();processes=[];report={'passed':False}
 def rpc(method,params={}):
