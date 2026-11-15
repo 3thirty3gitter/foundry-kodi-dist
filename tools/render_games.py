@@ -605,7 +605,7 @@ def prepare_shipped_skin(home, profile, skin_source=SKIN, helper_source=HELPER, 
     identifiers = []
     sources = [root / 'src/resource.images.foundry.wallpapers',
                root / 'src/resource.images.foundry.osd',
-               root / 'src/resource.uisounds.foundry.pulse', helper_source, skin_source]
+               root / 'src/resource.uisounds.foundry.pulse', root / 'src/resource.images.foundry.media.puremarks', helper_source, skin_source]
     for source in sources:
         aid = E.parse(source / 'addon.xml').getroot().get('id')
         shutil.copytree(source, addons / aid, ignore=shutil.ignore_patterns('.git', '__pycache__', '*.pyc'))

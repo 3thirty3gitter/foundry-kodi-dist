@@ -217,7 +217,7 @@ class WeatherRendererTests(unittest.TestCase):
             addon(skin, 'skin.foundry')
             addon(helper, 'script.foundry.helper', '<extension point="xbmc.python.library" library="resources/lib/default.py"/><extension point="xbmc.service" library="service.py"/>')
             renderer.write(helper / 'resources/lib/default.py', "raise RuntimeError('Original helper must not run')\n")
-            for identifier in ('resource.images.foundry.wallpapers', 'resource.images.foundry.osd', 'resource.uisounds.foundry.pulse', renderer.PROVIDER):
+            for identifier in ('resource.images.foundry.wallpapers', 'resource.images.foundry.osd', 'resource.images.foundry.media.puremarks', 'resource.uisounds.foundry.pulse', renderer.PROVIDER):
                 addon(dist / 'src' / identifier, identifier)
             provider = dist / 'src' / renderer.PROVIDER
             original = "print('original shipped entrypoint')\n"

@@ -294,7 +294,7 @@ def main():
         base=Path(temporary);home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
         profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True)
         addons=profile/'addons';addons.mkdir()
-        for source in [SKIN,HELPER,ROOT/'src/resource.images.foundry.wallpapers',ROOT/'src/resource.images.foundry.osd',ROOT/'src/resource.uisounds.foundry.pulse']:
+        for source in [SKIN,HELPER,ROOT/'src/resource.images.foundry.wallpapers',ROOT/'src/resource.images.foundry.osd',ROOT/'src/resource.uisounds.foundry.pulse',ROOT/'src/resource.images.foundry.media.puremarks']:
             aid=E.parse(source/'addon.xml').getroot().get('id');shutil.copytree(source,addons/aid)
         helper=addons/'script.foundry.helper';skin=addons/'skin.foundry'
         manifest=E.parse(helper/'addon.xml')
@@ -376,7 +376,7 @@ def main():
             else:raise AssertionError('Initial add-on dialogs did not settle')
             # Fresh profiles discover manually placed add-ons as disabled.
             # Enable the isolated fixture dependencies before selecting its skin.
-            for aid in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.uisounds.foundry.qacustom','script.foundry.helper','skin.foundry','script.foundry.interfaceqa'):
+            for aid in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.media.puremarks','resource.uisounds.foundry.qacustom','script.foundry.helper','skin.foundry','script.foundry.interfaceqa'):
                 rpc('Addons.SetAddonEnabled',{'addonid':aid,'enabled':True})
             assert rpc('Settings.SetSettingValue',{'setting':'lookandfeel.skin','value':'skin.foundry'})
             wait_for(lambda:rpc('XBMC.GetInfoBooleans',{'booleans':['System.HasActiveModalDialog']}).get('System.HasActiveModalDialog'))

@@ -211,7 +211,7 @@ def prepare(base, kodi_root=Path('/usr/share/kodi'), skin_source=SKIN, helper_so
     addons = profile / 'addons'
     addons.mkdir(parents=True)
     sources = [ROOT / 'src/resource.images.foundry.wallpapers', ROOT / 'src/resource.images.foundry.osd',
-               ROOT / 'src/resource.uisounds.foundry.pulse', helper_source,
+               ROOT / 'src/resource.uisounds.foundry.pulse', ROOT / 'src/resource.images.foundry.media.puremarks', helper_source,
                ROOT / ('src/' + PROVIDER), skin_source]
     identifiers = []
     for source in sources:

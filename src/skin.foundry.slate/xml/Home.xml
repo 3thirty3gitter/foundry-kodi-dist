@@ -966,6 +966,7 @@
 				<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
 				<include condition="!Skin.HasSetting(hide_mediaflags)" content="MediaFlags">
 					<param name="infolabel_prefix" value="Container." />
+                    <param name="media_context" value="container" />
 					<param name="resolution_var" value="$VAR[ContainerResolutionFlagVar]" />
 				</include>
 				<control type="rss">

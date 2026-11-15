@@ -47,7 +47,7 @@ def main():
  with tempfile.TemporaryDirectory(prefix='foundry-action-contract-',ignore_cleanup_errors=True) as temp:
   base=Path(temp);home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
   profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True);addons=profile/'addons';addons.mkdir()
-  sources=[root.parent/'skin.foundry-nimbus',root.parent/'script.foundry.helper']+[root/'src'/x for x in ('skin.foundry.slate','script.foundry.slate.helper','resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons')]
+  sources=[root.parent/'skin.foundry-nimbus',root.parent/'script.foundry.helper']+[root/'src'/x for x in ('skin.foundry.slate','script.foundry.slate.helper','resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','resource.images.foundry.media.puremarks')]
   aids=[]
   for source in sources:
    aid=E.parse(source/'addon.xml').getroot().get('id');aids.append(aid);shutil.copytree(source,addons/aid,ignore=shutil.ignore_patterns('.git'))

@@ -1,0 +1,3 @@
+Pure Marks complete approved artwork
+
+105 populated paths: 31 sourced mark paths retained byte-for-byte; 74 original technical diagrams with factual labels. No added badge backplates. Screen outlines are pictograms, not badge frames. Channel numbers mean total channel count, not invented speaker layout or Atmos. Unknown 0 channels uses ? CH. AVC audio alias remains AVC, not AAC. MPEG-4 is not labelled H.264. HEVC is not x265. Technical glyphs do not imitate restricted VP8/VP9/Xvid marks. Original SVG sources are included under CC0-1.0; font rendering uses installed Arial and does not redistribute font files. Owner artwork review approved on2026-11-15. Publication status is recorded separately by the release workflow; this note does not assert deployment.

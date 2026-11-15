@@ -2,6 +2,7 @@ import xbmc, xbmcgui, xbmcvfs
 from threading import Thread
 from modules.logger import logger
 from modules.file_sources import ensure_file_sources
+from modules.media_pack import MediaPackMonitor
 from modules.startup_splash import install_startup_splash
 
 from modules.monitors.ratings import RatingsMonitor
@@ -25,6 +26,7 @@ class Service(xbmc.Monitor):
             xbmcvfs.mkdirs(SETTINGS_PATH)
 
         self.home_window = xbmcgui.Window(10000)
+        self.media_pack_monitor = MediaPackMonitor()
         self.get_infolabel = xbmc.getInfoLabel
         self.get_visibility = xbmc.getCondVisibility
         self.image_monitor = ImageMonitor(ImageBlur, ImageAnalysisConfig())
@@ -40,6 +42,7 @@ class Service(xbmc.Monitor):
         splash_attempted = False
         try:
             while not self.abortRequested():
+                self.media_pack_monitor.process()
                 if self._should_pause():
                     self.metadata_monitor.pause()
                     self.waitForAbort(2)
@@ -59,6 +62,7 @@ class Service(xbmc.Monitor):
                 self.ratings_monitor.process_current_item()
                 self.waitForAbort(0.2)
         finally:
+            self.media_pack_monitor.clear()
             self.metadata_monitor.stop()
             self.image_monitor.stop()
             self.image_monitor.join(timeout=2)

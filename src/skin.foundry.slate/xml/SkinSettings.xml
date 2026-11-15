@@ -743,6 +743,12 @@
           <onclick>Skin.ToggleSetting(Disable.PersistentArtwork)</onclick>
           <selected>!Skin.HasSetting(Disable.PersistentArtwork)</selected>
         </control>
+        <control type="button" id="6098">
+          <label>Media icon pack</label>
+          <label2>$VAR[MediaIconPackName]</label2>
+          <include content="DefaultSettingButton"><param name="system_icon" value="media" /></include>
+          <onclick>RunScript(script.foundry.slate.helper,mode=choose_media_icon_pack)</onclick>
+        </control>
         <control type="button" id="6014">
           <label>$LOCALIZE[31131]</label>
           <label2>$INFO[Skin.String(HomeFanart.name)]</label2>

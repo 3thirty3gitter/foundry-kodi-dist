@@ -8,7 +8,7 @@ for stale in out.iterdir():
  if stale.is_file() and (stale.suffix == '.png' or stale.name in ('focus-report.json','focus-progress.json','native-report.json','restored.json','icon-report.json','native-icon-report.json')):
   stale.unlink()
 profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True);addons=profile/'addons';addons.mkdir()
-for source in [ROOT/'src/skin.foundry.slate',ROOT/'src/script.foundry.slate.helper',ROOT.parent/'skin.foundry-nimbus',ROOT.parent/'script.foundry.helper']+[ROOT/'src'/x for x in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons')]:
+for source in [ROOT/'src/skin.foundry.slate',ROOT/'src/script.foundry.slate.helper',ROOT.parent/'skin.foundry-nimbus',ROOT.parent/'script.foundry.helper']+[ROOT/'src'/x for x in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','resource.images.foundry.media.puremarks')]:
  aid=E.parse(source/'addon.xml').getroot().get('id');shutil.copytree(source,addons/aid,ignore=shutil.ignore_patterns('.git'))
 for helper in addons.glob('script.*helper'):
  t=E.parse(helper/'addon.xml');r=t.getroot()
@@ -77,7 +77,7 @@ try:
  for _ in range(20):
   if modal():rpc('Input.Back')
   time.sleep(.3)
- for aid in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','script.foundry.helper','script.foundry.slate.helper','skin.foundry','skin.foundry.slate','script.foundry.slate.iconqa'):rpc('Addons.SetAddonEnabled',{'addonid':aid,'enabled':True})
+ for aid in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','resource.images.foundry.media.puremarks','script.foundry.helper','script.foundry.slate.helper','skin.foundry','skin.foundry.slate','script.foundry.slate.iconqa'):rpc('Addons.SetAddonEnabled',{'addonid':aid,'enabled':True})
  assert rpc('Settings.SetSettingValue',{'setting':'lookandfeel.skin','value':'skin.foundry.slate'})
  wait(modal);rpc('Input.Left');rpc('Input.Select');wait(lambda:not modal());time.sleep(3)
  rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.slate.iconqa','wait':False})

@@ -17,3 +17,5 @@ candidates/resource.images.foundry.media.puremarks/** -text
 
 candidates/media-audio-overlay/** -text
 candidates/media-audio-derived/** -text
+
+src/resource.images.foundry.media.puremarks/** -text

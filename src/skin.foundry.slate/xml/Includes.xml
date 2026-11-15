@@ -440,6 +440,8 @@
     <param name="width">115</param>
     <param name="height">60</param>
     <param name="visible">true</param>
+    <param name="pack_texture" />
+    <param name="pack_visible">false</param>
     <definition>
       <control type="image">
         <width>$PARAM[width]</width>
@@ -448,12 +450,24 @@
         <aspectratio align="center" aligny="center">keep</aspectratio>
         <texture colordiffuse="artwork_dim">$PARAM[texture]</texture>
         <visible>$PARAM[visible]</visible>
+        <visible>![$PARAM[pack_visible]]</visible>
+        <visible>![Skin.HasSetting(TrailerPlaying) | Window.IsVisible(12003) | Window.IsVisible(Home) | Window.IsVisible(1121) | Control.IsVisible(50) | Control.IsVisible(500) | Control.IsVisible(501)]</visible>
+      </control>
+      <control type="image">
+        <width>$PARAM[width]</width>
+        <height>$PARAM[height]</height>
+        <fadetime>0</fadetime>
+        <aspectratio align="center" aligny="center">keep</aspectratio>
+        <texture>$PARAM[pack_texture]</texture>
+        <visible>$PARAM[visible]</visible>
+        <visible>$PARAM[pack_visible]</visible>
         <visible>![Skin.HasSetting(TrailerPlaying) | Window.IsVisible(12003) | Window.IsVisible(Home) | Window.IsVisible(1121) | Control.IsVisible(50) | Control.IsVisible(500) | Control.IsVisible(501)]</visible>
       </control>
     </definition>
   </include>
   <include name="MediaFlags">
     <param name="infolabel_prefix" />
+    <param name="media_context">list</param>
     <param name="resolution_var">$VAR[ResolutionFlagVar]</param>
     <definition>
       <control type="grouplist">
@@ -478,26 +492,38 @@
         <include content="MediaFlag">
           <param name="texture" value="$INFO[ListItem.VideoCodec,flags/videocodec/,.png]" />
           <param name="visible" value="!String.IsEmpty($PARAM[infolabel_prefix]ListItem.VideoCodec)" />
+          <param name="pack_texture" value="$INFO[Window(Home).Property(foundry.slate.media.$PARAM[media_context].videocodec.path)]" />
+          <param name="pack_visible" value="!String.IsEmpty(Window(Home).Property(foundry.slate.media.$PARAM[media_context].videocodec.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual($PARAM[infolabel_prefix]ListItem.VideoCodec,Window(Home).Property(foundry.slate.media.$PARAM[media_context].videocodec.value))" />
         </include>
         <include content="MediaFlag">
           <param name="texture" value="$PARAM[resolution_var]" />
           <param name="visible" value="!String.IsEmpty($PARAM[infolabel_prefix]ListItem.VideoResolution)" />
+          <param name="pack_texture" value="$INFO[Window(Home).Property(foundry.slate.media.$PARAM[media_context].videoresolution.path)]" />
+          <param name="pack_visible" value="!String.IsEmpty(Window(Home).Property(foundry.slate.media.$PARAM[media_context].videoresolution.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual($PARAM[infolabel_prefix]ListItem.VideoResolution,Window(Home).Property(foundry.slate.media.$PARAM[media_context].videoresolution.value)) + [[$PARAM[infolabel_prefix]ListItem.IsStereoscopic + String.IsEqual(Window(Home).Property(foundry.slate.media.$PARAM[media_context].videoresolution.stereo),true)] | [!$PARAM[infolabel_prefix]ListItem.IsStereoscopic + String.IsEqual(Window(Home).Property(foundry.slate.media.$PARAM[media_context].videoresolution.stereo),false)]]" />
         </include>
         <include content="MediaFlag">
           <param name="texture" value="$INFO[ListItem.HdrType,flags/videohdr/,.png]" />
           <param name="visible" value="!String.IsEmpty($PARAM[infolabel_prefix]ListItem.HdrType)" />
+          <param name="pack_texture" value="$INFO[Window(Home).Property(foundry.slate.media.$PARAM[media_context].videohdr.path)]" />
+          <param name="pack_visible" value="!String.IsEmpty(Window(Home).Property(foundry.slate.media.$PARAM[media_context].videohdr.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual($PARAM[infolabel_prefix]ListItem.HdrType,Window(Home).Property(foundry.slate.media.$PARAM[media_context].videohdr.value))" />
         </include>
         <include content="MediaFlag">
           <param name="texture" value="$INFO[ListItem.VideoAspect,flags/aspectratio/,.png]" />
           <param name="visible" value="!String.IsEmpty($PARAM[infolabel_prefix]ListItem.VideoAspect)" />
+          <param name="pack_texture" value="$INFO[Window(Home).Property(foundry.slate.media.$PARAM[media_context].aspectratio.path)]" />
+          <param name="pack_visible" value="!String.IsEmpty(Window(Home).Property(foundry.slate.media.$PARAM[media_context].aspectratio.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual($PARAM[infolabel_prefix]ListItem.VideoAspect,Window(Home).Property(foundry.slate.media.$PARAM[media_context].aspectratio.value))" />
         </include>
         <include content="MediaFlag">
           <param name="texture" value="$INFO[$PARAM[infolabel_prefix]ListItem.AudioCodec,flags/audiocodec/,.png]" />
           <param name="visible" value="!String.IsEmpty($PARAM[infolabel_prefix]ListItem.AudioCodec)" />
+          <param name="pack_texture" value="$INFO[Window(Home).Property(foundry.slate.media.$PARAM[media_context].audiocodec.path)]" />
+          <param name="pack_visible" value="!String.IsEmpty(Window(Home).Property(foundry.slate.media.$PARAM[media_context].audiocodec.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual($PARAM[infolabel_prefix]ListItem.AudioCodec,Window(Home).Property(foundry.slate.media.$PARAM[media_context].audiocodec.value))" />
         </include>
         <include content="MediaFlag">
           <param name="texture" value="$INFO[$PARAM[infolabel_prefix]ListItem.AudioChannels,flags/audiochannel/,.png]" />
           <param name="visible" value="!String.IsEmpty($PARAM[infolabel_prefix]ListItem.AudioChannels)" />
+          <param name="pack_texture" value="$INFO[Window(Home).Property(foundry.slate.media.$PARAM[media_context].audiochannel.path)]" />
+          <param name="pack_visible" value="!String.IsEmpty(Window(Home).Property(foundry.slate.media.$PARAM[media_context].audiochannel.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual($PARAM[infolabel_prefix]ListItem.AudioChannels,Window(Home).Property(foundry.slate.media.$PARAM[media_context].audiochannel.value))" />
         </include>
       </control>
     </definition>

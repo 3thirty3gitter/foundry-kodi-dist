@@ -28,6 +28,7 @@
     <value>resource://resource.images.foundry.slate.icons/aliases/streampilot/pause.png</value>
   </variable>
   <variable name="StreamPilotOSDResolution">
+    <value condition="!String.IsEmpty(Window(Home).Property(foundry.slate.media.player.videoresolution.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual(VideoPlayer.VideoResolution,Window(Home).Property(foundry.slate.media.player.videoresolution.value))">$INFO[Window(Home).Property(foundry.slate.media.player.videoresolution.path)]</value>
     <value condition="String.IsEqual(VideoPlayer.VideoResolution,4K)">resource://resource.images.foundry.osd/resolution_4k_supplied.jpg</value>
     <value condition="String.IsEqual(VideoPlayer.VideoResolution,2160)">resource://resource.images.foundry.osd/resolution_4k_supplied.jpg</value>
     <value condition="String.IsEqual(VideoPlayer.VideoResolution,1080)">resource://resource.images.foundry.osd/resolution_fhd_supplied.jpg</value>
@@ -38,12 +39,14 @@
     <value />
   </variable>
   <variable name="StreamPilotOSDChannels">
+    <value condition="!String.IsEmpty(Window(Home).Property(foundry.slate.media.player.audiochannel.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual(VideoPlayer.AudioChannels,Window(Home).Property(foundry.slate.media.player.audiochannel.value))">$INFO[Window(Home).Property(foundry.slate.media.player.audiochannel.path)]</value>
     <value condition="String.IsEqual(VideoPlayer.AudioChannels,2)">resource://resource.images.foundry.osd/audio_2_0.jpg</value>
     <value condition="String.IsEqual(VideoPlayer.AudioChannels,6)">resource://resource.images.foundry.osd/audio_5_1.jpg</value>
     <value condition="String.IsEqual(VideoPlayer.AudioChannels,8)">resource://resource.images.foundry.osd/audio_7_1.jpg</value>
     <value />
   </variable>
   <variable name="StreamPilotOSDAudio">
+    <value condition="!String.IsEmpty(Window(Home).Property(foundry.slate.media.player.audiocodec.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual(VideoPlayer.AudioCodec,Window(Home).Property(foundry.slate.media.player.audiocodec.value))">$INFO[Window(Home).Property(foundry.slate.media.player.audiocodec.path)]</value>
     <value condition="String.IsEqual(VideoPlayer.AudioCodec,eac3-joc)">resource://resource.images.foundry.osd/audio_dolby_atmos.jpg</value>
     <value condition="String.IsEqual(VideoPlayer.AudioCodec,truehd)">resource://resource.images.foundry.osd/audio_dolby_truehd.jpg</value>
     <value condition="String.IsEqual(VideoPlayer.AudioCodec,eac3)">resource://resource.images.foundry.osd/audio_dolby_digital_plus.jpg</value>
@@ -118,7 +121,7 @@
         <width>76</width>
         <height>54</height>
         <aspectratio>keep</aspectratio>
-        <visible>String.IsEqual(VideoPlayer.AudioChannels,2) | String.IsEqual(VideoPlayer.AudioChannels,6) | String.IsEqual(VideoPlayer.AudioChannels,8)</visible>
+        <visible>[!String.IsEmpty(Window(Home).Property(foundry.slate.media.player.audiochannel.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual(VideoPlayer.AudioChannels,Window(Home).Property(foundry.slate.media.player.audiochannel.value))] | [String.IsEqual(VideoPlayer.AudioChannels,2) | String.IsEqual(VideoPlayer.AudioChannels,6) | String.IsEqual(VideoPlayer.AudioChannels,8)]</visible>
         <texture>$VAR[StreamPilotOSDChannels]</texture>
       </control>
       <control type="image">
@@ -126,6 +129,14 @@
         <height>54</height>
         <aspectratio>keep</aspectratio>
         <visible>!String.IsEmpty(VideoPlayer.AudioCodec) + [String.IsEqual(VideoPlayer.AudioCodec,eac3-joc) | String.IsEqual(VideoPlayer.AudioCodec,truehd) | String.IsEqual(VideoPlayer.AudioCodec,eac3) | String.IsEqual(VideoPlayer.AudioCodec,ac3) | String.IsEqual(VideoPlayer.AudioCodec,dtshd_ma) | String.IsEqual(VideoPlayer.AudioCodec,dtshd_hra) | String.IsEqual(VideoPlayer.AudioCodec,dca_ma) | String.IsEqual(VideoPlayer.AudioCodec,dca_hra) | String.IsEqual(VideoPlayer.AudioCodec,flac) | String.IsEqual(VideoPlayer.AudioCodec,aac) | String.IsEqual(VideoPlayer.AudioCodec,aac_latm) | String.IsEqual(VideoPlayer.AudioCodec,pcm) | String.StartsWith(VideoPlayer.AudioCodec,pcm_)]</visible>
+        <texture>$VAR[StreamPilotOSDAudio]</texture>
+        <visible>![String.IsEqual(Window(Home).Property(foundry.slate.media.player.audiocodec.wide),true) + !String.IsEmpty(Window(Home).Property(foundry.slate.media.player.audiocodec.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual(VideoPlayer.AudioCodec,Window(Home).Property(foundry.slate.media.player.audiocodec.value))]</visible>
+      </control>
+      <control type="image">
+        <width>160</width>
+        <height>54</height>
+        <aspectratio>keep</aspectratio>
+        <visible>String.IsEqual(Window(Home).Property(foundry.slate.media.player.audiocodec.wide),true) + !String.IsEmpty(Window(Home).Property(foundry.slate.media.player.audiocodec.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual(VideoPlayer.AudioCodec,Window(Home).Property(foundry.slate.media.player.audiocodec.value))</visible>
         <texture>$VAR[StreamPilotOSDAudio]</texture>
       </control>
       <control type="label">
@@ -136,6 +147,7 @@
         <width>76</width>
         <visible>!String.IsEmpty(VideoPlayer.AudioCodec) + ![String.IsEqual(VideoPlayer.AudioCodec,eac3-joc) | String.IsEqual(VideoPlayer.AudioCodec,truehd) | String.IsEqual(VideoPlayer.AudioCodec,eac3) | String.IsEqual(VideoPlayer.AudioCodec,ac3) | String.IsEqual(VideoPlayer.AudioCodec,dtshd_ma) | String.IsEqual(VideoPlayer.AudioCodec,dtshd_hra) | String.IsEqual(VideoPlayer.AudioCodec,dca_ma) | String.IsEqual(VideoPlayer.AudioCodec,dca_hra) | String.IsEqual(VideoPlayer.AudioCodec,flac) | String.IsEqual(VideoPlayer.AudioCodec,aac) | String.IsEqual(VideoPlayer.AudioCodec,aac_latm) | String.IsEqual(VideoPlayer.AudioCodec,pcm) | String.StartsWith(VideoPlayer.AudioCodec,pcm_)]</visible>
         <label>$VAR[StreamPilotOSDAudioLabel]</label>
+        <visible>![String.IsEqual(Window(Home).Property(foundry.slate.media.player.audiocodec.wide),true) + !String.IsEmpty(Window(Home).Property(foundry.slate.media.player.audiocodec.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual(VideoPlayer.AudioCodec,Window(Home).Property(foundry.slate.media.player.audiocodec.value))]</visible>
       </control>
     </control>
   </include>
@@ -431,8 +443,67 @@
         <texture>$INFO[Player.Icon]</texture>
       </control>
       <control type="group">
+        <visible>![String.IsEqual(Window(Home).Property(foundry.slate.media.player.audiocodec.wide),true) + !String.IsEmpty(Window(Home).Property(foundry.slate.media.player.audiocodec.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual(VideoPlayer.AudioCodec,Window(Home).Property(foundry.slate.media.player.audiocodec.value))]</visible>
         <left>228</left>
         <right>452</right>
+        <top>28</top>
+        <height>192</height>
+        <control type="label">
+          <font>SPLiveTitle</font>
+          <textcolor>FFFFFFFF</textcolor>
+          <height>48</height>
+          <aligny>center</aligny>
+          <left>0</left>
+          <top>0</top>
+          <width>100%</width>
+          <scroll>True</scroll>
+          <label>$VAR[StreamPilotOSDTitle]</label>
+        </control>
+        <control type="textbox">
+          <left>0</left>
+          <top>48</top>
+          <width>100%</width>
+          <height>66</height>
+          <font>SPBody</font>
+          <textcolor>FFB9CBD7</textcolor>
+          <label>$VAR[FoundryPlayerPlot]</label>
+        </control>
+        <control type="progress">
+          <left>0</left>
+          <top>132</top>
+          <width>100%</width>
+          <height>10</height>
+          <info>PVR.EpgEventProgress</info>
+          <visible>VideoPlayer.HasEPG</visible>
+          <texturebg colordiffuse="29FFFFFF">colors/white.png</texturebg>
+          <midtexture colordiffuse="FF67F2D5">colors/white.png</midtexture>
+        </control>
+        <control type="label">
+          <font>SPTime</font>
+          <textcolor>FFB9CBD7</textcolor>
+          <height>28</height>
+          <aligny>center</aligny>
+          <left>0</left>
+          <top>152</top>
+          <width>300</width>
+          <label>$VAR[StreamPilotOSDLiveStart]</label>
+        </control>
+        <control type="label">
+          <font>SPTime</font>
+          <textcolor>FFB9CBD7</textcolor>
+          <height>28</height>
+          <aligny>center</aligny>
+          <right>0</right>
+          <top>152</top>
+          <width>300</width>
+          <align>right</align>
+          <label>$VAR[StreamPilotOSDLiveEnd]</label>
+        </control>
+      </control>
+      <control type="group">
+        <visible>String.IsEqual(Window(Home).Property(foundry.slate.media.player.audiocodec.wide),true) + !String.IsEmpty(Window(Home).Property(foundry.slate.media.player.audiocodec.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual(VideoPlayer.AudioCodec,Window(Home).Property(foundry.slate.media.player.audiocodec.value))</visible>
+        <left>228</left>
+        <right>536</right>
         <top>28</top>
         <height>192</height>
         <control type="label">
@@ -511,9 +582,18 @@
         <label>$VAR[StreamPilotOSDLiveStart] – $VAR[StreamPilotOSDLiveEnd]</label>
       </control>
       <control type="group">
+        <visible>![String.IsEqual(Window(Home).Property(foundry.slate.media.player.audiocodec.wide),true) + !String.IsEmpty(Window(Home).Property(foundry.slate.media.player.audiocodec.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual(VideoPlayer.AudioCodec,Window(Home).Property(foundry.slate.media.player.audiocodec.value))]</visible>
         <right>164</right>
         <top>115</top>
         <width>248</width>
+        <height>54</height>
+        <include>StreamPilotFormatBadges</include>
+      </control>
+      <control type="group">
+        <visible>String.IsEqual(Window(Home).Property(foundry.slate.media.player.audiocodec.wide),true) + !String.IsEmpty(Window(Home).Property(foundry.slate.media.player.audiocodec.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.slate.media.pack)) + String.IsEqual(VideoPlayer.AudioCodec,Window(Home).Property(foundry.slate.media.player.audiocodec.value))</visible>
+        <right>164</right>
+        <top>115</top>
+        <width>332</width>
         <height>54</height>
         <include>StreamPilotFormatBadges</include>
       </control>

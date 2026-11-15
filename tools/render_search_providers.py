@@ -8,7 +8,7 @@ for stale in out.iterdir():
  if stale.is_file() and (stale.suffix == '.png' or stale.name in ('native-report.json',)):
   stale.unlink()
 profile=home/'portable_data';userdata=profile/'userdata';userdata.mkdir(parents=True);addons=profile/'addons';addons.mkdir()
-for source in [ROOT/'src/skin.foundry.slate',ROOT/'src/script.foundry.slate.helper',ROOT.parent/'skin.foundry-nimbus',ROOT.parent/'script.foundry.helper']+[ROOT/'src'/x for x in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons')]:
+for source in [ROOT/'src/skin.foundry.slate',ROOT/'src/script.foundry.slate.helper',ROOT.parent/'skin.foundry-nimbus',ROOT.parent/'script.foundry.helper']+[ROOT/'src'/x for x in ('resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','resource.images.foundry.media.puremarks')]:
  aid=E.parse(source/'addon.xml').getroot().get('id');shutil.copytree(source,addons/aid,ignore=shutil.ignore_patterns('.git'))
 for helper in addons.glob('script.*helper'):
  t=E.parse(helper/'addon.xml');r=t.getroot()
@@ -115,7 +115,7 @@ try:
   elif time.monotonic()-quiet>2:break
   time.sleep(.2)
  else:raise AssertionError('Startup dialogs did not settle')
- for aid in ['resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','script.foundry.helper','script.foundry.slate.helper','skin.foundry','skin.foundry.slate','script.foundry.searchqa','script.foundry.searchdriver','plugin.qa.video','plugin.qa.disabled','plugin.qa.audio']+LEGACY_IDS:
+ for aid in ['resource.images.foundry.wallpapers','resource.images.foundry.osd','resource.uisounds.foundry.pulse','resource.images.foundry.slate.icons','resource.images.foundry.media.puremarks','script.foundry.helper','script.foundry.slate.helper','skin.foundry','skin.foundry.slate','script.foundry.searchqa','script.foundry.searchdriver','plugin.qa.video','plugin.qa.disabled','plugin.qa.audio']+LEGACY_IDS:
   rpc('Addons.SetAddonEnabled',{'addonid':aid,'enabled':True})
  rpc('Addons.SetAddonEnabled',{'addonid':'plugin.qa.disabled','enabled':False})
  for skin,helper in [('skin.foundry','script.foundry.helper'),('skin.foundry.slate','script.foundry.slate.helper')]:
