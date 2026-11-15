@@ -1,0 +1,164 @@
+{
+  "passed": true,
+  "scope": "Disposable native Kodi real picker and video metadata; unrelated Home startup helper callbacks suppressed in fixture entry only; actual search router/module and SkinSettings unchanged; unknown providers are open-only, no integrated search claim.",
+  "skins": {
+    "skin.foundry": {
+      "inventory": [
+        {
+          "id": "plugin.qa.disabled",
+          "slot": "plugin.qa.disabled",
+          "label": "QA Disabled",
+          "enabled": false,
+          "native": false
+        },
+        {
+          "id": "plugin.video.fen",
+          "slot": "0",
+          "label": "QA Legacy 0",
+          "enabled": true,
+          "native": true
+        },
+        {
+          "id": "plugin.video.fenlight",
+          "slot": "1",
+          "label": "QA Legacy 1",
+          "enabled": true,
+          "native": true
+        },
+        {
+          "id": "plugin.video.umbrella",
+          "slot": "2",
+          "label": "QA Legacy 2",
+          "enabled": true,
+          "native": true
+        },
+        {
+          "id": "plugin.video.pov",
+          "slot": "3",
+          "label": "QA Legacy 3",
+          "enabled": true,
+          "native": true
+        },
+        {
+          "id": "plugin.video.seren",
+          "slot": "4",
+          "label": "QA Legacy 4",
+          "enabled": true,
+          "native": true
+        },
+        {
+          "id": "plugin.qa.video",
+          "slot": "plugin.qa.video",
+          "label": "QA Video",
+          "enabled": true,
+          "native": false
+        }
+      ],
+      "active_skin_verified": "skin.foundry",
+      "actual_settings_control_picker_cancel": true,
+      "legacy_selections": [
+        {
+          "addon": "plugin.video.fen",
+          "slot": "0"
+        },
+        {
+          "addon": "plugin.video.fenlight",
+          "slot": "1"
+        },
+        {
+          "addon": "plugin.video.umbrella",
+          "slot": "2"
+        },
+        {
+          "addon": "plugin.video.pov",
+          "slot": "3"
+        },
+        {
+          "addon": "plugin.video.seren",
+          "slot": "4"
+        }
+      ],
+      "legacy_xml_routes_unchanged": true,
+      "passed": true
+    },
+    "skin.foundry.slate": {
+      "inventory": [
+        {
+          "id": "plugin.qa.disabled",
+          "slot": "plugin.qa.disabled",
+          "label": "QA Disabled",
+          "enabled": false,
+          "native": false
+        },
+        {
+          "id": "plugin.video.fen",
+          "slot": "0",
+          "label": "QA Legacy 0",
+          "enabled": true,
+          "native": true
+        },
+        {
+          "id": "plugin.video.fenlight",
+          "slot": "1",
+          "label": "QA Legacy 1",
+          "enabled": true,
+          "native": true
+        },
+        {
+          "id": "plugin.video.umbrella",
+          "slot": "2",
+          "label": "QA Legacy 2",
+          "enabled": true,
+          "native": true
+        },
+        {
+          "id": "plugin.video.pov",
+          "slot": "3",
+          "label": "QA Legacy 3",
+          "enabled": true,
+          "native": true
+        },
+        {
+          "id": "plugin.video.seren",
+          "slot": "4",
+          "label": "QA Legacy 4",
+          "enabled": true,
+          "native": true
+        },
+        {
+          "id": "plugin.qa.video",
+          "slot": "plugin.qa.video",
+          "label": "QA Video",
+          "enabled": true,
+          "native": false
+        }
+      ],
+      "active_skin_verified": "skin.foundry.slate",
+      "actual_settings_control_picker_cancel": true,
+      "legacy_selections": [
+        {
+          "addon": "plugin.video.fen",
+          "slot": "0"
+        },
+        {
+          "addon": "plugin.video.fenlight",
+          "slot": "1"
+        },
+        {
+          "addon": "plugin.video.umbrella",
+          "slot": "2"
+        },
+        {
+          "addon": "plugin.video.pov",
+          "slot": "3"
+        },
+        {
+          "addon": "plugin.video.seren",
+          "slot": "4"
+        }
+      ],
+      "legacy_xml_routes_unchanged": true,
+      "passed": true
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "release": "1.5.6",
+  "skin": "1.5.6",
+  "packages": [
+    {
+      "id": "repository.foundry",
+      "version": "1.2.0",
+      "path": "repository.foundry/repository.foundry-1.2.0.zip",
+      "sha256": "2a83d7d4ec2ac362fed010005ec55b6c87aee40a393a7fd82454e7137b48ffcc",
+      "size": 762
+    },
+    {
+      "id": "resource.images.foundry.wallpapers",
+      "version": "1.1.1",
+      "path": "resource.images.foundry.wallpapers/resource.images.foundry.wallpapers-1.1.1.zip",
+      "sha256": "ca31310f602b3c8054a0d79de613f58e42f30901e640e17e1db10453f455c3a3",
+      "size": 17421183
+    },
+    {
+      "id": "resource.images.foundry.osd",
+      "version": "1.0.0",
+      "path": "resource.images.foundry.osd/resource.images.foundry.osd-1.0.0.zip",
+      "sha256": "37ec361ab6b80bb5557ca70512263de24dc9decdbe62e531f3e5f4adb3b4987b",
+      "size": 3770026
+    },
+    {
+      "id": "resource.uisounds.foundry.pulse",
+      "version": "1.1.0",
+      "path": "resource.uisounds.foundry.pulse/resource.uisounds.foundry.pulse-1.1.0.zip",
+      "sha256": "d314f7c06e0b565c09c5f1d0593e013656adc43e6116cc1902062a54aa793ed3",
+      "size": 24581
+    },
+    {
+      "id": "weather.foundry.canada",
+      "version": "0.1.1",
+      "path": "weather.foundry.canada/weather.foundry.canada-0.1.1.zip",
+      "sha256": "c263cb66663df099c7a7f57cbe41537d92c3cf6d987385bdd9ed02da1c09f5a8",
+      "size": 17156
+    },
+    {
+      "id": "plugin.games.foundry",
+      "version": "0.1.0",
+      "path": "plugin.games.foundry/plugin.games.foundry-0.1.0.zip",
+      "sha256": "e55ac14ce17676806e75413157fd59e72b91817a4bc518b303318319d3730f6b",
+      "size": 17449
+    },
+    {
+      "id": "skin.foundry",
+      "version": "1.5.6",
+      "path": "skin.foundry/skin.foundry-1.5.6.zip",
+      "sha256": "e855f9d36570ec11c77c53ec11f6423ba46729160c92806443167ee05be678a9",
+      "size": 73495826
+    },
+    {
+      "id": "script.foundry.helper",
+      "version": "1.3.7",
+      "path": "script.foundry.helper/script.foundry.helper-1.3.7.zip",
+      "sha256": "f7c5cc808e029e7812c947da438a9c34afd01fd61581827dabe6b35b14b59eae",
+      "size": 907321
+    },
+    {
+      "id": "script.program.foundry-build",
+      "version": "1.5.6",
+      "path": "script.program.foundry-build/script.program.foundry-build-1.5.6.zip",
+      "sha256": "374102e3171fae46a52b95df3eda20054b79fbb41142af05db51847013489516",
+      "size": 2712
+    },
+    {
+      "id": "script.program.foundry-bootstrap",
+      "version": "1.5.6",
+      "path": "script.program.foundry-bootstrap/script.program.foundry-bootstrap-1.5.6.zip",
+      "sha256": "7d900aa54a34823a372064528843d3f892a7f9a9aed7cbf506a50bc820137e46",
+      "size": 854
+    },
+    {
+      "id": "script.foundry.slate.helper",
+      "version": "0.1.2",
+      "path": "script.foundry.slate.helper/script.foundry.slate.helper-0.1.2.zip",
+      "sha256": "e733416da42a30eab5a6999d942ba2b05231eccad7d5521ab3d9158b260cf7d0",
+      "size": 906709
+    },
+    {
+      "id": "skin.foundry.slate",
+      "version": "0.1.5",
+      "path": "skin.foundry.slate/skin.foundry.slate-0.1.5.zip",
+      "sha256": "136a1c1167c4cdbb731f449aa34406cfa09f521721988ab3d08c2898674d5152",
+      "size": 22700669
+    },
+    {
+      "id": "resource.images.foundry.slate.icons",
+      "version": "0.1.0",
+      "path": "resource.images.foundry.slate.icons/resource.images.foundry.slate.icons-0.1.0.zip",
+      "sha256": "274fdeaf529a03881c2e229cf32ebda4e8ce8bdf05bfaea98a9c6a6e3d298645",
+      "size": 5397597
+    },
+    {
+      "id": "script.program.foundry-simkl",
+      "version": "0.1.0",
+      "path": "script.program.foundry-simkl/script.program.foundry-simkl-0.1.0.zip",
+      "sha256": "e32151459f453ffd781591cc56b19597f6b679dbbd83cf0e9732cb68429ca525",
+      "size": 1601
+    },
+    {
+      "id": "resource.images.foundry.media.puremarks",
+      "version": "0.1.0",
+      "path": "resource.images.foundry.media.puremarks/resource.images.foundry.media.puremarks-0.1.0.zip",
+      "sha256": "3089cea090f6a65f1a15bc28dcdaa41dc8f20c15c95121c4bbc63b771bf32d64",
+      "size": 941217
+    }
+  ]
+}

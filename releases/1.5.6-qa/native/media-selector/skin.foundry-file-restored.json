@@ -1,0 +1,20 @@
+{
+  "ListItem.AudioChannels": "6",
+  "ListItem.AudioCodec": "ac3",
+  "ListItem.HdrType": "hdr10",
+  "ListItem.VideoAspect": "1.78",
+  "ListItem.VideoCodec": "h264",
+  "ListItem.VideoResolution": "1080",
+  "Window(Home).Property(foundry.media.list.aspectratio.path)": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.qaa/resources/flags/aspectratio/1.78.png",
+  "Window(Home).Property(foundry.media.list.aspectratio.value)": "1.78",
+  "Window(Home).Property(foundry.media.list.audiochannel.path)": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.qaa/resources/flags/audiochannel/6.png",
+  "Window(Home).Property(foundry.media.list.audiochannel.value)": "6",
+  "Window(Home).Property(foundry.media.list.audiocodec.path)": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.qaa/resources/flags/audiocodec/ac3.png",
+  "Window(Home).Property(foundry.media.list.audiocodec.value)": "ac3",
+  "Window(Home).Property(foundry.media.list.videocodec.path)": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.qaa/resources/flags/videocodec/h264.png",
+  "Window(Home).Property(foundry.media.list.videocodec.value)": "h264",
+  "Window(Home).Property(foundry.media.list.videohdr.path)": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.qaa/resources/flags/videohdr/hdr10.png",
+  "Window(Home).Property(foundry.media.list.videohdr.value)": "hdr10",
+  "Window(Home).Property(foundry.media.list.videoresolution.path)": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.qaa/resources/flags/videoresolution/1080.png",
+  "Window(Home).Property(foundry.media.list.videoresolution.value)": "1080"
+}

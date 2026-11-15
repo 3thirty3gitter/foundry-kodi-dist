@@ -1,0 +1,1443 @@
+{
+  "scope": "Unchanged Service loop and native Monitor; unrelated workers/startup stubbed; media monitor unchanged apart from observation wrappers",
+  "source": {
+    "service": "71166d3cbe5b9f19df682e0e8a79f013c01bcf155462e16d7e546aec785904e2",
+    "media_pack": "d79d2549332667b6f49b87369a48d41f23d338c8889e328c15c37848305c3632"
+  },
+  "samples": [
+    {
+      "at": 1439.522326521,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1441.524335998,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1443.530587811,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1445.531238074,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1447.532227626,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1449.532849023,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1451.533760049,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1453.534402,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1455.537366947,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1457.540181429,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1459.545592887,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1461.546417877,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1463.547037747,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1465.547752276,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1467.554067209,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1469.555051226,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1471.559392597,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1473.562732327,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1475.563445856,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1477.564169226,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1479.564870464,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1481.56558447,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1483.566284225,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1485.566967008,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1487.567691556,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1489.568492779,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1491.569280181,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1493.569945501,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1495.57068927,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1497.571551252,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1499.573520971,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1501.576292362,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1503.576961011,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1505.577698892,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1507.578416964,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1509.579120261,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1511.605571548,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1513.616402533,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1515.617226625,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1517.618027436,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1519.618699723,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1521.61937603,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1523.623243184,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1525.624049115,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1527.624761632,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1529.625552757,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1531.626304491,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1533.627019127,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1535.627716853,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1537.628472796,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1539.629296558,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1541.630116358,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1543.630813824,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1545.63168019,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1547.681075572,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1549.681894899,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1551.682684358,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1553.683463491,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1555.684171398,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1557.684904658,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1559.686780582,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1561.69135946,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1563.692448101,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1565.693902302,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1567.697915244,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1569.705294854,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1571.706281436,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1573.707159275,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1575.713188385,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1577.756656569,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1579.757230844,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1581.757955367,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1583.762923966,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1585.763640768,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1587.76470834,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1589.76623602,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1591.773234111,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1593.785095918,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1595.785948707,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1597.789289984,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1599.790051559,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1601.797234804,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1603.798049958,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1605.798803466,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1607.799864484,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1609.800652539,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1611.805063956,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1613.805980495,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.puremarks"
+    },
+    {
+      "at": 1615.806937263,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1617.809288965,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1619.810042979,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1621.840702779,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1622.111656325,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1622.370885452,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1622.829414016,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1623.103146137,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1623.408861213,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1623.763268637,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1624.046847104,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1624.252720383,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1624.498591577,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1624.823675876,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1625.107692879,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1625.39404368,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1625.677845857,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1625.924777327,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1628.241193716,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1630.285879014,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1632.372770854,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1634.443557692,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1636.570236476,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1638.728464104,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1640.841580323,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1643.059559078,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1645.187761524,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1647.228289203,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1649.33962274,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1651.484465834,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1653.54627702,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1655.611621077,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1657.756976944,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qab",
+      "setting": "resource.images.foundry.media.qab"
+    },
+    {
+      "at": 1659.897267904,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qab",
+      "setting": "resource.images.foundry.media.qab"
+    },
+    {
+      "at": 1662.074818005,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qab",
+      "setting": "resource.images.foundry.media.qab"
+    },
+    {
+      "at": 1664.262502417,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qab",
+      "setting": "resource.images.foundry.media.qab"
+    },
+    {
+      "at": 1666.37642509,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1668.495124364,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1670.581981686,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1672.67177138,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1674.714530707,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1676.843776985,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1678.880035768,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1680.936816162,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1683.120553704,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1685.237562245,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1687.422325103,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1689.534910006,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1691.719506937,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1693.771435391,
+      "skin": "skin.foundry.slate",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1695.901529489,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1696.225743739,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1696.609254368,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1696.983148141,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1697.273585218,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1697.574793124,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1697.948928775,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1698.322855547,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1698.697400162,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1699.113452019,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1699.40476506,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1699.701692683,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1700.075958396,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1700.43778837,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1700.719628418,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1701.034560246,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1701.384131281,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1701.73591132,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1702.118830278,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1702.467262375,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1702.819221773,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1703.168162601,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1703.523145254,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1703.879487516,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1704.231518699,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1704.583574038,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1704.929600352,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1705.269783796,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1705.516950087,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1705.752211514,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1706.006484742,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1706.270674568,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1706.658849624,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1706.955767956,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1707.166988969,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1707.491234231,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1707.854282928,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1708.270444146,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1708.674418253,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1709.038114516,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    },
+    {
+      "at": 1709.400940945,
+      "skin": "skin.foundry.slate",
+      "paused": false,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    }
+  ],
+  "waits": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2
+  ],
+  "passed": false
+}

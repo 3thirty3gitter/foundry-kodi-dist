@@ -1,0 +1,5 @@
+[
+  "if_nameindex_denied",
+  "sysfs_denied",
+  "real_SIOCGIFCONF"
+]

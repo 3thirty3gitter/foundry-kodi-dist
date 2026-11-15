@@ -1,0 +1,526 @@
+{
+  "scope": "Offline native Home/navigation/switch-back smoke; helper services/setup suppressed in disposable copies only. Not a full runtime/coexistence certification.",
+  "passed": true,
+  "kodi": {
+    "version": {
+      "major": 21,
+      "minor": 2,
+      "revision": "20250330-nogitfound",
+      "tag": "stable"
+    }
+  },
+  "navigation": {
+    "passed": true,
+    "trace": [
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 801,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Right",
+        "focus": 802,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Select",
+        "focus": 802,
+        "window": 10004,
+        "modal": 9999
+      },
+      {
+        "action": "Back",
+        "focus": 802,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Right",
+        "focus": 803,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Select",
+        "focus": 803,
+        "window": 10000,
+        "modal": 11107
+      },
+      {
+        "action": "Back",
+        "focus": 803,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Up",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 803,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Back",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 803,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Left",
+        "focus": 802,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Left",
+        "focus": 801,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Right",
+        "focus": 802,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Select",
+        "focus": 802,
+        "window": 10004,
+        "modal": 9999
+      },
+      {
+        "action": "Back",
+        "focus": 802,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Right",
+        "focus": 803,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Select",
+        "focus": 803,
+        "window": 10000,
+        "modal": 11107
+      },
+      {
+        "action": "Back",
+        "focus": 803,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Up",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 803,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Back",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 803,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Left",
+        "focus": 802,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Left",
+        "focus": 801,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Right",
+        "focus": 802,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Select",
+        "focus": 802,
+        "window": 10004,
+        "modal": 9999
+      },
+      {
+        "action": "Back",
+        "focus": 802,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Right",
+        "focus": 803,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Select",
+        "focus": 803,
+        "window": 10000,
+        "modal": 11107
+      },
+      {
+        "action": "Back",
+        "focus": 803,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Up",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Down",
+        "focus": 803,
+        "window": 10000,
+        "modal": 9999
+      },
+      {
+        "action": "Back",
+        "focus": 9000,
+        "window": 10000,
+        "modal": 9999
+      }
+    ],
+    "scope": "Native desktop shipped Home XML with offline helpers suppressed. Search uses configured built-in window1107. No Shield/live-provider/widget population claim.",
+    "radio_visual_states": [
+      {
+        "hidden": true,
+        "window": 10035,
+        "focus": 6243
+      },
+      {
+        "hidden": false,
+        "window": 10035,
+        "focus": 6243
+      },
+      {
+        "hidden": true,
+        "window": 10035,
+        "focus": 6243
+      },
+      {
+        "hidden": false,
+        "window": 10035,
+        "focus": 6243
+      },
+      {
+        "hidden": true,
+        "window": 10035,
+        "focus": 6243
+      }
+    ],
+    "real_radio_toggles": 5,
+    "hidden_before_restart": true
+  },
+  "home_sha256": "65faed2808e1b083ab3407a1b002a1ca44274200217d470483e32b57a5b043a3",
+  "hidden_label_shift_pixels": 51,
+  "selector_alignment": [
+    {
+      "row": 0,
+      "offset": 0.0
+    },
+    {
+      "row": 1,
+      "offset": 0.0
+    },
+    {
+      "row": 2,
+      "offset": 0.0
+    },
+    {
+      "row": 3,
+      "offset": 0.0
+    },
+    {
+      "row": 4,
+      "offset": 0.0
+    },
+    {
+      "row": 5,
+      "offset": 0.0
+    }
+  ],
+  "footer_pixel_bounds": {
+    "power": [
+      71,
+      898,
+      106,
+      936
+    ],
+    "settings": [
+      141,
+      900,
+      176,
+      937
+    ],
+    "search": [
+      212,
+      902,
+      245,
+      935
+    ]
+  },
+  "radio_visual_polarity": {
+    "True": {
+      "left_rgb_sum": 165.875,
+      "right_rgb_sum": 64.0
+    },
+    "False": {
+      "left_rgb_sum": 64.0,
+      "right_rgb_sum": 558.75
+    }
+  },
+  "footer_visual_differences": {
+    "power": 149690.0,
+    "settings": 261893.0,
+    "search": 131852.0
+  },
+  "saved_icon_settings": [
+    {
+      "phase": "hidden-before-restart",
+      "id": "slatehidemainmenuicons",
+      "value": "true"
+    },
+    {
+      "phase": "shown-before-restart",
+      "id": "slatehidemainmenuicons",
+      "value": "false"
+    }
+  ],
+  "hidden_persisted_after_restart": true,
+  "shown_persisted_after_second_restart": true
+}

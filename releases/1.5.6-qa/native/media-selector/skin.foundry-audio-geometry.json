@@ -1,0 +1,1447 @@
+{
+  "passed": true,
+  "pages": [
+    {
+      "card": "StreamPilotVODCard",
+      "variant": "wide",
+      "file": "skin.foundry-StreamPilotVODCard-wide.png",
+      "codec": "ac3",
+      "channels": "2",
+      "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+      "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags-osd/audiocodec/ac3.png",
+      "wide": true,
+      "visible_ink_recall": 1.0,
+      "derived_xml_geometry": {
+        "audio": [
+          504,
+          917,
+          160,
+          54
+        ],
+        "row": [
+          332,
+          917,
+          332,
+          54
+        ],
+        "text": [
+          332,
+          843,
+          1020,
+          184
+        ],
+        "gap": null
+      },
+      "text_right": 1352,
+      "badges_left": 332,
+      "screenshot_sha256": "91742cf36209164c3c36859eb125b0aeeb17828578c706a83db39605edf6ee19"
+    },
+    {
+      "card": "StreamPilotVODCard",
+      "variant": "builtin",
+      "file": "skin.foundry-StreamPilotVODCard-builtin.png",
+      "codec": "ac3",
+      "channels": "2",
+      "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+      "path": "",
+      "wide": false,
+      "derived_xml_geometry": {
+        "audio": [
+          504,
+          917,
+          76,
+          54
+        ],
+        "row": [
+          332,
+          917,
+          248,
+          54
+        ],
+        "text": [
+          332,
+          843,
+          1020,
+          184
+        ],
+        "gap": null
+      },
+      "text_right": 1352,
+      "badges_left": 332,
+      "screenshot_sha256": "c7e17102f53d4a28480fb39aa85dc802634e41842d2b65a5614650001f51d9e6"
+    },
+    {
+      "card": "StreamPilotVODCard",
+      "variant": "missing-derivative",
+      "file": "skin.foundry-StreamPilotVODCard-missing-derivative.png",
+      "codec": "ac3",
+      "channels": "2",
+      "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+      "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiocodec/ac3.png",
+      "wide": false,
+      "visible_ink_recall": 1.0,
+      "derived_xml_geometry": {
+        "audio": [
+          504,
+          917,
+          76,
+          54
+        ],
+        "row": [
+          332,
+          917,
+          248,
+          54
+        ],
+        "text": [
+          332,
+          843,
+          1020,
+          184
+        ],
+        "gap": null
+      },
+      "text_right": 1352,
+      "badges_left": 332,
+      "screenshot_sha256": "2c62f32ae097b79d1918dcdc348896b5ddc690f6766ecb1eab853dcd6b973bf4"
+    },
+    {
+      "card": "StreamPilotVODCard",
+      "variant": "wide-restored",
+      "file": "skin.foundry-StreamPilotVODCard-wide-restored.png",
+      "codec": "ac3",
+      "channels": "2",
+      "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+      "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags-osd/audiocodec/ac3.png",
+      "wide": true,
+      "visible_ink_recall": 1.0,
+      "derived_xml_geometry": {
+        "audio": [
+          504,
+          917,
+          160,
+          54
+        ],
+        "row": [
+          332,
+          917,
+          332,
+          54
+        ],
+        "text": [
+          332,
+          843,
+          1020,
+          184
+        ],
+        "gap": null
+      },
+      "text_right": 1352,
+      "badges_left": 332,
+      "screenshot_sha256": "9925c057a86560197ce2853556724ba98cbe8e5cbb440405072d87b960840297"
+    },
+    {
+      "card": "StreamPilotLiveCard",
+      "variant": "wide",
+      "file": "skin.foundry-StreamPilotLiveCard-wide.png",
+      "codec": "ac3",
+      "channels": "2",
+      "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+      "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags-osd/audiocodec/ac3.png",
+      "wide": true,
+      "visible_ink_recall": 1.0,
+      "derived_xml_geometry": {
+        "audio": [
+          1536,
+          899,
+          160,
+          54
+        ],
+        "row": [
+          1364,
+          899,
+          332,
+          54
+        ],
+        "text": [
+          288,
+          812,
+          1036,
+          192
+        ],
+        "gap": 40
+      },
+      "text_right": 1324,
+      "badges_left": 1364,
+      "screenshot_sha256": "93a35a4620c131ea0bbba08bbff24304b654059c77383453d700fb9113124356"
+    },
+    {
+      "card": "StreamPilotLiveCard",
+      "variant": "builtin",
+      "file": "skin.foundry-StreamPilotLiveCard-builtin.png",
+      "codec": "ac3",
+      "channels": "2",
+      "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+      "path": "",
+      "wide": false,
+      "derived_xml_geometry": {
+        "audio": [
+          1620,
+          899,
+          76,
+          54
+        ],
+        "row": [
+          1448,
+          899,
+          248,
+          54
+        ],
+        "text": [
+          288,
+          812,
+          1120,
+          192
+        ],
+        "gap": 40
+      },
+      "text_right": 1408,
+      "badges_left": 1448,
+      "screenshot_sha256": "382db5064563cd959b5ba78ff18e2c649001d6ae7c57f1db55455910e767a242"
+    },
+    {
+      "card": "StreamPilotLiveCard",
+      "variant": "missing-derivative",
+      "file": "skin.foundry-StreamPilotLiveCard-missing-derivative.png",
+      "codec": "ac3",
+      "channels": "2",
+      "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+      "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiocodec/ac3.png",
+      "wide": false,
+      "visible_ink_recall": 1.0,
+      "derived_xml_geometry": {
+        "audio": [
+          1620,
+          899,
+          76,
+          54
+        ],
+        "row": [
+          1448,
+          899,
+          248,
+          54
+        ],
+        "text": [
+          288,
+          812,
+          1120,
+          192
+        ],
+        "gap": 40
+      },
+      "text_right": 1408,
+      "badges_left": 1448,
+      "screenshot_sha256": "437f3974771862dd5cd092a65174c00c6fe16faed1efef7cd8e3b7a0afb85917"
+    },
+    {
+      "card": "StreamPilotLiveCard",
+      "variant": "wide-restored",
+      "file": "skin.foundry-StreamPilotLiveCard-wide-restored.png",
+      "codec": "ac3",
+      "channels": "2",
+      "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+      "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags-osd/audiocodec/ac3.png",
+      "wide": true,
+      "visible_ink_recall": 1.0,
+      "derived_xml_geometry": {
+        "audio": [
+          1536,
+          899,
+          160,
+          54
+        ],
+        "row": [
+          1364,
+          899,
+          332,
+          54
+        ],
+        "text": [
+          288,
+          812,
+          1036,
+          192
+        ],
+        "gap": 40
+      },
+      "text_right": 1324,
+      "badges_left": 1364,
+      "screenshot_sha256": "b44b4747f49f9e80ba59f2e675e745ecd19473c57c868570fcfa4ed531999b14"
+    }
+  ],
+  "geometry_source": {
+    "source_sha256": "70c3555851d37d88bdac576c4740c4c30c8a9dd674818cdb3d2d105e9b923ee1",
+    "wide_guard": "String.IsEqual(Window(Home).Property(foundry.media.player.audiocodec.wide),true) + !String.IsEmpty(Window(Home).Property(foundry.media.player.audiocodec.path)) + String.IsEqual(Skin.String(MediaIconPack),Window(Home).Property(foundry.media.pack)) + String.IsEqual(VideoPlayer.AudioCodec,Window(Home).Property(foundry.media.player.audiocodec.value))",
+    "cards": {
+      "StreamPilotVODCard": {
+        "narrow": {
+          "audio": [
+            504,
+            917,
+            76,
+            54
+          ],
+          "row": [
+            332,
+            917,
+            248,
+            54
+          ],
+          "text": [
+            332,
+            843,
+            1020,
+            184
+          ],
+          "gap": null
+        },
+        "wide": {
+          "audio": [
+            504,
+            917,
+            160,
+            54
+          ],
+          "row": [
+            332,
+            917,
+            332,
+            54
+          ],
+          "text": [
+            332,
+            843,
+            1020,
+            184
+          ],
+          "gap": null
+        }
+      },
+      "StreamPilotLiveCard": {
+        "narrow": {
+          "audio": [
+            1620,
+            899,
+            76,
+            54
+          ],
+          "row": [
+            1448,
+            899,
+            248,
+            54
+          ],
+          "text": [
+            288,
+            812,
+            1120,
+            192
+          ],
+          "gap": 40
+        },
+        "wide": {
+          "audio": [
+            1536,
+            899,
+            160,
+            54
+          ],
+          "row": [
+            1364,
+            899,
+            332,
+            54
+          ],
+          "text": [
+            288,
+            812,
+            1036,
+            192
+          ],
+          "gap": 40
+        }
+      }
+    }
+  },
+  "scope": "Actual shipped card includes with native AC3/real title metadata, synthetic Live layout not PVR; visual title/time/status review required",
+  "original_pack_status": "approved",
+  "source_receipts": [
+    {
+      "file": "DERIVATIVE-PROVENANCE.json",
+      "sha256": "c196e2c010fe5aea5fa33359377b48928d74e2264bc5c545becbaf8bb2bf40aa"
+    },
+    {
+      "file": "PROVENANCE.md",
+      "sha256": "539e9e90e5208956d9028f50802b632a2884350eafc24d1d469f73bf8bac4d7e"
+    },
+    {
+      "file": "README.md",
+      "sha256": "04600969e00e68e0141bb9e0759cfbf5c6e83c55ecd0e4fd5096096ec233e1ec"
+    },
+    {
+      "file": "REVIEW-NOTES.md",
+      "sha256": "a9e4a69c306a7914f8675d0d72b13a43ddcb34216ee97e9e64dba75347da702d"
+    },
+    {
+      "file": "UNRESOLVED.csv",
+      "sha256": "725105b1a23eeeac03193c5e440416f054fc8080fd33f90f42a68c73ef4a240e"
+    },
+    {
+      "file": "addon.xml",
+      "sha256": "895cb8d62f9ea6b2b364f23b743ca99a3435c76e5c04816e70c76ce8c0fe26dd"
+    },
+    {
+      "file": "original-vectors/aspectratio/1.00.svg",
+      "sha256": "a27f4f6e4dc680f3b953272659e9defb487cb49ce5c674fab944cc4ffc81b9d1"
+    },
+    {
+      "file": "original-vectors/aspectratio/1.19.svg",
+      "sha256": "2db707cadf067b2dd31aa928efc7d6732de4b46086db65b13e5d5eecb91f002a"
+    },
+    {
+      "file": "original-vectors/aspectratio/1.33.svg",
+      "sha256": "59bc85edf45bdcdd632e37416c75c3385b6ef8176b6824bb5fdb0e97d17dc4a0"
+    },
+    {
+      "file": "original-vectors/aspectratio/1.37.svg",
+      "sha256": "f167861845145faf9748dad3241c097d604693cd10ea6e61d379286de752dab9"
+    },
+    {
+      "file": "original-vectors/aspectratio/1.66.svg",
+      "sha256": "bf9245ae4931a276c67906030813f423a15df4415a9e29f2efe9c523ec87a9ec"
+    },
+    {
+      "file": "original-vectors/aspectratio/1.78.svg",
+      "sha256": "b3e7e295999fdd7c4425636a5a0755fc55a05dc00d9b391e6b9e997d399185a4"
+    },
+    {
+      "file": "original-vectors/aspectratio/1.85.svg",
+      "sha256": "fa13678182c5309042d3421a1d3b8520920a222abda92d5c2860ebf27f93c325"
+    },
+    {
+      "file": "original-vectors/aspectratio/2.00.svg",
+      "sha256": "5f7bd240a5baea3a19b2896241e6f5a91310e9804cc3539dbf3f6de3c509a47c"
+    },
+    {
+      "file": "original-vectors/aspectratio/2.20.svg",
+      "sha256": "e2411523c6fa1b3d4f1e77534950669c2a2aa5eae4497d65f28c405d2edc6c9f"
+    },
+    {
+      "file": "original-vectors/aspectratio/2.35.svg",
+      "sha256": "f23eb65d66e1b09287cd403b97241b815acce867a1cfb31dab97ead0500c2f02"
+    },
+    {
+      "file": "original-vectors/aspectratio/2.40.svg",
+      "sha256": "72f6573eb1977d0e74ec32fa90d03cb7880f26e606765919eb152d2c64df36ae"
+    },
+    {
+      "file": "original-vectors/aspectratio/2.55.svg",
+      "sha256": "79a112df5f734f7a4f2b836d7ffb4e69d9de4d86e6949ef4bedcfab1dc7f5715"
+    },
+    {
+      "file": "original-vectors/aspectratio/2.76.svg",
+      "sha256": "41d33a7a8a219fc8c10e8f618a4c01e849a29862ccfd7d9331ae331661b13abf"
+    },
+    {
+      "file": "original-vectors/audiochannel/0.svg",
+      "sha256": "e46f37402fa0e2c8a7efef93161fd0466dc19b7990485d6d5a70a941d5000024"
+    },
+    {
+      "file": "original-vectors/audiochannel/1.svg",
+      "sha256": "d7a6fec8b4c3d897ce590f0631eecc1ec008167a7ea6ad955e494bd260f5129d"
+    },
+    {
+      "file": "original-vectors/audiochannel/10.svg",
+      "sha256": "4cfd47cb1ccf9a677c028100f54bc1a1a4846a658980de7ebddb398e6f77ff1c"
+    },
+    {
+      "file": "original-vectors/audiochannel/2.svg",
+      "sha256": "95b7d3f48bf8df8f14de250628e24c27225bc8ea334a3afe52caabcf75c129ef"
+    },
+    {
+      "file": "original-vectors/audiochannel/3.svg",
+      "sha256": "36f2f25c8ce57cc8fab4bb51f0f27d570910dbc1fc54b18a6dcf8caf1d745eda"
+    },
+    {
+      "file": "original-vectors/audiochannel/4.svg",
+      "sha256": "18d5361fd9ca610bfdbdbc967f15c15f050d8a9a2d2af101b56fbe242325dbbb"
+    },
+    {
+      "file": "original-vectors/audiochannel/5.svg",
+      "sha256": "24f1e3292ddf8c4da81c9a4ab79811192c29019d7103296c3f93da9ba6e6c6e5"
+    },
+    {
+      "file": "original-vectors/audiochannel/6.svg",
+      "sha256": "403a24a827436a1c64b49e3f1c31b2b630c3a1eae376a4b0f701f340810f9443"
+    },
+    {
+      "file": "original-vectors/audiochannel/7.svg",
+      "sha256": "cb58f4279d150ae1a69e84acf0855c3349424b25a8fc0fb8e0b0b55cf07a1fbf"
+    },
+    {
+      "file": "original-vectors/audiochannel/8.svg",
+      "sha256": "dbd9957a883fe90c746d72cdef6603289cbd92a3ff641db429ad6009e98f4809"
+    },
+    {
+      "file": "original-vectors/audiocodec/aif.svg",
+      "sha256": "e316316a8f76f0ef484441f6cf60f461440fc853f08a1b1127dca0c021fca586"
+    },
+    {
+      "file": "original-vectors/audiocodec/aifc.svg",
+      "sha256": "ee55e4aa3075235dd0101232024b425900229101ed79d419d5c0621b962ddd27"
+    },
+    {
+      "file": "original-vectors/audiocodec/aiff.svg",
+      "sha256": "e316316a8f76f0ef484441f6cf60f461440fc853f08a1b1127dca0c021fca586"
+    },
+    {
+      "file": "original-vectors/audiocodec/alac.svg",
+      "sha256": "29757b27cbcd68ba3c1464bed89da9d025d6dc4d44481856e24e55c7f87068cf"
+    },
+    {
+      "file": "original-vectors/audiocodec/ape.svg",
+      "sha256": "49c52c1ae7bcf2d63480d0012440304d5efb6c9c7219433e48cfad9f55bb92b1"
+    },
+    {
+      "file": "original-vectors/audiocodec/avc.svg",
+      "sha256": "117a6ebb279db5d54620719dcd2586bcbfc619848227c42b528bad76c541024a"
+    },
+    {
+      "file": "original-vectors/audiocodec/cdda.svg",
+      "sha256": "189c22146098e7eff1f51ceb4e2d7887556f876f341438a4c4fd4b1717c82b61"
+    },
+    {
+      "file": "original-vectors/audiocodec/dca_hra.svg",
+      "sha256": "4ae8991351a5f0a12b49e29f0e520a903331bebf927a9618b5688c862f6f8cb8"
+    },
+    {
+      "file": "original-vectors/audiocodec/dtshd_hra.svg",
+      "sha256": "4ae8991351a5f0a12b49e29f0e520a903331bebf927a9618b5688c862f6f8cb8"
+    },
+    {
+      "file": "original-vectors/audiocodec/mp1.svg",
+      "sha256": "58c56ffe5f010057beaba6e6be3500ae637a60f460267d1e0d31761870f5a74c"
+    },
+    {
+      "file": "original-vectors/audiocodec/mp2.svg",
+      "sha256": "2573a5f3607cc1a292266e92bc0ca003e35fff2caeb483c254308b328f2d741b"
+    },
+    {
+      "file": "original-vectors/audiocodec/ogg.svg",
+      "sha256": "ef927a2948d056512efbd1fcece680c33045d8f2fb802fe5cc83e148c045b754"
+    },
+    {
+      "file": "original-vectors/audiocodec/pcm.svg",
+      "sha256": "d9ac6d5091f18aa64186c8859f4aa36dc933826dfc0baca88bd2bda6f47dafae"
+    },
+    {
+      "file": "original-vectors/audiocodec/pcm_bluray.svg",
+      "sha256": "d9ac6d5091f18aa64186c8859f4aa36dc933826dfc0baca88bd2bda6f47dafae"
+    },
+    {
+      "file": "original-vectors/audiocodec/pcm_s16le.svg",
+      "sha256": "e0e7a7438a589df633a93cdaed5e08699d98f34cfa4d087ee1c80d3ae89a0498"
+    },
+    {
+      "file": "original-vectors/audiocodec/pcm_s24le.svg",
+      "sha256": "3e1a5923ad25cfa496995ecfc4fa50e6e02a3f34d96c7357a7912b69531b4a86"
+    },
+    {
+      "file": "original-vectors/audiocodec/wav.svg",
+      "sha256": "ec8e43ea432dde3769051d8708e05afd06c53c2906d0a5834e6b6c4e31f179a6"
+    },
+    {
+      "file": "original-vectors/audiocodec/wma.svg",
+      "sha256": "3f6a46e85b454549329f7d0a753760c45a4b2140ab2495c80d7fe53e65b8bf8f"
+    },
+    {
+      "file": "original-vectors/audiocodec/wmapro.svg",
+      "sha256": "f44dc1fe221f8e1ba57fead5a5e3cb31f96605d1f312fae817f6a7a2c44b0af0"
+    },
+    {
+      "file": "original-vectors/audiocodec/wmav2.svg",
+      "sha256": "73afb3bd9ebc75a1774567689c1f6651f2b4506393e44b443d0fbc60b6041193"
+    },
+    {
+      "file": "original-vectors/videocodec/avc1.svg",
+      "sha256": "c0ee2238a754a30ceecf5075bb32a1e03acf89b5a958fe1770351ed217ba3b7d"
+    },
+    {
+      "file": "original-vectors/videocodec/flv.svg",
+      "sha256": "add178731378fb1c2f2b9b8115f78add71be24b9d07ec8bb5fd812da4c107496"
+    },
+    {
+      "file": "original-vectors/videocodec/h264.svg",
+      "sha256": "c0ee2238a754a30ceecf5075bb32a1e03acf89b5a958fe1770351ed217ba3b7d"
+    },
+    {
+      "file": "original-vectors/videocodec/hev1.svg",
+      "sha256": "2e107ff50bb9ce61e8936c757ba4fb9f1bcceaf514f14a734a3a418a9054aabf"
+    },
+    {
+      "file": "original-vectors/videocodec/hevc.svg",
+      "sha256": "2e107ff50bb9ce61e8936c757ba4fb9f1bcceaf514f14a734a3a418a9054aabf"
+    },
+    {
+      "file": "original-vectors/videocodec/hvc1.svg",
+      "sha256": "2e107ff50bb9ce61e8936c757ba4fb9f1bcceaf514f14a734a3a418a9054aabf"
+    },
+    {
+      "file": "original-vectors/videocodec/mp4v.svg",
+      "sha256": "408a61c45d09cb32f50f07f1cdb49761bf1b4260cf1c3ef0ffd8533bedcb9b3a"
+    },
+    {
+      "file": "original-vectors/videocodec/mpeg1.svg",
+      "sha256": "819168362e9ed6c8d7fe779489caa4b013efa6b2b2c0024e040149ec0776a2a0"
+    },
+    {
+      "file": "original-vectors/videocodec/mpeg1video.svg",
+      "sha256": "819168362e9ed6c8d7fe779489caa4b013efa6b2b2c0024e040149ec0776a2a0"
+    },
+    {
+      "file": "original-vectors/videocodec/mpeg2.svg",
+      "sha256": "d1ecf528b19f3bb4416216dd136dd75d5cba7f20e1239d0bb3af9a9e05ac9d51"
+    },
+    {
+      "file": "original-vectors/videocodec/mpeg2video.svg",
+      "sha256": "d1ecf528b19f3bb4416216dd136dd75d5cba7f20e1239d0bb3af9a9e05ac9d51"
+    },
+    {
+      "file": "original-vectors/videocodec/mpeg4.svg",
+      "sha256": "408a61c45d09cb32f50f07f1cdb49761bf1b4260cf1c3ef0ffd8533bedcb9b3a"
+    },
+    {
+      "file": "original-vectors/videocodec/tv.svg",
+      "sha256": "df0d7623b4f46d13c8dc2390bba4e1227690acbbed6da54049967a764f3618a7"
+    },
+    {
+      "file": "original-vectors/videocodec/vc-1.svg",
+      "sha256": "b9c5bfc0d790952188c047089040d35acfc0a1148837e4d1851a1a518c738f78"
+    },
+    {
+      "file": "original-vectors/videocodec/vc1.svg",
+      "sha256": "b9c5bfc0d790952188c047089040d35acfc0a1148837e4d1851a1a518c738f78"
+    },
+    {
+      "file": "original-vectors/videocodec/vp8.svg",
+      "sha256": "0181b4e21535d3cac7aad5870f754a492c055acbc84c0369b97dd283f9195956"
+    },
+    {
+      "file": "original-vectors/videocodec/vp9.svg",
+      "sha256": "c5a4303fc2170e9b6716f2652bae672ee0ed3cf15afcb4eb1b6774ace9662b5e"
+    },
+    {
+      "file": "original-vectors/videocodec/wmv.svg",
+      "sha256": "1a654528afd8ea2f50367040564124720d52d89a637f76e75e5a21942d13d302"
+    },
+    {
+      "file": "original-vectors/videocodec/wmv3.svg",
+      "sha256": "bcac3ca092584f46ccd9101f3a7d4e77c84ce246c19494873e42c7d70098293d"
+    },
+    {
+      "file": "original-vectors/videocodec/wvc1.svg",
+      "sha256": "b9c5bfc0d790952188c047089040d35acfc0a1148837e4d1851a1a518c738f78"
+    },
+    {
+      "file": "original-vectors/videocodec/xvid.svg",
+      "sha256": "930eb2d85077fc88d4c05643171be698d3517292599fc769b96563e2e614d1be"
+    },
+    {
+      "file": "original-vectors/videohdr/hlg.svg",
+      "sha256": "d80a24ed6d43351f77fe9adbc8be5ec1415fd73b0321bc6da539664ebddb7fa9"
+    },
+    {
+      "file": "original-vectors/videoresolution/1080.svg",
+      "sha256": "2e9b57e90155992bd3e4a3b6b6829b7742fec07b6aff79147f2b42d41354fb1d"
+    },
+    {
+      "file": "original-vectors/videoresolution/2160.svg",
+      "sha256": "4da5cfb5fde97dbabb0307fcedbdec2e8b9748bdaa19c5f516610636caf42c8a"
+    },
+    {
+      "file": "original-vectors/videoresolution/3d.svg",
+      "sha256": "889ae18b8a6d0bfcc5e909f209db5304d6ac8068e9309f36f198ad83ef826a69"
+    },
+    {
+      "file": "original-vectors/videoresolution/480.svg",
+      "sha256": "2bf61e71a54803a89ef55d89ac4314a331412c139f8e9db49061c6e566c0f256"
+    },
+    {
+      "file": "original-vectors/videoresolution/4k.svg",
+      "sha256": "4da5cfb5fde97dbabb0307fcedbdec2e8b9748bdaa19c5f516610636caf42c8a"
+    },
+    {
+      "file": "original-vectors/videoresolution/540.svg",
+      "sha256": "ab266e7b56a582af1b210598c056767957112a6d7ca42b8060556bfb8110e6c6"
+    },
+    {
+      "file": "original-vectors/videoresolution/576.svg",
+      "sha256": "1b7cbc45ee55c8345dd5049eb333dab6bd1f6a09fd83d321a6dda168193840ef"
+    },
+    {
+      "file": "original-vectors/videoresolution/720.svg",
+      "sha256": "b28edaaf03811101ebd424ae5908c04e5b7d7ab63c75d2cdcbc97573c4522d2b"
+    },
+    {
+      "file": "original-vectors/videoresolution/8k.svg",
+      "sha256": "da90bfe5e3311db0a89229917ba0b5c5525eeab2deda41c1b5db2f63ab68bf2e"
+    },
+    {
+      "file": "resources/flags/aspectratio/1.00.png",
+      "sha256": "f3367adb5dc12f35e30ad256a179d5ad00959166f4fadf131d67689e445eefc0"
+    },
+    {
+      "file": "resources/flags/aspectratio/1.19.png",
+      "sha256": "2a9f02e841373d71d2ebefe2c78982f2ad8cb9ce478ebea8eddcbeae10c66338"
+    },
+    {
+      "file": "resources/flags/aspectratio/1.33.png",
+      "sha256": "59097d1426eaa181785c8d4fc370141526de6622141f1b70e386f94ac368e14e"
+    },
+    {
+      "file": "resources/flags/aspectratio/1.37.png",
+      "sha256": "dc6bc801a0b6b042b7f221559751f5f88525f2b5530ecac8f3ab33ccd8484061"
+    },
+    {
+      "file": "resources/flags/aspectratio/1.66.png",
+      "sha256": "f0eebff209d65740d75a54a279bb3406857754ef678f421210849f9254182b70"
+    },
+    {
+      "file": "resources/flags/aspectratio/1.78.png",
+      "sha256": "b917dd902da3870148ef451e744db6affc1e48a2c2899a59863021db78a06145"
+    },
+    {
+      "file": "resources/flags/aspectratio/1.85.png",
+      "sha256": "0e551bf51c077801541c838af1c155193722a02a61766819c5cbf4dbde20ca41"
+    },
+    {
+      "file": "resources/flags/aspectratio/2.00.png",
+      "sha256": "8b335fadc51f74ffcf4212dd612b2abcc42b4b3623db0156bb71d351b4d80ea9"
+    },
+    {
+      "file": "resources/flags/aspectratio/2.20.png",
+      "sha256": "8fde727af1eba4d94be63b8f898fc1c280c372662b5aac6b8f1401ea143139a1"
+    },
+    {
+      "file": "resources/flags/aspectratio/2.35.png",
+      "sha256": "8067f664ac728aa2649554d6b9b383deb220e25e8d3e38a3b54c3432aa22803b"
+    },
+    {
+      "file": "resources/flags/aspectratio/2.40.png",
+      "sha256": "38e95b5658e0a0c558fd30c1eae0d9f55cef78bea5bb10a30583dd8e4f7b0e60"
+    },
+    {
+      "file": "resources/flags/aspectratio/2.55.png",
+      "sha256": "280cd65f8964b77236d904291fa75ec8138a7a256a7deed3de02f86efdd680c0"
+    },
+    {
+      "file": "resources/flags/aspectratio/2.76.png",
+      "sha256": "eb5160329656b34a3bcd58673b2902f212eba5945bd7896e33b72bfba2e2ef23"
+    },
+    {
+      "file": "resources/flags/audiochannel/0.png",
+      "sha256": "ed33dadbe22f4c3787213314680d11e88524b22b9cf2b13141466fa1671da1a4"
+    },
+    {
+      "file": "resources/flags/audiochannel/1.png",
+      "sha256": "ad0030303d8e8647b43ef7fdd75f1edb9a38ec8a740d799cd8882d7e5fa6da56"
+    },
+    {
+      "file": "resources/flags/audiochannel/10.png",
+      "sha256": "a185861605fb63ae451a89d12176e7da0bc63e76e2f30bb23fe35fb3b467a9fa"
+    },
+    {
+      "file": "resources/flags/audiochannel/2.png",
+      "sha256": "02424ebe5bd7e9d1f9f19afb6cc20a858e827be5c5478434bf8fb8728c726609"
+    },
+    {
+      "file": "resources/flags/audiochannel/3.png",
+      "sha256": "0acd1d9adc11ab5dbbd0d2cee87d5e017029a0d9c6146d21ae09c4c6fbf684ee"
+    },
+    {
+      "file": "resources/flags/audiochannel/4.png",
+      "sha256": "9e05fcb18af5fa831476a1a28be81952ab96c7ee038d57a5cf9ecefcb3e1fd0e"
+    },
+    {
+      "file": "resources/flags/audiochannel/5.png",
+      "sha256": "b1d10214757080d8bfa3ab200c812a430edfa881d5041e675db8d1f0902aa381"
+    },
+    {
+      "file": "resources/flags/audiochannel/6.png",
+      "sha256": "44da490f68e3949a6b00784ea3897fb03b277e2029b7a7a3e993c862c010382a"
+    },
+    {
+      "file": "resources/flags/audiochannel/7.png",
+      "sha256": "23937d624839f453cba0643580d3ec6e1905448344256819cfaf7a478a9442f8"
+    },
+    {
+      "file": "resources/flags/audiochannel/8.png",
+      "sha256": "d9aaafd85077a1ccf33b665851e2c9d8d0eafcef292c3cff6a4f6404a714e493"
+    },
+    {
+      "file": "resources/flags/audiocodec/aac.png",
+      "sha256": "316e950242e52ac7c37b814261e76aae18a4dba496f2d803d8133b03d01f336f"
+    },
+    {
+      "file": "resources/flags/audiocodec/aac_latm.png",
+      "sha256": "316e950242e52ac7c37b814261e76aae18a4dba496f2d803d8133b03d01f336f"
+    },
+    {
+      "file": "resources/flags/audiocodec/ac3.png",
+      "sha256": "04f93e78daca939e8aa43f050ef5b23d55a86f2c6cb8f2aa8d3fe42e3c30aef5"
+    },
+    {
+      "file": "resources/flags/audiocodec/aif.png",
+      "sha256": "181e86b61c29951cc1d1572940862343369dba9a32005ac9ffc5bbe7ab0fe39b"
+    },
+    {
+      "file": "resources/flags/audiocodec/aifc.png",
+      "sha256": "5680dbbf5f71899e9b53d8408e8b63889af5605b18cc4d9a8a7d273b1414622a"
+    },
+    {
+      "file": "resources/flags/audiocodec/aiff.png",
+      "sha256": "181e86b61c29951cc1d1572940862343369dba9a32005ac9ffc5bbe7ab0fe39b"
+    },
+    {
+      "file": "resources/flags/audiocodec/alac.png",
+      "sha256": "52d1bb1c3814ad837af16e987d91d6862ff630805d9112d7ab0444b131e47233"
+    },
+    {
+      "file": "resources/flags/audiocodec/ape.png",
+      "sha256": "570f59b7b158e41055dda7ffe9ccda5e2bb90de095485b418ad0dcfb3144860e"
+    },
+    {
+      "file": "resources/flags/audiocodec/atmos.png",
+      "sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc"
+    },
+    {
+      "file": "resources/flags/audiocodec/avc.png",
+      "sha256": "156c0dc986d604d093656bec9911bcf83525e2da0c08f7e52cba33da5f93fce6"
+    },
+    {
+      "file": "resources/flags/audiocodec/cdda.png",
+      "sha256": "ce83aadafc62b5acd928f8e46c20973027a6063277859dd447dbaf57abd962fb"
+    },
+    {
+      "file": "resources/flags/audiocodec/dca.png",
+      "sha256": "782a275744fbfe6ef7a360d22e4fd3e3052d962dd78ab487ae3af5998876a5f3"
+    },
+    {
+      "file": "resources/flags/audiocodec/dca_hra.png",
+      "sha256": "d90d493480d00285a7c5c535377df7ea77f82b86c3643eca6d6d4229bfd029a7"
+    },
+    {
+      "file": "resources/flags/audiocodec/dca_ma.png",
+      "sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8"
+    },
+    {
+      "file": "resources/flags/audiocodec/dolbydigital.png",
+      "sha256": "04f93e78daca939e8aa43f050ef5b23d55a86f2c6cb8f2aa8d3fe42e3c30aef5"
+    },
+    {
+      "file": "resources/flags/audiocodec/dts.png",
+      "sha256": "782a275744fbfe6ef7a360d22e4fd3e3052d962dd78ab487ae3af5998876a5f3"
+    },
+    {
+      "file": "resources/flags/audiocodec/dtshd_hra.png",
+      "sha256": "d90d493480d00285a7c5c535377df7ea77f82b86c3643eca6d6d4229bfd029a7"
+    },
+    {
+      "file": "resources/flags/audiocodec/dtshd_ma.png",
+      "sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8"
+    },
+    {
+      "file": "resources/flags/audiocodec/dtsma.png",
+      "sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8"
+    },
+    {
+      "file": "resources/flags/audiocodec/eac3-joc.png",
+      "sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc"
+    },
+    {
+      "file": "resources/flags/audiocodec/eac3.png",
+      "sha256": "a9cd31ab4801975d635f6ba90bb7e99d52e3531a73d54e0664fa5953594035c8"
+    },
+    {
+      "file": "resources/flags/audiocodec/flac.png",
+      "sha256": "09194d5195b46458ae3156da92bcfb7b73f24e3befd21dd841875f40049bfe4b"
+    },
+    {
+      "file": "resources/flags/audiocodec/mp1.png",
+      "sha256": "b02060b52d150b32adc4ccb31a8b00aad80a5e4de866abf3e5594d0026c17288"
+    },
+    {
+      "file": "resources/flags/audiocodec/mp2.png",
+      "sha256": "922c582a1aef005a45d5a63c7905dadd9b9788511907f01b783d5d8be14bdba0"
+    },
+    {
+      "file": "resources/flags/audiocodec/mp3.png",
+      "sha256": "2557a393b51d4e95896ff93b085b963b164e0b277e6801e00233b460478141a4"
+    },
+    {
+      "file": "resources/flags/audiocodec/mp3float.png",
+      "sha256": "2557a393b51d4e95896ff93b085b963b164e0b277e6801e00233b460478141a4"
+    },
+    {
+      "file": "resources/flags/audiocodec/ogg.png",
+      "sha256": "d13981f6fceccd01907359613779591363ed1319cc8c10a08fb82154f2d39b87"
+    },
+    {
+      "file": "resources/flags/audiocodec/opus.png",
+      "sha256": "ff897f8cabb0d2ed0d8f5156329b3f3f61b6e8f026db885efe6cff0739cb369a"
+    },
+    {
+      "file": "resources/flags/audiocodec/pcm.png",
+      "sha256": "73aeabdce610ee065e31fc3949aa6c67f35882595e4ddaf9d33227714524e5a0"
+    },
+    {
+      "file": "resources/flags/audiocodec/pcm_bluray.png",
+      "sha256": "73aeabdce610ee065e31fc3949aa6c67f35882595e4ddaf9d33227714524e5a0"
+    },
+    {
+      "file": "resources/flags/audiocodec/pcm_s16le.png",
+      "sha256": "cd718e63efe69a24b66ccc13d30c963aa15548d720bd3fd44094503e9a206526"
+    },
+    {
+      "file": "resources/flags/audiocodec/pcm_s24le.png",
+      "sha256": "751c3807987eb80e272d0ecd76e899591ce7724bfaec04ef94510733c85a3cae"
+    },
+    {
+      "file": "resources/flags/audiocodec/truehd.png",
+      "sha256": "3896c83d2e82a16f85fea86872eb71ea8ba7525b12664279d94e121604a839ae"
+    },
+    {
+      "file": "resources/flags/audiocodec/truehd_atmos.png",
+      "sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc"
+    },
+    {
+      "file": "resources/flags/audiocodec/vorbis.png",
+      "sha256": "05659b36fcd23d17375999e36caa5898ff96575b8bdff1c409dfda24df917c67"
+    },
+    {
+      "file": "resources/flags/audiocodec/wav.png",
+      "sha256": "e01790741545d4645e83fc64eb57ea631aad2dc7ba7b4ef90abe39f31060bbe5"
+    },
+    {
+      "file": "resources/flags/audiocodec/wavpack.png",
+      "sha256": "09bb5eeafa3739d88e85177e1995ba7807e3bd93d2c825561a50d9b62334e8a0"
+    },
+    {
+      "file": "resources/flags/audiocodec/wma.png",
+      "sha256": "10c9c1f1b484a75f648fedb74c76754cf9d663bdecdd2a6c1d9863352ca6c713"
+    },
+    {
+      "file": "resources/flags/audiocodec/wmapro.png",
+      "sha256": "7b997e3c82e18414bf943592281a984f391fe12da89a301b764af1bd9343a013"
+    },
+    {
+      "file": "resources/flags/audiocodec/wmav2.png",
+      "sha256": "25a9bad76f6b8ed3dd942a5f6e89b806307fb6a82a1a5195540fa5ef4faf11d8"
+    },
+    {
+      "file": "resources/flags/videocodec/av1.png",
+      "sha256": "6ec71d0340bc17d4fe57821475ac4f8a375c7de4bc58982d1ea62ec8dcab69c0"
+    },
+    {
+      "file": "resources/flags/videocodec/avc1.png",
+      "sha256": "7791e12ba5e97dcc5f308413302170ec41cac3648e22798231c0044a7a4639db"
+    },
+    {
+      "file": "resources/flags/videocodec/bluray.png",
+      "sha256": "b73f4da63186900dc32c1116ae259860579808cb80bd7828cb4061432b359ff9"
+    },
+    {
+      "file": "resources/flags/videocodec/div3.png",
+      "sha256": "095e469fa5bcd7d8c1ef2e9b048f35f41085120edd99694c6b17b3ee64caac5b"
+    },
+    {
+      "file": "resources/flags/videocodec/divx.png",
+      "sha256": "095e469fa5bcd7d8c1ef2e9b048f35f41085120edd99694c6b17b3ee64caac5b"
+    },
+    {
+      "file": "resources/flags/videocodec/dvd.png",
+      "sha256": "79ece6a7dd612128c6b7ce704a7158890ed4397016aaf25ba604d6198659b1f4"
+    },
+    {
+      "file": "resources/flags/videocodec/dx50.png",
+      "sha256": "095e469fa5bcd7d8c1ef2e9b048f35f41085120edd99694c6b17b3ee64caac5b"
+    },
+    {
+      "file": "resources/flags/videocodec/flv.png",
+      "sha256": "8ec2bfc8d772c05b5a42aac35ec56b214d7be43d4210d5268d2924cb1aa19a6b"
+    },
+    {
+      "file": "resources/flags/videocodec/h264.png",
+      "sha256": "7791e12ba5e97dcc5f308413302170ec41cac3648e22798231c0044a7a4639db"
+    },
+    {
+      "file": "resources/flags/videocodec/hddvd.png",
+      "sha256": "bafa239bfca12a7772a0a068132a0b51f5c9cae6c1d58874e9c48587b32af04a"
+    },
+    {
+      "file": "resources/flags/videocodec/hdmv.png",
+      "sha256": "b73f4da63186900dc32c1116ae259860579808cb80bd7828cb4061432b359ff9"
+    },
+    {
+      "file": "resources/flags/videocodec/hev1.png",
+      "sha256": "383f617621b9c3e9742c950440197445d243c83c240961d3f40ceb738c1293fe"
+    },
+    {
+      "file": "resources/flags/videocodec/hevc.png",
+      "sha256": "383f617621b9c3e9742c950440197445d243c83c240961d3f40ceb738c1293fe"
+    },
+    {
+      "file": "resources/flags/videocodec/hvc1.png",
+      "sha256": "383f617621b9c3e9742c950440197445d243c83c240961d3f40ceb738c1293fe"
+    },
+    {
+      "file": "resources/flags/videocodec/mp4v.png",
+      "sha256": "3b13a2f731b0f50ec84b8fc682afb44c21426474e492663638fa02a84f72899e"
+    },
+    {
+      "file": "resources/flags/videocodec/mpeg1.png",
+      "sha256": "bb407be1dbf10be801f67cc3e58e5a503f6bb2f872f552a47fb0be6f1d26e2fa"
+    },
+    {
+      "file": "resources/flags/videocodec/mpeg1video.png",
+      "sha256": "bb407be1dbf10be801f67cc3e58e5a503f6bb2f872f552a47fb0be6f1d26e2fa"
+    },
+    {
+      "file": "resources/flags/videocodec/mpeg2.png",
+      "sha256": "221e973ba311a383664f4afba6460ec52909e5f7e142ea43a6f11809bc0d0e83"
+    },
+    {
+      "file": "resources/flags/videocodec/mpeg2video.png",
+      "sha256": "221e973ba311a383664f4afba6460ec52909e5f7e142ea43a6f11809bc0d0e83"
+    },
+    {
+      "file": "resources/flags/videocodec/mpeg4.png",
+      "sha256": "3b13a2f731b0f50ec84b8fc682afb44c21426474e492663638fa02a84f72899e"
+    },
+    {
+      "file": "resources/flags/videocodec/tv.png",
+      "sha256": "b440834faf71952e330099806ca811328a93d0cfbfeebc1e3591c1d284715b5a"
+    },
+    {
+      "file": "resources/flags/videocodec/vc-1.png",
+      "sha256": "fafc1c8a394ac7aa6c4ece1d93cc74e3f935a617713c0512b72aa96e2fa1a122"
+    },
+    {
+      "file": "resources/flags/videocodec/vc1.png",
+      "sha256": "fafc1c8a394ac7aa6c4ece1d93cc74e3f935a617713c0512b72aa96e2fa1a122"
+    },
+    {
+      "file": "resources/flags/videocodec/vhs.png",
+      "sha256": "2c1658ac93fc56b59e76f36402e69c47781c0c2e2146bea0bbf2beaa8c6d25e7"
+    },
+    {
+      "file": "resources/flags/videocodec/vp8.png",
+      "sha256": "a2f8a1b62051f6896365dde37374b0fcd8eeed8fffe7a7030faa371e1c5a0a24"
+    },
+    {
+      "file": "resources/flags/videocodec/vp9.png",
+      "sha256": "3cbe024b93da210ce249698da559b97fa44102ea6afa70995c37f2c114005290"
+    },
+    {
+      "file": "resources/flags/videocodec/wmv.png",
+      "sha256": "5cc77d0bbe301a1dd522746025db54732ab69ac9a9a788c666728ff1b0de1e42"
+    },
+    {
+      "file": "resources/flags/videocodec/wmv3.png",
+      "sha256": "96bc5a8a572267d0edff9be0e9d32a3b6d7fdca5ca715ad1be9f7ac0aa91041d"
+    },
+    {
+      "file": "resources/flags/videocodec/wvc1.png",
+      "sha256": "fafc1c8a394ac7aa6c4ece1d93cc74e3f935a617713c0512b72aa96e2fa1a122"
+    },
+    {
+      "file": "resources/flags/videocodec/xvid.png",
+      "sha256": "c909a2bd9699289e67e95954d59189d979f910e62ac90911e3344e365f61ac30"
+    },
+    {
+      "file": "resources/flags/videohdr/dolbyvision.png",
+      "sha256": "1ea8b64a2bccfa961b2f38b1e13baf9a19fd2b271698618344aba0486c1e32d3"
+    },
+    {
+      "file": "resources/flags/videohdr/hdr10.png",
+      "sha256": "55d68ebf508a29d31c7de0bd0a554822a01fbac90bbe8b87132759cd8e9c0af6"
+    },
+    {
+      "file": "resources/flags/videohdr/hlg.png",
+      "sha256": "c044ad77086682fa1a9a73f3dcc0498f6aa4868ac18c3ae991a3a9f32bba3340"
+    },
+    {
+      "file": "resources/flags/videoresolution/1080.png",
+      "sha256": "18031e350c151ff723e6fbe382b9b0537a44e4fcac2267561208cf7774faa4ea"
+    },
+    {
+      "file": "resources/flags/videoresolution/2160.png",
+      "sha256": "d7336811cb4b2f47660720029c7e0485ae1d8000574cf36a67a367dc6a4030fb"
+    },
+    {
+      "file": "resources/flags/videoresolution/3d.png",
+      "sha256": "ad7ae1de96a0fab669595f5a14564c0bf464fe5552ca38d2331e5f642bf34713"
+    },
+    {
+      "file": "resources/flags/videoresolution/480.png",
+      "sha256": "5ab535593edf37d85ffa63513b76b9290f311b9a3a964d7f3b0af87da7959471"
+    },
+    {
+      "file": "resources/flags/videoresolution/4k.png",
+      "sha256": "d7336811cb4b2f47660720029c7e0485ae1d8000574cf36a67a367dc6a4030fb"
+    },
+    {
+      "file": "resources/flags/videoresolution/540.png",
+      "sha256": "07ffd85e16d49d72a1e377d279c54b831eaf125fb2b0b1113d188d862e26a08c"
+    },
+    {
+      "file": "resources/flags/videoresolution/576.png",
+      "sha256": "df71e9f0388d183832ca4e212adfcb7527e58f47e65ca224960f2b211635b539"
+    },
+    {
+      "file": "resources/flags/videoresolution/720.png",
+      "sha256": "270e4a8ef5fca8027012648383789f45b99cf2dd9b3d8377afb88878f8a10a10"
+    },
+    {
+      "file": "resources/flags/videoresolution/8k.png",
+      "sha256": "1b8e7331e5a7f60e8848a12e234e97fcafbb1fa6004de1ee0c47e45cb3b9a230"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/aac.png",
+      "sha256": "01a2b7e1b4cfd6fcb112fa689c19db8339b99115cab741bde45a2ca7815cca7b"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/aac_latm.png",
+      "sha256": "01a2b7e1b4cfd6fcb112fa689c19db8339b99115cab741bde45a2ca7815cca7b"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/ac3.png",
+      "sha256": "721bab58b1117a02de7c3c597eec51f5a31e60d7caa880b8d4a68dfe6aebdfd3"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/aif.png",
+      "sha256": "e00fe4c29c850cad2ed6c1a8234911883aaad460454476c50d50bde7d7c4acb3"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/aifc.png",
+      "sha256": "224ccab6fcf6c6a9d164e76ce9216fc6a021d1991ad7bfdfe960c1b08c063018"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/aiff.png",
+      "sha256": "e00fe4c29c850cad2ed6c1a8234911883aaad460454476c50d50bde7d7c4acb3"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/alac.png",
+      "sha256": "7669a657eae56927391c6e95118bb7a9975bed1b0cce7226f2ffba9edbc2cce8"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/ape.png",
+      "sha256": "bfc1d4ec23d25f24bfde24f00345b1346565c8b6e572fce58dc74a5ebed0dac8"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/atmos.png",
+      "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/avc.png",
+      "sha256": "ef00deed1055ee957c36192d9d2eb54dd5b925f85bddfbcdf10fc909ee48cc91"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/cdda.png",
+      "sha256": "88bbed2725adfda1b1c16ab4550f5e3d3aac067d59f30740ca962e9a7021ac1c"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dca.png",
+      "sha256": "a08ae201743f9c118d2af2eca44548b34783b983582eeed0ed363d86fc530bc0"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dca_hra.png",
+      "sha256": "a8df89d02a8f774f4343aaea06beb12621d4ecb0a0b47a38b7fcaf4b7065aa2d"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dca_ma.png",
+      "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dolbydigital.png",
+      "sha256": "721bab58b1117a02de7c3c597eec51f5a31e60d7caa880b8d4a68dfe6aebdfd3"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dts.png",
+      "sha256": "a08ae201743f9c118d2af2eca44548b34783b983582eeed0ed363d86fc530bc0"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dtshd_hra.png",
+      "sha256": "a8df89d02a8f774f4343aaea06beb12621d4ecb0a0b47a38b7fcaf4b7065aa2d"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dtshd_ma.png",
+      "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dtsma.png",
+      "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/eac3-joc.png",
+      "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/eac3.png",
+      "sha256": "57288e641eecfd088d51f16b8d11bcc0fc0813f8b36648ce5bab3edaf9f2a1e1"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/flac.png",
+      "sha256": "7b7f6ae65fcdd4c36e96f7017e49c448642ad9387c56176dcbe8761b2ce25930"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/mp1.png",
+      "sha256": "8d4678ae8298a357d00afed3b11e1a78ba9b66d586119ffae90c44937f47cf05"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/mp2.png",
+      "sha256": "0459a008a2dfe189f99623a5e02dadd58785f467f450517bb5222cf9c95e7ddf"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/mp3.png",
+      "sha256": "0ac46b35ec7494272a5b77a4a582375278bff6339656c4101670fa90c800e297"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/mp3float.png",
+      "sha256": "0ac46b35ec7494272a5b77a4a582375278bff6339656c4101670fa90c800e297"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/ogg.png",
+      "sha256": "93772a84855b1b193c3cfdfefbeb8504c627539a3f78a119337aff4cd109ad03"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/opus.png",
+      "sha256": "7c6a04a6d01f4f9bd65e5e30ff7b32768bcd793e367514b3304b4b81157d7f53"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/pcm.png",
+      "sha256": "75641cc0420990432292476601c7cef3c187ef61262756c5c886dc416eb90773"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/pcm_bluray.png",
+      "sha256": "75641cc0420990432292476601c7cef3c187ef61262756c5c886dc416eb90773"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/pcm_s16le.png",
+      "sha256": "de018718c8e7f14b1c060195bc80f28d3d9cd65f80a058e3414860f5e591644c"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/pcm_s24le.png",
+      "sha256": "a3f0501e22444300a314db8f30add6670a117a537ab48898dc36a76621acee36"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/truehd.png",
+      "sha256": "6e21c1f5f88f56c8e3453354a182fbd17e3f82e9412b258208874dcde5a10132"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/truehd_atmos.png",
+      "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/vorbis.png",
+      "sha256": "e7945462410262e83e8c01fc41f73722e57b5ed6955c2a46ae09f62c840acc70"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/wav.png",
+      "sha256": "9eebef568d98b51f9d357de03af63bbf220851d0312e62ce6fe8114558b2800a"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/wavpack.png",
+      "sha256": "2676bcc5f9e09356b9025ed507d2f741a7a4e06ea57099aedcc10f867441e826"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/wma.png",
+      "sha256": "ea35ca36c26173d00ff8cd524afd4df71fd8e78a2a112c1dfe4e8389d41e9111"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/wmapro.png",
+      "sha256": "35aaab6a7ac1325dba9fba8d314b9e5b824449a050bbf5d448cfaf3c2ee6c481"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/wmav2.png",
+      "sha256": "b27a2f80d8d457ee8301357f7a941de9592e4a1a9e1a73b5541a25c8e80680e2"
+    },
+    {
+      "file": "resources/media-pack.json",
+      "sha256": "f459064122e7ff0491f153ad217644fe135c05470be83e2cd7becdc2a85bff59"
+    }
+  ],
+  "derivative_receipts": [
+    {
+      "file": "resources/flags-osd/audiocodec/aac.png",
+      "sha256": "01a2b7e1b4cfd6fcb112fa689c19db8339b99115cab741bde45a2ca7815cca7b"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/aac_latm.png",
+      "sha256": "01a2b7e1b4cfd6fcb112fa689c19db8339b99115cab741bde45a2ca7815cca7b"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/ac3.png",
+      "sha256": "721bab58b1117a02de7c3c597eec51f5a31e60d7caa880b8d4a68dfe6aebdfd3"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/aif.png",
+      "sha256": "e00fe4c29c850cad2ed6c1a8234911883aaad460454476c50d50bde7d7c4acb3"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/aifc.png",
+      "sha256": "224ccab6fcf6c6a9d164e76ce9216fc6a021d1991ad7bfdfe960c1b08c063018"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/aiff.png",
+      "sha256": "e00fe4c29c850cad2ed6c1a8234911883aaad460454476c50d50bde7d7c4acb3"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/alac.png",
+      "sha256": "7669a657eae56927391c6e95118bb7a9975bed1b0cce7226f2ffba9edbc2cce8"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/ape.png",
+      "sha256": "bfc1d4ec23d25f24bfde24f00345b1346565c8b6e572fce58dc74a5ebed0dac8"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/atmos.png",
+      "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/avc.png",
+      "sha256": "ef00deed1055ee957c36192d9d2eb54dd5b925f85bddfbcdf10fc909ee48cc91"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/cdda.png",
+      "sha256": "88bbed2725adfda1b1c16ab4550f5e3d3aac067d59f30740ca962e9a7021ac1c"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dca.png",
+      "sha256": "a08ae201743f9c118d2af2eca44548b34783b983582eeed0ed363d86fc530bc0"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dca_hra.png",
+      "sha256": "a8df89d02a8f774f4343aaea06beb12621d4ecb0a0b47a38b7fcaf4b7065aa2d"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dca_ma.png",
+      "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dolbydigital.png",
+      "sha256": "721bab58b1117a02de7c3c597eec51f5a31e60d7caa880b8d4a68dfe6aebdfd3"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dts.png",
+      "sha256": "a08ae201743f9c118d2af2eca44548b34783b983582eeed0ed363d86fc530bc0"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dtshd_hra.png",
+      "sha256": "a8df89d02a8f774f4343aaea06beb12621d4ecb0a0b47a38b7fcaf4b7065aa2d"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dtshd_ma.png",
+      "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/dtsma.png",
+      "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/eac3-joc.png",
+      "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/eac3.png",
+      "sha256": "57288e641eecfd088d51f16b8d11bcc0fc0813f8b36648ce5bab3edaf9f2a1e1"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/flac.png",
+      "sha256": "7b7f6ae65fcdd4c36e96f7017e49c448642ad9387c56176dcbe8761b2ce25930"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/mp1.png",
+      "sha256": "8d4678ae8298a357d00afed3b11e1a78ba9b66d586119ffae90c44937f47cf05"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/mp2.png",
+      "sha256": "0459a008a2dfe189f99623a5e02dadd58785f467f450517bb5222cf9c95e7ddf"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/mp3.png",
+      "sha256": "0ac46b35ec7494272a5b77a4a582375278bff6339656c4101670fa90c800e297"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/mp3float.png",
+      "sha256": "0ac46b35ec7494272a5b77a4a582375278bff6339656c4101670fa90c800e297"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/ogg.png",
+      "sha256": "93772a84855b1b193c3cfdfefbeb8504c627539a3f78a119337aff4cd109ad03"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/opus.png",
+      "sha256": "7c6a04a6d01f4f9bd65e5e30ff7b32768bcd793e367514b3304b4b81157d7f53"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/pcm.png",
+      "sha256": "75641cc0420990432292476601c7cef3c187ef61262756c5c886dc416eb90773"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/pcm_bluray.png",
+      "sha256": "75641cc0420990432292476601c7cef3c187ef61262756c5c886dc416eb90773"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/pcm_s16le.png",
+      "sha256": "de018718c8e7f14b1c060195bc80f28d3d9cd65f80a058e3414860f5e591644c"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/pcm_s24le.png",
+      "sha256": "a3f0501e22444300a314db8f30add6670a117a537ab48898dc36a76621acee36"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/truehd.png",
+      "sha256": "6e21c1f5f88f56c8e3453354a182fbd17e3f82e9412b258208874dcde5a10132"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/truehd_atmos.png",
+      "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/vorbis.png",
+      "sha256": "e7945462410262e83e8c01fc41f73722e57b5ed6955c2a46ae09f62c840acc70"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/wav.png",
+      "sha256": "9eebef568d98b51f9d357de03af63bbf220851d0312e62ce6fe8114558b2800a"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/wavpack.png",
+      "sha256": "2676bcc5f9e09356b9025ed507d2f741a7a4e06ea57099aedcc10f867441e826"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/wma.png",
+      "sha256": "ea35ca36c26173d00ff8cd524afd4df71fd8e78a2a112c1dfe4e8389d41e9111"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/wmapro.png",
+      "sha256": "35aaab6a7ac1325dba9fba8d314b9e5b824449a050bbf5d448cfaf3c2ee6c481"
+    },
+    {
+      "file": "resources/flags-osd/audiocodec/wmav2.png",
+      "sha256": "b27a2f80d8d457ee8301357f7a941de9592e4a1a9e1a73b5541a25c8e80680e2"
+    }
+  ]
+}

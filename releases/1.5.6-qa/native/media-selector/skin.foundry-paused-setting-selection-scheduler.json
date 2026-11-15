@@ -1,0 +1,211 @@
+{
+  "scope": "Unchanged Service loop and native Monitor; unrelated workers/startup stubbed; media monitor unchanged apart from observation wrappers",
+  "source": {
+    "service": "382536402e3d94d71042881ec66aceaf0e556ef033d7dd6b908739e2245f50ff",
+    "media_pack": "e68e2d6484f680f5def71ca530d6420fe3b48ebf7f3393da1eca2ad74f9d66ea"
+  },
+  "samples": [
+    {
+      "at": 1299.806197064,
+      "skin": "skin.estuary",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1302.10615673,
+      "skin": "skin.foundry",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1302.401947797,
+      "skin": "skin.foundry",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1302.728353358,
+      "skin": "skin.foundry",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1303.030250718,
+      "skin": "skin.foundry",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1303.363154761,
+      "skin": "skin.foundry",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1303.697323344,
+      "skin": "skin.foundry",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1304.103712265,
+      "skin": "skin.foundry",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1304.38591883,
+      "skin": "skin.foundry",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1304.591186735,
+      "skin": "skin.foundry",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1304.837569167,
+      "skin": "skin.foundry",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1305.12205534,
+      "skin": "skin.foundry",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1305.327315704,
+      "skin": "skin.foundry",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1305.573480706,
+      "skin": "skin.foundry",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1305.898081301,
+      "skin": "skin.foundry",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1306.224096455,
+      "skin": "skin.foundry",
+      "paused": false,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1306.750637728,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1308.758515335,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1310.804535465,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1312.892959508,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1314.979411572,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1317.104448998,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1319.241249927,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1321.283287857,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "",
+      "setting": ""
+    },
+    {
+      "at": 1323.364396898,
+      "skin": "skin.foundry",
+      "paused": true,
+      "pack": "resource.images.foundry.media.qaa",
+      "setting": "resource.images.foundry.media.qaa"
+    }
+  ],
+  "waits": [
+    2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+  ],
+  "passed": false
+}

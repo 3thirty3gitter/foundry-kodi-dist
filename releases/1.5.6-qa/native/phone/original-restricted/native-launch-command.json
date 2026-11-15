@@ -1,0 +1,26 @@
+{
+  "command": [
+    "gdb",
+    "--batch",
+    "--return-child-result",
+    "-ex",
+    "set pagination off",
+    "-ex",
+    "set logging file /work/foundry-kodi-dist/releases/1.5.6-qa/phone/original-restricted/native-gdb.log",
+    "-ex",
+    "set logging enabled on",
+    "-ex",
+    "run",
+    "-ex",
+    "thread apply all bt full",
+    "--args",
+    "/usr/lib/x86_64-linux-gnu/kodi/kodi.bin",
+    "-p",
+    "-fs",
+    "--windowing=x11",
+    "--debug"
+  ],
+  "debugger": true,
+  "KODI_HOME": "/tmp/foundry-interface-xfwjgmbi/kodi",
+  "KODI_BIN_HOME": "/usr/lib/x86_64-linux-gnu/kodi"
+}

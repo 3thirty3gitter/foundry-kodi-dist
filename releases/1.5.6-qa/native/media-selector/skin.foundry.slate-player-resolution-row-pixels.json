@@ -1,0 +1,38 @@
+[
+  {
+    "category": "videocodec",
+    "a_pixels": 5040,
+    "b_pixels": 0,
+    "expected": true
+  },
+  {
+    "category": "videoresolution",
+    "a_pixels": 5040,
+    "b_pixels": 0,
+    "expected": true
+  },
+  {
+    "category": "videohdr",
+    "a_pixels": 5040,
+    "b_pixels": 0,
+    "expected": true
+  },
+  {
+    "category": "aspectratio",
+    "a_pixels": 5040,
+    "b_pixels": 0,
+    "expected": true
+  },
+  {
+    "category": "audiocodec",
+    "a_pixels": 5040,
+    "b_pixels": 0,
+    "expected": true
+  },
+  {
+    "category": "audiochannel",
+    "a_pixels": 5040,
+    "b_pixels": 0,
+    "expected": true
+  }
+]

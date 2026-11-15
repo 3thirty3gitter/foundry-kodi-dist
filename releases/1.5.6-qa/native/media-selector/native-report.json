@@ -1,0 +1,3192 @@
+{
+  "passed": true,
+  "skins": {
+    "skin.foundry": {
+      "inventory": [
+        {
+          "id": "resource.images.foundry.media.puremarks",
+          "name": "Pure Marks",
+          "root": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags",
+          "categories": [
+            "aspectratio",
+            "audiochannel",
+            "audiocodec",
+            "videocodec",
+            "videohdr",
+            "videoresolution"
+          ],
+          "osd_root": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags-osd",
+          "osd_derivatives": {
+            "aac": {
+              "source_sha256": "316e950242e52ac7c37b814261e76aae18a4dba496f2d803d8133b03d01f336f",
+              "bbox": [
+                120,
+                16,
+                264,
+                176
+              ],
+              "sha256": "01a2b7e1b4cfd6fcb112fa689c19db8339b99115cab741bde45a2ca7815cca7b"
+            },
+            "aac_latm": {
+              "source_sha256": "316e950242e52ac7c37b814261e76aae18a4dba496f2d803d8133b03d01f336f",
+              "bbox": [
+                120,
+                16,
+                264,
+                176
+              ],
+              "sha256": "01a2b7e1b4cfd6fcb112fa689c19db8339b99115cab741bde45a2ca7815cca7b"
+            },
+            "ac3": {
+              "source_sha256": "04f93e78daca939e8aa43f050ef5b23d55a86f2c6cb8f2aa8d3fe42e3c30aef5",
+              "bbox": [
+                16,
+                52,
+                368,
+                140
+              ],
+              "sha256": "721bab58b1117a02de7c3c597eec51f5a31e60d7caa880b8d4a68dfe6aebdfd3"
+            },
+            "aif": {
+              "source_sha256": "181e86b61c29951cc1d1572940862343369dba9a32005ac9ffc5bbe7ab0fe39b",
+              "bbox": [
+                17,
+                57,
+                250,
+                135
+              ],
+              "sha256": "e00fe4c29c850cad2ed6c1a8234911883aaad460454476c50d50bde7d7c4acb3"
+            },
+            "aifc": {
+              "source_sha256": "5680dbbf5f71899e9b53d8408e8b63889af5605b18cc4d9a8a7d273b1414622a",
+              "bbox": [
+                17,
+                57,
+                310,
+                135
+              ],
+              "sha256": "224ccab6fcf6c6a9d164e76ce9216fc6a021d1991ad7bfdfe960c1b08c063018"
+            },
+            "aiff": {
+              "source_sha256": "181e86b61c29951cc1d1572940862343369dba9a32005ac9ffc5bbe7ab0fe39b",
+              "bbox": [
+                17,
+                57,
+                250,
+                135
+              ],
+              "sha256": "e00fe4c29c850cad2ed6c1a8234911883aaad460454476c50d50bde7d7c4acb3"
+            },
+            "alac": {
+              "source_sha256": "52d1bb1c3814ad837af16e987d91d6862ff630805d9112d7ab0444b131e47233",
+              "bbox": [
+                17,
+                57,
+                282,
+                135
+              ],
+              "sha256": "7669a657eae56927391c6e95118bb7a9975bed1b0cce7226f2ffba9edbc2cce8"
+            },
+            "ape": {
+              "source_sha256": "570f59b7b158e41055dda7ffe9ccda5e2bb90de095485b418ad0dcfb3144860e",
+              "bbox": [
+                17,
+                57,
+                241,
+                135
+              ],
+              "sha256": "bfc1d4ec23d25f24bfde24f00345b1346565c8b6e572fce58dc74a5ebed0dac8"
+            },
+            "atmos": {
+              "source_sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc",
+              "bbox": [
+                16,
+                51,
+                368,
+                141
+              ],
+              "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382"
+            },
+            "avc": {
+              "source_sha256": "156c0dc986d604d093656bec9911bcf83525e2da0c08f7e52cba33da5f93fce6",
+              "bbox": [
+                17,
+                57,
+                244,
+                135
+              ],
+              "sha256": "ef00deed1055ee957c36192d9d2eb54dd5b925f85bddfbcdf10fc909ee48cc91"
+            },
+            "cdda": {
+              "source_sha256": "ce83aadafc62b5acd928f8e46c20973027a6063277859dd447dbaf57abd962fb",
+              "bbox": [
+                15,
+                50,
+                362,
+                142
+              ],
+              "sha256": "88bbed2725adfda1b1c16ab4550f5e3d3aac067d59f30740ca962e9a7021ac1c"
+            },
+            "dca": {
+              "source_sha256": "782a275744fbfe6ef7a360d22e4fd3e3052d962dd78ab487ae3af5998876a5f3",
+              "bbox": [
+                117,
+                44,
+                267,
+                106
+              ],
+              "sha256": "a08ae201743f9c118d2af2eca44548b34783b983582eeed0ed363d86fc530bc0"
+            },
+            "dca_hra": {
+              "source_sha256": "d90d493480d00285a7c5c535377df7ea77f82b86c3643eca6d6d4229bfd029a7",
+              "bbox": [
+                17,
+                57,
+                363,
+                135
+              ],
+              "sha256": "a8df89d02a8f774f4343aaea06beb12621d4ecb0a0b47a38b7fcaf4b7065aa2d"
+            },
+            "dca_ma": {
+              "source_sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8",
+              "bbox": [
+                16,
+                43,
+                368,
+                148
+              ],
+              "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03"
+            },
+            "dolbydigital": {
+              "source_sha256": "04f93e78daca939e8aa43f050ef5b23d55a86f2c6cb8f2aa8d3fe42e3c30aef5",
+              "bbox": [
+                16,
+                52,
+                368,
+                140
+              ],
+              "sha256": "721bab58b1117a02de7c3c597eec51f5a31e60d7caa880b8d4a68dfe6aebdfd3"
+            },
+            "dts": {
+              "source_sha256": "782a275744fbfe6ef7a360d22e4fd3e3052d962dd78ab487ae3af5998876a5f3",
+              "bbox": [
+                117,
+                44,
+                267,
+                106
+              ],
+              "sha256": "a08ae201743f9c118d2af2eca44548b34783b983582eeed0ed363d86fc530bc0"
+            },
+            "dtshd_hra": {
+              "source_sha256": "d90d493480d00285a7c5c535377df7ea77f82b86c3643eca6d6d4229bfd029a7",
+              "bbox": [
+                17,
+                57,
+                363,
+                135
+              ],
+              "sha256": "a8df89d02a8f774f4343aaea06beb12621d4ecb0a0b47a38b7fcaf4b7065aa2d"
+            },
+            "dtshd_ma": {
+              "source_sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8",
+              "bbox": [
+                16,
+                43,
+                368,
+                148
+              ],
+              "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03"
+            },
+            "dtsma": {
+              "source_sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8",
+              "bbox": [
+                16,
+                43,
+                368,
+                148
+              ],
+              "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03"
+            },
+            "eac3-joc": {
+              "source_sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc",
+              "bbox": [
+                16,
+                51,
+                368,
+                141
+              ],
+              "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382"
+            },
+            "eac3": {
+              "source_sha256": "a9cd31ab4801975d635f6ba90bb7e99d52e3531a73d54e0664fa5953594035c8",
+              "bbox": [
+                16,
+                53,
+                368,
+                138
+              ],
+              "sha256": "57288e641eecfd088d51f16b8d11bcc0fc0813f8b36648ce5bab3edaf9f2a1e1"
+            },
+            "flac": {
+              "source_sha256": "09194d5195b46458ae3156da92bcfb7b73f24e3befd21dd841875f40049bfe4b",
+              "bbox": [
+                26,
+                16,
+                357,
+                176
+              ],
+              "sha256": "7b7f6ae65fcdd4c36e96f7017e49c448642ad9387c56176dcbe8761b2ce25930"
+            },
+            "mp1": {
+              "source_sha256": "b02060b52d150b32adc4ccb31a8b00aad80a5e4de866abf3e5594d0026c17288",
+              "bbox": [
+                17,
+                57,
+                234,
+                135
+              ],
+              "sha256": "8d4678ae8298a357d00afed3b11e1a78ba9b66d586119ffae90c44937f47cf05"
+            },
+            "mp2": {
+              "source_sha256": "922c582a1aef005a45d5a63c7905dadd9b9788511907f01b783d5d8be14bdba0",
+              "bbox": [
+                17,
+                57,
+                241,
+                135
+              ],
+              "sha256": "0459a008a2dfe189f99623a5e02dadd58785f467f450517bb5222cf9c95e7ddf"
+            },
+            "mp3": {
+              "source_sha256": "2557a393b51d4e95896ff93b085b963b164e0b277e6801e00233b460478141a4",
+              "bbox": [
+                33,
+                16,
+                351,
+                176
+              ],
+              "sha256": "0ac46b35ec7494272a5b77a4a582375278bff6339656c4101670fa90c800e297"
+            },
+            "mp3float": {
+              "source_sha256": "2557a393b51d4e95896ff93b085b963b164e0b277e6801e00233b460478141a4",
+              "bbox": [
+                33,
+                16,
+                351,
+                176
+              ],
+              "sha256": "0ac46b35ec7494272a5b77a4a582375278bff6339656c4101670fa90c800e297"
+            },
+            "ogg": {
+              "source_sha256": "d13981f6fceccd01907359613779591363ed1319cc8c10a08fb82154f2d39b87",
+              "bbox": [
+                17,
+                57,
+                256,
+                135
+              ],
+              "sha256": "93772a84855b1b193c3cfdfefbeb8504c627539a3f78a119337aff4cd109ad03"
+            },
+            "opus": {
+              "source_sha256": "ff897f8cabb0d2ed0d8f5156329b3f3f61b6e8f026db885efe6cff0739cb369a",
+              "bbox": [
+                52,
+                16,
+                332,
+                176
+              ],
+              "sha256": "7c6a04a6d01f4f9bd65e5e30ff7b32768bcd793e367514b3304b4b81157d7f53"
+            },
+            "pcm": {
+              "source_sha256": "73aeabdce610ee065e31fc3949aa6c67f35882595e4ddaf9d33227714524e5a0",
+              "bbox": [
+                17,
+                57,
+                249,
+                135
+              ],
+              "sha256": "75641cc0420990432292476601c7cef3c187ef61262756c5c886dc416eb90773"
+            },
+            "pcm_bluray": {
+              "source_sha256": "73aeabdce610ee065e31fc3949aa6c67f35882595e4ddaf9d33227714524e5a0",
+              "bbox": [
+                17,
+                57,
+                249,
+                135
+              ],
+              "sha256": "75641cc0420990432292476601c7cef3c187ef61262756c5c886dc416eb90773"
+            },
+            "pcm_s16le": {
+              "source_sha256": "cd718e63efe69a24b66ccc13d30c963aa15548d720bd3fd44094503e9a206526",
+              "bbox": [
+                17,
+                57,
+                330,
+                135
+              ],
+              "sha256": "de018718c8e7f14b1c060195bc80f28d3d9cd65f80a058e3414860f5e591644c"
+            },
+            "pcm_s24le": {
+              "source_sha256": "751c3807987eb80e272d0ecd76e899591ce7724bfaec04ef94510733c85a3cae",
+              "bbox": [
+                17,
+                57,
+                331,
+                135
+              ],
+              "sha256": "a3f0501e22444300a314db8f30add6670a117a537ab48898dc36a76621acee36"
+            },
+            "truehd": {
+              "source_sha256": "3896c83d2e82a16f85fea86872eb71ea8ba7525b12664279d94e121604a839ae",
+              "bbox": [
+                16,
+                52,
+                368,
+                140
+              ],
+              "sha256": "6e21c1f5f88f56c8e3453354a182fbd17e3f82e9412b258208874dcde5a10132"
+            },
+            "truehd_atmos": {
+              "source_sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc",
+              "bbox": [
+                16,
+                51,
+                368,
+                141
+              ],
+              "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382"
+            },
+            "vorbis": {
+              "source_sha256": "05659b36fcd23d17375999e36caa5898ff96575b8bdff1c409dfda24df917c67",
+              "bbox": [
+                96,
+                16,
+                288,
+                176
+              ],
+              "sha256": "e7945462410262e83e8c01fc41f73722e57b5ed6955c2a46ae09f62c840acc70"
+            },
+            "wav": {
+              "source_sha256": "e01790741545d4645e83fc64eb57ea631aad2dc7ba7b4ef90abe39f31060bbe5",
+              "bbox": [
+                17,
+                57,
+                259,
+                135
+              ],
+              "sha256": "9eebef568d98b51f9d357de03af63bbf220851d0312e62ce6fe8114558b2800a"
+            },
+            "wavpack": {
+              "source_sha256": "09bb5eeafa3739d88e85177e1995ba7807e3bd93d2c825561a50d9b62334e8a0",
+              "bbox": [
+                62,
+                16,
+                322,
+                176
+              ],
+              "sha256": "2676bcc5f9e09356b9025ed507d2f741a7a4e06ea57099aedcc10f867441e826"
+            },
+            "wma": {
+              "source_sha256": "10c9c1f1b484a75f648fedb74c76754cf9d663bdecdd2a6c1d9863352ca6c713",
+              "bbox": [
+                17,
+                57,
+                269,
+                135
+              ],
+              "sha256": "ea35ca36c26173d00ff8cd524afd4df71fd8e78a2a112c1dfe4e8389d41e9111"
+            },
+            "wmapro": {
+              "source_sha256": "7b997e3c82e18414bf943592281a984f391fe12da89a301b764af1bd9343a013",
+              "bbox": [
+                17,
+                57,
+                362,
+                135
+              ],
+              "sha256": "35aaab6a7ac1325dba9fba8d314b9e5b824449a050bbf5d448cfaf3c2ee6c481"
+            },
+            "wmav2": {
+              "source_sha256": "25a9bad76f6b8ed3dd942a5f6e89b806307fb6a82a1a5195540fa5ef4faf11d8",
+              "bbox": [
+                17,
+                57,
+                314,
+                135
+              ],
+              "sha256": "b27a2f80d8d457ee8301357f7a941de9592e4a1a9e1a73b5541a25c8e80680e2"
+            }
+          }
+        },
+        {
+          "id": "resource.images.foundry.media.qaa",
+          "name": "QA A",
+          "root": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.qaa/resources/flags",
+          "categories": [
+            "videocodec",
+            "videoresolution",
+            "videohdr",
+            "aspectratio",
+            "audiocodec",
+            "audiochannel"
+          ],
+          "osd_root": "",
+          "osd_derivatives": {}
+        },
+        {
+          "id": "resource.images.foundry.media.qab",
+          "name": "QA B",
+          "root": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.qab/resources/flags",
+          "categories": [
+            "videocodec",
+            "videoresolution",
+            "videohdr",
+            "aspectratio",
+            "audiocodec",
+            "audiochannel"
+          ],
+          "osd_root": "",
+          "osd_derivatives": {}
+        }
+      ],
+      "actual_player_resolution": "480",
+      "actual_player_audio": {
+        "codec": "pcm_s16le",
+        "channels": 2
+      },
+      "missing_pack_enabled_state": false,
+      "audio_geometry": [
+        {
+          "card": "StreamPilotVODCard",
+          "variant": "wide",
+          "file": "skin.foundry-StreamPilotVODCard-wide.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags-osd/audiocodec/ac3.png",
+          "wide": true,
+          "visible_ink_recall": 1.0,
+          "derived_xml_geometry": {
+            "audio": [
+              504,
+              917,
+              160,
+              54
+            ],
+            "row": [
+              332,
+              917,
+              332,
+              54
+            ],
+            "text": [
+              332,
+              843,
+              1020,
+              184
+            ],
+            "gap": null
+          },
+          "text_right": 1352,
+          "badges_left": 332,
+          "screenshot_sha256": "91742cf36209164c3c36859eb125b0aeeb17828578c706a83db39605edf6ee19"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "variant": "builtin",
+          "file": "skin.foundry-StreamPilotVODCard-builtin.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "",
+          "wide": false,
+          "derived_xml_geometry": {
+            "audio": [
+              504,
+              917,
+              76,
+              54
+            ],
+            "row": [
+              332,
+              917,
+              248,
+              54
+            ],
+            "text": [
+              332,
+              843,
+              1020,
+              184
+            ],
+            "gap": null
+          },
+          "text_right": 1352,
+          "badges_left": 332,
+          "screenshot_sha256": "c7e17102f53d4a28480fb39aa85dc802634e41842d2b65a5614650001f51d9e6"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "variant": "missing-derivative",
+          "file": "skin.foundry-StreamPilotVODCard-missing-derivative.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiocodec/ac3.png",
+          "wide": false,
+          "visible_ink_recall": 1.0,
+          "derived_xml_geometry": {
+            "audio": [
+              504,
+              917,
+              76,
+              54
+            ],
+            "row": [
+              332,
+              917,
+              248,
+              54
+            ],
+            "text": [
+              332,
+              843,
+              1020,
+              184
+            ],
+            "gap": null
+          },
+          "text_right": 1352,
+          "badges_left": 332,
+          "screenshot_sha256": "2c62f32ae097b79d1918dcdc348896b5ddc690f6766ecb1eab853dcd6b973bf4"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "variant": "wide-restored",
+          "file": "skin.foundry-StreamPilotVODCard-wide-restored.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags-osd/audiocodec/ac3.png",
+          "wide": true,
+          "visible_ink_recall": 1.0,
+          "derived_xml_geometry": {
+            "audio": [
+              504,
+              917,
+              160,
+              54
+            ],
+            "row": [
+              332,
+              917,
+              332,
+              54
+            ],
+            "text": [
+              332,
+              843,
+              1020,
+              184
+            ],
+            "gap": null
+          },
+          "text_right": 1352,
+          "badges_left": 332,
+          "screenshot_sha256": "9925c057a86560197ce2853556724ba98cbe8e5cbb440405072d87b960840297"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "variant": "wide",
+          "file": "skin.foundry-StreamPilotLiveCard-wide.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags-osd/audiocodec/ac3.png",
+          "wide": true,
+          "visible_ink_recall": 1.0,
+          "derived_xml_geometry": {
+            "audio": [
+              1536,
+              899,
+              160,
+              54
+            ],
+            "row": [
+              1364,
+              899,
+              332,
+              54
+            ],
+            "text": [
+              288,
+              812,
+              1036,
+              192
+            ],
+            "gap": 40
+          },
+          "text_right": 1324,
+          "badges_left": 1364,
+          "screenshot_sha256": "93a35a4620c131ea0bbba08bbff24304b654059c77383453d700fb9113124356"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "variant": "builtin",
+          "file": "skin.foundry-StreamPilotLiveCard-builtin.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "",
+          "wide": false,
+          "derived_xml_geometry": {
+            "audio": [
+              1620,
+              899,
+              76,
+              54
+            ],
+            "row": [
+              1448,
+              899,
+              248,
+              54
+            ],
+            "text": [
+              288,
+              812,
+              1120,
+              192
+            ],
+            "gap": 40
+          },
+          "text_right": 1408,
+          "badges_left": 1448,
+          "screenshot_sha256": "382db5064563cd959b5ba78ff18e2c649001d6ae7c57f1db55455910e767a242"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "variant": "missing-derivative",
+          "file": "skin.foundry-StreamPilotLiveCard-missing-derivative.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiocodec/ac3.png",
+          "wide": false,
+          "visible_ink_recall": 1.0,
+          "derived_xml_geometry": {
+            "audio": [
+              1620,
+              899,
+              76,
+              54
+            ],
+            "row": [
+              1448,
+              899,
+              248,
+              54
+            ],
+            "text": [
+              288,
+              812,
+              1120,
+              192
+            ],
+            "gap": 40
+          },
+          "text_right": 1408,
+          "badges_left": 1448,
+          "screenshot_sha256": "437f3974771862dd5cd092a65174c00c6fe16faed1efef7cd8e3b7a0afb85917"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "variant": "wide-restored",
+          "file": "skin.foundry-StreamPilotLiveCard-wide-restored.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags-osd/audiocodec/ac3.png",
+          "wide": true,
+          "visible_ink_recall": 1.0,
+          "derived_xml_geometry": {
+            "audio": [
+              1536,
+              899,
+              160,
+              54
+            ],
+            "row": [
+              1364,
+              899,
+              332,
+              54
+            ],
+            "text": [
+              288,
+              812,
+              1036,
+              192
+            ],
+            "gap": 40
+          },
+          "text_right": 1324,
+          "badges_left": 1364,
+          "screenshot_sha256": "b44b4747f49f9e80ba59f2e675e745ecd19473c57c868570fcfa4ed531999b14"
+        }
+      ],
+      "channel_geometry": [
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 1,
+          "actual_channels": "1",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/1.png",
+          "file": "skin.foundry-StreamPilotVODCard-channels-1-selected.png",
+          "fixture": {
+            "file": "channels-1.mkv",
+            "channels": 1,
+            "codec": "pcm_s16le",
+            "sha256": "ec87cb4ca35d2be343f2f5c36a65872e011b354932fe99f9dce4ca64417d0546",
+            "bytes": 487324
+          },
+          "screenshot_sha256": "8766687182847dbbc2420c9cb6ad68cf9e06f52eaa2c75f2b4baff2df7a82200",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            418,
+            925,
+            76,
+            38
+          ],
+          "source_sha256": "ad0030303d8e8647b43ef7fdd75f1edb9a38ec8a740d799cd8882d7e5fa6da56"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 1,
+          "actual_channels": "1",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry-StreamPilotVODCard-channels-1-builtin.png",
+          "fixture": {
+            "file": "channels-1.mkv",
+            "channels": 1,
+            "codec": "pcm_s16le",
+            "sha256": "ec87cb4ca35d2be343f2f5c36a65872e011b354932fe99f9dce4ca64417d0546",
+            "bytes": 487324
+          },
+          "screenshot_sha256": "07acbb442a541a7afc26d6b237908c43e7359c783927ee80d1f24fdee4e79096"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 1,
+          "actual_channels": "1",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/1.png",
+          "file": "skin.foundry-StreamPilotLiveCard-channels-1-selected.png",
+          "fixture": {
+            "file": "channels-1.mkv",
+            "channels": 1,
+            "codec": "pcm_s16le",
+            "sha256": "ec87cb4ca35d2be343f2f5c36a65872e011b354932fe99f9dce4ca64417d0546",
+            "bytes": 487324
+          },
+          "screenshot_sha256": "962b8a6b7898964702141494105add78456724d4fe5a1cb639eceb88c3873f05",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            1450,
+            907,
+            76,
+            38
+          ],
+          "source_sha256": "ad0030303d8e8647b43ef7fdd75f1edb9a38ec8a740d799cd8882d7e5fa6da56"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 1,
+          "actual_channels": "1",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry-StreamPilotLiveCard-channels-1-builtin.png",
+          "fixture": {
+            "file": "channels-1.mkv",
+            "channels": 1,
+            "codec": "pcm_s16le",
+            "sha256": "ec87cb4ca35d2be343f2f5c36a65872e011b354932fe99f9dce4ca64417d0546",
+            "bytes": 487324
+          },
+          "screenshot_sha256": "f73a15bb56ee949580b45bd314e0f86ce485504ab198c99c786f84fd4af74491"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 3,
+          "actual_channels": "3",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/3.png",
+          "file": "skin.foundry-StreamPilotVODCard-channels-3-selected.png",
+          "fixture": {
+            "file": "channels-3.mkv",
+            "channels": 3,
+            "codec": "pcm_s16le",
+            "sha256": "e5eb335dd0f22d76281c3be09144e659791c0fa080cac0a4fce241519ed748b4",
+            "bytes": 1447324
+          },
+          "screenshot_sha256": "53249116bd1eae344ea638dfe500e4b83a36bf29d741cdb8948d8237e07beeee",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            418,
+            925,
+            76,
+            38
+          ],
+          "source_sha256": "0acd1d9adc11ab5dbbd0d2cee87d5e017029a0d9c6146d21ae09c4c6fbf684ee"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 3,
+          "actual_channels": "3",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry-StreamPilotVODCard-channels-3-builtin.png",
+          "fixture": {
+            "file": "channels-3.mkv",
+            "channels": 3,
+            "codec": "pcm_s16le",
+            "sha256": "e5eb335dd0f22d76281c3be09144e659791c0fa080cac0a4fce241519ed748b4",
+            "bytes": 1447324
+          },
+          "screenshot_sha256": "63c242ad920d36e7d2b35083f973d9e4edaf1854b9604c555307695a97ecbd5a"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 3,
+          "actual_channels": "3",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/3.png",
+          "file": "skin.foundry-StreamPilotLiveCard-channels-3-selected.png",
+          "fixture": {
+            "file": "channels-3.mkv",
+            "channels": 3,
+            "codec": "pcm_s16le",
+            "sha256": "e5eb335dd0f22d76281c3be09144e659791c0fa080cac0a4fce241519ed748b4",
+            "bytes": 1447324
+          },
+          "screenshot_sha256": "313669e64c0c3243286674d984a1407ae3b80a7c767d61c060ad33b4a58566b3",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            1450,
+            907,
+            76,
+            38
+          ],
+          "source_sha256": "0acd1d9adc11ab5dbbd0d2cee87d5e017029a0d9c6146d21ae09c4c6fbf684ee"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 3,
+          "actual_channels": "3",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry-StreamPilotLiveCard-channels-3-builtin.png",
+          "fixture": {
+            "file": "channels-3.mkv",
+            "channels": 3,
+            "codec": "pcm_s16le",
+            "sha256": "e5eb335dd0f22d76281c3be09144e659791c0fa080cac0a4fce241519ed748b4",
+            "bytes": 1447324
+          },
+          "screenshot_sha256": "97bee2ac0718b27af56cb628deb4cc5b5e172e26537b9e98516a0b6873a2cd21"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 4,
+          "actual_channels": "4",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/4.png",
+          "file": "skin.foundry-StreamPilotVODCard-channels-4-selected.png",
+          "fixture": {
+            "file": "channels-4.mkv",
+            "channels": 4,
+            "codec": "pcm_s16le",
+            "sha256": "b45911ca6bb5315bb80df3af49d491fdbb1c0ba4e2b807fdd67b628b0a3a56ab",
+            "bytes": 1927324
+          },
+          "screenshot_sha256": "5afa8e8c3a6634f14622d100525fa5d0c6f894203a0d4835650c8495c2244a4a",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            418,
+            925,
+            76,
+            38
+          ],
+          "source_sha256": "9e05fcb18af5fa831476a1a28be81952ab96c7ee038d57a5cf9ecefcb3e1fd0e"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 4,
+          "actual_channels": "4",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry-StreamPilotVODCard-channels-4-builtin.png",
+          "fixture": {
+            "file": "channels-4.mkv",
+            "channels": 4,
+            "codec": "pcm_s16le",
+            "sha256": "b45911ca6bb5315bb80df3af49d491fdbb1c0ba4e2b807fdd67b628b0a3a56ab",
+            "bytes": 1927324
+          },
+          "screenshot_sha256": "adba1e0376e406c699c2dac17bb22bcd0e298f2e6de1aa005285810afccb3e40"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 4,
+          "actual_channels": "4",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/4.png",
+          "file": "skin.foundry-StreamPilotLiveCard-channels-4-selected.png",
+          "fixture": {
+            "file": "channels-4.mkv",
+            "channels": 4,
+            "codec": "pcm_s16le",
+            "sha256": "b45911ca6bb5315bb80df3af49d491fdbb1c0ba4e2b807fdd67b628b0a3a56ab",
+            "bytes": 1927324
+          },
+          "screenshot_sha256": "916b2ad69dea6a147d3bce21ed79f5acedca0ce0a4e2b8aaeb4125485c8874f1",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            1450,
+            907,
+            76,
+            38
+          ],
+          "source_sha256": "9e05fcb18af5fa831476a1a28be81952ab96c7ee038d57a5cf9ecefcb3e1fd0e"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 4,
+          "actual_channels": "4",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry-StreamPilotLiveCard-channels-4-builtin.png",
+          "fixture": {
+            "file": "channels-4.mkv",
+            "channels": 4,
+            "codec": "pcm_s16le",
+            "sha256": "b45911ca6bb5315bb80df3af49d491fdbb1c0ba4e2b807fdd67b628b0a3a56ab",
+            "bytes": 1927324
+          },
+          "screenshot_sha256": "e998e59ae3e7104e0370da8fa549c1dffe94bb8bec2df844f0bd5246d0b2a705"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 5,
+          "actual_channels": "5",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/5.png",
+          "file": "skin.foundry-StreamPilotVODCard-channels-5-selected.png",
+          "fixture": {
+            "file": "channels-5.mkv",
+            "channels": 5,
+            "codec": "pcm_s16le",
+            "sha256": "eced75055e2c740a6478aeb3dbf6172c951b26247bfe3c7aff278e1ef2c9ac62",
+            "bytes": 2407324
+          },
+          "screenshot_sha256": "92887367d56f50124fa03629178bead4c6123321a47336b11b5cbb1b4708dfbb",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            418,
+            925,
+            76,
+            38
+          ],
+          "source_sha256": "b1d10214757080d8bfa3ab200c812a430edfa881d5041e675db8d1f0902aa381"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 5,
+          "actual_channels": "5",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry-StreamPilotVODCard-channels-5-builtin.png",
+          "fixture": {
+            "file": "channels-5.mkv",
+            "channels": 5,
+            "codec": "pcm_s16le",
+            "sha256": "eced75055e2c740a6478aeb3dbf6172c951b26247bfe3c7aff278e1ef2c9ac62",
+            "bytes": 2407324
+          },
+          "screenshot_sha256": "1f4dcf45f6e890a25514bb4c0b8463e60907f30f431f3d6f77b959c94ce79fd8"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 5,
+          "actual_channels": "5",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/5.png",
+          "file": "skin.foundry-StreamPilotLiveCard-channels-5-selected.png",
+          "fixture": {
+            "file": "channels-5.mkv",
+            "channels": 5,
+            "codec": "pcm_s16le",
+            "sha256": "eced75055e2c740a6478aeb3dbf6172c951b26247bfe3c7aff278e1ef2c9ac62",
+            "bytes": 2407324
+          },
+          "screenshot_sha256": "c062e4ebad252661dcf8673086c5da545d4a61a6c7b03206d058c5b95ae635fc",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            1450,
+            907,
+            76,
+            38
+          ],
+          "source_sha256": "b1d10214757080d8bfa3ab200c812a430edfa881d5041e675db8d1f0902aa381"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 5,
+          "actual_channels": "5",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry-StreamPilotLiveCard-channels-5-builtin.png",
+          "fixture": {
+            "file": "channels-5.mkv",
+            "channels": 5,
+            "codec": "pcm_s16le",
+            "sha256": "eced75055e2c740a6478aeb3dbf6172c951b26247bfe3c7aff278e1ef2c9ac62",
+            "bytes": 2407324
+          },
+          "screenshot_sha256": "cb981154ab598b0992c131e2ed293edcaa89d2345f21edf7ecb96eb498e8c80a"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 7,
+          "actual_channels": "7",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/7.png",
+          "file": "skin.foundry-StreamPilotVODCard-channels-7-selected.png",
+          "fixture": {
+            "file": "channels-7.mkv",
+            "channels": 7,
+            "codec": "pcm_s16le",
+            "sha256": "af457b19695c0c964faf1ac50657997826bbcc8a8e4d7ec1419f4e867f4a87cc",
+            "bytes": 3367324
+          },
+          "screenshot_sha256": "326fea134fd5b6ae12be4ae6593e741744d4135a7f2bd0fee42b8ce2568dcf36",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            418,
+            925,
+            76,
+            38
+          ],
+          "source_sha256": "23937d624839f453cba0643580d3ec6e1905448344256819cfaf7a478a9442f8"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 7,
+          "actual_channels": "7",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry-StreamPilotVODCard-channels-7-builtin.png",
+          "fixture": {
+            "file": "channels-7.mkv",
+            "channels": 7,
+            "codec": "pcm_s16le",
+            "sha256": "af457b19695c0c964faf1ac50657997826bbcc8a8e4d7ec1419f4e867f4a87cc",
+            "bytes": 3367324
+          },
+          "screenshot_sha256": "cb625a88d142b4dd659e475cd4f1b5ef66ef70022ac261da4ff202023ada2920"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 7,
+          "actual_channels": "7",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/7.png",
+          "file": "skin.foundry-StreamPilotLiveCard-channels-7-selected.png",
+          "fixture": {
+            "file": "channels-7.mkv",
+            "channels": 7,
+            "codec": "pcm_s16le",
+            "sha256": "af457b19695c0c964faf1ac50657997826bbcc8a8e4d7ec1419f4e867f4a87cc",
+            "bytes": 3367324
+          },
+          "screenshot_sha256": "10c79503a299e1a3ee6e208018e9a7fc5b79d400ae616a504affcc1e65af4e24",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            1450,
+            907,
+            76,
+            38
+          ],
+          "source_sha256": "23937d624839f453cba0643580d3ec6e1905448344256819cfaf7a478a9442f8"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 7,
+          "actual_channels": "7",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry-StreamPilotLiveCard-channels-7-builtin.png",
+          "fixture": {
+            "file": "channels-7.mkv",
+            "channels": 7,
+            "codec": "pcm_s16le",
+            "sha256": "af457b19695c0c964faf1ac50657997826bbcc8a8e4d7ec1419f4e867f4a87cc",
+            "bytes": 3367324
+          },
+          "screenshot_sha256": "53ac7e03cd9f3c844d63a71481e22c2c1f956f383ba8a558e385b77c3580e06b"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 10,
+          "actual_channels": "10",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/10.png",
+          "file": "skin.foundry-StreamPilotVODCard-channels-10-selected.png",
+          "fixture": {
+            "file": "channels-10.mkv",
+            "channels": 10,
+            "codec": "pcm_s16le",
+            "sha256": "bf18b3b0300c68b94f4eba3f530874c49904992b65a423992c7a0594ffedde75",
+            "bytes": 4807558
+          },
+          "screenshot_sha256": "05bd41d880baac17f51f5bac020ccfc3e71c2445ac605cc4f665046f50b4b865",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            418,
+            925,
+            76,
+            38
+          ],
+          "source_sha256": "a185861605fb63ae451a89d12176e7da0bc63e76e2f30bb23fe35fb3b467a9fa"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 10,
+          "actual_channels": "10",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry-StreamPilotVODCard-channels-10-builtin.png",
+          "fixture": {
+            "file": "channels-10.mkv",
+            "channels": 10,
+            "codec": "pcm_s16le",
+            "sha256": "bf18b3b0300c68b94f4eba3f530874c49904992b65a423992c7a0594ffedde75",
+            "bytes": 4807558
+          },
+          "screenshot_sha256": "c815681606f76ab9099bf1fdd565a17d9bfa40ef21ddc6d5df838ed625d1c3c9"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 10,
+          "actual_channels": "10",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/10.png",
+          "file": "skin.foundry-StreamPilotLiveCard-channels-10-selected.png",
+          "fixture": {
+            "file": "channels-10.mkv",
+            "channels": 10,
+            "codec": "pcm_s16le",
+            "sha256": "bf18b3b0300c68b94f4eba3f530874c49904992b65a423992c7a0594ffedde75",
+            "bytes": 4807558
+          },
+          "screenshot_sha256": "fbe1fb50138e256d3ed7bee5bb00feebed02cac3857cb72e24b7819782c4eec3",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            1450,
+            907,
+            76,
+            38
+          ],
+          "source_sha256": "a185861605fb63ae451a89d12176e7da0bc63e76e2f30bb23fe35fb3b467a9fa"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 10,
+          "actual_channels": "10",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry-StreamPilotLiveCard-channels-10-builtin.png",
+          "fixture": {
+            "file": "channels-10.mkv",
+            "channels": 10,
+            "codec": "pcm_s16le",
+            "sha256": "bf18b3b0300c68b94f4eba3f530874c49904992b65a423992c7a0594ffedde75",
+            "bytes": 4807558
+          },
+          "screenshot_sha256": "04a2808dd46b3b35f9e69464fded504bcde14901167ccffcfc24b94afd8a74c0"
+        }
+      ],
+      "passed": true
+    },
+    "skin.foundry.slate": {
+      "inventory": [
+        {
+          "id": "resource.images.foundry.media.puremarks",
+          "name": "Pure Marks",
+          "root": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags",
+          "categories": [
+            "aspectratio",
+            "audiochannel",
+            "audiocodec",
+            "videocodec",
+            "videohdr",
+            "videoresolution"
+          ],
+          "osd_root": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags-osd",
+          "osd_derivatives": {
+            "aac": {
+              "source_sha256": "316e950242e52ac7c37b814261e76aae18a4dba496f2d803d8133b03d01f336f",
+              "bbox": [
+                120,
+                16,
+                264,
+                176
+              ],
+              "sha256": "01a2b7e1b4cfd6fcb112fa689c19db8339b99115cab741bde45a2ca7815cca7b"
+            },
+            "aac_latm": {
+              "source_sha256": "316e950242e52ac7c37b814261e76aae18a4dba496f2d803d8133b03d01f336f",
+              "bbox": [
+                120,
+                16,
+                264,
+                176
+              ],
+              "sha256": "01a2b7e1b4cfd6fcb112fa689c19db8339b99115cab741bde45a2ca7815cca7b"
+            },
+            "ac3": {
+              "source_sha256": "04f93e78daca939e8aa43f050ef5b23d55a86f2c6cb8f2aa8d3fe42e3c30aef5",
+              "bbox": [
+                16,
+                52,
+                368,
+                140
+              ],
+              "sha256": "721bab58b1117a02de7c3c597eec51f5a31e60d7caa880b8d4a68dfe6aebdfd3"
+            },
+            "aif": {
+              "source_sha256": "181e86b61c29951cc1d1572940862343369dba9a32005ac9ffc5bbe7ab0fe39b",
+              "bbox": [
+                17,
+                57,
+                250,
+                135
+              ],
+              "sha256": "e00fe4c29c850cad2ed6c1a8234911883aaad460454476c50d50bde7d7c4acb3"
+            },
+            "aifc": {
+              "source_sha256": "5680dbbf5f71899e9b53d8408e8b63889af5605b18cc4d9a8a7d273b1414622a",
+              "bbox": [
+                17,
+                57,
+                310,
+                135
+              ],
+              "sha256": "224ccab6fcf6c6a9d164e76ce9216fc6a021d1991ad7bfdfe960c1b08c063018"
+            },
+            "aiff": {
+              "source_sha256": "181e86b61c29951cc1d1572940862343369dba9a32005ac9ffc5bbe7ab0fe39b",
+              "bbox": [
+                17,
+                57,
+                250,
+                135
+              ],
+              "sha256": "e00fe4c29c850cad2ed6c1a8234911883aaad460454476c50d50bde7d7c4acb3"
+            },
+            "alac": {
+              "source_sha256": "52d1bb1c3814ad837af16e987d91d6862ff630805d9112d7ab0444b131e47233",
+              "bbox": [
+                17,
+                57,
+                282,
+                135
+              ],
+              "sha256": "7669a657eae56927391c6e95118bb7a9975bed1b0cce7226f2ffba9edbc2cce8"
+            },
+            "ape": {
+              "source_sha256": "570f59b7b158e41055dda7ffe9ccda5e2bb90de095485b418ad0dcfb3144860e",
+              "bbox": [
+                17,
+                57,
+                241,
+                135
+              ],
+              "sha256": "bfc1d4ec23d25f24bfde24f00345b1346565c8b6e572fce58dc74a5ebed0dac8"
+            },
+            "atmos": {
+              "source_sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc",
+              "bbox": [
+                16,
+                51,
+                368,
+                141
+              ],
+              "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382"
+            },
+            "avc": {
+              "source_sha256": "156c0dc986d604d093656bec9911bcf83525e2da0c08f7e52cba33da5f93fce6",
+              "bbox": [
+                17,
+                57,
+                244,
+                135
+              ],
+              "sha256": "ef00deed1055ee957c36192d9d2eb54dd5b925f85bddfbcdf10fc909ee48cc91"
+            },
+            "cdda": {
+              "source_sha256": "ce83aadafc62b5acd928f8e46c20973027a6063277859dd447dbaf57abd962fb",
+              "bbox": [
+                15,
+                50,
+                362,
+                142
+              ],
+              "sha256": "88bbed2725adfda1b1c16ab4550f5e3d3aac067d59f30740ca962e9a7021ac1c"
+            },
+            "dca": {
+              "source_sha256": "782a275744fbfe6ef7a360d22e4fd3e3052d962dd78ab487ae3af5998876a5f3",
+              "bbox": [
+                117,
+                44,
+                267,
+                106
+              ],
+              "sha256": "a08ae201743f9c118d2af2eca44548b34783b983582eeed0ed363d86fc530bc0"
+            },
+            "dca_hra": {
+              "source_sha256": "d90d493480d00285a7c5c535377df7ea77f82b86c3643eca6d6d4229bfd029a7",
+              "bbox": [
+                17,
+                57,
+                363,
+                135
+              ],
+              "sha256": "a8df89d02a8f774f4343aaea06beb12621d4ecb0a0b47a38b7fcaf4b7065aa2d"
+            },
+            "dca_ma": {
+              "source_sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8",
+              "bbox": [
+                16,
+                43,
+                368,
+                148
+              ],
+              "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03"
+            },
+            "dolbydigital": {
+              "source_sha256": "04f93e78daca939e8aa43f050ef5b23d55a86f2c6cb8f2aa8d3fe42e3c30aef5",
+              "bbox": [
+                16,
+                52,
+                368,
+                140
+              ],
+              "sha256": "721bab58b1117a02de7c3c597eec51f5a31e60d7caa880b8d4a68dfe6aebdfd3"
+            },
+            "dts": {
+              "source_sha256": "782a275744fbfe6ef7a360d22e4fd3e3052d962dd78ab487ae3af5998876a5f3",
+              "bbox": [
+                117,
+                44,
+                267,
+                106
+              ],
+              "sha256": "a08ae201743f9c118d2af2eca44548b34783b983582eeed0ed363d86fc530bc0"
+            },
+            "dtshd_hra": {
+              "source_sha256": "d90d493480d00285a7c5c535377df7ea77f82b86c3643eca6d6d4229bfd029a7",
+              "bbox": [
+                17,
+                57,
+                363,
+                135
+              ],
+              "sha256": "a8df89d02a8f774f4343aaea06beb12621d4ecb0a0b47a38b7fcaf4b7065aa2d"
+            },
+            "dtshd_ma": {
+              "source_sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8",
+              "bbox": [
+                16,
+                43,
+                368,
+                148
+              ],
+              "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03"
+            },
+            "dtsma": {
+              "source_sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8",
+              "bbox": [
+                16,
+                43,
+                368,
+                148
+              ],
+              "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03"
+            },
+            "eac3-joc": {
+              "source_sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc",
+              "bbox": [
+                16,
+                51,
+                368,
+                141
+              ],
+              "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382"
+            },
+            "eac3": {
+              "source_sha256": "a9cd31ab4801975d635f6ba90bb7e99d52e3531a73d54e0664fa5953594035c8",
+              "bbox": [
+                16,
+                53,
+                368,
+                138
+              ],
+              "sha256": "57288e641eecfd088d51f16b8d11bcc0fc0813f8b36648ce5bab3edaf9f2a1e1"
+            },
+            "flac": {
+              "source_sha256": "09194d5195b46458ae3156da92bcfb7b73f24e3befd21dd841875f40049bfe4b",
+              "bbox": [
+                26,
+                16,
+                357,
+                176
+              ],
+              "sha256": "7b7f6ae65fcdd4c36e96f7017e49c448642ad9387c56176dcbe8761b2ce25930"
+            },
+            "mp1": {
+              "source_sha256": "b02060b52d150b32adc4ccb31a8b00aad80a5e4de866abf3e5594d0026c17288",
+              "bbox": [
+                17,
+                57,
+                234,
+                135
+              ],
+              "sha256": "8d4678ae8298a357d00afed3b11e1a78ba9b66d586119ffae90c44937f47cf05"
+            },
+            "mp2": {
+              "source_sha256": "922c582a1aef005a45d5a63c7905dadd9b9788511907f01b783d5d8be14bdba0",
+              "bbox": [
+                17,
+                57,
+                241,
+                135
+              ],
+              "sha256": "0459a008a2dfe189f99623a5e02dadd58785f467f450517bb5222cf9c95e7ddf"
+            },
+            "mp3": {
+              "source_sha256": "2557a393b51d4e95896ff93b085b963b164e0b277e6801e00233b460478141a4",
+              "bbox": [
+                33,
+                16,
+                351,
+                176
+              ],
+              "sha256": "0ac46b35ec7494272a5b77a4a582375278bff6339656c4101670fa90c800e297"
+            },
+            "mp3float": {
+              "source_sha256": "2557a393b51d4e95896ff93b085b963b164e0b277e6801e00233b460478141a4",
+              "bbox": [
+                33,
+                16,
+                351,
+                176
+              ],
+              "sha256": "0ac46b35ec7494272a5b77a4a582375278bff6339656c4101670fa90c800e297"
+            },
+            "ogg": {
+              "source_sha256": "d13981f6fceccd01907359613779591363ed1319cc8c10a08fb82154f2d39b87",
+              "bbox": [
+                17,
+                57,
+                256,
+                135
+              ],
+              "sha256": "93772a84855b1b193c3cfdfefbeb8504c627539a3f78a119337aff4cd109ad03"
+            },
+            "opus": {
+              "source_sha256": "ff897f8cabb0d2ed0d8f5156329b3f3f61b6e8f026db885efe6cff0739cb369a",
+              "bbox": [
+                52,
+                16,
+                332,
+                176
+              ],
+              "sha256": "7c6a04a6d01f4f9bd65e5e30ff7b32768bcd793e367514b3304b4b81157d7f53"
+            },
+            "pcm": {
+              "source_sha256": "73aeabdce610ee065e31fc3949aa6c67f35882595e4ddaf9d33227714524e5a0",
+              "bbox": [
+                17,
+                57,
+                249,
+                135
+              ],
+              "sha256": "75641cc0420990432292476601c7cef3c187ef61262756c5c886dc416eb90773"
+            },
+            "pcm_bluray": {
+              "source_sha256": "73aeabdce610ee065e31fc3949aa6c67f35882595e4ddaf9d33227714524e5a0",
+              "bbox": [
+                17,
+                57,
+                249,
+                135
+              ],
+              "sha256": "75641cc0420990432292476601c7cef3c187ef61262756c5c886dc416eb90773"
+            },
+            "pcm_s16le": {
+              "source_sha256": "cd718e63efe69a24b66ccc13d30c963aa15548d720bd3fd44094503e9a206526",
+              "bbox": [
+                17,
+                57,
+                330,
+                135
+              ],
+              "sha256": "de018718c8e7f14b1c060195bc80f28d3d9cd65f80a058e3414860f5e591644c"
+            },
+            "pcm_s24le": {
+              "source_sha256": "751c3807987eb80e272d0ecd76e899591ce7724bfaec04ef94510733c85a3cae",
+              "bbox": [
+                17,
+                57,
+                331,
+                135
+              ],
+              "sha256": "a3f0501e22444300a314db8f30add6670a117a537ab48898dc36a76621acee36"
+            },
+            "truehd": {
+              "source_sha256": "3896c83d2e82a16f85fea86872eb71ea8ba7525b12664279d94e121604a839ae",
+              "bbox": [
+                16,
+                52,
+                368,
+                140
+              ],
+              "sha256": "6e21c1f5f88f56c8e3453354a182fbd17e3f82e9412b258208874dcde5a10132"
+            },
+            "truehd_atmos": {
+              "source_sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc",
+              "bbox": [
+                16,
+                51,
+                368,
+                141
+              ],
+              "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382"
+            },
+            "vorbis": {
+              "source_sha256": "05659b36fcd23d17375999e36caa5898ff96575b8bdff1c409dfda24df917c67",
+              "bbox": [
+                96,
+                16,
+                288,
+                176
+              ],
+              "sha256": "e7945462410262e83e8c01fc41f73722e57b5ed6955c2a46ae09f62c840acc70"
+            },
+            "wav": {
+              "source_sha256": "e01790741545d4645e83fc64eb57ea631aad2dc7ba7b4ef90abe39f31060bbe5",
+              "bbox": [
+                17,
+                57,
+                259,
+                135
+              ],
+              "sha256": "9eebef568d98b51f9d357de03af63bbf220851d0312e62ce6fe8114558b2800a"
+            },
+            "wavpack": {
+              "source_sha256": "09bb5eeafa3739d88e85177e1995ba7807e3bd93d2c825561a50d9b62334e8a0",
+              "bbox": [
+                62,
+                16,
+                322,
+                176
+              ],
+              "sha256": "2676bcc5f9e09356b9025ed507d2f741a7a4e06ea57099aedcc10f867441e826"
+            },
+            "wma": {
+              "source_sha256": "10c9c1f1b484a75f648fedb74c76754cf9d663bdecdd2a6c1d9863352ca6c713",
+              "bbox": [
+                17,
+                57,
+                269,
+                135
+              ],
+              "sha256": "ea35ca36c26173d00ff8cd524afd4df71fd8e78a2a112c1dfe4e8389d41e9111"
+            },
+            "wmapro": {
+              "source_sha256": "7b997e3c82e18414bf943592281a984f391fe12da89a301b764af1bd9343a013",
+              "bbox": [
+                17,
+                57,
+                362,
+                135
+              ],
+              "sha256": "35aaab6a7ac1325dba9fba8d314b9e5b824449a050bbf5d448cfaf3c2ee6c481"
+            },
+            "wmav2": {
+              "source_sha256": "25a9bad76f6b8ed3dd942a5f6e89b806307fb6a82a1a5195540fa5ef4faf11d8",
+              "bbox": [
+                17,
+                57,
+                314,
+                135
+              ],
+              "sha256": "b27a2f80d8d457ee8301357f7a941de9592e4a1a9e1a73b5541a25c8e80680e2"
+            }
+          }
+        },
+        {
+          "id": "resource.images.foundry.media.qaa",
+          "name": "QA A",
+          "root": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.qaa/resources/flags",
+          "categories": [
+            "videocodec",
+            "videoresolution",
+            "videohdr",
+            "aspectratio",
+            "audiocodec",
+            "audiochannel"
+          ],
+          "osd_root": "",
+          "osd_derivatives": {}
+        },
+        {
+          "id": "resource.images.foundry.media.qab",
+          "name": "QA B",
+          "root": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.qab/resources/flags",
+          "categories": [
+            "videocodec",
+            "videoresolution",
+            "videohdr",
+            "aspectratio",
+            "audiocodec",
+            "audiochannel"
+          ],
+          "osd_root": "",
+          "osd_derivatives": {}
+        }
+      ],
+      "actual_player_resolution": "480",
+      "actual_player_audio": {
+        "codec": "pcm_s16le",
+        "channels": 2
+      },
+      "missing_pack_enabled_state": false,
+      "audio_geometry": [
+        {
+          "card": "StreamPilotVODCard",
+          "variant": "wide",
+          "file": "skin.foundry.slate-StreamPilotVODCard-wide.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags-osd/audiocodec/ac3.png",
+          "wide": true,
+          "visible_ink_recall": 1.0,
+          "derived_xml_geometry": {
+            "audio": [
+              504,
+              917,
+              160,
+              54
+            ],
+            "row": [
+              332,
+              917,
+              332,
+              54
+            ],
+            "text": [
+              332,
+              843,
+              1020,
+              184
+            ],
+            "gap": null
+          },
+          "text_right": 1352,
+          "badges_left": 332,
+          "screenshot_sha256": "6affc1f335b8aae802852a1187339e1032b6aa0bfce3e91f2b9002736aa1650e"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "variant": "builtin",
+          "file": "skin.foundry.slate-StreamPilotVODCard-builtin.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "",
+          "wide": false,
+          "derived_xml_geometry": {
+            "audio": [
+              504,
+              917,
+              76,
+              54
+            ],
+            "row": [
+              332,
+              917,
+              248,
+              54
+            ],
+            "text": [
+              332,
+              843,
+              1020,
+              184
+            ],
+            "gap": null
+          },
+          "text_right": 1352,
+          "badges_left": 332,
+          "screenshot_sha256": "13b1dd63342f3cbb7437b58c427b3dfec06519c3563f1dc126290537017b23ef"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "variant": "missing-derivative",
+          "file": "skin.foundry.slate-StreamPilotVODCard-missing-derivative.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiocodec/ac3.png",
+          "wide": false,
+          "visible_ink_recall": 1.0,
+          "derived_xml_geometry": {
+            "audio": [
+              504,
+              917,
+              76,
+              54
+            ],
+            "row": [
+              332,
+              917,
+              248,
+              54
+            ],
+            "text": [
+              332,
+              843,
+              1020,
+              184
+            ],
+            "gap": null
+          },
+          "text_right": 1352,
+          "badges_left": 332,
+          "screenshot_sha256": "2ccacecd918ee536ea9059d4b0f27a59add00bdcb5da453beefa3801daa8f304"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "variant": "wide-restored",
+          "file": "skin.foundry.slate-StreamPilotVODCard-wide-restored.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags-osd/audiocodec/ac3.png",
+          "wide": true,
+          "visible_ink_recall": 1.0,
+          "derived_xml_geometry": {
+            "audio": [
+              504,
+              917,
+              160,
+              54
+            ],
+            "row": [
+              332,
+              917,
+              332,
+              54
+            ],
+            "text": [
+              332,
+              843,
+              1020,
+              184
+            ],
+            "gap": null
+          },
+          "text_right": 1352,
+          "badges_left": 332,
+          "screenshot_sha256": "8fb12a94cfd46add8613fd068c2b8c7bb661bf0d18156d99e6250c224bfb7cef"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "variant": "wide",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-wide.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags-osd/audiocodec/ac3.png",
+          "wide": true,
+          "visible_ink_recall": 1.0,
+          "derived_xml_geometry": {
+            "audio": [
+              1536,
+              899,
+              160,
+              54
+            ],
+            "row": [
+              1364,
+              899,
+              332,
+              54
+            ],
+            "text": [
+              288,
+              812,
+              1036,
+              192
+            ],
+            "gap": 40
+          },
+          "text_right": 1324,
+          "badges_left": 1364,
+          "screenshot_sha256": "e5ab02b7ad7efdd1519cc1eaf0cfe35392941bb38bc53b7a9a138e63bb095d82"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "variant": "builtin",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-builtin.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "",
+          "wide": false,
+          "derived_xml_geometry": {
+            "audio": [
+              1620,
+              899,
+              76,
+              54
+            ],
+            "row": [
+              1448,
+              899,
+              248,
+              54
+            ],
+            "text": [
+              288,
+              812,
+              1120,
+              192
+            ],
+            "gap": 40
+          },
+          "text_right": 1408,
+          "badges_left": 1448,
+          "screenshot_sha256": "665bccfee9fce488c58fe879a85e052a0ba918a20a10f17378e18945ca6a202d"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "variant": "missing-derivative",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-missing-derivative.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiocodec/ac3.png",
+          "wide": false,
+          "visible_ink_recall": 1.0,
+          "derived_xml_geometry": {
+            "audio": [
+              1620,
+              899,
+              76,
+              54
+            ],
+            "row": [
+              1448,
+              899,
+              248,
+              54
+            ],
+            "text": [
+              288,
+              812,
+              1120,
+              192
+            ],
+            "gap": 40
+          },
+          "text_right": 1408,
+          "badges_left": 1448,
+          "screenshot_sha256": "12d5953d5508af7a3f7ae3ff325467f4c74e809c25aa523c35c985656ff35a66"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "variant": "wide-restored",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-wide-restored.png",
+          "codec": "ac3",
+          "channels": "2",
+          "title": "A Very Long Film and Live Programme Title: The Remarkable Journey Across the Northern Mountains and Beyond",
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags-osd/audiocodec/ac3.png",
+          "wide": true,
+          "visible_ink_recall": 1.0,
+          "derived_xml_geometry": {
+            "audio": [
+              1536,
+              899,
+              160,
+              54
+            ],
+            "row": [
+              1364,
+              899,
+              332,
+              54
+            ],
+            "text": [
+              288,
+              812,
+              1036,
+              192
+            ],
+            "gap": 40
+          },
+          "text_right": 1324,
+          "badges_left": 1364,
+          "screenshot_sha256": "e329bf683af8ca549479c62d1d5d23a60e324ea1db37d72337bb90c5bf403e77"
+        }
+      ],
+      "channel_geometry": [
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 1,
+          "actual_channels": "1",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/1.png",
+          "file": "skin.foundry.slate-StreamPilotVODCard-channels-1-selected.png",
+          "fixture": {
+            "file": "channels-1.mkv",
+            "channels": 1,
+            "codec": "pcm_s16le",
+            "sha256": "ec87cb4ca35d2be343f2f5c36a65872e011b354932fe99f9dce4ca64417d0546",
+            "bytes": 487324
+          },
+          "screenshot_sha256": "0fe5d97d72d96b370cd0951890a0d32c03d092f669c959116d800c26b912bdac",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            418,
+            925,
+            76,
+            38
+          ],
+          "source_sha256": "ad0030303d8e8647b43ef7fdd75f1edb9a38ec8a740d799cd8882d7e5fa6da56"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 1,
+          "actual_channels": "1",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry.slate-StreamPilotVODCard-channels-1-builtin.png",
+          "fixture": {
+            "file": "channels-1.mkv",
+            "channels": 1,
+            "codec": "pcm_s16le",
+            "sha256": "ec87cb4ca35d2be343f2f5c36a65872e011b354932fe99f9dce4ca64417d0546",
+            "bytes": 487324
+          },
+          "screenshot_sha256": "3f549333410a57aca5b4c5b803e6c3fd5f6aed51efabeb73cd8aee3866136e95"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 1,
+          "actual_channels": "1",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/1.png",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-channels-1-selected.png",
+          "fixture": {
+            "file": "channels-1.mkv",
+            "channels": 1,
+            "codec": "pcm_s16le",
+            "sha256": "ec87cb4ca35d2be343f2f5c36a65872e011b354932fe99f9dce4ca64417d0546",
+            "bytes": 487324
+          },
+          "screenshot_sha256": "ff1a2a96d135fb008bf394ee020cc29ec500a388f1618fbb0d85a5a70af53a5c",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            1450,
+            907,
+            76,
+            38
+          ],
+          "source_sha256": "ad0030303d8e8647b43ef7fdd75f1edb9a38ec8a740d799cd8882d7e5fa6da56"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 1,
+          "actual_channels": "1",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-channels-1-builtin.png",
+          "fixture": {
+            "file": "channels-1.mkv",
+            "channels": 1,
+            "codec": "pcm_s16le",
+            "sha256": "ec87cb4ca35d2be343f2f5c36a65872e011b354932fe99f9dce4ca64417d0546",
+            "bytes": 487324
+          },
+          "screenshot_sha256": "63e132aa4b245877a48000a59b7b44c85ffcc3a40299d844bd1a54e3d884b29a"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 3,
+          "actual_channels": "3",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/3.png",
+          "file": "skin.foundry.slate-StreamPilotVODCard-channels-3-selected.png",
+          "fixture": {
+            "file": "channels-3.mkv",
+            "channels": 3,
+            "codec": "pcm_s16le",
+            "sha256": "e5eb335dd0f22d76281c3be09144e659791c0fa080cac0a4fce241519ed748b4",
+            "bytes": 1447324
+          },
+          "screenshot_sha256": "a008012ec615115943eb8cadeee9e92bab874f3643092bac8bae3f133d526504",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            418,
+            925,
+            76,
+            38
+          ],
+          "source_sha256": "0acd1d9adc11ab5dbbd0d2cee87d5e017029a0d9c6146d21ae09c4c6fbf684ee"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 3,
+          "actual_channels": "3",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry.slate-StreamPilotVODCard-channels-3-builtin.png",
+          "fixture": {
+            "file": "channels-3.mkv",
+            "channels": 3,
+            "codec": "pcm_s16le",
+            "sha256": "e5eb335dd0f22d76281c3be09144e659791c0fa080cac0a4fce241519ed748b4",
+            "bytes": 1447324
+          },
+          "screenshot_sha256": "fdd89c569748d8205979189fc91988a43dd1ccef1584cca84c9a95e40423c920"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 3,
+          "actual_channels": "3",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/3.png",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-channels-3-selected.png",
+          "fixture": {
+            "file": "channels-3.mkv",
+            "channels": 3,
+            "codec": "pcm_s16le",
+            "sha256": "e5eb335dd0f22d76281c3be09144e659791c0fa080cac0a4fce241519ed748b4",
+            "bytes": 1447324
+          },
+          "screenshot_sha256": "e7ce4140b02131c9735092bb099da42e3ab6636927aa1eda567a2be2c4f957d2",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            1450,
+            907,
+            76,
+            38
+          ],
+          "source_sha256": "0acd1d9adc11ab5dbbd0d2cee87d5e017029a0d9c6146d21ae09c4c6fbf684ee"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 3,
+          "actual_channels": "3",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-channels-3-builtin.png",
+          "fixture": {
+            "file": "channels-3.mkv",
+            "channels": 3,
+            "codec": "pcm_s16le",
+            "sha256": "e5eb335dd0f22d76281c3be09144e659791c0fa080cac0a4fce241519ed748b4",
+            "bytes": 1447324
+          },
+          "screenshot_sha256": "2688d494b22e5fe41c59a46ab7d8d405d29be63fc693292ea9dce445bb62cc12"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 4,
+          "actual_channels": "4",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/4.png",
+          "file": "skin.foundry.slate-StreamPilotVODCard-channels-4-selected.png",
+          "fixture": {
+            "file": "channels-4.mkv",
+            "channels": 4,
+            "codec": "pcm_s16le",
+            "sha256": "b45911ca6bb5315bb80df3af49d491fdbb1c0ba4e2b807fdd67b628b0a3a56ab",
+            "bytes": 1927324
+          },
+          "screenshot_sha256": "86039b01b16fd412edb5e95f844a9564ad840f4b42693daccad24dad01c8a788",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            418,
+            925,
+            76,
+            38
+          ],
+          "source_sha256": "9e05fcb18af5fa831476a1a28be81952ab96c7ee038d57a5cf9ecefcb3e1fd0e"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 4,
+          "actual_channels": "4",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry.slate-StreamPilotVODCard-channels-4-builtin.png",
+          "fixture": {
+            "file": "channels-4.mkv",
+            "channels": 4,
+            "codec": "pcm_s16le",
+            "sha256": "b45911ca6bb5315bb80df3af49d491fdbb1c0ba4e2b807fdd67b628b0a3a56ab",
+            "bytes": 1927324
+          },
+          "screenshot_sha256": "21b3698631528cbba60b481bfbd19db5f81ae8108e474231d4b52a1d042a9f12"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 4,
+          "actual_channels": "4",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/4.png",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-channels-4-selected.png",
+          "fixture": {
+            "file": "channels-4.mkv",
+            "channels": 4,
+            "codec": "pcm_s16le",
+            "sha256": "b45911ca6bb5315bb80df3af49d491fdbb1c0ba4e2b807fdd67b628b0a3a56ab",
+            "bytes": 1927324
+          },
+          "screenshot_sha256": "add15b8f8bd3cc9c09705a4d0dacdba87e66faf5abb71921c3c5e5f46e64d532",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            1450,
+            907,
+            76,
+            38
+          ],
+          "source_sha256": "9e05fcb18af5fa831476a1a28be81952ab96c7ee038d57a5cf9ecefcb3e1fd0e"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 4,
+          "actual_channels": "4",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-channels-4-builtin.png",
+          "fixture": {
+            "file": "channels-4.mkv",
+            "channels": 4,
+            "codec": "pcm_s16le",
+            "sha256": "b45911ca6bb5315bb80df3af49d491fdbb1c0ba4e2b807fdd67b628b0a3a56ab",
+            "bytes": 1927324
+          },
+          "screenshot_sha256": "9277a8597944ffc1c909a4d92d8c9e937d3a81ae6f8aefc9fa84b7e82ab94b1c"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 5,
+          "actual_channels": "5",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/5.png",
+          "file": "skin.foundry.slate-StreamPilotVODCard-channels-5-selected.png",
+          "fixture": {
+            "file": "channels-5.mkv",
+            "channels": 5,
+            "codec": "pcm_s16le",
+            "sha256": "eced75055e2c740a6478aeb3dbf6172c951b26247bfe3c7aff278e1ef2c9ac62",
+            "bytes": 2407324
+          },
+          "screenshot_sha256": "1896032c7f064670d0071791fd0091b07c74c51dd672fe50cbf8ab44939e8182",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            418,
+            925,
+            76,
+            38
+          ],
+          "source_sha256": "b1d10214757080d8bfa3ab200c812a430edfa881d5041e675db8d1f0902aa381"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 5,
+          "actual_channels": "5",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry.slate-StreamPilotVODCard-channels-5-builtin.png",
+          "fixture": {
+            "file": "channels-5.mkv",
+            "channels": 5,
+            "codec": "pcm_s16le",
+            "sha256": "eced75055e2c740a6478aeb3dbf6172c951b26247bfe3c7aff278e1ef2c9ac62",
+            "bytes": 2407324
+          },
+          "screenshot_sha256": "7272e671567bbd91558fc3618b4d5cc51843fad29cd833afe96c17b75de243dd"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 5,
+          "actual_channels": "5",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/5.png",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-channels-5-selected.png",
+          "fixture": {
+            "file": "channels-5.mkv",
+            "channels": 5,
+            "codec": "pcm_s16le",
+            "sha256": "eced75055e2c740a6478aeb3dbf6172c951b26247bfe3c7aff278e1ef2c9ac62",
+            "bytes": 2407324
+          },
+          "screenshot_sha256": "bde317f1a0d8b642a6bd0bddf7c58af9b78875bdac0faff7eb533556bf3e2483",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            1450,
+            907,
+            76,
+            38
+          ],
+          "source_sha256": "b1d10214757080d8bfa3ab200c812a430edfa881d5041e675db8d1f0902aa381"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 5,
+          "actual_channels": "5",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-channels-5-builtin.png",
+          "fixture": {
+            "file": "channels-5.mkv",
+            "channels": 5,
+            "codec": "pcm_s16le",
+            "sha256": "eced75055e2c740a6478aeb3dbf6172c951b26247bfe3c7aff278e1ef2c9ac62",
+            "bytes": 2407324
+          },
+          "screenshot_sha256": "c977cc44f1fef140ac0c0e58cdf684c3592259a7b83113c3f20663acc8c44b7b"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 7,
+          "actual_channels": "7",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/7.png",
+          "file": "skin.foundry.slate-StreamPilotVODCard-channels-7-selected.png",
+          "fixture": {
+            "file": "channels-7.mkv",
+            "channels": 7,
+            "codec": "pcm_s16le",
+            "sha256": "af457b19695c0c964faf1ac50657997826bbcc8a8e4d7ec1419f4e867f4a87cc",
+            "bytes": 3367324
+          },
+          "screenshot_sha256": "6ceff33c1e17857e93ea401a249d7c14a073e81be4c21fecc7cf099031559dbb",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            418,
+            925,
+            76,
+            38
+          ],
+          "source_sha256": "23937d624839f453cba0643580d3ec6e1905448344256819cfaf7a478a9442f8"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 7,
+          "actual_channels": "7",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry.slate-StreamPilotVODCard-channels-7-builtin.png",
+          "fixture": {
+            "file": "channels-7.mkv",
+            "channels": 7,
+            "codec": "pcm_s16le",
+            "sha256": "af457b19695c0c964faf1ac50657997826bbcc8a8e4d7ec1419f4e867f4a87cc",
+            "bytes": 3367324
+          },
+          "screenshot_sha256": "99a50fe17bf7eb54b16ac154a9d917bc86b662a7c2c202c69bfeb4a8a12c47f5"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 7,
+          "actual_channels": "7",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/7.png",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-channels-7-selected.png",
+          "fixture": {
+            "file": "channels-7.mkv",
+            "channels": 7,
+            "codec": "pcm_s16le",
+            "sha256": "af457b19695c0c964faf1ac50657997826bbcc8a8e4d7ec1419f4e867f4a87cc",
+            "bytes": 3367324
+          },
+          "screenshot_sha256": "38570f8d971521933bb8470194789a9fd1ed0d583112a00a25b35cffdff3027c",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            1450,
+            907,
+            76,
+            38
+          ],
+          "source_sha256": "23937d624839f453cba0643580d3ec6e1905448344256819cfaf7a478a9442f8"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 7,
+          "actual_channels": "7",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-channels-7-builtin.png",
+          "fixture": {
+            "file": "channels-7.mkv",
+            "channels": 7,
+            "codec": "pcm_s16le",
+            "sha256": "af457b19695c0c964faf1ac50657997826bbcc8a8e4d7ec1419f4e867f4a87cc",
+            "bytes": 3367324
+          },
+          "screenshot_sha256": "3ead9077e1feb4def90d6637457e86e5be11a8adb08881cf2862ffc322ff80fd"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 10,
+          "actual_channels": "10",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/10.png",
+          "file": "skin.foundry.slate-StreamPilotVODCard-channels-10-selected.png",
+          "fixture": {
+            "file": "channels-10.mkv",
+            "channels": 10,
+            "codec": "pcm_s16le",
+            "sha256": "bf18b3b0300c68b94f4eba3f530874c49904992b65a423992c7a0594ffedde75",
+            "bytes": 4807558
+          },
+          "screenshot_sha256": "d97c03fb9c8d73add3b31cf52949690deed0e2b4d911029781c332d8bfe157c1",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            418,
+            925,
+            76,
+            38
+          ],
+          "source_sha256": "a185861605fb63ae451a89d12176e7da0bc63e76e2f30bb23fe35fb3b467a9fa"
+        },
+        {
+          "card": "StreamPilotVODCard",
+          "channels": 10,
+          "actual_channels": "10",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry.slate-StreamPilotVODCard-channels-10-builtin.png",
+          "fixture": {
+            "file": "channels-10.mkv",
+            "channels": 10,
+            "codec": "pcm_s16le",
+            "sha256": "bf18b3b0300c68b94f4eba3f530874c49904992b65a423992c7a0594ffedde75",
+            "bytes": 4807558
+          },
+          "screenshot_sha256": "a56972103a871aedc265e7832aff807822695b22f8d45e88bd201a65962b2e65"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 10,
+          "actual_channels": "10",
+          "actual_codec": "pcm_s16le",
+          "selected": true,
+          "channel_control_visible": true,
+          "path": "/tmp/media-pack-native-1hx4627x/kodi/portable_data/addons/resource.images.foundry.media.puremarks/resources/flags/audiochannel/10.png",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-channels-10-selected.png",
+          "fixture": {
+            "file": "channels-10.mkv",
+            "channels": 10,
+            "codec": "pcm_s16le",
+            "sha256": "bf18b3b0300c68b94f4eba3f530874c49904992b65a423992c7a0594ffedde75",
+            "bytes": 4807558
+          },
+          "screenshot_sha256": "0a5a16346a0fea2abacd9e9d79751d1b9487b5d964983974e9e3b421b8bfc6b2",
+          "visible_ink_recall": 1.0,
+          "channel_rectangle": [
+            1450,
+            907,
+            76,
+            38
+          ],
+          "source_sha256": "a185861605fb63ae451a89d12176e7da0bc63e76e2f30bb23fe35fb3b467a9fa"
+        },
+        {
+          "card": "StreamPilotLiveCard",
+          "channels": 10,
+          "actual_channels": "10",
+          "actual_codec": "pcm_s16le",
+          "selected": false,
+          "channel_control_visible": false,
+          "path": "",
+          "file": "skin.foundry.slate-StreamPilotLiveCard-channels-10-builtin.png",
+          "fixture": {
+            "file": "channels-10.mkv",
+            "channels": 10,
+            "codec": "pcm_s16le",
+            "sha256": "bf18b3b0300c68b94f4eba3f530874c49904992b65a423992c7a0594ffedde75",
+            "bytes": 4807558
+          },
+          "screenshot_sha256": "e8edf015f146e7fd77c8cc7e7643227311ee83dc63b2e55e27434f5b45935651"
+        }
+      ],
+      "passed": true
+    }
+  },
+  "scheduler_evidence": [
+    {
+      "phase": "paused-setting-selection",
+      "skin": "skin.foundry",
+      "file": "skin.foundry-paused-setting-selection-scheduler.json",
+      "paused": true
+    },
+    {
+      "phase": "active-video",
+      "skin": "skin.foundry",
+      "file": "skin.foundry-active-video-scheduler.json",
+      "paused": false
+    },
+    {
+      "phase": "paused-setting-selection",
+      "skin": "skin.foundry.slate",
+      "file": "skin.foundry.slate-paused-setting-selection-scheduler.json",
+      "paused": true
+    },
+    {
+      "phase": "active-video",
+      "skin": "skin.foundry.slate",
+      "file": "skin.foundry.slate-active-video-scheduler.json",
+      "paused": false
+    }
+  ],
+  "scope": "Geometry phase uses exact approved packaged artwork, unchanged add-on ID and manifest; synthetic Live card not PVR. Actual settings button/picker; unchanged production Service loop with actual media monitor; unrelated worker dependencies stubbed; shipped MediaFlags/StreamPilotFormatBadges includes in custom window, real ListItem metadata and offline native video. Catalog window, physical device, codecs other than native PCM/AC3 and unrelated service workers NOT certified by this runner.",
+  "picker_choices": [
+    {
+      "skin": "skin.foundry",
+      "id": "resource.images.foundry.media.qaa",
+      "index": 2,
+      "ids": [
+        "",
+        "resource.images.foundry.media.puremarks",
+        "resource.images.foundry.media.qaa",
+        "resource.images.foundry.media.qab"
+      ],
+      "names": [
+        "Built-in icons",
+        "Pure Marks",
+        "QA A",
+        "QA B"
+      ]
+    },
+    {
+      "skin": "skin.foundry",
+      "id": "resource.images.foundry.media.qab",
+      "index": 3,
+      "ids": [
+        "",
+        "resource.images.foundry.media.puremarks",
+        "resource.images.foundry.media.qaa",
+        "resource.images.foundry.media.qab"
+      ],
+      "names": [
+        "Built-in icons",
+        "Pure Marks",
+        "QA A",
+        "QA B"
+      ]
+    },
+    {
+      "skin": "skin.foundry",
+      "id": "",
+      "index": 0,
+      "ids": [
+        "",
+        "resource.images.foundry.media.puremarks",
+        "resource.images.foundry.media.qaa",
+        "resource.images.foundry.media.qab"
+      ],
+      "names": [
+        "Built-in icons",
+        "Pure Marks",
+        "QA A",
+        "QA B"
+      ]
+    },
+    {
+      "skin": "skin.foundry",
+      "id": "resource.images.foundry.media.qaa",
+      "index": 2,
+      "ids": [
+        "",
+        "resource.images.foundry.media.puremarks",
+        "resource.images.foundry.media.qaa",
+        "resource.images.foundry.media.qab"
+      ],
+      "names": [
+        "Built-in icons",
+        "Pure Marks",
+        "QA A",
+        "QA B"
+      ]
+    },
+    {
+      "skin": "skin.foundry.slate",
+      "id": "resource.images.foundry.media.qaa",
+      "index": 2,
+      "ids": [
+        "",
+        "resource.images.foundry.media.puremarks",
+        "resource.images.foundry.media.qaa",
+        "resource.images.foundry.media.qab"
+      ],
+      "names": [
+        "Built-in icons",
+        "Pure Marks",
+        "QA A",
+        "QA B"
+      ]
+    },
+    {
+      "skin": "skin.foundry.slate",
+      "id": "resource.images.foundry.media.qab",
+      "index": 3,
+      "ids": [
+        "",
+        "resource.images.foundry.media.puremarks",
+        "resource.images.foundry.media.qaa",
+        "resource.images.foundry.media.qab"
+      ],
+      "names": [
+        "Built-in icons",
+        "Pure Marks",
+        "QA A",
+        "QA B"
+      ]
+    },
+    {
+      "skin": "skin.foundry.slate",
+      "id": "",
+      "index": 0,
+      "ids": [
+        "",
+        "resource.images.foundry.media.puremarks",
+        "resource.images.foundry.media.qaa",
+        "resource.images.foundry.media.qab"
+      ],
+      "names": [
+        "Built-in icons",
+        "Pure Marks",
+        "QA A",
+        "QA B"
+      ]
+    },
+    {
+      "skin": "skin.foundry.slate",
+      "id": "resource.images.foundry.media.qaa",
+      "index": 2,
+      "ids": [
+        "",
+        "resource.images.foundry.media.puremarks",
+        "resource.images.foundry.media.qaa",
+        "resource.images.foundry.media.qab"
+      ],
+      "names": [
+        "Built-in icons",
+        "Pure Marks",
+        "QA A",
+        "QA B"
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-channels-7-builtin.png",
+      "sha256": "53ac7e03cd9f3c844d63a71481e22c2c1f956f383ba8a558e385b77c3580e06b"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-wide.png",
+      "sha256": "e5ab02b7ad7efdd1519cc1eaf0cfe35392941bb38bc53b7a9a138e63bb095d82"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-missing-derivative.png",
+      "sha256": "12d5953d5508af7a3f7ae3ff325467f4c74e809c25aa523c35c985656ff35a66"
+    },
+    {
+      "file": "skin.foundry.slate-before-disable.png",
+      "sha256": "ef826ae501d2f56ef867c71ac5bc5b1bfc2a4bdc7f9308fbad2239674fd5ec3c"
+    },
+    {
+      "file": "skin.foundry-missing-pack.png",
+      "sha256": "31d6249595331d33c9bd97c015c4d33a686347663fd1383f6b87db25b1f50430"
+    },
+    {
+      "file": "skin.foundry-picker-2.png",
+      "sha256": "12468e7314ccd0d92946d897abff03104b6bd54fb874c723232eead2e816b6d1"
+    },
+    {
+      "file": "skin.foundry.slate-picker-2.png",
+      "sha256": "81ee91a87e50fbc18f602ab89813a94bd8e4d015004a4fae6fd63d4388709f2c"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-channels-4-builtin.png",
+      "sha256": "adba1e0376e406c699c2dac17bb22bcd0e298f2e6de1aa005285810afccb3e40"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-channels-1-builtin.png",
+      "sha256": "07acbb442a541a7afc26d6b237908c43e7359c783927ee80d1f24fdee4e79096"
+    },
+    {
+      "file": "skin.foundry-player-resolution.png",
+      "sha256": "71ec921d209cc94da4f5a662e0129a8be89a3c9f1940a595ed34a88400f7f26e"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-channels-1-builtin.png",
+      "sha256": "63e132aa4b245877a48000a59b7b44c85ffcc3a40299d844bd1a54e3d884b29a"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-channels-7-selected.png",
+      "sha256": "38570f8d971521933bb8470194789a9fd1ed0d583112a00a25b35cffdff3027c"
+    },
+    {
+      "file": "skin.foundry-builtin.png",
+      "sha256": "31d6249595331d33c9bd97c015c4d33a686347663fd1383f6b87db25b1f50430"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-channels-1-selected.png",
+      "sha256": "8766687182847dbbc2420c9cb6ad68cf9e06f52eaa2c75f2b4baff2df7a82200"
+    },
+    {
+      "file": "skin.foundry.slate-disabled.png",
+      "sha256": "96d0609b4125f08778fb5bea3ac2b150b88a5d601810cf9ca58b52de7b3e78b9"
+    },
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-missing-derivative.png",
+      "sha256": "437f3974771862dd5cd092a65174c00c6fe16faed1efef7cd8e3b7a0afb85917"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-missing-derivative.png",
+      "sha256": "2ccacecd918ee536ea9059d4b0f27a59add00bdcb5da453beefa3801daa8f304"
+    },
+    {
+      "file": "skin.foundry-missing-file.png",
+      "sha256": "869c4312dfe248d13ccb03bd1998c7595e089feb378aca66f1ba30dc35092067"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-channels-10-builtin.png",
+      "sha256": "c815681606f76ab9099bf1fdd565a17d9bfa40ef21ddc6d5df838ed625d1c3c9"
+    },
+    {
+      "file": "skin.foundry.slate-pack-a.png",
+      "sha256": "ef826ae501d2f56ef867c71ac5bc5b1bfc2a4bdc7f9308fbad2239674fd5ec3c"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-wide.png",
+      "sha256": "6affc1f335b8aae802852a1187339e1032b6aa0bfce3e91f2b9002736aa1650e"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-channels-3-builtin.png",
+      "sha256": "fdd89c569748d8205979189fc91988a43dd1ccef1584cca84c9a95e40423c920"
+    },
+    {
+      "file": "skin.foundry-playback-ready.png",
+      "sha256": "bfcb103a10ab9dd77a1ced275a3d4562837d332d4bdea3e773fd950dc9858ff4"
+    },
+    {
+      "file": "skin.foundry.slate-empty.png",
+      "sha256": "98a31ba540dbe4f3db08e52543a783146df55a2f637b952e6ac18bde5d9808a3"
+    },
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-wide-restored.png",
+      "sha256": "b44b4747f49f9e80ba59f2e675e745ecd19473c57c868570fcfa4ed531999b14"
+    },
+    {
+      "file": "skin.foundry.slate-picker-3.png",
+      "sha256": "edcd6503ef68f62a7fe43f94de7a85e6fd51ae9a20b9929a77639d822be74752"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-builtin.png",
+      "sha256": "13b1dd63342f3cbb7437b58c427b3dfec06519c3563f1dc126290537017b23ef"
+    },
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-wide.png",
+      "sha256": "93a35a4620c131ea0bbba08bbff24304b654059c77383453d700fb9113124356"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-wide-restored.png",
+      "sha256": "9925c057a86560197ce2853556724ba98cbe8e5cbb440405072d87b960840297"
+    },
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-channels-3-builtin.png",
+      "sha256": "97bee2ac0718b27af56cb628deb4cc5b5e172e26537b9e98516a0b6873a2cd21"
+    },
+    {
+      "file": "skin.foundry-file-restored.png",
+      "sha256": "9124665a7295b11e15c0e3d809b86adc387f9d18f86f59e753edcccd508405e4"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-channels-1-selected.png",
+      "sha256": "0fe5d97d72d96b370cd0951890a0d32c03d092f669c959116d800c26b912bdac"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-channels-7-builtin.png",
+      "sha256": "3ead9077e1feb4def90d6637457e86e5be11a8adb08881cf2862ffc322ff80fd"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-channels-5-selected.png",
+      "sha256": "92887367d56f50124fa03629178bead4c6123321a47336b11b5cbb1b4708dfbb"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-missing-derivative.png",
+      "sha256": "2c62f32ae097b79d1918dcdc348896b5ddc690f6766ecb1eab853dcd6b973bf4"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-channels-5-selected.png",
+      "sha256": "1896032c7f064670d0071791fd0091b07c74c51dd672fe50cbf8ab44939e8182"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-channels-7-selected.png",
+      "sha256": "326fea134fd5b6ae12be4ae6593e741744d4135a7f2bd0fee42b8ce2568dcf36"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-channels-1-selected.png",
+      "sha256": "ff1a2a96d135fb008bf394ee020cc29ec500a388f1618fbb0d85a5a70af53a5c"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-channels-7-selected.png",
+      "sha256": "6ceff33c1e17857e93ea401a249d7c14a073e81be4c21fecc7cf099031559dbb"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-channels-5-selected.png",
+      "sha256": "bde317f1a0d8b642a6bd0bddf7c58af9b78875bdac0faff7eb533556bf3e2483"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-channels-3-selected.png",
+      "sha256": "a008012ec615115943eb8cadeee9e92bab874f3643092bac8bae3f133d526504"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-channels-10-selected.png",
+      "sha256": "d97c03fb9c8d73add3b31cf52949690deed0e2b4d911029781c332d8bfe157c1"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-wide-restored.png",
+      "sha256": "e329bf683af8ca549479c62d1d5d23a60e324ea1db37d72337bb90c5bf403e77"
+    },
+    {
+      "file": "skin.foundry-artwork-category.png",
+      "sha256": "0557daa5f11c606a26efc9214ad3568764c30c40cdb15863ca391c237ae52801"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-channels-4-selected.png",
+      "sha256": "add15b8f8bd3cc9c09705a4d0dacdba87e66faf5abb71921c3c5e5f46e64d532"
+    },
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-channels-7-selected.png",
+      "sha256": "10c79503a299e1a3ee6e208018e9a7fc5b79d400ae616a504affcc1e65af4e24"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-channels-3-selected.png",
+      "sha256": "53249116bd1eae344ea638dfe500e4b83a36bf29d741cdb8948d8237e07beeee"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-channels-5-builtin.png",
+      "sha256": "1f4dcf45f6e890a25514bb4c0b8463e60907f30f431f3d6f77b959c94ce79fd8"
+    },
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-builtin.png",
+      "sha256": "382db5064563cd959b5ba78ff18e2c649001d6ae7c57f1db55455910e767a242"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-channels-4-selected.png",
+      "sha256": "5afa8e8c3a6634f14622d100525fa5d0c6f894203a0d4835650c8495c2244a4a"
+    },
+    {
+      "file": "skin.foundry-after-restart.png",
+      "sha256": "9124665a7295b11e15c0e3d809b86adc387f9d18f86f59e753edcccd508405e4"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-channels-10-builtin.png",
+      "sha256": "a56972103a871aedc265e7832aff807822695b22f8d45e88bd201a65962b2e65"
+    },
+    {
+      "file": "skin.foundry.slate-file-restored.png",
+      "sha256": "ef826ae501d2f56ef867c71ac5bc5b1bfc2a4bdc7f9308fbad2239674fd5ec3c"
+    },
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-channels-5-selected.png",
+      "sha256": "c062e4ebad252661dcf8673086c5da545d4a61a6c7b03206d058c5b95ae635fc"
+    },
+    {
+      "file": "skin.foundry.slate-playback-ready.png",
+      "sha256": "bfcb103a10ab9dd77a1ced275a3d4562837d332d4bdea3e773fd950dc9858ff4"
+    },
+    {
+      "file": "skin.foundry.slate-builtin.png",
+      "sha256": "96d0609b4125f08778fb5bea3ac2b150b88a5d601810cf9ca58b52de7b3e78b9"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-channels-10-builtin.png",
+      "sha256": "e8edf015f146e7fd77c8cc7e7643227311ee83dc63b2e55e27434f5b45935651"
+    },
+    {
+      "file": "skin.foundry.slate-artwork-category.png",
+      "sha256": "bc373b438f9043407c6e5f67df20852397cb53f951f24636c071e8af226af012"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-channels-10-selected.png",
+      "sha256": "0a5a16346a0fea2abacd9e9d79751d1b9487b5d964983974e9e3b421b8bfc6b2"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-channels-3-selected.png",
+      "sha256": "e7ce4140b02131c9735092bb099da42e3ab6636927aa1eda567a2be2c4f957d2"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-channels-5-builtin.png",
+      "sha256": "c977cc44f1fef140ac0c0e58cdf684c3592259a7b83113c3f20663acc8c44b7b"
+    },
+    {
+      "file": "skin.foundry.slate-pack-b.png",
+      "sha256": "4f8831c2faf6b29abe4aac73893e5a65cb4ef3517995f5191c797df86cd5534a"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-channels-3-builtin.png",
+      "sha256": "63c242ad920d36e7d2b35083f973d9e4edaf1854b9604c555307695a97ecbd5a"
+    },
+    {
+      "file": "skin.foundry-settings-opened.png",
+      "sha256": "03ef0c2982739e1d7b530450529246f9177cb8646ab3191fc9834d4da06ff5ec"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-channels-4-builtin.png",
+      "sha256": "21b3698631528cbba60b481bfbd19db5f81ae8108e474231d4b52a1d042a9f12"
+    },
+    {
+      "file": "skin.foundry-before-disable.png",
+      "sha256": "9124665a7295b11e15c0e3d809b86adc387f9d18f86f59e753edcccd508405e4"
+    },
+    {
+      "file": "skin.foundry-reenabled.png",
+      "sha256": "9124665a7295b11e15c0e3d809b86adc387f9d18f86f59e753edcccd508405e4"
+    },
+    {
+      "file": "skin.foundry.slate-missing-file.png",
+      "sha256": "e35c0c1ddd314360498efb5bbf41c25e14f56e665b19f870ac334ee21b926bd5"
+    },
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-channels-1-builtin.png",
+      "sha256": "f73a15bb56ee949580b45bd314e0f86ce485504ab198c99c786f84fd4af74491"
+    },
+    {
+      "file": "skin.foundry.slate-missing-pack.png",
+      "sha256": "9b9a4ac86712ee4a3eedfdd3b2248fc199db9ea444799645dcc2b5f491e8448b"
+    },
+    {
+      "file": "skin.foundry-pack-b.png",
+      "sha256": "85600bad9b040e3f4c7f3b5dbec75670a2a1b3cd264f4217bab763dfef4b496a"
+    },
+    {
+      "file": "skin.foundry-picker-0.png",
+      "sha256": "131f5d9afc8594fa25cbb43df213a8fe7970079ef589595643899eaa0d955b61"
+    },
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-channels-3-selected.png",
+      "sha256": "313669e64c0c3243286674d984a1407ae3b80a7c767d61c060ad33b4a58566b3"
+    },
+    {
+      "file": "skin.foundry.slate-media-pack-control.png",
+      "sha256": "f133bdabae81cb326e47066c676426590f4e82fc50129f66443a679e4a787fbe"
+    },
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-channels-5-builtin.png",
+      "sha256": "cb981154ab598b0992c131e2ed293edcaa89d2345f21edf7ecb96eb498e8c80a"
+    },
+    {
+      "file": "skin.foundry-disabled.png",
+      "sha256": "31d6249595331d33c9bd97c015c4d33a686347663fd1383f6b87db25b1f50430"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-channels-4-builtin.png",
+      "sha256": "9277a8597944ffc1c909a4d92d8c9e937d3a81ae6f8aefc9fa84b7e82ab94b1c"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-builtin.png",
+      "sha256": "c7e17102f53d4a28480fb39aa85dc802634e41842d2b65a5614650001f51d9e6"
+    },
+    {
+      "file": "skin.foundry.slate-player-resolution.png",
+      "sha256": "58ae85869735a79f509b620c05f00183148209c451d3628f1a92cfb13cbc12e1"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-builtin.png",
+      "sha256": "665bccfee9fce488c58fe879a85e052a0ba918a20a10f17378e18945ca6a202d"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-channels-5-builtin.png",
+      "sha256": "7272e671567bbd91558fc3618b4d5cc51843fad29cd833afe96c17b75de243dd"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-channels-7-builtin.png",
+      "sha256": "cb625a88d142b4dd659e475cd4f1b5ef66ef70022ac261da4ff202023ada2920"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-channels-10-selected.png",
+      "sha256": "05bd41d880baac17f51f5bac020ccfc3e71c2445ac605cc4f665046f50b4b865"
+    },
+    {
+      "file": "skin.foundry-media-pack-control.png",
+      "sha256": "58fdbb140a0ae3d2220ecbefd801f542b60999cdd485609e18b975146476324d"
+    },
+    {
+      "file": "skin.foundry.slate-picker-0.png",
+      "sha256": "e0d2b5c12a3b5975eb42ea9c272e47082cc6547d87619fbc11969f9c6ce9681d"
+    },
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-channels-4-selected.png",
+      "sha256": "916b2ad69dea6a147d3bce21ed79f5acedca0ce0a4e2b8aaeb4125485c8874f1"
+    },
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-channels-4-builtin.png",
+      "sha256": "e998e59ae3e7104e0370da8fa549c1dffe94bb8bec2df844f0bd5246d0b2a705"
+    },
+    {
+      "file": "skin.foundry-picker-3.png",
+      "sha256": "38791ed98aab8cb741ff562338b8cc2325b9f3bf990a7418dfa26ec92a6c4813"
+    },
+    {
+      "file": "skin.foundry.slate-settings-opened.png",
+      "sha256": "1c636fe58b2a877a33b6a9cce97e443065f5d61227d0c1192b8607e6a486ae74"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-channels-4-selected.png",
+      "sha256": "86039b01b16fd412edb5e95f844a9564ad840f4b42693daccad24dad01c8a788"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-channels-7-builtin.png",
+      "sha256": "99a50fe17bf7eb54b16ac154a9d917bc86b662a7c2c202c69bfeb4a8a12c47f5"
+    },
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-channels-1-selected.png",
+      "sha256": "962b8a6b7898964702141494105add78456724d4fe5a1cb639eceb88c3873f05"
+    },
+    {
+      "file": "skin.foundry-StreamPilotVODCard-wide.png",
+      "sha256": "91742cf36209164c3c36859eb125b0aeeb17828578c706a83db39605edf6ee19"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotLiveCard-channels-3-builtin.png",
+      "sha256": "2688d494b22e5fe41c59a46ab7d8d405d29be63fc693292ea9dce445bb62cc12"
+    },
+    {
+      "file": "skin.foundry-empty.png",
+      "sha256": "280e18623cd8dd3dddb8c67ac526b271508608f53bdc25ba3a8297042fc787ff"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-wide-restored.png",
+      "sha256": "8fb12a94cfd46add8613fd068c2b8c7bb661bf0d18156d99e6250c224bfb7cef"
+    },
+    {
+      "file": "skin.foundry.slate-after-restart.png",
+      "sha256": "7c237d4f70f0902056e90d26bef3d8746323cb047ccdc05131ff096fa5ac8fa4"
+    },
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-channels-10-selected.png",
+      "sha256": "fbe1fb50138e256d3ed7bee5bb00feebed02cac3857cb72e24b7819782c4eec3"
+    },
+    {
+      "file": "skin.foundry.slate-StreamPilotVODCard-channels-1-builtin.png",
+      "sha256": "3f549333410a57aca5b4c5b803e6c3fd5f6aed51efabeb73cd8aee3866136e95"
+    },
+    {
+      "file": "skin.foundry.slate-reenabled.png",
+      "sha256": "ef826ae501d2f56ef867c71ac5bc5b1bfc2a4bdc7f9308fbad2239674fd5ec3c"
+    },
+    {
+      "file": "skin.foundry-StreamPilotLiveCard-channels-10-builtin.png",
+      "sha256": "04a2808dd46b3b35f9e69464fded504bcde14901167ccffcfc24b94afd8a74c0"
+    },
+    {
+      "file": "skin.foundry-pack-a.png",
+      "sha256": "9124665a7295b11e15c0e3d809b86adc387f9d18f86f59e753edcccd508405e4"
+    }
+  ],
+  "source_receipts": [
+    {
+      "file": "script.foundry.helper/resources/lib/modules/media_pack.py",
+      "sha256": "e68e2d6484f680f5def71ca530d6420fe3b48ebf7f3393da1eca2ad74f9d66ea"
+    },
+    {
+      "file": "script.foundry.helper/resources/lib/modules/router.py",
+      "sha256": "89f7d55adffab9f995774301b32bd4aa78381267d28a22a7b002705732bc9f80"
+    },
+    {
+      "file": "script.foundry.helper/resources/lib/service.py",
+      "sha256": "382536402e3d94d71042881ec66aceaf0e556ef033d7dd6b908739e2245f50ff"
+    },
+    {
+      "file": "script.foundry.slate.helper/resources/lib/modules/media_pack.py",
+      "sha256": "d79d2549332667b6f49b87369a48d41f23d338c8889e328c15c37848305c3632"
+    },
+    {
+      "file": "script.foundry.slate.helper/resources/lib/modules/router.py",
+      "sha256": "2581fcbd1b6a4bb035167cf3f2d2c4e4f045c0aa48c251af3cc11416d46465c7"
+    },
+    {
+      "file": "script.foundry.slate.helper/resources/lib/service.py",
+      "sha256": "71166d3cbe5b9f19df682e0e8a79f013c01bcf155462e16d7e546aec785904e2"
+    },
+    {
+      "file": "skin.foundry/xml/Home.xml",
+      "sha256": "d326bb4948567d141ee55dc4f2599409696a67bcbb10ae9eefa123e16534bd3b"
+    },
+    {
+      "file": "skin.foundry/xml/Custom_1121_SearchResults.xml",
+      "sha256": "d7254579525ca99f5ce5feeafa753d6f73e6cb4a7c3325d42ee85708370ab03a"
+    },
+    {
+      "file": "skin.foundry/xml/Includes.xml",
+      "sha256": "45b9d10fd57e37ce56377f5fb2ab94ae4758e2d999a52a0279434addbe17b0e5"
+    },
+    {
+      "file": "skin.foundry/xml/Includes_StreamPilotOSD.xml",
+      "sha256": "70c3555851d37d88bdac576c4740c4c30c8a9dd674818cdb3d2d105e9b923ee1"
+    },
+    {
+      "file": "skin.foundry/xml/SkinSettings.xml",
+      "sha256": "82c6989047f8f043b7f22d9acf045a3eab182c38ac3e1525b84336684851f144"
+    },
+    {
+      "file": "skin.foundry/xml/Variables.xml",
+      "sha256": "d3cb0e08b7bd238a5e5e47d9db87270984618eea05918901dfd05651dc080b66"
+    },
+    {
+      "file": "skin.foundry.slate/xml/Home.xml",
+      "sha256": "65faed2808e1b083ab3407a1b002a1ca44274200217d470483e32b57a5b043a3"
+    },
+    {
+      "file": "skin.foundry.slate/xml/Custom_1121_SearchResults.xml",
+      "sha256": "f288052d35270458212f856b2f295e5491feb0517582d57f1ca38a4d4b1376fe"
+    },
+    {
+      "file": "skin.foundry.slate/xml/Includes.xml",
+      "sha256": "64e1c0b928f20343eb91b6840133f5986d07cb63f15bc41d3d5e1b044bc7a85f"
+    },
+    {
+      "file": "skin.foundry.slate/xml/Includes_StreamPilotOSD.xml",
+      "sha256": "e43b549827628987f3f348abd74487170126fb4cab37685e9f19983d962b5f8d"
+    },
+    {
+      "file": "skin.foundry.slate/xml/SkinSettings.xml",
+      "sha256": "bbd9e9480b3c60adeb4c509e7f9912491d07583410322c41a2ec00cc91c0e474"
+    },
+    {
+      "file": "skin.foundry.slate/xml/Variables.xml",
+      "sha256": "8c90c9e719517c9b09a9a1b6684fb51e89b89c3e95319e9fd0aaea4cff581654"
+    }
+  ],
+  "runner_source_sha256": "aeef54b103db67069e7bb0dec7e8b49f35c3733495d3e55da79f8937d96082dc",
+  "release_source_mode": "packaged-no-overlay",
+  "actual_pack_id": "resource.images.foundry.media.puremarks",
+  "actual_pack_manifest_sha256": "f459064122e7ff0491f153ad217644fe135c05470be83e2cd7becdc2a85bff59"
+}

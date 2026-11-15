@@ -1,0 +1,20 @@
+{
+  "ListItem.AudioChannels": "",
+  "ListItem.AudioCodec": "",
+  "ListItem.HdrType": "",
+  "ListItem.VideoAspect": "",
+  "ListItem.VideoCodec": "",
+  "ListItem.VideoResolution": "",
+  "Window(Home).Property(foundry.slate.media.list.aspectratio.path)": "",
+  "Window(Home).Property(foundry.slate.media.list.aspectratio.value)": "",
+  "Window(Home).Property(foundry.slate.media.list.audiochannel.path)": "",
+  "Window(Home).Property(foundry.slate.media.list.audiochannel.value)": "",
+  "Window(Home).Property(foundry.slate.media.list.audiocodec.path)": "",
+  "Window(Home).Property(foundry.slate.media.list.audiocodec.value)": "",
+  "Window(Home).Property(foundry.slate.media.list.videocodec.path)": "",
+  "Window(Home).Property(foundry.slate.media.list.videocodec.value)": "",
+  "Window(Home).Property(foundry.slate.media.list.videohdr.path)": "",
+  "Window(Home).Property(foundry.slate.media.list.videohdr.value)": "",
+  "Window(Home).Property(foundry.slate.media.list.videoresolution.path)": "",
+  "Window(Home).Property(foundry.slate.media.list.videoresolution.value)": ""
+}

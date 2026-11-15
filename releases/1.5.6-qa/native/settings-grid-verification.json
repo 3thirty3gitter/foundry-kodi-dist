@@ -1,0 +1,94 @@
+{
+  "shipped_settings_xml_sha256": "7c60118f1cdcb9b40092d6c4c333d3bb1bbd713e23e0728e69bfcc7201e8c0ca",
+  "transparent_new_icon_count": 12,
+  "frames_and_background_layers": false,
+  "native_directional_steps": [
+    {
+      "direction": null,
+      "selected": "Skin settings",
+      "screenshot": "settings-grid-00.png"
+    },
+    {
+      "direction": "Right",
+      "selected": "File manager",
+      "screenshot": "settings-grid-01.png"
+    },
+    {
+      "direction": "Right",
+      "selected": "Add-ons",
+      "screenshot": "settings-grid-02.png"
+    },
+    {
+      "direction": "Right",
+      "selected": "System information",
+      "screenshot": "settings-grid-03.png"
+    },
+    {
+      "direction": "Down",
+      "selected": "Services",
+      "screenshot": "settings-grid-04.png"
+    },
+    {
+      "direction": "Left",
+      "selected": "PVR & Live TV",
+      "screenshot": "settings-grid-05.png"
+    },
+    {
+      "direction": "Left",
+      "selected": "Media",
+      "screenshot": "settings-grid-06.png"
+    },
+    {
+      "direction": "Left",
+      "selected": "Player",
+      "screenshot": "settings-grid-07.png"
+    },
+    {
+      "direction": "Down",
+      "selected": "Games",
+      "screenshot": "settings-grid-08.png"
+    },
+    {
+      "direction": "Right",
+      "selected": "Interface",
+      "screenshot": "settings-grid-09.png"
+    },
+    {
+      "direction": "Right",
+      "selected": "Profiles",
+      "screenshot": "settings-grid-10.png"
+    },
+    {
+      "direction": "Right",
+      "selected": "System",
+      "screenshot": "settings-grid-11.png"
+    },
+    {
+      "direction": "Up",
+      "selected": "Services",
+      "screenshot": "settings-grid-12.png"
+    },
+    {
+      "direction": "Up",
+      "selected": "System information",
+      "screenshot": "settings-grid-13.png"
+    },
+    {
+      "direction": "Left",
+      "selected": "Add-ons",
+      "screenshot": "settings-grid-14.png"
+    },
+    {
+      "direction": "Left",
+      "selected": "File manager",
+      "screenshot": "settings-grid-15.png"
+    },
+    {
+      "direction": "Left",
+      "selected": "Skin settings",
+      "screenshot": "settings-grid-16.png"
+    }
+  ],
+  "visual_review_required": true,
+  "scope": "Actual Settings window in isolated disposable Kodi profile; no user profile modified"
+}

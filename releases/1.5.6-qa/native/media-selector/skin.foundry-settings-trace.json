@@ -1,0 +1,12 @@
+[
+  {
+    "step": "remembered-target",
+    "labels": {
+      "Container(9000).ListItem.Label": "Artwork display",
+      "System.CurrentControl": "Media icon pack"
+    },
+    "category6": true,
+    "category_focused": false,
+    "target_focused": true
+  }
+]

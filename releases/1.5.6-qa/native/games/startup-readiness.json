@@ -1,0 +1,150 @@
+{
+  "passed": true,
+  "quiet_seconds": 2,
+  "observations": [
+    {
+      "window": {
+        "id": 10100,
+        "label": "Yes / No dialog"
+      },
+      "skin": {
+        "id": "skin.foundry",
+        "name": "Foundry"
+      },
+      "flags": {
+        "Container.IsUpdating": false,
+        "System.HasActiveModalDialog": false,
+        "Window.IsVisible(startup)": false
+      },
+      "owner": "foundry-games-qa-ujo620i1",
+      "actual_skin_log": {
+        "ready": true,
+        "loaded_path": "/tmp/foundry-games-qa-ujo620i1/kodi/portable_data/addons/skin.foundry/",
+        "load_event": "2026-11-15 17:27:01.464 T:23       info <general>:   load skin from: /tmp/foundry-games-qa-ujo620i1/kodi/portable_data/addons/skin.foundry/ (version: 1.5.6)",
+        "last_transition": "2026-11-15 17:27:01.517 T:23      debug <general>: ------ Window Init (Home.xml) ------"
+      },
+      "home_signature": {
+        "Container(9000).ListItem.Property(id)": "",
+        "Container(9000).ListItem.Property(menu_id)": "",
+        "Container(9000).NumItems": "2"
+      },
+      "widgets": []
+    },
+    {
+      "window": {
+        "id": 10000,
+        "label": "Home"
+      },
+      "skin": {
+        "id": "skin.foundry",
+        "name": "Foundry"
+      },
+      "flags": {
+        "Container.IsUpdating": false,
+        "System.HasActiveModalDialog": false,
+        "Window.IsVisible(startup)": false
+      },
+      "owner": "foundry-games-qa-ujo620i1",
+      "actual_skin_log": {
+        "ready": true,
+        "loaded_path": "/tmp/foundry-games-qa-ujo620i1/kodi/portable_data/addons/skin.foundry/",
+        "load_event": "2026-11-15 17:27:01.464 T:23       info <general>:   load skin from: /tmp/foundry-games-qa-ujo620i1/kodi/portable_data/addons/skin.foundry/ (version: 1.5.6)",
+        "last_transition": "2026-11-15 17:27:01.517 T:23      debug <general>: ------ Window Init (Home.xml) ------"
+      },
+      "home_signature": {
+        "Container(9000).ListItem.Property(id)": "music",
+        "Container(9000).ListItem.Property(menu_id)": "7000",
+        "Container(9000).NumItems": "10"
+      },
+      "widgets": [
+        [
+          "7b9ca4a763de4e90bc6ac9aa5d70a575",
+          "favorites",
+          "completed"
+        ],
+        [
+          "ed289e1e6b484792a46abfcfc36e9488",
+          "recent",
+          "started"
+        ]
+      ]
+    },
+    {
+      "window": {
+        "id": 10000,
+        "label": "Home"
+      },
+      "skin": {
+        "id": "skin.foundry",
+        "name": "Foundry"
+      },
+      "flags": {
+        "Container.IsUpdating": false,
+        "System.HasActiveModalDialog": false,
+        "Window.IsVisible(startup)": false
+      },
+      "owner": "foundry-games-qa-ujo620i1",
+      "actual_skin_log": {
+        "ready": true,
+        "loaded_path": "/tmp/foundry-games-qa-ujo620i1/kodi/portable_data/addons/skin.foundry/",
+        "load_event": "2026-11-15 17:27:01.464 T:23       info <general>:   load skin from: /tmp/foundry-games-qa-ujo620i1/kodi/portable_data/addons/skin.foundry/ (version: 1.5.6)",
+        "last_transition": "2026-11-15 17:27:02.338 T:23      debug <general>: ------ Window Init (Home.xml) ------"
+      },
+      "home_signature": {
+        "Container(9000).ListItem.Property(id)": "music",
+        "Container(9000).ListItem.Property(menu_id)": "7000",
+        "Container(9000).NumItems": "10"
+      },
+      "widgets": [
+        [
+          "7b9ca4a763de4e90bc6ac9aa5d70a575",
+          "favorites",
+          "completed"
+        ],
+        [
+          "ed289e1e6b484792a46abfcfc36e9488",
+          "recent",
+          "completed"
+        ]
+      ]
+    }
+  ],
+  "completed_game_widgets": [
+    {
+      "id": "7b9ca4a763de4e90bc6ac9aa5d70a575",
+      "action": "games",
+      "mode": "favorites",
+      "phase": "completed",
+      "error": "",
+      "started": 488.494220532,
+      "directory_id": "8a2a127aaa5c4fad94ce352a07bd0266",
+      "completed": 488.892655679,
+      "runtime_skin_path": "/tmp/foundry-games-qa-ujo620i1/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10000
+    },
+    {
+      "id": "ed289e1e6b484792a46abfcfc36e9488",
+      "action": "games",
+      "mode": "recent",
+      "phase": "completed",
+      "error": "",
+      "started": 488.547467734,
+      "directory_id": "31b88bf6db19470791a6d26419978795",
+      "completed": 488.969907834,
+      "runtime_skin_path": "/tmp/foundry-games-qa-ujo620i1/kodi/portable_data/addons/skin.foundry/",
+      "window_id": 10000
+    }
+  ],
+  "owner": "foundry-games-qa-ujo620i1",
+  "actual_skin_log": {
+    "ready": true,
+    "loaded_path": "/tmp/foundry-games-qa-ujo620i1/kodi/portable_data/addons/skin.foundry/",
+    "load_event": "2026-11-15 17:27:01.464 T:23       info <general>:   load skin from: /tmp/foundry-games-qa-ujo620i1/kodi/portable_data/addons/skin.foundry/ (version: 1.5.6)",
+    "last_transition": "2026-11-15 17:27:02.338 T:23      debug <general>: ------ Window Init (Home.xml) ------"
+  },
+  "home_signature": {
+    "Container(9000).ListItem.Property(id)": "music",
+    "Container(9000).ListItem.Property(menu_id)": "7000",
+    "Container(9000).NumItems": "10"
+  }
+}
