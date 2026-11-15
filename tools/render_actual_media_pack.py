@@ -1,6 +1,7 @@
 """Standalone native resource smoke gate, for tools/run_native_qa.sh.
 Fixture controls prove resource decoding/compositing, NOT shipped skin coverage.
 """
+from native_qa_assertions import harden_qa_source
 import argparse,json,os,shutil,subprocess,tempfile,time,urllib.request,sys,hashlib
 from pathlib import Path
 from PIL import Image
@@ -88,7 +89,7 @@ except Exception:r['error']=traceback.format_exc()
 finally:
  if w:w.close()
  (OUT/'mediaflags-inner.json').write_text(json.dumps(r))
-'''.replace('QA_VALUE',repr(str(qa))).replace('OUT_VALUE',repr(str(out))).replace('SAMPLES_VALUE',repr(samples)).replace('ASSETS_VALUE',repr(assets)).replace('QA_PATH',repr(str(qa)));(qa/'default.py').write_text(payload)
+'''.replace('QA_VALUE',repr(str(qa))).replace('OUT_VALUE',repr(str(out))).replace('SAMPLES_VALUE',repr(samples)).replace('ASSETS_VALUE',repr(assets)).replace('QA_PATH',repr(str(qa)));(qa/'default.py').write_text(harden_qa_source(payload))
 (user/'guisettings.xml').write_text('<settings version="2"><setting id="lookandfeel.skin">skin.estuary</setting><setting id="services.webserver">true</setting><setting id="services.webserverport">18991</setting><setting id="services.webserverauthentication">false</setting></settings>')
 env=dict(os.environ,HOME=str(base/'home'),XDG_CONFIG_HOME=str(base/'home/.config'),XDG_CACHE_HOME=str(base/'home/.cache'),DISPLAY=':98',KODI_HOME=str(home),LIBGL_ALWAYS_SOFTWARE='1',AE_SINK='NULL');(base/'home').mkdir();processes=[];report={'passed':False}
 def rpc(method,params={}):

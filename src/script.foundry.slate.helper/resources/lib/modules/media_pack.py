@@ -14,6 +14,7 @@ import xbmcvfs
 SKIN_ID = "skin.foundry.slate"
 PREFIX = "foundry.slate.media"
 SETTING = "MediaIconPack"
+MAX_MANIFEST_BYTES = 256 * 1024
 CATEGORIES = {
     "videocodec": "VideoCodec", "videoresolution": "VideoResolution",
     "videohdr": "HdrType", "aspectratio": "VideoAspect",
@@ -31,8 +32,11 @@ def read_pack(addon_id):
             return None
         addon = xbmcaddon.Addon(addon_id)
         root = os.path.realpath(xbmcvfs.translatePath(addon.getAddonInfo("path")))
-        with open(os.path.join(root, "resources", "media-pack.json"), encoding="utf-8") as stream:
-            data = json.loads(stream.read(65537))
+        with open(os.path.join(root, "resources", "media-pack.json"), "rb") as stream:
+            raw = stream.read(MAX_MANIFEST_BYTES + 1)
+        if len(raw) > MAX_MANIFEST_BYTES:
+            return None
+        data = json.loads(raw.decode("utf-8"))
         if not isinstance(data, dict):
             return None
         flags_root = os.path.realpath(os.path.join(root, "resources", "flags"))

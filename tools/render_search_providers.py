@@ -1,3 +1,4 @@
+from native_qa_assertions import harden_qa_source
 from pathlib import Path
 import os,json,shutil,subprocess,time,urllib.request,xml.etree.ElementTree as E
 import argparse,tempfile,hashlib,sys
@@ -150,7 +151,7 @@ try:
    if probe_offset[0] is not None:wait_probe_completed()
    probe_offset[0]=(profile/'temp/kodi.log').stat().st_size
    if marker.exists():marker.unlink()
-   (qa/'default.py').write_text('import sys,json,xbmc\nfrom pathlib import Path\nsys.path.insert(0,'+repr(str(entry))+')\nfrom modules import search_provider as p\nassert xbmc.getSkinDir()=='+repr(skin)+', (\"Wrong actual skin\",xbmc.getSkinDir())\n'+body+'\nxbmc.sleep(350)\nPath('+repr(str(marker))+').write_text(json.dumps({"selection":xbmc.getInfoLabel("Skin.String(current_search_provider)")}))\n')
+   (qa/'default.py').write_text(harden_qa_source('import sys,json,xbmc\nfrom pathlib import Path\nsys.path.insert(0,'+repr(str(entry))+')\nfrom modules import search_provider as p\nassert xbmc.getSkinDir()=='+repr(skin)+', (\"Wrong actual skin\",xbmc.getSkinDir())\n'+body+'\nxbmc.sleep(350)\nPath('+repr(str(marker))+').write_text(json.dumps({"selection":xbmc.getInfoLabel("Skin.String(current_search_provider)")}))\n'))
    rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.searchqa','wait':False})
   run('rows=p.installed_video_providers()\nassert "plugin.qa.audio" not in [r["id"] for r in rows]\nassert any(r["id"]=="plugin.qa.disabled" and not r["enabled"] for r in rows)\nPath('+repr(str(out/(skin+'-inventory.json')))+').write_text(json.dumps(rows))')
   wait_probe_completed();rows=json.loads((out/(skin+'-inventory.json')).read_text());report['skins'][skin]={'inventory':rows,'active_skin_verified':observed}

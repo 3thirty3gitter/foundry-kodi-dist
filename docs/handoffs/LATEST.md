@@ -1,3 +1,9 @@
+## Final validation correction, 2026-11-15
+
+First complete candidate run 43683456034 passed 13 native gates but failed media selection: the approved 67,919-byte manifest exceeded the old read limit. Both helper parsers now read at most 256 KiB + 1 byte and reject oversize data before strict UTF-8/JSON parsing. Actual complete-manifest and boundary regressions added.
+
+Kodi Linux sets Python optimization and strips native Python `assert` statements. Five QA generators now convert their embedded assertions to explicit conditional failures; production source copies are untouched. The media inventory check is also explicit and duplicated on the host. Prior host-side checks remain evidence for their narrow scope, but the affected native assertions require a fresh full run. No publication yet.
+
 # Media pack selection and complete Pure Marks candidate,2026-11-15
 
 User-approved105-path scope:31 sourced marks and74 original technical glyphs. Not all official brand logos. Adds persisted Media icon pack selection for original Foundry and Slate; missing/disabled/invalid assets preserve builtin icons. Dark-background marks, with pixel-preserving alpha-trimmed audio variants and conditional160px audio layout; default builtin layout unchanged. No network/account access or automatic pack selection.

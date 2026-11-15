@@ -4,7 +4,7 @@
   "helper": "1.3.7",
   "source_commits": {
     "skin.foundry-nimbus": "7d6c5b877bcf7b38688e8379e91d072734882c72",
-    "script.foundry.helper": "3e6fa6ed48aac37f1ff143736ce591475aa7e019"
+    "script.foundry.helper": "27a015facd749610cf2190dcb9a33a83b835aaa6"
   },
   "validation": {
     "status": "awaiting_final_ci",

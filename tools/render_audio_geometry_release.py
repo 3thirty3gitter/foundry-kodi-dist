@@ -103,7 +103,7 @@ def drive(body):
  offset=logpath.stat().st_size if logpath.exists() else 0
  source='import xbmc,xbmcgui,json,traceback\nfrom pathlib import Path\nresult={"ok":False}\ntry:\n'
  source+='\n'.join(' '+line for line in body.splitlines())
- source+='\n result["ok"]=True\nexcept Exception:\n result["error"]=traceback.format_exc()\nfinally:\n Path('+repr(str(receipt))+').write_text(json.dumps(result))\n'
+ source+='\n import sys\n result["native_optimize"]=sys.flags.optimize\n result["native_debug"]=__debug__\n result["ok"]=True\nexcept Exception:\n result["error"]=traceback.format_exc()\nfinally:\n Path('+repr(str(receipt))+').write_text(json.dumps(result))\n'
  (driver/'default.py').write_text(source)
  rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.searchdriver','wait':False})
  wait(receipt.exists)
@@ -224,8 +224,10 @@ def scheduler_evidence(label,paused):
  report['scheduler_evidence'].append({'phase':label,'skin':skin,'file':dest.name,'paused':paused})
 def inspect_module():
  dest=out/(skin+'-inventory.json')
- drive('import sys\nsys.path.insert(0,'+repr(str(addons/helper/'resources/lib'))+')\nfrom modules import media_pack\nrows=media_pack.discover()\nassert set(r["id"] for r in rows)=='+repr(set(PACKS[:2]+['resource.images.foundry.media.puremarks']))+'\nPath('+repr(str(dest))+').write_text(json.dumps(rows))')
- return json.loads(dest.read_text())
+ drive('import sys\nsys.path.insert(0,'+repr(str(addons/helper/'resources/lib'))+')\nfrom modules import media_pack\nrows=media_pack.discover()\nif set(r["id"] for r in rows)!='+repr(set(PACKS[:2]+['resource.images.foundry.media.puremarks']))+':\n raise AssertionError("Incorrect compatible pack inventory: "+repr(rows))\nPath('+repr(str(dest))+').write_text(json.dumps(rows))')
+ rows=json.loads(dest.read_text())
+ if {r['id'] for r in rows}!=set(PACKS[:2]+[ACTUAL_QA]):raise AssertionError(('Incorrect host-verified inventory',rows))
+ return rows
 def show_fixture():
  # Custom content window invokes shipped MediaFlags include, unchanged; selected
  # metadata comes from real ListItem stream details, never injected Home values.
@@ -547,6 +549,7 @@ finally:
   for relative in paths:
    f=addons/aid/relative
    report['source_receipts'].append({'file':aid+'/'+relative,'sha256':hashlib.sha256(f.read_bytes()).hexdigest()})
+ report['runner_source_sha256']=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
  report.update(release_source_mode='packaged-no-overlay' if not args.stage and not args.audio_stage else 'overlay-candidate',actual_pack_id=ACTUAL_QA,actual_pack_manifest_sha256=hashlib.sha256(manifest_path.read_bytes()).hexdigest())
  (out/'native-report.json').write_text(json.dumps(report,indent=2))
  try:rpc('Application.Quit');k.wait(timeout=15)
