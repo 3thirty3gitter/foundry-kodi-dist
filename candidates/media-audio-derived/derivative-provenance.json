@@ -1,0 +1,426 @@
+{
+  "source_manifest_sha256": "6449a3a914682fab50f6ac1e353fe5a4a72acaf9dd1e3e3623a0a3e5d5f6381f",
+  "derivatives": [
+    {
+      "source": "flags/audiocodec/aac.png",
+      "file": "flags-osd/audiocodec/aac.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        144,
+        160
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "316e950242e52ac7c37b814261e76aae18a4dba496f2d803d8133b03d01f336f",
+      "sha256": "01a2b7e1b4cfd6fcb112fa689c19db8339b99115cab741bde45a2ca7815cca7b",
+      "bbox": [
+        120,
+        16,
+        264,
+        176
+      ]
+    },
+    {
+      "source": "flags/audiocodec/aac_latm.png",
+      "file": "flags-osd/audiocodec/aac_latm.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        144,
+        160
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "316e950242e52ac7c37b814261e76aae18a4dba496f2d803d8133b03d01f336f",
+      "sha256": "01a2b7e1b4cfd6fcb112fa689c19db8339b99115cab741bde45a2ca7815cca7b",
+      "bbox": [
+        120,
+        16,
+        264,
+        176
+      ]
+    },
+    {
+      "source": "flags/audiocodec/ac3.png",
+      "file": "flags-osd/audiocodec/ac3.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        352,
+        88
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "04f93e78daca939e8aa43f050ef5b23d55a86f2c6cb8f2aa8d3fe42e3c30aef5",
+      "sha256": "721bab58b1117a02de7c3c597eec51f5a31e60d7caa880b8d4a68dfe6aebdfd3",
+      "bbox": [
+        16,
+        52,
+        368,
+        140
+      ]
+    },
+    {
+      "source": "flags/audiocodec/atmos.png",
+      "file": "flags-osd/audiocodec/atmos.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        352,
+        90
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc",
+      "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382",
+      "bbox": [
+        16,
+        51,
+        368,
+        141
+      ]
+    },
+    {
+      "source": "flags/audiocodec/dca.png",
+      "file": "flags-osd/audiocodec/dca.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        150,
+        62
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "782a275744fbfe6ef7a360d22e4fd3e3052d962dd78ab487ae3af5998876a5f3",
+      "sha256": "a08ae201743f9c118d2af2eca44548b34783b983582eeed0ed363d86fc530bc0",
+      "bbox": [
+        117,
+        44,
+        267,
+        106
+      ]
+    },
+    {
+      "source": "flags/audiocodec/dca_ma.png",
+      "file": "flags-osd/audiocodec/dca_ma.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        352,
+        105
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8",
+      "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03",
+      "bbox": [
+        16,
+        43,
+        368,
+        148
+      ]
+    },
+    {
+      "source": "flags/audiocodec/dolbydigital.png",
+      "file": "flags-osd/audiocodec/dolbydigital.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        352,
+        88
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "04f93e78daca939e8aa43f050ef5b23d55a86f2c6cb8f2aa8d3fe42e3c30aef5",
+      "sha256": "721bab58b1117a02de7c3c597eec51f5a31e60d7caa880b8d4a68dfe6aebdfd3",
+      "bbox": [
+        16,
+        52,
+        368,
+        140
+      ]
+    },
+    {
+      "source": "flags/audiocodec/dts.png",
+      "file": "flags-osd/audiocodec/dts.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        150,
+        62
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "782a275744fbfe6ef7a360d22e4fd3e3052d962dd78ab487ae3af5998876a5f3",
+      "sha256": "a08ae201743f9c118d2af2eca44548b34783b983582eeed0ed363d86fc530bc0",
+      "bbox": [
+        117,
+        44,
+        267,
+        106
+      ]
+    },
+    {
+      "source": "flags/audiocodec/dtshd_ma.png",
+      "file": "flags-osd/audiocodec/dtshd_ma.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        352,
+        105
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8",
+      "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03",
+      "bbox": [
+        16,
+        43,
+        368,
+        148
+      ]
+    },
+    {
+      "source": "flags/audiocodec/dtsma.png",
+      "file": "flags-osd/audiocodec/dtsma.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        352,
+        105
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "1dbe2b09175b332337bca29837eab96bf4dd45bfbb6fb7b9683d58f1b3718fc8",
+      "sha256": "9b19699d8ea567ee08d93d9c373e252084ac4821619dbf4ebf1da5f410fe1e03",
+      "bbox": [
+        16,
+        43,
+        368,
+        148
+      ]
+    },
+    {
+      "source": "flags/audiocodec/eac3-joc.png",
+      "file": "flags-osd/audiocodec/eac3-joc.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        352,
+        90
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc",
+      "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382",
+      "bbox": [
+        16,
+        51,
+        368,
+        141
+      ]
+    },
+    {
+      "source": "flags/audiocodec/eac3.png",
+      "file": "flags-osd/audiocodec/eac3.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        352,
+        85
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "a9cd31ab4801975d635f6ba90bb7e99d52e3531a73d54e0664fa5953594035c8",
+      "sha256": "57288e641eecfd088d51f16b8d11bcc0fc0813f8b36648ce5bab3edaf9f2a1e1",
+      "bbox": [
+        16,
+        53,
+        368,
+        138
+      ]
+    },
+    {
+      "source": "flags/audiocodec/flac.png",
+      "file": "flags-osd/audiocodec/flac.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        331,
+        160
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "09194d5195b46458ae3156da92bcfb7b73f24e3befd21dd841875f40049bfe4b",
+      "sha256": "7b7f6ae65fcdd4c36e96f7017e49c448642ad9387c56176dcbe8761b2ce25930",
+      "bbox": [
+        26,
+        16,
+        357,
+        176
+      ]
+    },
+    {
+      "source": "flags/audiocodec/mp3.png",
+      "file": "flags-osd/audiocodec/mp3.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        318,
+        160
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "2557a393b51d4e95896ff93b085b963b164e0b277e6801e00233b460478141a4",
+      "sha256": "0ac46b35ec7494272a5b77a4a582375278bff6339656c4101670fa90c800e297",
+      "bbox": [
+        33,
+        16,
+        351,
+        176
+      ]
+    },
+    {
+      "source": "flags/audiocodec/mp3float.png",
+      "file": "flags-osd/audiocodec/mp3float.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        318,
+        160
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "2557a393b51d4e95896ff93b085b963b164e0b277e6801e00233b460478141a4",
+      "sha256": "0ac46b35ec7494272a5b77a4a582375278bff6339656c4101670fa90c800e297",
+      "bbox": [
+        33,
+        16,
+        351,
+        176
+      ]
+    },
+    {
+      "source": "flags/audiocodec/opus.png",
+      "file": "flags-osd/audiocodec/opus.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        280,
+        160
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "ff897f8cabb0d2ed0d8f5156329b3f3f61b6e8f026db885efe6cff0739cb369a",
+      "sha256": "7c6a04a6d01f4f9bd65e5e30ff7b32768bcd793e367514b3304b4b81157d7f53",
+      "bbox": [
+        52,
+        16,
+        332,
+        176
+      ]
+    },
+    {
+      "source": "flags/audiocodec/truehd.png",
+      "file": "flags-osd/audiocodec/truehd.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        352,
+        88
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "3896c83d2e82a16f85fea86872eb71ea8ba7525b12664279d94e121604a839ae",
+      "sha256": "6e21c1f5f88f56c8e3453354a182fbd17e3f82e9412b258208874dcde5a10132",
+      "bbox": [
+        16,
+        52,
+        368,
+        140
+      ]
+    },
+    {
+      "source": "flags/audiocodec/truehd_atmos.png",
+      "file": "flags-osd/audiocodec/truehd_atmos.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        352,
+        90
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "4f0b20a791e89f9fb1526decbb8bf61826914f2b601f370116ca83400227b5dc",
+      "sha256": "1c77adcb540ccf3b08e125978784af7326651db6e736c9cf89ba2485ba231382",
+      "bbox": [
+        16,
+        51,
+        368,
+        141
+      ]
+    },
+    {
+      "source": "flags/audiocodec/vorbis.png",
+      "file": "flags-osd/audiocodec/vorbis.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        192,
+        160
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "05659b36fcd23d17375999e36caa5898ff96575b8bdff1c409dfda24df917c67",
+      "sha256": "e7945462410262e83e8c01fc41f73722e57b5ed6955c2a46ae09f62c840acc70",
+      "bbox": [
+        96,
+        16,
+        288,
+        176
+      ]
+    },
+    {
+      "source": "flags/audiocodec/wavpack.png",
+      "file": "flags-osd/audiocodec/wavpack.png",
+      "source_dimensions": [
+        384,
+        192
+      ],
+      "dimensions": [
+        260,
+        160
+      ],
+      "method": "Exact bounding box of every nonzero alpha pixel; no resampling, recolouring or shape change",
+      "source_sha256": "09bb5eeafa3739d88e85177e1995ba7807e3bd93d2c825561a50d9b62334e8a0",
+      "sha256": "2676bcc5f9e09356b9025ed507d2f741a7a4e06ea57099aedcc10f867441e826",
+      "bbox": [
+        62,
+        16,
+        322,
+        176
+      ]
+    }
+  ],
+  "original_files_changed": false
+}

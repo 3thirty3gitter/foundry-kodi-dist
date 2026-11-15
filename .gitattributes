@@ -14,3 +14,6 @@ src/script.foundry.slate.helper/** -text
 candidates/resource.images.foundry.studios/sources/*.svg -text
 candidates/media-selector-overlay/** -text
 candidates/resource.images.foundry.media.puremarks/** -text
+
+candidates/media-audio-overlay/** -text
+candidates/media-audio-derived/** -text
