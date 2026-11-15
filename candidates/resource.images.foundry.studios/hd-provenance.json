@@ -1,0 +1,117 @@
+{
+  "matched": [
+    {
+      "studio": "A24 Films",
+      "targets": [
+        "A24.png"
+      ],
+      "baseline_sha256": "59bae2382fe0defd463aaef1aade7aeb9a94ff0d75dbcc9cade3074db3a02291",
+      "replacement": "matched/A24.png",
+      "replacement_sha256": "cb2c274fe465acc51387d83c15eb7c16c746cc3d4583e4ea3f4fdccf23205722",
+      "source": "sources/a24.svg",
+      "adapted_vector": "sources/a24-baseline-white.svg",
+      "modification": "Explicit white fill matching all nontransparent baseline pixels; original vector path data unchanged",
+      "shape_alpha_iou": 0.9606852583699947,
+      "dimensions": [
+        2048,
+        840
+      ],
+      "qa_status": "Source vector matches A24 Films silhouette; no raster upscale; full original white preserved; native rendering pending; owner review required",
+      "source_record": "manifest.json A24"
+    }
+  ],
+  "sources": [
+    {
+      "name": "Netflix",
+      "png": "Netflix.png",
+      "svg": "sources/netflix.svg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Netflix_2015_logo.svg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
+      "author": "Netflix Inc.; vector extracted from Netflix website",
+      "variant": "2015 wordmark",
+      "license_record": "Commons PD-textlogo declaration; trademarks retained, no endorsement",
+      "source_sha256": "0c12d5374247e16fced565a207d010bf39f1eb55ee0394581ced67b2e6fa7b92",
+      "png_sha256": "258f9bcb2658ae352809cd175cda3fcfd6f285967f7a9c0a3a58e4e7386be0fd",
+      "dimensions": [
+        2048,
+        553
+      ],
+      "method": "native SVG rasterization at 2048px long edge; not raster upscaling",
+      "qa": "source SVG no embedded raster/external URLs/scripts; RGBA/2048/nonempty alpha; visually reviewed",
+      "status": "prototype, alias/variant mapping review before replacement"
+    },
+    {
+      "name": "Warner Bros. Pictures",
+      "png": "Warner Bros. Pictures.png",
+      "svg": "sources/warner-bros-pictures.svg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Warner_Bros._Pictures_2023_(Alt,_with_wordmark).svg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/7/71/Warner_Bros._Pictures_2023_%28Alt%2C_with_wordmark%29.svg",
+      "author": "Warner Bros. Entertainment; Chermayeff & Geismar & Haviv; WBD Brand Guide",
+      "variant": "2023 full-colour wordmark/shield",
+      "license_record": "Commons PD-textlogo declaration; trademarks retained, no endorsement",
+      "source_sha256": "363e905b51e72f6b0289d74d0326d060fb80ee802c7b0123ed4eb413e8f0b3ab",
+      "png_sha256": "08fa813a2b0306d8895ec718c5e6d355ab92acb41693bba0bc74d77c1412de85",
+      "dimensions": [
+        1804,
+        2048
+      ],
+      "method": "native SVG rasterization at 2048px long edge; not raster upscaling",
+      "qa": "source SVG no embedded raster/external URLs/scripts; RGBA/2048/nonempty alpha; visually reviewed",
+      "status": "prototype, alias/variant mapping review before replacement"
+    },
+    {
+      "name": "A24",
+      "png": "A24.png",
+      "svg": "sources/a24.svg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:A24_logo.svg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/b/b7/A24_logo.svg",
+      "source_origin": "a24films.com",
+      "license_record": "Commons PD-textlogo declaration; trademarks retained, no endorsement",
+      "source_sha256": "9eb99486294305e06d1bd5ee9b23e46dd0d84886c11ae6daa8643a964830a892",
+      "png_sha256": "eb991c8c22ae5ec0def503cd36cfbff3e99a3285a570b90d21843390bb7a1d6b",
+      "dimensions": [
+        2048,
+        840
+      ],
+      "method": "Native SVG rasterization at 2048px long edge; not raster upscaling",
+      "qa": "SVG structure and RGBA/alpha/dimensions verified; visual review on white QA background passed",
+      "status": "Exact company and silhouette match (normalized alpha IoU 0.9607); authentic black variant versus white baseline, pending contrast/variant integration review"
+    },
+    {
+      "name": "Lionsgate Studios 2024",
+      "png": "Lionsgate Studios 2024.png",
+      "svg": "sources/lionsgate-studios-2024.svg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Lionsgate_Studios_logo.svg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Lionsgate_Studios_logo.svg",
+      "source_origin": "investors.lionsgatestudios.com",
+      "license_record": "Commons PD-textlogo declaration; trademarks retained, no endorsement",
+      "source_sha256": "6347aa112c72fd696fd4b69774f88b953f97786e0ed58c22faf0842059b6b162",
+      "png_sha256": "0fc52cab9fa92072299eece6235d1851fab9a0bab1b4b5e3bf785c5f5285054e",
+      "dimensions": [
+        2048,
+        459
+      ],
+      "method": "Native SVG rasterization at 2048px long edge; not raster upscaling",
+      "qa": "SVG structure and RGBA/alpha/dimensions verified; visual review on white QA background passed",
+      "status": "New 2024 entity mark; no verified baseline target; do not overwrite Lionsgate historical mark"
+    },
+    {
+      "name": "Lionsgate Canada 2024",
+      "png": "Lionsgate Canada 2024.png",
+      "svg": "sources/lionsgate-canada-2024.svg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Lionsgate_Canada_logo.svg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/9/99/Lionsgate_Canada_logo.svg",
+      "source_origin": "lionsgate.com/canada",
+      "license_record": "Commons PD-textlogo declaration; trademarks retained, no endorsement",
+      "source_sha256": "5faafc267f22cf83491dfcf5bc66c445ea8c217ce592149a07702f7716cd1ae7",
+      "png_sha256": "d55a7714a34b5c81a55c19af2e1630b1375a583cb39b743a9a2d3d9cd76faa95",
+      "dimensions": [
+        2048,
+        502
+      ],
+      "method": "Native SVG rasterization at 2048px long edge; not raster upscaling",
+      "qa": "SVG structure and RGBA/alpha/dimensions verified; visual review on white QA background passed",
+      "status": "New 2024 entity mark; no verified baseline target; do not overwrite parent company mark"
+    }
+  ]
+}

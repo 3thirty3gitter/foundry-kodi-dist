@@ -24,6 +24,14 @@ for mode in ('colour','monochrome'):
    if (mode=='colour' and coloured>.15) or (mode=='monochrome' and coloured<.01 and dark>.5):
     samples.append(dict(asset,qa_mode=mode));break
  else:raise AssertionError('No representative '+mode)
+# Rebuilt vector sample rendered aspect-preserving, not at full source resolution.
+a24=next(asset for asset in assets if asset['file']=='A24.png')
+assert max(a24['width'],a24['height'])>=2048,'Rebuilt A24 required'
+samples.append(dict(a24,qa_mode='rebuilt-vector'))
+for sample in samples:
+ scale=min(1.0,400/sample['width'],220/sample['height'])
+ sample['render_width']=round(sample['width']*scale)
+ sample['render_height']=round(sample['height']*scale)
 qa=addons/'script.foundry.studioqa';qa.mkdir();Image.new('RGBA',(4,4),'white').save(qa/'qa-white.png');(qa/'addon.xml').write_text('<addon id="script.foundry.studioqa" name="Studio QA" version="1.0.0" provider-name="QA"><requires><import addon="xbmc.python" version="3.0.0"/></requires><extension point="xbmc.python.script" library="default.py"/></addon>')
 fixture_xml=qa/'resources/skins/default/1080i/studioqa.xml';fixture_xml.parent.mkdir(parents=True);fixture_xml.write_text('<window><defaultcontrol always="true">1</defaultcontrol><controls><control type="label" id="1"><left>0</left><top>0</top><width>1</width><height>1</height><label /></control></controls></window>')
 payload='''import xbmc,xbmcgui,xbmcvfs,json,hashlib,traceback,time
@@ -44,8 +52,8 @@ try:
   y=150+index*250
   for x,bg in ((100,'FFFFFFFF'),(600,'FF202020')):
    w.addControl(xbmcgui.ControlImage(x,y,400,220,str(Path(QA_VALUE)/'qa-white.png'),colorDiffuse=bg))
-   w.addControl(xbmcgui.ControlImage(x,y,sample['width'],sample['height'],'resource://resource.images.foundry.studios/'+sample['file']))
- w.addControl(xbmcgui.ControlLabel(100,700,800,60,'Unknown Studio (text fallback)',textColor='FFFFFFFF'))
+   w.addControl(xbmcgui.ControlImage(x,y,sample['render_width'],sample['render_height'],'resource://resource.images.foundry.studios/'+sample['file']))
+ w.addControl(xbmcgui.ControlLabel(100,920,800,60,'Unknown Studio (text fallback)',textColor='FFFFFFFF'))
  xbmc.sleep(1500);xbmc.executebuiltin('TakeScreenshot('+str(OUT/'studio-native.png')+')');xbmc.sleep(1000)
  r.update(passed=True,samples=SAMPLES,resource_hash_verified=verified,unknown_text_is_fixture_only=True)
 except Exception:r['error']=traceback.format_exc()
@@ -79,7 +87,7 @@ try:
  cap=Image.open(out/'studio-native.png').convert('RGB');assert cap.size==(1920,1080)
  errors=[]
  for index,sample in enumerate(samples):
-  src=Image.open(pack/'resources'/sample['file']).convert('RGBA');y=150+index*250
+  src=Image.open(pack/'resources'/sample['file']).convert('RGBA');src=src.resize((sample['render_width'],sample['render_height']),Image.Resampling.LANCZOS);y=150+index*250
   for x,bg in ((100,(255,255,255)),(600,(32,32,32))):
    expected=Image.new('RGBA',src.size,bg+(255,));expected.alpha_composite(src);expected=expected.convert('RGB')
    observed=cap.crop((x,y,x+src.width,y+src.height))

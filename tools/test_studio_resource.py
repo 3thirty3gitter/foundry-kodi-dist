@@ -19,7 +19,16 @@ class StudioResourceTests(unittest.TestCase):
     with Image.open(p) as im:
      self.assertEqual(im.size,(a['width'],a['height']))
      im.verify()
-  self.assertEqual(sum(a['hd_long_edge_512'] for a in assets),3)
+  self.assertEqual(sum(a['hd_long_edge_512'] for a in assets),4)
+ def test_first_rebuild_is_exactly_a24(self):
+  q=json.loads((ROOT/'quality-summary.json').read_text())
+  self.assertEqual(q['rebuilt'],1)
+  self.assertTrue(q['not_claimed_all_HD'])
+  m=json.loads((ROOT/'hd-provenance.json').read_text())['matched']
+  self.assertEqual([x['targets'] for x in m],[['A24.png']])
+  self.assertEqual(m[0]['dimensions'],[2048,840])
+  self.assertGreater(m[0]['shape_alpha_iou'],.95)
+  self.assertEqual(hashlib.sha256((ROOT/'resources/A24.png').read_bytes()).hexdigest(),m[0]['replacement_sha256'])
  def test_license_and_transparent_coverage_claim(self):
   self.assertIn('Creative Commons',(ROOT/'LICENSE.txt').read_text(encoding='utf-8'))
   x=ET.parse(ROOT/'addon.xml').getroot()

@@ -11,3 +11,7 @@ No live network enrichment is wired. The isolated TMDB original-resolution adapt
 Both-skin helper adapters and roughly 50 XML studio references are under separate review for original colour, optional resource preference and safe offline text fallback. They are not shipped by this standalone source commit. Existing released packages and production feeds remain untouched.
 
 Candidate is kept under candidates/, not release src/: the normal release gate correctly refuses unpublished add-ons omitted from the release manifest. No gate exception is added. User subsequently requested faithful HD rebuilds; this low-resolution archive is only a provenance baseline, not fulfillment of that request. Native fixture API corrected to documented WindowXMLDialog 1080i; rerun pending.
+
+Standalone baseline native workflow 43662720245 PASSED all 7,428 resource hashes and colour/alpha compositing with maximum mean RGB error0.014/255. Native screenshot independently reviewed and rehashed; exact LF package hash3c75d785ea042097f65cbd91e34544ecb12987aa65c71bb237b2cacfa75521b3 (90,687,597bytes). That is baseline infrastructure proof, not all-HD.
+
+First HD overlay now replaces ONLY A24.png with2048x840 genuine vector rasterization, baseline white retained, path geometry unchanged. Source/modified provenance and exact prior/replacement hashes included. Four total assets meet512px threshold; one newly rebuilt. Native HD sample verification pending. No other aliases or brand-era variants substituted.

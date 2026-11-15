@@ -1635,12 +1635,23 @@
     {
       "name": "A24",
       "file": "A24.png",
-      "width": 161,
-      "height": 109,
+      "width": 2048,
+      "height": 840,
       "alpha": true,
-      "sha256": "59bae2382fe0defd463aaef1aade7aeb9a94ff0d75dbcc9cade3074db3a02291",
-      "hd_long_edge_512": false,
-      "source": "Team Kodi coloured 7cbc54f89ef94cd007e9c147a4d609ec72ade005"
+      "sha256": "cb2c274fe465acc51387d83c15eb7c16c746cc3d4583e4ea3f4fdccf23205722",
+      "hd_long_edge_512": true,
+      "source": "Verified vector rebuild: see hd-provenance.json",
+      "prior_source": {
+        "name": "A24",
+        "file": "A24.png",
+        "width": 161,
+        "height": 109,
+        "alpha": true,
+        "sha256": "59bae2382fe0defd463aaef1aade7aeb9a94ff0d75dbcc9cade3074db3a02291",
+        "hd_long_edge_512": false,
+        "source": "Team Kodi coloured 7cbc54f89ef94cd007e9c147a4d609ec72ade005"
+      },
+      "rebuild_method": "Explicit white fill matching all nontransparent baseline pixels; original vector path data unchanged"
     },
     {
       "name": "AAC Kids",
