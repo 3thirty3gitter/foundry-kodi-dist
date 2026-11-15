@@ -158,16 +158,30 @@ def start_monitor():
  rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.mediapackmonitor','wait':False})
 def open_settings():
  drive('xbmc.executebuiltin("ActivateWindow(skinsettings)",False)')
- wait(lambda:cond('Control.HasFocus(9000)'))
- for _ in range(20):
-  if cond('Control.IsVisible(6098)'):break
-  act('down')
- assert cond('Control.IsVisible(6098)')
- act('right')
- for _ in range(50):
-  if cond('Control.HasFocus(6098)'):break
-  act('down')
- assert cond('Control.HasFocus(6098)'), 'Actual settings button unreachable'
+ trace=[]
+ def record(step):
+  labels=['System.CurrentControl','Container(9000).ListItem.Label']
+  trace.append({'step':step,'labels':rpc('XBMC.GetInfoLabels',{'labels':labels}),'category6':cond('Container(9000).HasFocus(6)'),'category_focused':cond('Control.HasFocus(9000)'),'target_focused':cond('Control.HasFocus(6098)')})
+ try:
+  wait(lambda:cond('Control.HasFocus(9000)'));record('opened');snap(skin+'-settings-opened')
+  for _ in range(20):
+   if cond('Container(9000).HasFocus(6)'):break
+   act('down');record('category-down')
+  assert cond('Container(9000).HasFocus(6)'), 'Artwork category not selected'
+  wait(lambda:cond('Control.IsVisible(600)') and cond('Control.IsVisible(6098)') and cond('Control.IsEnabled(6098)'))
+  time.sleep(.8);snap(skin+'-artwork-category');act('right')
+  wait(lambda:not cond('Control.HasFocus(9000)'),t=5);record('entered-artwork')
+  for _ in range(50):
+   if cond('Control.HasFocus(6098)'):break
+   act('down');record('control-down')
+  assert cond('Control.HasFocus(6098)'), 'Actual settings button unreachable'
+  snap(skin+'-media-pack-control')
+ except Exception:
+  snap(skin+'-settings-failure')
+  target=out/(skin+'-settings-focus.json')
+  drive('Path('+repr(str(target))+').write_text(json.dumps({"skin":xbmc.getSkinDir(),"window":xbmcgui.getCurrentWindowId(),"dialog":xbmcgui.getCurrentWindowDialogId(),"focus":xbmcgui.Window(xbmcgui.getCurrentWindowId()).getFocusId(),"label":xbmc.getInfoLabel("System.CurrentControl")}))')
+  raise
+ finally:(out/(skin+'-settings-trace.json')).write_text(json.dumps(trace,indent=2))
 def choose(index,expected):
  open_settings();act('select');wait(lambda:cond('Window.IsVisible(selectdialog)'))
  # Real picker selection, not setting injection. Home resets native select list.
