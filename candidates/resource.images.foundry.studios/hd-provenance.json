@@ -37,6 +37,29 @@
       ],
       "qa_status": "Native rendering pending; visual silhouette reviewed; source 1980 HBO mark matches baseline",
       "source_record": "manifest.json HBO"
+    },
+    {
+      "studio": "StudioCanal",
+      "targets": [
+        "StudioCanal.png"
+      ],
+      "baseline_sha256": "b2938227212f084fb8bad851123324cf58883bc0e4f2f37193efe863a8fc0495",
+      "replacement": "matched/StudioCanal.png",
+      "replacement_sha256": "c11b5f43c18ef594906e82dcacf3ff5aee6dbde569e98c6a436a20613b8dc29c",
+      "source": "sources/studiocanal.svg",
+      "modification": "None; genuine source artwork rasterized at2048px",
+      "shape_alpha_iou": 0.9993817109325797,
+      "baseline_size_rgb_mae": [
+        4.3822,
+        4.1602,
+        4.4421
+      ],
+      "dimensions": [
+        2048,
+        357
+      ],
+      "qa_status": "2011 wordmark and rounded corners visually match; original #1a171b background and white text unchanged; native pending",
+      "source_record": "manifest.json StudioCanal"
     }
   ],
   "sources": [
@@ -153,6 +176,17 @@
       "variant": "2016 horizontal logo",
       "license_record": "Commons PD-textlogo; trademark retained",
       "source_sha256": "229e99c07ca7be29ec2ab91b724ee7eaadd077ffccde55760471b80bdba9c6b0"
+    },
+    {
+      "name": "StudioCanal",
+      "svg": "sources/studiocanal.svg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Studiocanal_2011_logo.svg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/2/27/Studiocanal_2011_logo.svg",
+      "source_origin": "http://www.studiocanal.com/fr",
+      "author": "DBLG",
+      "variant": "2011 rounded background wordmark",
+      "license_record": "Commons PD-textlogo; trademarks retained",
+      "source_sha256": "dcb22bf360829f032ab530367d23a8a8723c5e92306249e9278d74d4c1e143ad"
     }
   ]
 }

@@ -61937,12 +61937,23 @@
     {
       "name": "StudioCanal",
       "file": "StudioCanal.png",
-      "width": 161,
-      "height": 109,
+      "width": 2048,
+      "height": 357,
       "alpha": true,
-      "sha256": "b2938227212f084fb8bad851123324cf58883bc0e4f2f37193efe863a8fc0495",
-      "hd_long_edge_512": false,
-      "source": "Team Kodi coloured 7cbc54f89ef94cd007e9c147a4d609ec72ade005"
+      "sha256": "c11b5f43c18ef594906e82dcacf3ff5aee6dbde569e98c6a436a20613b8dc29c",
+      "hd_long_edge_512": true,
+      "source": "Verified vector rebuild: see hd-provenance.json",
+      "prior_source": {
+        "name": "StudioCanal",
+        "file": "StudioCanal.png",
+        "width": 161,
+        "height": 109,
+        "alpha": true,
+        "sha256": "b2938227212f084fb8bad851123324cf58883bc0e4f2f37193efe863a8fc0495",
+        "hd_long_edge_512": false,
+        "source": "Team Kodi coloured 7cbc54f89ef94cd007e9c147a4d609ec72ade005"
+      },
+      "rebuild_method": "None; genuine source artwork rasterized at2048px"
     },
     {
       "name": "studios usa television",
