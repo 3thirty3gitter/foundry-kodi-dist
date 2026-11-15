@@ -238,7 +238,12 @@ finally:(OUT/'fixture-stopped').write_text('true')
   if (out/p).exists():(out/p).unlink()
  (qa/'default.py').write_text(source)
  rpc('Addons.ExecuteAddon',{'addonid':'script.foundry.searchqa','wait':False});wait(lambda:(out/'fixture-ready').exists())
- wait(lambda:cond('Control.HasFocus(900)'))
+ try:wait(lambda:cond('Control.HasFocus(900)'))
+ except Exception:
+  snap(skin+'-fixture-focus-failure')
+  evidence=out/(skin+'-fixture-focus-failure.json')
+  drive('Path('+repr(str(evidence))+').write_text(json.dumps({"skin":xbmc.getSkinDir(),"window":xbmcgui.getCurrentWindowId(),"dialog":xbmcgui.getCurrentWindowDialogId(),"focus":xbmcgui.Window(xbmcgui.getCurrentWindowId()).getFocusId(),"video":xbmc.getCondVisibility("Player.HasVideo")}))')
+  raise
 def close_fixture():
  (out/'close-fixture').write_text('true');wait(lambda:(out/'fixture-stopped').exists());time.sleep(1)
 def snapshot(name,expect_pack):
@@ -268,6 +273,19 @@ def snapshot(name,expect_pack):
  time.sleep(.8)
  values=rpc('XBMC.GetInfoLabels',{'labels':labels})
  (out/(skin+'-'+name+'.json')).write_text(json.dumps(values,indent=2));snap(skin+'-'+name)
+ row=[]
+ with Image.open(out/(skin+'-'+name+'.png')).convert('RGB') as im:
+  for index,category in enumerate(CATS):
+   pixels=list(im.crop((1160+125*index,350,1275+125*index,415)).getdata())
+   a=sum(r>210 and g<65 and b>120 for r,g,b in pixels)
+   b=sum(r<65 and g>200 and b<130 for r,g,b in pixels)
+   path=values['Window(Home).Property('+prefix+'.list.'+category+'.path)']
+   expected=bool(expect_pack and path)
+   row.append({'category':category,'a_pixels':a,'b_pixels':b,'expected':expected})
+   if expected:
+    assert (a if expect_pack==PACKS[0] else b)>2000,('Missing rendered category',category,row)
+   else:assert a+b<100,('Unexpected/stale rendered category',category,row)
+ (out/(skin+'-'+name+'-row-pixels.json')).write_text(json.dumps(row,indent=2))
  assert not (out/'monitor-error.txt').exists()
  return values
 def colour_count(name,which):
@@ -300,7 +318,9 @@ try:
   time.sleep(.5);v=snapshot('missing-file',PACKS[0]);assert not v['Window(Home).Property('+prefix+'.list.videocodec.path)']
   asset.write_bytes(asset_bytes);time.sleep(.5);v=snapshot('file-restored',PACKS[0]);assert v['Window(Home).Property('+prefix+'.list.videocodec.path)'];close_fixture()
   drive('xbmcgui.Window(10000).clearProperty("pause_services")')
-  rpc('Player.Open',{'item':{'file':str(base/'fixture.avi')}});wait(lambda:cond('Player.HasVideo'));show_fixture()
+  rpc('Player.Open',{'item':{'file':str(base/'fixture.avi')}});wait(lambda:cond('Player.HasVideo'))
+  wait(lambda:cond('Window.IsActive(12005)') and not cond('System.HasActiveModalDialog'))
+  snap(skin+'-playback-ready');show_fixture()
   wait(lambda:bool(info('Window(Home).Property('+prefix+'.player.videoresolution.path)')))
   snapshot('player-resolution',PACKS[0])
   resolution=info('VideoPlayer.VideoResolution');assert resolution
