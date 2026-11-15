@@ -6,6 +6,7 @@ from pathlib import Path
 from PIL import Image
 p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
 out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
+for prior in out.glob('studio-page-*.png'):prior.unlink()
 for marker in ('studio-inner.json','studio-native.png','native-studio-report.json'):
  (out/marker).unlink(missing_ok=True)
 base=Path(tempfile.mkdtemp(prefix='studio-native-'));home=base/'kodi';shutil.copytree('/usr/share/kodi',home,ignore_dangling_symlinks=True)
@@ -25,9 +26,11 @@ for mode in ('colour','monochrome'):
     samples.append(dict(asset,qa_mode=mode));break
  else:raise AssertionError('No representative '+mode)
 # Rebuilt vector sample rendered aspect-preserving, not at full source resolution.
-a24=next(asset for asset in assets if asset['file']=='A24.png')
-assert max(a24['width'],a24['height'])>=2048,'Rebuilt A24 required'
-samples.append(dict(a24,qa_mode='rebuilt-vector'))
+rebuilt=[asset for asset in assets if asset.get('rebuild_method')]
+assert rebuilt,'Rebuilt assets required'
+for asset in rebuilt:
+ assert max(asset['width'],asset['height'])>=2048,asset['file']
+ samples.append(dict(asset,qa_mode='rebuilt-vector'))
 for sample in samples:
  scale=min(1.0,400/sample['width'],220/sample['height'])
  sample['render_width']=round(sample['width']*scale)
@@ -48,14 +51,20 @@ try:
   verified+=1
  w=xbmcgui.WindowXMLDialog('studioqa.xml',QA_PATH,'default','1080i');w.show()
  # WindowXMLDialog supported constructor loads explicit 1080i skin resolution.
+ pages=[]
  for index,sample in enumerate(SAMPLES):
-  y=150+index*250
+  y=150;controls=[]
   for x,bg in ((100,'FFFFFFFF'),(600,'FF202020')):
-   w.addControl(xbmcgui.ControlImage(x,y,400,220,str(Path(QA_VALUE)/'qa-white.png'),colorDiffuse=bg))
-   w.addControl(xbmcgui.ControlImage(x,y,sample['render_width'],sample['render_height'],'resource://resource.images.foundry.studios/'+sample['file']))
- w.addControl(xbmcgui.ControlLabel(100,920,800,60,'Unknown Studio (text fallback)',textColor='FFFFFFFF'))
- xbmc.sleep(1500);xbmc.executebuiltin('TakeScreenshot('+str(OUT/'studio-native.png')+')');xbmc.sleep(1000)
- r.update(passed=True,samples=SAMPLES,resource_hash_verified=verified,unknown_text_is_fixture_only=True)
+   controls.append(xbmcgui.ControlImage(x,y,400,220,str(Path(QA_VALUE)/'qa-white.png'),colorDiffuse=bg))
+   controls.append(xbmcgui.ControlImage(x,y,sample['render_width'],sample['render_height'],'resource://resource.images.foundry.studios/'+sample['file']))
+  controls.append(xbmcgui.ControlLabel(100,420,1000,60,sample['file'],textColor='FFFFFFFF'))
+  controls.append(xbmcgui.ControlLabel(100,700,800,60,'Unknown Studio (text fallback)',textColor='FFFFFFFF'))
+  for control in controls:w.addControl(control)
+  name='studio-page-%03d.png'%index
+  xbmc.sleep(1000);xbmc.executebuiltin('TakeScreenshot('+str(OUT/name)+')');xbmc.sleep(1000)
+  pages.append(name)
+  for control in controls:w.removeControl(control)
+ r.update(passed=True,samples=SAMPLES,pages=pages,resource_hash_verified=verified,unknown_text_is_fixture_only=True)
 except Exception:r['error']=traceback.format_exc()
 finally:
  if w:w.close()
@@ -84,16 +93,19 @@ try:
   if (out/'studio-inner.json').exists():break
   time.sleep(.3)
  inner=json.loads((out/'studio-inner.json').read_text());assert inner['passed'],inner
- cap=Image.open(out/'studio-native.png').convert('RGB');assert cap.size==(1920,1080)
+ assert len(inner['pages'])==len(samples);page_results=[]
  errors=[]
  for index,sample in enumerate(samples):
-  src=Image.open(pack/'resources'/sample['file']).convert('RGBA');src=src.resize((sample['render_width'],sample['render_height']),Image.Resampling.LANCZOS);y=150+index*250
+  cap=Image.open(out/inner['pages'][index]).convert('RGB');assert cap.size==(1920,1080)
+  asset_errors=[]
+  src=Image.open(pack/'resources'/sample['file']).convert('RGBA');src=src.resize((sample['render_width'],sample['render_height']),Image.Resampling.LANCZOS);y=150
   for x,bg in ((100,(255,255,255)),(600,(32,32,32))):
    expected=Image.new('RGBA',src.size,bg+(255,));expected.alpha_composite(src);expected=expected.convert('RGB')
    observed=cap.crop((x,y,x+src.width,y+src.height))
-   error=sum(abs(u-v) for p,q in zip(expected.getdata(),observed.getdata()) for u,v in zip(p,q))/(src.width*src.height*3);errors.append(error)
+   error=sum(abs(u-v) for p,q in zip(expected.getdata(),observed.getdata()) for u,v in zip(p,q))/(src.width*src.height*3);errors.append(error);asset_errors.append(error)
+  page_results.append({'file':sample['file'],'mode':sample['qa_mode'],'source_dimensions':[sample['width'],sample['height']],'render_dimensions':[sample['render_width'],sample['render_height']],'mean_rgb_error_light_dark':asset_errors,'screenshot_sha256':hashlib.sha256((out/inner['pages'][index]).read_bytes()).hexdigest()})
  assert max(errors)<12,errors
- report.update(passed=True,native=inner,mean_rgb_error_light_dark=errors,screenshot_sha256=hashlib.sha256((out/'studio-native.png').read_bytes()).hexdigest(),scope='Resource fixture only; shipped skin views require separate QA')
+ report.update(passed=True,native=inner,mean_rgb_error_light_dark=errors,pages=page_results,scope='Resource fixture only; shipped skin views require separate QA')
 except Exception as e:report['error']=repr(e)
 finally:
  try:rpc('Application.Quit')

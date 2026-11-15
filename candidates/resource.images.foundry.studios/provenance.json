@@ -31626,12 +31626,23 @@
     {
       "name": "HBO",
       "file": "HBO.png",
-      "width": 161,
-      "height": 109,
+      "width": 2048,
+      "height": 844,
       "alpha": true,
-      "sha256": "1df47424fd1745e28a7a53656b0c6ecb97ce5b95d2e5af2eb8349d7ff3a29d58",
-      "hd_long_edge_512": false,
-      "source": "Team Kodi coloured 7cbc54f89ef94cd007e9c147a4d609ec72ade005"
+      "sha256": "d580fb44b9ca50290617214b65b9f90f3589c01b50bea7b69e95f542a713dfb5",
+      "hd_long_edge_512": true,
+      "source": "Verified vector rebuild: see hd-provenance.json",
+      "prior_source": {
+        "name": "HBO",
+        "file": "HBO.png",
+        "width": 161,
+        "height": 109,
+        "alpha": true,
+        "sha256": "1df47424fd1745e28a7a53656b0c6ecb97ce5b95d2e5af2eb8349d7ff3a29d58",
+        "hd_long_edge_512": false,
+        "source": "Team Kodi coloured 7cbc54f89ef94cd007e9c147a4d609ec72ade005"
+      },
+      "rebuild_method": "Original vector paths unchanged; fill #2b7cbc exactly matches every opaque baseline pixel"
     },
     {
       "name": "Hbo2",

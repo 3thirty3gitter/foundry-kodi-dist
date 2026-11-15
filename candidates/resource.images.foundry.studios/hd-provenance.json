@@ -18,6 +18,25 @@
       ],
       "qa_status": "Source vector matches A24 Films silhouette; no raster upscale; full original white preserved; native rendering pending; owner review required",
       "source_record": "manifest.json A24"
+    },
+    {
+      "studio": "HBO",
+      "targets": [
+        "HBO.png"
+      ],
+      "baseline_sha256": "1df47424fd1745e28a7a53656b0c6ecb97ce5b95d2e5af2eb8349d7ff3a29d58",
+      "replacement": "matched/HBO.png",
+      "replacement_sha256": "d580fb44b9ca50290617214b65b9f90f3589c01b50bea7b69e95f542a713dfb5",
+      "source": "sources/hbo.svg",
+      "adapted_vector": "sources/hbo-baseline-blue.svg",
+      "modification": "Original vector paths unchanged; fill #2b7cbc exactly matches every opaque baseline pixel",
+      "shape_alpha_iou": 0.9641794503987021,
+      "dimensions": [
+        2048,
+        844
+      ],
+      "qa_status": "Native rendering pending; visual silhouette reviewed; source 1980 HBO mark matches baseline",
+      "source_record": "manifest.json HBO"
     }
   ],
   "sources": [
@@ -112,6 +131,28 @@
       "method": "Native SVG rasterization at 2048px long edge; not raster upscaling",
       "qa": "SVG structure and RGBA/alpha/dimensions verified; visual review on white QA background passed",
       "status": "New 2024 entity mark; no verified baseline target; do not overwrite parent company mark"
+    },
+    {
+      "name": "HBO",
+      "svg": "sources/hbo.svg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:HBO_logo.svg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/d/de/HBO_logo.svg",
+      "source_origin": "hbo.com",
+      "author": "Gerard Huerta",
+      "variant": "1980 HBO wordmark",
+      "license_record": "Commons PD-textlogo; trademark retained",
+      "source_sha256": "ff3b394544e418078da83e1dc1e733547d1e2efa5354dd5e5d2bde1d6a65a9b1"
+    },
+    {
+      "name": "Marvel Studios",
+      "svg": "sources/marvel2016.svg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Marvel_Studios_2016_logo.svg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/1/10/Marvel_Studios_2016_logo.svg",
+      "source_origin": "Marvel PDF page23 archived as recorded by Commons",
+      "author": "Marvel",
+      "variant": "2016 horizontal logo",
+      "license_record": "Commons PD-textlogo; trademark retained",
+      "source_sha256": "229e99c07ca7be29ec2ab91b724ee7eaadd077ffccde55760471b80bdba9c6b0"
     }
   ]
 }
